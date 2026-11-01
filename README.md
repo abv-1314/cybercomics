@@ -1,11 +1,13 @@
 # Сайт CyberComics
 
 ## Как сайт попадает на cybercomics.ru
-Каждый push в ветку `main` запускает GitHub Actions (`.github/workflows/deploy.yml`):
-сборка `node src/build.js && node src/prerender.js` → выкладка папки `dist/` на хостинг reg.ru по SSH (rsync).
-Руками ничего распаковывать не нужно. Статус выкладки — вкладка **Actions** в репозитории.
-Секреты и переменные описаны в начале `deploy.yml`.
-
+1. Каждый push в ветку `main` запускает GitHub Actions (`.github/workflows/deploy.yml`):
+   сборка `node src/build.js && node src/prerender.js`, готовые файлы уходят в ветку `site`.
+2. На хостинге reg.ru раз в 5 минут крон запускает `deploy/pull.sh`: если в `site` новая сборка,
+   он скачивает её и обновляет папку `~/www/cybercomics.ru`.
+   Команда крона: `curl -fsSL https://raw.githubusercontent.com/abv-1314/cybercomics/main/deploy/pull.sh | sh`
+   (репозиторий должен быть публичным, иначе хостинг не скачает сборку).
+Руками ничего распаковывать не нужно. Статус сборки — вкладка **Actions** в репозитории.
 
 Готовый сайт лежит в папке `dist/`. Его можно залить на любой статический хостинг
 (GitHub Pages, Cloudflare Pages, Netlify, Яндекс Object Storage, обычный хостинг с FTP).

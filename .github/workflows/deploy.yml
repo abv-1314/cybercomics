@@ -1,10 +1,6 @@
-# Каждый push в main: собрать сайт и выложить его на хостинг по SSH (rsync).
-# Секреты репозитория (Settings → Secrets and variables → Actions → Secrets):
-#   SSH_HOST     — адрес сервера хостинга (например, server123.hosting.reg.ru)
-#   SSH_USER     — логин хостинга (u1234567)
-#   SSH_PASSWORD — пароль от хостинга
-# Переменные (там же, вкладка Variables), все необязательные:
-#   DEPLOY_PATH          — папка сайта на хостинге, по умолчанию www/cybercomics.ru
+# Каждый push в main: собрать сайт и положить готовые файлы в ветку `site`.
+# Хостинг reg.ru раз в 5 минут проверяет ветку и обновляет сайт сам (deploy/pull.sh, крон).
+# Переменные (Settings → Secrets and variables → Actions → Variables), все необязательные:
 #   METRIKA_ID           — номер счётчика Яндекс.Метрики (включать только после уведомления в РКН)
 #   YANDEX_VERIFICATION  — код подтверждения Яндекс Вебмастера
 #   GOOGLE_VERIFICATION  — код подтверждения Google Search Console
@@ -18,6 +14,9 @@ on:
 concurrency:
   group: deploy
   cancel-in-progress: false
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -58,29 +57,16 @@ jobs:
           test -s dist/index.html && test -s dist/sitemap.xml && test -s dist/404.html
           echo "Страниц: $(find dist -name index.html | wc -l)"
 
-      - name: Выложить на хостинг
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH || 'www/cybercomics.ru' }}
+      # Готовый сайт кладём в ветку `site`. Хостинг сам забирает её по крону (deploy/pull.sh):
+      # reg.ru не пускает SSH-подключения с серверов GitHub.
+      - name: Опубликовать сборку в ветку site
         run: |
-          if [ -z "$SSH_HOST" ] && [ -z "$SSH_USER" ] && [ -z "$SSHPASS" ]; then
-            echo "::warning::Секреты хостинга ещё не заданы: сайт собран, но не выложен"; exit 0
-          fi
-          if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ] || [ -z "$SSHPASS" ]; then
-            echo "::error::Задайте все три секрета: SSH_HOST, SSH_USER, SSH_PASSWORD"; exit 1
-          fi
-          # Защита: --delete стирает лишнее только внутри папки сайта.
-          case "$DEPLOY_PATH" in
-            *..*|/|"") echo "::error::Странный DEPLOY_PATH: $DEPLOY_PATH"; exit 1 ;;
-            *cybercomics.ru*) ;;
-            *) echo "::error::DEPLOY_PATH должен вести в папку cybercomics.ru"; exit 1 ;;
-          esac
-          sudo apt-get install -y -qq sshpass rsync >/dev/null
-          # Файлы подтверждения Вебмастера/Search Console и .well-known не трогаем.
-          rsync -az --delete --checksum \
-            --exclude 'yandex_*.html' --exclude 'google*.html' --exclude '.well-known/' --exclude 'cgi-bin/' \
-            -e "sshpass -e ssh -o StrictHostKeyChecking=accept-new" \
-            dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
-          echo "Готово: https://cybercomics.ru"
+          cd dist
+          echo "${GITHUB_SHA}" > VERSION
+          git init -q -b site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Сборка ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" site
+          echo "Сборка ${GITHUB_SHA::7} в ветке site. Хостинг заберёт её в течение 5 минут."
