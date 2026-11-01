@@ -13,8 +13,17 @@ RewriteRule ^ https://cybercomics.ru%{REQUEST_URI} [R=301,L]
 # www -> без www
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://cybercomics.ru%{REQUEST_URI} [R=301,L]
+# /index.html и /папка/index.html -> адрес со слешем (без дублей)
+RewriteCond %{THE_REQUEST} \s/+((?:[^\s?]*/)?)index\.html[\s?] [NC]
+RewriteRule ^ https://cybercomics.ru/%1 [R=301,L]
+# папка без слеша -> со слешем, сразу на https (одним прыжком)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^ https://cybercomics.ru%{REQUEST_URI}/ [R=301,L]
 # старая Лавка -> Барахолка
-RewriteRule ^lavka/?$ /baraholka/ [R=301,L]
+RewriteRule ^lavka/?$ https://cybercomics.ru/baraholka/ [R=301,L]
+# убранная страница «Родителям» -> главная
+RewriteRule ^roditelyam/?$ https://cybercomics.ru/ [R=301,L]
 
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript text/plain application/json image/svg+xml application/manifest+json
