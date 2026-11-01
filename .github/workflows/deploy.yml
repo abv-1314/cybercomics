@@ -49,7 +49,7 @@ jobs:
           CONTACT_EMAIL: cybercomics@yandex.ru
           METRIKA_ID: ${{ vars.METRIKA_ID }}
           YANDEX_VERIFICATION: ${{ vars.YANDEX_VERIFICATION || '1b6f3fc44339628b' }}
-          GOOGLE_VERIFICATION: ${{ vars.GOOGLE_VERIFICATION }}
+          GOOGLE_VERIFICATION: ${{ vars.GOOGLE_VERIFICATION || 'rNmx7jxp-bci2a4VwdZWNqMAG13CjLH7x67XNDkMXvE' }}
         run: |
           node src/build.js
           node src/prerender.js
