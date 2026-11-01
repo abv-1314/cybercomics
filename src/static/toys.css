@@ -99,3 +99,8 @@ article:has(> .toy-host[data-toy="ix"]){max-width:900px !important}
 /* Фрагменты растягивают кадры на 100vw: при видимой полосе прокрутки (Windows) это даёт
    пару пикселей горизонтального скролла. clip, а не hidden, чтобы не ломать position:sticky. */
 html.ix-page,html.ix-page body{overflow-x:clip}
+
+/* Отклик на касание: без ожидания двойного тапа (зум) на кнопках, ссылках и полях. Прокрутка и щипок работают. */
+a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipulation}
+/* Бесконечные анимации вне экрана — на паузе (ставит src/static/js/toys.js, motion). */
+[data-rt-off],[data-rt-off] *,[data-rt-off] *::before,[data-rt-off] *::after{animation-play-state:paused !important}

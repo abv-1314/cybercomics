@@ -6,7 +6,7 @@
  * (например SITE_URL=https://твой-домен.ru). Каналы: TELEGRAM_URL (основной) и VK_URL (по желанию).
  * Подвал и данные: CONTACT_EMAIL (почта для связи), METRIKA_ID (номер счётчика Яндекс.Метрики;
  * без него Метрики и окна про cookie нет), OPERATOR (кто оператор данных в политике; без него
- * «владелец сайта» и домен). Тексты страниц /privacy/, /soglasie/, /roditelyam/ — src/legal/*.html.
+ * «владелец сайта» и домен). Тексты страниц /privacy/, /soglasie/ — src/legal/*.html.
  * Не задан ни один канал — на главной вместо кнопки неактивная плашка «Канал скоро». */
 "use strict";
 const fs = require("fs");
@@ -304,6 +304,26 @@ NAMES.forEach((n) => {
   comps += "DC.define(" + JSON.stringify(n) + ", " + JSON.stringify(P[n].template) + ", (function () {\n" + P[n].logic + "\nreturn Component;\n})());\n";
 });
 write("assets/js/components.js", comps);
+// Каждой странице — только её компоненты (и вложенные через dc-import), а не все восемь (~490 КБ).
+// Замер 01.11 (Pixel 7, CPU ×4): разбор и компиляция всего components.js держали главный поток
+// до первого рабочего нажатия; на главной нужен ~120 КБ из 490. Shop нужен методичкам (window.CCShop).
+const DEPS = { Manual: ["Shop"] };
+function compDeps(name, seen) {
+  seen = seen || [];
+  if (seen.indexOf(name) !== -1) return seen;
+  (DEPS[name] || []).concat((P[name].template.match(/<dc-import name="([A-Za-z]+)"/g) || []).map((m) => m.slice(17, -1)))
+    .forEach((d) => { if (P[d]) compDeps(d, seen); });
+  seen.push(name);
+  return seen;
+}
+const COMP_FILE = {};
+NAMES.forEach((n) => {
+  if (n === "Slide" || n === "VillainArt") return;
+  let js = "/* Сгенерировано src/build.js из макета: компоненты страницы " + n + ". Не редактировать вручную. */\n";
+  compDeps(n).forEach((c) => { js += "DC.define(" + JSON.stringify(c) + ", " + JSON.stringify(P[c].template) + ", (function () {\n" + P[c].logic + "\nreturn Component;\n})());\n"; });
+  COMP_FILE[n] = "assets/js/components-" + n.toLowerCase() + ".js";
+  write(COMP_FILE[n], js);
+});
 write("assets/js/dc.js", read("runtime/dc.js"));
 // Иконки, которые браузеры и Яндекс ищут в корне сайта.
 ["favicon.ico", "apple-touch-icon.png"].forEach((f) => { if (fs.existsSync(path.join(SRC, "static", f))) fs.copyFileSync(path.join(SRC, "static", f), path.join(DIST, f)); });
@@ -329,6 +349,13 @@ const SCROLL_TOP = "<script>(function(){try{if('scrollRestoration' in history)hi
   "function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}" +
   "top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});" +
   "window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>";
+// Нажатия до запуска скриптов: страница приходит уже нарисованной, кнопки видны раньше, чем загрузится JS.
+// Запоминаем последнее нажатие на кнопку в #app (путь в дереве и текст); src/static/js/toys.js (replayTaps)
+// повторит его, когда обработчики будут готовы. Ссылки не трогаем — они работают и без JS.
+const EARLY_TAPS = "<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;" +
+  "var b=e.target&&e.target.closest&&e.target.closest('button,[role=\\'button\\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;" +
+  "var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));" +
+  "q.push({p:p,t:(b.textContent||'').replace(/\\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>";
 const pages = [];
 // Версия файла в адресе (?v=<8 знаков хеша содержимого>): изменился файл — изменился адрес, поэтому nginx может
 // отдавать такие адреса с кешем на год (deploy/nginx.conf). В PREVIEW (file://) адрес без версии.
@@ -338,9 +365,9 @@ function asset(root, rel) {
   if (!(rel in VER)) { try { VER[rel] = require("crypto").createHash("sha256").update(fs.readFileSync(path.join(DIST, rel))).digest("hex").slice(0, 8); } catch (e) { VER[rel] = ""; } }
   return root + rel + (VER[rel] ? "?v=" + VER[rel] : "");
 }
-// Подвал (12+, связь, данные, «Родителям», перенос прогресса) и окно про cookie: src/runtime/legal.js.
+// Подвал (связь, данные, перенос прогресса) и окно про cookie: src/runtime/legal.js.
 function legalScripts(root, share) {
-  const cfg = { email: CONTACT_EMAIL, metrika: METRIKA_ID, privacy: root + href("privacy/"), soglasie: root + href("soglasie/"), parents: root + href("roditelyam/") };
+  const cfg = { email: CONTACT_EMAIL, metrika: METRIKA_ID, privacy: root + href("privacy/"), soglasie: root + href("soglasie/") };
   // Кнопка «Поделиться» (главная и выпуски): ссылка на страницу, текст для соцсетей.
   if (share) cfg.share = share;
   return "<script>window.CC_LEGAL=" + JSON.stringify(cfg) + ";</script>\n" + '<script src="' + root + 'assets/js/legal.js"></script>\n';
@@ -378,6 +405,7 @@ function page({ file, route, title, description, comp, props, image, jsonld, noi
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width,initial-scale=1">',
     SCROLL_TOP,
+    EARLY_TAPS,
     "<title>" + esc(title) + "</title>",
     '<meta name="description" content="' + esc(description) + '">',
     noindex ? '<meta name="robots" content="noindex">' : "",
@@ -410,10 +438,10 @@ function page({ file, route, title, description, comp, props, image, jsonld, noi
     "<script>window.CC_LINKS=" + JSON.stringify(HREFS) + ";window.CC_BLOBS=" + JSON.stringify(BLOBS) + ";window.CC_ANSWERS=" + JSON.stringify(ANSWERS) + ";</script>\n" +
     '<script src="' + asset(root, "assets/js/dc.js") + '"></script>\n' +
     '<script src="' + asset(root, "assets/js/cc.js") + '"></script>\n' +
-    '<script src="' + asset(root, "assets/js/components.js") + '"></script>\n' +
+    '<script src="' + asset(root, COMP_FILE[comp] || "assets/js/components.js") + '"></script>\n' +
     '<script src="' + asset(root, "assets/js/toys.js") + '"></script>\n' +
     legalScripts(root, comp === "IssueReader" || comp === "Main" ? { url: url, text: comp === "Main" ? "Кибербезопасность в комиксах простыми словами" : title.replace(/ — CyberComics.*$/, "") } : null) +
-    "<script>DC.mount(" + JSON.stringify(comp) + ", document.getElementById(\"app\"), " + JSON.stringify(props || {}) + ");CCToys.mountAll();CCLegal.start();</script>";
+    "<script>DC.mount(" + JSON.stringify(comp) + ", document.getElementById(\"app\"), " + JSON.stringify(props || {}) + ");CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>";
   write(file, "<!doctype html>\n<html lang=\"ru\"" + (frag ? ' class="ix-page"' : "") + ">\n<head>\n" + head + "\n</head>\n<body>\n" + body + "\n</body>\n</html>\n");
   pages.push({ file, route, noindex });
 }
@@ -464,7 +492,7 @@ fs.rmSync(path.join(DIST, "lavka"), { recursive: true, force: true });
 page({ file: "arkada/index.html", route: "arkada/", comp: "Arcade",
   title: "Разминка — кроссворды и игры — CyberComics", description: "Разминка CyberComics: кроссворды и мини-игры по темам выпусков про кибербезопасность. За игры начисляются биты." });
 
-// ---------- Данные, согласие, «Родителям» ----------
+// ---------- Данные и согласие ----------
 // Простые страницы без компонентов: текст из src/legal/*.html, подстановки {{...}} из переменных сборки.
 {
   const domain = SITE_URL ? SITE_URL.replace(/^https?:\/\//, "") : "CyberComics";
@@ -500,7 +528,6 @@ page({ file: "arkada/index.html", route: "arkada/", comp: "Arcade",
   ["privacy", "soglasie", "roditelyam"].forEach((r) => fs.rmSync(path.join(DIST, r), { recursive: true, force: true }));
   legalPage("privacy/", METRIKA_ID ? "Политика обработки персональных данных" : "Данные и приватность", METRIKA_ID ? "privacy-metrika" : "privacy-basic");
   if (METRIKA_ID) legalPage("soglasie/", "Согласие на статистику посещений", "soglasie");
-  legalPage("roditelyam/", "Родителям", "roditelyam");
 }
 
 // 404: пути от корня сайта (/assets/…), потому что страница показывается по любому адресу. noindex ставит seo.js.

@@ -26,50 +26,53 @@ a{color:#141414}a:hover{color:#c81e1e}
 .cc-lit{animation:cc-glow 4s ease-in-out infinite}
 .cc-pulse{animation:cc-pulse 2.4s ease-in-out infinite}
 .cc-d{transition:transform .2s, filter .2s}
-.cc-d:hover{transform:translateY(-4px)}
+@media (hover: hover){.cc-d:hover{transform:translateY(-4px)}}
 /* Маршрут хакера: дома стоят на bottom:230px (дорога 216 + 14), крыши = 230 + высота дома. Сдвинете город — сдвиньте и эти точки. */
+/* Маршрут — через transform (left/bottom → translate от точки left:880px; bottom:230px): так анимация идёт
+   в потоке композитора, без перерасчёта раскладки и перерисовки каждый кадр (замер 01.11: на ноутбуке с
+   замедлением CPU ×4 главный поток был занят ~90% времени, пока хакер бегал). */
 @keyframes cc-route{
-0%{left:1062px;bottom:230px;opacity:0;transform:scale(.6)}
-2.38%{left:1040px;bottom:230px;opacity:1;transform:scale(1)}
-8.1%{left:880px;bottom:230px}
-9.29%{left:858px;bottom:500px}
-10.48%{left:830px;bottom:450px}
-14.52%{left:712px;bottom:450px}
-15.71%{left:660px;bottom:535px}
-16.9%{left:600px;bottom:480px}
-19.52%{left:545px;bottom:480px}
-20.71%{left:525px;bottom:660px}
-21.9%{left:500px;bottom:610px}
-24.29%{left:490px;bottom:610px}
-26%{left:490px;bottom:610px}
-27%{left:490px;bottom:610px}
-28%{left:490px;bottom:610px}
-39.05%{left:490px;bottom:610px}
-40.5%{left:490px;bottom:610px}
-42%{left:500px;bottom:610px}
-45.71%{left:470px;bottom:610px;opacity:1;transform:scale(1)}
-47.38%{left:455px;bottom:560px;opacity:1;transform:scale(.8)}
-48.81%{left:455px;bottom:550px;opacity:0;transform:scale(.2)}
-54.29%{left:375px;bottom:520px;opacity:0;transform:scale(.2)}
-55.71%{left:375px;bottom:520px;opacity:1;transform:scale(1)}
-58.1%{left:340px;bottom:520px}
-59.76%{left:305px;bottom:570px}
-61.43%{left:282px;bottom:230px}
-62.62%{left:256px;bottom:460px}
-63.81%{left:225px;bottom:400px}
-68.1%{left:110px;bottom:400px}
-69.29%{left:80px;bottom:520px}
-70.48%{left:66px;bottom:490px}
-72.86%{left:66px;bottom:490px}
-74.05%{left:30px;bottom:530px}
-75.24%{left:14px;bottom:230px}
-76.9%{left:24px;bottom:170px}
-78.57%{left:36px;bottom:111px}
-93.81%{left:990px;bottom:111px}
-95.48%{left:1010px;bottom:170px}
-97.14%{left:1030px;bottom:230px;opacity:1;transform:scale(1)}
-99.05%{left:1060px;bottom:230px;opacity:0;transform:scale(.6)}
-100%{left:1062px;bottom:230px;opacity:0;transform:scale(.6)}
+0%{opacity:0;transform:translate(182px,0px) scale(0.6)}
+2.38%{opacity:1;transform:translate(160px,0px) scale(1)}
+8.1%{transform:translate(0px,0px) scale(1)}
+9.29%{transform:translate(-22px,-270px) scale(1)}
+10.48%{transform:translate(-50px,-220px) scale(1)}
+14.52%{transform:translate(-168px,-220px) scale(1)}
+15.71%{transform:translate(-220px,-305px) scale(1)}
+16.9%{transform:translate(-280px,-250px) scale(1)}
+19.52%{transform:translate(-335px,-250px) scale(1)}
+20.71%{transform:translate(-355px,-430px) scale(1)}
+21.9%{transform:translate(-380px,-380px) scale(1)}
+24.29%{transform:translate(-390px,-380px) scale(1)}
+26%{transform:translate(-390px,-380px) scale(1)}
+27%{transform:translate(-390px,-380px) scale(1)}
+28%{transform:translate(-390px,-380px) scale(1)}
+39.05%{transform:translate(-390px,-380px) scale(1)}
+40.5%{transform:translate(-390px,-380px) scale(1)}
+42%{transform:translate(-380px,-380px) scale(1)}
+45.71%{opacity:1;transform:translate(-410px,-380px) scale(1)}
+47.38%{opacity:1;transform:translate(-425px,-330px) scale(0.8)}
+48.81%{opacity:0;transform:translate(-425px,-320px) scale(0.2)}
+54.29%{opacity:0;transform:translate(-505px,-290px) scale(0.2)}
+55.71%{opacity:1;transform:translate(-505px,-290px) scale(1)}
+58.1%{transform:translate(-540px,-290px) scale(1)}
+59.76%{transform:translate(-575px,-340px) scale(1)}
+61.43%{transform:translate(-598px,0px) scale(1)}
+62.62%{transform:translate(-624px,-230px) scale(1)}
+63.81%{transform:translate(-655px,-170px) scale(1)}
+68.1%{transform:translate(-770px,-170px) scale(1)}
+69.29%{transform:translate(-800px,-290px) scale(1)}
+70.48%{transform:translate(-814px,-260px) scale(1)}
+72.86%{transform:translate(-814px,-260px) scale(1)}
+74.05%{transform:translate(-850px,-300px) scale(1)}
+75.24%{transform:translate(-866px,0px) scale(1)}
+76.9%{transform:translate(-856px,60px) scale(1)}
+78.57%{transform:translate(-844px,119px) scale(1)}
+93.81%{transform:translate(110px,119px) scale(1)}
+95.48%{transform:translate(130px,60px) scale(1)}
+97.14%{opacity:1;transform:translate(150px,0px) scale(1)}
+99.05%{opacity:0;transform:translate(180px,0px) scale(0.6)}
+100%{opacity:0;transform:translate(182px,0px) scale(0.6)}
 }
 @keyframes cc-face{
 0%,25.9%{transform:scaleX(-1)}
@@ -140,7 +143,7 @@ a{color:#141414}a:hover{color:#c81e1e}
 .cc-turnN{animation:cc-turnN .6s cubic-bezier(.2,.8,.3,1.12) both;transform-origin:0% 50%}
 .cc-turnP{animation:cc-turnP .6s cubic-bezier(.2,.8,.3,1.12) both;transform-origin:100% 50%}
 .cc-flipbtn{cursor:pointer;width:48px;height:48px;font-size:20px;background:#ffffff;color:#141414;border:3px solid #141414;box-shadow:4px 4px 0 #141414;transition:transform .1s, box-shadow .1s}
-.cc-flipbtn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #141414}
+@media (hover: hover){.cc-flipbtn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #141414}}
 .cc-flipbtn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #141414}
 @media (prefers-reduced-motion: reduce){.cc-turnN,.cc-turnP{animation:none}}
 .cc-h1{padding-right:110px;font-size:46px}
@@ -178,6 +181,8 @@ a{color:#141414}a:hover{color:#c81e1e}
 @media (max-width: 600px){.cc-hide-sm{display:none !important}}
 /* Карта на телефоне: город лентой (листай вбок), небо урезано, фундамент — списком шагов ниже. */
 .cc-map-swipe{display:none}
+/* Карта вне экрана не рисуется и не считается (у неё заданы ширина и высота, поэтому размер страницы не меняется). */
+.cc-map{content-visibility:auto}
 .cc-sign-r{left:auto !important;right:18px;transform:none !important}
 @media (max-width: 560px){
 .cc-map-scroll{padding:0 !important;margin:0 16px !important;border:3px solid #141414;overscroll-behavior-x:contain;scrollbar-width:thin}

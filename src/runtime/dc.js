@@ -74,10 +74,44 @@
   }
 
   // ---------- шаблон → виртуальные узлы ----------
-  const EVENTS = { onclick: "click", oninput: "input", onpointerenter: "pointerenter", onpointerleave: "pointerleave", ontouchmove: "touchmove", onchange: "change", onkeydown: "keydown" };
+  const EVENTS = { onclick: "click", oninput: "input", onpointerenter: "pointerenter", onpointerleave: "pointerleave", ontouchmove: "touchmove", onchange: "change", onkeydown: "keydown", onfocus: "focus" };
   const BOOL = { disabled: 1, checked: 1, hidden: 1 };
 
+  // Статичный узел шаблона: без {{…}}, событий, sc-for/sc-if/dc-import внутри и без полей ввода.
+  // Его описание строится один раз и переиспользуется; при обновлении такой узел страницы, уже
+  // сверенный с этим описанием, не обходится заново. Замер 01.11 (Pixel 7, CPU ×4): нажатие на главной
+  // заново строило и сверяло все ~900 элементов страницы — 120–150 мс скрипта на каждое нажатие.
+  const DYN_TAGS = { "sc-for": 1, "sc-if": 1, "dc-import": 1, input: 1, textarea: 1, select: 1 };
+  function isStatic(node) {
+    if (node._st !== undefined) return node._st;
+    let st = true;
+    if (node.nodeType === 3) st = node.nodeValue.indexOf("{{") === -1;
+    else if (node.nodeType === 1) {
+      const tag = node.tagName.toLowerCase();
+      if (DYN_TAGS[tag]) st = false;
+      else {
+        for (let a = 0; a < node.attributes.length && st; a++) {
+          const at = node.attributes[a];
+          if (EVENTS[at.name.toLowerCase()] || at.value.indexOf("{{") !== -1) st = false;
+        }
+        const kids = tag === "template" ? node.content.childNodes : node.childNodes;
+        for (let k = 0; k < kids.length && st; k++) st = isStatic(kids[k]);
+      }
+    }
+    node._st = st;
+    return st;
+  }
+
   function build(node, scope, out) {
+    if (node.nodeType === 1 && isStatic(node)) {
+      if (!node._vn) { const o = []; buildNode(node, [], o); node._vn = o[0]; if (node._vn) node._vn.st = true; }
+      if (node._vn) out.push(node._vn);
+      return;
+    }
+    buildNode(node, scope, out);
+  }
+
+  function buildNode(node, scope, out) {
     if (node.nodeType === 3) {
       const t = interp(node.nodeValue, scope);
       out.push({ text: t === undefined || t === null || t === false ? "" : String(t) });
@@ -128,6 +162,7 @@
   }
 
   // ---------- обновление настоящего DOM ----------
+  const PASSIVE = { touchmove: 1, touchstart: 1 };
   function setEvents(el, on) {
     if (!el._h) el._h = {};
     Object.keys(el._h).forEach((k) => { if (!on[k]) { el.removeEventListener(k, el._h[k].fn); delete el._h[k]; } });
@@ -135,7 +170,8 @@
       if (!el._h[k]) {
         const rec = { cur: on[k], fn: (e) => rec.cur(e) };
         el._h[k] = rec;
-        el.addEventListener(k, rec.fn);
+        // touchmove/touchstart без preventDefault: пассивный обработчик не задерживает прокрутку пальцем.
+        el.addEventListener(k, rec.fn, PASSIVE[k] ? { passive: true } : false);
       } else el._h[k].cur = on[k];
     });
   }
@@ -145,12 +181,14 @@
     if (v.comp) return mountComp(v);
     const el = v.ns && v.ns !== "http://www.w3.org/1999/xhtml" ? document.createElementNS(v.ns, v.tag) : document.createElement(v.tag);
     patchEl(el, v);
+    if (v.st) el._vn = v;
     return el;
   }
 
   function patchEl(el, v) {
     const want = v.attrs;
-    Array.from(el.attributes).forEach((a) => { if (!(a.name in want)) el.removeAttribute(a.name); });
+    // data-rt-*: служебные пометки скриптов страницы (например, «анимации на паузе вне экрана»), их не снимаем.
+    Array.from(el.attributes).forEach((a) => { if (!(a.name in want) && a.name.indexOf("data-rt-") !== 0) el.removeAttribute(a.name); });
     Object.keys(want).forEach((k) => { if (el.getAttribute(k) !== want[k]) el.setAttribute(k, want[k]); });
     if (v.tag === "input" || v.tag === "textarea") {
       const val = want.value === undefined ? "" : want.value;
@@ -176,15 +214,40 @@
       if (k.text !== undefined && vs.length && vs[vs.length - 1].text !== undefined) vs[vs.length - 1] = { text: vs[vs.length - 1].text + k.text };
       else vs.push(k);
     });
-    const doms = Array.from(el.childNodes).filter((n) => n.nodeType === 1 || n.nodeType === 3);
+    // Блоки, которые вставил не движок (подвал и «Поделиться» из legal.js), не трогаем.
+    const doms = Array.from(el.childNodes).filter((n) => n.nodeType === 3 || (n.nodeType === 1 && !foreign(n)));
     Array.from(el.childNodes).forEach((n) => { if (n.nodeType !== 1 && n.nodeType !== 3) el.removeChild(n); });
-    let i = 0;
+    // Узлы сопоставляются по порядку. Если на месте нет точного совпадения (тег + id + class),
+    // ищем его на несколько шагов вперёд: блок появился (sc-if, sc-for) — вставляем, исчез — убираем.
+    // Без этого открытие «Входа» вверху главной сдвигало все секции на одну позицию и движок
+    // переписывал всю страницу (замер 01.11: ~120 изменений DOM на одно нажатие вместо одной вставки).
+    const AHEAD = 8;
+    let i = 0, j = 0;
     for (; i < vs.length; i++) {
-      const v = vs[i], d = doms[i];
+      const v = vs[i];
+      let d = doms[j];
+      if (d && !exact(d, v) && (d.nodeType === 1 || v.text === undefined)) {
+        let ins = 0, del = 0;
+        if (d.nodeType === 1) for (let k = 1; k <= AHEAD && i + k < vs.length; k++) if (exact(d, vs[i + k])) { ins = k; break; }
+        if (v.text === undefined) for (let k = 1; k <= AHEAD && j + k < doms.length; k++) if (exact(doms[j + k], v)) { del = k; break; }
+        if (ins && (!del || ins <= del)) {
+          // перед d появились ins новых узлов
+          for (let t = 0; t < ins; t++) el.insertBefore(create(vs[i + t]), d);
+          i += ins - 1;
+          continue;
+        }
+        if (del) {
+          // del старых узлов исчезли
+          for (let t = 0; t < del; t++) { unmount(doms[j + t]); el.removeChild(doms[j + t]); }
+          j += del;
+          d = doms[j];
+        }
+      }
+      j++;
       if (d && same(d, v)) {
         if (v.text !== undefined) { if (d.nodeValue !== v.text) d.nodeValue = v.text; }
         else if (v.comp) { d._comp.inst.props = v.props; update(d._comp.inst); }
-        else patchEl(d, v);
+        else if (!(v.st && d._vn === v)) { patchEl(d, v); if (v.st) d._vn = v; }
       } else if (v.comp && d && d.nodeType === 1 && !d._comp && d.tagName === "DC-IMPORT" && d.getAttribute("name") === v.comp) {
         // Вложенный компонент из заранее отрисованной разметки: оживляем на месте, а не пересоздаём.
         // Иначе картинки и текст первого экрана рисуются второй раз (LCP сдвигается на момент запуска JS).
@@ -195,7 +258,17 @@
         if (d) unmount(d);
       }
     }
-    for (; i < doms.length; i++) { unmount(doms[i]); el.removeChild(doms[i]); }
+    for (; j < doms.length; j++) { unmount(doms[j]); el.removeChild(doms[j]); }
+  }
+
+  function foreign(n) { return n.hasAttribute("data-ccs") || n.hasAttribute("data-ccl"); }
+
+  // Точное совпадение узла и описания: тот же тег и те же id и class (для компонента — то же имя).
+  function exact(d, v) {
+    if (v.comp) return same(d, v) || (d.nodeType === 1 && !d._comp && d.tagName === "DC-IMPORT" && d.getAttribute("name") === v.comp);
+    if (!same(d, v)) return false;
+    if (v.text !== undefined) return true;
+    return (d.getAttribute("id") || "") === (v.attrs.id || "") && (d.getAttribute("class") || "") === (v.attrs.class || "");
   }
 
   function unmount(d) {

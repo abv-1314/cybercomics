@@ -984,7 +984,10 @@ if(RM){
   });
   ['wheel','touchstart'].forEach(function(ev){W0.addEventListener(ev,stopPlay,{passive:true})});
   W0.addEventListener('keydown',function(e){if(playing&&!(e.target===act&&(e.key==='Enter'||e.key===' ')))stopPlay();});
-  W0.addEventListener('scroll',function(){if(!playing)syncDock();else{var p=trackP(),i=beatAt(p),a=i>0?BEATS[i-1][0]:0,ee=i<BEATS.length?BEATS[i][0]:1;act.style.setProperty('--f',clamp((p-a)/Math.max(.001,ee-a)).toFixed(3));}},{passive:true});
+  /* Док пересчитывается только пока плёнка рядом с экраном: раньше обработчик читал getBoundingClientRect
+     и писал стиль на каждое событие scroll по всей странице. */
+  var dockNear=true;if('IntersectionObserver' in window)new IntersectionObserver(function(en){dockNear=en[0].isIntersecting;if(!dockNear&&!playing)syncDock();},{rootMargin:'200px 0px'}).observe(track);
+  W0.addEventListener('scroll',function(){if(!dockNear&&!playing)return;if(!playing)syncDock();else{var p=trackP(),i=beatAt(p),a=i>0?BEATS[i-1][0]:0,ee=i<BEATS.length?BEATS[i][0]:1;act.style.setProperty('--f',clamp((p-a)/Math.max(.001,ee-a)).toFixed(3));}},{passive:true});
   syncDock();
 }
 

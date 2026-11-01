@@ -80,7 +80,7 @@ const ISSUE_SEO = {
 // kind: "manual" — методичка или шпаргалка Барахолки (LearningResource), parent — адрес родителя в крошках.
 const PAGE_SEO = {
   "": { name: "Главная", t: "Кибербезопасность для начинающих в комиксах — CyberComics",
-    d: "Кибербезопасность простыми словами для подростков и новичков: комиксы про сети, OWASP Top 10, XSS, SQL-инъекции и JWT. Квизы и вопросы с собеседований." },
+    d: "Кибербезопасность простыми словами для начинающих: комиксы про сети, OWASP Top 10, XSS, SQL-инъекции и JWT. Квизы и вопросы с собеседований." },
   "povtorenie/": { name: "Прокачаться", t: "Прокачаться: вопросы по кибербезопасности — CyberComics",
     d: "Прокачайся после выпусков CyberComics: вопросы из квизов по сетям, вебу и OWASP возвращаются, пока не запомнятся. Прогресс хранится в браузере." },
   "arkada/": { name: "Разминка", index: true, t: "Разминка: кроссворды и игры про IT — CyberComics",
@@ -103,11 +103,11 @@ const PAGE_SEO = {
     t: "Команды Linux для начинающих: шпаргалка — CyberComics",
     d: "Шпаргалка по командам Linux на каждый день: файлы, поиск, права, процессы, диск и сеть, с объяснением каждого флага." }
 };
-// Кому адресованы материалы (schema.org audience): подростки 12+ и новички.
-const AUDIENCE = { "@type": "EducationalAudience", educationalRole: "student", audienceType: "подростки 12+ и начинающие в IT" };
+// Кому адресованы материалы (schema.org audience): взрослые, студенты и новички.
+const AUDIENCE = { "@type": "EducationalAudience", educationalRole: "student", audienceType: "студенты и начинающие в IT" };
 // Подтверждение прав в Яндекс.Вебмастере и Google Search Console (мета-тег на главной): только буквы, цифры, «_» и «-».
 const verif = (v) => (/^[A-Za-z0-9_-]{8,100}$/.test(v || "") ? v : "");
-const SITE_DESC = "Интерактивные комиксы про кибербезопасность на русском для подростков и новичков: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.";
+const SITE_DESC = "Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.";
 
 // ---------- Вспомогательное ----------
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -310,7 +310,7 @@ function processPage(pg, ctx) {
       "@type": "LearningResource", "@id": url + "#resource", url, mainEntityOfPage: url, name: cfgPage.name, description: desc,
       inLanguage: "ru", dateModified: day(lastmod), author: { "@id": org["@id"] }, publisher: { "@id": org["@id"] }, isPartOf: { "@id": site["@id"] },
       learningResourceType: /шпаргалка/i.test(cfgPage.name) ? "шпаргалка" : "методичка", about: { "@type": "Thing", name: cfgPage.about },
-      educationalLevel: "начальный", typicalAgeRange: "12-", audience: AUDIENCE, image: [ogAbs] });
+      educationalLevel: "начальный", audience: AUDIENCE, image: [ogAbs] });
     graph.push(crumbList(chain));
   }
   else if (d && slug) {
@@ -323,7 +323,7 @@ function processPage(pg, ctx) {
       learningResourceType: "интерактивный комикс", educationalLevel: LEVEL[d.diff] || undefined,
       timeRequired: d.minutes ? "PT" + d.minutes + "M" : undefined, teaches: d.learn,
       about: { "@type": "Thing", name: cfg.topic || cfg.term || plain(d.title).split(":")[0] },
-      typicalAgeRange: "12-", audience: AUDIENCE
+      audience: AUDIENCE
     };
     const crumbs = { "@type": "BreadcrumbList", "@id": url + "#breadcrumbs", itemListElement: [
       { "@type": "ListItem", position: 1, name: BRAND, item: ctx.base + "/" },

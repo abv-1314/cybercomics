@@ -173,5 +173,82 @@
       TOYS[name](el);
     });
   }
-  window.CCToys = { mountAll: mountAll };
+  // ---------- бесконечные анимации вне экрана — на паузу ----------
+  // Звёзды, дым, гирлянды, пульсирующие кнопки выпусков крутятся бесконечно. Часть из них (box-shadow,
+  // clip-path, left/bottom) браузер считает в главном потоке каждый кадр, даже когда их не видно, —
+  // и нажатия ждут своей очереди. Здесь у каждой такой анимации ищется неподвижный «контейнер»
+  // (родитель самого верхнего анимированного предка, чтобы связанные сценки вставали на паузу вместе),
+  // и пока контейнер далеко от экрана, на нём стоит data-rt-off (правило в toys.css ставит паузу).
+  // Вернулся к экрану — анимация продолжается с того же места. Движок data-rt-* не снимает.
+  var motion = (function () {
+    if (!("IntersectionObserver" in window) || !document.getAnimations) return { scan: function () {} };
+    var seen = typeof WeakSet === "function" ? new WeakSet() : null;
+    var done = seen ? new WeakSet() : null; // элементы, для которых контейнер уже найден
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var z = e.target;
+        if (!z.isConnected) { io.unobserve(z); return; }
+        if (e.isIntersecting) z.removeAttribute("data-rt-off"); else z.setAttribute("data-rt-off", "");
+      });
+    }, { rootMargin: "200px 0px" });
+    var cache = null; // на время одного прохода: элемент → анимирован ли он сам
+    function moving(el) {
+      if (cache && cache.has(el)) return cache.get(el);
+      var m = false;
+      try { m = el.getAnimations().some(function (a) { return a.playState === "running"; }); } catch (e) { m = false; }
+      if (cache) cache.set(el, m);
+      return m;
+    }
+    function zoneFor(t) {
+      var top = t;
+      for (var el = t.parentElement; el && el !== document.body; el = el.parentElement) if (moving(el)) top = el;
+      var z = top.parentElement;
+      while (z && z !== document.body && getComputedStyle(z).display === "contents") z = z.parentElement;
+      return z && z !== document.body && z !== document.documentElement ? z : null;
+    }
+    function add(t) {
+      if (!t || t.nodeType !== 1 || !seen) return;
+      var z = zoneFor(t);
+      if (!z || seen.has(z)) return;
+      seen.add(z);
+      io.observe(z);
+    }
+    function infinite(a) { try { return a.effect && a.effect.getTiming().iterations === Infinity; } catch (e) { return false; } }
+    function scan() {
+      cache = typeof Map === "function" ? new Map() : null;
+      document.getAnimations().forEach(function (a) {
+        var t = a.effect && a.effect.target;
+        if (!t || (done && done.has(t)) || !infinite(a)) return;
+        if (done) done.add(t);
+        add(t);
+      });
+      cache = null;
+    }
+    // Новые анимации (после нажатий, при смене экрана игры): по animationstart один общий проход чуть позже,
+    // а не обход предков на каждое событие (звёзды карты стартуют пачкой по 30 штук).
+    var later = 0;
+    document.addEventListener("animationstart", function () {
+      if (!later) later = setTimeout(function () { later = 0; scan(); }, 300);
+    }, true);
+    return { scan: scan };
+  })();
+
+  // ---------- нажатия до запуска скриптов ----------
+  // Страница приходит уже нарисованной, и кнопки видны раньше, чем загрузится JS. Ранний скрипт в <head>
+  // (src/build.js, EARLY_TAPS) запоминает последнее нажатие на кнопку в #app; здесь, когда обработчики
+  // готовы, оно повторяется на той же кнопке (по пути в дереве и тексту), а не теряется.
+  function replayTaps() {
+    var q = window.__ccTapQ;
+    window.__ccLive = true;
+    if (!q || !q.length) return;
+    var last = q[q.length - 1];
+    q.length = 0;
+    var app = document.getElementById("app"), el = app;
+    for (var i = 0; el && i < last.p.length; i++) el = el.children[last.p[i]];
+    if (!el || el === app || !el.isConnected) return;
+    if ((el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40) !== last.t) return;
+    el.click();
+  }
+
+  window.CCToys = { mountAll: function () { mountAll(); motion.scan(); }, replayTaps: replayTaps };
 })();

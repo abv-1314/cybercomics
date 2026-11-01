@@ -66,7 +66,7 @@ a{color:#141414}a:hover{color:#c81e1e}
 .cw-grid{display:grid;gap:3px;width:100%}
 .cw-x{aspect-ratio:1/1}
 .cw-c{position:relative;aspect-ratio:1/1}
-.cw-in{display:block;width:100%;height:100%;box-sizing:border-box;margin:0;padding:0;text-align:center;font-family:'Russo One',sans-serif;font-size:clamp(13px,2vw,21px);text-transform:uppercase;color:#141414;background:#ffffff;border:2px solid #141414;border-radius:0;caret-color:transparent;cursor:pointer;transition:background .15s}
+.cw-in{display:block;width:100%;height:100%;box-sizing:border-box;margin:0;padding:0;text-align:center;font-family:'Russo One',sans-serif;font-size:clamp(16px,2vw,21px);text-transform:uppercase;color:#141414;background:#ffffff;border:2px solid #141414;border-radius:0;caret-color:transparent;cursor:pointer;transition:background .15s}
 .cw-in.act{background:#fff1a8}
 .cw-in.sel{background:#ffd60a}
 .cw-in.ok{background:#bff5d6}
@@ -234,7 +234,7 @@ a{color:#141414}a:hover{color:#c81e1e}
                 <sc-if value="{{x.blk}}" hint-placeholder-val="{{true}}"><span class="cw-x"></span></sc-if>
                 <sc-if value="{{x.cell}}" hint-placeholder-val="{{false}}">
                   <span class="cw-c">
-                    <input class="{{x.cls}}" id="{{x.id}}" value="{{x.val}}" aria-label="{{x.aria}}" autocomplete="off" autocapitalize="characters" spellcheck="false" onChange="{{x.change}}" onKeyDown="{{x.key}}" onFocus="{{x.focus}}" onClick="{{x.click}}">
+                    <input class="{{x.cls}}" id="{{x.id}}" value="{{x.val}}" aria-label="{{x.aria}}" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="2" onInput="{{x.change}}" onKeyDown="{{x.key}}" onFocus="{{x.focus}}" onClick="{{x.click}}">
                     <sc-if value="{{x.hasNum}}" hint-placeholder-val="{{false}}"><span class="cw-n">{{x.num}}</span></sc-if>
                   </span>
                 </sc-if>
@@ -605,6 +605,12 @@ class Component extends DCLogic {
     this.setState(n);
     if (mode === 'cw') { const P = D.CW.find((p) => p.id === arg); this.focusCell(this.firstEmpty(P.words[0], arg)); }
     if (mode === 'wd') setTimeout(() => { const el = document.querySelector('.wd-wrap'); if (el) el.focus(); }, 30);
+    // Игра заменяет список на месте: без прокрутки её начало оставалось выше экрана (кнопку «Играть» жмут внизу списка).
+    if (typeof window !== 'undefined' && window.requestAnimationFrame) requestAnimationFrame(() => {
+      const b = document.querySelector('main .ac-back');
+      const t = b ? b.getBoundingClientRect().top : 0;
+      if (b && (t < 0 || t > window.innerHeight * 0.6)) b.scrollIntoView({ block: 'start' });
+    });
   }
 
   /* ---------- кроссворды ---------- */
@@ -687,7 +693,9 @@ class Component extends DCLogic {
         blk: false, cell: true, id: 'cw-' + k, val, num: numAt[k] || '', hasNum: !!numAt[k],
         aria: 'Клетка, строка ' + (r + 1) + ', столбец ' + (c + 1),
         cls: 'cw-in' + (k === st.sel ? ' sel' : curSet.indexOf(k) >= 0 ? ' act' : '') + (bad ? ' bad' : okCells[k] && k !== st.sel ? ' ok' : ''),
-        change: (e) => this.cwType(k, e && e.target ? e.target.value : ''),
+        // На каждый ввод (input), а не на уход из клетки (change): на телефоне иначе все буквы оказывались в одной клетке.
+        // Поле в фокусе движок не перезаписывает, поэтому значение клетки выставляем сами.
+        change: (e) => { const t = e && e.target; this.cwType(k, t ? t.value : ''); if (t) { const v = this.vals()[k] || ''; if (t.value !== v) t.value = v; } },
         key: (e) => this.cwKey(k, e), focus: () => this.cwFocus(k), click: () => this.cwClick(k)
       });
     }

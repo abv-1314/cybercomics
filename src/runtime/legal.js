@@ -1,6 +1,6 @@
-/* CyberComics — подвал (связь, 12+, ссылки на данные), окно про cookie с Яндекс.Метрикой
+/* CyberComics — подвал (связь, ссылки на данные), окно про cookie с Яндекс.Метрикой
  * и перенос прогресса на другое устройство без регистрации.
- * Настройки приходят из сборки: window.CC_LEGAL = { email, metrika, privacy, soglasie, parents }.
+ * Настройки приходят из сборки: window.CC_LEGAL = { email, metrika, privacy, soglasie }.
  *
  * Метрика: без METRIKA_ID при сборке её нет совсем. С ним скрипт mc.yandex.ru
  * не загружается, пока читатель не нажал «Принять». Выбор лежит в 'cc-consent' =
@@ -36,7 +36,6 @@
   const CSS =
     ".ccl-foot{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 14px;font-size:16px}" +
     ".ccl-foot a,.ccl-foot button{font:inherit;color:#141414;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center}" +
-    ".ccl-age{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:30px;border:2px solid #141414;font-weight:700;font-family:'Russo One',Rubik,sans-serif}" +
     ".ccl-banner{position:fixed;left:12px;right:12px;bottom:12px;z-index:1000;max-width:640px;margin:0 auto;background:#fff;color:#141414;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:16px;font:17px/1.45 Rubik,system-ui,sans-serif;box-sizing:border-box}" +
     ".ccl-banner h2{margin:0 0 6px;font:20px/1.2 'Russo One',Rubik,sans-serif}" +
     ".ccl-banner p{margin:0 0 8px}" +
@@ -45,12 +44,12 @@
     ".ccl-btn{font:18px 'Russo One',Rubik,sans-serif;min-height:52px;padding:10px 14px;border:3px solid #141414;background:#ffd60a;color:#141414;cursor:pointer;box-sizing:border-box}" +
     ".ccl-btn:focus-visible,.ccl-foot a:focus-visible,.ccl-foot button:focus-visible{outline:3px solid #ff2e93;outline-offset:2px}" +
     ".ccl-long{display:none}@media (min-width:600px){.ccl-long{display:block}.ccl-short{display:none}}" +
-    ".ccl-dlg{border:3px solid #141414;box-shadow:8px 8px 0 #141414;padding:20px;max-width:min(560px,calc(100vw - 32px));width:100%;box-sizing:border-box;font:17px/1.45 Rubik,system-ui,sans-serif;color:#141414;background:#fff}" +
+    ".ccl-dlg{border:3px solid #141414;box-shadow:8px 8px 0 #141414;padding:20px;max-width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;width:100%;box-sizing:border-box;font:17px/1.45 Rubik,system-ui,sans-serif;color:#141414;background:#fff}" +
     ".ccl-dlg::backdrop{background:rgba(20,20,20,.55)}" +
     ".ccl-dlg h2{margin:0 0 8px;font:22px/1.2 'Russo One',Rubik,sans-serif}" +
     ".ccl-dlg h3{margin:16px 0 6px;font:18px/1.2 'Russo One',Rubik,sans-serif}" +
     ".ccl-dlg p{margin:0 0 8px}" +
-    ".ccl-dlg textarea{width:100%;min-height:96px;box-sizing:border-box;font:15px/1.4 ui-monospace,Menlo,Consolas,monospace;border:2px solid #141414;padding:8px;word-break:break-all}" +
+    ".ccl-dlg textarea{width:100%;min-height:96px;box-sizing:border-box;font:16px/1.4 ui-monospace,Menlo,Consolas,monospace;border:2px solid #141414;padding:8px;word-break:break-all}" +
     ".ccl-dlg .ccl-row{grid-template-columns:1fr}@media (min-width:480px){.ccl-dlg .ccl-row{grid-template-columns:1fr 1fr}}" +
     ".ccl-msg{min-height:1.4em;font-weight:700}" +
     ".ccl-share{max-width:1160px;margin:0 auto;padding:28px 16px 32px;box-sizing:border-box;text-align:center;font-family:Rubik,system-ui,sans-serif;color:#141414}" +
@@ -198,10 +197,8 @@
   // ---------- подвал ----------
   function footExtras() {
     const box = el("div", { class: "ccl-foot", "data-ccl": "1" });
-    box.appendChild(el("span", { class: "ccl-age", title: "Для читателей от 12 лет", text: "12+" }));
     if (CFG.email) box.appendChild(el("span", {}, ["Связь: ", el("a", { href: "mailto:" + CFG.email, text: CFG.email })]));
     box.appendChild(el("a", { href: CFG.privacy, text: CFG.metrika ? "Политика данных" : "Данные и приватность" }));
-    box.appendChild(el("a", { href: CFG.parents, text: "Родителям" }));
     const tr = el("button", { type: "button", text: "Перенести прогресс" });
     tr.addEventListener("click", openTransfer);
     box.appendChild(tr);
