@@ -17,6 +17,8 @@
 (function () {
   "use strict";
   const CFG = window.CC_LEGAL || {};
+  /* Статистика начинается не раньше даты из уведомления в Роскомнадзор (metrikaFrom, ГГГГ-ММ-ДД, по Москве). */
+  if (CFG.metrika && CFG.metrikaFrom && Date.now() < Date.parse(CFG.metrikaFrom + "T00:00:00+03:00")) CFG.metrika = "";
   const CONSENT_KEY = "cc-consent";
   const CONSENT_VER = "1.0";
   const YEAR = 365 * 24 * 3600 * 1000;
@@ -36,10 +38,14 @@
   const CSS =
     ".ccl-foot{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 14px;font-size:16px}" +
     ".ccl-foot a,.ccl-foot button{font:inherit;color:#141414;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center}" +
-    ".ccl-banner{position:fixed;left:12px;right:12px;bottom:12px;z-index:1000;max-width:640px;margin:0 auto;background:#fff;color:#141414;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:16px;font:17px/1.45 Rubik,system-ui,sans-serif;box-sizing:border-box}" +
-    ".ccl-banner h2{margin:0 0 6px;font:20px/1.2 'Russo One',Rubik,sans-serif}" +
+    ".ccl-banner{position:fixed;left:12px;right:12px;bottom:12px;z-index:1000;max-width:600px;margin:0 auto;background:#fff;color:#141414;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:18px 16px 16px;font:17px/1.45 Rubik,system-ui,sans-serif;box-sizing:border-box;max-height:calc(100dvh - 24px);overflow:auto;animation:ccl-in .35s cubic-bezier(.2,1.4,.4,1) both}" +
+    "@keyframes ccl-in{from{transform:translateY(24px) rotate(-1deg);opacity:0}}@media (prefers-reduced-motion:reduce){.ccl-banner{animation:none}}" +
+    ".ccl-tag{display:inline-block;margin:0 0 10px;background:#ff2e93;color:#fff;border:3px solid #141414;padding:2px 10px;font:13px/1.3 'Russo One',Rubik,sans-serif;letter-spacing:.04em;text-transform:uppercase;transform:rotate(-2deg)}" +
+    ".ccl-banner h2{margin:2px 0 8px;font:22px/1.15 'Russo One',Rubik,sans-serif}" +
+    ".ccl-banner h2 span{background:#ffd60a;padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}" +
     ".ccl-banner p{margin:0 0 8px}" +
-    ".ccl-banner a{color:#141414}" +
+    ".ccl-banner .ccl-links{font-size:15px}" +
+    ".ccl-banner a{color:#141414;text-underline-offset:3px}" +
     ".ccl-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}" +
     ".ccl-btn{font:18px 'Russo One',Rubik,sans-serif;min-height:52px;padding:10px 14px;border:3px solid #141414;background:#ffd60a;color:#141414;cursor:pointer;box-sizing:border-box}" +
     ".ccl-btn:focus-visible,.ccl-foot a:focus-visible,.ccl-foot button:focus-visible{outline:3px solid #ff2e93;outline-offset:2px}" +
@@ -104,19 +110,18 @@
   function showBanner() {
     if (!CFG.metrika) return;
     if (banner) { banner.querySelector(".ccl-btn").focus(); return; }
-    const links = () => el("p", {}, [el("a", { href: CFG.soglasie, text: "Согласие на статистику" }), " · ", el("a", { href: CFG.privacy, text: "Политика данных" })]);
     const yes = el("button", { type: "button", class: "ccl-btn", text: "Принять" });
     const no = el("button", { type: "button", class: "ccl-btn", text: "Отказаться" });
     banner = el("section", { class: "ccl-banner", role: "dialog", "aria-label": "Статистика посещений" }, [
-      el("h2", { text: "Можно считать посещения?" }),
+      el("span", { class: "ccl-tag", "aria-hidden": "true", text: "Сетеград · вопрос" }),
+      el("h2", {}, ["Можно ", el("span", { text: "считать посещения" }), "?"]),
       el("div", { class: "ccl-long" }, [
-        el("p", { text: "Мы хотим понимать, какие выпуски читают, чтобы делать новые. Для этого нужна Яндекс.Метрика: она ставит cookie и узнаёт тип устройства, город по IP и какие страницы ты открыл. Ник мы туда не передаём." }),
-        el("p", { text: "Если тебе меньше 14 лет, спроси родителей или просто нажми «Отказаться», сайт работает полностью." })
+        el("p", { text: "Хотим знать, какие выпуски читают, чтобы рисовать новые. Для этого Яндекс.Метрика ставит cookie и видит тип устройства, город по IP и открытые страницы. Ник и ответы туда не уходят, Вебвизора нет." })
       ]),
       el("div", { class: "ccl-short" }, [
-        el("p", { text: "Для статистики нужна Яндекс.Метрика, она ставит cookie. Если тебе меньше 14, спроси родителей или жми «Отказаться», сайт работает и так." })
+        el("p", { text: "Яндекс.Метрика поставит cookie и посчитает, какие выпуски читают. Ник и ответы не уходят. Откажешься, и сайт работает так же." })
       ]),
-      links(),
+      el("p", { class: "ccl-links" }, [el("a", { href: CFG.soglasie, text: "Согласие на статистику" }), " · ", el("a", { href: CFG.privacy, text: "Политика данных" })]),
       el("div", { class: "ccl-row" }, [yes, no])
     ]);
     yes.addEventListener("click", () => { saveConsent("accepted"); hideBanner(); loadMetrika(); });

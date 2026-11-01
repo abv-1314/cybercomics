@@ -47,7 +47,8 @@ jobs:
         env:
           SITE_URL: https://cybercomics.ru
           CONTACT_EMAIL: cybercomics@yandex.ru
-          METRIKA_ID: ${{ vars.METRIKA_ID }}
+          METRIKA_ID: ${{ vars.METRIKA_ID || '113983030' }}
+          METRIKA_FROM: ${{ vars.METRIKA_FROM || '2026-11-03' }}
           YANDEX_VERIFICATION: ${{ vars.YANDEX_VERIFICATION || '1b6f3fc44339628b' }}
           GOOGLE_VERIFICATION: ${{ vars.GOOGLE_VERIFICATION || 'rNmx7jxp-bci2a4VwdZWNqMAG13CjLH7x67XNDkMXvE' }}
         run: |

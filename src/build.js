@@ -367,7 +367,7 @@ function asset(root, rel) {
 }
 // Подвал (связь, данные, перенос прогресса) и окно про cookie: src/runtime/legal.js.
 function legalScripts(root, share) {
-  const cfg = { email: CONTACT_EMAIL, metrika: METRIKA_ID, privacy: root + href("privacy/"), soglasie: root + href("soglasie/") };
+  const cfg = { email: CONTACT_EMAIL, metrika: METRIKA_ID, metrikaFrom: process.env.METRIKA_FROM || "", privacy: root + href("privacy/"), soglasie: root + href("soglasie/") };
   // Кнопка «Поделиться» (главная и выпуски): ссылка на страницу, текст для соцсетей.
   if (share) cfg.share = share;
   return "<script>window.CC_LEGAL=" + JSON.stringify(cfg) + ";</script>\n" + '<script src="' + root + 'assets/js/legal.js"></script>\n';
