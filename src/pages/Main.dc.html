@@ -175,7 +175,7 @@ a{color:#141414}a:hover{color:#c81e1e}
 .cc-poster-cta:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #000}
 .cc-poster-cap{margin:-4px 0 0;font-size:16px;line-height:1.35;color:#d9dcf0;text-align:center}
 @media (max-width: 380px){.cc-poster-h1{font-size:29px}.cc-poster-say{font-size:18px}.cc-poster-tag{font-size:14px;padding:3px 8px}.cc-poster-who{font-size:13px}.cc-poster-who b{font-size:13px}.cc-poster-cta{font-size:18px}}
-@media (max-height: 700px) and (max-width: 760px){.cc-poster-say{display:none}}
+.cc-poster-say{display:none}
 @media (max-height: 600px) and (max-width: 760px){.cc-poster-lead{display:none}}
 /* Шапка на телефоне: кнопку CyberComics+ прячем (блок есть ниже). */
 @media (max-width: 600px){.cc-hide-sm{display:none !important}}
@@ -782,21 +782,24 @@ class Component extends DCLogic {
     if (st.cat === 'Фундамент') list.sort((x, y) => (stepOf(x.issue) || 99) - (stepOf(y.issue) || 99));
     const MOT = ['Всё, что пришло от клиента, — моё оружие.', 'Зачем взламывать, если можно просто поменять цифру?', 'Одна кавычка — и ваша база говорит со мной.', 'Я живу в вашем комментарии и жду каждого читателя.', 'Твой браузер сам принесёт мне твои cookie.', 'Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер.', 'Подпись? А кто её проверяет?', 'Один git push — и ключи от облака у всего интернета.', 'Нас десять. И мы в каждом втором приложении.'];
     const PLAIN = ['HTTP: о чём на самом деле шепчутся браузер и сервер', 'IDOR: как одна цифра в адресе открывает чужие данные', 'SQL-инъекция: когда данные становятся кодом', 'XSS: как чужой скрипт оказывается в твоём браузере', 'CSRF: как сайт заставляют действовать твоими руками', 'SSRF: как сервер обращают против своей же сети', 'JWT: что внутри токена и почему подпись важна', 'Секреты в Git и как их ловит пайплайн', 'OWASP Top 10:2025 — вся банда на одной карте'];
-    const slide0 = st.slide === null || st.slide === undefined ? Math.max(0, A.indexOf(nextUp)) : st.slide;
-    const si = ((slide0 % A.length) + A.length) % A.length;
-    const sa = A[si];
+    // Слайдер злодеев идёт по пути новичка (шаг 1, 2, 3…), а не по номерам выпусков.
+    const SL = path.map((n) => by[n]).concat(A.filter((a) => path.indexOf(a.issue) < 0));
+    const slide0 = st.slide === null || st.slide === undefined ? Math.max(0, SL.indexOf(nextUp)) : st.slide;
+    const si = ((slide0 % SL.length) + SL.length) % SL.length;
+    const sa = SL[si];
+    const ai = A.indexOf(sa);
     const slideItem = {
-      issue: sa.issue, villain: sa.villain, motto: sa.motto || MOT[si], plain: sa.plain || PLAIN[si], emblem: sa.emblem, district: DN[sa.dist], minutes: sa.minutes,
+      issue: sa.issue, villain: sa.villain, motto: sa.motto || MOT[ai], plain: sa.plain || PLAIN[ai], emblem: sa.emblem, district: DN[sa.dist], minutes: sa.minutes,
       stars: '★'.repeat(sa.diff) + '☆'.repeat(3 - sa.diff), color: sa.color, art: sa.art || 'v' + sa.issue, read: !!sa.read,
-      status: sa.read ? 'Прочитан ✓' : (sa === nextUp ? (stepOf(sa.issue) ? 'Шаг ' + stepOf(sa.issue) + ' · следующий' : 'Следующий') : 'Впереди'),
-      cta: sa.read ? 'Перечитать выпуск №' + sa.issue : (sa === nextUp && !readTotal ? 'Читать первый выпуск' : 'Читать выпуск №' + sa.issue),
+      status: ((t) => t.charAt(0).toUpperCase() + t.slice(1))((stepOf(sa.issue) ? 'Шаг ' + stepOf(sa.issue) + ' · ' : '') + (sa.read ? 'прочитан ✓' : (sa === nextUp ? 'следующий' : 'впереди'))),
+      cta: ((sn) => sa.read ? (sn ? 'Перечитать шаг ' + sn : 'Перечитать выпуск №' + sa.issue) : (sa === nextUp && !readTotal ? 'Читать первый выпуск' : (sn ? 'Читать шаг ' + sn + ' из ' + STEPS.length : 'Читать выпуск №' + sa.issue)))(stepOf(sa.issue)),
       total: A.length,
       href: 'Issue' + sa.issue + '.dc.html',
       onPrev: () => flipTo(si - 1, 'p'),
       onNext: () => flipTo(si + 1, 'n')
     };
-    const flipTo = (n, dir) => this.setState({ slide: ((n % A.length) + A.length) % A.length, dir, flips: (st.flips || 0) + 1 });
-    const dots = A.map((a, i) => ({
+    const flipTo = (n, dir) => this.setState({ slide: ((n % SL.length) + SL.length) % SL.length, dir, flips: (st.flips || 0) + 1 });
+    const dots = SL.map((a, i) => ({
       label: 'Выпуск №' + a.issue,
       go: () => { if (i !== si) flipTo(i, i > si ? 'n' : 'p'); },
       style: 'cursor:pointer;padding:0;border:2px solid #141414;' + (i === si ? 'width:22px;height:22px;background:#141414' : 'width:14px;height:14px;background:' + (a.read ? '#ffd60a' : '#ffffff'))
