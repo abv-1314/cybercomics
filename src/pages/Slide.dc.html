@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Карточка выпуска</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;family=Rubik+Mono+One&amp;family=Rubik:wght@400;500;700&amp;family=Neucha&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="cc-slide" style="width: 100%; display: flex; flex-direction: column; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; font-family: Rubik, system-ui, sans-serif; color: #141414; box-sizing: border-box">
+  <div style="{{it.topStyle}}">
+    <div style="position: relative; padding: 8px 14px 10px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414">
+      <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">{{it.villain}}:</span>
+      <span style="display: block; font-family: Neucha, cursive; font-size: 20px; line-height: 1.2">{{it.motto}}</span>
+      <span style="position: absolute; left: 46%; bottom: -32px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 32px solid #141414"></span>
+      <span style="position: absolute; left: calc(46% + 4px); bottom: -24px; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 25px solid #ffffff"></span>
+    </div>
+  </div>
+  <div style="{{it.padStyle}}">
+    <div style="position: relative">
+      <div style="{{it.coverStyle}}">
+        <dc-import name="VillainArt" kind="{{it.art}}" vname="{{it.villain}}" emblem="{{it.emblem}}" color="{{it.color}}" fit="square" hint-size="100%,100%"></dc-import>
+      </div>
+      <button type="button" onClick="{{it.onPrev}}" aria-label="Предыдущий выпуск" style="position: absolute; z-index: 4; left: -14px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 16px; color: #141414; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">◀</button>
+      <button type="button" onClick="{{it.onNext}}" aria-label="Следующий выпуск" style="position: absolute; z-index: 4; right: -14px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 16px; color: #141414; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">▶</button>
+    </div>
+  </div>
+  <div style="padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 9px">
+    <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">{{it.plain}}</span>
+    <a href="{{it.href}}" style="{{it.ctaStyle}}">{{it.cta}}</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"item":{"editor":null},"$preview":{"width":380,"height":640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const d = {
+      issue: 5, villain: 'Подделыватель', motto: 'Твой браузер сам принесёт мне твои cookie.', plain: 'CSRF: как сайт заставляют действовать твоими руками',
+      district: 'Веб-квартал', minutes: 10, stars: '★★☆', art: 'v5', status: 'Следующий', cta: 'Читать выпуск №5', color: '#ffd60a', read: false, total: 9, onPrev: null, onNext: null, href: 'Issue5.dc.html'
+    };
+    const it = Object.assign({}, d, this.props.item || {});
+    it.topStyle = 'position:relative;z-index:3;padding:14px 20px 16px;background-image:radial-gradient(rgba(0,0,0,.16) 1.5px, transparent 2px);background-size:10px 10px;background-color:' + it.color;
+    it.padStyle = 'padding:0 20px 20px;border-bottom:3px solid #141414;background-image:radial-gradient(rgba(0,0,0,.16) 1.5px, transparent 2px);background-size:10px 10px;background-color:' + it.color;
+    it.coverStyle = 'position:relative;aspect-ratio:1/1;overflow:hidden;border:3px solid #141414;box-shadow:5px 5px 0 #141414;background-color:' + it.color;
+    it.statusStyle = 'font-family:Russo One,sans-serif;font-size:12px;padding:2px 8px;border:2px solid #141414;' +
+      (it.read ? 'background:#ffffff;color:#141414' : 'background:#ff3b3b;color:#ffffff');
+    it.ctaStyle = 'text-align:center;font-family:Russo One,sans-serif;font-size:18px;text-decoration:none;padding:11px 18px;min-height:48px;box-sizing:border-box;border:3px solid #141414;box-shadow:4px 4px 0 #141414;' +
+      (it.read ? 'background:#ffffff;color:#141414' : 'background:#ff3b3b;color:#ffffff');
+    return { it };
+  }
+}
+</script>
+</body>
+</html>

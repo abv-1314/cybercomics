@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CyberComics — выпуск</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;family=Rubik+Mono+One&amp;family=Rubik:wght@400;500;700&amp;family=Neucha&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fff7e3}
+a{color:#141414}a:hover{color:#c81e1e}
+.ir-opt{transition:transform .08s, box-shadow .08s}
+.ir-opt:not([disabled]):hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #141414 !important}
+.ir-portrait{position:relative;flex:0 0 300px;aspect-ratio:4/5;overflow:hidden;border:3px solid #141414;box-shadow:8px 8px 0 #141414;transform:rotate(-1.2deg);background:#ffffff}
+@media (max-width: 700px){.ir-portrait{flex-basis:100%;transform:none}.ir-h1{font-size:30px !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="Main.dc.html" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="Main.dc.html#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="Main.dc.html#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="Review.dc.html" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="Arcade.dc.html" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="Shop.dc.html" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">{{bitsLabel}}</span>
+    <sc-if value="{{ccUser}}" hint-placeholder-val="{{false}}"><a href="Main.dc.html" title="Профиль — на главной" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 14px; background: #141414; color: #ffffff; border: 3px solid #141414">Привет, {{ccUser}}</a></sc-if>
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="Main.dc.html#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" kind="{{d.art}}" vname="{{d.villain}}" emblem="{{d.emblem}}" color="{{d.color}}" hint-size="100%,100%"></dc-import>
+      </div>
+      <div style="{{coverStyle}}">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №{{num}}</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">{{d.district}}</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">{{d.minutes}} мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">{{stars}}</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">{{d.title}}</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">{{d.sub}}</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">{{d.villain}}:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">{{d.motto}}</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <sc-for list="{{d.learn}}" as="l" hint-placeholder-count="4"><li>{{l}}</li></sc-for>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">{{d.villain}} — злодей</span>
+      </div>
+
+        <sc-for list="{{blocks}}" as="k" hint-placeholder-count="8">
+          <sc-if value="{{k.isCap}}" hint-placeholder-val="{{false}}">
+            <div style="align-self: stretch; font-size: 18px; line-height: 1.55; font-style: italic; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; transform: rotate(-0.4deg)"><sc-for list="{{k.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></div>
+          </sc-if>
+          <sc-if value="{{k.isSay}}" hint-placeholder-val="{{true}}">
+            <div style="{{k.rowStyle}}">
+              <div style="flex: none; width: 74px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+                <sc-if value="{{k.hasImg}}" hint-placeholder-val="{{false}}"><img src="{{k.img}}" alt="" loading="lazy" decoding="async" width="62" height="62" style="width: 62px; height: 62px; border-radius: 50%; object-fit: cover; object-position: 50% 12%; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; background: #ffffff"></sc-if>
+                <sc-if value="{{k.noImg}}" hint-placeholder-val="{{true}}"><span style="{{k.avStyle}}">{{k.initials}}</span></sc-if>
+                <span style="font-family: 'Russo One', sans-serif; font-size: 11px; line-height: 1.15; text-align: center">{{k.name}}</span>
+              </div>
+              <div style="{{k.bubbleStyle}}"><sc-for list="{{k.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isH}}" hint-placeholder-val="{{false}}">
+            <h2 style="margin: 18px 0 0; font-family: 'Russo One', sans-serif; font-size: 27px; line-height: 1.2; padding-left: 14px; border-left: 10px solid #ff3b3b">{{k.text}}</h2>
+          </sc-if>
+          <sc-if value="{{k.isP}}" hint-placeholder-val="{{false}}">
+            <p style="margin: 0; font-size: 18px; line-height: 1.65"><sc-for list="{{k.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></p>
+          </sc-if>
+          <sc-if value="{{k.isList}}" hint-placeholder-val="{{false}}">
+            <ul style="margin: 0; padding-left: 24px; font-size: 18px; line-height: 1.6; display: flex; flex-direction: column; gap: 6px">
+              <sc-for list="{{k.items}}" as="it" hint-placeholder-count="3"><li><sc-for list="{{it.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></li></sc-for>
+            </ul>
+          </sc-if>
+          <sc-if value="{{k.isSteps}}" hint-placeholder-val="{{false}}">
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <sc-for list="{{k.items}}" as="it" hint-placeholder-count="3">
+                <div style="display: flex; gap: 12px; align-items: flex-start">
+                  <span style="flex: none; width: 34px; height: 34px; display: grid; place-items: center; font-family: 'Rubik Mono One', sans-serif; font-size: 15px; background: #ffd60a; border: 3px solid #141414; box-shadow: 2px 2px 0 #141414">{{it.n}}</span>
+                  <span style="font-size: 18px; line-height: 1.55; padding-top: 3px"><sc-for list="{{it.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isTip}}" hint-placeholder-val="{{false}}">
+            <div style="{{k.tipStyle}}">
+              <span style="{{k.tipTitleStyle}}">{{k.title}}</span>
+              <p style="margin: 0; font-size: 17px; line-height: 1.6"><sc-for list="{{k.segs}}" as="s" hint-placeholder-count="1"><sc-if value="{{s.t}}" hint-placeholder-val="{{true}}">{{s.text}}</sc-if><sc-if value="{{s.b}}" hint-placeholder-val="{{false}}"><b>{{s.text}}</b></sc-if><sc-if value="{{s.c}}" hint-placeholder-val="{{false}}"><code style="font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: #fff1c2; border: 2px solid #141414; padding: 0 5px">{{s.text}}</code></sc-if><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><a href="#fn-{{s.n}}" title="Сноска {{s.n}}" style="font-family: 'Russo One', sans-serif; font-size: .7em; vertical-align: super; text-decoration: none; padding: 0 4px; margin-left: 1px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{s.n}}</a></sc-if></sc-for></p>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isCode}}" hint-placeholder-val="{{false}}">
+            <div style="{{k.codeWrap}}">
+              <span style="{{k.codeLabel}}">{{k.label}}</span>
+              <pre style="margin: 0; padding: 14px 16px; overflow-x: auto; font-family: ui-monospace, Consolas, monospace; font-size: 14px; line-height: 1.55; color: #f1f1f1; white-space: pre">{{k.code}}</pre>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isTable}}" hint-placeholder-val="{{false}}">
+            <div style="overflow-x: auto; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; background: #ffffff">
+              <div style="{{k.gridStyle}}">
+                <sc-for list="{{k.cells}}" as="c" hint-placeholder-count="6"><div style="{{c.style}}">{{c.text}}</div></sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isPipe}}" hint-placeholder-val="{{false}}">
+            <div style="background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px">
+              <span style="align-self: flex-start; font-family: 'Russo One', sans-serif; font-size: 14px; padding: 3px 10px; background: #141414; color: #ffd60a">Где ловить в DevSecOps-пайплайне</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px">
+                <sc-for list="{{k.stages}}" as="st" hint-placeholder-count="11"><span style="{{st.style}}">{{st.name}}</span></sc-for>
+              </div>
+              <p style="margin: 0; font-size: 16px; line-height: 1.55">{{k.text}}</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{k.isToy}}" hint-placeholder-val="{{false}}">
+            <div data-keep="1" data-toy="{{k.toy}}" class="toy-host"></div>
+          </sc-if>
+          <sc-if value="{{k.isSfx}}" hint-placeholder-val="{{false}}">
+            <div style="text-align: center; padding: 6px 0"><span style="display: inline-block; max-width: 100%; overflow-wrap: anywhere; font-family: 'Rubik Mono One', sans-serif; font-size: clamp(28px, 8vw, 52px); line-height: 1.05; color: #ffd60a; -webkit-text-stroke: 2.5px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414; transform: rotate(-4deg)">{{k.text}}</span></div>
+          </sc-if>
+        </sc-for>
+
+      <section aria-label="Проверь себя" style="margin-top: 20px; background: #fff1c2; border: 3px solid #141414; box-shadow: 8px 8px 0 #141414; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+        <h2 style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 26px">Битва со злодеем</h2>
+        <p style="margin: 0; font-size: 16px; color: #5b5446">Сначала назови ответ про себя, потом выбирай. Закрепить темы можно в «Прокачаться».</p>
+        <sc-for list="{{quiz}}" as="q" hint-placeholder-count="3">
+          <div style="background: #ffffff; border: 3px solid #141414; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+            <span style="font-weight: 700; font-size: 17px; line-height: 1.4">{{q.q}}</span>
+            <div style="display: grid; gap: 8px">
+              <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="4">
+                <button type="button" class="ir-opt" onClick="{{o.pick}}" disabled="{{o.locked}}" style="{{o.style}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{q.answered}}" hint-placeholder-val="{{false}}">
+              <div style="{{q.fbStyle}}"><b style="font-family: 'Russo One', sans-serif">{{q.fbTitle}}</b> {{q.w}}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{quizDone}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; background: #141414; color: #ffffff; padding: 12px 16px">
+            <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 24px; color: #ffd60a">{{score}} из {{qTotal}}</span>
+            <span style="font-size: 16px">{{scoreText}}</span>
+          </div>
+        </sc-if>
+      </section>
+
+      <section aria-label="Вопрос с собеседования" style="background-color: #7b4dff; background-image: radial-gradient(rgba(255,255,255,.22) 1.5px, transparent 2px); background-size: 12px 12px; color: #ffffff; border: 3px solid #141414; box-shadow: 8px 8px 0 #141414; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 22px; color: #ffffff; -webkit-text-stroke: 1px #141414; paint-order: stroke fill">Вопрос с собеседования</h2>
+        <p style="margin: 0; font-family: Neucha, cursive; font-size: 26px; line-height: 1.25; color: #141414; background: #ffffff; border: 3px solid #141414; border-radius: 18px; padding: 12px 16px">{{d.iv.q}}</p>
+        <p style="margin: 0; font-size: 15px">Сначала ответь вслух или на листке, потом сравни с сильной версией.</p>
+        <sc-if value="{{ivHidden}}" hint-placeholder-val="{{true}}">
+          <button type="button" onClick="{{showIv}}" style="align-self: flex-start; cursor: pointer; min-height: 48px; padding: 0 20px; font-family: 'Russo One', sans-serif; font-size: 17px; color: #141414; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Показать сильный ответ</button>
+        </sc-if>
+        <sc-if value="{{ivShown}}" hint-placeholder-val="{{false}}">
+          <div style="background: #ffffff; color: #141414; border: 3px solid #141414; padding: 14px 16px; font-size: 17px; line-height: 1.6">{{d.iv.a}}</div>
+        </sc-if>
+      </section>
+
+      <section aria-label="Сноски" style="background: #ffffff; border: 3px solid #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Сноски</h2>
+        <sc-for list="{{fns}}" as="f" hint-placeholder-count="4">
+          <div id="fn-{{f.n}}" style="display: flex; gap: 12px; align-items: baseline; font-size: 16px; line-height: 1.5; border-bottom: 2px dashed #e2dccb; padding-bottom: 8px">
+            <span style="flex: none; font-family: 'Russo One', sans-serif; font-size: 13px; padding: 0 6px; background: #ff2e93; color: #ffffff; border: 2px solid #141414">{{f.n}}</span>
+            <span><b>{{f.term}}</b> — {{f.def}}</span>
+          </div>
+        </sc-for>
+      </section>
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="{{prevHref}}" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">{{prevLabel}}</a>
+        <a href="{{nextHref}}" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">{{nextLabel}}</a>
+      </nav>
+    </article>
+  </main>
+  <footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"issue":{"editor":"enum","options":["1","2","3","4","5","6","7","8","9"],"default":"2"},"$preview":{"width":1280,"height":5200}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { ans: {}, iv: false }; }
+  segs(str) {
+    return String(str).split(/(\*\*[^*]+\*\*|`[^`]+`|\[\^\d+\])/).filter((x) => x !== '').map((x) => {
+      if (x.startsWith('**') && x.endsWith('**')) return { b: true, text: x.slice(2, -2) };
+      if (x.startsWith('`') && x.endsWith('`')) return { c: true, text: x.slice(1, -1) };
+      const m = x.match(/^\[\^(\d+)\]$/);
+      if (m) return { f: true, n: m[1] };
+      return { t: true, text: x };
+    });
+  }
+  renderVals() {
+    const ISSUES = {
+      1: {
+        villain: 'Перехватчик', title: 'HTTP: о чём шепчутся браузер и сервер', sub: 'Фундамент веба: без него не понять ни одну веб-атаку', color: '#19c3ff', minutes: 9, diff: 1, district: 'Фундамент', art: 'v1',
+        motto: 'Всё, что пришло от клиента, — моё оружие.',
+        learn: ['Из чего состоят запрос и ответ', 'Чем код 401 отличается от 403', 'Зачем cookie флаги HttpOnly, Secure и SameSite', 'Почему проверка в браузере — не защита'],
+        blocks: [
+          ['toy', 'http-story']
+        ],
+        fn: [['HTTP', 'Протокол, по которому браузер и сервер обмениваются запросами и ответами.'], ['Cookie', 'Небольшая запись, которую сайт сохраняет в браузере и получает обратно с каждым запросом.'], ['Аутентификация', 'Проверка «кто ты»: пароль, код из приложения, ключ.'], ['Авторизация', 'Проверка «что тебе можно» после того, как личность установлена.'], ['TLS', 'Протокол, который шифрует связь и защищает её от подмены. На нём работает HTTPS и «замочек» в адресной строке.']],
+        quiz: [
+          { q: 'Соня вошла в магазин, открывает /admin и получает отказ. Какой код ответа здесь правильный?', o: ['401', '403', '404', '500'], a: 1, w: 'Сервер знает, кто это (номерок есть), но прав нет — 403. Код 401 был бы, если бы Соня не вошла.' },
+          { q: 'Пришла ссылка https://shop-example-bonus.top, горит замочек. Что это доказывает?', o: ['Что сайт настоящий и безопасный', 'Только что связь зашифрована и сервер владеет этим адресом', 'Что сайт проверила полиция'], a: 1, w: 'Сертификат бесплатно выдают на любой домен, в том числе поддельный. shop-example-bonus.top — это не shop.example.' },
+          { q: 'Разработчик спрятал поле с ценой в форме и проверяет её скриптом в браузере. Этого достаточно?', o: ['Да, скрытое поле не видно', 'Да, если включён HTTPS', 'Нет: клиент может прислать любое письмо, цена должна браться на сервере'], a: 2, w: 'Скрытое поле и проверка в браузере — удобство для честных. Перехватчик правит письмо до отправки, и HTTPS этому не мешает.' }
+        ],
+        iv: { q: 'Что происходит, когда вводишь адрес сайта в браузер и нажимаешь Enter?', a: 'Браузер узнаёт IP-адрес сайта через DNS. Устанавливает соединение (TCP, а в HTTP/3 — QUIC поверх UDP) и поверх него TLS: проверяет сертификат и договаривается о ключах шифрования. Если сайт прислал HSTS раньше, браузер сразу идёт по HTTPS. Затем отправляет HTTP-запрос с методом, путём, заголовками и cookie; сервер отвечает кодом статуса, заголовками (в том числе Set-Cookie) и HTML. Браузер разбирает страницу, догружает стили, скрипты и картинки и применяет правила безопасности: политику одного источника, CSP, SameSite. Сильный ответ добавляет риски на каждом шаге: подмена DNS, перехват без TLS, доверие серверу к данным клиента.' }
+      },
+      2: {
+        villain: 'Мистер IDOR', title: 'Мистер IDOR и чужие заказы', sub: 'Broken Access Control — уязвимость №1 в OWASP Top 10:2025', color: '#ff3b3b', minutes: 10, diff: 1, district: 'Веб-квартал', art: 'v2',
+        motto: 'Зачем взламывать, если можно просто поменять цифру?',
+        learn: ['Чем аутентификация отличается от авторизации', 'Почему сервер должен проверять владельца каждого объекта', 'Почему UUID — не исправление', 'Как поймать такую ошибку в пайплайне'],
+        blocks: [
+          ['cap', 'Интернет-магазин. Алиса открывает свой заказ по адресу /orders/123. Из любопытства меняет число на 124…'],
+          ['say', 'villain', '…и видит адрес, телефон и покупки незнакомого Боба. Никаких взломов. Только одна цифра.'],
+          ['say', 'kai', 'Подожди, Алиса же вошла под своим паролем. Почему сервер показал ей чужое?'],
+          ['say', 'hero', 'Потому что сервер проверил только **кто она**, но не проверил, **чей это заказ**. Эта ошибка называется IDOR[^1]. Она входит в категорию Broken Access Control — первое место в OWASP Top 10[^2].'],
+          ['h', 'Два вопроса, которые сервер обязан задать'],
+          ['list', ['**Кто ты?** Это аутентификация: пароль, код, токен.', '**Что тебе можно?** Это авторизация: твой ли это заказ, админ ли ты.']],
+          ['p', 'У Алисы первый вопрос сработал идеально. Сломался второй.'],
+          ['code', 'Так делать нельзя', 'bad', '@app.get("/orders/<int:order_id>")\n@login_required                     # проверили только вход\ndef get_order(order_id):\n    order = Order.query.get_or_404(order_id)\n    return jsonify(order.to_dict())  # чей заказ — не проверили'],
+          ['code', 'Так правильно', 'good', '@app.get("/orders/<int:order_id>")\n@login_required\ndef get_order(order_id):\n    order = Order.query.filter_by(\n        id=order_id,\n        owner_id=current_user.id     # ищем только среди своих\n    ).first_or_404()                 # чужой заказ — 404\n    return jsonify(order.to_dict())'],
+          ['say', 'kai', 'А если вместо 124 сделать длинный случайный номер, который не угадать?'],
+          ['say', 'hero', 'Это называется UUID[^3]. Угадать станет сложнее, но проверки прав так и не появится. Номера утекают в логах, ссылках и ответах других страниц. Исправление одно — проверка владельца на сервере.'],
+          ['tip', 'note', 'Два вида нарушения доступа', '**Горизонтальное** — доступ к данным другого пользователя того же уровня, как Алиса к заказу Боба. **Вертикальное** — обычный пользователь делает то, что может только админ. В API первое называют BOLA, второе — BFLA[^4].'],
+          ['tip', 'defense', 'Как защищаться', 'Всё запрещено, пока явно не разрешено. Права проверяются на сервере при каждом запросе и к каждому объекту. Логика доступа живёт в одном месте, а не разбросана по коду. Отказы в доступе пишутся в журнал, а массовый перебор номеров вызывает тревогу.'],
+          ['h', 'Где ловить в пайплайне'],
+          ['say', 'hero', 'Сканеры почти не видят такие ошибки: они не знают, что заказ 124 принадлежит Бобу. Лучше всего работает простой тест: «пользователь A не видит заказ пользователя B».'],
+          ['pipe', ['IDE', 'CI', 'DAST'], 'Код-ревью с вопросом «кто может вызвать этот адрес и к каким объектам». Тесты авторизации в CI. Проверка сайта с двумя тестовыми аккаунтами.'],
+          ['sfx', 'ДОСТУП ЗАПРЕЩЁН!']
+        ],
+        fn: [['IDOR', 'Insecure Direct Object Reference — прямая ссылка на объект без проверки прав.'], ['OWASP Top 10', 'Список десяти главных рисков веб-приложений от сообщества OWASP. Последняя редакция — 2025 года.'], ['UUID', 'Длинный случайный идентификатор вида 9f1c…, который трудно угадать.'], ['BOLA и BFLA', 'Нарушение доступа на уровне объекта и на уровне функции в API.']],
+        quiz: [
+          { q: 'Пользователь меняет /orders/123 на /orders/124 и видит чужой заказ. Что это?', o: ['SQL-инъекция', 'IDOR', 'XSS', 'Ошибка аутентификации'], a: 1, w: 'Вход выполнен правильно, сервер не проверил право на объект. Это IDOR, категория A01.' },
+          { q: 'Разработчик предлагает заменить номера заказов на UUID. Это исправление?', o: ['Да, UUID не угадать', 'Нет: угадать сложнее, но проверки прав по-прежнему нет', 'Да, если добавить HTTPS', 'Да, если UUID версии 4'], a: 1, w: 'Номера утекают. Исправление — проверка владельца на сервере.' },
+          { q: 'Что надёжнее всего ловит такие ошибки при каждом изменении кода?', o: ['Проверка зависимостей', 'Поиск секретов', 'Тесты авторизации в CI', 'Проверка контейнеров'], a: 2, w: 'Тест «A не видит объект B» фиксирует правило и роняет сборку при регрессии.' }
+        ],
+        iv: { q: 'Как бы ты искал IDOR в приложении и как объяснил бы разработчикам исправление?', a: 'Завожу два аккаунта одного уровня и один с другой ролью. Прохожу функции приложения и отмечаю все запросы, где передаётся номер объекта: в адресе, параметрах, теле. Повторяю их от имени другого пользователя — на своём тестовом стенде. Если получил чужие данные или выполнил чужое действие, это IDOR. Исправление: проверка прав на сервере при каждом обращении к объекту, запрет по умолчанию, централизованная логика доступа. UUID не исправляет. В CI добавляем тесты авторизации, в логах — тревогу на массовые отказы.' }
+      },
+      3: {
+        villain: 'Доктор Инъекция', title: 'Доктор Инъекция: когда данные становятся кодом', sub: 'SQL-инъекция — классика категории A05 Injection', color: '#ff2e93', minutes: 11, diff: 2, district: 'Веб-квартал', art: 'v3',
+        motto: 'Одна кавычка — и ваша база говорит со мной.',
+        learn: ['Почему склеивание строк опасно', 'Как параметризованный запрос разделяет код и данные', 'Что делать с сортировкой и именами колонок', 'Кто ловит инъекции в пайплайне'],
+        blocks: [
+          ['cap', 'Форма входа. Поле «логин». Доктор Инъекция вводит туда не имя, а кусочек команды для базы данных.'],
+          ['say', 'kai', 'А как обычный текст может стать командой?'],
+          ['say', 'hero', 'Представь бланк, где ты дописываешь своё имя в готовую фразу: «Выдать заказ клиенту ____». Если вписать туда «Петрову. А ещё выдать всё со склада», а кладовщик читает бланк целиком как приказ, — склад пуст. Так работает инъекция: **данные смешались с командой**.'],
+          ['h', 'Откуда берётся ошибка'],
+          ['p', 'Приложение общается с базой на языке SQL[^1]. Ошибка появляется, когда текст от пользователя **приклеивают** прямо к SQL-запросу. База не отличает, где команда, а где данные, и выполняет всё как команду.'],
+          ['code', 'Так делать нельзя', 'bad', 'name = request.form["username"]\nquery = "SELECT * FROM users WHERE name = \'" + name + "\'"\ndb.execute(query)   # ввод пользователя стал частью SQL'],
+          ['code', 'Так правильно', 'good', 'cursor.execute(\n    "SELECT * FROM users WHERE name = %s",\n    (name,)          # значение передаётся отдельно от команды\n)'],
+          ['say', 'hero', 'Это **параметризованный запрос**[^2]. База сначала получает структуру команды, а значение — отдельно. Что бы ни ввёл пользователь, это навсегда останется просто текстом.'],
+          ['say', 'villain', 'Фу. Скучно. Я так не играю.'],
+          ['tip', 'attack', 'Чем опасна инъекция', 'Можно войти без пароля, прочитать всю базу с паролями и личными данными, изменить или удалить записи. В плохо настроенных системах — даже выполнить команды на сервере.'],
+          ['say', 'kai', 'А если я пользуюсь ORM[^3], я в безопасности?'],
+          ['say', 'hero', 'Почти. ORM сама подставляет параметры. Но если внутри ORM написать «сырой» запрос и склеить его со строкой — ошибка возвращается.'],
+          ['tip', 'defense', 'Чек-лист защиты', 'Параметризованные запросы или ORM — всегда. Имена колонок и направление сортировки параметризовать нельзя: сверяй их со списком разрешённых значений. Учётная запись приложения в базе — с минимальными правами[^4]. Подробные ошибки базы не показываем пользователю. Фильтр запросов (WAF) — дополнительный слой, но не замена исправлению.'],
+          ['tip', 'note', 'Не путай с XSS', 'SQL-инъекция выполняется **в базе данных на сервере**. XSS — **в браузере жертвы**. Корень один: данные смешались с кодом. Интерпретаторы разные.'],
+          ['pipe', ['IDE', 'SAST', 'DAST', 'Runtime'], 'SAST отслеживает путь данных от ввода до запроса к базе — это его сильная сторона. DAST проверяет работающий сайт. В проде WAF и мониторинг ошибок базы замечают попытки.'],
+          ['sfx', 'ПШШ!']
+        ],
+        fn: [['SQL', 'Язык запросов к базам данных: найти, добавить, изменить, удалить записи.'], ['Параметризованный запрос', 'Запрос, где команда и значения передаются в базу раздельно. Синоним — prepared statement.'], ['ORM', 'Библиотека, которая позволяет работать с базой через объекты кода вместо ручного SQL.'], ['Минимальные права', 'Принцип least privilege: у учётной записи есть только те права, без которых не обойтись.']],
+        quiz: [
+          { q: 'Почему параметризованный запрос защищает от SQL-инъекции?', o: ['Шифрует ввод', 'Команда и значения уходят в базу раздельно', 'Удаляет кавычки', 'Работает только с числами'], a: 1, w: 'База получает структуру заранее, а значения подставляет как данные. Ввод не меняет команду.' },
+          { q: 'Пользователь выбирает поле сортировки. Как безопасно подставить его в запрос?', o: ['Параметризовать как обычное значение', 'Экранировать кавычки', 'Сверить со списком разрешённых колонок', 'Включить WAF'], a: 2, w: 'Имена колонок не параметризуются. Правильно — сравнить ввод с заранее известным списком.' },
+          { q: 'Какой инструмент лучше всего находит SQL-инъекции в исходном коде до выкладки?', o: ['SCA', 'SAST', 'Проверка контейнеров', 'Проверка IaC'], a: 1, w: 'SAST читает код и отслеживает путь данных от ввода к запросу к базе.' }
+        ],
+        iv: { q: 'Что такое SQL-инъекция и как от неё защититься?', a: 'Это уязвимость, при которой ввод пользователя встраивается в SQL-запрос и меняет его смысл. Причина — склеивание строк: база не отличает данные от команды. Последствия: обход входа, утечка и изменение данных, иногда выполнение команд на сервере. Защита: параметризованные запросы или ORM, список разрешённых значений для имён колонок, минимальные права учётной записи базы, никаких подробных ошибок наружу. WAF и валидация — дополнительный слой. В пайплайне инъекции ловят SAST и DAST.' }
+      },
+      4: {
+        villain: 'Скрипт-Призрак', title: 'Скрипт-Призрак вселяется в браузер', sub: 'Cross-Site Scripting: отражённый, хранимый и DOM-based', color: '#8a5cff', minutes: 11, diff: 2, district: 'Веб-квартал', art: 'v4',
+        motto: 'Я живу в вашем комментарии и жду каждого читателя.',
+        learn: ['Что такое XSS и почему он опасен', 'Три вида XSS', 'Почему textContent безопаснее innerHTML', 'Что даёт CSP и чего не даёт'],
+        blocks: [
+          ['cap', 'Форум. Обычный комментарий под статьёй. Но внутри спрятан не текст, а кусочек программы. Каждый, кто откроет страницу, запустит его у себя.'],
+          ['say', 'kai', 'Как текст может запуститься?'],
+          ['say', 'hero', 'Браузер читает страницу как HTML[^1]. Если сайт вставил текст пользователя в страницу без обработки, браузер может принять его за часть разметки — и за программу. Это и есть XSS[^2].'],
+          ['say', 'villain', 'И я работаю от имени сайта. Вижу то, что видишь ты. Нажимаю то, что можешь нажать ты.'],
+          ['h', 'Три вида Призрака'],
+          ['list', ['**Отражённый** — вредный текст приходит в ссылке, сайт сразу «отражает» его на странице. Жертву заманивают по ссылке.', '**Хранимый** — вредный текст сохранён на сервере: в комментарии, профиле. Срабатывает у каждого, кто откроет страницу. Самый опасный.', '**DOM-based** — ошибка целиком в скрипте страницы: он берёт данные из адреса и вставляет их в страницу.']],
+          ['h', 'Как выглядит ошибка в коде'],
+          ['code', 'Так делать нельзя', 'bad', 'const name = new URLSearchParams(location.search).get("name");\ngreeting.innerHTML = "Привет, " + name;\n// innerHTML разбирает строку как HTML'],
+          ['code', 'Так правильно', 'good', 'greeting.textContent = "Привет, " + name;\n// textContent вставляет ТЕКСТ, браузер не ищет в нём разметку'],
+          ['tip', 'attack', 'Чем опасен XSS', 'Скрипт действует от имени пользователя: меняет почту, переводит деньги, читает личные данные на странице. Может украсть cookie без флага HttpOnly или токены из хранилища браузера. Может нарисовать поддельную форму пароля прямо на настоящем сайте.'],
+          ['say', 'kai', 'Значит, надо просто всё фильтровать?'],
+          ['say', 'hero', 'Надо **правильно выводить**. Один и тот же текст по-разному опасен внутри HTML, внутри атрибута, внутри скрипта. Хорошие шаблонизаторы делают это сами — главное не обходить их защиту.'],
+          ['tip', 'defense', 'Чек-лист защиты', 'Используй шаблоны с автоэкранированием[^3]: React, Angular, Jinja2. Избегай `innerHTML`, `dangerouslySetInnerHTML`, `v-html` и фильтра `safe`. Если HTML от пользователя действительно нужен — очищай его библиотекой вроде DOMPurify. Добавь CSP[^4] как второй слой. Cookie сессии — с флагом HttpOnly.'],
+          ['tip', 'note', 'XSS, SQL-инъекция и CSRF — в чём разница', '**XSS** — чужой код работает в браузере внутри сайта. **SQL-инъекция** — чужая команда работает в базе на сервере. **CSRF** — чужой сайт заставляет браузер отправить запрос, но не видит ответа.'],
+          ['pipe', ['IDE', 'SAST', 'SCA', 'DAST', 'Runtime'], 'SAST находит опасные функции вывода. SCA — старые библиотеки с известными дырами. DAST проверяет работающий сайт. CSP в проде присылает отчёты о заблокированных скриптах.'],
+          ['sfx', 'БУ!']
+        ],
+        fn: [['HTML', 'Язык разметки страниц. Браузер читает его и рисует страницу.'], ['XSS', 'Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя.'], ['Автоэкранирование', 'Шаблонизатор сам превращает опасные символы вроде < в безопасный текст.'], ['CSP', 'Content Security Policy — заголовок, который говорит браузеру, какие скрипты на странице разрешены.']],
+        quiz: [
+          { q: 'Вредный текст сохранился в профиле и срабатывает у всех, кто открыл профиль. Какой это XSS?', o: ['Отражённый', 'Хранимый', 'DOM-based', 'Это не XSS'], a: 1, w: 'Данные хранятся на сервере и срабатывают у каждого посетителя — хранимый XSS.' },
+          { q: 'Что устраняет DOM XSS в строке element.innerHTML = userInput?', o: ['Флаг HttpOnly', 'element.textContent = userInput', 'HTTPS', 'Длинный пароль'], a: 1, w: 'textContent вставляет текст без разбора HTML.' },
+          { q: 'На сайте строгий CSP. Можно не исправлять найденный XSS?', o: ['Да, CSP всё блокирует', 'Нет: CSP — второй слой, исправлять нужно вывод', 'Да, если сайт на React', 'Да, если есть HttpOnly'], a: 1, w: 'Политики бывают неполными. Корень — неправильный вывод данных.' }
+        ],
+        iv: { q: 'Какие бывают виды XSS и как от них защищаться?', a: 'XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта. Отражённый: вредные данные в запросе сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript. Защита: контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов, очистка HTML через DOMPurify, когда HTML нужен. Дополнительно — CSP и HttpOnly cookie. В пайплайне: SAST, SCA для фронтенд-библиотек, DAST.' }
+      },
+      5: {
+        villain: 'Подделыватель', title: 'Подделыватель и чужие руки', sub: 'CSRF, SameSite и почему CORS тут ни при чём', color: '#ffd60a', minutes: 10, diff: 2, district: 'Веб-квартал', art: 'v5',
+        motto: 'Твой браузер сам принесёт мне твои cookie.',
+        learn: ['Почему браузер может отправить запрос без твоего ведома', 'Как работают CSRF-токены и SameSite', 'Чем CORS отличается от защиты от CSRF', 'Почему XSS ломает защиту от CSRF'],
+        blocks: [
+          ['cap', 'Боб вошёл в интернет-банк и забыл про вкладку. В соседней он смотрит сайт с котиками. Где-то на этой странице спрятана невидимая форма.'],
+          ['say', 'villain', 'Форма сама отправится в банк. А браузер Боба сам приложит к ней его cookie. Для банка это будет запрос от Боба.'],
+          ['say', 'kai', 'Но Боб же ничего не нажимал!'],
+          ['say', 'hero', 'В этом и фокус. Это CSRF[^1] — подделка межсайтового запроса. Браузер исторически прикладывает cookie ко всем запросам на сайт, кто бы их ни начал.'],
+          ['h', 'Когда Подделывателю везёт'],
+          ['steps', ['Сайт узнаёт пользователя по cookie, которые браузер отправляет сам.', 'Есть действие, которое что-то меняет: перевод, смена почты или пароля.', 'Все параметры запроса известны заранее, секретов в нём нет.']],
+          ['tip', 'note', 'Ответ Подделыватель не увидит', 'Политика одного источника[^2] не даёт чужому сайту прочитать ответ банка. Поэтому CSRF — про чужие **действия**, а не про кражу данных.'],
+          ['h', 'Как защищаться'],
+          ['list', ['**CSRF-токен** — сервер кладёт в форму случайный секрет и проверяет его при каждом изменяющем запросе. Чужой сайт этот секрет не знает.', '**SameSite** для cookie: `Lax` или `Strict` — браузер не прикладывает cookie к фоновым запросам с чужих сайтов.', '**Проверка Origin**[^3] — сервер отклоняет изменяющие запросы с чужих источников.', '**GET никогда ничего не меняет.**', '**Повторный ввод пароля** для самых важных действий.']],
+          ['say', 'kai', 'А у нас настроен CORS[^4]. Значит, мы защищены?'],
+          ['say', 'villain', 'Обожаю, когда так говорят.'],
+          ['say', 'hero', 'Нет. CORS решает, может ли чужой сайт **читать** ответы. А отправить обычную форму можно и без него. От CSRF защищают токены, SameSite и проверка Origin.'],
+          ['tip', 'attack', 'Если на сайте есть XSS', 'Скрипт внутри сайта прочитает любой CSRF-токен и отправит запрос сам. Поэтому XSS серьёзнее: он ломает защиту от CSRF.'],
+          ['pipe', ['SAST', 'DAST'], 'SAST находит места, где защита от CSRF во фреймворке отключена. DAST проверяет токены и атрибуты SameSite у cookie.'],
+          ['sfx', 'ПОДДЕЛКА!']
+        ],
+        fn: [['CSRF', 'Cross-Site Request Forgery — чужой сайт заставляет браузер отправить запрос от имени пользователя.'], ['Политика одного источника', 'Same-Origin Policy: скрипт одного сайта не может читать ответы другого.'], ['Origin', 'Источник запроса: схема, домен и порт. Браузер сообщает его серверу в заголовке.'], ['CORS', 'Механизм, которым сервер разрешает определённым сайтам читать свои ответы.']],
+        quiz: [
+          { q: 'Почему CSRF вообще работает?', o: ['Браузер сам прикладывает cookie к запросам на сайт', 'Атакующий знает пароль', 'Сайт без HTTPS', 'Из-за SQL-инъекции'], a: 0, w: 'Сервер видит валидную сессию и не может отличить настоящий запрос от поддельного без дополнительной проверки.' },
+          { q: 'Защищает ли настроенный CORS от CSRF?', o: ['Да, полностью', 'Нет: CORS про чтение ответов, а не про отправку запросов', 'Только для GET', 'Да, если разрешены все сайты'], a: 1, w: 'Обычная форма уходит без проверок CORS. Защита — токены, SameSite, Origin.' },
+          { q: 'На сайте нашли XSS. Помогут ли CSRF-токены?', o: ['Да, полностью', 'Нет: скрипт на странице прочитает токен', 'Да, если токен длинный', 'Да, если есть HSTS'], a: 1, w: 'XSS работает внутри сайта, политика одного источника ему не мешает.' }
+        ],
+        iv: { q: 'Объясни разницу между CSRF, CORS и политикой одного источника.', a: 'Политика одного источника — правило браузера: скрипт одного сайта не может читать ответы другого. CORS — способ, которым сервер явно разрешает определённым сайтам читать свои ответы, то есть ослабление этого правила. CSRF — атака, при которой чужой сайт заставляет браузер жертвы отправить изменяющий запрос с её cookie: прочитать ответ он не может, но действие выполняется. Защита от CSRF: токены, SameSite=Lax или Strict, проверка Origin, GET без побочных эффектов.' }
+      },
+      6: {
+        villain: 'Прокси-Паук', title: 'Прокси-Паук плетёт сеть изнутри', sub: 'SSRF: как сервер обращают против своей же сети', color: '#2ee59d', minutes: 12, diff: 3, district: 'Веб-квартал', art: 'v6',
+        motto: 'Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер.',
+        learn: ['Почему опасно скачивать файлы по ссылке от пользователя', 'Что сервер видит такого, чего не видит интернет', 'Почему запрет по списку адресов не работает', 'Как защищаться слоями'],
+        blocks: [
+          ['cap', 'Сервис аватарок: «Вставьте ссылку на картинку — мы её загрузим». Обычные люди вставляют фото. Паук вставляет адрес, который ведёт внутрь самой компании.'],
+          ['say', 'kai', 'А что плохого? Сервер просто скачает картинку.'],
+          ['say', 'hero', 'Сервер стоит **внутри** периметра[^1]. Ему видны внутренние админки, базы, служебные сервисы облака. Если он скачивает что угодно по ссылке от пользователя, атакующий использует его как свои руки внутри. Это SSRF[^2].'],
+          ['say', 'villain', 'Снаружи до внутренних дверей не дотянуться. А ваш сервер — дотянется. И вежливо принесёт мне ответ.'],
+          ['h', 'Реальный случай'],
+          ['p', 'В 2019 году утечка в банке Capital One — данные около 100 миллионов клиентов — началась с SSRF. Через сервер атакующий добрался до служебного сервиса облака[^3], получил временные ключи, а у ключей оказалось слишком много прав. Цепочка: **SSRF → служебный сервис → ключи → лишние права → данные**.'],
+          ['h', 'Почему запрет по списку не работает'],
+          ['say', 'kai', 'Давай просто запретим внутренние адреса в ссылке!'],
+          ['say', 'hero', 'Один и тот же адрес можно записать десятком способов. Ещё бывают перенаправления и домены, которые указывают внутрь. Поэтому проверять надо не текст ссылки, а **куда реально пойдёт запрос**.'],
+          ['tip', 'defense', 'Защита слоями', 'Разрешай только нужные домены и только https. Определяй IP-адрес сам, отклоняй внутренние диапазоны и подключайся именно к проверенному адресу. Не следуй перенаправлениям или проверяй каждое. Ограничь сервису исходящий трафик[^4]: загрузчику картинок не нужна внутренняя сеть. В облаке включи защищённый режим служебного сервиса (в AWS — IMDSv2) и выдавай ролям минимум прав. Не показывай пользователю сырой ответ внутреннего запроса.'],
+          ['tip', 'note', 'Где SSRF в OWASP 2025', 'В редакции 2021 года SSRF был отдельной категорией A10. В 2025 его включили в **A01 Broken Access Control**: сервер получает доступ туда, куда пользователю нельзя.'],
+          ['pipe', ['SAST', 'IaC', 'DAST', 'Runtime'], 'SAST находит места, где адрес от пользователя уходит прямо в HTTP-клиент. Сканер IaC — облачные машины без защищённого режима и слишком широкие права. В проде мониторинг замечает обращения приложения к служебным адресам.'],
+          ['sfx', 'ВЖЖЖ!']
+        ],
+        fn: [['Периметр', 'Граница между внутренней сетью компании и интернетом.'], ['SSRF', 'Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему.'], ['Служебный сервис облака', 'Сервис метаданных: внутри облака он сообщает машине её настройки и временные ключи.'], ['Исходящий трафик', 'Запросы, которые сервер сам отправляет наружу или в другие сети.']],
+        quiz: [
+          { q: 'Сервер скачивает картинку по ссылке, которую прислал пользователь. Главный риск?', o: ['XSS', 'SSRF', 'CSRF', 'IDOR'], a: 1, w: 'Сервер делает запрос по чужой указке и может дотянуться до внутренних ресурсов.' },
+          { q: 'Почему запрет внутренних адресов по тексту ссылки — слабая защита?', o: ['Он медленный', 'Адрес можно записать по-разному, бывают перенаправления и подставные домены', 'Он ломает HTTPS', 'Это хорошая защита'], a: 1, w: 'Проверять нужно реальный IP, к которому идёт подключение.' },
+          { q: 'Какой скан найдёт облачную машину без защищённого режима служебного сервиса?', o: ['SCA', 'Скан IaC', 'Поиск секретов', 'DAST'], a: 1, w: 'Это настройка инфраструктуры, описанная кодом. Её проверяют сканеры IaC до выкладки.' }
+        ],
+        iv: { q: 'Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?', a: 'Главный риск — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Также: разведка внутренней сети, обход межсетевого экрана, огромные файлы. Защита слоями: список разрешённых доменов и только https, проверка реального IP с отказом во внутренних диапазонах, запрет перенаправлений, ограничение исходящего трафика, защищённый режим метаданных и минимальные права роли, лимиты размера и времени, никакого сырого ответа пользователю. В пайплайне — SAST, скан IaC, мониторинг исходящих запросов.' }
+      },
+      7: {
+        villain: 'Токенщик', title: 'Токенщик и поддельные пропуска', sub: 'JWT: что внутри токена и почему подпись важна', color: '#19c3ff', minutes: 13, diff: 2, district: 'Веб-квартал', art: 'v7',
+        motto: 'Подпись? А кто её проверяет?',
+        learn: ['Из чего состоит JWT', 'Почему содержимое токена видно всем', 'Что обязан проверить сервер', 'Где хранить токен в браузере'],
+        blocks: [
+          ['cap', 'Мир микросервисов[^1]. Десятки сервисов, и каждому надо знать, кто пришёл. Бегать в общую базу на каждый запрос долго. Нужен пропуск, который можно проверить на месте.'],
+          ['say', 'hero', 'Такой пропуск — JWT[^2]. Сервер записывает в него, кто ты и до какого времени пропуск действует, и ставит **подпись**[^3]. Любой сервис с ключом проверки убедится, что пропуск настоящий и его не меняли.'],
+          ['h', 'Из чего состоит пропуск'],
+          ['list', ['**Заголовок** — каким алгоритмом подписано.', '**Содержимое** — утверждения: кто владелец (`sub`), когда истекает (`exp`), кто выдал (`iss`), для кого (`aud`).', '**Подпись** — доказательство, что первые две части не меняли.']],
+          ['say', 'kai', 'Раз есть подпись, значит, внутри всё зашифровано?'],
+          ['say', 'hero', 'Нет! Первые две части просто закодированы — их прочитает кто угодно. Подпись защищает от **изменения**, а не от **чтения**. Поэтому никаких паролей и секретов внутри токена.'],
+          ['say', 'villain', 'Люблю сервисы, которые читают пропуск, но подпись не проверяют.'],
+          ['h', 'Что обязан проверить сервер'],
+          ['steps', ['**Подпись** — правильным ключом и алгоритмом, который задан в настройках сервера. Алгоритму из самого токена доверять нельзя.', '**Срок** — не истёк ли пропуск.', '**Кто выдал и для кого** — `iss` и `aud` совпадают с ожидаемыми.', '**Права** — и только потом: можно ли этому человеку то, о чём он просит. Настоящий пропуск не открывает чужие заказы.']],
+          ['tip', 'attack', 'Типичные ошибки', 'Токен читают, но подпись не проверяют. Доверяют алгоритму, который указан в токене. Подписывают слабым секретом, который можно подобрать. Выдают пропуск на месяцы. Не умеют отзывать пропуск после выхода или кражи.'],
+          ['h', 'Короткий и длинный пропуск'],
+          ['p', '**Access-токен** живёт минуты и уходит с каждым запросом. **Refresh-токен** живёт дольше, нужен только чтобы получить новый access-токен, и хранится на сервере с возможностью отзыва. При каждом обновлении выдаётся новый refresh-токен, старый сгорает.'],
+          ['h', 'Где хранить токен в браузере'],
+          ['list', ['**localStorage** — просто, но любой скрипт на странице его прочитает. При XSS токен украдут.', '**Cookie с HttpOnly** — скрипты не прочитают, но браузер отправляет её сам, поэтому нужна защита от CSRF.', '**В памяти страницы + refresh в HttpOnly cookie** — популярный компромисс для одностраничных приложений.']],
+          ['tip', 'defense', 'Сильный ответ на собеседовании', 'Идеального места нет — есть компромисс между XSS и CSRF. HttpOnly, Secure и SameSite cookie плюс защита от CSRF, короткий срок access-токена и в любом случае исправление XSS.'],
+          ['pipe', ['IDE', 'SAST', 'SCA', 'Secrets', 'DAST'], 'SAST находит чтение токена без проверки подписи. SCA — уязвимые версии JWT-библиотек. Поиск секретов — ключ подписи в репозитории. DAST проверяет реакцию на изменённые и просроченные токены.'],
+          ['sfx', 'ВАШ БИЛЕТ!']
+        ],
+        fn: [['Микросервисы', 'Архитектура, где приложение собрано из многих маленьких сервисов.'], ['JWT', 'JSON Web Token — компактный подписанный пропуск с данными о пользователе.'], ['Подпись', 'Криптографическая отметка: по ней видно, что данные выдал тот, у кого ключ, и их не меняли.']],
+        quiz: [
+          { q: 'Можно ли прочитать содержимое JWT без ключа?', o: ['Нет, оно зашифровано', 'Да: подпись защищает от изменения, а не от чтения', 'Только с публичным ключом', 'Только у старых токенов'], a: 1, w: 'Подписанный токен не зашифрован. Поэтому секретов в нём быть не должно.' },
+          { q: 'В каком порядке сервер проверяет токен?', o: ['Сразу читает роль и пускает', 'Подпись, срок, издатель и получатель, затем права', 'Только срок', 'Только что токен читается'], a: 1, w: 'Сначала убеждаемся, что пропуск настоящий и свежий, потом — что у владельца есть права.' },
+          { q: 'Токен лежит в localStorage. Какая атака опаснее всего?', o: ['CSRF', 'XSS', 'SQL-инъекция', 'SSRF'], a: 1, w: 'Любой скрипт на странице прочитает localStorage. Браузер не прикладывает этот токен сам, поэтому CSRF тут не работает.' }
+        ],
+        iv: { q: 'Как устроен JWT и что backend должен проверять при каждом запросе?', a: 'JWT состоит из трёх частей: заголовок с алгоритмом, содержимое с утверждениями (sub, exp, iss, aud) и подпись. Первые две части закодированы и читаются кем угодно, подпись защищает от изменения. Backend проверяет подпись правильным ключом и алгоритмом из своей конфигурации, срок действия, издателя и получателя, а затем авторизацию к конкретному ресурсу. Дополнительно: короткий срок access-токена, refresh-токены с ротацией и отзывом, никаких секретов внутри, хранение в HttpOnly, Secure, SameSite cookie с защитой от CSRF или в памяти страницы.' }
+      },
+      8: {
+        villain: 'Утечкин', title: 'Утечкин и конвейер защиты', sub: 'Секреты в Git и карта DevSecOps-пайплайна', color: '#a8f03c', minutes: 13, diff: 2, district: 'Завод', art: 'v8',
+        motto: 'Один git push — и ключи от облака у всего интернета.',
+        learn: ['Почему удалить коммит с ключом недостаточно', 'Что делать в первые минуты после утечки', 'Как не допустить утечку', 'Какой контроль ловит какой риск в пайплайне'],
+        blocks: [
+          ['cap', 'Пятница, вечер. Разработчик спешит домой и отправляет в публичный репозиторий всё подряд — вместе с файлом, где лежит ключ доступа к облаку.'],
+          ['say', 'villain', 'Боты постоянно просматривают новые публичные коммиты. Такие ключи находят за минуты.'],
+          ['say', 'kai', 'Так он же может сразу удалить файл!'],
+          ['say', 'hero', 'Файл останется в **истории Git**[^1], в копиях у всех, кто успел скачать, в форках и кэшах. С момента публикации считай ключ **украденным**.'],
+          ['h', 'Что делать: по порядку'],
+          ['steps', ['**Отозвать и заменить ключ** — немедленно. Это шаг номер один.', '**Проверить журналы**: пользовался ли кто-то ключом, что успели сделать.', 'Убрать последствия: удалить чужие ресурсы, проверить доступы.', 'Почистить историю репозитория — это уборка, а не защита.', 'Разобрать причину и поставить контроль, чтобы не повторилось.']],
+          ['h', 'Как не допустить'],
+          ['list', ['Файлы с ключами — в `.gitignore`. В репозиторий кладём только пример без значений.', '**Проверка перед коммитом**[^2] — например, gitleaks на машине разработчика.', '**Защита при отправке** — платформа блокирует push с распознанным секретом.', '**Поиск секретов в CI** — страховка, если первые проверки пропустили.', '**Хранилище секретов**[^3]: Vault или облачный менеджер. В коде ключей нет вообще.', '**Короткоживущие ключи для CI** через OIDC[^4] вместо постоянных: красть нечего.']],
+          ['h', 'Большая карта конвейера'],
+          ['say', 'hero', 'Чем раньше нашли проблему, тем дешевле её исправить. Но один инструмент не ловит всё: каждый слой видит своё.'],
+          ['table', ['Контроль', 'От чего защищает', 'Где работает'], [['SAST', 'Ошибки в своём коде: инъекции, XSS', 'Редактор, проверка изменений'], ['SCA', 'Известные уязвимости в библиотеках', 'Проверка изменений, постоянный мониторинг'], ['Поиск секретов', 'Ключи и пароли в коде и истории', 'Перед коммитом, при отправке, в CI'], ['Скан IaC', 'Опасные настройки облака в коде', 'До выкладки инфраструктуры'], ['Скан контейнеров', 'Уязвимости в образах', 'После сборки'], ['DAST', 'Ошибки работающего приложения', 'Тестовый стенд'], ['Мониторинг', 'Атаки и аномалии в проде', 'Продакшн']]],
+          ['tip', 'note', 'SAST, DAST и SCA за 10 секунд', '**SAST** читает твой код, не запуская его. **DAST** проверяет работающее приложение снаружи. **SCA** проверяет чужой код — библиотеки и их версии.'],
+          ['say', 'kai', 'А если SCA нашёл критическую уязвимость и сборка упала за час до релиза? Можно же выключить проверку?'],
+          ['say', 'hero', 'Нельзя. Читаем, что за уязвимость и достижима ли она у нас. Есть исправленная версия — обновляем. Нет — ставим компенсирующие меры. Решили принять риск — оформляем это с ответственным и сроком, а не тихо выключаем навсегда.'],
+          ['pipe', ['IDE', 'Commit', 'CI', 'SAST', 'SCA', 'Secrets', 'Container', 'IaC', 'Deploy', 'DAST', 'Runtime'], 'Каждый этап — свой слой. Логические ошибки вроде IDOR сканеры почти не видят: их ловят тесты и ревью.'],
+          ['sfx', 'ДЗЫНЬ!']
+        ],
+        fn: [['История Git', 'Git хранит все версии файлов. Удалённое в новом коммите остаётся в старых.'], ['Проверка перед коммитом', 'Pre-commit hook — скрипт, который запускается перед каждым коммитом и может его остановить.'], ['Хранилище секретов', 'Сервис, который хранит ключи и выдаёт их приложению при запуске.'], ['OIDC', 'Способ получить временные облачные ключи на время одной задачи в CI без постоянного секрета.']],
+        quiz: [
+          { q: 'Ключ облака попал в публичный репозиторий. Что делать первым?', o: ['Удалить файл новым коммитом', 'Отозвать ключ и проверить журналы', 'Переписать историю git', 'Сделать репозиторий приватным'], a: 1, w: 'Ключ уже могли скопировать. Сначала лишаем его силы.' },
+          { q: 'Какой инструмент проверяет известные уязвимости в сторонних библиотеках?', o: ['SAST', 'DAST', 'SCA', 'Скан IaC'], a: 2, w: 'SCA сверяет библиотеки и их версии с базами уязвимостей.' },
+          { q: 'Где секрет ловится раньше всего?', o: ['В DAST на стенде', 'Проверкой перед коммитом на машине разработчика', 'В мониторинге', 'В журналах'], a: 1, w: 'Проверка перед коммитом не пускает секрет даже в локальную историю.' }
+        ],
+        iv: { q: 'Сборка упала после SCA: найдена критическая уязвимость в зависимости. Твои действия?', a: 'Не отключаю проверку. Смотрю отчёт: какая библиотека, прямая или транзитивная, что за уязвимость. Оцениваю реальный риск: условия эксплуатации, есть ли публичный эксплойт, используем ли уязвимую функцию, доступен ли компонент извне. Если есть исправленная версия — обновляю и прогоняю тесты. Если нет — компенсирующие меры и задача на отслеживание. Если бизнес принимает риск — оформленное решение с ответственным и сроком, исключение в сканере с комментарием и датой окончания. На будущее — автоматическое обновление зависимостей.' }
+      },
+      9: {
+        villain: 'Совет Десяти', title: 'OWASP Top 10:2025 — галерея злодеев', sub: 'Все десять категорий: смысл, пример и как не перепутать', color: '#ffd60a', minutes: 12, diff: 1, district: 'Веб-квартал', art: 'v9',
+        motto: 'Нас десять. И мы в каждом втором приложении.',
+        learn: ['Все десять категорий OWASP Top 10:2025', 'Что изменилось с 2021 года', 'Как отличать похожие категории', 'Как отвечать на этот вопрос на собеседовании'],
+        blocks: [
+          ['cap', 'Зал заседаний под городом. Вокруг стола десять фигур в капюшонах. Каждая отвечает за свой вид беды.'],
+          ['say', 'kai', 'Что это за Совет?'],
+          ['say', 'hero', 'OWASP[^1] — открытое сообщество по безопасности приложений. Раз в несколько лет оно публикует **Top 10** — список самых опасных рисков, основанный на данных о реальных уязвимостях. Последняя редакция — 2025 года.'],
+          ['h', 'Все десять'],
+          ['table', ['№', 'Категория', 'Простыми словами'], [['A01', 'Broken Access Control', 'Пользователь делает то, на что нет прав. Сюда же теперь входит SSRF'], ['A02', 'Security Misconfiguration', 'Небезопасные настройки: пароли по умолчанию, открытое хранилище'], ['A03', 'Software Supply Chain Failures', 'Риски в зависимостях, сборке и поставке'], ['A04', 'Cryptographic Failures', 'Слабая или отсутствующая криптография'], ['A05', 'Injection', 'Данные становятся кодом: SQL-инъекция, XSS'], ['A06', 'Insecure Design', 'Дыра в самой архитектуре, а не в реализации'], ['A07', 'Authentication Failures', 'Ошибки при установлении личности'], ['A08', 'Software or Data Integrity Failures', 'Нет проверки целостности кода и данных'], ['A09', 'Security Logging & Alerting Failures', 'Атаку не видно и на неё не реагируют'], ['A10', 'Mishandling of Exceptional Conditions', 'Ошибки и сбои обрабатываются небезопасно']]],
+          ['tip', 'note', 'Что изменилось с 2021', 'Security Misconfiguration поднялась на второе место. Появилась **Software Supply Chain Failures** (A03) — она расширила бывшую категорию про устаревшие компоненты. SSRF вошёл в A01. Новая категория — **Mishandling of Exceptional Conditions** (A10).'],
+          ['h', 'Пары, которые путают'],
+          ['list', ['**A01 и A07**: A07 — «кто ты?», вход и сессии. A01 — «что тебе можно?», права на объект и действие.', '**A06 и остальные**: Insecure Design — ошибка ещё в проекте, идеальный код её не спасёт.', '**A03 и A08**: A03 — риски цепочки поставки в целом. A08 — нет проверки подлинности конкретного кода или данных.']],
+          ['h', 'Тренировка: назови категорию'],
+          ['say', 'hero', 'Закрой ответы рукой и попробуй сам — так знания держатся крепче[^2].'],
+          ['list', ['Пароли хранятся в базе без соли простым хешем. → **A04**', 'Можно бесконечно перебирать пароли на форме входа. → **A07**', 'Взлом заметили через полгода, потому что журналов не было. → **A09**', 'Когда сервис проверки прав недоступен, приложение пускает всех. → **A10**', 'Хранилище в облаке открыто всему интернету. → **A02**']],
+          ['say', 'villain', 'Запомнишь нас всех — и Совет распущен.'],
+          ['pipe', ['SAST', 'SCA', 'Secrets', 'IaC', 'DAST', 'Runtime'], 'Почти у каждой категории есть свой контроль: A05 ловит SAST, A03 — SCA и подпись артефактов, A02 — скан IaC, A09 — мониторинг. A01 и A06 требуют ревью, тестов и моделирования угроз.'],
+          ['sfx', '10 ИЗ 10!']
+        ],
+        fn: [['OWASP', 'Open Worldwide Application Security Project — некоммерческое сообщество по безопасности приложений.'], ['Активное припоминание', 'Active recall: попытка вспомнить ответ сама укрепляет память сильнее, чем перечитывание.']],
+        quiz: [
+          { q: 'Форма входа позволяет бесконечно перебирать пароли. Категория?', o: ['A01 Broken Access Control', 'A05 Injection', 'A07 Authentication Failures', 'A09 Logging Failures'], a: 2, w: 'Это проблема механизма входа — нет защиты от перебора.' },
+          { q: 'Куда в OWASP Top 10:2025 отнесли SSRF?', o: ['Отдельная категория A10', 'A01 Broken Access Control', 'A05 Injection', 'A02 Misconfiguration'], a: 1, w: 'В 2025 SSRF вошёл в Broken Access Control. A10 теперь — обработка исключительных ситуаций.' },
+          { q: 'При сбое проверки прав приложение пропускает запрос. Категория?', o: ['A10 Mishandling of Exceptional Conditions', 'A04 Cryptographic Failures', 'A03 Supply Chain', 'A08 Integrity Failures'], a: 0, w: 'Небезопасное поведение при сбое — пример новой категории A10.' }
+        ],
+        iv: { q: 'Назови OWASP Top 10 и приведи пример к трём категориям.', a: 'A01 Broken Access Control, A02 Security Misconfiguration, A03 Software Supply Chain Failures, A04 Cryptographic Failures, A05 Injection, A06 Insecure Design, A07 Authentication Failures, A08 Software or Data Integrity Failures, A09 Security Logging & Alerting Failures, A10 Mishandling of Exceptional Conditions. Примеры: A01 — IDOR, когда пользователь меняет номер и видит чужой заказ; A05 — SQL-инъекция из-за склеивания строк, защита — параметризованные запросы; A03 — уязвимая библиотека, защита — SCA, SBOM, фиксированные версии и подпись артефактов. Сильный ход — сразу назвать, каким контролем в пайплайне ловится каждая.' }
+      }
+    };
+
+    const n = Math.min(9, Math.max(1, parseInt(this.props.issue ?? '2', 10) || 2));
+    const d = ISSUES[n];
+    const st = Object.assign({ ans: {}, iv: false }, this.state || {});
+    const BLOB = { v1: '40522caf67506d1d8a1711a08454e769', v2: '514e6e80025fe9d5923d48bbb8ffecaf', v3: 'f6d4ece1d46d17878f4a78cd6cd908a5', v5: '2871ddc0547fea9d62c83365e76e7ab1', v6: 'b22c2c3c1d7460c06a98b2235425b27a', v7: '61d2fd71e56001a5bf9abae0dba0bfa3', v8: 'de2ab356956cf23de58721cd3bb69056', v9: '21cf2a6d96e6d7f14f40bc7226037139' };
+    const STAGES = ['IDE', 'Commit', 'CI', 'SAST', 'SCA', 'Secrets', 'Container', 'IaC', 'Deploy', 'DAST', 'Runtime'];
+    const WHO = {
+      hero: { name: 'Дядя Миша', initials: 'ДМ', av: '#9e1b32', fg: '#ffffff', bubble: '#ffffff', right: false },
+      kai: { name: 'Соня', initials: 'С', av: '#19c3ff', fg: '#141414', bubble: '#e6f6ff', right: false },
+      villain: { name: d.villain, initials: d.villain.split(/[\s-]/).map((w) => w[0]).join('').slice(0, 2).toUpperCase(), av: '#7b4dff', fg: '#ffffff', bubble: '#ffe3e3', right: true }
+    };
+    const TIP = { attack: ['#ffe3e3', '#ff3b3b', '#ffffff'], defense: ['#dcf9ec', '#0f8a57', '#ffffff'], note: ['#fff6c7', '#141414', '#ffd60a'] };
+    const blocks = d.blocks.map((b) => {
+      const k = { isCap: false, isSay: false, isH: false, isP: false, isList: false, isSteps: false, isTip: false, isCode: false, isTable: false, isPipe: false, isSfx: false, isToy: false };
+      const t = b[0];
+      if (t === 'cap') return Object.assign(k, { isCap: true, segs: this.segs(b[1]) });
+      if (t === 'h') return Object.assign(k, { isH: true, text: b[1] });
+      if (t === 'p') return Object.assign(k, { isP: true, segs: this.segs(b[1]) });
+      if (t === 'sfx') return Object.assign(k, { isSfx: true, text: b[1] });
+      if (t === 'toy') return Object.assign(k, { isToy: true, toy: b[1] });
+      if (t === 'list') return Object.assign(k, { isList: true, items: b[1].map((x) => ({ segs: this.segs(x) })) });
+      if (t === 'steps') return Object.assign(k, { isSteps: true, items: b[1].map((x, i) => ({ n: i + 1, segs: this.segs(x) })) });
+      if (t === 'say') {
+        const w = WHO[b[1]];
+        const img = b[1] === 'villain' && BLOB[d.art] ? '/_blob/' + BLOB[d.art] : '';
+        return Object.assign(k, {
+          isSay: true, segs: this.segs(b[2]), name: w.name, initials: w.initials, hasImg: !!img, noImg: !img, img,
+          rowStyle: 'display:flex;gap:12px;align-items:flex-start;' + (w.right ? 'flex-direction:row-reverse' : ''),
+          avStyle: 'width:62px;height:62px;display:grid;place-items:center;border-radius:50%;font-family:Rubik Mono One,sans-serif;font-size:17px;border:3px solid #141414;box-shadow:3px 3px 0 #141414;background:' + w.av + ';color:' + w.fg,
+          bubbleStyle: 'position:relative;flex:1;min-width:0;font-family:Neucha,cursive;font-size:22px;line-height:1.35;border:3px solid #141414;border-radius:22px;box-shadow:3px 3px 0 #141414;padding:12px 18px;background:' + w.bubble
+        });
+      }
+      if (t === 'tip') {
+        const c = TIP[b[1]];
+        return Object.assign(k, { isTip: true, title: b[2], segs: this.segs(b[3]),
+          tipStyle: 'display:flex;flex-direction:column;gap:10px;border:3px solid #141414;box-shadow:4px 4px 0 #141414;padding:16px 18px;background:' + c[0],
+          tipTitleStyle: 'align-self:flex-start;font-family:Russo One,sans-serif;font-size:14px;padding:3px 10px;border:2px solid #141414;transform:rotate(-1.5deg);background:' + c[1] + ';color:' + c[2] });
+      }
+      if (t === 'code') {
+        const col = b[2] === 'bad' ? '#ff3b3b' : (b[2] === 'good' ? '#2ee59d' : '#ffd60a');
+        return Object.assign(k, { isCode: true, label: b[1], code: b[3],
+          codeWrap: 'display:flex;flex-direction:column;background:#1b1b1f;border:3px solid #141414;box-shadow:4px 4px 0 ' + col,
+          codeLabel: 'align-self:flex-start;font-family:Russo One,sans-serif;font-size:12px;padding:3px 10px;border-right:2px solid #141414;border-bottom:2px solid #141414;background:' + col + ';color:' + (b[2] === 'bad' ? '#ffffff' : '#141414') });
+      }
+      if (t === 'table') {
+        const cols = b[1].length;
+        const cells = [];
+        b[1].forEach((h) => cells.push({ text: h, style: 'padding:10px 12px;font-family:Russo One,sans-serif;font-size:14px;background:#141414;color:#ffd60a' }));
+        b[2].forEach((row, ri) => row.forEach((c, ci) => cells.push({ text: c, style: 'padding:10px 12px;font-size:15px;line-height:1.45;border-top:2px solid #141414;' + (ci ? 'border-left:2px solid #141414;' : 'font-weight:700;') + 'background:' + (ri % 2 ? '#fff7e3' : '#ffffff') })));
+        return Object.assign(k, { isTable: true, cells, gridStyle: 'display:grid;min-width:560px;grid-template-columns:' + (cols === 3 ? 'minmax(70px,.6fr) minmax(0,1.2fr) minmax(0,2fr)' : 'repeat(' + cols + ',minmax(0,1fr))') });
+      }
+      if (t === 'pipe') {
+        const hit = new Set(b[1]);
+        return Object.assign(k, { isPipe: true, text: b[2], stages: STAGES.map((s) => ({ name: s, style: 'font-family:Russo One,sans-serif;font-size:13px;padding:5px 10px;border:2px solid #141414;' + (hit.has(s) ? 'background:#2ee59d;box-shadow:2px 2px 0 #141414' : 'background:#f1ece0;color:#8c8577') })) });
+      }
+      return k;
+    });
+    const quiz = d.quiz.map((q, qi) => {
+      const chosen = st.ans[qi];
+      const answered = chosen !== undefined;
+      const right = answered && chosen === q.a;
+      return {
+        q: q.q, w: q.w, answered,
+        fbTitle: right ? 'Верно.' : 'Мимо.',
+        fbStyle: 'font-size:16px;line-height:1.5;padding:10px 12px;border-left:6px solid ' + (right ? '#0f8a57;background:#dcf9ec' : '#ff3b3b;background:#ffe3e3'),
+        opts: q.o.map((label, oi) => {
+          let bg = '#fff7e3', color = '#141414', deco = 'none';
+          if (answered && oi === q.a) bg = '#2ee59d';
+          else if (answered && oi === chosen) { bg = '#ff3b3b'; color = '#ffffff'; deco = 'line-through'; }
+          return { label, locked: answered,
+            pick: () => { const cur = (this.state && this.state.ans) || {}; if (cur[qi] === undefined) this.setState({ ans: Object.assign({}, cur, { [qi]: oi }) }); },
+            style: 'text-align:left;min-height:46px;padding:10px 14px;font:500 16px Rubik,sans-serif;border:3px solid #141414;box-shadow:3px 3px 0 #141414;cursor:' + (answered ? 'default' : 'pointer') + ';background:' + bg + ';color:' + color + ';text-decoration:' + deco };
+        })
+      };
+    });
+    const done = d.quiz.every((_, i) => st.ans[i] !== undefined);
+    const score = d.quiz.filter((q, i) => st.ans[i] === q.a).length;
+    const prev = n > 1 ? n - 1 : 9, next = n < 9 ? n + 1 : 1;
+    return {
+      d, num: n, blocks, quiz,
+      ccUser: window.CC ? (CC.getUser() || '') : '',
+      stars: '★'.repeat(d.diff) + '☆'.repeat(3 - d.diff),
+      coverStyle: 'flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:' + d.color,
+      fns: d.fn.map((f, i) => ({ n: i + 1, term: f[0], def: f[1] })),
+      quizDone: done, score, qTotal: d.quiz.length,
+      scoreText: score === d.quiz.length ? 'Злодей повержен начисто!' : (score > 0 ? 'Злодей отступил, но обещал вернуться. Закрепи тему в «Прокачаться».' : 'Злодей сбежал. Перечитай выпуск — и в бой ещё раз.'),
+      ivHidden: !st.iv, ivShown: !!st.iv, showIv: () => this.setState({ iv: true }),
+      prevHref: 'Issue' + prev + '.dc.html', prevLabel: '← №' + prev + ' ' + ISSUES[prev].villain,
+      nextHref: 'Issue' + next + '.dc.html', nextLabel: '№' + next + ' ' + ISSUES[next].villain + ' →'
+    };
+  }
+}
+</script>
+</body>
+</html>

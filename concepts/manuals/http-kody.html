@@ -1,0 +1,78 @@
+<!-- Шпаргалка Барахолки: HTTP-коды ответов. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="hc-1" data-title="Как читать код · 1xx, 2xx и 3xx" data-preview>
+  <span class="mn-tag">Шпаргалка · HTTP</span>
+  <h2 class="mn-h1">HTTP-коды на одном листе</h2>
+  <p class="pen">Сервер на каждый запрос отвечает трёхзначным числом. Первая цифра — это уже половина ответа.</p>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Первая цифра</th><th>Смысл</th></tr></thead>
+    <tbody>
+      <tr><td><b>1xx</b></td><td>Информация: «принял, продолжай».</td></tr>
+      <tr><td><b>2xx</b></td><td><span class="mk g">Успех.</span></td></tr>
+      <tr><td><b>3xx</b></td><td>Перенаправление: «тебе туда».</td></tr>
+      <tr><td><b>4xx</b></td><td><span class="mk">Ошибка клиента:</span> что-то не так с запросом.</td></tr>
+      <tr><td><b>5xx</b></td><td><span class="mk p">Ошибка сервера:</span> сломалось у него.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">1xx и 2xx</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>101</code></td><td>Switching Protocols — переходим на другой протокол, например на WebSocket.</td></tr>
+      <tr><td><code>200</code></td><td>OK — всё хорошо, вот ответ.</td></tr>
+      <tr><td><code>201</code></td><td>Created — создал новую запись (после POST).</td></tr>
+      <tr><td><code>204</code></td><td>No Content — сделал, но показать нечего (часто после DELETE).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">3xx — перенаправления</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>301</code></td><td>Moved Permanently — переехал навсегда. Поисковики запомнят новый адрес.</td></tr>
+      <tr><td><code>302</code></td><td>Found — временно смотри в другом месте. Классика после входа на сайт.</td></tr>
+      <tr><td><code>304</code></td><td>Not Modified — не изменилось, бери из своего кэша.</td></tr>
+      <tr><td><code>307</code> / <code>308</code></td><td>Временный / постоянный переезд, но метод и тело запроса не меняются.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Если сайт перенаправляет на адрес из параметра <code>?next=</code> без проверки, это «открытый редирект»: им заманивают на поддельные страницы. Перенаправлять — только на свои адреса.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="hc-2" data-title="4xx, 5xx и что коды говорят о безопасности">
+  <h3 class="mn-h3">4xx — ошибся клиент</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>400</code></td><td>Bad Request — запрос кривой, сервер его не понял.</td></tr>
+      <tr><td><code>401</code></td><td>Unauthorized — на деле «<b>кто ты?</b>»: не вошёл или токен не годится.</td></tr>
+      <tr><td><code>403</code></td><td>Forbidden — «<b>тебе нельзя</b>»: личность известна, прав нет.</td></tr>
+      <tr><td><code>404</code></td><td>Not Found — такого нет (или тебе не говорят, что есть).</td></tr>
+      <tr><td><code>405</code></td><td>Method Not Allowed — адрес есть, но не с этим методом (скажем, DELETE).</td></tr>
+      <tr><td><code>409</code></td><td>Conflict — конфликт с текущим состоянием, например имя уже занято.</td></tr>
+      <tr><td><code>418</code></td><td>I'm a teapot — шутка из первоапрельского RFC 2324 (1998). Настоящий чайник кофе не варит.</td></tr>
+      <tr><td><code>422</code></td><td>Unprocessable Content — формат верный, а данные не прошли проверку.</td></tr>
+      <tr><td><code>429</code></td><td>Too Many Requests — слишком часто, подожди. Так работает ограничение попыток.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">5xx — сломался сервер</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>500</code></td><td>Internal Server Error — внутри что-то упало.</td></tr>
+      <tr><td><code>502</code></td><td>Bad Gateway — посредник (прокси) получил плохой ответ от сервера за ним.</td></tr>
+      <tr><td><code>503</code></td><td>Service Unavailable — перегружен или на обслуживании.</td></tr>
+      <tr><td><code>504</code></td><td>Gateway Timeout — посредник не дождался ответа.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-stick">
+    <h4>Коды и безопасность</h4>
+    <ul>
+      <li><b>401 и 403</b> — это A07 и A01 из OWASP: «кто ты?» и «что тебе можно?».</li>
+      <li>На чужой объект часто отвечают <b>404</b>, а не 403, чтобы не подтверждать, что он вообще существует.</li>
+      <li><b>429</b> — признак защиты от перебора паролей. Нет его на форме входа — повод задуматься.</li>
+      <li><b>500</b> с подробной ошибкой и путями к файлам на экране — подарок атакующему (A02, A10). Пользователю — короткое сообщение, подробности — в журнал.</li>
+    </ul>
+  </div>
+  <p class="pen">Посмотреть код ответа: в браузере F12 → вкладка «Сеть» (Network). Подробно про запросы и ответы — <a href="Issue1.dc.html">выпуск №1 про HTTP</a>.</p>
+  <span class="mn-pg">2</span>
+</section>

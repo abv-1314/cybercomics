@@ -1,0 +1,1171 @@
+<section class="ix ix-ip" data-ix="ip" aria-label="Выпуск 12: Сети и IP-адреса">
+
+<svg class="ix-ip-sprite" aria-hidden="true" focusable="false" width="0" height="0">
+  <symbol id="ix-ip-i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19.5h20"/></symbol>
+  <symbol id="ix-ip-i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.2h2"/></symbol>
+  <symbol id="ix-ip-i-pad" viewBox="0 0 24 24"><path d="M7 8.5h10a4.5 4.5 0 0 1 4.4 5.4l-.5 2.3a2.6 2.6 0 0 1-4.6 1L15 15.5H9l-1.3 1.7a2.6 2.6 0 0 1-4.6-1l-.5-2.3A4.5 4.5 0 0 1 7 8.5z"/><path d="M8 11v3M6.5 12.5h3M15.5 12h.01M17.5 13.5h.01"/></symbol>
+  <symbol id="ix-ip-i-bulb" viewBox="0 0 24 24"><path d="M9.5 17.5h5M10.5 20.5h3M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2v.5h5V16c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="ix-ip-i-tablet" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="ix-ip-i-router" viewBox="0 0 24 24"><rect x="3" y="12.5" width="18" height="7.5" rx="1.6"/><path d="M7 12.5 5.2 6M17 12.5 18.8 6"/><path d="M7 16.3h.01M10 16.3h.01M13 16.3h.01"/></symbol>
+  <symbol id="ix-ip-i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9M12 3C9.4 5.6 8.2 8.6 8.2 12s1.2 6.4 3.8 9"/></symbol>
+</svg>
+
+<div class="ix-ip-story">
+
+  <div class="ix-ip-hud" aria-hidden="true">
+    <span class="ix-ip-hud-l">ЗАЩИТА СЕТИ</span>
+    <span class="ix-ip-bar"><i></i><b>0%</b></span>
+    <span class="ix-ip-pips"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span>
+  </div>
+  <div class="ix-ip-sr" aria-live="polite" data-live></div>
+
+  <!-- ================= MISSION ================= -->
+  <div class="ix-ip-mission" id="ix-ip-mission">
+    <div class="ix-ip-poster" aria-hidden="true">
+      <div class="ix-ip-pghost"><span data-t="192.168">192.168</span><span data-t=".1.1">.1.1</span></div>
+      <div class="ix-ip-badge">
+        <span class="ix-ip-badge-top">ЗДРАВСТВУЙТЕ, Я&nbsp;—</span>
+        <span class="ix-ip-badge-name">роутер</span>
+        <span class="ix-ip-badge-mac">MAC 66:6f:72:67:65:13</span>
+      </div>
+      <span class="ix-ip-pname">САМОЗВАНЕЦ</span>
+    </div>
+    <div class="ix-ip-mbody">
+      <p class="ix-ip-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ВЫПУСК 12</p>
+      <h2 class="ix-ip-mt">Кто тут<br>роутер?</h2>
+      <p class="ix-ip-msub">В&nbsp;домашней сети Сони завёлся <em>двойник роутера</em>. Чтобы его поймать, сначала побудь роутером сам: раздай адреса, проведи пакет в&nbsp;интернет и&nbsp;обратно.</p>
+      <ol class="ix-ip-moves" aria-label="Уровни миссии">
+        <li data-mv="1"><b>01</b><span>Раздай адреса</span></li>
+        <li data-mv="2"><b>02</b><span>Свои и&nbsp;публичные</span></li>
+        <li data-mv="3"><b>03</b><span>Выход через NAT</span></li>
+        <li data-mv="4"><b>04</b><span>Маска /24</span></li>
+        <li data-mv="5" class="ix-ip-mv-boss"><b>05</b><span>Поймай Самозванца</span></li>
+      </ol>
+      <button class="ix-ip-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ================= L1: DHCP + IPv4 ================= -->
+  <section class="ix-ip-lvl ix-ip-locked" id="ix-ip-l1" aria-labelledby="ix-ip-t1">
+    <div class="ix-ip-lh"><span class="ix-ip-ln">УРОВЕНЬ 1 / 5</span><h3 class="ix-ip-lt" id="ix-ip-t1">Раздай адреса</h3><span class="ix-ip-ok">ВЫДАНО</span></div>
+    <div class="ix-ip-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="ix-ip-lb">
+      <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">Дядя Миша, у&nbsp;меня дома ноут, телефон, приставка и&nbsp;лампочка с&nbsp;Wi‑Fi. Как роутер понимает, кому что отдать?</span></div>
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Как почтальон в&nbsp;доме — по номерам квартир. Только номера раздаёт сам роутер. Побудь им.</span></div>
+
+      <div class="ix-ip-home" data-home="1">
+        <p class="ix-ip-zone">ДОМ СОНИ · Wi‑Fi</p>
+        <div class="ix-ip-dev ix-ip-dev-router" data-dev="router">
+          <svg class="ix-ip-ic"><use href="#ix-ip-i-router"/></svg>
+          <span class="ix-ip-dn">Роутер</span><span class="ix-ip-da">192.168.1.1</span>
+        </div>
+        <div class="ix-ip-devs">
+          <div class="ix-ip-dev" data-dev="laptop"><svg class="ix-ip-ic"><use href="#ix-ip-i-laptop"/></svg><span class="ix-ip-dn">Ноутбук</span><span class="ix-ip-da" data-ip>— . — . — . —</span></div>
+          <div class="ix-ip-dev" data-dev="phone"><svg class="ix-ip-ic"><use href="#ix-ip-i-phone"/></svg><span class="ix-ip-dn">Телефон Сони</span><span class="ix-ip-da" data-ip>— . — . — . —</span></div>
+          <div class="ix-ip-dev" data-dev="pad"><svg class="ix-ip-ic"><use href="#ix-ip-i-pad"/></svg><span class="ix-ip-dn">Приставка</span><span class="ix-ip-da" data-ip>— . — . — . —</span></div>
+          <div class="ix-ip-dev" data-dev="bulb"><svg class="ix-ip-ic"><use href="#ix-ip-i-bulb"/></svg><span class="ix-ip-dn">Лампочка</span><span class="ix-ip-da" data-ip>— . — . — . —</span></div>
+          <div class="ix-ip-dev ix-ip-dev-new" data-dev="tablet" hidden><svg class="ix-ip-ic"><use href="#ix-ip-i-tablet"/></svg><span class="ix-ip-dn">Планшет</span><span class="ix-ip-da" data-ip>192.168.1.14</span></div>
+        </div>
+      </div>
+      <div class="ix-ip-act"><button class="ix-ip-btn ix-ip-y" type="button" data-act="dhcp">Раздать адреса ▶</button></div>
+
+      <div class="ix-ip-ph" data-ph="l1-anat" hidden>
+        <p class="ix-ip-lead">Роутер выдал адреса сам, по протоколу <b>DHCP</b>. Разберём один.</p>
+        <div class="ix-ip-anat" role="img" aria-label="Адрес 192.168.1.10: четыре числа, каждое по 8 бит">
+          <span><b>192</b><i>11000000</i></span><em>.</em>
+          <span><b>168</b><i>10101000</i></span><em>.</em>
+          <span><b>1</b><i>00000001</i></span><em>.</em>
+          <span><b>10</b><i>00001010</i></span>
+        </div>
+        <p class="ix-ip-big">Четыре числа от&nbsp;0 до&nbsp;255.<br><span>Каждое — 8 бит, всего 32 бита. Это IPv4.</span></p>
+
+        <p class="ix-ip-q">Пришёл планшет. Какой адрес ему может выдать роутер?</p>
+        <div class="ix-ip-choices" data-quiz="tablet">
+          <button class="ix-ip-ch" type="button" data-v="256"><b>192.168.1.256</b><span>Следующий номер побольше</span></button>
+          <button class="ix-ip-ch" type="button" data-v="10"><b>192.168.1.10</b><span>Как у ноутбука, он всё равно спит</span></button>
+          <button class="ix-ip-ch" type="button" data-v="14" data-ok><b>192.168.1.14</b><span>Первый свободный</span></button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-after">
+        <div class="ix-ip-act"><button class="ix-ip-btn" type="button" data-goto="ix-ip-l2">Дальше: у&nbsp;Кати тоже .10?! ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L2: PRIVATE vs PUBLIC ================= -->
+  <section class="ix-ip-lvl ix-ip-locked" id="ix-ip-l2" aria-labelledby="ix-ip-t2">
+    <div class="ix-ip-lh"><span class="ix-ip-ln">УРОВЕНЬ 2 / 5</span><h3 class="ix-ip-lt" id="ix-ip-t2">Свои и&nbsp;публичные</h3><span class="ix-ip-ok">РАЗОБРАНО</span></div>
+    <div class="ix-ip-lockcap"><span>🔒 Сначала раздай адреса</span></div>
+    <div class="ix-ip-lb">
+      <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">У&nbsp;подруги Кати ноутбук тоже <b>192.168.1.10</b>! Мы&nbsp;что, в&nbsp;интернете одинаковые?</span></div>
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Нет. Это частный адрес. Как «квартира&nbsp;10»: она есть в&nbsp;каждом доме, но&nbsp;письмо «в&nbsp;кв.&nbsp;10» почта не&nbsp;доставит.</span></div>
+
+      <ul class="ix-ip-ranges" aria-label="Частные диапазоны">
+        <li><b>10.<i>x.x.x</i></b><span>10.0.0.0/8 — большие сети, офисы</span></li>
+        <li><b>172.16–31<i>.x.x</i></b><span>172.16.0.0/12 — второе число только с&nbsp;16 по&nbsp;31!</span></li>
+        <li><b>192.168.<i>x.x</i></b><span>192.168.0.0/16 — почти все домашние роутеры</span></li>
+      </ul>
+      <p class="ix-ip-def">Эти три диапазона отданы под внутренние сети. Роутеры в&nbsp;интернете пакеты на&nbsp;такие адреса не&nbsp;пропускают. Почти все остальные адреса — <b>публичные</b>: каждый уникален на&nbsp;всю планету.</p>
+
+      <div class="ix-ip-sort" data-sort>
+        <p class="ix-ip-q">Частный или публичный? <span class="ix-ip-cnt" data-cnt>1 / 4</span></p>
+        <div class="ix-ip-sortcard"><span class="ix-ip-sortip" data-sortip>10.0.0.5</span></div>
+        <div class="ix-ip-act ix-ip-pair">
+          <button class="ix-ip-btn" type="button" data-sv="priv">Частный</button>
+          <button class="ix-ip-btn" type="button" data-sv="pub">Публичный</button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-after">
+        <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">А&nbsp;<b>127.0.0.1</b> в&nbsp;настройках моего игрового сервера — это какой?</span></div>
+        <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Особый. Это петля, localhost: пакет никуда не&nbsp;уходит и&nbsp;возвращается в&nbsp;тот же компьютер.</span></div>
+        <p class="ix-ip-big">127.0.0.1 — это «я&nbsp;сам».<br><span>У&nbsp;каждого компьютера он свой.</span></p>
+        <div class="ix-ip-act"><button class="ix-ip-btn" type="button" data-goto="ix-ip-l3">Выйти в&nbsp;интернет ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L3: NAT ================= -->
+  <section class="ix-ip-lvl ix-ip-locked" id="ix-ip-l3" aria-labelledby="ix-ip-t3">
+    <div class="ix-ip-lh"><span class="ix-ip-ln">УРОВЕНЬ 3 / 5</span><h3 class="ix-ip-lt" id="ix-ip-t3">Выход через NAT</h3><span class="ix-ip-ok">ДОСТАВЛЕНО</span></div>
+    <div class="ix-ip-lockcap"><span>🔒 Сначала разбери адреса</span></div>
+    <div class="ix-ip-lb">
+      <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">Если <b>192.168</b> в&nbsp;интернет не&nbsp;пускают, как мой телефон вообще открывает сайты?</span></div>
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Роутер переклеивает обратный адрес на&nbsp;конверте. Ты&nbsp;сейчас роутер — клей сам.</span></div>
+
+      <div class="ix-ip-nat" data-nat data-st="0">
+        <div class="ix-ip-band ix-ip-band-net" data-band="site">
+          <p class="ix-ip-zone">ИНТЕРНЕТ</p>
+          <div class="ix-ip-node"><svg class="ix-ip-ic"><use href="#ix-ip-i-globe"/></svg><span><b>Сайт игры</b><code>198.51.100.20</code></span></div>
+        </div>
+        <div class="ix-ip-band ix-ip-band-rt" data-band="router">
+          <div class="ix-ip-node"><svg class="ix-ip-ic"><use href="#ix-ip-i-router"/></svg><span><b>Роутер</b><code class="ix-ip-pubip">203.0.113.7</code><small>снаружи · внутри 192.168.1.1</small></span></div>
+        </div>
+        <div class="ix-ip-band ix-ip-band-home" data-band="phone">
+          <p class="ix-ip-zone">ДОМ СОНИ</p>
+          <div class="ix-ip-node"><svg class="ix-ip-ic"><use href="#ix-ip-i-phone"/></svg><span><b>Телефон</b><code>192.168.1.11</code></span></div>
+          <span class="ix-ip-okpage" data-okpage>✓ страница открылась</span>
+        </div>
+        <div class="ix-ip-pkt" data-pkt aria-hidden="true">
+          <span class="ix-ip-pkt-k" data-pk>ЗАПРОС</span>
+          <span class="ix-ip-pkt-r"><small>ОТ</small><code data-from>192.168.1.11:51000</code></span>
+          <span class="ix-ip-pkt-r"><small>КОМУ</small><code data-to>198.51.100.20:443</code></span>
+        </div>
+      </div>
+      <p class="ix-ip-cap" data-nathint aria-live="polite">Телефон открывает сайт игры. На&nbsp;конверте его частный адрес.</p>
+      <div class="ix-ip-nattab" data-nattab>
+        <p class="ix-ip-nattab-h">ПАМЯТЬ РОУТЕРА (ТАБЛИЦА NAT)</p>
+        <p class="ix-ip-nattab-e" data-natempty>пока пусто</p>
+        <p class="ix-ip-nattab-row" data-natrow hidden><small>ВНУТРИ</small><code>192.168.1.11:51000</code><small>СНАРУЖИ</small><code>203.0.113.7:40001</code></p>
+      </div>
+      <div class="ix-ip-act"><button class="ix-ip-btn ix-ip-y" type="button" data-act="nat">Отправить запрос ▶</button></div>
+
+      <div class="ix-ip-ph" data-ph="l3-q" hidden>
+        <p class="ix-ip-q">Сайт записал в&nbsp;журнал адрес посетителя. Какой?</p>
+        <div class="ix-ip-choices ix-ip-two-ch" data-quiz="seen">
+          <button class="ix-ip-ch" type="button" data-v="priv"><b>192.168.1.11</b><span>Адрес телефона Сони</span></button>
+          <button class="ix-ip-ch" type="button" data-v="pub" data-ok><b>203.0.113.7</b><span>Публичный адрес роутера</span></button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-after">
+        <h4 class="ix-ip-h">Что сайт узнаёт по&nbsp;твоему IP</h4>
+        <div class="ix-ip-two">
+          <p><span class="ix-ip-mk ix-ip-mk-ok" aria-label="видно">✓</span><span><b>Видно</b>Провайдера, страну и&nbsp;примерно город — часто с&nbsp;ошибкой. Нередко и&nbsp;то, что ты пришёл через VPN.</span></p>
+          <p><span class="ix-ip-mk ix-ip-mk-no" aria-label="не видно">✗</span><span><b>Не видно</b>Имя, точный адрес, какой именно телефон в&nbsp;квартире. За&nbsp;203.0.113.7 вся семья Сони сразу.</span></p>
+        </div>
+        <p class="ix-ip-note">Кому и&nbsp;когда выдан адрес, знает провайдер. Раскрыть это он может только по&nbsp;официальному запросу, например полиции. А&nbsp;в&nbsp;мобильном интернете один публичный адрес часто делят десятки и&nbsp;сотни абонентов (это называется CGNAT).</p>
+
+        <div class="ix-ip-v6">
+          <p class="ix-ip-v6k">А&nbsp;ЧТО ТАКОЕ IPv6?</p>
+          <p class="ix-ip-v6a">2001:db8::1a2b</p>
+          <p>Адресов IPv4 всего около 4,3&nbsp;миллиарда, и&nbsp;у&nbsp;мирового распорядителя адресов свободные блоки кончились ещё в&nbsp;2011&nbsp;году. Отсюда и&nbsp;NAT. В&nbsp;IPv6 адрес длиной <b>128&nbsp;бит</b>, записан шестнадцатеричными группами через двоеточие. Адресов хватает всем, поэтому устройство обычно получает свой публичный адрес. Чужих тогда не&nbsp;пускает фаервол роутера, а&nbsp;не&nbsp;NAT.</p>
+        </div>
+        <div class="ix-ip-act"><button class="ix-ip-btn" type="button" data-goto="ix-ip-l4">Дальше: что за&nbsp;/24? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L4: MASK /24 ================= -->
+  <section class="ix-ip-lvl ix-ip-locked" id="ix-ip-l4" aria-labelledby="ix-ip-t4">
+    <div class="ix-ip-lh"><span class="ix-ip-ln">УРОВЕНЬ 4 / 5</span><h3 class="ix-ip-lt" id="ix-ip-t4">Маска /24</h3><span class="ix-ip-ok">ПОНЯТО</span></div>
+    <div class="ix-ip-lockcap"><span>🔒 Сначала выйди в&nbsp;интернет</span></div>
+    <div class="ix-ip-lb">
+      <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">В&nbsp;настройках телефона написано <b>192.168.1.11/24</b>. Что за&nbsp;/24?</span></div>
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Граница. Первые 24 бита — номер сети, он у&nbsp;всех в&nbsp;доме общий. Последние 8 — номер устройства.</span></div>
+
+      <div class="ix-ip-mask" role="img" aria-label="32 бита адреса: первые 24 — номер сети 192.168.1, последние 8 — номер устройства 11">
+        <div class="ix-ip-bits" data-bits></div>
+        <div class="ix-ip-masklab">
+          <span class="ix-ip-ml-net"><b>192.168.1</b>сеть · 24 бита</span>
+          <span class="ix-ip-ml-host"><b>.11</b>устройство</span>
+        </div>
+      </div>
+      <p class="ix-ip-def">Та&nbsp;же маска в&nbsp;старой записи: <b>255.255.255.0</b>. В&nbsp;такой сети 256 номеров, устройствам достаётся 254: .0 — номер самой сети, .255 — «всем сразу».</p>
+
+      <div class="ix-ip-route" data-route>
+        <p class="ix-ip-q">Телефону надо отправить пакет. Как? <span class="ix-ip-cnt" data-cnt>1 / 3</span></p>
+        <div class="ix-ip-sortcard"><span class="ix-ip-sortip" data-rip><b>192.168.1</b>.13</span><span class="ix-ip-rnote" data-rnote>лампочка</span></div>
+        <div class="ix-ip-act ix-ip-pair">
+          <button class="ix-ip-btn" type="button" data-rv="direct">Напрямую</button>
+          <button class="ix-ip-btn" type="button" data-rv="gw">Через роутер</button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-after">
+        <p class="ix-ip-big">Чужим — через роутер.<br><span>Но&nbsp;даже роутеру пакет несут не&nbsp;по&nbsp;IP. Тогда по&nbsp;чему?</span></p>
+        <div class="ix-ip-act"><button class="ix-ip-btn ix-ip-y" type="button" data-goto="ix-ip-l5">Поймать Самозванца ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L5: MAC, ARP, SPOOF ================= -->
+  <section class="ix-ip-lvl ix-ip-lvl-boss ix-ip-locked" id="ix-ip-l5" aria-labelledby="ix-ip-t5">
+    <div class="ix-ip-lh"><span class="ix-ip-ln">УРОВЕНЬ 5 / 5</span><h3 class="ix-ip-lt" id="ix-ip-t5">Кто тут роутер?</h3><span class="ix-ip-ok">ПОЙМАН</span></div>
+    <div class="ix-ip-lockcap"><span>🔒 Сначала разберись с&nbsp;маской</span></div>
+    <div class="ix-ip-lb">
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">IP — адрес на&nbsp;конверте. А&nbsp;по&nbsp;комнате конверт несут по&nbsp;<b>MAC</b> — заводскому номеру сетевой карты. За&nbsp;пределы твоей сети MAC не&nbsp;уходит.</span></div>
+      <p class="ix-ip-big ix-ip-big-c">IP — куда в&nbsp;мире.<br><span>MAC — кому в&nbsp;этой комнате.</span></p>
+      <div class="ix-ip-say"><span class="ix-ip-who ix-ip-sonya">СОНЯ</span><span class="ix-ip-bub">А&nbsp;как телефон узнаёт MAC роутера?</span></div>
+      <div class="ix-ip-say"><span class="ix-ip-who">ДЯДЯ МИША</span><span class="ix-ip-bub">Кричит на&nbsp;всю сеть: «Кто здесь <b>192.168.1.1</b>?» Это <b>ARP</b>. И&nbsp;верит тому, кто ответит. Проверки нет никакой.</span></div>
+
+      <div class="ix-ip-arp" data-arp>
+        <div class="ix-ip-arpnet">
+          <div class="ix-ip-dev ix-ip-dev-sm" data-adev="phone"><svg class="ix-ip-ic"><use href="#ix-ip-i-phone"/></svg><span class="ix-ip-dn">Телефон Сони</span><span class="ix-ip-da">.11</span></div>
+          <div class="ix-ip-dev ix-ip-dev-sm" data-adev="router"><svg class="ix-ip-ic"><use href="#ix-ip-i-router"/></svg><span class="ix-ip-dn">Роутер</span><span class="ix-ip-da">.1</span></div>
+          <div class="ix-ip-dev ix-ip-dev-sm" data-adev="laptop"><svg class="ix-ip-ic"><use href="#ix-ip-i-laptop"/></svg><span class="ix-ip-dn">Ноутбук</span><span class="ix-ip-da">.10</span></div>
+          <div class="ix-ip-dev ix-ip-dev-sm" data-adev="bulb"><svg class="ix-ip-ic"><use href="#ix-ip-i-bulb"/></svg><span class="ix-ip-dn">Лампочка</span><span class="ix-ip-da">.13</span></div>
+        </div>
+        <ol class="ix-ip-log" data-log aria-live="polite" aria-label="Что звучит в сети"></ol>
+        <div class="ix-ip-arptab">
+          <p class="ix-ip-arptab-h">ТАБЛИЦА ARP В&nbsp;ТЕЛЕФОНЕ</p>
+          <dl data-arptab>
+            <dt>192.168.1.1</dt><dd data-arpgw>?</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="ix-ip-act"><button class="ix-ip-btn ix-ip-y" type="button" data-act="arp">Крикнуть: кто 192.168.1.1? ▶</button></div>
+
+      <div class="ix-ip-ph" data-ph="l5-find" hidden>
+        <p class="ix-ip-lead">Время откачено. Вот таблица телефона в&nbsp;момент взлома. Найди, кто врёт.</p>
+        <dl class="ix-ip-evid">
+          <dt>192.168.1.1</dt><dd class="ix-ip-sus">66:6f:72:67:65:13</dd>
+          <dt>192.168.1.10</dt><dd>3c:22:fb:8a:41:0a</dd>
+          <dt>192.168.1.13</dt><dd class="ix-ip-sus">66:6f:72:67:65:13</dd>
+        </dl>
+        <p class="ix-ip-q">Кто Самозванец?</p>
+        <div class="ix-ip-choices" data-quiz="who">
+          <button class="ix-ip-ch" type="button" data-v="router"><b>Роутер</b><span>Он же 192.168.1.1</span></button>
+          <button class="ix-ip-ch" type="button" data-v="laptop"><b>Ноутбук</b><span>192.168.1.10</span></button>
+          <button class="ix-ip-ch" type="button" data-v="bulb" data-ok><b>Лампочка</b><span>192.168.1.13</span></button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-ph" data-ph="l5-stop" hidden>
+        <p class="ix-ip-q">Как остановить его прямо сейчас?</p>
+        <div class="ix-ip-choices" data-quiz="stop">
+          <button class="ix-ip-ch" type="button" data-v="ip"><b>Дать лампочке другой IP</b><span>Пусть живёт на .99</span></button>
+          <button class="ix-ip-ch" type="button" data-v="reboot"><b>Перезагрузить телефон</b><span>Таблица очистится</span></button>
+          <button class="ix-ip-ch" type="button" data-v="iso" data-ok><b>Отключить лампочку</b><span>И&nbsp;умные гаджеты — в&nbsp;гостевую сеть</span></button>
+        </div>
+        <p class="ix-ip-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-ip-after">
+        <h4 class="ix-ip-h">Как защищаются от&nbsp;ARP spoofing</h4>
+        <ul class="ix-ip-defs">
+          <li><b>Не&nbsp;пускать в&nbsp;сеть.</b> ARP работает только внутри одной сети: Самозванцу надо быть в&nbsp;твоём Wi‑Fi. Пароль WPA2/WPA3 и&nbsp;гостевая сеть для гаджетов.</li>
+          <li><b>Шифровать.</b> HTTPS, а&nbsp;в&nbsp;чужих сетях ещё и&nbsp;VPN: посередине он увидит только шифр.</li>
+          <li><b>Проверять ответы.</b> Умные коммутаторы в&nbsp;офисах сверяют ARP-ответы с&nbsp;выданными адресами (Dynamic ARP Inspection) и&nbsp;отбрасывают ложь.</li>
+          <li><b>Замечать.</b> Программы-сторожа поднимают тревогу, когда у&nbsp;роутера вдруг сменился MAC.</li>
+        </ul>
+        <p class="ix-ip-note"><b>Родственник — IP spoofing:</b> подписать пакет чужим IP. Ответ при этом уйдёт настоящему владельцу адреса, поэтому так скорее прячут атаку, чем крадут данные. Добросовестные провайдеры отбрасывают пакеты с&nbsp;чужим обратным адресом. В&nbsp;IPv6 вместо ARP работает NDP, и&nbsp;его подделывают так&nbsp;же.</p>
+        <div class="ix-ip-act"><button class="ix-ip-btn ix-ip-y" type="button" data-goto="ix-ip-battle">К&nbsp;битве с&nbsp;Самозванцем ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ================= HACK OVERLAY ================= -->
+<div class="ix-ip-hack" role="dialog" aria-modal="true" aria-labelledby="ix-ip-hk" hidden>
+  <div class="ix-ip-hkin">
+    <div class="ix-ip-badge ix-ip-badge-hk" aria-hidden="true">
+      <span class="ix-ip-badge-top">ЗДРАВСТВУЙТЕ, Я&nbsp;—</span>
+      <span class="ix-ip-badge-name">роутер</span>
+      <span class="ix-ip-badge-mac">MAC 66:6f:72:67:65:13</span>
+    </div>
+    <p class="ix-ip-hkt" id="ix-ip-hk">ВЗЛОМ!</p>
+    <div class="ix-ip-hkcard">
+      <span class="ix-ip-hkpath">Телефон <i>→</i> <b>Лампочка</b> <i>→</i> Роутер</span>
+      <span>Весь трафик Сони теперь идёт через двойника: куда она ходит, когда, и&nbsp;всё, что без HTTPS.</span>
+    </div>
+    <p class="ix-ip-hksay">Я&nbsp;ничего не&nbsp;взламывал. Я&nbsp;просто громко сказал: «Я&nbsp;роутер».</p>
+    <button class="ix-ip-btn ix-ip-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ================= BATTLE ================= -->
+<section class="ix-ip-battle" id="ix-ip-battle" aria-labelledby="ix-ip-bt" tabindex="-1">
+  <div class="ix-ip-bh">
+    <span class="ix-ip-bface" aria-hidden="true"><b>Я&nbsp;—</b><i>.1</i></span>
+    <div class="ix-ip-bhx">
+      <h2 class="ix-ip-bt" id="ix-ip-bt">Битва со&nbsp;злодеем</h2>
+      <div class="ix-ip-hp" role="img" aria-label="Здоровье Самозванца: 3 из 3" data-hp-wrap><i data-hp></i><b data-hp-t>САМОЗВАНЕЦ · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-ip-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ================= INTERVIEW ================= -->
+<section class="ix-ip-iv" aria-labelledby="ix-ip-ivt">
+  <p class="ix-ip-ivk">ВОПРОС С&nbsp;СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ix-ip-ivq" id="ix-ip-ivt">Приложение блокирует вход после пяти неудачных попыток с&nbsp;одного IP. Что здесь не&nbsp;так и&nbsp;как сделать лучше?</h2>
+  <div class="ix-ip-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: вспомни NAT. Сколько людей может стоять за&nbsp;одним адресом? И&nbsp;откуда сервер вообще берёт IP клиента?</span>
+  </div>
+  <button class="ix-ip-btn ix-ip-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-ip-iva">Показать сильный ответ</button>
+  <div class="ix-ip-iva" id="ix-ip-iva" hidden>
+    <ol>
+      <li><b>За&nbsp;одним IP — толпа.</b> Школа, офис, мобильный оператор с&nbsp;CGNAT: заблокируешь один адрес — отрежешь сотни честных людей.</li>
+      <li><b>Адрес легко сменить.</b> Прокси, VPN, переподключение к&nbsp;мобильной сети. Поэтому лимит считают ещё и&nbsp;по&nbsp;аккаунту, а&nbsp;не&nbsp;только по&nbsp;IP.</li>
+      <li><b>Откуда взят IP.</b> За&nbsp;балансировщиком адрес клиента приходит в&nbsp;заголовке X-Forwarded-For, а&nbsp;его может вписать кто угодно. Доверять можно только записи, которую добавил свой прокси.</li>
+      <li><b>IPv6 и&nbsp;меры получше.</b> Абоненту выдают целую подсеть, часто /64, поэтому лимит ставят на&nbsp;префикс. Плюс растущие задержки, CAPTCHA, второй фактор и&nbsp;тревога на&nbsp;массовые ошибки.</li>
+    </ol>
+    <p class="ix-ip-ivx"><b>Ошибка новичка:</b> считать, что IP — это человек. IP — точка выхода в&nbsp;интернет: её делят многие, и&nbsp;её меняют за&nbsp;секунду.</p>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="ix-ip-cs" aria-labelledby="ix-ip-cst">
+  <h2 class="ix-ip-cst" id="ix-ip-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ix-ip-csl">
+    <li><span class="ix-ip-csn" aria-hidden="true">01</span><div><b>IPv4 — четыре числа</b><p>Каждое от&nbsp;0 до&nbsp;255, это 8 бит. Всего 32 бита — около 4,3&nbsp;млрд адресов.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">02</span><div><b>Частные адреса</b><p>10/8, 172.16/12 и&nbsp;192.168/16 живут внутри домов и&nbsp;офисов, а&nbsp;127.0.0.1 — это ты сам.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">03</span><div><b>NAT</b><p>Роутер меняет частный адрес на&nbsp;один публичный и&nbsp;запоминает, кому вернуть ответ.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">04</span><div><b>Маска /24</b><p>Первые три числа — сеть, последнее — устройство: свои напрямую, чужие через роутер.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">05</span><div><b>IPv6</b><p>128 бит вместо 32: адресов хватает всем, и&nbsp;охраняет уже фаервол, а&nbsp;не&nbsp;NAT.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">06</span><div><b>MAC, ARP и&nbsp;двойник</b><p>ARP верит любому ответу, поэтому чужак в&nbsp;твоём Wi‑Fi может назваться роутером.</p></div></li>
+    <li><span class="ix-ip-csn" aria-hidden="true">07</span><div><b>IP — не&nbsp;паспорт и&nbsp;не&nbsp;пароль</b><p>Он выдаёт провайдера и&nbsp;примерный город, но&nbsp;не&nbsp;имя, а&nbsp;подделать или сменить его легко.</p></div></li>
+  </ol>
+  <p class="ix-ip-train"><b>Тренируйся легально:</b> TryHackMe (комнаты по&nbsp;основам сетей), HackTheBox Academy, picoCTF. Wireshark запускай только в&nbsp;своей сети. Чужие сети и&nbsp;чужой Wi‑Fi трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-ip{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--vred:#e3262b;--acc:#2ee59d;--accdk:#0a7a4e;--night:#0d1512;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-ip *,.ix-ip *::before,.ix-ip *::after{box-sizing:border-box}
+.ix-ip button{font:inherit;color:inherit}
+.ix-ip :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-ip [hidden]{display:none !important}
+.ix-ip p{margin:0}
+.ix-ip code{font-family:var(--code)}
+.ix-ip .ix-ip-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ix-ip .ix-ip-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ix-ip .ix-ip-ic{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+
+/* HUD */
+.ix-ip .ix-ip-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-ip .ix-ip-hud.ix-ip-on{display:flex}
+.ix-ip.ix-ip-anim .ix-ip-hud.ix-ip-on{animation:ix-ip-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-ip .ix-ip-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--acc);white-space:nowrap}
+.ix-ip .ix-ip-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-ip .ix-ip-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--acc);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-ip .ix-ip-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-ip .ix-ip-hud.ix-ip-hit{animation:ix-ip-shake .4s}
+.ix-ip .ix-ip-hud.ix-ip-hit .ix-ip-bar{border-color:var(--red)}
+.ix-ip .ix-ip-pips{display:flex;gap:4px}
+.ix-ip .ix-ip-pips span{width:22px;height:22px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:11px}
+.ix-ip .ix-ip-pips span.ix-ip-done{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+
+/* MISSION */
+.ix-ip .ix-ip-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--acc);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-ip .ix-ip-poster{position:relative;min-height:400px;background:var(--night);border-right:3px solid var(--ink);overflow:hidden;display:grid;place-items:center;
+  background-image:radial-gradient(rgba(46,229,157,.26) 1.3px,transparent 2px);background-size:9px 9px}
+.ix-ip .ix-ip-poster::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(46,229,157,.22),transparent 62%);pointer-events:none}
+.ix-ip .ix-ip-pghost{position:absolute;left:0;right:0;top:56px;bottom:14px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:58px;line-height:1;letter-spacing:-.03em;pointer-events:none;white-space:nowrap}
+.ix-ip .ix-ip-pghost span{position:relative;color:transparent;-webkit-text-stroke:2px rgba(46,229,157,.7)}
+.ix-ip .ix-ip-pghost span::after{content:attr(data-t);position:absolute;left:0;top:0;-webkit-text-stroke:2px rgba(255,59,59,.75);transform:translate(7px,5px)}
+.ix-ip.ix-ip-anim .ix-ip-pghost span::after{animation:ix-ip-twin 3.2s steps(1) infinite}
+.ix-ip .ix-ip-badge{position:relative;z-index:2;width:250px;max-width:78%;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:7px 7px 0 #000;transform:rotate(-7deg);display:flex;flex-direction:column;text-align:center;margin-top:34px}
+.ix-ip .ix-ip-badge-top{background:var(--vred);color:#fff;font-family:var(--f-cap);font-size:15px;padding:9px 8px 7px;letter-spacing:.03em}
+.ix-ip .ix-ip-badge-name{font-family:var(--f-hand);font-size:58px;line-height:1;padding:14px 8px 12px;transform:rotate(-2deg)}
+.ix-ip .ix-ip-badge-mac{background:var(--vred);color:#fff;font-family:var(--code);font-size:13px;font-weight:700;padding:6px 8px}
+.ix-ip.ix-ip-anim .ix-ip-poster .ix-ip-badge{animation:ix-ip-slap .6s cubic-bezier(.2,1.5,.4,1) .25s both}
+.ix-ip .ix-ip-pname{position:absolute;z-index:3;left:14px;top:14px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--acc);text-shadow:3px 3px 0 var(--vred)}
+.ix-ip .ix-ip-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(46,229,157,.09) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-ip .ix-ip-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--acc)}
+.ix-ip .ix-ip-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-ip .ix-ip-msub{font-size:20px;line-height:1.4}
+.ix-ip .ix-ip-msub em{font-style:normal;color:var(--ink);background:var(--acc);padding:0 5px}
+.ix-ip .ix-ip-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ix-ip .ix-ip-moves li{border:2px solid #fff;padding:8px 10px 9px;display:flex;align-items:center;gap:10px}
+.ix-ip .ix-ip-moves b{font-family:var(--f-mono);font-weight:400;font-size:20px;color:var(--ink);-webkit-text-stroke:1.5px var(--acc);flex:0 0 auto}
+.ix-ip .ix-ip-moves span{font-family:var(--f-cap);font-size:14px;line-height:1.2}
+.ix-ip .ix-ip-moves li.ix-ip-mv-boss{grid-column:1/-1;border-color:var(--red)}
+.ix-ip .ix-ip-moves li.ix-ip-mv-boss b{-webkit-text-stroke-color:var(--red)}
+.ix-ip .ix-ip-moves li.ix-ip-x{border-color:var(--acc);background:rgba(46,229,157,.16)}
+.ix-ip .ix-ip-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-ip .ix-ip-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--acc)}
+.ix-ip .ix-ip-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--acc)}
+.ix-ip.ix-ip-anim .ix-ip-go.ix-ip-pulse{animation:ix-ip-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-ip .ix-ip-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:52px}
+.ix-ip .ix-ip-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--acc)}
+.ix-ip .ix-ip-lvl-boss .ix-ip-lh{background:var(--red);color:#fff}
+.ix-ip .ix-ip-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--acc);padding:4px 10px}
+.ix-ip .ix-ip-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-ip .ix-ip-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--yel);color:var(--ink);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-ip .ix-ip-clear .ix-ip-ok{display:inline-block}
+.ix-ip .ix-ip-lb{padding:22px 20px 26px}
+.ix-ip .ix-ip-locked{pointer-events:none;user-select:none}
+.ix-ip .ix-ip-locked .ix-ip-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:240px;overflow:hidden}
+.ix-ip .ix-ip-lockcap{display:none}
+.ix-ip .ix-ip-locked .ix-ip-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-ip .ix-ip-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-ip .ix-ip-after{display:none;margin-top:28px}
+.ix-ip .ix-ip-lvl.ix-ip-clear .ix-ip-after{display:block}
+.ix-ip.ix-ip-anim .ix-ip-lvl.ix-ip-clear .ix-ip-after,.ix-ip.ix-ip-anim .ix-ip-ph{animation:ix-ip-up .4s ease-out}
+.ix-ip .ix-ip-ph{margin-top:28px}
+.ix-ip .ix-ip-ph,.ix-ip .ix-ip-after,.ix-ip .ix-ip-nat,.ix-ip .ix-ip-arp,.ix-ip .ix-ip-home{scroll-margin-top:60px}
+
+.ix-ip .ix-ip-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-ip .ix-ip-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px;white-space:nowrap}
+.ix-ip .ix-ip-who.ix-ip-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-ip .ix-ip-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+.ix-ip .ix-ip-bub b{font-family:var(--f-text);font-weight:700;font-size:.82em}
+
+.ix-ip .ix-ip-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-ip .ix-ip-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--acc);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center;line-height:1.2}
+.ix-ip .ix-ip-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--acc)}
+.ix-ip .ix-ip-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--acc)}
+.ix-ip .ix-ip-btn.ix-ip-y{background:var(--yel);color:var(--ink)}
+.ix-ip .ix-ip-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--acc)}
+.ix-ip .ix-ip-btn.ix-ip-spent,.ix-ip .ix-ip-btn.ix-ip-spent:disabled{opacity:1;background:transparent;color:var(--muted);border-style:dashed;border-color:#9a9483;box-shadow:none}
+.ix-ip .ix-ip-pair .ix-ip-btn{flex:1 1 150px}
+
+.ix-ip .ix-ip-lead{font-size:19px;line-height:1.45;margin-bottom:16px}
+.ix-ip .ix-ip-big{font-family:var(--f-cap);font-size:28px;line-height:1.2;margin-top:22px}
+.ix-ip .ix-ip-big span{display:inline-block;margin-top:4px;font-family:var(--f-text);font-weight:500;font-size:20px;line-height:1.35;color:var(--muted)}
+.ix-ip .ix-ip-big-c{margin:6px 0 24px;padding:16px 18px;background:var(--ink);color:var(--acc)}
+.ix-ip .ix-ip-big-c span{color:#fff;font-family:var(--f-cap);font-weight:400;font-size:28px;line-height:1.2}
+.ix-ip .ix-ip-def{margin-top:18px;font-size:18px;line-height:1.5}
+.ix-ip .ix-ip-note{margin-top:18px;font-size:18px;line-height:1.5;border-left:5px solid var(--acc);padding:2px 0 2px 14px}
+.ix-ip .ix-ip-cap{margin-top:16px;min-height:3em;font-size:19px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-ip .ix-ip-cap b{font-weight:700}
+.ix-ip .ix-ip-h{margin:0 0 14px;font-family:var(--f-cap);font-weight:400;font-size:24px;line-height:1.2}
+
+/* home network */
+.ix-ip .ix-ip-home{position:relative;margin-top:22px;padding:18px 16px 20px;background:var(--night);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);
+  background-image:radial-gradient(rgba(46,229,157,.14) 1.2px,transparent 1.8px);background-size:10px 10px}
+.ix-ip .ix-ip-zone{font-family:var(--f-cap);font-size:13px;letter-spacing:.12em;color:#9fb8ad}
+.ix-ip .ix-ip-dev{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;min-width:0}
+.ix-ip .ix-ip-dev .ix-ip-ic{width:64px;height:64px;padding:16px;border-radius:50%;background:var(--acc);color:var(--ink);border:3px solid var(--ink);box-shadow:0 0 0 4px rgba(46,229,157,.18);transition:background .3s,box-shadow .3s}
+.ix-ip .ix-ip-dn{font-family:var(--f-cap);font-size:15px;line-height:1.2;margin-top:4px}
+.ix-ip .ix-ip-da{font-family:var(--code);font-weight:700;font-size:17px;color:var(--yel);white-space:nowrap}
+.ix-ip .ix-ip-dev-router{margin:4px auto 18px}
+.ix-ip .ix-ip-dev-router .ix-ip-ic{width:76px;height:76px;padding:17px;background:var(--yel)}
+.ix-ip .ix-ip-devs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px 10px}
+.ix-ip .ix-ip-devs .ix-ip-da{color:#7f948b}
+.ix-ip .ix-ip-dev.ix-ip-got .ix-ip-da{color:var(--yel)}
+.ix-ip .ix-ip-dev.ix-ip-ping .ix-ip-ic{box-shadow:0 0 0 10px rgba(255,214,10,.35)}
+.ix-ip .ix-ip-dev-router.ix-ip-ping .ix-ip-ic{box-shadow:0 0 0 12px rgba(46,229,157,.35)}
+.ix-ip.ix-ip-anim .ix-ip-dev-new:not([hidden]){animation:ix-ip-pop .5s cubic-bezier(.2,1.6,.4,1)}
+
+/* anatomy */
+.ix-ip .ix-ip-anat{display:flex;align-items:flex-end;justify-content:center;gap:2px;padding:18px 8px 16px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc)}
+.ix-ip .ix-ip-anat span{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ix-ip .ix-ip-anat b{display:block;width:100%;text-align:center;font-family:var(--f-mono);font-weight:400;font-size:34px;line-height:1;color:var(--ink);background:var(--acc);padding:10px 2px}
+.ix-ip .ix-ip-anat span:nth-of-type(4) b{background:var(--yel)}
+.ix-ip .ix-ip-anat i{font-style:normal;font-family:var(--code);font-size:14px;color:#a9c3b8;letter-spacing:.02em}
+.ix-ip .ix-ip-anat em{font-style:normal;font-family:var(--f-mono);font-size:30px;color:var(--acc);align-self:center;margin-bottom:24px}
+
+/* quiz choices */
+.ix-ip .ix-ip-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.ix-ip .ix-ip-cnt{font-family:var(--f-cap);font-size:14px;background:var(--ink);color:var(--acc);padding:2px 8px}
+.ix-ip .ix-ip-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-ip .ix-ip-choices.ix-ip-two-ch{grid-template-columns:1fr 1fr}
+.ix-ip .ix-ip-ch{min-height:88px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-ip .ix-ip-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-ip .ix-ip-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-ip .ix-ip-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2;overflow-wrap:anywhere}
+.ix-ip .ix-ip-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-ip .ix-ip-ch.ix-ip-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.7;cursor:default}
+.ix-ip .ix-ip-ch.ix-ip-right{background:var(--acc)}
+.ix-ip .ix-ip-ch.ix-ip-right span{color:var(--ink)}
+.ix-ip .ix-ip-ch:disabled{cursor:default;transform:none}
+.ix-ip .ix-ip-fb{margin-top:14px;font-size:18px;line-height:1.4}
+.ix-ip .ix-ip-fb:empty{display:none}
+.ix-ip .ix-ip-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-ip .ix-ip-fb.ix-ip-bad b{color:#c81e1e}
+.ix-ip .ix-ip-fb.ix-ip-good b{color:var(--accdk)}
+
+/* ranges */
+.ix-ip .ix-ip-ranges{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:0}
+.ix-ip .ix-ip-ranges li{display:flex;flex-direction:column;gap:2px;padding:14px 0;border-bottom:2px solid rgba(20,20,20,.14)}
+.ix-ip .ix-ip-ranges li:first-child{padding-top:4px}
+.ix-ip .ix-ip-ranges b{font-family:var(--f-mono);font-weight:400;font-size:28px;line-height:1.1;color:var(--accdk)}
+.ix-ip .ix-ip-ranges b i{font-style:normal;color:#9a9483}
+.ix-ip .ix-ip-ranges span{font-size:18px;line-height:1.35}
+
+/* sort card */
+.ix-ip .ix-ip-sortcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:112px;padding:16px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc)}
+.ix-ip .ix-ip-sortip{font-family:var(--f-mono);font-size:36px;line-height:1.1;color:#fff;text-align:center;overflow-wrap:anywhere}
+.ix-ip .ix-ip-sortip b{font-weight:400;color:var(--acc)}
+.ix-ip .ix-ip-sortip s{text-decoration:none;color:#ff8a8a}
+.ix-ip .ix-ip-rnote{font-family:var(--f-hand);font-size:22px;color:#c9d6d0}
+.ix-ip .ix-ip-sortcard.ix-ip-nope{animation:ix-ip-shake .4s}
+.ix-ip .ix-ip-sortcard.ix-ip-yes{box-shadow:5px 5px 0 var(--yel)}
+.ix-ip.ix-ip-anim .ix-ip-sortcard.ix-ip-next .ix-ip-sortip{animation:ix-ip-up .35s ease-out}
+
+/* NAT stage */
+.ix-ip .ix-ip-nat{position:relative;margin-top:22px;background:var(--night);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);overflow:hidden;
+  background-image:radial-gradient(rgba(46,229,157,.13) 1.2px,transparent 1.8px);background-size:10px 10px}
+.ix-ip .ix-ip-band{position:relative;min-height:150px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.ix-ip .ix-ip-band .ix-ip-zone{position:absolute;left:16px;top:12px}
+.ix-ip .ix-ip-band-rt{min-height:170px;border-top:3px dashed rgba(255,255,255,.35);border-bottom:3px dashed rgba(255,255,255,.35);background:rgba(255,214,10,.06)}
+.ix-ip .ix-ip-node{display:flex;align-items:center;gap:12px;max-width:44%}
+.ix-ip .ix-ip-node .ix-ip-ic{width:56px;height:56px;padding:13px;border-radius:50%;background:var(--acc);color:var(--ink);border:3px solid var(--ink);transition:box-shadow .3s}
+.ix-ip .ix-ip-band-rt .ix-ip-node .ix-ip-ic{background:var(--yel)}
+.ix-ip .ix-ip-band-net .ix-ip-node .ix-ip-ic{background:#fff}
+.ix-ip .ix-ip-node span{display:flex;flex-direction:column;min-width:0}
+.ix-ip .ix-ip-node b{font-family:var(--f-cap);font-weight:400;font-size:17px;line-height:1.2}
+.ix-ip .ix-ip-node code{font-weight:700;font-size:15px;color:var(--yel);white-space:nowrap}
+.ix-ip .ix-ip-node small{font-size:14px;line-height:1.3;color:#a9c3b8}
+.ix-ip .ix-ip-band.ix-ip-here .ix-ip-node .ix-ip-ic{box-shadow:0 0 0 8px rgba(255,214,10,.35)}
+.ix-ip .ix-ip-okpage{position:absolute;left:16px;bottom:10px;font-family:var(--f-cap);font-size:14px;color:var(--ink);background:var(--acc);padding:3px 8px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.ix-ip .ix-ip-nat[data-st="4"] .ix-ip-okpage{opacity:1;transform:none}
+.ix-ip .ix-ip-pkt{position:absolute;z-index:4;right:12px;top:0;width:min(54%,300px);display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px;background:var(--paper);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 #000;transform:translateY(var(--y,0px)) rotate(-1.5deg);transition:transform .9s cubic-bezier(.5,0,.25,1)}
+.ix-ip .ix-ip-pkt-k{font-family:var(--f-cap);font-size:12px;letter-spacing:.08em;background:var(--ink);color:var(--paper);align-self:flex-start;padding:2px 7px}
+.ix-ip .ix-ip-pkt.ix-ip-reply .ix-ip-pkt-k{background:var(--accdk);color:#fff}
+.ix-ip .ix-ip-pkt-r{display:flex;flex-direction:column;line-height:1.15}
+.ix-ip .ix-ip-pkt-r small{font-family:var(--f-cap);font-size:11px;color:var(--muted);letter-spacing:.06em}
+.ix-ip .ix-ip-pkt-r code{font-weight:800;font-size:16px;white-space:nowrap;padding:1px 3px;margin-left:-3px;transition:background .3s}
+.ix-ip .ix-ip-pkt-r code.ix-ip-warn{background:rgba(255,59,59,.28);box-shadow:inset 3px 0 0 var(--red)}
+.ix-ip .ix-ip-pkt-r code.ix-ip-flip{background:var(--acc)}
+.ix-ip .ix-ip-nattab{margin-top:14px;padding:12px 16px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-ip .ix-ip-nattab-h{font-family:var(--f-cap);font-size:13px;letter-spacing:.06em;color:var(--muted)}
+.ix-ip .ix-ip-nattab-e{font-family:var(--f-hand);font-size:22px;color:#8a8475}
+.ix-ip .ix-ip-nattab-row{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:2px 12px;margin-top:6px;padding:6px 8px;margin-left:-8px;transition:background .3s}
+.ix-ip .ix-ip-nattab-row small{font-family:var(--f-cap);font-size:13px;color:var(--muted)}
+.ix-ip .ix-ip-nattab-row code{font-weight:800;font-size:17px}
+.ix-ip .ix-ip-nattab-row.ix-ip-lit{background:var(--yel)}
+.ix-ip.ix-ip-anim .ix-ip-nattab-row:not([hidden]){animation:ix-ip-up .4s ease-out}
+
+/* two columns: seen / not seen */
+.ix-ip .ix-ip-two{display:grid;gap:16px}
+.ix-ip .ix-ip-two p{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.4}
+.ix-ip .ix-ip-two b{display:block;font-family:var(--f-cap);font-weight:400;font-size:23px;line-height:1.15;margin-bottom:2px}
+.ix-ip .ix-ip-mk{flex:0 0 46px;height:46px;display:grid;place-items:center;border:3px solid var(--ink);font-size:26px;font-weight:700;line-height:1}
+.ix-ip .ix-ip-mk-ok{background:var(--acc)}
+.ix-ip .ix-ip-mk-no{background:var(--red);color:#fff}
+
+/* IPv6 */
+.ix-ip .ix-ip-v6{margin-top:30px;padding:18px 18px 20px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-ip .ix-ip-v6k{font-family:var(--f-cap);font-size:14px;letter-spacing:.08em;color:var(--acc)}
+.ix-ip .ix-ip-v6a{font-family:var(--code);font-weight:800;font-size:32px;line-height:1.15;color:var(--yel);margin:6px 0 10px;overflow-wrap:anywhere}
+.ix-ip .ix-ip-v6 p:last-child{font-size:18px;line-height:1.5}
+.ix-ip .ix-ip-v6 b{color:var(--acc)}
+
+/* mask */
+.ix-ip .ix-ip-mask{margin-top:22px;padding:18px 14px 16px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc)}
+.ix-ip .ix-ip-bits{display:flex;gap:2px;height:40px}
+.ix-ip .ix-ip-bits i{flex:1 1 0;min-width:0;background:var(--acc);transform-origin:bottom}
+.ix-ip .ix-ip-bits i.ix-ip-h8{background:var(--yel)}
+.ix-ip .ix-ip-bits i.ix-ip-gap{margin-left:6px}
+.ix-ip.ix-ip-anim .ix-ip-mask.ix-ip-grow .ix-ip-bits i{animation:ix-ip-bit .4s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--d) * 22ms)}
+.ix-ip .ix-ip-masklab{display:grid;grid-template-columns:3fr 1fr;gap:8px;margin-top:10px}
+.ix-ip .ix-ip-masklab span{display:flex;flex-direction:column;font-size:15px;line-height:1.3;color:#c9d6d0}
+.ix-ip .ix-ip-masklab b{font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1}
+.ix-ip .ix-ip-ml-net b{color:var(--acc)}
+.ix-ip .ix-ip-ml-host{text-align:right;align-items:flex-end}
+.ix-ip .ix-ip-ml-host b{color:var(--yel)}
+
+/* ARP */
+.ix-ip .ix-ip-arp{margin-top:22px;padding:18px 14px;background:var(--night);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);
+  background-image:radial-gradient(rgba(46,229,157,.12) 1.2px,transparent 1.8px);background-size:10px 10px}
+.ix-ip .ix-ip-arpnet{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-ip .ix-ip-dev-sm .ix-ip-ic{width:54px;height:54px;padding:12px}
+.ix-ip .ix-ip-dev-sm .ix-ip-dn{font-size:14px}
+.ix-ip .ix-ip-dev-sm .ix-ip-da{font-size:16px}
+.ix-ip .ix-ip-dev[data-adev="router"] .ix-ip-ic{background:var(--yel)}
+.ix-ip .ix-ip-dev.ix-ip-shout .ix-ip-ic{box-shadow:0 0 0 10px rgba(255,214,10,.4)}
+.ix-ip .ix-ip-dev.ix-ip-evil .ix-ip-ic{background:var(--red);color:#fff;box-shadow:0 0 0 10px rgba(255,59,59,.4)}
+.ix-ip.ix-ip-anim .ix-ip-dev.ix-ip-evil .ix-ip-ic{animation:ix-ip-shake .4s}
+.ix-ip .ix-ip-dev.ix-ip-off{opacity:.5}
+.ix-ip .ix-ip-dev.ix-ip-off .ix-ip-ic{background:#555;color:#bbb}
+.ix-ip .ix-ip-dev.ix-ip-off .ix-ip-da{color:var(--red);font-family:var(--f-cap);font-size:13px}
+.ix-ip .ix-ip-log{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px;min-height:0}
+.ix-ip .ix-ip-log:empty{display:none}
+.ix-ip .ix-ip-log li{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-left:5px solid #fff;background:rgba(255,255,255,.06)}
+.ix-ip .ix-ip-log li small{font-family:var(--f-cap);font-size:13px;color:#a9c3b8;letter-spacing:.04em}
+.ix-ip .ix-ip-log li span{font-family:var(--f-hand);font-size:23px;line-height:1.2}
+.ix-ip .ix-ip-log li code{font-family:var(--code);font-weight:700;font-size:15px}
+.ix-ip .ix-ip-log li span b{font-family:var(--f-text);font-weight:700;font-size:.8em}
+.ix-ip .ix-ip-log li.ix-ip-l-rt{border-color:var(--yel)}
+.ix-ip .ix-ip-log li.ix-ip-l-ev{border-color:var(--red);background:rgba(255,59,59,.16)}
+.ix-ip .ix-ip-log li.ix-ip-l-ev code{color:#ff9d9d}
+.ix-ip .ix-ip-log li em{font-style:normal;font-family:var(--f-cap);font-size:13px;background:var(--red);color:#fff;padding:1px 6px;align-self:flex-start}
+.ix-ip.ix-ip-anim .ix-ip-log li{animation:ix-ip-up .35s ease-out}
+.ix-ip .ix-ip-arptab{margin-top:16px;padding:12px 14px;background:var(--paper);color:var(--ink);border:3px solid var(--ink)}
+.ix-ip .ix-ip-arptab-h{font-family:var(--f-cap);font-size:13px;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.ix-ip .ix-ip-arptab dl,.ix-ip .ix-ip-evid{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center}
+.ix-ip .ix-ip-arptab dt,.ix-ip .ix-ip-evid dt{font-family:var(--code);font-weight:700;font-size:16px}
+.ix-ip .ix-ip-arptab dd,.ix-ip .ix-ip-evid dd{margin:0;font-family:var(--code);font-weight:800;font-size:16px;padding:2px 6px;justify-self:start;white-space:nowrap}
+.ix-ip .ix-ip-arptab dd.ix-ip-good{background:var(--acc)}
+.ix-ip .ix-ip-arptab dd.ix-ip-bad{background:var(--red);color:#fff}
+.ix-ip .ix-ip-arptab dd s{display:block;opacity:.7;font-weight:400}
+.ix-ip .ix-ip-evid{padding:14px 16px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-ip .ix-ip-evid.ix-ip-revealed dd.ix-ip-sus{background:var(--red);color:#fff}
+
+.ix-ip .ix-ip-defs{list-style:none;margin:0;padding:0;display:grid}
+.ix-ip .ix-ip-defs li{padding:14px 0 14px 44px;position:relative;font-size:18px;line-height:1.45;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-ip .ix-ip-defs li:last-child{border-bottom:0}
+.ix-ip .ix-ip-defs li::before{content:"✓";position:absolute;left:0;top:13px;width:30px;height:30px;display:grid;place-items:center;background:var(--acc);border:2px solid var(--ink);font-weight:700;font-size:17px}
+.ix-ip .ix-ip-defs b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+
+/* HACK */
+.ix-ip .ix-ip-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--vred);color:#fff;
+  background-image:radial-gradient(rgba(20,20,20,.3) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-ip .ix-ip-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-ip .ix-ip-badge-hk{margin-top:0;width:230px;transform:rotate(-6deg)}
+.ix-ip .ix-ip-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-ip .ix-ip-hkcard{display:grid;gap:6px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 16px;font-size:17px;line-height:1.4;transform:rotate(1.5deg)}
+.ix-ip .ix-ip-hkpath{font-family:var(--f-cap);font-size:18px}
+.ix-ip .ix-ip-hkpath b{font-weight:400;background:var(--red);color:#fff;padding:0 6px}
+.ix-ip .ix-ip-hkpath i{font-style:normal;color:var(--red)}
+.ix-ip .ix-ip-hksay{font-family:var(--f-hand);font-size:25px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-ip .ix-ip-hack .ix-ip-btn{box-shadow:4px 4px 0 var(--ink)}
+.ix-ip.ix-ip-anim .ix-ip-hack:not([hidden]) .ix-ip-hkin{animation:ix-ip-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-ip.ix-ip-anim .ix-ip-hack.ix-ip-rw{animation:ix-ip-fade .6s ease-in forwards}
+.ix-ip.ix-ip-anim .ix-ip-hack.ix-ip-rw .ix-ip-hkin{animation:ix-ip-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-ip .ix-ip-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--acc);scroll-margin-top:16px;outline:none}
+.ix-ip .ix-ip-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-ip .ix-ip-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;border:3px solid #fff;background:var(--vred);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;transform:rotate(-8deg)}
+.ix-ip .ix-ip-bface b{font-family:var(--f-cap);font-weight:400;font-size:13px}
+.ix-ip .ix-ip-bface i{font-style:normal;font-family:var(--f-mono);font-size:30px;color:var(--yel)}
+.ix-ip .ix-ip-bface.ix-ip-ow{animation:ix-ip-shake .4s}
+.ix-ip .ix-ip-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-ip .ix-ip-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--acc)}
+.ix-ip .ix-ip-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-ip .ix-ip-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-ip .ix-ip-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-ip .ix-ip-bbody{position:relative;padding:22px 20px 26px}
+.ix-ip .ix-ip-mvn{font-family:var(--f-cap);font-size:14px;color:var(--acc);margin-bottom:10px}
+.ix-ip .ix-ip-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red);margin-bottom:22px}
+.ix-ip .ix-ip-vsay small{display:block;font-family:var(--f-cap);font-size:12px;color:var(--vred);letter-spacing:.06em}
+.ix-ip .ix-ip-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-ip .ix-ip-bopts{display:grid;gap:10px}
+.ix-ip .ix-ip-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-ip .ix-ip-bo:hover{background:#262626}
+.ix-ip .ix-ip-bo.ix-ip-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-ip .ix-ip-bo.ix-ip-right{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.ix-ip .ix-ip-bo:disabled{cursor:default}
+.ix-ip .ix-ip-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-ip .ix-ip-bfb:empty{display:none}
+.ix-ip .ix-ip-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-ip .ix-ip-bfb.ix-ip-good b{color:var(--acc)}
+.ix-ip .ix-ip-bfb.ix-ip-bad b{color:#ff8a8a}
+.ix-ip .ix-ip-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-ip-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-ip .ix-ip-win{display:grid;gap:16px;justify-items:start}
+.ix-ip .ix-ip-wpost{position:relative;width:100%;max-width:420px;min-height:230px;display:grid;place-items:center;border:3px solid #fff;background:var(--night);overflow:hidden;
+  background-image:radial-gradient(rgba(46,229,157,.22) 1.3px,transparent 2px);background-size:9px 9px}
+.ix-ip .ix-ip-wpost .ix-ip-badge{margin:0;filter:grayscale(1) contrast(1.1);width:220px}
+.ix-ip .ix-ip-wpost .ix-ip-badge-name{text-decoration:line-through 5px #000}
+.ix-ip .ix-ip-wpost>span{position:absolute;z-index:3;left:50%;top:76%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-ip.ix-ip-anim .ix-ip-wpost>span{animation:ix-ip-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-ip .ix-ip-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--acc)}
+.ix-ip .ix-ip-wins{font-size:20px}
+.ix-ip .ix-ip-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-ip .ix-ip-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-ip .ix-ip-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-ip .ix-ip-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--accdk);margin-bottom:10px}
+.ix-ip .ix-ip-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-ip .ix-ip-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--acc)}
+.ix-ip .ix-ip-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-ip .ix-ip-think span{font-size:18px;line-height:1.45}
+.ix-ip .ix-ip-iva{margin-top:24px}
+.ix-ip.ix-ip-anim .ix-ip-iva{animation:ix-ip-up .4s ease-out}
+.ix-ip .ix-ip-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixip}
+.ix-ip .ix-ip-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixip}
+.ix-ip .ix-ip-iva li::before{content:counter(ixip);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--acc);font-family:var(--f-cap);font-size:17px}
+.ix-ip .ix-ip-iva li b{font-weight:700}
+.ix-ip .ix-ip-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-ip .ix-ip-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-ip .ix-ip-cs{margin-top:72px}
+.ix-ip .ix-ip-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-ip .ix-ip-csl{list-style:none;margin:0;padding:0}
+.ix-ip .ix-ip-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-ip .ix-ip-csl li:last-child{border-bottom:0}
+.ix-ip .ix-ip-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-ip .ix-ip-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-ip .ix-ip-csl p{font-size:18px;line-height:1.45}
+.ix-ip .ix-ip-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-ip-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-ip-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-ip-twin{0%,86%,100%{transform:translate(7px,5px)}88%{transform:translate(-9px,2px)}91%{transform:translate(12px,-3px)}94%{transform:translate(2px,6px)}}
+@keyframes ix-ip-slap{from{opacity:0;transform:rotate(14deg) scale(1.9)}to{opacity:1;transform:rotate(-7deg) scale(1)}}
+@keyframes ix-ip-pulse{0%,100%{box-shadow:5px 5px 0 var(--acc)}50%{box-shadow:5px 5px 0 var(--acc),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-ip-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-ip-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes ix-ip-bit{from{transform:scaleY(0)}to{transform:none}}
+@keyframes ix-ip-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-ip-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-ip-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-ip-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+@keyframes ix-ip-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+
+@media (min-width:761px){
+  .ix-ip .ix-ip-poster .ix-ip-badge{width:310px}
+  .ix-ip .ix-ip-poster .ix-ip-badge-name{font-size:72px}
+  .ix-ip .ix-ip-pname{font-size:30px}
+}
+@media (max-width:760px){
+  .ix-ip .ix-ip-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--acc)}
+  .ix-ip .ix-ip-poster{border-right:0;border-bottom:3px solid var(--ink);min-height:330px}
+  .ix-ip .ix-ip-pghost{font-size:46px;top:58px;bottom:12px}
+  .ix-ip .ix-ip-pname{font-size:24px}
+  .ix-ip .ix-ip-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-ip .ix-ip-mt{font-size:40px}
+  .ix-ip .ix-ip-go{align-self:stretch}
+  .ix-ip .ix-ip-choices,.ix-ip .ix-ip-choices.ix-ip-two-ch{grid-template-columns:1fr}
+  .ix-ip .ix-ip-ch{min-height:68px}
+}
+@media (max-width:520px){
+  .ix-ip .ix-ip-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-ip .ix-ip-lh{padding:12px 14px}
+  .ix-ip .ix-ip-lt{font-size:20px}
+  .ix-ip .ix-ip-lb{padding:18px 14px 22px}
+  .ix-ip .ix-ip-bub{font-size:21px}
+  .ix-ip .ix-ip-who{font-size:11px;padding:3px 6px}
+  .ix-ip .ix-ip-home{padding:16px 10px 18px}
+  .ix-ip .ix-ip-devs{grid-template-columns:1fr 1fr}
+  .ix-ip .ix-ip-anat{padding:14px 6px}
+  .ix-ip .ix-ip-anat b{font-size:22px;padding:9px 0}
+  .ix-ip .ix-ip-anat i{font-size:12px;letter-spacing:-.02em}
+  .ix-ip .ix-ip-anat em{font-size:20px;margin-bottom:20px}
+  .ix-ip .ix-ip-big{font-size:23px}
+  .ix-ip .ix-ip-big span{font-size:18px}
+  .ix-ip .ix-ip-big-c span{font-size:23px}
+  .ix-ip .ix-ip-q{font-size:20px}
+  .ix-ip .ix-ip-ranges b{font-size:22px}
+  .ix-ip .ix-ip-sortip{font-size:28px}
+  .ix-ip .ix-ip-band{padding:12px 12px;min-height:150px}
+  .ix-ip .ix-ip-band .ix-ip-zone{left:12px}
+  .ix-ip .ix-ip-node{flex-direction:column;align-items:flex-start;gap:6px;max-width:42%}
+  .ix-ip .ix-ip-node .ix-ip-ic{width:48px;height:48px;padding:10px}
+  .ix-ip .ix-ip-node code{font-size:14px}
+  .ix-ip .ix-ip-node small{font-size:13px}
+  .ix-ip .ix-ip-band-net .ix-ip-node,.ix-ip .ix-ip-band-home .ix-ip-node{margin-top:18px}
+  .ix-ip .ix-ip-band-home{min-height:190px}
+  .ix-ip .ix-ip-okpage{left:12px;bottom:10px}
+  .ix-ip .ix-ip-pkt{right:8px;width:57%;padding:8px 10px 10px}
+  .ix-ip .ix-ip-pkt-r code{font-size:14px}
+  .ix-ip .ix-ip-nattab{padding:12px}
+  .ix-ip .ix-ip-nattab-row code{font-size:15px}
+  .ix-ip .ix-ip-two b{font-size:21px}
+  .ix-ip .ix-ip-v6a{font-size:27px}
+  .ix-ip .ix-ip-masklab b{font-size:20px}
+  .ix-ip .ix-ip-masklab span{font-size:14px}
+  .ix-ip .ix-ip-arp{padding:16px 8px}
+  .ix-ip .ix-ip-arpnet{gap:4px}
+  .ix-ip .ix-ip-dev-sm .ix-ip-ic{width:46px;height:46px;padding:10px}
+  .ix-ip .ix-ip-dev-sm .ix-ip-dn{font-size:13px}
+  .ix-ip .ix-ip-log li{padding:8px 10px}
+  .ix-ip .ix-ip-log li span{font-size:21px}
+  .ix-ip .ix-ip-log li code{font-size:14px}
+  .ix-ip .ix-ip-arptab dt,.ix-ip .ix-ip-evid dt,.ix-ip .ix-ip-arptab dd,.ix-ip .ix-ip-evid dd{font-size:14px}
+  .ix-ip .ix-ip-arptab dl,.ix-ip .ix-ip-evid{gap:6px 10px}
+  .ix-ip .ix-ip-evid{padding:12px}
+  .ix-ip .ix-ip-hkt{font-size:46px}
+  .ix-ip .ix-ip-bh{padding:16px 14px;gap:12px}
+  .ix-ip .ix-ip-bface{width:68px;height:68px}
+  .ix-ip .ix-ip-bface i{font-size:24px}
+  .ix-ip .ix-ip-bt{font-size:20px}
+  .ix-ip .ix-ip-bbody{padding:18px 14px 22px}
+  .ix-ip .ix-ip-vsay{font-size:22px}
+  .ix-ip .ix-ip-wint{font-size:23px}
+  .ix-ip .ix-ip-iv{padding:22px 16px 24px}
+  .ix-ip .ix-ip-ivq{font-size:22px}
+  .ix-ip .ix-ip-iva li{padding-left:42px;font-size:18px}
+  .ix-ip .ix-ip-cst{font-size:25px}
+  .ix-ip .ix-ip-csl li{gap:14px}
+  .ix-ip .ix-ip-csn{flex-basis:54px;font-size:30px}
+  .ix-ip .ix-ip-hud{padding:7px 8px;gap:6px}
+  .ix-ip .ix-ip-hud-l{font-size:10px}
+  .ix-ip .ix-ip-pips{gap:3px}
+  .ix-ip .ix-ip-pips span{width:20px;height:20px;font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-ip *,.ix-ip *::before,.ix-ip *::after{animation:none !important;transition:none !important}
+  .ix-ip .ix-ip-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-ip'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ix-ip-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusLater(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:500)}
+  function show(name){var p=q('[data-ph="'+name+'"]'); if(p) p.hidden=false; return p}
+
+  /* split-flap: digits run before settling */
+  function flap(el,text){
+    if(RM){el.textContent=text;return Promise.resolve()}
+    return new Promise(function(res){
+      var f=0,N=text.length+6;
+      var t=setInterval(function(){
+        f++; var out='';
+        for(var i=0;i<text.length;i++){var c=text.charAt(i); out+=(f>i+6||!/[0-9]/.test(c))?c:String(Math.floor(Math.random()*10))}
+        el.textContent=out;
+        if(f>=N){clearInterval(t);el.textContent=text;res()}
+      },38);
+    });
+  }
+
+  /* HUD + levels */
+  var hud=q('.ix-ip-hud'), fill=q('.ix-ip-bar i'), barT=q('.ix-ip-bar b'), pips=qa('.ix-ip-pips span');
+  var DEF=[10,30,55,75,100], S={def:0,steps:[0,0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ix-ip-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('ix-ip-hit');void hud.offsetWidth;hud.classList.add('ix-ip-hit');setTimeout(function(){hud.classList.remove('ix-ip-hit')},700)}
+  function step(i){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=DEF[i]; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('ix-ip-x');
+    q('#ix-ip-l'+(i+1)).classList.add('ix-ip-clear');
+    var nx=q('#ix-ip-l'+(i+2)); if(nx) nx.classList.remove('ix-ip-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    if(t.id==='ix-ip-l4') growMask();
+    if(t.id==='ix-ip-l3') setTimeout(placePkt,60);
+    focusLater(t.classList.contains('ix-ip-battle')?t:t.querySelector('.ix-ip-lb button:not(:disabled)'));
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.classList.add('ix-ip-pulse');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-ip-l1');
+    if(!hud.classList.contains('ix-ip-on')){
+      hud.classList.add('ix-ip-on'); paint(); l1.classList.remove('ix-ip-locked');
+      startBtn.classList.remove('ix-ip-pulse'); startBtn.textContent='Миссия начата ▼';
+      say('Миссия принята. Уровень первый открыт.');
+    }
+    go(l1); focusLater(q('[data-act="dhcp"]'));
+  });
+
+  /* generic quiz */
+  var FB={
+    tablet:{'256':'<b>Не влезет.</b>Каждое число — от 0 до 255: больше в 8 бит не помещается.',
+            '10':'<b>Конфликт!</b>Адрес занят ноутбуком. Два одинаковых адреса в одной сети — и связь сбоит у обоих.',
+            '14':'<b>Верно.</b>Свободный номер в правильном формате. Планшет в сети.'},
+    seen:{priv:'<b>Нет.</b>Частный адрес до сайта не доходит: роутер заменил его ещё на выходе.',
+          pub:'<b>Да.</b>Один публичный адрес на всю квартиру — его сайт и видит.'},
+    who:{router:'<b>Мимо.</b>Настоящий MAC роутера — a4:2b:b0:1e:00:01. Его из таблицы как раз вытеснили.',
+         laptop:'<b>Мимо.</b>MAC ноутбука встречается в таблице один раз. С ним всё честно.',
+         bulb:'<b>Попался!</b>У двух адресов один MAC — и это MAC лампочки. Её взломали через старую прошивку.'},
+    stop:{ip:'<b>Не поможет.</b>Самозванцу не нужен свой адрес: он врёт про чужой.',
+          reboot:'<b>Ненадолго.</b>Таблица очистится, но через секунду он снова крикнет «я роутер».',
+          iso:'<b>Стоп!</b>Двойника нет в сети — врать некому. А гостевая сеть отделит дешёвые гаджеты от телефонов и ноутбуков.'}
+  };
+  var ONOK={};
+  qa('[data-quiz]').forEach(function(wrap){
+    var id=wrap.getAttribute('data-quiz'), fb=wrap.parentNode.querySelector('[data-fb]');
+    qa('.ix-ip-ch',wrap).forEach(function(b){b.addEventListener('click',function(){
+      if(b.disabled) return;
+      var v=b.getAttribute('data-v');
+      if(!b.hasAttribute('data-ok')){
+        b.classList.add('ix-ip-wrong'); b.disabled=true; hit();
+        fb.className='ix-ip-fb ix-ip-bad'; fb.innerHTML=FB[id][v]; return;
+      }
+      qa('.ix-ip-ch',wrap).forEach(function(x){x.disabled=true});
+      b.classList.add('ix-ip-right');
+      fb.className='ix-ip-fb ix-ip-good'; fb.innerHTML=FB[id][v];
+      ONOK[id]&&ONOK[id]();
+    })});
+  });
+
+  /* L1: DHCP */
+  var dhcp=q('[data-act="dhcp"]'), home=q('[data-home="1"]'), rtr=q('[data-dev="router"]',home);
+  var LEASE=[['laptop','192.168.1.10'],['phone','192.168.1.11'],['pad','192.168.1.12'],['bulb','192.168.1.13']];
+  dhcp.addEventListener('click',function(){
+    if(dhcp.disabled) return; dhcp.disabled=true;
+    var p=Promise.resolve();
+    LEASE.forEach(function(L){
+      p=p.then(function(){
+        var d=q('[data-dev="'+L[0]+'"]',home); rtr.classList.add('ix-ip-ping'); d.classList.add('ix-ip-ping','ix-ip-got');
+        return flap(q('[data-ip]',d),L[1]).then(function(){rtr.classList.remove('ix-ip-ping'); d.classList.remove('ix-ip-ping'); return wait(120)});
+      });
+    });
+    p.then(function(){
+      dhcp.textContent='Адреса выданы ✓'; dhcp.classList.add('ix-ip-spent');
+      say('Роутер раздал адреса: ноутбук 10, телефон 11, приставка 12, лампочка 13.');
+      var ph=show('l1-anat'); go(ph); focusLater(q('.ix-ip-ch',ph));
+    });
+  });
+  ONOK.tablet=function(){
+    var t=q('[data-dev="tablet"]',home); t.hidden=false; t.classList.add('ix-ip-got');
+    step(0); say('Уровень первый пройден. Защита 10 процентов.');
+  };
+
+  /* L2: sorter */
+  var SORT=[
+    {ip:'10.0.0.5',a:'priv',ok:'Всё, что начинается с 10, — частное.',bad:'Начинается с 10 — это частный диапазон 10.0.0.0/8.'},
+    {ip:'172.32.0.1',a:'pub',ok:'Ловушка пройдена: частные только с 172.16 по 172.31.',bad:'Ловушка! Частные — только с 172.16 по 172.31, а здесь 32.'},
+    {ip:'192.168.0.100',a:'priv',ok:'192.168 — домашняя классика.',bad:'Всё, что начинается с 192.168, — частное.'},
+    {ip:'8.8.8.8',a:'pub',ok:'Это публичный DNS-сервер Google: его видно из любой точки интернета.',bad:'Он не входит ни в один частный диапазон — значит, публичный.'}
+  ];
+  var sw=q('[data-sort]'), sIP=q('[data-sortip]',sw), sCnt=q('[data-cnt]',sw), sFb=q('[data-fb]',sw), sCard=q('.ix-ip-sortcard',sw), sBtns=qa('[data-sv]',sw), si=0, sBusy=false;
+  var NAMES={priv:'частный',pub:'публичный'};
+  sBtns.forEach(function(b){b.addEventListener('click',function(){
+    if(sBusy||si>=SORT.length) return;
+    var it=SORT[si], v=b.getAttribute('data-sv');
+    sCard.classList.remove('ix-ip-nope','ix-ip-yes','ix-ip-next'); void sCard.offsetWidth;
+    if(v!==it.a){sCard.classList.add('ix-ip-nope'); hit(); sFb.className='ix-ip-fb ix-ip-bad'; sFb.innerHTML='<b>'+it.ip+' — не '+NAMES[v]+'.</b>'+esc(it.bad); return}
+    sCard.classList.add('ix-ip-yes'); sFb.className='ix-ip-fb ix-ip-good'; sFb.innerHTML='<b>'+it.ip+' — '+NAMES[v]+'.</b>'+esc(it.ok);
+    sBusy=true; si++;
+    if(si>=SORT.length){
+      sBtns.forEach(function(x){x.disabled=true}); sCnt.textContent='4 / 4 ✓';
+      step(1); say('Все четыре адреса разобраны. Уровень второй пройден.');
+      var a=q('#ix-ip-l2 .ix-ip-after'); wait(700).then(function(){go(a); focusLater(q('#ix-ip-l2 [data-goto]'))});
+      return;
+    }
+    wait(900).then(function(){
+      sIP.textContent=SORT[si].ip; sCnt.textContent=(si+1)+' / 4';
+      sCard.classList.remove('ix-ip-yes'); sCard.classList.add('ix-ip-next'); sBusy=false;
+      say('Следующий адрес: '+SORT[si].ip);
+    });
+  })});
+
+  /* L3: NAT */
+  var nat=q('[data-nat]'), pkt=q('[data-pkt]'), pK=q('[data-pk]',pkt), pFrom=q('[data-from]',pkt), pTo=q('[data-to]',pkt);
+  var natBtn=q('[data-act="nat"]'), natCap=q('[data-nathint]'), natRow=q('[data-natrow]'), natEmpty=q('[data-natempty]');
+  var BANDS={site:q('[data-band="site"]'),router:q('[data-band="router"]'),phone:q('[data-band="phone"]')}, at='phone', nst=0, nBusy=false;
+  function placePkt(){var b=BANDS[at]; pkt.style.setProperty('--y',Math.round(b.offsetTop+(b.offsetHeight-pkt.offsetHeight)/2)+'px')}
+  function moveTo(k){
+    Object.keys(BANDS).forEach(function(x){BANDS[x].classList.remove('ix-ip-here')});
+    at=k; placePkt(); return wait(950).then(function(){BANDS[k].classList.add('ix-ip-here')});
+  }
+  window.addEventListener('resize',placePkt);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(placePkt);
+  placePkt();
+  function natReset(){
+    pkt.classList.remove('ix-ip-reply'); pK.textContent='ЗАПРОС';
+    pFrom.textContent='192.168.1.11:51000'; pTo.textContent='198.51.100.20:443';
+    pFrom.className=''; pTo.className=''; natRow.classList.remove('ix-ip-lit');
+    nat.setAttribute('data-st','0');
+  }
+  natBtn.addEventListener('click',function(){
+    if(nBusy) return; nBusy=true; natBtn.disabled=true;
+    var p;
+    if(nst===0){
+      natReset();
+      p=moveTo('router').then(function(){
+        pFrom.className='ix-ip-warn'; nat.setAttribute('data-st','1');
+        natCap.innerHTML='<b>Стоп.</b> Обратный адрес 192.168.1.11 — частный. Ответ из интернета по нему не найдёт дорогу.';
+        natBtn.textContent='Переклеить адрес ▶'; nst=1;
+      });
+    } else if(nst===1){
+      pFrom.className='ix-ip-flip';
+      p=flap(pFrom,'203.0.113.7:40001').then(function(){
+        natEmpty.hidden=true; natRow.hidden=false;
+        natCap.innerHTML='Роутер записал в&nbsp;память: ответ на&nbsp;порт <b>40001</b> — телефону. Порт — номер «окошка», которое ждёт ответ.';
+        return wait(900);
+      }).then(function(){ pFrom.className=''; return moveTo('site'); }).then(function(){
+        nat.setAttribute('data-st','2'); pkt.classList.add('ix-ip-reply'); pK.textContent='ОТВЕТ';
+        natCap.innerHTML='Сайт видит только <b>203.0.113.7</b> и&nbsp;отвечает на&nbsp;него.';
+        return Promise.all([flap(pFrom,'198.51.100.20:443'),flap(pTo,'203.0.113.7:40001')]);
+      }).then(function(){ natBtn.textContent='Вернуть ответ домой ▶'; nst=2; });
+    } else if(nst===2){
+      p=moveTo('router').then(function(){
+        nat.setAttribute('data-st','3'); natRow.classList.add('ix-ip-lit'); pTo.className='ix-ip-flip';
+        natCap.innerHTML='Порт 40001? Есть в&nbsp;таблице: это телефон. Переклеиваем обратно.';
+        return flap(pTo,'192.168.1.11:51000');
+      }).then(function(){ return wait(700) }).then(function(){ pTo.className=''; return moveTo('phone'); }).then(function(){
+        nat.setAttribute('data-st','4');
+        natCap.innerHTML='Доставлено. Это и&nbsp;есть <b>NAT</b>: вся квартира выходит в&nbsp;интернет под одним публичным адресом.';
+        natBtn.textContent='Пройти путь ещё раз ↺'; nst=0;
+        if(q('[data-ph="l3-q"]').hidden){ var ph=show('l3-q'); go(ph); focusLater(q('.ix-ip-ch',ph)); }
+        say('Ответ вернулся на телефон. Роутер переклеил адрес туда и обратно.');
+      });
+    }
+    p.then(function(){nBusy=false; natBtn.disabled=false});
+  });
+  ONOK.seen=function(){ step(2); say('Уровень третий пройден. Защита 55 процентов.'); };
+
+  /* L4: mask */
+  var bits=q('[data-bits]'), mask=q('.ix-ip-mask'), bh='';
+  for(var i=0;i<32;i++){bh+='<i style="--d:'+i+'" class="'+(i>=24?'ix-ip-h8':'')+(i&&i%8===0?' ix-ip-gap':'')+'"></i>'}
+  bits.innerHTML=bh;
+  function growMask(){mask.classList.remove('ix-ip-grow');void mask.offsetWidth;mask.classList.add('ix-ip-grow')}
+  var ROUTE=[
+    {ip:'192.168.1.13',hl:'<b>192.168.1</b>.13',note:'лампочка',a:'direct',ok:'Первые три числа совпали — сосед по сети. Роутер не нужен.',bad:'Сравни первые три числа: 192.168.1, как у телефона. Это свой.'},
+    {ip:'192.168.2.13',hl:'<b>192.168</b>.<s>2</s>.13',note:'тоже .13 — лампочка?',a:'gw',ok:'Третье число другое — это уже другая сеть. Только через роутер.',bad:'Присмотрись к третьему числу: 2, а не 1. Сеть другая.'},
+    {ip:'198.51.100.20',hl:'<s>198.51.100</s>.20',note:'сайт игры',a:'gw',ok:'Интернет — всегда через роутер. Для телефона он «шлюз по умолчанию».',bad:'Ни одно число сети не совпало. Это интернет.'}
+  ];
+  var rw=q('[data-route]'), rIP=q('[data-rip]',rw), rNote=q('[data-rnote]',rw), rCnt=q('[data-cnt]',rw), rFb=q('[data-fb]',rw), rCard=q('.ix-ip-sortcard',rw), rBtns=qa('[data-rv]',rw), ri=0, rBusy=false;
+  rIP.textContent=ROUTE[0].ip;
+  rBtns.forEach(function(b){b.addEventListener('click',function(){
+    if(rBusy||ri>=ROUTE.length) return;
+    var it=ROUTE[ri], v=b.getAttribute('data-rv');
+    rCard.classList.remove('ix-ip-nope','ix-ip-yes','ix-ip-next'); void rCard.offsetWidth;
+    if(v!==it.a){rCard.classList.add('ix-ip-nope'); hit(); rFb.className='ix-ip-fb ix-ip-bad'; rFb.innerHTML='<b>Не туда.</b>'+esc(it.bad); return}
+    rIP.innerHTML=it.hl; rCard.classList.add('ix-ip-yes');
+    rFb.className='ix-ip-fb ix-ip-good'; rFb.innerHTML='<b>'+(v==='direct'?'Напрямую.':'Через роутер.')+'</b>'+esc(it.ok);
+    rBusy=true; ri++;
+    if(ri>=ROUTE.length){
+      rBtns.forEach(function(x){x.disabled=true}); rCnt.textContent='3 / 3 ✓';
+      step(3); say('Уровень четвёртый пройден. Защита 75 процентов.');
+      var a=q('#ix-ip-l4 .ix-ip-after'); wait(800).then(function(){go(a); focusLater(q('#ix-ip-l4 [data-goto]'))});
+      return;
+    }
+    wait(1100).then(function(){
+      rIP.textContent=ROUTE[ri].ip; rNote.textContent=ROUTE[ri].note; rCnt.textContent=(ri+1)+' / 3';
+      rCard.classList.remove('ix-ip-yes'); rCard.classList.add('ix-ip-next'); rBusy=false;
+      say('Следующий адрес: '+ROUTE[ri].ip+', '+ROUTE[ri].note);
+    });
+  })});
+
+  /* L5: ARP + spoof */
+  var arpBtn=q('[data-act="arp"]'), log=q('[data-log]'), gw=q('[data-arpgw]');
+  function ad(k){return q('[data-adev="'+k+'"]')}
+  function logLine(cls,who,text,code,tag){
+    var li=document.createElement('li'); if(cls) li.className=cls;
+    li.innerHTML='<small>'+who+'</small><span>'+text+'</span>'+(code?'<code>'+code+'</code>':'')+(tag?'<em>'+tag+'</em>':'');
+    log.appendChild(li); return li;
+  }
+  arpBtn.addEventListener('click',function(){
+    if(arpBtn.disabled) return; arpBtn.disabled=true;
+    ad('phone').classList.add('ix-ip-shout');
+    logLine('','ТЕЛЕФОН → ВСЕМ','Кто здесь <b>192.168.1.1</b>? Ответьте <b>192.168.1.11</b>.');
+    wait(1000).then(function(){
+      ad('phone').classList.remove('ix-ip-shout'); ad('router').classList.add('ix-ip-shout');
+      logLine('ix-ip-l-rt','РОУТЕР → ТЕЛЕФОНУ','<b>192.168.1.1</b> — это я.','MAC a4:2b:b0:1e:00:01');
+      gw.className='ix-ip-good'; gw.textContent='a4:2b:b0:1e:00:01';
+      say('Роутер ответил. В таблице его настоящий MAC.');
+      return wait(1500);
+    }).then(function(){
+      ad('router').classList.remove('ix-ip-shout'); ad('bulb').classList.add('ix-ip-evil');
+      logLine('ix-ip-l-ev','ЛАМПОЧКА → ТЕЛЕФОНУ','Нет! <b>192.168.1.1</b> — это я!','MAC 66:6f:72:67:65:13','повторяет каждую секунду');
+      gw.className='ix-ip-bad'; gw.innerHTML='<s>a4:2b:…:01</s>66:6f:72:67:65:13';
+      hit(); say('Лампочка ответила тоже. Телефон поверил последнему ответу.');
+      return wait(1600);
+    }).then(openHack);
+  });
+  var hack=q('.ix-ip-hack'), rew=q('[data-act="rewind"]');
+  function openHack(){hack.hidden=false; hack.classList.remove('ix-ip-rw'); setTimeout(function(){rew.focus()},30)}
+  function closeHack(){
+    if(hack.hidden||hack.classList.contains('ix-ip-rw')) return;
+    hack.classList.add('ix-ip-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('ix-ip-rw');
+      arpBtn.textContent='Таблица отравлена ✗'; arpBtn.classList.add('ix-ip-spent');
+      var ph=show('l5-find'); go(ph); focusLater(q('.ix-ip-ch',ph));
+      say('Время откачено. Найди, кто врёт.');
+    });
+  }
+  rew.addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();rew.focus()}
+  });
+  ONOK.who=function(){
+    q('.ix-ip-evid').classList.add('ix-ip-revealed');
+    wait(500).then(function(){var ph=show('l5-stop'); go(ph); focusLater(q('.ix-ip-ch',ph))});
+  };
+  ONOK.stop=function(){
+    var b=ad('bulb'); b.classList.remove('ix-ip-evil'); b.classList.add('ix-ip-off'); q('.ix-ip-da',b).textContent='ОТКЛЮЧЕНА';
+    logLine('ix-ip-l-rt','РОУТЕР → ТЕЛЕФОНУ','<b>192.168.1.1</b> — это я.','MAC a4:2b:b0:1e:00:01','врать больше некому');
+    gw.className='ix-ip-good'; gw.textContent='a4:2b:b0:1e:00:01'; arpBtn.textContent='Двойник отключён ✓';
+    step(4); say('Самозванец отключён. Защита сети 100 процентов.');
+  };
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Отвечу на ARP первым и громче всех: «192.168.1.1 — это я!»',q:'Что защитит офисную сеть?',
+     o:[['Сменить IP у всех ноутбуков',0,'Он врёт про адрес роутера, а не ноутбуков. Смена ничего не даст.'],
+        ['Коммутатор сверяет ARP-ответы с адресами, выданными по DHCP',1,'Ложный «я роутер» отброшен. Это Dynamic ARP Inspection.'],
+        ['Спрятать имя Wi‑Fi сети',0,'Скрытую сеть находят за секунды. К тому же он уже внутри.']]},
+    {v:'Ладно. На вокзале открытый Wi‑Fi, умного коммутатора нет. Встану посередине и прочитаю всё, что ты отправляешь.',q:'Чем ответишь?',
+     o:[['Режим инкогнито в браузере',0,'Инкогнито не хранит историю на устройстве. Трафик он не шифрует.'],
+        ['HTTPS везде, а в чужой сети — ещё и VPN',1,'Посередине он видит только зашифрованный поток.']]},
+    {v:'Тогда подпишусь чужим IP. Ваша админка пускает только адрес 10.0.0.5 — им и представлюсь.',q:'Как закрыть админку?',
+     o:[['Добавить в список ещё пару «надёжных» адресов',0,'Больше адресов — больше масок для Самозванца.'],
+        ['Требовать вход с паролем и вторым фактором',1,'Адрес подделать можно, но без пароля и кода он ничего не даст. Белый список IP — лишь дополнительный слой.'],
+        ['Сменить 10.0.0.5 на 10.0.0.77',0,'Новый адрес он узнает так же, как старый.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ix-ip-bface'), BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='САМОЗВАНЕЦ · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Самозванца: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="ix-ip-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="ix-ip-vsay"><small>САМОЗВАНЕЦ</small>'+esc(m.v)+'</p><p class="ix-ip-bq">'+esc(m.q)+'</p><div class="ix-ip-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="ix-ip-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    bb.innerHTML=h+'</div><p class="ix-ip-bfb" data-bfb aria-live="polite"></p>';
+    qa('.ix-ip-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var o=MOVES[BS.i].o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('ix-ip-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='ix-ip-bfb ix-ip-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]); return;
+    }
+    qa('.ix-ip-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-ip-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('ix-ip-ow'); void face.offsetWidth; face.classList.add('ix-ip-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='ix-ip-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='ix-ip-bfb ix-ip-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='ix-ip-act';
+    nb.innerHTML='<button type="button" class="ix-ip-btn ix-ip-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.ix-ip-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="ix-ip-win"><div class="ix-ip-wpost" aria-hidden="true"><div class="ix-ip-badge"><span class="ix-ip-badge-top">ЗДРАВСТВУЙТЕ, Я&nbsp;—</span><span class="ix-ip-badge-name">роутер</span><span class="ix-ip-badge-mac">MAC 66:6f:72:67:65:13</span></div><span>ПОВЕРЖЕН</span></div>'+
+      '<p class="ix-ip-wint">Самозванец повержен</p><p class="ix-ip-wins">С первого раза: <b>'+BS.first+'/3</b></p>'+
+      '<p class="ix-ip-rule">Не верь адресу на слово: ни IP, ни MAC не доказывают, кто перед тобой.</p>'+
+      '<button type="button" class="ix-ip-btn ix-ip-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Самозванец повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-ip-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>

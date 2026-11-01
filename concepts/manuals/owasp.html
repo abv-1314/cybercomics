@@ -1,0 +1,189 @@
+<!-- Методичка Барахолки: «OWASP Top 10:2025 — конспект». Формат как в git.html.
+     Названия и порядок категорий сверены с concepts/issues/owasp-top-10-2025.html и данными выпуска 9 (IssueReader). -->
+
+<section class="mn-page" id="ow-1" data-title="Что такое OWASP Top 10 и весь список" data-preview>
+  <span class="mn-tag">Тетрадь №2 · OWASP</span>
+  <h2 class="mn-h1">OWASP Top 10:2025 — конспект</h2>
+  <p class="pen">Десять категорий, которые спрашивают на каждом собесе в AppSec. Выучим по порядку и перестанем путать соседей.</p>
+
+  <p><b>OWASP</b> (Open Worldwide Application Security Project) — открытое некоммерческое сообщество по безопасности приложений. Раз в несколько лет оно публикует <b>Top 10</b> — список <span class="mk">самых опасных рисков веб-приложений</span>, собранный по данным о реальных уязвимостях. Последняя редакция — 2025 года.</p>
+
+  <table class="mn-tab wrap">
+    <thead><tr><th>№</th><th>Категория</th><th>Одной фразой</th></tr></thead>
+    <tbody>
+      <tr><td><b>A01</b></td><td>Broken Access Control</td><td>Делаешь то, на что нет прав. Сюда же теперь входит SSRF.</td></tr>
+      <tr><td><b>A02</b></td><td>Security Misconfiguration</td><td>Небезопасные настройки.</td></tr>
+      <tr><td><b>A03</b></td><td>Software Supply Chain Failures</td><td>Риски в зависимостях, сборке и поставке.</td></tr>
+      <tr><td><b>A04</b></td><td>Cryptographic Failures</td><td>Слабая или отсутствующая криптография.</td></tr>
+      <tr><td><b>A05</b></td><td>Injection</td><td>Данные становятся кодом.</td></tr>
+      <tr><td><b>A06</b></td><td>Insecure Design</td><td>Дыра в замысле, а не в коде.</td></tr>
+      <tr><td><b>A07</b></td><td>Authentication Failures</td><td>Ошибки в ответе на вопрос «кто ты?».</td></tr>
+      <tr><td><b>A08</b></td><td>Software or Data Integrity Failures</td><td>Нет проверки подлинности кода и данных.</td></tr>
+      <tr><td><b>A09</b></td><td>Security Logging &amp; Alerting Failures</td><td>Атаку не видно, и на неё никто не реагирует.</td></tr>
+      <tr><td><b>A10</b></td><td>Mishandling of Exceptional Conditions</td><td>Ошибки и сбои обрабатываются небезопасно.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Это не «топ дыр по популярности», а категории рисков. В каждую входит много конкретных уязвимостей.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="ow-2" data-title="Что изменилось с 2021 и как читать конспект" data-preview>
+  <h2 class="mn-h2"><span class="mn-n">!</span>Что нового в 2025</h2>
+  <ul>
+    <li><b>A02 Security Misconfiguration</b> поднялась на второе место.</li>
+    <li><b>A03 Software Supply Chain Failures</b> — <span class="mk">новая</span>. Она расширила старую категорию про уязвимые и устаревшие компоненты: теперь это вся цепочка — зависимости, сборка, поставка.</li>
+    <li><b>SSRF</b> больше не отдельная категория: теперь он внутри <b>A01</b>.</li>
+    <li><b>A10 Mishandling of Exceptional Conditions</b> — <span class="mk">новая</span>: как приложение ведёт себя при сбоях и ошибках.</li>
+  </ul>
+  <div class="mn-warn">
+    <h4>Ошибка новичка на собесе</h4>
+    <p>Отвечать по редакции 2021 года: с SSRF отдельным пунктом A10 и без Supply Chain. Сразу видно, что учил по старой статье.</p>
+  </div>
+
+  <h3 class="mn-h3">Как устроена каждая страница дальше</h3>
+  <ul class="mn-legend">
+    <li><span class="mn-lbl">смысл:</span> одной фразой, чтобы запомнить.</li>
+    <li><span class="mn-lbl">сценарий:</span> как это выглядит в жизни.</li>
+    <li><span class="mn-lbl">защита:</span> что делают разработчики.</li>
+    <li><span class="mn-lbl">не путать:</span> с какой соседкой её путают и как различить.</li>
+  </ul>
+
+  <h3 class="mn-h3">Пять вопросов, которые разводят почти все пары</h3>
+  <ul class="mn-chips">
+    <li>A07 — кто ты?</li>
+    <li>A01 — что тебе можно?</li>
+    <li>A05 — данные стали кодом</li>
+    <li>A02 — опасные настройки</li>
+    <li>A06 — ошибка ещё в чертеже</li>
+  </ul>
+  <p class="pen">Совет: закрой ладонью колонку «одной фразой» на прошлой странице и вспомни сам. Так запоминается крепче, чем перечитывание.</p>
+  <span class="mn-pg">2</span>
+</section>
+
+<section class="mn-page" id="ow-3" data-title="A01 Broken Access Control · A02 Security Misconfiguration">
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">01</span><span>Broken Access Control<small>нарушение контроля доступа · кличка «Чужой Ключ»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> пользователь делает то, на что у него <span class="mk">нет прав</span>.</p>
+    <p><span class="mn-lbl">сценарий:</span> в адресе <code>/orders/123</code> меняешь число на 124 — и видишь чужой заказ (это IDOR, <a href="Issue2.dc.html">выпуск №2</a>). Или обычный пользователь открывает страницу админки, потому что кнопку спрятали, а проверку забыли. Сюда же теперь входит SSRF: сервер по твоей просьбе ходит туда, куда тебе нельзя (<a href="Issue6.dc.html">выпуск №6</a>).</p>
+    <p><span class="mn-lbl">защита:</span> по умолчанию — запрещено. На <b>сервере</b> проверять права на каждый объект и каждое действие: «этот заказ правда твой?». Скрытая кнопка — не защита.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A07</b>. A07 — «кто ты?», вход и сессии. A01 начинается <span class="ul">после</span> входа: «что тебе можно?».</p>
+  </div>
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">02</span><span>Security Misconfiguration<small>небезопасная настройка · кличка «Раззява»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> код может быть в порядке, но <span class="mk">настроено опасно</span>.</p>
+    <p><span class="mn-lbl">сценарий:</span> пароль <code>admin/admin</code>, который никто не сменил после установки. Облачное хранилище с файлами открыто всему интернету. Включённые без нужды отладка и лишние службы, подробные ошибки с внутренностями сервера.</p>
+    <p><span class="mn-lbl">защита:</span> одинаковая проверенная настройка для всех серверов, описанная кодом (IaC) и проверенная сканером IaC. Пароли по умолчанию меняются сразу, всё лишнее выключено.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A05 Injection</b>. Данные стали кодом — это A05. Код ни при чём, подвели настройки — A02.</p>
+  </div>
+  <span class="mn-pg">3</span>
+</section>
+
+<section class="mn-page" id="ow-4" data-title="A03 Supply Chain · A04 Cryptographic Failures">
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">03</span><span>Software Supply Chain Failures<small>сбои цепочки поставки ПО · кличка «Отравитель» · новая</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> беда приходит <span class="mk">через чужой код и сборку</span>: библиотеки, их зависимости, инструменты и конвейер.</p>
+    <p><span class="mn-lbl">сценарий:</span> в проекте библиотека с известной уязвимостью, и она едет прямо в прод. Или пакет, который подключили сто проектов, кто-то подменил на заражённую версию.</p>
+    <p><span class="mn-lbl">защита:</span> SCA (проверка зависимостей по базам уязвимостей), SBOM — список всего, из чего собрано приложение, фиксированные версии в lock-файле, пакеты только из доверенных источников, подпись артефактов сборки. Про конвейер — <a href="Issue8.dc.html">выпуск №8</a>.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A08</b>. A03 — риски цепочки поставки <span class="ul">в целом</span>. A08 — не проверена подлинность <span class="ul">конкретного</span> кода или данных.</p>
+  </div>
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">04</span><span>Cryptographic Failures<small>криптографические ошибки · кличка «Ржавый Замок»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> криптография <span class="mk">слабая или её нет</span>, и тайное перестаёт быть тайным.</p>
+    <p><span class="mn-lbl">сценарий:</span> база утекла, а пароли в ней лежат простым быстрым хешем без соли — их подбирают за часы. Данные идут по сети без шифрования. Ключ шифрования записан прямо в коде.</p>
+    <p><span class="mn-lbl">защита:</span> HTTPS (TLS) везде. Пароли — только специальными медленными функциями с солью: bcrypt, scrypt или Argon2. Ключи — в хранилище секретов, не в коде. Свою криптографию не изобретать.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A07</b>. A07 — логика входа (можно ли перебирать пароли, как живёт сессия). A04 — как защищены сами секреты и данные: хранение и передача.</p>
+  </div>
+  <span class="mn-pg">4</span>
+</section>
+
+<section class="mn-page" id="ow-5" data-title="A05 Injection · A06 Insecure Design">
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">05</span><span>Injection<small>внедрение · кличка «Чревовещатель»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> <span class="mk">данные становятся кодом</span>. Ввод пользователя попадает в запрос или страницу и начинает командовать.</p>
+    <p><span class="mn-lbl">сценарий:</span> запрос к базе склеен из строк с тем, что ввёл пользователь, и кавычка в поле поиска меняет смысл SQL (<a href="Issue3.dc.html">выпуск №3</a>). Чужой скрипт из комментария выполняется в браузере у других (XSS, <a href="Issue4.dc.html">выпуск №4</a>) — он тоже в A05.</p>
+    <p><span class="mn-lbl">защита:</span> параметризованные запросы вместо склейки строк. Экранирование вывода под место, куда он попадает (HTML, атрибут, JS). Проверка ввода по списку разрешённого. Ловит SAST — анализ кода без запуска.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A02</b>: там подвели настройки, тут — код, который смешал данные и команды.</p>
+  </div>
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">06</span><span>Insecure Design<small>небезопасный дизайн · кличка «Кривой Чертёж»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> дыра <span class="mk">в самом замысле</span>. Код написан ровно по плану, но план плохой.</p>
+    <p><span class="mn-lbl">сценарий:</span> купон на скидку можно применять снова и снова: лимит никто не придумал. Восстановление пароля по вопросу «любимый цвет?». Никакой ограничитель не предусмотрен, и бот скупает весь товар.</p>
+    <p><span class="mn-lbl">защита:</span> думать о безопасности ещё до кода: моделирование угроз («что тут может пойти не так?»), сценарии злоупотребления, лимиты и проверенные шаблоны. Ловят ревью, тесты и моделирование угроз, а не сканеры.</p>
+    <p><span class="mn-lbl">не путать:</span> с ошибками реализации (A05, A04 и др.). Там план хороший, а код кривой. Тут идеальный код ошибку не спасёт.</p>
+  </div>
+  <span class="mn-pg">5</span>
+</section>
+
+<section class="mn-page" id="ow-6" data-title="A07 Authentication Failures · A08 Integrity Failures">
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">07</span><span>Authentication Failures<small>ошибки аутентификации · кличка «Самозванец»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> сайт <span class="mk">ошибается, выясняя «кто ты?»</span>.</p>
+    <p><span class="mn-lbl">сценарий:</span> пароль можно перебирать бесконечно. Разрешены пароли вроде <code>123456</code>. После «Выйти» сессия продолжает жить. Подставляют логины и пароли, утёкшие с других сайтов.</p>
+    <p><span class="mn-lbl">защита:</span> ограничение числа попыток, второй фактор (MFA), проверка паролей по спискам утёкших, правильные сессии: новая после входа, уничтожается при выходе. Подробно про токены — <a href="Issue7.dc.html">выпуск №7 про JWT</a>.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A01</b>. Вход честный, личность подтверждена, а человек лезет в чужое — это уже A01.</p>
+  </div>
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">08</span><span>Software or Data Integrity Failures<small>нарушение целостности ПО и данных · кличка «Подменыш»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> <span class="mk">никто не проверил, что код или данные настоящие</span> и их не подменили по пути.</p>
+    <p><span class="mn-lbl">сценарий:</span> обновление ставится без проверки подписи. Скрипт подключён со стороннего сервера без проверки целостности. Приложение принимает от клиента данные, которым слепо доверяет, и разбирает их как объекты (небезопасная десериализация).</p>
+    <p><span class="mn-lbl">защита:</span> цифровые подписи обновлений и артефактов, проверка хешей, атрибут <code>integrity</code> (SRI) у внешних скриптов, не доверять данным от клиента без проверки.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A03</b>. Там вся цепочка поставки, тут — конкретный кусок кода или данных без проверки подлинности.</p>
+  </div>
+  <span class="mn-pg">6</span>
+</section>
+
+<section class="mn-page" id="ow-7" data-title="A09 Logging & Alerting · A10 Exceptional Conditions">
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">09</span><span>Security Logging &amp; Alerting Failures<small>сбои журналирования и оповещений · кличка «Невидимка»</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> <span class="mk">атаку не видно</span>, и на неё никто не реагирует.</p>
+    <p><span class="mn-lbl">сценарий:</span> взлом заметили через полгода: журналов не было. Или журналы были, но их никто не читал, и сотня неудачных входов подряд не подняла тревогу.</p>
+    <p><span class="mn-lbl">защита:</span> записывать важные события (входы, неудачи, смену прав), собирать журналы в одном месте, настроить оповещения и знать, кто реагирует. Пароли и токены в журналы не писать. Это зона мониторинга.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A10</b>. A10 — как приложение <span class="ul">ведёт себя</span> при сбое. A09 — <span class="ul">увидит ли</span> кто-то, что случилось.</p>
+  </div>
+  <div class="mn-cat">
+    <h2 class="mn-h2"><span class="mn-n">10</span><span>Mishandling of Exceptional Conditions<small>небезопасная обработка исключительных ситуаций · кличка «Паникёр» · новая</small></span></h2>
+    <p><span class="mn-lbl">смысл:</span> когда что-то идёт не так, приложение <span class="mk">ломается небезопасно</span>.</p>
+    <p><span class="mn-lbl">сценарий:</span> сервис проверки прав упал — и приложение пустило всех («отказ в открытую», fail-open). Перевод денег упал на середине, а списание не откатилось.</p>
+    <p><span class="mn-lbl">защита:</span> при сбое — закрываться, а не открываться (fail-closed). Обрабатывать ошибки в одном месте, откатывать незаконченные операции, показывать пользователю короткое сообщение, а подробности — только в журнал.</p>
+    <p><span class="mn-lbl">не путать:</span> с <b>A09</b> (видимость) и с <b>A02</b> (настройки). A10 — про логику поведения при ошибке.</p>
+  </div>
+  <span class="mn-pg">7</span>
+</section>
+
+<section class="mn-page" id="ow-8" data-title="Пары-путаницы, собеседование и практика">
+  <h2 class="mn-h2"><span class="mn-n">★</span>Пары, которые путают</h2>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Пара</th><th>Как различить</th></tr></thead>
+    <tbody>
+      <tr><td><b>A01 / A07</b></td><td>A07 — «кто ты?». A01 — «что тебе можно?».</td></tr>
+      <tr><td><b>A05 / A02</b></td><td>Данные стали кодом — A05. Код в порядке, настроено опасно — A02.</td></tr>
+      <tr><td><b>A06 / остальные</b></td><td>A06 рождается ещё в проекте, идеальный код её не спасёт.</td></tr>
+      <tr><td><b>A03 / A08</b></td><td>A03 — вся цепочка зависимостей и сборки. A08 — не проверена подлинность конкретного кода или данных.</td></tr>
+      <tr><td><b>A09 / A10</b></td><td>A10 — как повело себя приложение. A09 — заметил ли кто-нибудь.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-stick">
+    <h4>Собес: «Назови OWASP Top 10 и приведи три примера»</h4>
+    <ol>
+      <li>Все десять по порядку, по редакции 2025.</li>
+      <li>Три примера с защитой: <b>A01</b> — IDOR, проверять владельца объекта на сервере; <b>A05</b> — SQL-инъекция, параметризованные запросы; <b>A03</b> — уязвимая библиотека, SCA, SBOM и фиксированные версии.</li>
+      <li>Сильный ход: где в пайплайне это ловят.</li>
+    </ol>
+  </div>
+
+  <h3 class="mn-h3">У каждой — свой контроль</h3>
+  <p>A05 ловит <b>SAST</b>, A03 — <b>SCA</b> и подпись артефактов, A02 — <b>скан IaC</b>, A09 — <b>мониторинг</b>. A01 и A06 требуют ревью, тестов и моделирования угроз.</p>
+
+  <div class="mn-warn">
+    <h4>Тренируйся только легально</h4>
+    <p>Чужие сайты трогать нельзя, даже «просто посмотреть». Для практики есть площадки, где уязвимости оставлены нарочно:</p>
+    <ul>
+      <li><a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Web Security Academy</a> — бесплатные лаборатории по каждой теме.</li>
+      <li><a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a> — учебный магазин, полный дыр из этого списка.</li>
+      <li><a href="https://picoctf.org" rel="noopener">picoCTF</a> и <a href="https://tryhackme.com" rel="noopener">TryHackMe</a> — задачи и комнаты для начинающих.</li>
+    </ul>
+  </div>
+  <p class="pen">Совет Десяти распущен. Первоисточник — <a href="https://owasp.org/Top10/" rel="noopener">owasp.org/Top10</a> (OWASP Foundation, лицензия CC BY 3.0, мы пересказали своими словами). А портреты всех десяти злодеев — в <a href="Issue9.dc.html">выпуске №9</a>.</p>
+  <span class="mn-pg">8</span>
+</section>

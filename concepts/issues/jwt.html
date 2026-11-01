@@ -1,0 +1,936 @@
+<section class="ix ix-jwt" data-ix="jwt" aria-label="Выпуск 7: Токенщик и поддельные пропуска">
+<div class="ix-jwt-live" id="ix-jwt-live" aria-live="polite"></div>
+
+<!-- ================= МИССИЯ ================= -->
+<div class="ix-jwt-game">
+
+<section class="ix-jwt-mission" id="ix-jwt-mission" aria-labelledby="ix-jwt-mt">
+  <div class="ix-jwt-eye" aria-hidden="true">
+    <img src="IMGROOT/villain-7.webp" alt="">
+    <div class="ix-jwt-ret"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#ff2e93" stroke-width="4"/><circle cx="50" cy="50" r="24" fill="none" stroke="#ff2e93" stroke-width="2" stroke-dasharray="6 5"/><path d="M50 0v22M50 78v22M0 50h22M78 50h22" stroke="#ff2e93" stroke-width="4"/></svg></div>
+    <span class="ix-jwt-tag">ЦЕЛЬ: ТОКЕНЩИК</span>
+    <span class="ix-jwt-tag2">В СЕТИ</span>
+  </div>
+  <div class="ix-jwt-mbody">
+    <p class="ix-jwt-kick" id="ix-jwt-kick">ЗАДАНИЕ · ВЕБ-КВАРТАЛ</p>
+    <h2 class="ix-jwt-mtitle" id="ix-jwt-mt"><span class="ix-jwt-w">Ты —</span> <span class="ix-jwt-w">охрана</span>
+      <span class="ix-jwt-dom"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="3"/></svg>api.example</span></h2>
+    <p class="ix-jwt-msub">Токенщик несёт поддельные пропуска. Сервер должен <em>раскусить каждый</em>.</p>
+    <p class="ix-jwt-motto">«Подпись? А кто её проверяет?»</p>
+    <ol class="ix-jwt-moves" aria-label="Четыре проверки">
+      <li id="ix-jwt-mv1"><b>01</b><span>Подпись</span></li>
+      <li id="ix-jwt-mv2"><b>02</b><span>Алгоритм</span></li>
+      <li id="ix-jwt-mv3"><b>03</b><span>Срок и адрес</span></li>
+      <li id="ix-jwt-mv4"><b>04</b><span>Кража</span></li>
+    </ol>
+    <button class="ix-jwt-go" id="ix-jwt-go" type="button">Принять миссию ▶</button>
+  </div>
+</section>
+
+<div class="ix-jwt-hud" id="ix-jwt-hud" aria-hidden="true">
+  <span class="ix-jwt-hud-l">ЗАЩИТА API</span>
+  <div class="ix-jwt-bar"><i id="ix-jwt-barf"></i><b id="ix-jwt-bart">0%</b></div>
+  <div class="ix-jwt-pips"><span id="ix-jwt-p1">1</span><span id="ix-jwt-p2">2</span><span id="ix-jwt-p3">3</span><span id="ix-jwt-p4">4</span></div>
+  <span class="ix-jwt-score" id="ix-jwt-score">0</span>
+</div>
+
+<!-- ================= БРИФИНГ: ПРОПУСК (ВАУ) ================= -->
+<section class="ix-jwt-lvl is-locked" id="ix-jwt-L0" aria-labelledby="ix-jwt-t0">
+  <div class="ix-jwt-lvl-h"><span class="ix-jwt-lvl-n">БРИФИНГ</span><h3 class="ix-jwt-lvl-t" id="ix-jwt-t0">Пропуск Сони</h3><span class="ix-jwt-badge">ПОНЯТНО</span></div>
+  <div class="ix-jwt-lockcap"><span>🔒 Сначала прими миссию</span></div>
+  <div class="ix-jwt-lvl-b">
+    <div class="ix-jwt-pass" id="ix-jwt-pass" role="group" aria-label="JWT-пропуск Сони">
+      <div class="ix-jwt-pc ix-jwt-pc-h" id="ix-jwt-pch">
+        <span class="ix-jwt-pl">Заголовок <i>header</i></span>
+        <code class="ix-jwt-raw" id="ix-jwt-rawh">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</code>
+      </div>
+      <span class="ix-jwt-dot" aria-hidden="true"></span>
+      <div class="ix-jwt-pc ix-jwt-pc-p" id="ix-jwt-pcp">
+        <span class="ix-jwt-pl">Содержимое <i>payload</i></span>
+        <code class="ix-jwt-raw" id="ix-jwt-rawp">eyJzdWIiOiJzb255YSIsInJvbGUiOiJ1c2VyIiwiaXNzIjoiYXV0aC5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE4OTM0NTYwMDB9</code>
+      </div>
+      <span class="ix-jwt-dot" aria-hidden="true"></span>
+      <div class="ix-jwt-pc ix-jwt-pc-s" id="ix-jwt-pcs">
+        <span class="ix-jwt-pl">Подпись <i>signature</i></span>
+        <code class="ix-jwt-raw" id="ix-jwt-raws">07_qMCd9NjDx_br3b_nZNwv2IgRzLNYIG6JZktmnu2g</code>
+        <div class="ix-jwt-chk" id="ix-jwt-chk" aria-live="polite"></div>
+        <span class="ix-jwt-crack" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="ix-jwt-nar" id="ix-jwt-nar" aria-live="polite">
+      <div class="ix-jwt-say"><span class="ix-jwt-who">ДЯДЯ МИША</span><span class="ix-jwt-bub">Это пропуск Сони — JWT. Сервис смотрит на него и решает, кто пришёл. Видишь две точки? Они режут его на три части.</span></div>
+    </div>
+    <div class="ix-jwt-dock"><button class="ix-jwt-btn ix-jwt-y" id="ix-jwt-act" type="button">✂ Разрезать по точкам</button></div>
+    <div class="ix-jwt-next"><button class="ix-jwt-btn" type="button" data-goto="L1">Токенщик ходит ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 1: ПОДПИСЬ ================= -->
+<section class="ix-jwt-lvl ix-jwt-v is-locked" id="ix-jwt-L1" aria-labelledby="ix-jwt-t1">
+  <div class="ix-jwt-lvl-h"><span class="ix-jwt-lvl-n">ПРОВЕРКА 1 / 4</span><h3 class="ix-jwt-lvl-t" id="ix-jwt-t1">Подпись</h3><span class="ix-jwt-badge">ОТБИТО</span></div>
+  <div class="ix-jwt-lockcap"><span>🔒 Сначала пройди брифинг</span></div>
+  <div class="ix-jwt-lvl-b">
+    <div class="ix-jwt-say"><span class="ix-jwt-who ix-jwt-wv">ТОКЕНЩИК</span><span class="ix-jwt-bub">Я тоже поставил себе «admin». Подпись старая? Плевать. Этот сервис пропуск только читает.</span></div>
+    <div class="ix-jwt-mini" aria-label="Пропуск Токенщика">
+      <span class="ix-jwt-mh">alg: HS256</span><span class="ix-jwt-mp">role: <b>"admin"</b></span><span class="ix-jwt-ms ix-jwt-bad">подпись от «user»</span>
+    </div>
+    <div class="ix-jwt-srv">
+      <p class="ix-jwt-srv-h">ТУРНИКЕТ API · что сервер делает с пропуском</p>
+      <button class="ix-jwt-sw" id="ix-jwt-sw1" type="button" role="switch" aria-checked="false">
+        <span class="ix-jwt-knob" aria-hidden="true"></span>
+        <span class="ix-jwt-swt"><code data-off="jwt.decode(token)" data-on="jwt.verify(token, KEY)">jwt.decode(token)</code><small data-off="только читает" data-on="проверяет подпись ключом сервера">только читает</small></span>
+      </button>
+    </div>
+    <button class="ix-jwt-btn ix-jwt-y ix-jwt-try" id="ix-jwt-try1" type="button">Предъявить пропуск ▶</button>
+    <div class="ix-jwt-res" id="ix-jwt-res1"></div>
+    <ul class="ix-jwt-tips">
+      <li><b>decode ≠ verify.</b> «Прочитал» не значит «проверил». Почти во всех библиотеках это две разные функции.</li>
+      <li><b>Секрет — длинный и случайный.</b> Слабый пароль вроде «secret» подбирают перебором, и тогда подпись может поставить кто угодно.</li>
+    </ul>
+    <div class="ix-jwt-next"><button class="ix-jwt-btn" type="button" data-goto="L2">Проверка 2 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 2: АЛГОРИТМ ================= -->
+<section class="ix-jwt-lvl ix-jwt-v is-locked" id="ix-jwt-L2" aria-labelledby="ix-jwt-t2">
+  <div class="ix-jwt-lvl-h"><span class="ix-jwt-lvl-n">ПРОВЕРКА 2 / 4</span><h3 class="ix-jwt-lvl-t" id="ix-jwt-t2">Алгоритм</h3><span class="ix-jwt-badge">ОТБИТО</span></div>
+  <div class="ix-jwt-lockcap"><span>🔒 Сначала отбей проверку 1</span></div>
+  <div class="ix-jwt-lvl-b">
+    <div class="ix-jwt-say"><span class="ix-jwt-who ix-jwt-wv">ТОКЕНЩИК</span><span class="ix-jwt-bub">Подпись проверяете? Ладно. Пишу в заголовке <code>alg: none</code> — «подписи нет, верьте так». Вы ведь берёте алгоритм из пропуска?</span></div>
+    <div class="ix-jwt-mini" aria-label="Пропуск Токенщика">
+      <span class="ix-jwt-mh">alg: <b>"none"</b></span><span class="ix-jwt-mp">role: <b>"admin"</b></span><span class="ix-jwt-ms ix-jwt-empty">подписи нет</span>
+    </div>
+    <div class="ix-jwt-srv">
+      <p class="ix-jwt-srv-h">ТУРНИКЕТ API</p>
+      <div class="ix-jwt-done">✓ <code>jwt.verify(token, KEY)</code></div>
+      <button class="ix-jwt-sw" id="ix-jwt-sw2" type="button" role="switch" aria-checked="false">
+        <span class="ix-jwt-knob" aria-hidden="true"></span>
+        <span class="ix-jwt-swt"><code data-off="алгоритм: из токена" data-on="algorithms: ['HS256']">алгоритм: из токена</code><small data-off="как скажет заголовок" data-on="только список из настроек сервера">как скажет заголовок</small></span>
+      </button>
+    </div>
+    <button class="ix-jwt-btn ix-jwt-y ix-jwt-try" id="ix-jwt-try2" type="button">Предъявить пропуск ▶</button>
+    <div class="ix-jwt-res" id="ix-jwt-res2"></div>
+    <ul class="ix-jwt-tips">
+      <li><b>Путаница RS256 и HS256.</b> RS256 проверяют открытым ключом, HS256 — общим секретом. Если сервер верит заголовку, открытый ключ (а его знают все) могут подсунуть как «секрет» HS256. Тот же рецепт: алгоритм задаёт сервер, каждый ключ — только для своего алгоритма.</li>
+      <li><b>Заголовку не доверяем ни в чём.</b> Он пришёл от клиента, а клиент мог его переписать.</li>
+    </ul>
+    <div class="ix-jwt-next"><button class="ix-jwt-btn" type="button" data-goto="L3">Проверка 3 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 3: EXP ISS AUD ================= -->
+<section class="ix-jwt-lvl ix-jwt-v is-locked" id="ix-jwt-L3" aria-labelledby="ix-jwt-t3">
+  <div class="ix-jwt-lvl-h"><span class="ix-jwt-lvl-n">ПРОВЕРКА 3 / 4</span><h3 class="ix-jwt-lvl-t" id="ix-jwt-t3">Срок и адрес</h3><span class="ix-jwt-badge">ОТБИТО</span></div>
+  <div class="ix-jwt-lockcap"><span>🔒 Сначала отбей проверку 2</span></div>
+  <div class="ix-jwt-lvl-b">
+    <div class="ix-jwt-say"><span class="ix-jwt-who ix-jwt-wv">ТОКЕНЩИК</span><span class="ix-jwt-bub">Подделывать больше не буду. Этот пропуск <b>настоящий</b>: нашёл в старом логе. Ну и что, что он с весны и для чата?</span></div>
+    <div class="ix-jwt-mini" aria-label="Пропуск Токенщика">
+      <span class="ix-jwt-mh">alg: HS256</span><span class="ix-jwt-mp">aud: <b>"chat.example"</b> · exp: <b>1 апр 2026</b></span><span class="ix-jwt-ms ix-jwt-ok">подпись ✓ настоящая</span>
+    </div>
+    <div class="ix-jwt-srv">
+      <p class="ix-jwt-srv-h">ТУРНИКЕТ API</p>
+      <div class="ix-jwt-done">✓ <code>jwt.verify(token, KEY)</code></div>
+      <div class="ix-jwt-done">✓ <code>algorithms: ['HS256']</code></div>
+      <button class="ix-jwt-sw" id="ix-jwt-sw3" type="button" role="switch" aria-checked="false">
+        <span class="ix-jwt-knob" aria-hidden="true"></span>
+        <span class="ix-jwt-swt"><code data-off="exp, iss, aud: не смотрим" data-on="exp · iss: 'auth.example' · aud: 'api.example'">exp, iss, aud: не смотрим</code><small data-off="подпись сошлась — и ладно" data-on="срок, кто выдал, для кого">подпись сошлась — и ладно</small></span>
+      </button>
+    </div>
+    <button class="ix-jwt-btn ix-jwt-y ix-jwt-try" id="ix-jwt-try3" type="button">Предъявить пропуск ▶</button>
+    <div class="ix-jwt-res" id="ix-jwt-res3"></div>
+    <div class="ix-jwt-authz">
+      <p class="ix-jwt-big">Кто ты ≠ что тебе можно</p>
+      <p><b>Аутентификация</b> — пропуск прошёл все проверки, сервер знает, <em>кто</em> пришёл.</p>
+      <p><b>Авторизация</b> — дальше, на каждый запрос: <em>можно</em> ли Соне именно этот заказ. Настоящий пропуск не открывает чужие заказы.</p>
+    </div>
+    <div class="ix-jwt-next"><button class="ix-jwt-btn" type="button" data-goto="L4">Проверка 4 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 4: ХРАНЕНИЕ ================= -->
+<section class="ix-jwt-lvl ix-jwt-v is-locked" id="ix-jwt-L4" aria-labelledby="ix-jwt-t4">
+  <div class="ix-jwt-lvl-h"><span class="ix-jwt-lvl-n">ПРОВЕРКА 4 / 4</span><h3 class="ix-jwt-lvl-t" id="ix-jwt-t4">Кража</h3><span class="ix-jwt-badge">ОТБИТО</span></div>
+  <div class="ix-jwt-lockcap"><span>🔒 Сначала отбей проверку 3</span></div>
+  <div class="ix-jwt-lvl-b">
+    <div class="ix-jwt-say"><span class="ix-jwt-who ix-jwt-wv">ТОКЕНЩИК</span><span class="ix-jwt-bub">Подделать не выходит. Значит, <b>украду настоящий</b>. На странице есть дырка для чужого скрипта (XSS). Где вы держите пропуск?</span></div>
+    <div class="ix-jwt-srv">
+      <p class="ix-jwt-srv-h">ГДЕ БРАУЗЕР ХРАНИТ ПРОПУСК</p>
+      <div class="ix-jwt-opts" role="radiogroup" aria-label="Где хранить токен" id="ix-jwt-store">
+        <button type="button" role="radio" aria-checked="true" data-v="ls"><code>localStorage</code><small>просто, любой скрипт страницы прочитает</small></button>
+        <button type="button" role="radio" aria-checked="false" data-v="ck"><code>Cookie: HttpOnly; Secure; SameSite</code><small>скрипт не прочитает, браузер шлёт сам</small></button>
+        <button type="button" role="radio" aria-checked="false" data-v="mem"><code>в памяти + refresh в HttpOnly cookie</code><small>частый выбор для одностраничных приложений</small></button>
+      </div>
+      <p class="ix-jwt-srv-h">СКОЛЬКО ЖИВЁТ ACCESS-ТОКЕН</p>
+      <div class="ix-jwt-opts ix-jwt-row2" role="radiogroup" aria-label="Срок access-токена" id="ix-jwt-life">
+        <button type="button" role="radio" aria-checked="true" data-v="30d"><code>30 дней</code></button>
+        <button type="button" role="radio" aria-checked="false" data-v="15m"><code>15 минут</code></button>
+      </div>
+    </div>
+    <button class="ix-jwt-btn ix-jwt-y ix-jwt-try" id="ix-jwt-try4" type="button">Пусть атакует ▶</button>
+    <div class="ix-jwt-warn" id="ix-jwt-warn4" aria-live="polite"></div>
+    <div class="ix-jwt-res" id="ix-jwt-res4"></div>
+    <ul class="ix-jwt-tips">
+      <li><b>Refresh-токен</b> нужен только чтобы получить новый access. Сервер его помнит и может отозвать. При каждом обновлении — новый refresh, старый сгорает.</li>
+      <li><b>Cookie браузер прикладывает сам</b> — значит, нужны SameSite и защита от CSRF.</li>
+      <li><b>Идеального места нет.</b> Это компромисс между XSS и CSRF. А XSS чини в любом случае: скрипт на странице может жать кнопки от имени Сони.</li>
+    </ul>
+    <div class="ix-jwt-next"><button class="ix-jwt-btn" type="button" data-goto="final">Итоги ▼</button></div>
+  </div>
+</section>
+
+<section class="ix-jwt-final" id="ix-jwt-final" aria-labelledby="ix-jwt-ft" tabindex="-1">
+  <div class="ix-jwt-fface"><img src="IMGROOT/villain-7.webp" alt="Токенщик"><span class="ix-jwt-fst">ПРОПУСК АННУЛИРОВАН</span></div>
+  <div class="ix-jwt-fbody">
+    <h3 class="ix-jwt-ft" id="ix-jwt-ft">Миссия выполнена</h3>
+    <div class="ix-jwt-fstats"><span>Счёт <b id="ix-jwt-fscore">0</b></span><span>Защита <b>100%</b></span><span>Взломов <b id="ix-jwt-ffails">0</b></span></div>
+    <p class="ix-jwt-rule">Пропуску не верят, пока не проверили печать, алгоритм, срок и адресата.</p>
+  </div>
+</section>
+
+</div><!-- /game -->
+
+<!-- ================= БИТВА ================= -->
+<section class="ix-jwt-battle" id="ix-jwt-battle" aria-labelledby="ix-jwt-bt">
+  <p class="ix-jwt-eyebrow">ПОСЛЕ МИССИИ</p>
+  <h3 class="ix-jwt-h" id="ix-jwt-bt">Битва со злодеем</h3>
+  <div class="ix-jwt-arena">
+    <div class="ix-jwt-bface" id="ix-jwt-bface"><img src="IMGROOT/villain-7.webp" alt="Токенщик"><span class="ix-jwt-bko" aria-hidden="true">ПОВЕРЖЕН</span></div>
+    <div class="ix-jwt-hpw">
+      <div class="ix-jwt-hpl"><span>ТОКЕНЩИК</span><span id="ix-jwt-hpn">HP 100</span></div>
+      <div class="ix-jwt-hp" role="progressbar" aria-label="Здоровье Токенщика" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-jwt-hpbar"><i id="ix-jwt-hpf"></i></div>
+      <p class="ix-jwt-bstep" id="ix-jwt-bstep">ХОД 1 / 3</p>
+    </div>
+  </div>
+  <div class="ix-jwt-bplay" id="ix-jwt-bplay">
+    <p class="ix-jwt-bmove" id="ix-jwt-bmove"></p>
+    <p class="ix-jwt-bq">Твоя защита:</p>
+    <div class="ix-jwt-bopts" id="ix-jwt-bopts"></div>
+    <p class="ix-jwt-bfb" id="ix-jwt-bfb" aria-live="polite"></p>
+  </div>
+  <div class="ix-jwt-bend" id="ix-jwt-bend" hidden>
+    <p class="ix-jwt-bwin">Токенщик повержен</p>
+    <p class="ix-jwt-bsc" id="ix-jwt-bsc"></p>
+    <button class="ix-jwt-btn ix-jwt-y" id="ix-jwt-bagain" type="button">↺ Ещё раз</button>
+  </div>
+</section>
+
+<!-- ================= СОБЕСЕДОВАНИЕ ================= -->
+<section class="ix-jwt-iv" aria-labelledby="ix-jwt-ivt">
+  <p class="ix-jwt-eyebrow ix-jwt-eyl">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h3 class="ix-jwt-ivq" id="ix-jwt-ivt">Как устроен JWT и что backend должен проверять при каждом запросе?</h3>
+  <div class="ix-jwt-think">
+    <p class="ix-jwt-thl">Подумай сам</p>
+    <p>Вспомни три части пропуска. Что из них видно всем? И что сервер обязан проверить, прежде чем поверить хоть одному полю?</p>
+  </div>
+  <button class="ix-jwt-btn ix-jwt-y" id="ix-jwt-ivb" type="button" aria-expanded="false" aria-controls="ix-jwt-iva">Показать сильный ответ</button>
+  <div class="ix-jwt-iva" id="ix-jwt-iva" hidden>
+    <ol>
+      <li><b>Три части, ничего не спрятано.</b> Заголовок с алгоритмом, содержимое (sub, exp, iss, aud) и подпись. Первые две — base64url, их читает кто угодно. Подпись защищает от изменения, а не от чтения, поэтому секретов внутри нет.</li>
+      <li><b>Подпись — ключом и алгоритмом из конфигурации.</b> Фиксированный список алгоритмов, никакого alg:none, каждый ключ — для своего алгоритма (без путаницы RS256/HS256), длинный случайный секрет.</li>
+      <li><b>Срок, издатель, получатель — потом права.</b> exp не истёк, iss и aud совпадают с ожидаемыми. Затем авторизация к конкретному ресурсу: это уже вопрос «что можно», а не «кто ты».</li>
+      <li><b>Жизненный цикл.</b> Короткий access-токен, refresh с ротацией и отзывом. Хранение — HttpOnly, Secure, SameSite cookie с защитой от CSRF или память страницы. XSS исправлять в любом случае.</li>
+    </ol>
+    <p class="ix-jwt-noob"><b>Ошибка новичка:</b> сказать «JWT зашифрован» и считать токен настоящим только потому, что он читается.</p>
+  </div>
+</section>
+
+<!-- ================= ШПАРГАЛКА ================= -->
+<section class="ix-jwt-cheat" aria-labelledby="ix-jwt-ct">
+  <h3 class="ix-jwt-h" id="ix-jwt-ct">Шпаргалка: что важно знать</h3>
+  <ol class="ix-jwt-cl">
+    <li><span class="ix-jwt-cn">01</span><div><b>Три части через точку</b><p>Заголовок, содержимое, подпись. Каждая — отдельный кусок строки.</p></div></li>
+    <li><span class="ix-jwt-cn">02</span><div><b>Содержимое видно всем</b><p>base64url — это запись, а не шифр. Паролей и секретов в токене не держат.</p></div></li>
+    <li><span class="ix-jwt-cn">03</span><div><b>Подпись — от изменения</b><p>Поменял одну букву — подпись не сходится, а новую без ключа сервера не поставить.</p></div></li>
+    <li><span class="ix-jwt-cn">04</span><div><b>Алгоритм решает сервер</b><p>Только список из настроек: alg:none и подмена RS256 на HS256 не проходят.</p></div></li>
+    <li><span class="ix-jwt-cn">05</span><div><b>exp, iss, aud</b><p>Настоящий пропуск бывает старым или чужим — проверь срок, кто выдал и для кого.</p></div></li>
+    <li><span class="ix-jwt-cn">06</span><div><b>Кто ты ≠ что можно</b><p>Пропуск отвечает «кто пришёл», а права на каждый ресурс сервер проверяет отдельно.</p></div></li>
+    <li><span class="ix-jwt-cn">07</span><div><b>Короткий access, отзываемый refresh</b><p>Access живёт минуты, refresh лежит в HttpOnly cookie, меняется при обновлении и отзывается.</p></div></li>
+  </ol>
+  <p class="ix-jwt-legal"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (раздел про JWT), picoCTF, OWASP Juice Shop. Чужие сайты и чужие токены трогать нельзя.</p>
+</section>
+
+<!-- ================= ВЗЛОМ ================= -->
+<div class="ix-jwt-hack" id="ix-jwt-hack" role="dialog" aria-modal="true" aria-labelledby="ix-jwt-hkt" hidden>
+  <div class="ix-jwt-hk">
+    <div class="ix-jwt-hkface"><img src="IMGROOT/villain-7.webp" alt=""></div>
+    <p class="ix-jwt-hkt" id="ix-jwt-hkt">ВЗЛОМ!</p>
+    <p class="ix-jwt-hkw" id="ix-jwt-hkw"></p>
+    <p class="ix-jwt-hks" id="ix-jwt-hks"></p>
+    <button class="ix-jwt-btn ix-jwt-y" id="ix-jwt-rewind" type="button">◀◀ Откатить время</button>
+  </div>
+</div>
+</section>
+
+<style>
+.ix-jwt{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--acc:#19c3ff;--pink:#ff2e93;--red:#ff3b3b;--green:#2ee59d;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;
+  --code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:100%;overflow-wrap:break-word}
+.ix-jwt,.ix-jwt *,.ix-jwt *::before,.ix-jwt *::after{box-sizing:border-box}
+.ix-jwt button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.ix-jwt :focus-visible{outline:4px solid var(--pink);outline-offset:3px}
+.ix-jwt code{font-family:var(--code)}
+.ix-jwt [hidden]{display:none !important}
+.ix-jwt .ix-jwt-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- mission ---------- */
+.ix-jwt .ix-jwt-mission{position:relative;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--acc),10px 10px 0 3px var(--ink);
+  display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden;min-height:560px;margin-right:10px}
+.ix-jwt .ix-jwt-eye{position:relative;overflow:hidden;background:var(--acc);border-right:3px solid var(--ink)}
+.ix-jwt .ix-jwt-eye img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.ix-jwt .ix-jwt-eye::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(rgba(20,20,20,.5) 1.1px,transparent 1.8px);background-size:7px 7px;mix-blend-mode:multiply;opacity:.35}
+.ix-jwt .ix-jwt-ret{position:absolute;z-index:3;left:var(--rx,38%);top:var(--ry,48%);width:150px;height:150px;transform:translate(-50%,-50%);pointer-events:none}
+.ix-jwt .ix-jwt-ret svg{width:100%;height:100%;overflow:visible}
+.ix-jwt .ix-jwt-tag{position:absolute;z-index:4;left:14px;bottom:14px;font-family:var(--f-cap);font-size:15px;background:var(--ink);color:var(--yel);padding:6px 12px;border:2px solid var(--yel)}
+.ix-jwt .ix-jwt-tag2{position:absolute;z-index:4;right:14px;top:14px;font-family:var(--f-cap);font-size:14px;background:var(--red);color:#fff;padding:5px 10px;border:2px solid var(--ink);transform:rotate(3deg)}
+.ix-jwt .ix-jwt-mbody{padding:34px 30px 32px;display:flex;flex-direction:column;gap:18px;background-image:radial-gradient(rgba(25,195,255,.14) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-jwt .ix-jwt-kick{margin:0;font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--acc)}
+.ix-jwt .ix-jwt-mtitle{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-jwt .ix-jwt-w{display:block}
+.ix-jwt .ix-jwt-dom{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-family:var(--code);font-size:22px;font-weight:700;text-transform:none;background:#fff;color:var(--ink);
+  border:3px solid var(--ink);box-shadow:4px 4px 0 var(--acc);padding:6px 16px;border-radius:30px}
+.ix-jwt .ix-jwt-dom svg{width:18px;height:18px}
+.ix-jwt .ix-jwt-msub{margin:0;font-family:var(--f-hand);font-size:27px;line-height:1.15}
+.ix-jwt .ix-jwt-msub em{font-style:normal;color:var(--acc)}
+.ix-jwt .ix-jwt-motto{margin:0;font-family:var(--f-hand);font-size:22px;color:#cfcfcf;border-left:4px solid var(--pink);padding-left:12px}
+.ix-jwt .ix-jwt-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-jwt .ix-jwt-moves li{border:2px solid #fff;padding:8px 8px 10px;position:relative}
+.ix-jwt .ix-jwt-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-jwt .ix-jwt-moves span{display:block;font-family:var(--f-cap);font-size:14px;line-height:1.2;margin-top:4px}
+.ix-jwt .ix-jwt-moves li.is-x::after{content:"";position:absolute;inset:-2px;border:3px solid var(--green);background:rgba(46,229,157,.14)}
+.ix-jwt .ix-jwt-go{align-self:flex-start;min-height:58px;padding:0 28px;font-family:var(--f-mono);font-size:18px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);
+  box-shadow:6px 6px 0 var(--pink);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-jwt .ix-jwt-go:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--pink)}
+.ix-jwt .ix-jwt-go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--pink)}
+.ix-jwt .ix-jwt-go:disabled{opacity:.55;cursor:default;transform:none;animation:none}
+.ix-jwt.ix-anim .ix-jwt-go:not(:disabled){animation:ixjwt-pulse 1.6s ease-in-out infinite}
+.ix-jwt.ix-anim .ix-jwt-eye img{animation:ixjwt-kb 10s ease-in-out infinite alternate}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-ret{animation:ixjwt-lock .9s cubic-bezier(.2,1.4,.4,1) .5s both}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-tag2{animation:ixjwt-slam .45s cubic-bezier(.2,1.6,.4,1) 1.1s both}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-w:nth-child(1){animation:ixjwt-slam .5s cubic-bezier(.2,1.6,.4,1) .3s both}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-w:nth-child(2){animation:ixjwt-slam .5s cubic-bezier(.2,1.6,.4,1) .55s both}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-moves li{animation:ixjwt-deal .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-moves li:nth-child(1){animation-delay:1.2s}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-moves li:nth-child(2){animation-delay:1.3s}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-moves li:nth-child(3){animation-delay:1.4s}
+.ix-jwt.ix-anim .ix-jwt-mission.is-seen .ix-jwt-moves li:nth-child(4){animation-delay:1.5s}
+
+/* ---------- HUD ---------- */
+.ix-jwt .ix-jwt-game{position:relative}
+.ix-jwt .ix-jwt-hud{position:sticky;top:0;z-index:40;margin-top:40px;background:var(--ink);color:#fff;display:none;align-items:center;gap:12px;padding:8px 14px;border:3px solid var(--ink)}
+.ix-jwt .ix-jwt-hud.is-on{display:flex}
+.ix-jwt .ix-jwt-hud-l{font-family:var(--f-cap);font-size:13px;color:var(--yel);white-space:nowrap}
+.ix-jwt .ix-jwt-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-jwt .ix-jwt-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-jwt .ix-jwt-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px;font-weight:400;text-shadow:0 0 3px #000}
+.ix-jwt .ix-jwt-hud.is-hit{animation:ixjwt-shake .4s}
+.ix-jwt .ix-jwt-hud.is-hit .ix-jwt-bar i{background:var(--red)}
+.ix-jwt .ix-jwt-pips{display:flex;gap:4px}
+.ix-jwt .ix-jwt-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-jwt .ix-jwt-pips span.is-done{background:var(--yel);color:var(--ink);border-color:var(--yel)}
+.ix-jwt .ix-jwt-score{font-family:var(--f-mono);font-size:15px;color:var(--yel);min-width:48px;text-align:right}
+.ix-jwt .ix-jwt-float{position:fixed;z-index:60;font-family:var(--f-mono);font-size:22px;color:var(--yel);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;pointer-events:none;animation:ixjwt-float 1.1s ease-out forwards}
+.ix-jwt .ix-jwt-float.is-neg{color:var(--red)}
+
+/* ---------- levels ---------- */
+.ix-jwt .ix-jwt-lvl{position:relative;margin:48px 8px 0 0;border:3px solid var(--ink);background:#fffdf6;box-shadow:8px 8px 0 var(--ink);scroll-margin-top:64px}
+.ix-jwt .ix-jwt-lvl-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 20px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-jwt .ix-jwt-v .ix-jwt-lvl-h{background:var(--acc)}
+.ix-jwt .ix-jwt-lvl-n{font-family:var(--f-cap);font-size:14px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-jwt .ix-jwt-lvl-t{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-jwt .ix-jwt-badge{display:none;margin-left:auto;font-family:var(--f-cap);font-size:14px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-jwt .ix-jwt-lvl.is-clear .ix-jwt-badge{display:inline-block}
+.ix-jwt .ix-jwt-lvl-b{padding:22px 20px 24px}
+.ix-jwt .ix-jwt-lvl.is-locked .ix-jwt-lvl-b{filter:grayscale(1) blur(3px);opacity:.35;user-select:none;max-height:420px;overflow:hidden}
+.ix-jwt .ix-jwt-lockcap{display:none}
+.ix-jwt .ix-jwt-lvl.is-locked .ix-jwt-lockcap{display:grid;position:absolute;inset:60px 0 0;place-items:center;z-index:5;pointer-events:none}
+.ix-jwt .ix-jwt-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-jwt .ix-jwt-next{display:none;margin-top:22px}
+.ix-jwt .ix-jwt-lvl.is-clear .ix-jwt-next{display:flex}
+.ix-jwt .ix-jwt-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 18px}
+.ix-jwt .ix-jwt-who{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-jwt .ix-jwt-wv{background:var(--acc);color:var(--ink);border:2px solid var(--ink)}
+.ix-jwt .ix-jwt-wk{background:var(--pink);color:var(--ink);border:2px solid var(--ink)}
+.ix-jwt .ix-jwt-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);min-width:0}
+.ix-jwt .ix-jwt-bub b{font-weight:400;background:var(--yel);padding:0 4px}
+.ix-jwt .ix-jwt-bub code{font-size:.8em;font-weight:700;background:var(--yel);padding:0 4px;white-space:nowrap}
+.ix-jwt .ix-jwt-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--pink);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-jwt .ix-jwt-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--pink)}
+.ix-jwt .ix-jwt-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pink)}
+.ix-jwt .ix-jwt-btn.ix-jwt-y{background:var(--yel);color:var(--ink)}
+.ix-jwt .ix-jwt-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ---------- the pass (wow) ---------- */
+.ix-jwt .ix-jwt-pass{position:relative;display:flex;align-items:stretch;margin:4px 0 40px;transition:gap .5s}
+.ix-jwt .ix-jwt-pc{position:relative;border:3px solid var(--ink);padding:16px 16px 18px;min-width:0;display:flex;flex-direction:column;gap:10px;
+  transition:transform .55s cubic-bezier(.2,1.5,.4,1),box-shadow .4s,background .3s,color .3s}
+.ix-jwt .ix-jwt-pc-h{flex:1 1 0;background:var(--pink)}
+.ix-jwt .ix-jwt-pc-p{flex:2.1 1 0;background:var(--acc);border-left:0;border-right:0}
+.ix-jwt .ix-jwt-pc-s{flex:1.25 1 0;background:var(--yel)}
+.ix-jwt .ix-jwt-pass:not(.is-split) .ix-jwt-pc-p{border-left:3px dashed var(--ink);border-right:3px dashed var(--ink)}
+.ix-jwt .ix-jwt-pass:not(.is-split){box-shadow:7px 7px 0 var(--ink)}
+.ix-jwt .ix-jwt-pl{font-family:var(--f-cap);font-size:18px;line-height:1;opacity:0;transform:translateY(-6px);transition:opacity .3s .35s,transform .3s .35s}
+.ix-jwt .ix-jwt-pl i{font-style:normal;font-family:var(--code);font-size:14px;opacity:.7;margin-left:4px}
+.ix-jwt .ix-jwt-raw{display:block;font-size:16px;line-height:1.45;font-weight:700;overflow-wrap:anywhere;word-break:break-all}
+.ix-jwt .ix-jwt-dot{flex:0 0 0;width:0;align-self:center;display:grid;place-items:center;overflow:visible;transition:flex-basis .5s cubic-bezier(.2,1.4,.4,1)}
+.ix-jwt .ix-jwt-dot::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .35s .25s cubic-bezier(.2,1.6,.4,1)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-dot{flex-basis:30px}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-dot::before{transform:scale(1)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc{border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-h{transform:rotate(-2.5deg) translateY(4px)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-p{transform:rotate(1deg) translateY(-6px)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-s{transform:rotate(2.5deg) translateY(6px)}
+.ix-jwt .ix-jwt-pass.is-split .ix-jwt-pl{opacity:1;transform:none}
+.ix-jwt .ix-jwt-dec{margin:0;font-family:var(--code);font-size:16px;line-height:1.5;font-weight:700;overflow-wrap:anywhere}
+.ix-jwt .ix-jwt-dec .ix-jwt-ln{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;min-height:30px;padding-left:14px}
+.ix-jwt .ix-jwt-dec .ix-jwt-an{margin-left:auto;font-family:var(--f-hand);font-weight:400;font-size:19px;opacity:.8;white-space:nowrap}
+.ix-jwt .ix-jwt-dec .ix-jwt-br{display:block}
+.ix-jwt .ix-jwt-dec .ix-jwt-k{opacity:.7}
+.ix-jwt .ix-jwt-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;margin:2px 0;border:3px dashed var(--ink);background:#fff;font-family:var(--code);font-size:16px;font-weight:700;cursor:pointer;vertical-align:middle}
+.ix-jwt .ix-jwt-chip:hover{background:var(--yel)}
+.ix-jwt .ix-jwt-chip.is-admin{background:var(--pink);border-style:solid;animation:ixjwt-pop .35s}
+.ix-jwt .ix-jwt-chip:disabled{cursor:default}
+.ix-jwt .ix-jwt-cap{font-family:var(--f-hand);font-size:18px;line-height:1.2}
+.ix-jwt .ix-jwt-chk{display:none;font-family:var(--code);font-size:15px;line-height:1.4;font-weight:700}
+.ix-jwt .ix-jwt-chk .ix-jwt-cmp{display:block;margin-top:6px}
+.ix-jwt .ix-jwt-chk .ix-jwt-cmp span{display:block;font-family:var(--f-text);font-weight:500;font-size:15px;opacity:.85}
+.ix-jwt .ix-jwt-chk .ix-jwt-ne{display:block;font-family:var(--f-mono);font-size:28px;line-height:1;margin:4px 0}
+.ix-jwt .ix-jwt-crack{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(115deg,transparent 46%,var(--ink) 46.5%,var(--ink) 48%,transparent 48.5%),linear-gradient(62deg,transparent 60%,var(--ink) 60.5%,var(--ink) 61.6%,transparent 62%)}
+.ix-jwt .ix-jwt-pc-s.is-bad{background:var(--red);color:#fff}
+.ix-jwt .ix-jwt-pc-s.is-bad .ix-jwt-raw{text-decoration:line-through;text-decoration-thickness:3px;opacity:.85}
+.ix-jwt .ix-jwt-pc-s.is-bad .ix-jwt-chk{display:block}
+.ix-jwt .ix-jwt-pc-s.is-bad .ix-jwt-crack{opacity:.28}
+.ix-jwt .ix-jwt-pass.is-forged .ix-jwt-pc-s{animation:ixjwt-shake .5s}
+.ix-jwt .ix-jwt-pstamp{position:absolute;z-index:6;right:2%;bottom:-30px;font-family:var(--f-mono);font-size:24px;color:var(--red);background:#fff;border:5px solid var(--red);padding:4px 12px;transform:rotate(-8deg);pointer-events:none;animation:ixjwt-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+
+.ix-jwt .ix-jwt-nar{min-height:120px}
+.ix-jwt .ix-jwt-nar > *{animation:ixjwt-fadeup .35s ease-out both}
+.ix-jwt .ix-jwt-big{margin:6px 0 10px;font-family:var(--f-cap);font-size:34px;line-height:1.1;color:var(--ink)}
+.ix-jwt .ix-jwt-big em{font-style:normal;background:var(--yel);padding:0 6px}
+.ix-jwt .ix-jwt-lead{margin:0 0 12px;font-size:20px;line-height:1.45}
+.ix-jwt .ix-jwt-ana{margin:0 0 16px;display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;padding:14px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.ix-jwt .ix-jwt-ana p{margin:0;font-size:18px;line-height:1.4}
+.ix-jwt .ix-jwt-ana b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px}
+.ix-jwt .ix-jwt-dock{margin-top:18px}
+.ix-jwt .ix-jwt-dock .ix-jwt-btn{min-width:260px}
+
+/* ---------- server panel ---------- */
+.ix-jwt .ix-jwt-mini{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px;font-family:var(--code);font-size:16px;font-weight:700}
+.ix-jwt .ix-jwt-mini > span{border:3px solid var(--ink);padding:6px 10px;max-width:100%;overflow-wrap:anywhere}
+.ix-jwt .ix-jwt-mini b{background:#fff;padding:0 4px}
+.ix-jwt .ix-jwt-mh{background:var(--pink)}
+.ix-jwt .ix-jwt-mp{background:var(--acc)}
+.ix-jwt .ix-jwt-ms{background:var(--yel)}
+.ix-jwt .ix-jwt-ms.ix-jwt-bad{background:var(--red);color:#fff}
+.ix-jwt .ix-jwt-ms.ix-jwt-empty{background:#fff;border-style:dashed;color:var(--muted)}
+.ix-jwt .ix-jwt-ms.ix-jwt-ok{background:var(--green)}
+.ix-jwt .ix-jwt-srv{background:var(--ink);color:#fff;padding:16px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.ix-jwt .ix-jwt-srv-h{margin:0;font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--acc)}
+.ix-jwt .ix-jwt-srv-h + .ix-jwt-srv-h,.ix-jwt .ix-jwt-opts + .ix-jwt-srv-h{margin-top:8px}
+.ix-jwt .ix-jwt-done{font-size:16px;color:var(--green);font-family:var(--code);font-weight:700;overflow-wrap:anywhere}
+.ix-jwt .ix-jwt-done code{color:#fff}
+.ix-jwt .ix-jwt-sw{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 14px;border:3px solid #fff;background:#222;cursor:pointer;text-align:left}
+.ix-jwt .ix-jwt-sw:hover{background:#2c2c2c}
+.ix-jwt .ix-jwt-knob{flex:0 0 56px;width:56px;height:30px;border-radius:15px;background:#777;border:2.5px solid #fff;position:relative;transition:background .2s}
+.ix-jwt .ix-jwt-knob::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#fff;transition:left .25s cubic-bezier(.3,1.6,.5,1)}
+.ix-jwt .ix-jwt-sw[aria-checked="true"]{border-color:var(--green)}
+.ix-jwt .ix-jwt-sw[aria-checked="true"] .ix-jwt-knob{background:var(--green)}
+.ix-jwt .ix-jwt-sw[aria-checked="true"] .ix-jwt-knob::after{left:27px}
+.ix-jwt .ix-jwt-swt{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ix-jwt .ix-jwt-swt code{font-size:17px;font-weight:700;color:var(--yel);overflow-wrap:anywhere}
+.ix-jwt .ix-jwt-sw[aria-checked="true"] .ix-jwt-swt code{color:var(--green)}
+.ix-jwt .ix-jwt-swt small{font-size:16px;color:#ddd}
+.ix-jwt .ix-jwt-sw.is-hint{animation:ixjwt-hint 1.2s ease-in-out 3}
+.ix-jwt .ix-jwt-sw:disabled{cursor:default}
+.ix-jwt .ix-jwt-opts{display:flex;flex-direction:column;gap:8px}
+.ix-jwt .ix-jwt-opts.ix-jwt-row2{flex-direction:row}
+.ix-jwt .ix-jwt-opts.ix-jwt-row2 button{flex:1}
+.ix-jwt .ix-jwt-opts button{min-height:52px;padding:8px 14px 8px 44px;border:3px solid #fff;background:#222;cursor:pointer;text-align:left;position:relative;display:flex;flex-direction:column;justify-content:center}
+.ix-jwt .ix-jwt-opts button::before{content:"";position:absolute;left:12px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:3px solid #fff}
+.ix-jwt .ix-jwt-opts button[aria-checked="true"]{border-color:var(--yel);background:#2e2a12}
+.ix-jwt .ix-jwt-opts button[aria-checked="true"]::before{background:var(--yel);box-shadow:inset 0 0 0 3px #2e2a12}
+.ix-jwt .ix-jwt-opts code{font-size:16px;font-weight:700;color:#fff;overflow-wrap:anywhere}
+.ix-jwt .ix-jwt-opts small{font-size:15px;color:#ccc}
+.ix-jwt .ix-jwt-try{min-width:260px}
+.ix-jwt .ix-jwt-res{position:relative}
+.ix-jwt .ix-jwt-res:not(:empty){margin-top:20px;animation:ixjwt-fadeup .35s ease-out}
+.ix-jwt .ix-jwt-gate{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ix-jwt .ix-jwt-stamp{display:inline-flex;flex-direction:column;align-items:center;border:5px solid #0a8f5c;color:#0a8f5c;padding:4px 14px;font-family:var(--f-mono);font-size:34px;line-height:1.05;transform:rotate(-6deg);animation:ixjwt-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-jwt .ix-jwt-stamp small{font-family:var(--f-cap);font-size:14px}
+.ix-jwt .ix-jwt-why{flex:1 1 220px;margin:0;font-family:var(--f-hand);font-size:24px;line-height:1.2}
+.ix-jwt .ix-jwt-rows{list-style:none;margin:16px 0 0;padding:0;font-size:18px}
+.ix-jwt .ix-jwt-rows li{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid rgba(20,20,20,.18)}
+.ix-jwt .ix-jwt-rows code{flex:0 0 46px;font-weight:700}
+.ix-jwt .ix-jwt-rows .ix-jwt-x{color:#d0201f;font-weight:700}
+.ix-jwt .ix-jwt-rows .ix-jwt-v2{color:#0a8f5c;font-weight:700}
+.ix-jwt .ix-jwt-tips{display:none;list-style:none;margin:22px 0 0;padding:0}
+.ix-jwt .ix-jwt-lvl.is-clear .ix-jwt-tips{display:block}
+.ix-jwt .ix-jwt-tips li{position:relative;padding:12px 0 12px 26px;border-top:1px solid rgba(20,20,20,.18);font-size:18px;line-height:1.45}
+.ix-jwt .ix-jwt-tips li::before{content:"";position:absolute;left:2px;top:21px;width:12px;height:12px;background:var(--yel);border:2px solid var(--ink)}
+.ix-jwt .ix-jwt-tips b{font-weight:700}
+.ix-jwt .ix-jwt-authz{display:none;margin-top:22px;padding-top:18px;border-top:3px solid var(--ink)}
+.ix-jwt .ix-jwt-lvl.is-clear .ix-jwt-authz{display:block}
+.ix-jwt .ix-jwt-authz p{margin:0 0 10px}
+.ix-jwt .ix-jwt-authz .ix-jwt-big{font-size:26px}
+.ix-jwt .ix-jwt-authz em{font-style:normal;background:var(--yel);padding:0 4px}
+.ix-jwt .ix-jwt-warn:not(:empty){margin-top:16px;padding:12px 16px;border:3px solid var(--ink);background:var(--yel);font-size:18px;line-height:1.4;animation:ixjwt-shake .35s}
+
+/* ---------- boom ---------- */
+.ix-jwt .ix-jwt-boom{position:absolute;z-index:20;pointer-events:none;padding:22px 26px;font-family:var(--f-mono);font-size:24px;line-height:1;color:var(--ink);background:var(--yel);white-space:nowrap;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);
+  animation:ixjwt-boom .9s cubic-bezier(.2,1.6,.4,1) forwards;transform:translate(-50%,-50%)}
+.ix-jwt .ix-jwt-boom.is-r{background:var(--red);color:#fff}
+.ix-jwt .ix-jwt-boom.is-g{background:var(--green)}
+
+/* ---------- final ---------- */
+.ix-jwt .ix-jwt-final{display:none;margin:56px 10px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--green),10px 10px 0 3px var(--ink);overflow:hidden;grid-template-columns:280px 1fr;scroll-margin-top:64px}
+.ix-jwt .ix-jwt-final.is-show{display:grid;animation:ixjwt-fadeup .5s ease-out}
+.ix-jwt .ix-jwt-fface{position:relative;min-height:300px;background:var(--acc);overflow:hidden;border-right:3px solid var(--ink)}
+.ix-jwt .ix-jwt-fface img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:grayscale(.4) contrast(1.1)}
+.ix-jwt .ix-jwt-fst{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:19px;line-height:1.1;text-align:center;color:var(--red);background:rgba(255,255,255,.93);border:5px solid var(--red);padding:6px 10px;width:max-content;max-width:90%}
+.ix-jwt .ix-jwt-fbody{padding:28px 26px;display:flex;flex-direction:column;gap:16px}
+.ix-jwt .ix-jwt-ft{margin:0;font-family:var(--f-mono);font-weight:400;font-size:36px;line-height:1.05;color:var(--green)}
+.ix-jwt .ix-jwt-fstats{display:flex;flex-wrap:wrap;gap:10px}
+.ix-jwt .ix-jwt-fstats span{font-family:var(--f-cap);font-size:16px;border:2px solid #fff;padding:6px 12px}
+.ix-jwt .ix-jwt-fstats b{font-family:var(--f-mono);font-weight:400;color:var(--yel);margin-left:4px}
+.ix-jwt .ix-jwt-rule{margin:0;font-family:var(--f-cap);font-size:22px;line-height:1.3;color:var(--ink);background:var(--yel);padding:16px 18px;border:3px solid #fff;box-shadow:6px 6px 0 var(--pink)}
+
+/* ---------- battle ---------- */
+.ix-jwt .ix-jwt-eyebrow{margin:0 0 6px;font-family:var(--f-cap);font-size:15px;letter-spacing:.1em;color:var(--muted)}
+.ix-jwt .ix-jwt-h{margin:0 0 22px;font-family:'Russo One',sans-serif;font-weight:400;font-size:36px;line-height:1.1}
+.ix-jwt .ix-jwt-battle{position:relative;margin-top:88px}
+.ix-jwt .ix-jwt-arena{display:flex;align-items:center;gap:20px;margin-bottom:22px}
+.ix-jwt .ix-jwt-bface{position:relative;flex:0 0 140px;width:140px;height:140px;border:4px solid var(--ink);border-radius:50%;overflow:hidden;background:var(--acc);box-shadow:5px 5px 0 var(--ink)}
+.ix-jwt .ix-jwt-bface img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 14%;transform:scale(1.9);transform-origin:52% 22%}
+.ix-jwt .ix-jwt-bface.is-hurt{animation:ixjwt-shake .4s}
+.ix-jwt .ix-jwt-bface.is-hurt::after{content:"";position:absolute;inset:0;background:rgba(255,59,59,.45)}
+.ix-jwt .ix-jwt-bko{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-14deg);font-family:var(--f-cap);font-size:13px;color:var(--red);background:#fff;border:3px solid var(--red);padding:2px 5px;display:none;white-space:nowrap}
+.ix-jwt .ix-jwt-bface.is-ko img{filter:grayscale(1)}
+.ix-jwt .ix-jwt-bface.is-ko .ix-jwt-bko{display:block;animation:ixjwt-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-jwt .ix-jwt-hpw{flex:1;min-width:0}
+.ix-jwt .ix-jwt-hpl{display:flex;justify-content:space-between;font-family:var(--f-cap);font-size:17px;margin-bottom:6px}
+.ix-jwt .ix-jwt-hp{height:26px;border:3px solid var(--ink);background:#fff;position:relative;overflow:hidden}
+.ix-jwt .ix-jwt-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.4,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.15) 0 6px,transparent 6px 12px)}
+.ix-jwt .ix-jwt-bstep{margin:10px 0 0;font-family:var(--f-cap);font-size:15px;color:var(--muted)}
+.ix-jwt .ix-jwt-bmove{margin:0 0 18px;font-family:var(--f-hand);font-size:26px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px 18px;box-shadow:4px 4px 0 var(--acc)}
+.ix-jwt .ix-jwt-bmove b{font-weight:400;background:var(--yel);padding:0 4px}
+.ix-jwt .ix-jwt-bmove code{font-size:.78em;font-weight:700;background:var(--yel);padding:0 4px}
+.ix-jwt .ix-jwt-bq{margin:0 0 10px;font-family:var(--f-cap);font-size:18px}
+.ix-jwt .ix-jwt-bopts{display:flex;flex-direction:column;gap:10px}
+.ix-jwt .ix-jwt-bopt{min-height:60px;padding:12px 16px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;font-size:18px;line-height:1.35;transition:transform .1s,box-shadow .1s}
+.ix-jwt .ix-jwt-bopt:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-jwt .ix-jwt-bopt:disabled{cursor:default;transform:none}
+.ix-jwt .ix-jwt-bopt.is-miss{background:#eee;color:#666;text-decoration:line-through;box-shadow:none}
+.ix-jwt .ix-jwt-bopt.is-hit{background:var(--green)}
+.ix-jwt .ix-jwt-bfb{min-height:1.5em;margin:16px 0 0;font-size:19px;line-height:1.4}
+.ix-jwt .ix-jwt-bfb b{font-family:var(--f-mono);font-weight:400;margin-right:6px}
+.ix-jwt .ix-jwt-bfb .ix-jwt-hitw{color:#0a8f5c}
+.ix-jwt .ix-jwt-bfb .ix-jwt-missw{color:#d0201f}
+.ix-jwt .ix-jwt-bend{padding:20px 0 0;border-top:3px solid var(--ink)}
+.ix-jwt .ix-jwt-bwin{margin:0;font-family:var(--f-mono);font-size:32px;line-height:1.1;color:var(--ink)}
+.ix-jwt .ix-jwt-bsc{margin:8px 0 18px;font-size:20px}
+
+/* ---------- interview ---------- */
+.ix-jwt .ix-jwt-iv{margin-top:88px;background:var(--ink);color:#fff;padding:30px 28px 32px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);margin-right:8px}
+.ix-jwt .ix-jwt-eyl{color:var(--acc)}
+.ix-jwt .ix-jwt-ivq{margin:0 0 22px;font-family:var(--f-cap);font-weight:400;font-size:28px;line-height:1.25}
+.ix-jwt .ix-jwt-think{border-left:5px solid var(--acc);padding:2px 0 2px 16px;margin-bottom:22px}
+.ix-jwt .ix-jwt-think p{margin:0;font-size:19px;line-height:1.45;color:#eee}
+.ix-jwt .ix-jwt-think .ix-jwt-thl{font-family:var(--f-hand);font-size:26px;color:var(--acc);margin-bottom:4px}
+.ix-jwt .ix-jwt-iv .ix-jwt-btn{box-shadow:4px 4px 0 var(--acc)}
+.ix-jwt .ix-jwt-iva{margin-top:24px;animation:ixjwt-fadeup .35s ease-out}
+.ix-jwt .ix-jwt-iva ol{margin:0;padding:0;list-style:none;counter-reset:ixjwtiv}
+.ix-jwt .ix-jwt-iva li{counter-increment:ixjwtiv;position:relative;padding:14px 0 14px 46px;border-top:1px solid #444;font-size:19px;line-height:1.5;color:#eee}
+.ix-jwt .ix-jwt-iva li::before{content:counter(ixjwtiv);position:absolute;left:0;top:14px;width:32px;height:32px;display:grid;place-items:center;background:var(--yel);color:var(--ink);font-family:var(--f-mono);font-size:15px}
+.ix-jwt .ix-jwt-iva li b{display:block;color:#fff;font-size:21px;margin-bottom:2px}
+.ix-jwt .ix-jwt-noob{margin:14px 0 0;padding:14px 16px;background:var(--pink);color:var(--ink);font-size:19px;line-height:1.4;border:3px solid #fff}
+
+/* ---------- cheat ---------- */
+.ix-jwt .ix-jwt-cheat{margin-top:88px}
+.ix-jwt .ix-jwt-cl{list-style:none;margin:0;padding:0}
+.ix-jwt .ix-jwt-cl li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-top:1px solid rgba(20,20,20,.22)}
+.ix-jwt .ix-jwt-cl li:last-child{border-bottom:1px solid rgba(20,20,20,.22)}
+.ix-jwt .ix-jwt-cn{flex:0 0 64px;font-family:var(--f-mono);font-size:34px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-jwt .ix-jwt-cl b{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-jwt .ix-jwt-cl p{margin:0;font-size:18px;line-height:1.45}
+.ix-jwt .ix-jwt-legal{margin:22px 0 0;font-size:18px;line-height:1.5}
+
+/* ---------- hack overlay ---------- */
+.ix-jwt .ix-jwt-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:var(--red);color:#fff;overflow:auto;
+  background-image:radial-gradient(rgba(20,20,20,.35) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-jwt .ix-jwt-hack:not([hidden]) .ix-jwt-hk{animation:ixjwt-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-jwt .ix-jwt-hack.is-rewind .ix-jwt-hk{animation:ixjwt-rewind .7s ease-in forwards}
+.ix-jwt .ix-jwt-hk{max-width:540px;width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ix-jwt .ix-jwt-hkface{position:relative;width:170px;height:170px;border:4px solid var(--ink);overflow:hidden;background:var(--acc);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg)}
+.ix-jwt .ix-jwt-hkface img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;transform:scale(1.6);transform-origin:50% 26%}
+.ix-jwt .ix-jwt-hkt{margin:0;font-family:var(--f-mono);font-size:60px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-jwt .ix-jwt-hkw{margin:0;background:#fff;color:var(--ink);border:3px solid var(--ink);padding:12px 16px;font-size:19px;line-height:1.4;box-shadow:5px 5px 0 var(--ink);transform:rotate(1deg)}
+.ix-jwt .ix-jwt-hkw code{font-weight:700;background:var(--yel);padding:0 4px}
+.ix-jwt .ix-jwt-hks{margin:0;font-family:var(--f-hand);font-size:25px;line-height:1.15;background:var(--ink);color:#fff;border-radius:16px;padding:8px 16px}
+
+/* ---------- keyframes ---------- */
+@keyframes ixjwt-kb{from{transform:scale(1)}to{transform:scale(1.08) translate(-1%,1%)}}
+@keyframes ixjwt-lock{from{opacity:0;transform:translate(-50%,-50%) scale(2.6) rotate(45deg)}to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}}
+@keyframes ixjwt-slam{from{opacity:0;transform:scale(2.2) rotate(-4deg)}60%{opacity:1;transform:scale(.94) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes ixjwt-deal{from{opacity:0;transform:translateY(30px) rotate(8deg)}to{opacity:1;transform:none}}
+@keyframes ixjwt-fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes ixjwt-shake{0%,100%{translate:0 0}20%{translate:-6px 2px}40%{translate:5px -3px}60%{translate:-4px 1px}80%{translate:3px 0}}
+@keyframes ixjwt-pulse{0%,100%{box-shadow:6px 6px 0 var(--pink)}50%{box-shadow:6px 6px 0 var(--pink),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ixjwt-hint{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 6px var(--yel)}}
+@keyframes ixjwt-pop{from{transform:scale(.5)}60%{transform:scale(1.2)}to{transform:none}}
+@keyframes ixjwt-stamp{from{opacity:0;scale:2.6}to{opacity:1;scale:1}}
+@keyframes ixjwt-float{from{transform:translateY(0) scale(.6);opacity:0}20%{transform:translateY(-6px) scale(1.15);opacity:1}to{transform:translateY(-60px);opacity:0}}
+@keyframes ixjwt-boom{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-20deg)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(4deg)}70%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}100%{opacity:0;transform:translate(-50%,-62%) rotate(-2deg)}}
+@keyframes ixjwt-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ixjwt-rewind{0%{transform:none}40%{transform:translateX(-30px) skewX(12deg);filter:hue-rotate(90deg) blur(1px)}100%{transform:translateX(-120%) skewX(30deg) scale(.6);opacity:0}}
+
+/* ---------- mobile ---------- */
+@media (max-width:760px){
+  .ix-jwt .ix-jwt-mission{grid-template-columns:1fr;min-height:0;margin-right:6px;box-shadow:6px 6px 0 var(--acc),6px 6px 0 3px var(--ink)}
+  .ix-jwt .ix-jwt-eye{height:330px;border-right:0;border-bottom:3px solid var(--ink);--rx:37%;--ry:56%}
+  .ix-jwt .ix-jwt-eye img{object-position:50% 34%}
+  .ix-jwt .ix-jwt-ret{width:120px;height:120px}
+  .ix-jwt .ix-jwt-mbody{padding:22px 18px 24px;gap:16px}
+  .ix-jwt .ix-jwt-mtitle{font-size:36px}
+  .ix-jwt .ix-jwt-dom{font-size:19px}
+  .ix-jwt .ix-jwt-msub{font-size:25px}
+  .ix-jwt .ix-jwt-moves{grid-template-columns:repeat(2,1fr)}
+  .ix-jwt .ix-jwt-go{align-self:stretch;font-size:17px}
+  .ix-jwt .ix-jwt-pass{flex-direction:column}
+  .ix-jwt .ix-jwt-pc-p{border-left:3px solid var(--ink);border-right:3px solid var(--ink);border-top:0;border-bottom:0}
+  .ix-jwt .ix-jwt-pass:not(.is-split) .ix-jwt-pc-p{border-left:3px solid var(--ink);border-right:3px solid var(--ink);border-top:3px dashed var(--ink);border-bottom:3px dashed var(--ink)}
+  .ix-jwt .ix-jwt-pass:not(.is-split) .ix-jwt-pc-h{border-bottom:0}
+  .ix-jwt .ix-jwt-pass:not(.is-split) .ix-jwt-pc-s{border-top:0}
+  .ix-jwt .ix-jwt-dot{width:auto;height:0;align-self:stretch;transition:flex-basis .5s cubic-bezier(.2,1.4,.4,1)}
+  .ix-jwt .ix-jwt-pass.is-split .ix-jwt-dot{flex-basis:30px}
+  .ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-h{transform:rotate(-1.5deg)}
+  .ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-p{transform:rotate(.8deg)}
+  .ix-jwt .ix-jwt-pass.is-split .ix-jwt-pc-s{transform:rotate(-1deg)}
+  .ix-jwt .ix-jwt-ana{grid-template-columns:1fr;gap:12px}
+  .ix-jwt .ix-jwt-final{grid-template-columns:1fr;margin-right:6px;box-shadow:6px 6px 0 var(--green),6px 6px 0 3px var(--ink)}
+  .ix-jwt .ix-jwt-fface{min-height:280px;border-right:0;border-bottom:3px solid var(--ink)}
+}
+@media (max-width:520px){
+  .ix-jwt .ix-jwt-lvl{margin-right:5px;box-shadow:5px 5px 0 var(--ink)}
+  .ix-jwt .ix-jwt-lvl-h{padding:12px 14px}
+  .ix-jwt .ix-jwt-lvl-t{font-size:20px}
+  .ix-jwt .ix-jwt-lvl-b{padding:18px 14px 20px}
+  .ix-jwt .ix-jwt-bub{font-size:21px}
+  .ix-jwt .ix-jwt-big{font-size:25px}
+  .ix-jwt .ix-jwt-dock .ix-jwt-btn,.ix-jwt .ix-jwt-try,.ix-jwt .ix-jwt-next .ix-jwt-btn{width:100%;min-width:0}
+  .ix-jwt .ix-jwt-srv{padding:12px}
+  .ix-jwt .ix-jwt-sw{padding:10px}
+  .ix-jwt .ix-jwt-hud{gap:8px;padding:7px 10px}
+  .ix-jwt .ix-jwt-hud-l{font-size:11px}
+  .ix-jwt .ix-jwt-pips span{width:21px;height:21px}
+  .ix-jwt .ix-jwt-score{font-size:13px;min-width:38px}
+  .ix-jwt .ix-jwt-h{font-size:30px}
+  .ix-jwt .ix-jwt-bface{flex-basis:104px;width:104px;height:104px}
+  .ix-jwt .ix-jwt-bmove{font-size:23px}
+  .ix-jwt .ix-jwt-iv{padding:22px 16px 24px;margin-right:6px;box-shadow:6px 6px 0 var(--yel)}
+  .ix-jwt .ix-jwt-ivq{font-size:23px}
+  .ix-jwt .ix-jwt-iv .ix-jwt-btn{width:100%}
+  .ix-jwt .ix-jwt-cn{flex-basis:52px;font-size:28px}
+  .ix-jwt .ix-jwt-hkt{font-size:44px}
+  .ix-jwt .ix-jwt-hkface{width:130px;height:130px}
+  .ix-jwt .ix-jwt-ft{font-size:28px}
+  .ix-jwt .ix-jwt-rule{font-size:19px}
+  .ix-jwt .ix-jwt-fbody{padding:22px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-jwt *,.ix-jwt *::before,.ix-jwt *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+var root=document.querySelector('.ix-jwt'); if(!root) return;
+var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+if(!RM) root.classList.add('ix-anim');
+function $(id){return root.querySelector('#ix-jwt-'+id)}
+var live=$('live');
+function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+function later(fn,ms){return setTimeout(fn,RM?0:ms)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function b64d(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return atob(s)}
+function b64e(s){return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+
+/* ---------- lock / unlock ---------- */
+var lv=[0,1,2,3,4].map(function(i){return $('L'+i)});
+lv.forEach(function(s){s.querySelector('.ix-jwt-lvl-b').inert=true});
+function unlock(s){s.classList.remove('is-locked');s.querySelector('.ix-jwt-lvl-b').inert=false}
+function goTo(el,focusSel){
+  el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+  var f=el.querySelector(focusSel||'.ix-jwt-lvl-b button:not([disabled])');
+  if(f) later(function(){try{f.focus({preventScroll:true})}catch(e){f.focus()}},550);
+}
+
+/* ---------- HUD & score ---------- */
+var S={score:0,clear:[0,0,0,0,0],fails:[0,0,0,0,0],hacks:0};
+var hud=$('hud');
+function paint(){
+  var d=(S.clear[1]+S.clear[2]+S.clear[3]+S.clear[4])*25;
+  $('barf').style.width=d+'%';$('bart').textContent=d+'%';$('score').textContent=S.score;
+  for(var i=1;i<=4;i++) $('p'+i).classList.toggle('is-done',!!S.clear[i]);
+}
+function floatAt(el,text,neg){
+  if(RM) return;
+  var r=el.getBoundingClientRect(),f=document.createElement('div');
+  f.className='ix-jwt-float'+(neg?' is-neg':'');f.textContent=text;f.setAttribute('aria-hidden','true');
+  f.style.left=Math.max(8,Math.min(innerWidth-120,r.left+r.width/2-40))+'px';f.style.top=(r.top-10)+'px';
+  root.appendChild(f);setTimeout(function(){f.remove()},1200);
+}
+function boom(box,text,cls,x,y){
+  if(RM) return;
+  var b=document.createElement('div');b.className='ix-jwt-boom '+(cls||'');b.textContent=text;b.setAttribute('aria-hidden','true');
+  b.style.left=(x==null?50:x)+'%';b.style.top=(y==null?40:y)+'%';box.appendChild(b);setTimeout(function(){b.remove()},950);
+}
+
+/* ---------- mission ---------- */
+var mission=$('mission');
+if(!RM&&'IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){mission.classList.add('is-seen');io.disconnect()}})},{threshold:.3});
+  io.observe(mission);
+} else mission.classList.add('is-seen');
+$('go').addEventListener('click',function(){
+  this.disabled=true;this.textContent='Миссия принята ✓';
+  hud.classList.add('is-on');paint();unlock(lv[0]);
+  say('Миссия принята. Брифинг открыт.');goTo(lv[0]);
+});
+
+/* ---------- briefing: the pass ---------- */
+var pass=$('pass'),act=$('act'),nar=$('nar'),step=0,pcs=$('pcs');
+var RAW_H=$('rawh').textContent,RAW_P=$('rawp').textContent;
+var SIG_USER='07_qMCd9NjDx_br3b_nZNwv2IgRzLNYIG6JZktmnu2g',SIG_ADMIN='oZgTuM7m46opXuH9FnU_khIY5dv96xfqtnB_10s-QSU';
+var ANN={alg:'← алгоритм',typ:'← тип',sub:'← кто',role:'← права',iss:'← кто выдал',aud:'← для кого',exp:'← до когда (1 янв 2030)'};
+function sayHtml(who,cls,txt){return '<div class="ix-jwt-say"><span class="ix-jwt-who '+(cls||'')+'">'+who+'</span><span class="ix-jwt-bub">'+txt+'</span></div>'}
+function jsonHtml(obj,role){
+  var keys=Object.keys(obj),out='<span class="ix-jwt-br">{</span>';
+  keys.forEach(function(k,i){
+    var v=obj[k],val;
+    if(k==='role'&&role) val='<button type="button" class="ix-jwt-chip'+(v==='admin'?' is-admin':'')+'" id="ix-jwt-role" aria-label="Поле role: '+v+'. Нажми, чтобы поменять на admin">"'+esc(v)+'"'+(v==='admin'?'':' <span aria-hidden="true">⇄</span>')+'</button>';
+    else val=typeof v==='number'?String(v):'"'+esc(v)+'"';
+    out+='<span class="ix-jwt-ln"><span><span class="ix-jwt-k">"'+k+'":</span> '+val+(i<keys.length-1?',':'')+'</span><span class="ix-jwt-an" aria-hidden="true">'+ANN[k]+'</span></span>';
+  });
+  return out+'<span class="ix-jwt-br">}</span>';
+}
+function scramble(pre,target,done){
+  if(RM){done();return}
+  var abc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',n=0,N=16;
+  var t=setInterval(function(){
+    n++;var k=Math.floor(target.length*n/N),s=target.slice(0,k);
+    for(var i=k;i<target.length;i++){var c=target[i];s+=(c==='\n'||c===' ')?c:abc[(Math.random()*abc.length)|0]}
+    pre.textContent=s;if(n>=N){clearInterval(t);done()}
+  },45);
+}
+var payloadObj=null;
+function decode(){
+  var h=JSON.parse(b64d(RAW_H)),p=JSON.parse(b64d(RAW_P));payloadObj=p;
+  [['pch',h,false],['pcp',p,true]].forEach(function(x){
+    var pc=$(x[0]),raw=pc.querySelector('.ix-jwt-raw'),pre=document.createElement('pre');
+    pre.className='ix-jwt-dec';pre.style.whiteSpace='pre-wrap';raw.replaceWith(pre);
+    var plain=JSON.stringify(x[1],null,2);
+    scramble(pre,plain,function(){pre.style.whiteSpace='';pre.innerHTML=jsonHtml(x[1],x[2]);if(x[2]){var c=$('role');c.addEventListener('click',forge)}});
+  });
+  var cap=document.createElement('p');cap.className='ix-jwt-cap';cap.textContent='Не текст, а отпечаток: его считают из первых двух частей и секретного ключа сервера. Ключ этого примера учебный: uchebnyj-klyuch-dyadi-mishi. Настоящий ключ знает только сервер.';
+  pcs.insertBefore(cap,$('chk'));
+}
+function forge(){
+  if(step!==2) return; step=3;
+  payloadObj.role='admin';
+  var c=$('role');c.classList.add('is-admin');c.innerHTML='"admin"';c.disabled=true;c.setAttribute('aria-label','Поле role: admin');
+  var newRaw=b64e(JSON.stringify(payloadObj));
+  pass.classList.add('is-forged');
+  later(function(){
+    pcs.classList.add('is-bad');
+    $('chk').innerHTML='<span class="ix-jwt-cmp"><span>в пропуске:</span>'+SIG_USER.slice(0,12)+'…</span><span class="ix-jwt-ne" aria-label="не равно">≠</span><span class="ix-jwt-cmp"><span>сервер посчитал:</span>'+SIG_ADMIN.slice(0,12)+'…</span>';
+    var st=document.createElement('span');st.className='ix-jwt-pstamp';st.textContent='ПОДДЕЛКА';st.setAttribute('aria-hidden','true');pass.appendChild(st);
+    boom(pass,'ХРУСЬ!','is-r',80,30);
+  },RM?0:420);
+  setNar(sayHtml('ДЯДЯ МИША','','Видишь? Подпись считают из заголовка, содержимого и <b>секретного ключа</b> сервера. Поменял одну букву — подпись уже не та. А новую без ключа не поставить.')+
+    sayHtml('ТОКЕНЩИК','ix-jwt-wv','Подумаешь. Это работает, только если сервер подпись <b>проверяет</b>.'));
+  var hadFocus=root.contains(document.activeElement);
+  act.parentNode.hidden=true;
+  lv[0].classList.add('is-clear');unlock(lv[1]);
+  if(hadFocus){var nb=lv[0].querySelector('[data-goto]');try{nb.focus({preventScroll:true})}catch(e){nb.focus()}}
+  say('Подпись не совпала: пропуск подделан. Открыта проверка 1.');
+  void newRaw;
+}
+function setNar(html){nar.innerHTML=html}
+act.addEventListener('click',function(){
+  if(step===0){
+    step=1;pass.classList.add('is-split');
+    if(!RM) boom(pass,'ЧИК!','',50,8);
+    setNar(sayHtml('ДЯДЯ МИША','','<b>Заголовок</b> — каким алгоритмом подписано. <b>Содержимое</b> — кто ты и до какого времени. <b>Подпись</b> — печать сервера.')+
+      sayHtml('СОНЯ','ix-jwt-wk','Похоже на секретный шифр. Без ключа не прочитать, да?'));
+    act.textContent='Раскодировать заголовок и содержимое';
+    say('Пропуск разрезан на три части: заголовок, содержимое, подпись.');
+  } else if(step===1){
+    step=2;decode();
+    setNar('<p class="ix-jwt-big">Это <em>не шифр</em>.</p>'+
+      '<p class="ix-jwt-lead">Это base64url — просто другая запись тех же букв. Раскодировать может кто угодно, ключ не нужен. Поэтому паролей и секретов в токене не держат.</p>'+
+      '<div class="ix-jwt-ana"><p><b>Подпись</b>Как печать на справке: читать справку могут все, подделать печать — нет. Защищает от изменения.</p><p><b>Шифрование</b>Как конверт с замком: прочитает только тот, у кого ключ. Защищает от чтения.</p></div>'+
+      sayHtml('ТОКЕНЩИК','ix-jwt-wv','Читать — это скучно. Я впишу себе <code>"admin"</code>.'));
+    act.textContent='Вписать role: "admin"';
+    say('Содержимое раскодировано без ключа. Это base64url, а не шифр.');
+  } else if(step===2){ forge(); }
+});
+
+/* ---------- switches ---------- */
+function bindSwitch(sw){
+  sw.addEventListener('click',function(){
+    if(sw.disabled) return;
+    var on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',on?'true':'false');sw.classList.remove('is-hint');
+    sw.querySelectorAll('[data-on]').forEach(function(e){e.textContent=e.getAttribute(on?'data-on':'data-off')});
+  });
+}
+[1,2,3].forEach(function(i){bindSwitch($('sw'+i))});
+function bindRadio(g){
+  var bs=[].slice.call(g.querySelectorAll('[role=radio]'));
+  function pick(b){bs.forEach(function(x){x.setAttribute('aria-checked',x===b?'true':'false');x.tabIndex=x===b?0:-1})}
+  bs.forEach(function(b,i){
+    b.tabIndex=b.getAttribute('aria-checked')==='true'?0:-1;
+    b.addEventListener('click',function(){if(!g.dataset.lock){pick(b);$('warn4').textContent=''}});
+    b.addEventListener('keydown',function(e){
+      var d=(e.key==='ArrowDown'||e.key==='ArrowRight')?1:(e.key==='ArrowUp'||e.key==='ArrowLeft')?-1:0;
+      if(!d||g.dataset.lock) return;e.preventDefault();var n=bs[(i+d+bs.length)%bs.length];pick(n);n.focus();$('warn4').textContent='';
+    });
+  });
+}
+bindRadio($('store'));bindRadio($('life'));
+function val(g){var b=$(g).querySelector('[aria-checked=true]');return b?b.getAttribute('data-v'):''}
+
+/* ---------- levels ---------- */
+var HK={
+  1:['Токенщик в админке. Сервер прочитал <code>role: "admin"</code> и не проверил подпись.','Я же говорил: подпись никто не смотрит.'],
+  2:['Сервер прочитал <code>alg: "none"</code> и решил, что подпись не нужна. Токенщик в админке.','Сам сказал — сам поверил.'],
+  3:['Пропуск истёк ещё весной и выдан для чата. Подпись настоящая, но сервер пустил его в API.','Старый пропуск — тоже пропуск, если на срок не смотреть.'],
+  4:['Чужой скрипт прочитал <code>localStorage</code> и унёс токен Сони.','Спасибо, что положили на видное место.']
+};
+var WIN={
+  1:'Подпись не сошлась с ключом сервера. Поддельная «admin» не прошла.',
+  2:'В списке только HS256. «none» в нём нет — отказ, даже не читаем дальше.',
+  3:'Подпись настоящая, но пропуск просрочен и выписан не для нас.',
+  4:''
+};
+var cur=0;
+function check(i){
+  if(i<4) return $('sw'+i).getAttribute('aria-checked')==='true';
+  var st=val('store'),lf=val('life');
+  if(st==='ls') return false;
+  return lf==='15m'?true:'warn';
+}
+function hack(i){
+  S.fails[i]++;S.hacks++;S.score=Math.max(0,S.score-20);paint();
+  hud.classList.remove('is-hit');void hud.offsetWidth;hud.classList.add('is-hit');setTimeout(function(){hud.classList.remove('is-hit')},700);
+  cur=i;$('hkw').innerHTML=HK[i][0];$('hks').textContent=HK[i][1];
+  var h=$('hack');h.hidden=false;h.classList.remove('is-rewind');
+  later(function(){$('rewind').focus()},60);
+  say('Взлом! '+$('hkw').textContent);
+}
+function rewind(){
+  var h=$('hack');if(h.hidden) return;
+  h.classList.add('is-rewind');
+  setTimeout(function(){
+    h.hidden=true;h.classList.remove('is-rewind');
+    var t=cur<4?$('sw'+cur):$('store');
+    if(cur<4){t.classList.add('is-hint')}
+    t.scrollIntoView({behavior:'auto',block:'center'});
+    var f=cur<4?t:$('store').querySelector('[aria-checked=true]');try{f.focus({preventScroll:true})}catch(e){f.focus()}
+    say(cur<4?'Время откатилось. Почини сервер переключателем и предъяви пропуск снова.':'Время откатилось. Выбери другое место для токена.');
+  },RM?0:650);
+}
+$('rewind').addEventListener('click',rewind);
+$('hack').addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();rewind()} if(e.key==='Tab'){e.preventDefault();$('rewind').focus()}});
+function win(i,btn){
+  S.clear[i]=1;var pts=100+(S.fails[i]?0:50);S.score+=pts;paint();floatAt(btn,'+'+pts+(S.fails[i]?'':' ★'));
+  btn.disabled=true;
+  if(i<4) $('sw'+i).disabled=true; else {$('store').dataset.lock=1;$('life').dataset.lock=1}
+  $('mv'+i).classList.add('is-x');
+  var r=$('res'+i),html='<div class="ix-jwt-gate"><span class="ix-jwt-stamp">ОТКАЗ<small>401 · не пущу</small></span><p class="ix-jwt-why">'+WIN[i]+'</p></div>';
+  if(i===3) html+='<ul class="ix-jwt-rows"><li><code>exp</code><span><span class="ix-jwt-x">✗ истёк</span> — 1 апреля 2026</span></li><li><code>iss</code><span><span class="ix-jwt-v2">✓ auth.example</span> — наш сервер входа</span></li><li><code>aud</code><span><span class="ix-jwt-x">✗ chat.example</span> — пропуск для чата, а это API</span></li></ul>';
+  if(i===4) html='<div class="ix-jwt-gate"><span class="ix-jwt-stamp">ПУСТО<small>скрипт ничего не нашёл</small></span><p class="ix-jwt-why">Скрипт не достал токен. А даже утёкший access сгорит через 15 минут.</p></div>';
+  r.innerHTML=html;boom(r,i===4?'МИМО!':'ОТКАЗ!','is-g',70,20);
+  lv[i].classList.add('is-clear');if(i<4) unlock(lv[i+1]);
+  say('Проверка '+i+' отбита. Плюс '+pts+' очков.');
+}
+[1,2,3,4].forEach(function(i){
+  var btn=$('try'+i);
+  btn.addEventListener('click',function(){
+    if(S.clear[i]) return;var ok=check(i);
+    if(ok===true) win(i,btn);
+    else if(ok==='warn'){$('warn4').textContent='Скрипт не дотянулся — хорошо. Но access-токен живёт 30 дней: утечёт другим путём (лог, чужой ноутбук) — месяц доступа, и отозвать нечем. Сократи срок.';}
+    else hack(i);
+  });
+});
+root.querySelectorAll('[data-goto]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var id=b.getAttribute('data-goto');
+    if(id==='final'){var f=$('final');$('fscore').textContent=S.score;$('ffails').textContent=S.hacks;f.classList.add('is-show');
+      f.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});later(function(){try{f.focus({preventScroll:true})}catch(e){}},500);say('Миссия выполнена. Счёт '+S.score);return}
+    goTo($(id));
+  });
+});
+
+/* ---------- battle ---------- */
+var MOVES=[
+  {v:'Сервис берёт алгоритм из заголовка. Пишу <code>alg: none</code> — подпись больше не нужна!',o:[
+    ['Принимать только HS256 из настроек сервера',1,'Алгоритм задаёт сервер, «none» не из списка — отказ.'],
+    ['Проверить, что токен длиннее 100 символов',0,'Длина ничего не доказывает. Решает подпись и список алгоритмов.'],
+    ['Закодировать токен в base64 ещё раз',0,'Кодировка — не защита: её раскодирует кто угодно.']]},
+  {v:'Нашёл в логах пропуск двухмесячной давности. Подпись-то <b>настоящая</b>!',o:[
+    ['Проверить подпись ещё раз, повнимательнее',0,'Подпись и правда настоящая. Тут нужна проверка срока.'],
+    ['Проверять exp, а access-токен делать коротким',1,'Пропуск истёк — отказ. Короткий срок делает старые утечки бесполезными.']]},
+  {v:'На странице дырка для скрипта (XSS). Сейчас прочитаю <code>localStorage</code>!',o:[
+    ['Переименовать ключ в localStorage на что-то хитрое',0,'Скрипт прочитает всё хранилище целиком, имя не спасёт.'],
+    ['Держать токен в HttpOnly cookie или в памяти и чинить XSS',1,'Скрипту нечего достать из хранилища. И дырку всё равно закрываем.'],
+    ['Зашифровать роль внутри токена',0,'Он крадёт пропуск целиком — содержимое ему и не нужно.']]}
+];
+var B={k:0,hp:100,first:0,missed:false};
+function bRender(){
+  var m=MOVES[B.k];$('bstep').textContent='ХОД '+(B.k+1)+' / 3';
+  $('bmove').innerHTML=m.v;$('bfb').innerHTML='';B.missed=false;
+  var box=$('bopts');box.innerHTML='';
+  m.o.forEach(function(o){
+    var b=document.createElement('button');b.type='button';b.className='ix-jwt-bopt';b.textContent=o[0];
+    b.addEventListener('click',function(){bPick(b,o)});box.appendChild(b);
+  });
+}
+function bPaint(){$('hpf').style.width=B.hp+'%';$('hpn').textContent='HP '+B.hp;$('hpbar').setAttribute('aria-valuenow',B.hp)}
+function bPick(b,o){
+  if(o[1]){
+    if(!B.missed) B.first++;
+    B.hp=B.k===2?0:B.hp-33;bPaint();
+    $('bopts').querySelectorAll('button').forEach(function(x){x.disabled=true});b.classList.add('is-hit');
+    $('bfb').innerHTML='<b class="ix-jwt-hitw">УДАР!</b>'+o[2];
+    var f=$('bface');f.classList.remove('is-hurt');void f.offsetWidth;f.classList.add('is-hurt');
+    boom($('battle'),'УДАР!','',22,22);
+    say('Удар! '+o[2]+' Здоровье Токенщика '+B.hp);
+    later(function(){
+      if(B.k<2){B.k++;bRender();var first=$('bopts').querySelector('button');if(first)first.focus()}
+      else bEnd();
+    },1500);
+  } else {
+    B.missed=true;b.disabled=true;b.classList.add('is-miss');
+    $('bfb').innerHTML='<b class="ix-jwt-missw">промах</b>'+o[2];say('Промах. '+o[2]);
+  }
+}
+function bEnd(){
+  $('bface').classList.add('is-ko');$('bplay').hidden=true;$('bend').hidden=false;$('bstep').textContent='БОЙ ОКОНЧЕН';
+  $('bsc').textContent='Удары с первой попытки: '+B.first+' из 3.'+(B.first===3?' Чистая победа!':'');
+  $('bagain').focus();say('Токенщик повержен. '+$('bsc').textContent);
+}
+$('bagain').addEventListener('click',function(){
+  B={k:0,hp:100,first:0,missed:false};$('bface').classList.remove('is-ko','is-hurt');$('bplay').hidden=false;$('bend').hidden=true;bPaint();bRender();
+  $('bopts').querySelector('button').focus();
+});
+bPaint();bRender();
+
+/* ---------- interview ---------- */
+$('ivb').addEventListener('click',function(){
+  var a=$('iva'),open=a.hidden;a.hidden=!open;this.setAttribute('aria-expanded',open?'true':'false');
+  this.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+});
+})();</script>

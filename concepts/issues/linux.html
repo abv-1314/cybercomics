@@ -1,0 +1,1706 @@
+<section class="ix ix-linux" data-ix="linux" aria-label="Выпуск 17: Товарищ 777 и права в Linux">
+<div class="xl-live" id="ix-linux-live" aria-live="polite"></div>
+
+<!-- ================= МИССИЯ ================= -->
+<div class="xl-game">
+
+<section class="xl-mission" id="ix-linux-mission" aria-labelledby="ix-linux-mt">
+  <div class="xl-poster" role="img" aria-label="Постер злодея: Товарищ 777, печать «Всем всё разрешено»">
+    <span class="xl-bg777" aria-hidden="true">777</span>
+    <svg class="xl-stamp" viewBox="0 0 200 200" aria-hidden="true">
+      <defs><path id="ix-linux-ring" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="7"/>
+      <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text class="xl-stamp-ring"><textPath href="#ix-linux-ring" textLength="452" lengthAdjust="spacing">ВСЕМ · ВСЁ · РАЗРЕШЕНО · ВСЕМ · ВСЁ · РАЗРЕШЕНО ·</textPath></text>
+      <text class="xl-stamp-num" x="100" y="117" text-anchor="middle">777</text>
+    </svg>
+    <div class="xl-pname" aria-hidden="true"><span>ТОВАРИЩ</span><b>777</b></div>
+    <code class="xl-pcmd" aria-hidden="true"><i>$</i> chmod 777 db.conf<em># под мою ответственность</em></code>
+    <span class="xl-tag" aria-hidden="true">ЦЕЛЬ: ТОВАРИЩ 777</span>
+    <span class="xl-tag2" aria-hidden="true">ДОСТУП: ВСЕМ</span>
+  </div>
+  <div class="xl-mbody">
+    <p class="xl-kick">ЗАДАНИЕ · ФУНДАМЕНТ · №17</p>
+    <h2 class="xl-mtitle" id="ix-linux-mt"><span class="xl-w">Отбери</span> <span class="xl-w">права</span>
+      <span class="xl-host"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M6 9l3 3-3 3M11 15h6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>shop-01</span></h2>
+    <p class="xl-msub">Товарищ 777 раздал на сервере магазина <em>всем всё</em>. Наведи порядок — только терминалом.</p>
+    <p class="xl-motto">«Права — всем! Подпись — моя.»</p>
+    <ol class="xl-moves" aria-label="Четыре уровня">
+      <li id="ix-linux-mv1"><b>01</b><span>Кто здесь</span></li>
+      <li id="ix-linux-mv2"><b>02</b><span>Три семёрки</span></li>
+      <li id="ix-linux-mv3"><b>03</b><span>Корона root</span></li>
+      <li id="ix-linux-mv4"><b>04</b><span>Журнал</span></li>
+    </ol>
+    <button class="xl-go" id="ix-linux-go" type="button">Принять миссию ▶</button>
+  </div>
+</section>
+
+<div class="xl-hud" id="ix-linux-hud" aria-hidden="true">
+  <span class="xl-hud-l">ЗАЩИТА СЕРВЕРА</span>
+  <div class="xl-bar"><i id="ix-linux-barf"></i><b id="ix-linux-bart">0%</b></div>
+  <div class="xl-pips"><span id="ix-linux-p1">1</span><span id="ix-linux-p2">2</span><span id="ix-linux-p3">3</span><span id="ix-linux-p4">4</span></div>
+  <span class="xl-score" id="ix-linux-score">0</span>
+</div>
+
+<!-- ================= БРИФИНГ: ГДЕ Я ================= -->
+<section class="xl-lvl is-locked" id="ix-linux-L0" aria-labelledby="ix-linux-t0">
+  <div class="xl-lvl-h"><span class="xl-lvl-n">БРИФИНГ</span><h3 class="xl-lvl-t" id="ix-linux-t0">Где я?</h3><span class="xl-badge">ГОТОВО</span></div>
+  <div class="xl-lockcap"><span>🔒 Сначала прими миссию</span></div>
+  <div class="xl-lvl-b">
+    <div class="xl-say"><span class="xl-who">ДЯДЯ МИША</span><span class="xl-bub">Сервер — это компьютер без экрана и мышки. С ним говорят текстом, через терминал. Я завёл тебе учётку <code>intern</code>. Заходи.</span></div>
+    <div class="xl-say"><span class="xl-who xl-wk">СОНЯ</span><span class="xl-bub">А если набрать что-то не то, сервер взорвётся?</span></div>
+    <div class="xl-say"><span class="xl-who">ДЯДЯ МИША</span><span class="xl-bub">Тут тренажёр, всё понарошку. Жми кнопки с командами или набирай сам. А на настоящем сервере — сначала думай, потом Enter.</span></div>
+    <ul class="xl-goals" id="ix-linux-g0" aria-label="Задачи"></ul>
+    <div class="xl-term-slot" id="ix-linux-ts0"></div>
+    <div class="xl-map" id="ix-linux-map" hidden>
+      <p class="xl-map-h">Карта сервера</p>
+      <ul class="xl-tree">
+        <li data-p="/"><span class="xl-tn"><code>/</code><span>корень: отсюда растёт всё</span></span>
+          <ul>
+            <li data-p="/etc"><span class="xl-tn"><code>etc/</code><span>настройки системы и программ</span></span>
+              <ul><li data-p="/etc/shop"><span class="xl-tn"><code>shop/</code><span>настройки магазина</span></span></li></ul></li>
+            <li data-p="/home"><span class="xl-tn"><code>home/</code><span>домашние папки людей</span></span>
+              <ul><li data-p="/home/intern"><span class="xl-tn"><code>intern/</code><span>твоя, она же <b>~</b></span></span></li></ul></li>
+            <li data-p="/root"><span class="xl-tn"><code>root/</code><span>дом суперпользователя root</span></span></li>
+            <li data-p="/usr"><span class="xl-tn"><code>usr/</code><span>программы и библиотеки</span></span></li>
+            <li data-p="/var"><span class="xl-tn"><code>var/</code><span>всё, что растёт и меняется</span></span>
+              <ul><li data-p="/var/log"><span class="xl-tn"><code>log/</code><span>журналы: кто, что, когда</span></span></li>
+                  <li data-p="/var/www"><span class="xl-tn"><code>www/</code><span>файлы сайтов</span></span></li></ul></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="xl-nar" id="ix-linux-nar0" aria-live="polite"></div>
+    <div class="xl-dock" id="ix-linux-dock0"></div>
+    <ul class="xl-tips">
+      <li><b>Путь от корня</b> начинается с <code>/</code> и работает откуда угодно: <code>/var/log</code>. Путь без <code>/</code> считается от того места, где стоишь.</li>
+      <li><b><code>..</code> — на папку выше, <code>~</code> — домой.</b> <code>cd</code> без всего тоже ведёт домой.</li>
+    </ul>
+    <div class="xl-next"><button class="xl-btn" type="button" data-goto="L1">Уровень 1 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 1: КТО ЗДЕСЬ ================= -->
+<section class="xl-lvl xl-v is-locked" id="ix-linux-L1" aria-labelledby="ix-linux-t1">
+  <div class="xl-lvl-h"><span class="xl-lvl-n">УРОВЕНЬ 1 / 4</span><h3 class="xl-lvl-t" id="ix-linux-t1">Кто здесь?</h3><span class="xl-badge">ГОТОВО</span></div>
+  <div class="xl-lockcap"><span>🔒 Сначала пройди брифинг</span></div>
+  <div class="xl-lvl-b">
+    <div class="xl-say"><span class="xl-who xl-wv">ТОВАРИЩ 777</span><span class="xl-bub">Пользователи, группы, номера… Бюрократия! У меня порядок простой: <b>каждому — всё</b>.</span></div>
+    <ul class="xl-goals" id="ix-linux-g1" aria-label="Задачи"></ul>
+    <div class="xl-term-slot" id="ix-linux-ts1"></div>
+    <div class="xl-nar" id="ix-linux-nar1" aria-live="polite"></div>
+    <div class="xl-dock" id="ix-linux-dock1"></div>
+    <ul class="xl-tips">
+      <li><b>root — это uid 0.</b> Система смотрит на номер, а не на имя: у кого uid 0, тому можно всё.</li>
+      <li><b>Службы — тоже пользователи.</b> <code>www-data</code>, <code>mysql</code>, <code>shop</code>: у каждой программы своя учётка, а значит, своя клетка.</li>
+    </ul>
+    <div class="xl-next"><button class="xl-btn" type="button" data-goto="L2">Уровень 2 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 2: ТРИ СЕМЁРКИ (ВАУ) ================= -->
+<section class="xl-lvl xl-v is-locked" id="ix-linux-L2" aria-labelledby="ix-linux-t2">
+  <div class="xl-lvl-h"><span class="xl-lvl-n">УРОВЕНЬ 2 / 4</span><h3 class="xl-lvl-t" id="ix-linux-t2">Три семёрки</h3><span class="xl-badge">ГОТОВО</span></div>
+  <div class="xl-lockcap"><span>🔒 Сначала пройди уровень 1</span></div>
+  <div class="xl-lvl-b">
+    <div class="xl-say"><span class="xl-who xl-wv">ТОВАРИЩ 777</span><span class="xl-bub">Конфиг с паролем от базы? Выдал права <b>всем</b>. Чтобы никто не жаловался, что «нет доступа».</span></div>
+    <ul class="xl-goals" id="ix-linux-g2" aria-label="Задачи"></ul>
+    <div class="xl-term-slot" id="ix-linux-ts2"></div>
+
+    <div class="xl-perm" id="ix-linux-perm" hidden>
+      <p class="xl-perm-file">файл <code>db.conf</code> · владелец <b>root</b> · группа <b>shop</b></p>
+      <div class="xl-pstr" id="ix-linux-pstr" role="img" aria-label="Права: -rwxrwxrwx">
+        <span class="xl-ps xl-ps-t">-</span><span class="xl-ps xl-ps-u">rwx</span><span class="xl-ps xl-ps-g">rwx</span><span class="xl-ps xl-ps-o">rwx</span>
+      </div>
+      <div class="xl-prows" id="ix-linux-prows">
+        <p class="xl-prow xl-pr-t"><code>-</code><span>первый знак — тип: <code>-</code> обычный файл, <code>d</code> папка</span></p>
+        <div class="xl-prow xl-pr-c" data-c="u"><span class="xl-plab">Владелец<i>root</i></span><span class="xl-pbits"></span><span class="xl-psum">=<b>7</b></span></div>
+        <div class="xl-prow xl-pr-c" data-c="g"><span class="xl-plab">Группа<i>shop</i></span><span class="xl-pbits"></span><span class="xl-psum">=<b>7</b></span></div>
+        <div class="xl-prow xl-pr-c" data-c="o"><span class="xl-plab">Остальные<i>все-все-все</i></span><span class="xl-pbits"></span><span class="xl-psum">=<b>7</b></span></div>
+      </div>
+      <p class="xl-plegend"><span><b>r</b> читать = 4</span> · <span><b>w</b> менять = 2</span> · <span><b>x</b> запускать = 1</span></p>
+      <div class="xl-ptotal" id="ix-linux-ptotal"><span class="xl-pt-l">права числом</span><b id="ix-linux-pnum">777</b><span class="xl-pt-stamp" id="ix-linux-pstamp" aria-hidden="true">ТОВАРИЩ 777</span></div>
+      <p class="xl-ptarget" id="ix-linux-ptarget" hidden><span>Нажимай на буквы.</span> Нужно: <b>root</b> — читать и менять, <b>группа shop</b> — только читать, <b>остальным</b> — ничего.</p>
+    </div>
+
+    <div class="xl-nar" id="ix-linux-nar2" aria-live="polite"></div>
+    <div class="xl-dock" id="ix-linux-dock2"></div>
+    <ul class="xl-tips">
+      <li><b>Папке нужен x.</b> Для папки x значит «можно войти» (<code>cd</code>). Частые права: папка <code>755</code>, секрет <code>600</code> или <code>640</code>, скрипт <code>755</code>.</li>
+      <li><b>«Permission denied» — не повод для 777.</b> Сначала выясни, кому именно и какой доступ нужен.</li>
+    </ul>
+    <div class="xl-next"><button class="xl-btn" type="button" data-goto="L3">Уровень 3 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 3: КОРОНА ROOT ================= -->
+<section class="xl-lvl xl-v is-locked" id="ix-linux-L3" aria-labelledby="ix-linux-t3">
+  <div class="xl-lvl-h"><span class="xl-lvl-n">УРОВЕНЬ 3 / 4</span><h3 class="xl-lvl-t" id="ix-linux-t3">Корона root</h3><span class="xl-badge">ГОТОВО</span></div>
+  <div class="xl-lockcap"><span>🔒 Сначала пройди уровень 2</span></div>
+  <div class="xl-lvl-b">
+    <div class="xl-say"><span class="xl-who xl-wv">ТОВАРИЩ 777</span><span class="xl-bub">А магазин я запустил от <b>root</b>. Чтобы ему ничего не мешало. Заботливый я!</span></div>
+    <ul class="xl-goals" id="ix-linux-g3" aria-label="Задачи"></ul>
+    <div class="xl-term-slot" id="ix-linux-ts3"></div>
+    <div class="xl-unit" id="ix-linux-unit" hidden>
+      <p class="xl-unit-h">ПРАВКА ФАЙЛА · /etc/systemd/system/shop.service</p>
+      <button class="xl-sw" id="ix-linux-sw" type="button" role="switch" aria-checked="false">
+        <span class="xl-knob" aria-hidden="true"></span>
+        <span class="xl-swt"><code data-off="User=root" data-on="User=shop">User=root</code><small data-off="магазин работает с правами root" data-on="магазин работает как служебный пользователь shop">магазин работает с правами root</small></span>
+      </button>
+    </div>
+    <div class="xl-res" id="ix-linux-res3"></div>
+    <div class="xl-nar" id="ix-linux-nar3" aria-live="polite"></div>
+    <div class="xl-dock" id="ix-linux-dock3"></div>
+    <ul class="xl-tips">
+      <li><b>sudo — это root на одну команду.</b> С паролем и записью в журнал. Сидеть под root весь день — привычка Товарища.</li>
+      <li><b>ps показывает процессы.</b> Чаще всего набирают <code>ps aux</code>: те же строки, только столбцов больше. Незнакомый процесс от root — повод насторожиться.</li>
+    </ul>
+    <div class="xl-next"><button class="xl-btn" type="button" data-goto="L4">Уровень 4 ▼</button></div>
+  </div>
+</section>
+
+<!-- ================= УРОВЕНЬ 4: ЖУРНАЛ ================= -->
+<section class="xl-lvl xl-v is-locked" id="ix-linux-L4" aria-labelledby="ix-linux-t4">
+  <div class="xl-lvl-h"><span class="xl-lvl-n">УРОВЕНЬ 4 / 4</span><h3 class="xl-lvl-t" id="ix-linux-t4">Кто стучится?</h3><span class="xl-badge">ГОТОВО</span></div>
+  <div class="xl-lockcap"><span>🔒 Сначала пройди уровень 3</span></div>
+  <div class="xl-lvl-b">
+    <div class="xl-say"><span class="xl-who xl-wv">ТОВАРИЩ 777</span><span class="xl-bub">Через магазин не пускаете? Зайду через дверь — по SSH. Пароль от root я <b>угадаю</b>.</span></div>
+    <ul class="xl-goals" id="ix-linux-g4" aria-label="Задачи"></ul>
+    <div class="xl-term-slot" id="ix-linux-ts4"></div>
+    <div class="xl-ssh" id="ix-linux-ssh" hidden>
+      <p class="xl-unit-h">ЧТО СДЕЛАТЬ С ДВЕРЬЮ SSH</p>
+      <div class="xl-opts" role="radiogroup" aria-label="Защита SSH" id="ix-linux-sshopt">
+        <button type="button" role="radio" aria-checked="true" data-v="port"><code>Port 2222</code><small>перенести дверь на другой порт</small></button>
+        <button type="button" role="radio" aria-checked="false" data-v="keys"><code>PermitRootLogin no · PasswordAuthentication no</code><small>root не входит, вход только по ключу, плюс fail2ban</small></button>
+        <button type="button" role="radio" aria-checked="false" data-v="wipe"><code>rm auth.log</code><small>стереть журнал, чтобы не пугал</small></button>
+      </div>
+    </div>
+    <div class="xl-warn" id="ix-linux-warn4" aria-live="polite"></div>
+    <div class="xl-res" id="ix-linux-res4"></div>
+    <div class="xl-nar" id="ix-linux-nar4" aria-live="polite"></div>
+    <div class="xl-dock" id="ix-linux-dock4"></div>
+    <ul class="xl-tips">
+      <li><b>Журналы живут в /var/log.</b> <code>auth.log</code> — входы и sudo, <code>syslog</code> — общая лента. Где этих файлов нет, то же покажет <code>journalctl</code>.</li>
+      <li><b>grep ищет строки.</b> <code>-i</code> — без учёта регистра, <code>-c</code> — посчитать, а через <code>|</code> он фильтрует вывод другой команды.</li>
+    </ul>
+    <div class="xl-next"><button class="xl-btn" type="button" data-goto="final">Итоги ▼</button></div>
+  </div>
+</section>
+
+<section class="xl-final" id="ix-linux-final" aria-labelledby="ix-linux-ft" tabindex="-1">
+  <div class="xl-fface" aria-hidden="true">
+    <span class="xl-f777">777</span>
+    <svg class="xl-stamp xl-fstamp" viewBox="0 0 200 200">
+      <defs><path id="ix-linux-ring2" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="7"/>
+      <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text class="xl-stamp-ring"><textPath href="#ix-linux-ring2" textLength="452" lengthAdjust="spacing">ПРАВА · ОТОЗВАНЫ · ПРАВА · ОТОЗВАНЫ · </textPath></text>
+      <text class="xl-stamp-num" x="100" y="117" text-anchor="middle">640</text>
+    </svg>
+  </div>
+  <div class="xl-fbody">
+    <h3 class="xl-ft" id="ix-linux-ft">Сервер сдан</h3>
+    <div class="xl-fstats"><span>Счёт <b id="ix-linux-fscore">0</b></span><span>Защита <b>100%</b></span><span>Взломов <b id="ix-linux-ffails">0</b></span></div>
+    <p class="xl-rule">Каждому — ровно столько прав, сколько нужно для работы. Остальное — через sudo и под запись в журнал.</p>
+    <div class="xl-why">
+      <p class="xl-why-h">Почему безопасники живут в Linux</p>
+      <p><b>Большинство серверов — Linux.</b> Сайты, облака, контейнеры, роутеры.</p>
+      <p><b>Всё — текст.</b> Настройки, журналы, процессы: открыл, прочитал, нашёл через grep.</p>
+      <p><b>Инструменты отсюда.</b> Пентестеры работают в Kali Linux, защитники разбирают журналы серверов.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /game -->
+
+<!-- ================= БИТВА ================= -->
+<section class="xl-battle" id="ix-linux-battle" aria-labelledby="ix-linux-bt">
+  <p class="xl-eyebrow">ПОСЛЕ МИССИИ</p>
+  <h3 class="xl-h" id="ix-linux-bt">Битва со злодеем</h3>
+  <div class="xl-arena">
+    <div class="xl-bface" id="ix-linux-bface" aria-hidden="true"><span class="xl-bnum">777</span><span class="xl-bko">ПОВЕРЖЕН</span></div>
+    <div class="xl-hpw">
+      <div class="xl-hpl"><span>ТОВАРИЩ 777</span><span id="ix-linux-hpn">HP 100</span></div>
+      <div class="xl-hp" role="progressbar" aria-label="Здоровье Товарища 777" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-linux-hpbar"><i id="ix-linux-hpf"></i></div>
+      <p class="xl-bstep" id="ix-linux-bstep">ХОД 1 / 3</p>
+    </div>
+  </div>
+  <div class="xl-bplay" id="ix-linux-bplay">
+    <p class="xl-bmove" id="ix-linux-bmove"></p>
+    <p class="xl-bq">Твоя защита:</p>
+    <div class="xl-bopts" id="ix-linux-bopts"></div>
+    <p class="xl-bfb" id="ix-linux-bfb" aria-live="polite"></p>
+  </div>
+  <div class="xl-bend" id="ix-linux-bend" hidden>
+    <p class="xl-bwin">Товарищ 777 повержен</p>
+    <p class="xl-bsc" id="ix-linux-bsc"></p>
+    <button class="xl-btn xl-y" id="ix-linux-bagain" type="button">↺ Ещё раз</button>
+  </div>
+</section>
+
+<!-- ================= СОБЕСЕДОВАНИЕ ================= -->
+<section class="xl-iv" aria-labelledby="ix-linux-ivt">
+  <p class="xl-eyebrow xl-eyl">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h3 class="xl-ivq" id="ix-linux-ivt">Как устроены права доступа в Linux и что такое принцип наименьших привилегий?</h3>
+  <div class="xl-think">
+    <p class="xl-thl">Подумай сам</p>
+    <p>Вспомни строку <code>-rw-r-----</code>. Сколько в ней групп по три буквы и кому каждая? Откуда берётся число 640? И почему магазину не нужен root?</p>
+  </div>
+  <button class="xl-btn xl-y" id="ix-linux-ivb" type="button" aria-expanded="false" aria-controls="ix-linux-iva">Показать сильный ответ</button>
+  <div class="xl-iva" id="ix-linux-iva" hidden>
+    <ol>
+      <li><b>Три класса, три права.</b> Владелец, группа и все остальные. r — читать, w — изменять, x — запускать, а для папки — входить в неё.</li>
+      <li><b>Число — сумма битов.</b> r = 4, w = 2, x = 1. 640 — это rw- r-- ---: владелец читает и пишет, группа читает, остальным ничего. 777 разрешает любому пользователю и процессу читать, менять и запускать.</li>
+      <li><b>root и sudo.</b> root (uid 0) может читать и менять любой файл. Работают обычным пользователем, а sudo берут на отдельную команду: с паролем и записью в журнал.</li>
+      <li><b>Наименьшие привилегии.</b> Каждая служба — от своего пользователя без лишних прав, секреты — 600 или 640, SSH без входа root и без паролей. Проверяем процессы (ps) и журналы (auth.log).</li>
+    </ol>
+    <p class="xl-noob"><b>Ошибка новичка:</b> «чинить» Permission denied через chmod 777 или запускать всё подряд через sudo.</p>
+  </div>
+</section>
+
+<!-- ================= ШПАРГАЛКА ================= -->
+<section class="xl-cheat" aria-labelledby="ix-linux-ct">
+  <h3 class="xl-h" id="ix-linux-ct">Шпаргалка: что важно знать</h3>
+  <ol class="xl-cl">
+    <li><span class="xl-cn">01</span><div><b>Всё растёт из /</b><p><code>/etc</code> — настройки, <code>/home</code> — люди, <code>/var/log</code> — журналы, <code>/root</code> — дом root.</p></div></li>
+    <li><span class="xl-cn">02</span><div><b>Пять первых команд</b><p><code>pwd</code> — где я, <code>ls</code> — что тут, <code>cd</code> — перейти, <code>cat</code> — показать файл, <code>grep</code> — найти строку.</p></div></li>
+    <li><span class="xl-cn">03</span><div><b>Пользователи и группы</b><p>У каждого свой uid. Группа даёт права сразу многим. Программы тоже работают под своими пользователями.</p></div></li>
+    <li><span class="xl-cn">04</span><div><b>rwx три раза</b><p>Владелец, группа, остальные. r = 4, w = 2, x = 1, поэтому <code>rw-r-----</code> — это 640.</p></div></li>
+    <li><span class="xl-cn">05</span><div><b>777 — красный флаг</b><p>Любой читает, меняет и запускает. Секретам хватит 600 или 640.</p></div></li>
+    <li><span class="xl-cn">06</span><div><b>root только через sudo</b><p>Службы запускай от своих пользователей. <code>ps</code> покажет, какой процесс от чьего имени работает.</p></div></li>
+    <li><span class="xl-cn">07</span><div><b>Журнал — память сервера</b><p><code>/var/log/auth.log</code> помнит входы, неудачи и каждый sudo. grep найдёт нужное за секунду.</p></div></li>
+  </ol>
+  <p class="xl-legal"><b>Тренируйся легально:</b> OverTheWire Bandit (терминал с нуля), picoCTF (General Skills), TryHackMe (Linux Fundamentals) или свой Linux в виртуалке. Чужие серверы трогать нельзя.</p>
+</section>
+
+<!-- ================= ВЗЛОМ ================= -->
+<div class="xl-hack" id="ix-linux-hack" role="dialog" aria-modal="true" aria-labelledby="ix-linux-hkt" hidden>
+  <div class="xl-hk">
+    <div class="xl-hkface" aria-hidden="true"><span>777</span></div>
+    <p class="xl-hkt" id="ix-linux-hkt">ВЗЛОМ!</p>
+    <p class="xl-hkw" id="ix-linux-hkw"></p>
+    <p class="xl-hks" id="ix-linux-hks"></p>
+    <button class="xl-btn xl-y" id="ix-linux-rewind" type="button">◀◀ Откатить время</button>
+  </div>
+</div>
+</section>
+
+<style>
+.ix-linux{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--acc:#2ee59d;--accd:#0a8f5c;--pink:#ff2e93;--red:#ff3b3b;--muted:#5b5446;
+  --tbg:#0c110f;--ttx:#d8e4dd;--tdir:#6cb6ff;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;
+  --code:ui-monospace,'SFMono-Regular',Menlo,Consolas,'DejaVu Sans Mono','Liberation Mono',monospace;
+  position:relative;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:100%;overflow-wrap:break-word}
+.ix-linux,.ix-linux *,.ix-linux *::before,.ix-linux *::after{box-sizing:border-box}
+.ix-linux button,.ix-linux input{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.ix-linux :focus-visible{outline:4px solid var(--pink);outline-offset:3px}
+.ix-linux code{font-family:var(--code)}
+.ix-linux [hidden]{display:none !important}
+.ix-linux .xl-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- mission / poster ---------- */
+.ix-linux .xl-mission{position:relative;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--acc),10px 10px 0 3px var(--ink);
+  display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden;min-height:560px;margin-right:10px}
+.ix-linux .xl-poster{position:relative;overflow:hidden;background:#07120d;border-right:3px solid var(--ink);color:var(--acc);min-height:420px;
+  background-image:radial-gradient(rgba(46,229,157,.28) 1.2px,transparent 1.9px),radial-gradient(ellipse at 50% 40%,rgba(46,229,157,.22),transparent 65%);background-size:8px 8px,100% 100%}
+.ix-linux .xl-poster::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.ix-linux .xl-bg777{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-family:var(--f-mono);font-size:210px;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(46,229,157,.35);letter-spacing:-.04em;white-space:nowrap;user-select:none}
+.ix-linux .xl-stamp{position:absolute;left:50%;top:40%;width:72%;max-width:300px;transform:translate(-50%,-50%) rotate(-14deg);color:var(--acc);overflow:visible;filter:drop-shadow(0 0 14px rgba(46,229,157,.35))}
+.ix-linux .xl-stamp-ring{font-family:var(--f-cap);font-size:17px;letter-spacing:1.5px;fill:currentColor}
+.ix-linux .xl-stamp-num{font-family:var(--f-mono);font-size:50px;fill:currentColor}
+.ix-linux .xl-pname{position:absolute;left:18px;right:18px;bottom:66px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ix-linux .xl-pname span{font-family:var(--f-cap);font-size:34px;line-height:1;color:#fff;text-shadow:3px 3px 0 #000}
+.ix-linux .xl-pname b{font-family:var(--f-mono);font-weight:400;font-size:40px;line-height:1;color:var(--ink);background:var(--acc);padding:2px 10px 4px;transform:rotate(-3deg);box-shadow:4px 4px 0 #000}
+.ix-linux .xl-pcmd{position:absolute;left:18px;right:18px;bottom:20px;font-size:15px;font-weight:700;color:var(--acc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-linux .xl-pcmd i{font-style:normal;color:#fff;margin-right:6px}
+.ix-linux .xl-pcmd em{font-style:normal;color:#7d9a8c;margin-left:10px}
+.ix-linux .xl-tag{position:absolute;z-index:4;left:14px;top:14px;font-family:var(--f-cap);font-size:15px;background:var(--ink);color:var(--yel);padding:6px 12px;border:2px solid var(--yel)}
+.ix-linux .xl-tag2{position:absolute;z-index:4;right:14px;top:16px;font-family:var(--f-cap);font-size:14px;background:var(--red);color:#fff;padding:5px 10px;border:2px solid var(--ink);transform:rotate(4deg)}
+.ix-linux .xl-mbody{padding:34px 30px 32px;display:flex;flex-direction:column;gap:18px;background-image:radial-gradient(rgba(46,229,157,.12) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-linux .xl-kick{margin:0;font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--acc)}
+.ix-linux .xl-mtitle{margin:0;font-family:var(--f-mono);font-weight:400;font-size:48px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-linux .xl-w{display:block}
+.ix-linux .xl-host{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font-family:var(--code);font-size:22px;font-weight:700;text-transform:none;background:var(--tbg);color:var(--acc);
+  border:3px solid var(--acc);box-shadow:4px 4px 0 #000;padding:6px 16px}
+.ix-linux .xl-host svg{width:22px;height:22px}
+.ix-linux .xl-msub{margin:0;font-family:var(--f-hand);font-size:27px;line-height:1.15}
+.ix-linux .xl-msub em{font-style:normal;color:var(--acc)}
+.ix-linux .xl-motto{margin:0;font-family:var(--f-hand);font-size:22px;color:#cfcfcf;border-left:4px solid var(--acc);padding-left:12px}
+.ix-linux .xl-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-linux .xl-moves li{border:2px solid #fff;padding:8px 8px 10px;position:relative}
+.ix-linux .xl-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-linux .xl-moves span{display:block;font-family:var(--f-cap);font-size:14px;line-height:1.2;margin-top:4px}
+.ix-linux .xl-moves li.is-x::after{content:"";position:absolute;inset:-2px;border:3px solid var(--acc);background:rgba(46,229,157,.16)}
+.ix-linux .xl-go{align-self:flex-start;min-height:58px;padding:0 28px;font-family:var(--f-mono);font-size:18px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);
+  box-shadow:6px 6px 0 var(--acc);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-linux .xl-go:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--acc)}
+.ix-linux .xl-go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--acc)}
+.ix-linux .xl-go:disabled{opacity:.55;cursor:default;transform:none;animation:none}
+.ix-linux.ix-anim .xl-go:not(:disabled){animation:ixlinux-pulse 1.6s ease-in-out infinite}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-stamp{animation:ixlinux-stamp-in .55s cubic-bezier(.2,1.5,.4,1) .35s both}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-poster{animation:ixlinux-thud .4s ease-out .62s}
+.ix-linux.ix-anim .xl-stamp-ring{animation:none}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-tag2{animation:ixlinux-slam .45s cubic-bezier(.2,1.6,.4,1) 1.1s both}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-w:nth-child(1){animation:ixlinux-slam .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-w:nth-child(2){animation:ixlinux-slam .5s cubic-bezier(.2,1.6,.4,1) .45s both}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-moves li{animation:ixlinux-deal .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-moves li:nth-child(1){animation-delay:1.2s}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-moves li:nth-child(2){animation-delay:1.3s}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-moves li:nth-child(3){animation-delay:1.4s}
+.ix-linux.ix-anim .xl-mission.is-seen .xl-moves li:nth-child(4){animation-delay:1.5s}
+.ix-linux.ix-anim .xl-pcmd::after{content:"";display:inline-block;width:.6em;height:1.05em;margin-left:4px;vertical-align:-3px;background:var(--acc);animation:ixlinux-blink 1s steps(1) infinite}
+
+/* ---------- HUD ---------- */
+.ix-linux .xl-game{position:relative}
+.ix-linux .xl-hud{position:sticky;top:0;z-index:40;margin-top:40px;background:var(--ink);color:#fff;display:none;align-items:center;gap:12px;padding:8px 14px;border:3px solid var(--ink)}
+.ix-linux .xl-hud.is-on{display:flex}
+.ix-linux .xl-hud-l{font-family:var(--f-cap);font-size:13px;color:var(--yel);white-space:nowrap}
+.ix-linux .xl-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-linux .xl-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--acc);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-linux .xl-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px;font-weight:400;text-shadow:0 0 3px #000}
+.ix-linux .xl-hud.is-hit{animation:ixlinux-shake .4s}
+.ix-linux .xl-hud.is-hit .xl-bar i{background:var(--red)}
+.ix-linux .xl-pips{display:flex;gap:4px}
+.ix-linux .xl-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-linux .xl-pips span.is-done{background:var(--acc);color:var(--ink);border-color:var(--acc)}
+.ix-linux .xl-score{font-family:var(--f-mono);font-size:15px;color:var(--yel);min-width:48px;text-align:right}
+.ix-linux .xl-float{position:fixed;z-index:60;font-family:var(--f-mono);font-size:22px;color:var(--yel);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;pointer-events:none;animation:ixlinux-float 1.1s ease-out forwards}
+
+/* ---------- levels ---------- */
+.ix-linux .xl-lvl{position:relative;margin:48px 8px 0 0;border:3px solid var(--ink);background:#fffdf6;box-shadow:8px 8px 0 var(--ink);scroll-margin-top:64px}
+.ix-linux .xl-lvl-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 20px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-linux .xl-v .xl-lvl-h{background:var(--acc)}
+.ix-linux .xl-lvl-n{font-family:var(--f-cap);font-size:14px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-linux .xl-lvl-t{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-linux .xl-badge{display:none;margin-left:auto;font-family:var(--f-cap);font-size:14px;background:#fff;border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-linux .xl-lvl.is-clear .xl-badge{display:inline-block}
+.ix-linux .xl-lvl-b{padding:22px 20px 24px}
+.ix-linux .xl-lvl.is-locked .xl-lvl-b{filter:grayscale(1) blur(3px);opacity:.35;user-select:none;max-height:380px;overflow:hidden}
+.ix-linux .xl-lockcap{display:none}
+.ix-linux .xl-lvl.is-locked .xl-lockcap{display:grid;position:absolute;inset:60px 0 0;place-items:center;z-index:5;pointer-events:none}
+.ix-linux .xl-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-linux .xl-next{display:none;margin-top:22px}
+.ix-linux .xl-lvl.is-clear .xl-next{display:flex}
+.ix-linux .xl-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-linux .xl-who{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-linux .xl-wv{background:var(--acc);color:var(--ink);border:2px solid var(--ink)}
+.ix-linux .xl-wk{background:var(--pink);color:var(--ink);border:2px solid var(--ink)}
+.ix-linux .xl-bub{font-family:var(--f-hand);font-size:23px;line-height:1.22;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:8px 14px;box-shadow:3px 3px 0 var(--ink);min-width:0}
+.ix-linux .xl-bub b{font-weight:400;background:var(--yel);padding:0 4px}
+.ix-linux .xl-bub code{font-size:.78em;font-weight:700;background:#e9fbf3;border:1px solid #9fdcc2;padding:0 4px;white-space:nowrap}
+.ix-linux .xl-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--acc);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-linux .xl-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--acc)}
+.ix-linux .xl-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--acc)}
+.ix-linux .xl-btn.xl-y{background:var(--yel);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-linux .xl-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* goals */
+.ix-linux .xl-goals{list-style:none;margin:6px 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.ix-linux .xl-goals li{display:flex;align-items:center;gap:8px;font-size:16px;line-height:1.3;color:var(--muted)}
+.ix-linux .xl-goals li::before{content:"";flex:0 0 18px;width:18px;height:18px;border:2.5px solid var(--ink);background:#fff}
+.ix-linux .xl-goals li.is-cur{color:var(--ink);font-weight:500}
+.ix-linux .xl-goals li.is-cur::before{background:var(--yel)}
+.ix-linux .xl-goals li.is-done{color:var(--accd)}
+.ix-linux .xl-goals li.is-done::before{background:var(--acc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10l4 4 8-9' fill='none' stroke='%23141414' stroke-width='3'/%3E%3C/svg%3E") center/14px no-repeat}
+.ix-linux .xl-goals code{font-weight:700;color:inherit}
+
+/* ---------- terminal ---------- */
+.ix-linux .xl-term{position:relative;margin:4px 0 0;background:var(--tbg);color:var(--ttx);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--acc);font-family:var(--code)}
+.ix-linux .xl-term:focus-within{box-shadow:6px 6px 0 var(--acc),0 0 0 4px rgba(46,229,157,.35)}
+.ix-linux .xl-tbar{display:flex;align-items:center;gap:10px;padding:7px 12px;background:#1b2320;color:#a6b9af;font-size:13px;border-bottom:2px solid #000;font-family:var(--code)}
+.ix-linux .xl-tbar .xl-ttl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.ix-linux .xl-tbar .xl-tst{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-cap);font-size:12px;letter-spacing:.06em;color:#7d8f86}
+.ix-linux .xl-tbar .xl-tst::before{content:"";width:9px;height:9px;border-radius:50%;background:#555}
+.ix-linux .xl-term.is-on .xl-tst{color:var(--acc)}
+.ix-linux .xl-term.is-on .xl-tst::before{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.ix-linux .xl-tscr{position:relative;padding:12px 14px 6px;max-height:min(460px,62vh);min-height:150px;overflow-y:auto;font-size:15px;line-height:1.45;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px);overscroll-behavior:contain}
+.ix-linux .xl-ln{white-space:pre-wrap;overflow-wrap:anywhere;min-height:1.45em}
+.ix-linux .xl-pu{color:var(--acc);font-weight:700}
+.ix-linux .xl-pp{color:var(--tdir);font-weight:700}
+.ix-linux .xl-dir{color:var(--tdir);font-weight:700}
+.ix-linux .xl-mt{color:#ff6b6b;font-weight:700}
+.ix-linux .xl-dim{color:#7d8f86}
+.ix-linux .xl-err{color:#ffb4a8}
+.ix-linux .xl-wht{color:#fff;font-weight:700}
+.ix-linux .xl-hot{background:var(--red);color:#fff;font-weight:700;border-radius:2px}
+.ix-linux .xl-okp{background:var(--acc);color:#04130c;font-weight:700;border-radius:2px}
+.ix-linux .xl-rowhot{background:rgba(255,59,59,.22);box-shadow:inset 3px 0 0 var(--red)}
+.ix-linux .xl-rowok{background:rgba(46,229,157,.16);box-shadow:inset 3px 0 0 var(--acc)}
+.ix-linux .xl-ls{display:flex;flex-wrap:wrap;column-gap:2ch;white-space:normal}
+.ix-linux .xl-ls span{white-space:pre}
+.ix-linux .xl-inl{display:flex;align-items:baseline;flex-wrap:wrap;padding:0 14px 12px;font-size:15px;line-height:1.45;cursor:text}
+.ix-linux .xl-inl .xl-pr{white-space:pre;flex:0 0 auto}
+.ix-linux .xl-tin{flex:1 1 8ch;min-width:8ch;background:transparent;border:0;outline:0;color:#fff;font-family:var(--code);font-size:15px;font-weight:700;line-height:1.45;padding:0;margin:0;caret-color:var(--acc);border-radius:0}
+.ix-linux .xl-tin::placeholder{color:#55665d;font-weight:400}
+.ix-linux .xl-tin:disabled{color:#fff;opacity:1;-webkit-text-fill-color:#fff}
+.ix-linux .xl-term.is-busy .xl-tin{caret-color:transparent}
+.ix-linux .xl-cur{display:inline-block;width:.6em;height:1.1em;vertical-align:-3px;background:var(--acc);margin-left:1px}
+.ix-linux.ix-anim .xl-cur{animation:ixlinux-blink 1s steps(1) infinite}
+.ix-linux .xl-term.is-off .xl-inl{opacity:.6}
+
+/* dock */
+.ix-linux .xl-dock{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:16px}
+.ix-linux .xl-dock:empty{display:none}
+.ix-linux .xl-cmd{display:flex;align-items:center;gap:14px;min-height:58px;width:auto;max-width:100%;padding:8px 20px 8px 16px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);cursor:pointer;text-align:left;transition:transform .1s,box-shadow .1s}
+.ix-linux .xl-cmd:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.ix-linux .xl-cmd:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-linux .xl-cmd:disabled{opacity:.55;cursor:default;transform:none}
+.ix-linux .xl-cmd .xl-cv i{font-style:normal}
+.ix-linux .xl-cmd .xl-cv{flex:0 0 auto;font-family:var(--f-cap);font-size:15px;background:var(--ink);color:var(--yel);padding:4px 9px}
+.ix-linux .xl-cmd .xl-cb{display:flex;flex-direction:column;min-width:0}
+.ix-linux .xl-cmd code{font-size:18px;font-weight:700;overflow-wrap:anywhere}
+.ix-linux .xl-cmd small{font-size:16px;line-height:1.25;color:#3d3727}
+.ix-linux .xl-cmd.xl-act{background:var(--ink);color:#fff;box-shadow:5px 5px 0 var(--acc)}
+.ix-linux .xl-cmd.xl-act .xl-cv{background:var(--acc);color:var(--ink)}
+.ix-linux .xl-cmd.xl-act small{color:#ccc}
+.ix-linux.ix-anim .xl-cmd.is-new{animation:ixlinux-fadeup .35s ease-out both}
+.ix-linux .xl-alt{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ix-linux .xl-alt > span{font-family:var(--f-hand);font-size:20px;color:var(--muted);margin-right:2px}
+.ix-linux .xl-chip{min-height:44px;padding:0 12px;border:2.5px dashed var(--ink);background:#fff;font-family:var(--code);font-size:15px;font-weight:700;cursor:pointer}
+.ix-linux .xl-chip:hover{background:#e9fbf3;border-style:solid}
+.ix-linux .xl-chip:disabled{opacity:.5;cursor:default}
+
+/* narration */
+.ix-linux .xl-nar{margin-top:18px}
+.ix-linux .xl-nar:empty{display:none}
+.ix-linux.ix-anim .xl-nar > *{animation:ixlinux-fadeup .35s ease-out both}
+.ix-linux.ix-anim .xl-nar > *:nth-child(2){animation-delay:.15s}
+.ix-linux .xl-big{margin:4px 0 10px;font-family:var(--f-cap);font-size:30px;line-height:1.12}
+.ix-linux .xl-big em{font-style:normal;background:var(--yel);padding:0 6px}
+.ix-linux .xl-big code{font-size:.85em;background:var(--ink);color:var(--acc);padding:0 8px}
+.ix-linux .xl-lead{margin:0 0 14px;font-size:20px;line-height:1.45}
+.ix-linux .xl-lead code{font-weight:700;background:#e9fbf3;padding:0 4px}
+
+/* tree map */
+.ix-linux .xl-map{margin:22px 0 4px;padding:4px 0 0}
+.ix-linux.ix-anim .xl-map:not([hidden]){animation:ixlinux-fadeup .45s ease-out both}
+.ix-linux .xl-map-h{margin:0 0 8px;font-family:var(--f-cap);font-size:15px;letter-spacing:.08em;color:var(--muted)}
+.ix-linux .xl-tree,.ix-linux .xl-tree ul{list-style:none;margin:0;padding:0}
+.ix-linux .xl-tree ul{margin-left:12px;padding-left:18px;border-left:3px solid var(--ink)}
+.ix-linux .xl-tree li{position:relative}
+.ix-linux .xl-tree ul > li::before{content:"";position:absolute;left:-18px;top:21px;width:14px;border-top:3px solid var(--ink)}
+.ix-linux .xl-tree ul > li:last-child::after{content:"";position:absolute;left:-21px;top:23px;bottom:0;width:3px;background:#fffdf6}
+.ix-linux .xl-tn{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 12px;min-height:42px;padding:6px 0}
+.ix-linux .xl-tn code{font-size:19px;font-weight:700;color:#1f5fae}
+.ix-linux .xl-tn > span{font-family:var(--f-hand);font-size:21px;line-height:1.15;color:#3d3727}
+.ix-linux .xl-tn b{font-family:var(--code);font-weight:700}
+.ix-linux .xl-tree li.is-here > .xl-tn code{background:var(--acc);color:var(--ink);padding:0 6px;box-shadow:3px 3px 0 var(--ink)}
+.ix-linux .xl-tree li.is-here > .xl-tn::after{content:"← ты здесь";font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--acc);padding:2px 8px;align-self:center}
+.ix-linux .xl-tree li.is-seen > .xl-tn code{text-decoration:underline;text-decoration-color:var(--acc);text-decoration-thickness:3px;text-underline-offset:4px}
+
+/* ---------- permission decoder (wow) ---------- */
+.ix-linux .xl-perm{position:relative;margin:24px 0 4px;padding:22px 20px 24px;background:#fff;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--red)}
+.ix-linux .xl-perm.is-fixed{box-shadow:7px 7px 0 var(--acc)}
+.ix-linux .xl-perm-file{margin:0 0 12px;font-size:17px;color:var(--muted)}
+.ix-linux .xl-perm-file code,.ix-linux .xl-perm-file b{color:var(--ink);font-weight:700}
+.ix-linux .xl-pstr{display:flex;justify-content:center;align-items:flex-end;gap:0;font-family:var(--code);font-weight:700;font-size:64px;line-height:1.1;margin:6px 0 18px;transition:gap .45s cubic-bezier(.2,1.4,.4,1)}
+.ix-linux .xl-ps{position:relative;padding-bottom:10px;white-space:pre}
+.ix-linux .xl-ps::after{content:"";position:absolute;left:4%;right:4%;bottom:0;height:8px;transform:scaleX(0);transition:transform .35s cubic-bezier(.2,1.4,.4,1);border:2px solid var(--ink)}
+.ix-linux .xl-ps-t::after{background:#ccc}
+.ix-linux .xl-ps-u::after{background:var(--acc)}
+.ix-linux .xl-ps-g::after{background:var(--yel)}
+.ix-linux .xl-ps-o::after{background:var(--red)}
+.ix-linux .xl-perm:not(.is-split) .xl-pstr{color:var(--red)}
+.ix-linux .xl-perm.is-split .xl-pstr{gap:.32em}
+.ix-linux .xl-perm.is-split .xl-ps::after{transform:none}
+.ix-linux .xl-perm.is-split .xl-ps-g::after{transition-delay:.1s}
+.ix-linux .xl-perm.is-split .xl-ps-o::after{transition-delay:.2s}
+.ix-linux .xl-prows{display:flex;flex-direction:column;gap:10px;max-width:620px;margin:0 auto}
+.ix-linux .xl-perm:not(.is-split) .xl-prows,.ix-linux .xl-perm:not(.is-split) .xl-plegend,.ix-linux .xl-perm:not(.is-split) .xl-ptotal{display:none}
+.ix-linux .xl-prow{margin:0;opacity:1}
+.ix-linux.ix-anim .xl-perm.is-split .xl-prow{animation:ixlinux-deal .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-linux.ix-anim .xl-perm.is-split .xl-prow:nth-child(2){animation-delay:.35s}
+.ix-linux.ix-anim .xl-perm.is-split .xl-prow:nth-child(3){animation-delay:.6s}
+.ix-linux.ix-anim .xl-perm.is-split .xl-prow:nth-child(4){animation-delay:.85s}
+.ix-linux .xl-pr-t{display:flex;align-items:baseline;gap:14px;font-size:17px;line-height:1.35;color:var(--muted);padding-bottom:6px}
+.ix-linux .xl-pr-t > code{flex:0 0 auto;font-size:26px;font-weight:700;color:var(--ink);width:42px;text-align:center}
+.ix-linux .xl-pr-t span code{font-weight:700;color:var(--ink)}
+.ix-linux .xl-pr-c{display:grid;grid-template-columns:minmax(0,1fr) auto 84px;align-items:center;gap:12px;padding:10px 0;border-top:1px solid rgba(20,20,20,.18)}
+.ix-linux .xl-plab{font-family:var(--f-cap);font-size:20px;line-height:1.1;padding-left:12px;border-left:8px solid var(--c)}
+.ix-linux .xl-plab i{display:block;font-style:normal;font-family:var(--code);font-size:15px;font-weight:700;color:var(--muted);margin-top:3px}
+.ix-linux .xl-pr-c[data-c="u"]{--c:var(--acc)}
+.ix-linux .xl-pr-c[data-c="g"]{--c:var(--yel)}
+.ix-linux .xl-pr-c[data-c="o"]{--c:var(--red)}
+.ix-linux .xl-pbits{display:flex;gap:8px}
+.ix-linux .xl-bit{width:56px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:3px solid var(--ink);background:var(--c);box-shadow:3px 3px 0 var(--ink);cursor:pointer;padding:0;transition:transform .1s,background .15s}
+.ix-linux .xl-bit b{font-family:var(--code);font-size:28px;line-height:1;font-weight:700}
+.ix-linux .xl-bit small{font-family:var(--f-cap);font-size:14px;line-height:1}
+.ix-linux .xl-bit[aria-pressed="false"]{background:#f1efe8;color:#9a937f;box-shadow:none;border-style:dashed}
+.ix-linux .xl-bit:disabled{cursor:default}
+.ix-linux .xl-bit:not(:disabled):hover{transform:translate(-1px,-1px)}
+.ix-linux .xl-perm.is-edit .xl-bit:not(:disabled){outline:0}
+.ix-linux.ix-anim .xl-perm.is-edit .xl-pbits{animation:ixlinux-hint 1.4s ease-in-out 2}
+.ix-linux .xl-psum{font-family:var(--f-mono);font-size:22px;text-align:right;white-space:nowrap}
+.ix-linux .xl-psum b{display:inline-block;font-weight:400;font-size:40px;line-height:1;margin-left:6px;color:var(--ink);min-width:1ch}
+.ix-linux .xl-pr-c[data-c="o"] .xl-psum b{color:var(--red)}
+.ix-linux .xl-pr-c[data-c="o"].is-zero .xl-psum b{color:var(--accd)}
+.ix-linux .xl-plegend{margin:14px 0 0;font-size:17px;color:var(--muted);text-align:center}
+.ix-linux .xl-plegend span{white-space:nowrap}
+.ix-linux .xl-plegend b{font-family:var(--code);color:var(--ink);font-size:19px}
+.ix-linux .xl-ptotal{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;margin:16px 0 0;padding-top:16px;border-top:3px solid var(--ink)}
+.ix-linux .xl-pt-l{font-family:var(--f-cap);font-size:16px;color:var(--muted)}
+.ix-linux .xl-ptotal > b{font-family:var(--f-mono);font-weight:400;font-size:76px;line-height:1;color:var(--red);letter-spacing:.02em}
+.ix-linux .xl-perm.is-good .xl-ptotal > b{color:var(--accd)}
+.ix-linux .xl-pt-stamp{position:relative;font-family:var(--f-mono);font-size:17px;line-height:1.1;color:var(--red);border:4px solid var(--red);padding:4px 8px;background:rgba(255,255,255,.9);transform:rotate(-10deg);display:none;pointer-events:none}
+.ix-linux .xl-perm.is-named .xl-pt-stamp{display:inline-block}
+.ix-linux.ix-anim .xl-perm.is-named .xl-pt-stamp{animation:ixlinux-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-linux .xl-perm.is-edit .xl-pt-stamp{display:none}
+.ix-linux .xl-perm.is-fixed .xl-pt-stamp{color:var(--accd);border-color:var(--accd)}
+.ix-linux .xl-ptarget{margin:16px 0 0;padding:12px 14px;background:var(--paper);border-left:6px solid var(--ink);font-size:18px;line-height:1.4}
+.ix-linux .xl-ptarget span{font-family:var(--f-hand);font-size:22px;margin-right:4px}
+
+/* ---------- unit / ssh panels ---------- */
+.ix-linux .xl-unit,.ix-linux .xl-ssh{margin-top:22px;background:var(--ink);color:#fff;padding:16px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);display:flex;flex-direction:column;gap:10px}
+.ix-linux .xl-unit-h{margin:0;font-family:var(--f-cap);font-size:14px;letter-spacing:.05em;color:var(--acc);overflow-wrap:anywhere}
+.ix-linux .xl-sw{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px 14px;border:3px solid #fff;background:#222;cursor:pointer;text-align:left}
+.ix-linux .xl-sw:hover{background:#2c2c2c}
+.ix-linux .xl-knob{flex:0 0 56px;width:56px;height:30px;border-radius:15px;background:#777;border:2.5px solid #fff;position:relative;transition:background .2s}
+.ix-linux .xl-knob::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#fff;transition:left .25s cubic-bezier(.3,1.6,.5,1)}
+.ix-linux .xl-sw[aria-checked="true"]{border-color:var(--acc)}
+.ix-linux .xl-sw[aria-checked="true"] .xl-knob{background:var(--acc)}
+.ix-linux .xl-sw[aria-checked="true"] .xl-knob::after{left:27px}
+.ix-linux .xl-swt{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ix-linux .xl-swt code{font-size:19px;font-weight:700;color:var(--red);filter:brightness(1.3)}
+.ix-linux .xl-sw[aria-checked="true"] .xl-swt code{color:var(--acc);filter:none}
+.ix-linux .xl-swt small{font-size:16px;color:#ddd}
+.ix-linux .xl-sw.is-hint{animation:ixlinux-hint 1.2s ease-in-out 3}
+.ix-linux .xl-sw:disabled{cursor:default}
+.ix-linux .xl-opts{display:flex;flex-direction:column;gap:8px}
+.ix-linux .xl-opts button{min-height:56px;padding:8px 14px 8px 44px;border:3px solid #fff;background:#222;cursor:pointer;text-align:left;position:relative;display:flex;flex-direction:column;justify-content:center}
+.ix-linux .xl-opts button::before{content:"";position:absolute;left:12px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:3px solid #fff}
+.ix-linux .xl-opts button[aria-checked="true"]{border-color:var(--yel);background:#2e2a12}
+.ix-linux .xl-opts button[aria-checked="true"]::before{background:var(--yel);box-shadow:inset 0 0 0 3px #2e2a12}
+.ix-linux .xl-opts code{font-size:16px;font-weight:700;color:#fff;overflow-wrap:anywhere}
+.ix-linux .xl-opts small{font-size:16px;color:#ccc}
+.ix-linux .xl-opts.is-hint{animation:ixlinux-hint 1.2s ease-in-out 2}
+.ix-linux .xl-res{position:relative}
+.ix-linux .xl-res:not(:empty){margin-top:20px}
+.ix-linux.ix-anim .xl-res:not(:empty){animation:ixlinux-fadeup .35s ease-out}
+.ix-linux .xl-gate{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ix-linux .xl-stampok{display:inline-flex;flex-direction:column;align-items:center;border:5px solid var(--accd);color:var(--accd);padding:4px 14px;font-family:var(--f-mono);font-size:32px;line-height:1.05;transform:rotate(-6deg);background:#fff}
+.ix-linux.ix-anim .xl-stampok{animation:ixlinux-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-linux .xl-stampok small{font-family:var(--f-cap);font-size:14px}
+.ix-linux .xl-why2{flex:1 1 220px;margin:0;font-family:var(--f-hand);font-size:24px;line-height:1.2}
+.ix-linux .xl-mini{margin-top:16px;background:var(--tbg);color:var(--ttx);font-family:var(--code);font-size:15px;line-height:1.5;padding:12px 14px;border:3px solid var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-linux .xl-mini .xl-mh{display:block;font-family:var(--f-cap);font-size:13px;color:#7d8f86;letter-spacing:.06em;margin-bottom:4px}
+.ix-linux .xl-tips{display:none;list-style:none;margin:22px 0 0;padding:0}
+.ix-linux .xl-lvl.is-clear .xl-tips{display:block}
+.ix-linux .xl-tips li{position:relative;padding:12px 0 12px 26px;border-top:1px solid rgba(20,20,20,.18);font-size:18px;line-height:1.45}
+.ix-linux .xl-tips li::before{content:"";position:absolute;left:2px;top:21px;width:12px;height:12px;background:var(--acc);border:2px solid var(--ink)}
+.ix-linux .xl-tips code{font-weight:700;background:#e9fbf3;padding:0 3px}
+.ix-linux .xl-warn:not(:empty){margin-top:16px;padding:12px 16px;border:3px solid var(--ink);background:var(--yel);font-size:18px;line-height:1.4}
+.ix-linux.ix-anim .xl-warn:not(:empty){animation:ixlinux-shake .35s}
+.ix-linux .xl-warn code{font-weight:700}
+
+/* boom */
+.ix-linux .xl-boom{position:absolute;z-index:20;pointer-events:none;padding:22px 26px;font-family:var(--f-mono);font-size:24px;line-height:1;color:var(--ink);background:var(--yel);white-space:nowrap;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);
+  animation:ixlinux-boom .9s cubic-bezier(.2,1.6,.4,1) forwards;transform:translate(-50%,-50%)}
+.ix-linux .xl-boom.is-r{background:var(--red);color:#fff}
+.ix-linux .xl-boom.is-g{background:var(--acc)}
+
+/* ---------- final ---------- */
+.ix-linux .xl-final{display:none;margin:56px 10px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--acc),10px 10px 0 3px var(--ink);overflow:hidden;grid-template-columns:300px 1fr;scroll-margin-top:64px}
+.ix-linux .xl-final.is-show{display:grid}
+.ix-linux.ix-anim .xl-final.is-show{animation:ixlinux-fadeup .5s ease-out}
+.ix-linux .xl-fface{position:relative;min-height:300px;background:#07120d;overflow:hidden;border-right:3px solid var(--ink);color:var(--acc);
+  background-image:radial-gradient(rgba(46,229,157,.25) 1.2px,transparent 1.9px);background-size:8px 8px}
+.ix-linux .xl-f777{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-family:var(--f-mono);font-size:110px;line-height:1;color:#3a4a42;white-space:nowrap}
+.ix-linux .xl-f777::after{content:"";position:absolute;left:-6%;right:-6%;top:48%;height:12px;background:var(--red);transform:rotate(-6deg);box-shadow:0 0 0 3px var(--ink)}
+.ix-linux .xl-fstamp{top:50%;width:78%}
+.ix-linux.ix-anim .xl-final.is-show .xl-fstamp{animation:ixlinux-stamp-in .55s cubic-bezier(.2,1.5,.4,1) .4s both}
+.ix-linux .xl-fbody{padding:28px 26px;display:flex;flex-direction:column;gap:16px}
+.ix-linux .xl-ft{margin:0;font-family:var(--f-mono);font-weight:400;font-size:36px;line-height:1.05;color:var(--acc)}
+.ix-linux .xl-fstats{display:flex;flex-wrap:wrap;gap:10px}
+.ix-linux .xl-fstats span{font-family:var(--f-cap);font-size:16px;border:2px solid #fff;padding:6px 12px}
+.ix-linux .xl-fstats b{font-family:var(--f-mono);font-weight:400;color:var(--yel);margin-left:4px}
+.ix-linux .xl-rule{margin:0;font-family:var(--f-cap);font-size:21px;line-height:1.3;color:var(--ink);background:var(--yel);padding:16px 18px;border:3px solid #fff;box-shadow:6px 6px 0 var(--acc)}
+.ix-linux .xl-why{margin-top:6px}
+.ix-linux .xl-why-h{margin:0 0 6px;font-family:var(--f-hand);font-size:26px;color:var(--acc)}
+.ix-linux .xl-why p:not(.xl-why-h){margin:0;padding:10px 0;border-top:1px solid #3a3a3a;font-size:18px;line-height:1.45;color:#e6e6e6}
+.ix-linux .xl-why b{color:#fff}
+
+/* ---------- battle ---------- */
+.ix-linux .xl-eyebrow{margin:0 0 6px;font-family:var(--f-cap);font-size:15px;letter-spacing:.1em;color:var(--muted)}
+.ix-linux .xl-h{margin:0 0 22px;font-family:'Russo One',sans-serif;font-weight:400;font-size:36px;line-height:1.1}
+.ix-linux .xl-battle{position:relative;margin-top:88px}
+.ix-linux .xl-arena{display:flex;align-items:center;gap:20px;margin-bottom:22px}
+.ix-linux .xl-bface{position:relative;flex:0 0 140px;width:140px;height:140px;border:4px solid var(--ink);border-radius:50%;overflow:hidden;background:#07120d;box-shadow:5px 5px 0 var(--ink);display:grid;place-items:center;
+  background-image:radial-gradient(rgba(46,229,157,.3) 1.2px,transparent 1.9px);background-size:7px 7px}
+.ix-linux .xl-bnum{font-family:var(--f-mono);font-size:40px;line-height:1;color:var(--acc);transform:rotate(-10deg);border:4px solid var(--acc);border-radius:50%;width:112px;height:112px;display:grid;place-items:center}
+.ix-linux .xl-bface.is-hurt{animation:ixlinux-shake .4s}
+.ix-linux .xl-bface.is-hurt::after{content:"";position:absolute;inset:0;background:rgba(255,59,59,.45)}
+.ix-linux .xl-bko{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-14deg);font-family:var(--f-cap);font-size:13px;color:var(--red);background:#fff;border:3px solid var(--red);padding:2px 5px;display:none;white-space:nowrap}
+.ix-linux .xl-bface.is-ko .xl-bnum{color:#555;border-color:#555}
+.ix-linux .xl-bface.is-ko .xl-bko{display:block}
+.ix-linux.ix-anim .xl-bface.is-ko .xl-bko{animation:ixlinux-stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-linux .xl-hpw{flex:1;min-width:0}
+.ix-linux .xl-hpl{display:flex;justify-content:space-between;font-family:var(--f-cap);font-size:17px;margin-bottom:6px}
+.ix-linux .xl-hp{height:26px;border:3px solid var(--ink);background:#fff;position:relative;overflow:hidden}
+.ix-linux .xl-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.4,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.15) 0 6px,transparent 6px 12px)}
+.ix-linux .xl-bstep{margin:10px 0 0;font-family:var(--f-cap);font-size:15px;color:var(--muted)}
+.ix-linux .xl-bmove{margin:0 0 18px;font-family:var(--f-hand);font-size:26px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px 18px;box-shadow:4px 4px 0 var(--acc)}
+.ix-linux .xl-bmove b{font-weight:400;background:var(--yel);padding:0 4px}
+.ix-linux .xl-bmove code{font-size:.78em;font-weight:700;background:var(--yel);padding:0 4px}
+.ix-linux .xl-bq{margin:0 0 10px;font-family:var(--f-cap);font-size:18px}
+.ix-linux .xl-bopts{display:flex;flex-direction:column;gap:10px}
+.ix-linux .xl-bopt{min-height:60px;padding:12px 16px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;font-size:18px;line-height:1.35;transition:transform .1s,box-shadow .1s}
+.ix-linux .xl-bopt:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-linux .xl-bopt:disabled{cursor:default;transform:none}
+.ix-linux .xl-bopt.is-miss{background:#eee;color:#666;text-decoration:line-through;box-shadow:none}
+.ix-linux .xl-bopt.is-hit{background:var(--acc)}
+.ix-linux .xl-bfb{min-height:1.5em;margin:16px 0 0;font-size:19px;line-height:1.4}
+.ix-linux .xl-bfb b{font-family:var(--f-mono);font-weight:400;margin-right:6px}
+.ix-linux .xl-bfb .xl-hitw{color:var(--accd)}
+.ix-linux .xl-bfb .xl-missw{color:#d0201f}
+.ix-linux .xl-bend{padding:20px 0 0;border-top:3px solid var(--ink)}
+.ix-linux .xl-bwin{margin:0;font-family:var(--f-mono);font-size:30px;line-height:1.1;color:var(--ink)}
+.ix-linux .xl-bsc{margin:8px 0 18px;font-size:20px}
+
+/* ---------- interview ---------- */
+.ix-linux .xl-iv{margin-top:88px;background:var(--ink);color:#fff;padding:30px 28px 32px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);margin-right:8px}
+.ix-linux .xl-eyl{color:var(--acc)}
+.ix-linux .xl-ivq{margin:0 0 22px;font-family:var(--f-cap);font-weight:400;font-size:28px;line-height:1.25}
+.ix-linux .xl-think{border-left:5px solid var(--acc);padding:2px 0 2px 16px;margin-bottom:22px}
+.ix-linux .xl-think p{margin:0;font-size:19px;line-height:1.45;color:#eee}
+.ix-linux .xl-think code{color:var(--acc);font-weight:700}
+.ix-linux .xl-think .xl-thl{font-family:var(--f-hand);font-size:26px;color:var(--acc);margin-bottom:4px}
+.ix-linux .xl-iv .xl-btn{box-shadow:4px 4px 0 var(--acc)}
+.ix-linux .xl-iva{margin-top:24px}
+.ix-linux.ix-anim .xl-iva{animation:ixlinux-fadeup .35s ease-out}
+.ix-linux .xl-iva ol{margin:0;padding:0;list-style:none;counter-reset:ixlinuxiv}
+.ix-linux .xl-iva li{counter-increment:ixlinuxiv;position:relative;padding:14px 0 14px 46px;border-top:1px solid #444;font-size:19px;line-height:1.5;color:#eee}
+.ix-linux .xl-iva li::before{content:counter(ixlinuxiv);position:absolute;left:0;top:14px;width:32px;height:32px;display:grid;place-items:center;background:var(--yel);color:var(--ink);font-family:var(--f-mono);font-size:15px}
+.ix-linux .xl-iva li b{display:block;color:#fff;font-size:21px;margin-bottom:2px}
+.ix-linux .xl-noob{margin:14px 0 0;padding:14px 16px;background:var(--pink);color:var(--ink);font-size:19px;line-height:1.4;border:3px solid #fff}
+
+/* ---------- cheat ---------- */
+.ix-linux .xl-cheat{margin-top:88px}
+.ix-linux .xl-cl{list-style:none;margin:0;padding:0}
+.ix-linux .xl-cl li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-top:1px solid rgba(20,20,20,.22)}
+.ix-linux .xl-cl li:last-child{border-bottom:1px solid rgba(20,20,20,.22)}
+.ix-linux .xl-cn{flex:0 0 64px;font-family:var(--f-mono);font-size:34px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-linux .xl-cl b{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-linux .xl-cl p{margin:0;font-size:18px;line-height:1.45}
+.ix-linux .xl-cl code{font-weight:700;background:#e9fbf3;padding:0 3px}
+.ix-linux .xl-legal{margin:22px 0 0;font-size:18px;line-height:1.5}
+
+/* ---------- hack overlay ---------- */
+.ix-linux .xl-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:var(--red);color:#fff;overflow:auto;
+  background-image:radial-gradient(rgba(20,20,20,.35) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-linux.ix-anim .xl-hack:not([hidden]) .xl-hk{animation:ixlinux-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-linux.ix-anim .xl-hack.is-rewind .xl-hk{animation:ixlinux-rewind .7s ease-in forwards}
+.ix-linux .xl-hk{max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.ix-linux .xl-hkface{width:150px;height:150px;border:4px solid var(--ink);background:#07120d;box-shadow:8px 8px 0 var(--ink);transform:rotate(-4deg);display:grid;place-items:center;
+  background-image:radial-gradient(rgba(46,229,157,.3) 1.2px,transparent 1.9px);background-size:7px 7px}
+.ix-linux .xl-hkface span{font-family:var(--f-mono);font-size:44px;color:var(--acc);border:5px solid var(--acc);border-radius:50%;width:122px;height:122px;display:grid;place-items:center;transform:rotate(-8deg)}
+.ix-linux .xl-hkt{margin:0;font-family:var(--f-mono);font-size:60px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-linux .xl-hkw{margin:0;background:#fff;color:var(--ink);border:3px solid var(--ink);padding:12px 16px;font-size:19px;line-height:1.4;box-shadow:5px 5px 0 var(--ink);transform:rotate(1deg)}
+.ix-linux .xl-hkw code{font-weight:700;background:var(--yel);padding:0 4px}
+.ix-linux .xl-hkw .xl-mini{text-align:left;margin:10px 0 0;font-size:15px}
+.ix-linux .xl-hks{margin:0;font-family:var(--f-hand);font-size:25px;line-height:1.15;background:var(--ink);color:#fff;border-radius:16px;padding:8px 16px}
+
+/* ---------- keyframes ---------- */
+@keyframes ixlinux-stamp-in{0%{opacity:0;transform:translate(-50%,-50%) rotate(-30deg) scale(2.4)}70%{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(.94)}100%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
+@keyframes ixlinux-thud{0%,100%{translate:0 0}30%{translate:0 5px}60%{translate:0 -2px}}
+@keyframes ixlinux-slam{from{opacity:0;transform:scale(2.2) rotate(-4deg)}60%{opacity:1;transform:scale(.94) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes ixlinux-deal{from{opacity:0;transform:translateY(24px) rotate(4deg)}to{opacity:1;transform:none}}
+@keyframes ixlinux-fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes ixlinux-shake{0%,100%{translate:0 0}20%{translate:-6px 2px}40%{translate:5px -3px}60%{translate:-4px 1px}80%{translate:3px 0}}
+@keyframes ixlinux-pulse{0%,100%{box-shadow:6px 6px 0 var(--acc)}50%{box-shadow:6px 6px 0 var(--acc),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ixlinux-hint{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 6px var(--yel)}}
+@keyframes ixlinux-blink{0%{opacity:1}50%{opacity:0}}
+@keyframes ixlinux-stamp{from{opacity:0;scale:2.6}to{opacity:1;scale:1}}
+@keyframes ixlinux-float{from{transform:translateY(0) scale(.6);opacity:0}20%{transform:translateY(-6px) scale(1.15);opacity:1}to{transform:translateY(-60px);opacity:0}}
+@keyframes ixlinux-boom{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-20deg)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(4deg)}70%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}100%{opacity:0;transform:translate(-50%,-62%) rotate(-2deg)}}
+@keyframes ixlinux-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ixlinux-rewind{0%{transform:none}40%{transform:translateX(-30px) skewX(12deg);filter:hue-rotate(90deg) blur(1px)}100%{transform:translateX(-120%) skewX(30deg) scale(.6);opacity:0}}
+@keyframes ixlinux-pop{from{transform:scale(.6)}60%{transform:scale(1.15)}to{transform:none}}
+
+/* ---------- mobile ---------- */
+@media (max-width:760px){
+  .ix-linux .xl-mission{grid-template-columns:1fr;min-height:0;margin-right:6px;box-shadow:6px 6px 0 var(--acc),6px 6px 0 3px var(--ink)}
+  .ix-linux .xl-poster{min-height:0;height:380px;border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-linux .xl-bg777{font-size:170px;top:42%}
+  .ix-linux .xl-stamp{width:62%;top:42%}
+  .ix-linux .xl-pname span{font-size:28px}
+  .ix-linux .xl-pname b{font-size:32px}
+  .ix-linux .xl-mbody{padding:22px 18px 24px;gap:16px}
+  .ix-linux .xl-mtitle{font-size:38px}
+  .ix-linux .xl-host{font-size:19px}
+  .ix-linux .xl-msub{font-size:25px}
+  .ix-linux .xl-moves{grid-template-columns:repeat(2,1fr)}
+  .ix-linux .xl-go{align-self:stretch;font-size:17px}
+  .ix-linux .xl-final{grid-template-columns:1fr;margin-right:6px;box-shadow:6px 6px 0 var(--acc),6px 6px 0 3px var(--ink)}
+  .ix-linux .xl-fface{min-height:260px;border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-linux .xl-fstamp{width:56%;max-width:230px}
+  .ix-linux .xl-pstr{font-size:46px}
+}
+@media (max-width:520px){
+  .ix-linux .xl-lvl{width:100vw;margin-left:calc(50% - 50vw);margin-right:0;border-left:0;border-right:0;box-shadow:0 6px 0 var(--ink)}
+  .ix-linux .xl-lvl-h{padding:12px 16px}
+  .ix-linux .xl-lvl-t{font-size:20px}
+  .ix-linux .xl-lvl-b{padding:18px 16px 22px}
+  .ix-linux .xl-bub{font-size:21px}
+  .ix-linux .xl-big{font-size:25px}
+  .ix-linux .xl-term{margin-left:-16px;margin-right:-16px;border-left:0;border-right:0;box-shadow:0 5px 0 var(--acc)}
+  .ix-linux .xl-term:focus-within{box-shadow:0 5px 0 var(--acc),inset 0 0 0 3px rgba(46,229,157,.4)}
+  .ix-linux .xl-tscr{padding:10px 10px 4px;font-size:13px;line-height:1.42;max-height:min(420px,58vh)}
+  .ix-linux .xl-inl{padding:0 10px 12px;font-size:13px}
+  .ix-linux .xl-tin{font-size:16px}
+  .ix-linux .xl-cmd{width:100%}
+  .ix-linux .xl-cmd code{font-size:16px}
+  .ix-linux .xl-next .xl-btn{width:100%}
+  .ix-linux .xl-perm{padding:18px 12px 20px;box-shadow:5px 5px 0 var(--red)}
+  .ix-linux .xl-perm.is-fixed{box-shadow:5px 5px 0 var(--acc)}
+  .ix-linux .xl-pstr{font-size:40px}
+  .ix-linux .xl-pr-c{grid-template-columns:minmax(0,1fr) auto 50px;gap:8px}
+  .ix-linux .xl-plab{font-size:17px;padding-left:8px;border-left-width:6px}
+  .ix-linux .xl-plab i{font-size:13px}
+  .ix-linux .xl-pbits{gap:5px}
+  .ix-linux .xl-bit{width:46px;height:58px}
+  .ix-linux .xl-bit b{font-size:24px}
+  .ix-linux .xl-psum{font-size:0}
+  .ix-linux .xl-psum b{font-size:32px;margin-left:0}
+  .ix-linux .xl-ptotal > b{font-size:58px}
+  .ix-linux .xl-pt-stamp{font-size:14px}
+  .ix-linux .xl-pcmd em{display:none}
+  .ix-linux .xl-cmd .xl-cv i{display:none}
+  .ix-linux .xl-cmd{gap:12px;padding-left:12px}
+  .ix-linux .xl-tn code{font-size:17px}
+  .ix-linux .xl-tn > span{font-size:19px}
+  .ix-linux .xl-unit,.ix-linux .xl-ssh{padding:12px}
+  .ix-linux .xl-sw{padding:10px}
+  .ix-linux .xl-hud{gap:8px;padding:7px 10px}
+  .ix-linux .xl-hud-l{font-size:11px}
+  .ix-linux .xl-pips span{width:21px;height:21px}
+  .ix-linux .xl-score{font-size:13px;min-width:38px}
+  .ix-linux .xl-h{font-size:30px}
+  .ix-linux .xl-bface{flex-basis:104px;width:104px;height:104px}
+  .ix-linux .xl-bnum{width:84px;height:84px;font-size:30px}
+  .ix-linux .xl-bmove{font-size:23px}
+  .ix-linux .xl-iv{padding:22px 16px 24px;margin-right:6px;box-shadow:6px 6px 0 var(--yel)}
+  .ix-linux .xl-ivq{font-size:23px}
+  .ix-linux .xl-iv .xl-btn{width:100%}
+  .ix-linux .xl-cn{flex-basis:52px;font-size:28px}
+  .ix-linux .xl-hkt{font-size:44px}
+  .ix-linux .xl-hkface{width:120px;height:120px}
+  .ix-linux .xl-hkface span{width:96px;height:96px;font-size:34px}
+  .ix-linux .xl-ft{font-size:28px}
+  .ix-linux .xl-rule{font-size:19px}
+  .ix-linux .xl-fbody{padding:22px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-linux *,.ix-linux *::before,.ix-linux *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+var root=document.querySelector('.ix-linux'); if(!root) return;
+var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+if(!RM) root.classList.add('ix-anim');
+function $(id){return root.querySelector('#ix-linux-'+id)}
+var live=$('live');
+function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+function later(fn,ms){return setTimeout(fn,RM?0:ms)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pad(s,n){s=String(s);while(s.length<n)s+=' ';return s}
+function lpad(s,n){s=String(s);while(s.length<n)s=' '+s;return s}
+function bytes(s){try{return new TextEncoder().encode(s).length}catch(e){return unescape(encodeURIComponent(s)).length}}
+
+/* =========================================================
+   ВИРТУАЛЬНЫЙ СЕРВЕР (ничего не выполняется по-настоящему)
+   ========================================================= */
+var HOME='/home/intern';
+var S={on:false,cwd:'/home/intern',old:'/home/intern',sudoOK:false,hist:[],clk:0,pid:1402,
+  unitUser:'root',loadedUser:'root',appUser:'root',appPid:812,sshFixed:false,authExtra:[]};
+var ME={user:'intern',groups:['intern','adm','sudo']},ROOT={user:'root',groups:['root']};
+var UID={root:0,daemon:1,'www-data':33,syslog:104,sshd:110,misha:1000,intern:1001,shop:998};
+var GID={root:0,adm:4,sudo:27,shadow:42,'www-data':33,syslog:110,misha:1000,intern:1001,shop:998};
+function clock(){var t=9*3600+41*60+7+S.clk,h=Math.floor(t/3600),m=Math.floor(t/60)%60,s=t%60;return 'Oct 13 '+(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s}
+function tick(){S.clk+=3+Math.floor(Math.random()*6)}
+
+var FS={};
+function D(p,m,u,g,t){FS[p]={d:1,m:m,u:u||'root',g:g||u||'root',t:t||'Apr 21  2024'}}
+function F(p,m,u,g,c,t){FS[p]={d:0,m:m,u:u||'root',g:g||u||'root',c:c,t:t||'Sep  3 11:20'}}
+['/','/bin','/boot','/dev','/etc','/home','/lib','/media','/mnt','/opt','/proc','/run','/sbin','/srv','/sys','/usr','/var'].forEach(function(p){D(p,493)});
+D('/tmp',1023);D('/root',448,'root','root','Oct 12 03:20');
+D('/home/intern',488,'intern','intern','Oct 13 09:41');D('/home/misha',488,'misha','misha','Oct 10 18:02');
+F('/home/intern/notes.txt',420,'intern','intern','Дядя Миша: проверь /etc/shop.\nТоварищ 777 опять всё «упростил».\n','Oct 13 08:55');
+F('/home/intern/.bashrc',420,'intern','intern','# ~/.bashrc\n','Oct 13 08:50');F('/home/intern/.profile',420,'intern','intern','# ~/.profile\n','Oct 13 08:50');
+F('/home/misha/todo.txt',416,'misha','misha','купить чай\n');
+D('/usr/bin',493);D('/usr/lib',493);D('/usr/local',493);D('/usr/sbin',493);D('/usr/share',493);
+D('/etc/shop',493,'root','shop','Oct 12 03:14');D('/etc/ssh',493);D('/etc/systemd',493);D('/etc/systemd/system',493,'root','root','Oct 12 03:10');
+F('/etc/hostname',420,'root','root','shop-01\n');
+F('/etc/hosts',420,'root','root','127.0.0.1 localhost\n127.0.1.1 shop-01\n');
+F('/etc/passwd',420,'root','root',[
+ 'root:x:0:0:root:/root:/bin/bash','daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin','www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin',
+ 'syslog:x:104:110::/home/syslog:/usr/sbin/nologin','sshd:x:110:65534::/run/sshd:/usr/sbin/nologin','misha:x:1000:1000:Mikhail,,,:/home/misha:/bin/bash',
+ 'intern:x:1001:1001:,,,:/home/intern:/bin/bash','shop:x:998:998:Shop app:/var/www/shop:/usr/sbin/nologin'].join('\n')+'\n','Oct 12 02:58');
+F('/etc/group',420,'root','root',['root:x:0:','adm:x:4:syslog,misha,intern','www-data:x:33:','sudo:x:27:misha,intern','shadow:x:42:','syslog:x:110:',
+ 'misha:x:1000:','intern:x:1001:','shop:x:998:'].join('\n')+'\n','Oct 12 02:58');
+F('/etc/shadow',416,'root','shadow',['root:$y$j9T$Lk2v0sT1$Hq8mW1yQ4cJ0aZ9nR7pV3bX5eT2uK6dF8gH1iJ4kL7:20373:0:99999:7:::','daemon:*:19800:0:99999:7:::',
+ 'misha:$y$j9T$4Rt9aBcD$Zp0Qw2Er4Ty6Ui8Op1As3Df5Gh7Jk9Lz2Xc4Vb6Nm8:20366:0:99999:7:::','intern:$y$j9T$e7Hn3KpQ$Ab1Cd3Ef5Gh7Ij9Kl0Mn2Op4Qr6St8Uv1Wx3Yz5:20374:0:99999:7:::',
+ 'shop:!:20373::::::'].join('\n')+'\n','Oct 12 02:58');
+F('/etc/sudoers',288,'root','root','root ALL=(ALL:ALL) ALL\n%sudo ALL=(ALL:ALL) ALL\n');
+var DBCONF='DB_HOST=127.0.0.1\nDB_NAME=shop\nDB_USER=shop\nDB_PASSWORD=Ch3burashka!88\n';
+F('/etc/shop/db.conf',511,'root','shop',DBCONF,'Oct 12 03:14');
+F('/etc/ssh/sshd_config',420,'root','root','','Oct 12 03:05');
+F('/etc/systemd/system/shop.service',420,'root','root','','Oct 12 03:10');
+D('/var/log',509,'root','syslog','Oct 13 09:41');D('/var/www',493);D('/var/www/shop',493,'root','shop','Oct  9 16:40');D('/var/log/nginx',493,'root','adm','Oct 13 00:00');D('/var/log/apt',493);
+F('/var/www/shop/app.js',420,'root','shop',"const config = readConfig('/etc/shop/db.conf');\n// магазин слушает порт 3000, наружу его отдаёт nginx\napp.listen(3000);\n",'Oct  9 16:40');
+F('/var/log/auth.log',416,'syslog','adm','','Oct 13 09:41');
+F('/var/log/syslog',416,'syslog','adm','Oct 13 09:40:01 shop-01 CRON[2281]: (root) CMD (command -v debian-sa1 > /dev/null && debian-sa1 1 1)\nOct 13 09:41:02 shop-01 systemd[1]: Started Session 41 of User intern.\n','Oct 13 09:41');
+F('/var/log/kern.log',416,'syslog','adm','Oct 13 00:00:01 shop-01 kernel: [    0.000000] Linux version 5.15.0-122-generic\n','Oct 13 00:00');
+F('/var/log/dpkg.log',420,'root','root','2026-10-01 06:12:44 status installed nodejs:amd64\n','Oct  1 06:12');
+
+function unitText(){return ['[Unit]','Description=Shop web app','After=network.target','','[Service]','User='+S.unitUser,'WorkingDirectory=/var/www/shop',
+  'ExecStart=/usr/bin/node app.js','Restart=always','','[Install]','WantedBy=multi-user.target'].join('\n')+'\n'}
+function sshdText(){return S.sshFixed?
+  'Include /etc/ssh/sshd_config.d/*.conf\n#Port 22\nPermitRootLogin no\nPasswordAuthentication no\n':
+  'Include /etc/ssh/sshd_config.d/*.conf\n#Port 22\n# поставил Товарищ 777: «пусть заходят все»\nPermitRootLogin yes\nPasswordAuthentication yes\n'}
+var AUTH0=[
+ 'Oct 13 03:14:02 shop-01 sshd[2101]: Failed password for root from 203.0.113.77 port 51122 ssh2',
+ 'Oct 13 03:14:06 shop-01 sshd[2101]: Failed password for root from 203.0.113.77 port 51122 ssh2',
+ 'Oct 13 03:14:09 shop-01 sshd[2101]: Failed password for root from 203.0.113.77 port 51122 ssh2',
+ 'Oct 13 03:14:10 shop-01 sshd[2101]: Connection closed by authenticating user root 203.0.113.77 port 51122 [preauth]',
+ 'Oct 13 03:14:15 shop-01 sshd[2104]: Invalid user admin from 203.0.113.77 port 51130',
+ 'Oct 13 03:14:17 shop-01 sshd[2104]: Failed password for invalid user admin from 203.0.113.77 port 51130 ssh2',
+ 'Oct 13 03:14:24 shop-01 sshd[2107]: Invalid user tovarisch777 from 203.0.113.77 port 51141',
+ 'Oct 13 03:14:26 shop-01 sshd[2107]: Failed password for invalid user tovarisch777 from 203.0.113.77 port 51141 ssh2',
+ 'Oct 13 03:14:31 shop-01 sshd[2107]: Failed password for invalid user tovarisch777 from 203.0.113.77 port 51141 ssh2',
+ 'Oct 13 09:02:44 shop-01 sshd[2290]: Accepted publickey for misha from 10.0.0.5 port 50422 ssh2: ED25519 SHA256:k3Ylq0Zr8xVw'];
+function content(p){
+  if(p==='/etc/systemd/system/shop.service') return unitText();
+  if(p==='/etc/ssh/sshd_config') return sshdText();
+  if(p==='/var/log/auth.log') return AUTH0.concat(S.authExtra).join('\n')+'\n';
+  return FS[p].c;
+}
+function sizeOf(p){var n=FS[p];return n.d?4096:bytes(content(p))}
+
+/* ---------- paths & permissions ---------- */
+function norm(p){var parts=[];p.split('/').forEach(function(x){if(!x||x==='.')return;if(x==='..')parts.pop();else parts.push(x)});return '/'+parts.join('/')}
+function resolve(p){
+  if(p==null||p==='') return S.cwd;
+  if(p==='~') return HOME; if(p.indexOf('~/')===0) p=HOME+p.slice(1);
+  return norm(p[0]==='/'?p:S.cwd+'/'+p);
+}
+function parent(p){if(p==='/')return null;var i=p.lastIndexOf('/');return i<=0?'/':p.slice(0,i)}
+function base(p){return p==='/'?'/':p.slice(p.lastIndexOf('/')+1)}
+function can(ctx,n,b){
+  if(ctx.user==='root') return b!==1||!!n.d||!!(n.m&73);
+  if(n.u===ctx.user) return !!((n.m>>6)&b);
+  if(ctx.groups.indexOf(n.g)>=0) return !!((n.m>>3)&b);
+  return !!(n.m&b);
+}
+function reach(ctx,p){ /* null | ENOENT | EACCES | ENOTDIR */
+  var parts=p.split('/').filter(Boolean),cur='';
+  for(var i=0;i<parts.length;i++){
+    var dir=cur||'/';var dn=FS[dir];
+    if(!dn) return 'ENOENT'; if(!dn.d) return 'ENOTDIR'; if(!can(ctx,dn,1)) return 'EACCES';
+    cur+='/'+parts[i];
+  }
+  return FS[p]?null:'ENOENT';
+}
+function kids(p,all){
+  var out=Object.keys(FS).filter(function(k){return k!==p&&parent(k)===p}).map(function(k){return {name:base(k),path:k}});
+  if(!all) out=out.filter(function(e){return e.name[0]!=='.'});
+  out.sort(function(a,b){var x=a.name.replace(/^\./,'').toLowerCase(),y=b.name.replace(/^\./,'').toLowerCase();return x<y?-1:x>y?1:0});
+  if(all) out=[{name:'.',path:p},{name:'..',path:parent(p)||'/'}].concat(out);
+  return out;
+}
+function permStr(n){var s=n.d?'d':'-',m=n.m;['r','w','x','r','w','x','r','w','x'].forEach(function(c,i){s+=(m>>(8-i))&1?c:'-'});
+  if(n.m&512) s=s.slice(0,9)+((n.m&1)?'t':'T'); return s}
+function tild(p){return p===HOME?'~':p.indexOf(HOME+'/')===0?'~'+p.slice(HOME.length):p}
+function L(t,c,h){return {t:t,c:c,h:h}}
+function E(t){return {t:t,c:'xl-err'}}
+function NOTE(t){return {t:'# '+t,c:'xl-dim'}}
+
+/* ---------- commands ---------- */
+var CMDS='cat cd chmod clear echo exit grep groups head help history hostname id ls ps pwd ssh sudo systemctl tail uname wc whoami'.split(' ');
+function cmdLs(ctx,a,stdin,o){
+  var fl='',paths=[],out=[],ok=true,target=null,lng=false;
+  a.forEach(function(x){if(x[0]==='-'&&x.length>1)fl+=x.slice(1);else paths.push(x)});
+  var bad=fl.replace(/[lah1]/g,'');if(bad) return {out:[E("ls: invalid option -- '"+bad[0]+"'"),L("Try 'ls --help' for more information.")],ok:false,ev:{}};
+  lng=fl.indexOf('l')>=0;var all=fl.indexOf('a')>=0;
+  if(!paths.length) paths=['.'];
+  paths.forEach(function(p){
+    var ap=resolve(p),e=reach(ctx,ap),ents;
+    if(e==='ENOENT'||e==='ENOTDIR'){out.push(E("ls: cannot access '"+p+"': "+(e==='ENOENT'?'No such file or directory':'Not a directory')));ok=false;return}
+    if(e==='EACCES'){out.push(E("ls: cannot access '"+p+"': Permission denied"));ok=false;return}
+    var n=FS[ap];
+    if(!n.d) ents=[{name:p,path:ap}];
+    else{
+      if(!can(ctx,n,4)){out.push(E("ls: cannot open directory '"+p+"': Permission denied"));ok=false;return}
+      ents=kids(ap,all);
+    }
+    if(paths.length>1) out.push(L(p+':'));
+    if(lng){
+      if(n.d) out.push(L('total '+(ents.length*4)));
+      var rows=ents.map(function(en){var m=FS[en.path];return [permStr(m),String(m.d?2+kids(en.path,false).filter(function(k){return FS[k.path].d}).length:1),m.u,m.g,String(sizeOf(en.path)),m.t,en.name,en.path]});
+      var w=[0,0,0,0,0];rows.forEach(function(r){for(var i=0;i<5;i++)w[i]=Math.max(w[i],r[i].length)});
+      rows.forEach(function(r){
+        var m=FS[r[7]],perm=r[0],cls='';
+        if(r[7]==='/etc/shop/db.conf'){cls=(m.m&7)?'xl-hot':((m.m&511)===416||(m.m&511)===288)?'xl-okp':''}
+        var tail=' '+lpad(r[1],w[1])+' '+pad(r[2],w[2])+' '+pad(r[3],w[3])+' '+lpad(r[4],w[4])+' '+r[5]+' ';
+        var nm=m.d?'<span class="xl-dir">'+esc(r[6])+'</span>':esc(r[6]);
+        out.push(L(perm+tail+r[6],'',(cls?'<span class="'+cls+'">'+perm+'</span>':perm)+esc(tail)+nm));
+      });
+    } else if(o.piped){
+      ents.forEach(function(en){out.push(L(en.name))});
+    } else if(ents.length){
+      out.push(L(ents.map(function(e){return e.name}).join('  '),'',
+        '<span class="xl-ls">'+ents.map(function(en){return FS[en.path].d?'<span class="xl-dir">'+esc(en.name)+'</span>':'<span>'+esc(en.name)+'</span>'}).join('')+'</span>'));
+    }
+    target=ap;
+  });
+  return {out:out,ok:ok,ev:{target:target,long:lng}};
+}
+function cmdCd(ctx,a){
+  var p=a[0];if(a.length>1) return {out:[E('-bash: cd: too many arguments')],ok:false,ev:{}};
+  var ap;if(p==='-'){ap=S.old}else ap=resolve(p==null?'~':p);
+  var e=reach(ctx,ap);
+  if(e==='ENOENT') return {out:[E('-bash: cd: '+p+': No such file or directory')],ok:false,ev:{}};
+  if(e==='EACCES'||(!e&&FS[ap].d&&!can(ctx,FS[ap],1))) return {out:[E('-bash: cd: '+p+': Permission denied')],ok:false,ev:{}};
+  if(!FS[ap].d||e==='ENOTDIR') return {out:[E('-bash: cd: '+p+': Not a directory')],ok:false,ev:{}};
+  S.old=S.cwd;S.cwd=ap;
+  return {out:p==='-'?[L(ap)]:[],ok:true,ev:{cwd:ap}};
+}
+function catLines(p,txt){
+  var ls=txt.split('\n');if(ls[ls.length-1]==='') ls.pop();
+  return ls.map(function(t){
+    var c='';
+    if(p==='/etc/systemd/system/shop.service'&&/^User=/.test(t)) c=S.unitUser==='root'?'xl-rowhot':'xl-rowok';
+    if(p==='/etc/shop/db.conf'&&/^DB_PASSWORD/.test(t)) c='xl-rowhot';
+    if(p==='/etc/ssh/sshd_config'&&/^(PermitRootLogin|PasswordAuthentication)/.test(t)) c=S.sshFixed?'xl-rowok':'xl-rowhot';
+    return L(t,c);
+  });
+}
+function readFile(ctx,cmd,p){
+  var ap=resolve(p),e=reach(ctx,ap);
+  if(e==='ENOENT'||e==='ENOTDIR') return {err:E(cmd+': '+p+': No such file or directory'),ap:ap};
+  if(e==='EACCES') return {err:E(cmd+': '+p+': Permission denied'),ap:ap,denied:1};
+  if(FS[ap].d) return {err:E(cmd+': '+p+': Is a directory'),ap:ap};
+  if(!can(ctx,FS[ap],4)) return {err:E(cmd+': '+p+': Permission denied'),ap:ap,denied:1};
+  return {lines:catLines(ap,content(ap)),ap:ap};
+}
+function cmdCat(ctx,a,stdin){
+  if(!a.length) return {out:stdin||[],ok:true,ev:{}};
+  var out=[],ok=true,last=null,denied=false;
+  a.forEach(function(p){var r=readFile(ctx,'cat',p);last=r.ap;if(r.err){out.push(r.err);ok=false;if(r.denied)denied=true}else out=out.concat(r.lines)});
+  return {out:out,ok:ok,ev:{path:last,denied:denied}};
+}
+function hl(t,pat,ci){
+  if(!pat) return esc(t);
+  var src=ci?t.toLowerCase():t,p=ci?pat.toLowerCase():pat,i=0,h='',j;
+  while((j=src.indexOf(p,i))>=0){h+=esc(t.slice(i,j))+'<span class="xl-mt">'+esc(t.slice(j,j+p.length))+'</span>';i=j+p.length}
+  return h+esc(t.slice(i));
+}
+function cmdGrep(ctx,a,stdin){
+  var fl='',rest=[];a.forEach(function(x){if(x[0]==='-'&&x.length>1&&!rest.length)fl+=x.slice(1);else rest.push(x)});
+  if(fl.replace(/[icnv]/g,'')) return {out:[E("grep: invalid option -- '"+fl.replace(/[icnv]/g,'')[0]+"'"),L("Usage: grep [OPTION]... PATTERNS [FILE]...")],ok:false,ev:{}};
+  var ci=fl.indexOf('i')>=0,cnt=fl.indexOf('c')>=0,num=fl.indexOf('n')>=0,inv=fl.indexOf('v')>=0;
+  var pat=rest.shift();
+  if(pat==null) return {out:[L('Usage: grep [OPTION]... PATTERNS [FILE]...'),L("Try 'grep --help' for more information.")],ok:false,ev:{}};
+  var srcs=[];
+  if(!rest.length){ if(!stdin) return {out:[NOTE('тренажёр: укажи файл, например grep root /etc/passwd')],ok:false,ev:{}}; srcs=[{name:'',lines:stdin}] }
+  var out=[],ok=true,count=0,file=null,denied=false;
+  rest.forEach(function(p){var r=readFile(ctx,'grep',p);file=r.ap;if(r.err){out.push(r.err);ok=false;if(r.denied)denied=true}else srcs.push({name:p,lines:r.lines})});
+  srcs.forEach(function(s){
+    var c=0;
+    s.lines.forEach(function(ln,i){
+      var t=ln.t,has=(ci?t.toLowerCase().indexOf(pat.toLowerCase()):t.indexOf(pat))>=0;
+      if(has===inv) return; c++;
+      if(cnt) return;
+      var pre=(srcs.length>1?s.name+':':'')+(num?(i+1)+':':'');
+      out.push(L(pre+t,ln.c,(pre?'<span class="xl-dim">'+esc(pre)+'</span>':'')+(inv?esc(t):hl(t,pat,ci))));
+    });
+    if(cnt) out.push(L((srcs.length>1?s.name+':':'')+c));
+    count+=c;
+  });
+  return {out:out,ok:ok&&count>0,ev:{pattern:pat,file:file,count:count,denied:denied}};
+}
+function procs(extra){
+  var list=[['root',1,'/sbin/init'],['root',612,'sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups'],['root',640,'/usr/sbin/cron -f -P'],
+    ['syslog',655,'/usr/sbin/rsyslogd -n -iNONE'],['root',701,'nginx: master process /usr/sbin/nginx'],['www-data',702,'nginx: worker process'],
+    [S.appUser,S.appPid,'/usr/bin/node app.js'],['intern',1337,'-bash']];
+  return list.concat(extra||[]);
+}
+var COLS=60;
+function cut(t,piped){return piped||t.length<=COLS?t:t.slice(0,COLS)}
+function cmdPs(ctx,a,stdin,o){
+  var arg=a.join(' '),me=++S.pid,out=[],extra=[[ctx.user,me,'ps '+arg]];
+  if(o.next&&/^grep\b/.test(o.next)) extra.push([ctx.user,me+1,o.next.replace(/^grep/,'grep --color=auto')]);
+  var cls=function(r){return r[2]==='/usr/bin/node app.js'?(r[0]==='root'?'xl-rowhot':'xl-rowok'):''};
+  if(!arg){out=[L('    PID TTY          TIME CMD'),L('   1337 pts/0    00:00:00 bash'),L(lpad(me,7)+' pts/0    00:00:00 ps')];}
+  else if(arg==='-eo user,pid,cmd'||arg==='-eo user,pid,args'){
+    out.push(L(cut('USER         PID CMD',o.piped)));
+    procs(extra).forEach(function(r){out.push(L(cut(pad(r[0],8)+' '+lpad(r[1],7)+' '+r[2],o.piped),cls(r)))});
+  } else if(arg==='aux'||arg==='-aux'||arg==='-ef'){
+    out.push(L(cut('USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND',o.piped)));
+    procs(extra).forEach(function(r,i){
+      var num=r[2]==='/usr/bin/node app.js'?' 1.2  3.4 1021340 68312 ?      Ssl  09:12   0:42 ':(r[0]==='intern'?' 0.0  0.1  10032  5120 pts/0    Ss   09:41   0:00 ':' 0.0  0.2  '+lpad(16000+i*3111,6)+' '+lpad(4000+i*517,5)+' ?        Ss   Oct12   0:01 ');
+      out.push(L(cut(pad(r[0],8)+' '+lpad(r[1],7)+num+r[2],o.piped),cls(r)));
+    });
+  } else return {out:[E('error: unsupported option'),NOTE('тренажёр знает: ps, ps aux, ps -eo user,pid,cmd')],ok:false,ev:{}};
+  return {out:out,ok:true,ev:{ps:arg||'-'}};
+}
+function parseMode(s,cur){
+  if(/^[0-7]{1,4}$/.test(s)) return parseInt(s,8)&4095;
+  var m=cur,okk=true;
+  s.split(',').forEach(function(part){
+    var r=/^([ugoa]*)([+=-])([rwx]*)$/.exec(part);if(!r){okk=false;return}
+    var who=r[1]||'a';if(who.indexOf('a')>=0)who='ugo';
+    var bits=(r[3].indexOf('r')>=0?4:0)|(r[3].indexOf('w')>=0?2:0)|(r[3].indexOf('x')>=0?1:0);
+    who.split('').forEach(function(w){var sh=w==='u'?6:w==='g'?3:0,mask=7<<sh,b=bits<<sh;
+      if(r[2]==='+')m|=b;else if(r[2]==='-')m&=~b;else m=(m&~mask)|b});
+  });
+  return okk?m:null;
+}
+function cmdChmod(ctx,a){
+  var fl=a.filter(function(x){return /^-[Rv]+$/.test(x)}),args=a.filter(function(x){return !/^-[Rv]+$/.test(x)});
+  if(args.length<2) return {out:[E(args.length?"chmod: missing operand after '"+args[0]+"'":'chmod: missing operand')],ok:false,ev:{}};
+  var ms=args[0],out=[],ok=true,last=null,mode=null,perm=false;
+  args.slice(1).forEach(function(p){
+    var ap=resolve(p),e=reach(ctx,ap);last=ap;
+    if(e){out.push(E("chmod: cannot access '"+p+"': "+(e==='EACCES'?'Permission denied':'No such file or directory')));ok=false;return}
+    var n=FS[ap],nm=parseMode(ms,n.m);
+    if(nm==null){out.push(E("chmod: invalid mode: '"+ms+"'"));ok=false;return}
+    if(ctx.user!=='root'&&n.u!==ctx.user){out.push(E("chmod: changing permissions of '"+p+"': Operation not permitted"));ok=false;perm=true;mode=nm;return}
+    if(ap==='/'||ap.indexOf('/etc/shop')!==0){out.push(NOTE('тренажёр: системные права не трогаем, только /etc/shop/db.conf'));ok=false;return}
+    n.m=nm;mode=nm;
+  });
+  void fl;
+  return {out:out,ok:ok,ev:{path:last,mode:mode,denied:perm}};
+}
+function cmdId(ctx,a){
+  var u=a[0]||ctx.user;
+  if(UID[u]==null) return {out:[E("id: '"+u+"': no such user")],ok:false,ev:{}};
+  var gs=u==='intern'?['intern','adm','sudo']:u==='misha'?['misha','adm','sudo']:u==='syslog'?['syslog','adm']:[u==='shop'?'shop':u==='www-data'?'www-data':u==='sshd'?'nogroup':'root'];
+  var g0=gs[0],gid=function(g){return g==='nogroup'?65534:GID[g]};
+  return {out:[L('uid='+UID[u]+'('+u+') gid='+gid(g0)+'('+g0+') groups='+gs.map(function(g){return gid(g)+'('+g+')'}).join(','))],ok:true,ev:{user:u}};
+}
+function cmdSystemctl(ctx,a){
+  var v=a[0],svc=(a[1]||'').replace(/\.service$/,'');
+  if(v==='status'&&svc==='shop') return {out:[L('● shop.service - Shop web app'),L('     Loaded: loaded (/etc/systemd/system/shop.service; enabled)'),L('     Active: active (running)'),L('   Main PID: '+S.appPid+' (node)')],ok:true,ev:{sc:'status'}};
+  if(v==='daemon-reload'){
+    if(ctx.user!=='root') return {out:[E('Failed to reload daemon: Interactive authentication required.')],ok:false,ev:{sc:'reload'}};
+    S.loadedUser=S.unitUser;return {out:[],ok:true,ev:{sc:'reload'}};
+  }
+  if((v==='restart'||v==='start'||v==='stop')&&svc==='shop'){
+    if(v==='stop') return {out:[NOTE('тренажёр: магазин не останавливаем, покупатели ждут')],ok:false,ev:{}};
+    if(ctx.user!=='root') return {out:[E('Failed to '+v+' shop.service: Interactive authentication required.'),L("See system logs and 'systemctl status shop.service' for details.")],ok:false,ev:{sc:'restart'}};
+    var out=[];
+    if(S.loadedUser!==S.unitUser) out.push(L("Warning: The unit file, source configuration file or drop-ins of shop.service changed on disk. Run 'systemctl daemon-reload' to reload units."));
+    S.appUser=S.loadedUser;S.appPid=2300+Math.floor(Math.random()*90);
+    return {out:out,ok:true,ev:{sc:'restart'}};
+  }
+  if(!v) return {out:[NOTE('тренажёр знает: systemctl status shop, daemon-reload, restart shop')],ok:false,ev:{}};
+  return {out:[E('Unit '+(a[1]||v)+'.service could not be found.')],ok:false,ev:{}};
+}
+function cmdHeadTail(name){return function(ctx,a,stdin){
+  var n=10,files=[];for(var i=0;i<a.length;i++){if(a[i]==='-n'){n=parseInt(a[++i],10)||10}else if(/^-\d+$/.test(a[i]))n=parseInt(a[i].slice(1),10);else files.push(a[i])}
+  var lines=stdin||[],out=[];
+  if(files.length){var r=readFile(ctx,name,files[0]);if(r.err) return {out:[r.err],ok:false,ev:{path:r.ap}};lines=r.lines}
+  out=name==='head'?lines.slice(0,n):lines.slice(Math.max(0,lines.length-n));
+  return {out:out,ok:true,ev:{}};
+}}
+function cmdWc(ctx,a,stdin){
+  var fl=a.filter(function(x){return x[0]==='-'}),fs=a.filter(function(x){return x[0]!=='-'});
+  if(fl.join('')!=='-l') return {out:[NOTE('тренажёр знает только wc -l')],ok:false,ev:{}};
+  var lines=stdin||[];
+  if(fs.length){var r=readFile(ctx,'wc',fs[0]);if(r.err) return {out:[r.err],ok:false,ev:{}};return {out:[L(r.lines.length+' '+fs[0])],ok:true,ev:{}}}
+  return {out:[L(String(lines.length))],ok:true,ev:{}};
+}
+var HELP=['Команды тренажёра (всё понарошку, ничего не выполняется):','  pwd   ls [-l -a]   cd   cat   grep [-i -c -n -v]','  whoami   id   groups   ps   chmod   sudo   systemctl',
+  '  head   tail   wc -l   history   clear','Tab дополняет имена, стрелки ↑ ↓ листают историю.'];
+var RUN={
+  pwd:function(){return {out:[L(S.cwd)],ok:true,ev:{}}},
+  ls:cmdLs, cd:cmdCd, cat:cmdCat, grep:cmdGrep, ps:cmdPs, chmod:cmdChmod, id:cmdId, systemctl:cmdSystemctl,
+  head:cmdHeadTail('head'), tail:cmdHeadTail('tail'), wc:cmdWc,
+  whoami:function(ctx){return {out:[L(ctx.user)],ok:true,ev:{}}},
+  groups:function(ctx,a){var u=a[0]||ctx.user;return {out:[L(u==='intern'?'intern adm sudo':u==='root'?'root':u)],ok:true,ev:{}}},
+  hostname:function(){return {out:[L('shop-01')],ok:true,ev:{}}},
+  uname:function(c,a){return {out:[L(a[0]==='-a'?'Linux shop-01 5.15.0-122-generic #132-Ubuntu SMP x86_64 GNU/Linux':'Linux')],ok:true,ev:{}}},
+  echo:function(c,a){return {out:[L(a.join(' '))],ok:true,ev:{}}},
+  help:function(){return {out:HELP.map(function(t,i){return L(t,i?'':'xl-wht')}),ok:true,ev:{}}},
+  history:function(){return {out:S.hist.map(function(h,i){return L(lpad(i+1,5)+'  '+h)}),ok:true,ev:{}}},
+  exit:function(){return {out:[NOTE('выйти можно, но Товарищ останется. Работаем дальше.')],ok:false,ev:{}}},
+  ssh:function(){return {out:[NOTE('ты уже на shop-01')],ok:false,ev:{}}}
+};
+function tok(s){
+  var out=[],cur='',q=null,has=false;
+  for(var i=0;i<s.length;i++){var c=s[i];
+    if(q){if(c===q)q=null;else cur+=c;continue}
+    if(c==='"'||c==="'"){q=c;has=true;continue}
+    if(/\s/.test(c)){if(cur||has){out.push(cur);cur='';has=false}continue}
+    cur+=c}
+  if(q) return null; if(cur||has) out.push(cur); return out;
+}
+function splitPipe(s){var parts=[],cur='',q=null;for(var i=0;i<s.length;i++){var c=s[i];if(q){if(c===q)q=null;cur+=c;continue}if(c==='"'||c==="'"){q=c;cur+=c;continue}if(c==='|'){parts.push(cur.trim());cur='';continue}cur+=c}parts.push(cur.trim());return parts}
+function pipeline(ctx,body){
+  if(/(^|[^|])(&&|;|>|<|`|\$\()/.test(body)) return {out:[NOTE('тренажёр понимает одну команду за раз (можно с | grep). Без ; && > и прочих фокусов.')],ok:false,ev:{cmd:'?'}};
+  var segs=splitPipe(body),stdin=null,out=[],ev={},first=null,ok=true;
+  if(segs.some(function(x){return !x})) return {out:[E("-bash: syntax error near unexpected token `|'")],ok:false,ev:{cmd:'?'}};
+  for(var i=0;i<segs.length;i++){
+    var t=tok(segs[i]);
+    if(!t) return {out:[E('-bash: unexpected EOF while looking for matching quote')],ok:false,ev:{cmd:'?'}};
+    var name=t[0],args=t.slice(1);
+    if(i===0) first=name;
+    if(i>0&&['grep','head','tail','wc','cat'].indexOf(name)<0) return {out:out.concat([NOTE('тренажёр: после | понимает grep, head, tail, wc')]),ok:false,ev:{cmd:first}};
+    var fn=RUN[name];
+    if(!fn){
+      var msg;
+      if(/^(rm|rmdir|shred|mkfs|dd)$/.test(name)) msg=NOTE('тренажёр ничего не удаляет. На настоящем сервере сначала думай, потом Enter.');
+      else if(/^(nano|vi|vim|emacs|mcedit|sudoedit)$/.test(name)) msg=NOTE('редактора в тренажёре нет: правь файлы кнопками под терминалом');
+      else if(/^(chown|useradd|usermod|passwd|kill|apt|apt-get|reboot|shutdown|su|curl|wget|nmap|find|less|more|mv|cp|touch|mkdir)$/.test(name)) msg=NOTE('эту команду тренажёр не умеет. Список: help');
+      out=out.concat(msg?[msg]:[L(name+': command not found'),NOTE('что умеет тренажёр: help')]);
+      return {out:out,ok:false,ev:{cmd:name,unknown:!msg}};
+    }
+    var r=fn(ctx,args,stdin,{piped:i<segs.length-1,next:segs[i+1]||''});
+    var errs=r.out.filter(function(l){return l.c==='xl-err'||(l.c==='xl-dim')});
+    var data=r.out.filter(function(l){return !(l.c==='xl-err'||l.c==='xl-dim')});
+    if(i<segs.length-1){out=out.concat(errs);stdin=data}else out=out.concat(r.out);
+    for(var k in r.ev) ev[k]=r.ev[k];
+    if(i===0) ok=r.ok; else ok=ok&&r.ok;
+    ev.last=name;
+  }
+  ev.cmd=first;ev.args=tok(segs[0]).slice(1);ev.pipe=segs.length>1;
+  return {out:out,ok:ok,ev:ev};
+}
+var BIN={chmod:'/usr/bin/chmod',cat:'/usr/bin/cat',grep:'/usr/bin/grep',ls:'/usr/bin/ls',systemctl:'/usr/bin/systemctl',ps:'/usr/bin/ps',id:'/usr/bin/id',whoami:'/usr/bin/whoami',head:'/usr/bin/head',tail:'/usr/bin/tail'};
+function logSudo(body){
+  var t=tok(body.split('|')[0])||[''],when=clock();
+  if(!BIN[t[0]]) return;
+  S.authExtra.push(when+' shop-01 sudo:   intern : TTY=pts/0 ; PWD='+S.cwd+' ; USER=root ; COMMAND='+BIN[t[0]]+(t.length>1?' '+t.slice(1).join(' '):''));
+  S.authExtra.push(when+' shop-01 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by intern(uid=1001)');
+  S.authExtra.push(when+' shop-01 sudo: pam_unix(sudo:session): session closed for user root');
+}
+
+/* ---------- execute one line ---------- */
+function execLine(term,line,done){
+  var t=line.trim();
+  if(!t){done(null);return}
+  S.hist.push(t);tick();
+  if(!S.on){
+    var a=tok(t)||[];
+    if(a[0]==='ssh'&&a[1]==='intern@shop-01'){
+      term.print([L('Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-122-generic x86_64)'),L(''),L('Last login: Mon Oct 12 21:04:51 2026 from 10.0.0.7')]);
+      S.on=true;S.authExtra.push(clock()+' shop-01 sshd[2312]: Accepted publickey for intern from 10.0.0.7 port 50510 ssh2: ED25519 SHA256:p9Qe2mT7wLcA');
+      terms.forEach(function(x){x.refresh()});done({cmd:'ssh',ok:true});return;
+    }
+    if(a[0]==='ssh'&&a[1]) {term.print(/shop-01$/.test(a[1])?[E(a[1].replace(/^.*@/,'')===a[1]?'you@shop-01: Permission denied (publickey).':a[1]+': Permission denied (publickey).')]:[E('ssh: Could not resolve hostname '+a[1].replace(/^.*@/,'')+': Name or service not known')]);done({cmd:'ssh',ok:false});return}
+    term.print([NOTE('ты пока на своём ноутбуке. Сначала подключись: ssh intern@shop-01')]);done({cmd:a[0],ok:false});return;
+  }
+  if(t==='clear'){term.clear();done({cmd:'clear',ok:true});return}
+  var sudo=false,body=t;
+  if(/^sudo(\s|$)/.test(t)){
+    body=t.replace(/^sudo\s*/,'');
+    if(!body){term.print([L('usage: sudo -h | -K | -k | -V'),L('usage: sudo [-u user] command')]);done({cmd:'sudo',ok:false});return}
+    if(/^(-i|-s|su\b|bash\b|-u\b|sh\b)/.test(body)){term.print([NOTE('тренажёр не пускает под root насовсем: так делает Товарищ. sudo — на одну команду.')]);done({cmd:'sudo',ok:false});return}
+    sudo=true;
+  }
+  function go(){
+    var r=pipeline(sudo?ROOT:ME,body);
+    term.print(r.out);
+    if(sudo) logSudo(body);
+    var ev=r.ev;ev.ok=r.ok;ev.sudo=sudo;ev.line=t;
+    terms.forEach(function(x){x.refresh()});
+    done(ev);
+  }
+  if(sudo&&!S.sudoOK){
+    term.print([L('[sudo] password for intern: ','','[sudo] password for intern: <span class="xl-dim">(символы не видны — так и задумано)</span>')]);
+    term.busy(true);
+    later(function(){S.sudoOK=true;go()},900);
+  } else go();
+}
+
+/* =========================================================
+   ТЕРМИНАЛ (DOM)
+   ========================================================= */
+var terms=[];
+function promptHtml(){
+  if(!S.on) return '<span class="xl-pu">you@laptop</span>:<span class="xl-pp">~</span>$ ';
+  return '<span class="xl-pu">intern@shop-01</span>:<span class="xl-pp">'+esc(tild(S.cwd))+'</span>$ ';
+}
+function promptText(){return S.on?'intern@shop-01:'+tild(S.cwd)+'$ ':'you@laptop:~$ '}
+function Term(idx,slot){
+  var el=document.createElement('div');el.className='xl-term';
+  el.innerHTML='<div class="xl-tbar"><span class="xl-ttl"></span><span class="xl-tst">SSH</span></div>'+
+    '<div class="xl-tscr" role="log" aria-label="Вывод терминала"></div>'+
+    '<label class="xl-inl"><span class="xl-pr"></span><input class="xl-tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="набери команду" aria-label="Команда для терминала"></label>';
+  slot.appendChild(el);
+  var scr=el.querySelector('.xl-tscr'),inp=el.querySelector('.xl-tin'),pr=el.querySelector('.xl-pr'),ttl=el.querySelector('.xl-ttl');
+  var T={el:el,idx:idx,isBusy:false,hp:-1};
+  T.refresh=function(){pr.innerHTML=promptHtml();ttl.textContent=S.on?'intern@shop-01: '+tild(S.cwd):'you@laptop: ~';el.classList.toggle('is-on',S.on)};
+  T.print=function(lines){
+    var f=document.createDocumentFragment();
+    lines.forEach(function(l){var d=document.createElement('div');d.className='xl-ln'+(l.c?' '+l.c:'');d.innerHTML=l.h!=null?l.h:esc(l.t);f.appendChild(d)});
+    scr.appendChild(f);scr.scrollTop=scr.scrollHeight;
+  };
+  T.echo=function(cmd){T.print([L(promptText()+cmd,'',promptHtml()+'<span class="xl-wht">'+esc(cmd)+'</span>')])};
+  T.clear=function(){scr.innerHTML=''};
+  T.busy=function(b){T.isBusy=b;inp.disabled=b;el.classList.toggle('is-busy',b);setDocks()};
+  T.submit=function(cmd,fromChip){
+    if(T.isBusy) return;
+    T.echo(cmd);inp.value='';T.hp=-1;T.busy(true);
+    measure(T);
+    execLine(T,cmd,function(ev){T.busy(false);if(ev) onEvent(T.idx,ev,fromChip)});
+  };
+  T.type=function(cmd){
+    if(T.isBusy) return;
+    T.busy(true);inp.value='';
+    if(RM){inp.value=cmd;T.isBusy=false;T.submit(cmd,true);return}
+    var i=0,dt=Math.max(14,Math.min(42,650/cmd.length));
+    var iv=setInterval(function(){i++;inp.value=cmd.slice(0,i);if(i>=cmd.length){clearInterval(iv);setTimeout(function(){T.isBusy=false;T.submit(cmd,true)},160)}},dt);
+  };
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();var v=inp.value;if(!v.trim()){T.echo('');return}T.submit(v,false)}
+    else if(e.key==='ArrowUp'||e.key==='ArrowDown'){
+      if(!S.hist.length) return;e.preventDefault();
+      if(T.hp<0) T.hp=S.hist.length;
+      T.hp=Math.max(0,Math.min(S.hist.length,T.hp+(e.key==='ArrowUp'?-1:1)));
+      inp.value=S.hist[T.hp]||'';
+    } else if(e.key==='Tab'){
+      var v=inp.value,m=/(\S*)$/.exec(v),w=m[1],before=v.slice(0,v.length-w.length);
+      if(!v.trim()) return; e.preventDefault();
+      var cands=[];
+      if(!before.trim()||/^sudo\s+$/.test(before)) cands=CMDS.filter(function(c){return c.indexOf(w)===0});
+      else{var dirPart=w.slice(0,w.lastIndexOf('/')+1),rest=w.slice(dirPart.length),dp=resolve(dirPart||'.');
+        if(FS[dp]&&FS[dp].d&&can(S.on?ME:ME,FS[dp],4)) cands=kids(dp,rest[0]==='.').filter(function(k){return k.name.indexOf(rest)===0&&k.name!=='.'&&k.name!=='..'}).map(function(k){return dirPart+k.name+(FS[k.path].d?'/':'')})}
+      if(cands.length===1) inp.value=before+cands[0]+(/\/$/.test(cands[0])?'':' ');
+      else if(cands.length>1){var p=cands[0];cands.forEach(function(c){while(c.indexOf(p)!==0)p=p.slice(0,-1)});if(p.length>w.length)inp.value=before+p;else{T.echo(v);T.print([L(cands.join('  '))])}}
+    }
+  });
+  T.refresh();terms.push(T);return T;
+}
+function measure(T){
+  var s=document.createElement('span');s.textContent='MMMMMMMMMM';s.style.cssText='position:absolute;visibility:hidden;white-space:pre';
+  var scr=T.el.querySelector('.xl-tscr');scr.appendChild(s);var w=s.getBoundingClientRect().width/10;s.remove();
+  var cs=getComputedStyle(scr),inner=scr.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  if(w>0) COLS=Math.max(30,Math.floor(inner/w));
+}
+
+/* =========================================================
+   МИССИЯ: уровни, HUD, очки
+   ========================================================= */
+var lv=[0,1,2,3,4].map(function(i){return $('L'+i)});
+lv.forEach(function(s){s.querySelector('.xl-lvl-b').inert=true});
+function unlock(i){lv[i].classList.remove('is-locked');lv[i].querySelector('.xl-lvl-b').inert=false;cur=i;renderGoals(i);setDock(i)}
+function goTo(el,focusSel){
+  el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+  var f=el.querySelector(focusSel||'.xl-dock button:not([disabled])');
+  if(f) later(function(){try{f.focus({preventScroll:true})}catch(e){f.focus()}},550);
+}
+var G={score:0,clear:[0,0,0,0,0],fails:[0,0,0,0,0],hacks:0};
+var hud=$('hud');
+function paint(){
+  var d=(G.clear[1]+G.clear[2]+G.clear[3]+G.clear[4])*25;
+  $('barf').style.width=d+'%';$('bart').textContent=d+'%';$('score').textContent=G.score;
+  for(var i=1;i<=4;i++) $('p'+i).classList.toggle('is-done',!!G.clear[i]);
+}
+function floatAt(el,text){
+  if(RM||!el) return;
+  var r=el.getBoundingClientRect(),f=document.createElement('div');
+  f.className='xl-float';f.textContent=text;f.setAttribute('aria-hidden','true');
+  f.style.left=Math.max(8,Math.min(innerWidth-120,r.left+r.width/2-40))+'px';f.style.top=(r.top-10)+'px';
+  root.appendChild(f);setTimeout(function(){f.remove()},1200);
+}
+function boom(box,text,cls,x,y){
+  if(RM||!box) return;
+  var b=document.createElement('div');b.className='xl-boom '+(cls||'');b.textContent=text;b.setAttribute('aria-hidden','true');
+  b.style.left=(x==null?50:x)+'%';b.style.top=(y==null?40:y)+'%';box.appendChild(b);setTimeout(function(){b.remove()},950);
+}
+function sayH(who,cls,txt){return '<div class="xl-say"><span class="xl-who '+(cls||'')+'">'+who+'</span><span class="xl-bub">'+txt+'</span></div>'}
+var MI='ДЯДЯ МИША',SO='СОНЯ',VI='ТОВАРИЩ 777';
+function M(t){return sayH(MI,'',t)} function So(t){return sayH(SO,'xl-wk',t)} function V(t){return sayH(VI,'xl-wv',t)}
+function nar(i,html){$('nar'+i).innerHTML=html}
+
+/* ---------- permission decoder ---------- */
+var P={u:7,g:7,o:7},perm=$('perm'),permEdit=false;
+var CLS=[['u','Владелец'],['g','Группа'],['o','Остальные']],BITN=[[4,'r','читать'],[2,'w','менять'],[1,'x','запускать']];
+function bitsStr(v){return (v&4?'r':'-')+(v&2?'w':'-')+(v&1?'x':'-')}
+function modeNum(){return ''+P.u+P.g+P.o}
+function permGood(){return (P.u===6||P.u===4)&&P.g===4&&P.o===0}
+root.querySelectorAll('.xl-pr-c').forEach(function(row){
+  var c=row.getAttribute('data-c'),box=row.querySelector('.xl-pbits'),lab=CLS.filter(function(x){return x[0]===c})[0][1];
+  BITN.forEach(function(b){
+    var bt=document.createElement('button');bt.type='button';bt.className='xl-bit';bt.disabled=true;bt.setAttribute('data-c',c);bt.setAttribute('data-b',b[0]);
+    bt.innerHTML='<b>'+b[1]+'</b><small>'+b[0]+'</small>';bt.setAttribute('aria-pressed','true');bt.setAttribute('aria-label',lab+': '+b[2]);
+    bt.addEventListener('click',function(){if(!permEdit) return;P[c]^=b[0];paintPerm();setDock(2);say(lab+': '+bitsStr(P[c])+'. Права числом '+modeNum())});
+    box.appendChild(bt);
+  });
+});
+function paintPerm(){
+  ['u','g','o'].forEach(function(c){
+    var row=root.querySelector('.xl-pr-c[data-c="'+c+'"]');
+    row.querySelectorAll('.xl-bit').forEach(function(bt){var b=+bt.getAttribute('data-b'),on=!!(P[c]&b);
+      bt.setAttribute('aria-pressed',on?'true':'false');bt.querySelector('b').textContent=on?'rwx'[b===4?0:b===2?1:2]:'-';bt.querySelector('small').textContent=on?b:0});
+    row.querySelector('.xl-psum b').textContent=P[c];
+    row.classList.toggle('is-zero',P[c]===0);
+    root.querySelector('.xl-ps-'+c).textContent=bitsStr(P[c]);
+  });
+  $('pnum').textContent=modeNum();
+  $('pstr').setAttribute('aria-label','Права: -'+bitsStr(P.u)+bitsStr(P.g)+bitsStr(P.o));
+  perm.classList.toggle('is-good',permGood());
+}
+function setPermEdit(on){permEdit=on;perm.classList.toggle('is-edit',on);root.querySelectorAll('.xl-bit').forEach(function(b){b.disabled=!on})}
+
+/* ---------- tree map ---------- */
+var map=$('map');
+function paintMap(){
+  var best=null;
+  map.querySelectorAll('li[data-p]').forEach(function(li){
+    var p=li.getAttribute('data-p');li.classList.remove('is-here');
+    if(S.cwd===p||(p==='/'?true:S.cwd.indexOf(p+'/')===0)){if(!best||p.length>best.getAttribute('data-p').length)best=li}
+  });
+  if(best){best.classList.add('is-here');best.classList.add('is-seen')}
+}
+
+/* ---------- levels data ---------- */
+var cur=-1,stp=[0,0,0,0,0];
+function dbPath(){return S.cwd==='/etc/shop'?'db.conf':'/etc/shop/db.conf'}
+function logPath(){return S.cwd==='/var/log'?'auth.log':'/var/log/auth.log'}
+var LV=[
+ {goals:['Войти: <code>ssh</code>','Где я: <code>pwd</code>','Корень: <code>ls /</code>','В настройки: <code>cd /etc</code>','Осмотреться: <code>ls</code>'],
+  alts:['ls','ls /home','cd ..','help'],
+  steps:[
+   {g:0,cmd:'ssh intern@shop-01',sub:'подключиться к серверу',test:function(e){return e.cmd==='ssh'&&e.ok},
+    then:function(){nar(0,M('Ты на сервере. Видишь приглашение <code>intern@shop-01:~$</code>? Кто ты, где ты и в какой папке. <code>~</code> — твоя домашняя папка, <code>$</code> — ты обычный пользователь.'))}},
+   {g:1,cmd:'pwd',sub:'в какой я папке',test:function(e){return e.cmd==='pwd'},
+    then:function(){nar(0,'<p class="xl-big"><code>'+esc(S.cwd)+'</code></p><p class="xl-lead"><code>pwd</code> — print working directory, «текущая папка». Путь читается от корня: в корне <code>/</code> лежит папка <code>home</code>, в ней — <code>intern</code>.</p>')}},
+   {g:2,cmd:'ls /',sub:'что лежит в самом корне',test:function(e){return e.cmd==='ls'&&e.target==='/'&&!e.long},
+    then:function(){map.hidden=false;paintMap();
+     nar(0,M('В Linux нет дисков C: и D:. Есть одно дерево, и растёт оно из корня <code>/</code>. Диски, флешки, настройки — всё ветки этого дерева. Карта — под терминалом.')+So('А где тут «Мои документы»?')+M('В <code>/home</code>. А настройки всей системы — в <code>/etc</code>. Нам туда.'))}},
+   {g:3,cmd:'cd /etc',sub:'перейти в папку настроек',test:function(e){return e.cmd==='cd'&&S.cwd==='/etc'},
+    then:function(){nar(0,M('Приглашение поменялось: теперь там <code>/etc</code>, и метка на карте переехала. <code>cd</code> — change directory. Команда промолчала: в Linux тишина значит «получилось».'))}},
+   {g:4,cmd:function(){return S.cwd==='/etc'?'ls':'ls /etc'},sub:'что лежит в /etc',test:function(e){return e.cmd==='ls'&&e.target==='/etc'&&!e.long},
+    then:function(){nar(0,M('<b>passwd</b> — список пользователей, <b>shadow</b> — хэши их паролей, <b>shop</b> — настройки нашего магазина. Туда Товарищ и наведался.')+So('Тогда идём в shop?')+M('Сначала разберёмся, кто тут вообще живёт.'));clear(0)}}
+  ]},
+ {goals:['Кто я: <code>whoami</code>','Номер и группы: <code>id</code>','Учётка магазина: <code>grep</code>','Тайник: <code>cat</code>'],
+  alts:['groups','id shop','grep sudo /etc/group'],
+  steps:[
+   {g:0,cmd:'whoami',sub:'кто я для системы',test:function(e){return e.cmd==='whoami'},
+    then:function(){nar(1,M('<code>intern</code> — это имя. Но система различает пользователей по номерам.'))}},
+   {g:1,cmd:'id',sub:'мой номер и группы',test:function(e){return e.cmd==='id'&&(!e.user||e.user==='intern')},
+    then:function(){nar(1,'<p class="xl-big"><code>uid=1001</code></p><p class="xl-lead">У каждого пользователя свой номер — <b>uid</b>. Группы — как отделы в НИИ: права выдают сразу целому отделу. Ты в группе <code>adm</code> (ей можно читать журналы) и <code>sudo</code> (можно просить права root).</p>')}},
+   {g:2,cmd:'grep shop /etc/passwd',sub:'найти учётку магазина',test:function(e){return e.cmd==='grep'&&e.file==='/etc/passwd'&&e.count>0},
+    then:function(){nar(1,M('<code>/etc/passwd</code> — список всех пользователей: имя, uid, группа, домашняя папка, оболочка. <code>shop</code> — не человек, а служебная учётка для магазина. <code>nologin</code> — войти под ней нельзя.')+
+     So('А пароли тоже тут? Файл же passwd.')+M('Раньше лежали тут — отсюда и название. Теперь на их месте <code>x</code>, а хэши паролей — в <code>/etc/shadow</code>. Попробуй открыть.'))}},
+   {g:3,cmd:'cat /etc/shadow',sub:'открыть хэши паролей',test:function(e){return e.cmd==='cat'&&e.path==='/etc/shadow'},
+    then:function(e){
+     if(e.ok) nar(1,M('С sudo открылось: root может всё. Но обычному пользователю этот файл закрыт — проверь без sudo. Вот так права и защищают.'));
+     else nar(1,'<p class="xl-big"><em>Permission denied</em></p><p class="xl-lead">Файл есть, а прочитать нельзя: открыт только root и группе <code>shadow</code>. Так права и защищают. Запомни это чувство — сейчас увидишь файл, где защиты нет.</p>');
+     win(1)}}
+  ]},
+ {goals:['Права: <code>ls -l</code>','Разобрать 777','Утечка: <code>cat</code>','Починить: <code>chmod</code>','Проверить: <code>ls -l</code>'],
+  alts:['cd /etc/shop','ls -l /etc'],
+  steps:[
+   {g:0,cmd:'ls -l /etc/shop',sub:'подробный список с правами',test:function(e){return e.cmd==='ls'&&e.long&&(e.target==='/etc/shop'||e.target==='/etc/shop/db.conf')},
+    then:function(){perm.hidden=false;nar(2,M('<code>-l</code> значит «подробно». Первая колонка — права. Видишь красное <code>-rwxrwxrwx</code>? Под терминалом я разложил эту строку крупно.'))}},
+   {g:1,act:'Разобрать -rwxrwxrwx',sub:'кому какие права',run:function(){decode()}},
+   {g:2,cmd:function(){return 'cat '+dbPath()},sub:'видно ли пароль обычному пользователю',test:function(e){return e.cmd==='cat'&&e.path==='/etc/shop/db.conf'},
+    then:function(e){
+     if(e.ok&&!e.sudo) nar(2,'<p class="xl-big">Пароль на экране.</p><p class="xl-lead">Ты даже не root. А пароль от базы — вот он. Так же его прочитает любая программа на сервере. А раз у остальных есть <code>w</code>, его ещё и перепишут.</p>'+M('Почини права. Жми на буквы в разборе: включай и выключай r, w, x.'));
+     else nar(2,M('Сейчас файл открыт всем, это видно и без sudo. Почини права: жми на буквы в разборе.'));
+     $('ptarget').hidden=false;setPermEdit(true);}},
+   {g:3,act:function(){return 'Применить: chmod '+modeNum()},sub:'записать новые права файлу',run:function(){T(2).type('chmod '+modeNum()+' '+dbPath())},
+    test:function(e){return e.cmd==='chmod'&&e.path==='/etc/shop/db.conf'},
+    then:function(e){
+     if(e.sudo){applied(e);return 'stay'}
+     if(!e.denied) return 'stay';
+     nar(2,M('<b>Operation not permitted.</b> Менять права может только владелец файла или root. Владелец тут — root. Попроси права root на одну команду: <code>sudo</code>.')+So('А почему я сама не root? Было бы удобно.')+M('Удобно — и Товарищу тоже. sudo спросит пароль и запишет в журнал, кто что сделал.'));
+    }},
+   {g:3,cmd:function(){return 'sudo chmod '+modeNum()+' '+dbPath()},sub:'права root на одну команду',test:function(e){return e.cmd==='chmod'&&e.path==='/etc/shop/db.conf'&&e.sudo},
+    then:function(e){applied(e);return 'stay'}},
+   {g:4,cmd:function(){return 'ls -l '+(S.cwd==='/etc/shop'?'':'/etc/shop')},sub:'проверить, что получилось',test:function(e){return e.cmd==='ls'&&e.long&&(e.target==='/etc/shop'||e.target==='/etc/shop/db.conf')},
+    then:function(){nar(2,'<p class="xl-big"><code>-rw-r-----</code> = '+modeNum()+'</p><p class="xl-lead">root читает и меняет, магазин из группы <code>shop</code> только читает, остальные не видят ни строчки. Товарищ 777 больше не подписывает этот файл.</p>');win(2)}}
+  ]},
+ {goals:['Процессы: <code>ps</code>','Файл службы: <code>cat</code>','Перезапуск: <code>systemctl</code>','Атака'],
+  alts:['ps aux','systemctl status shop','whoami'],
+  steps:[
+   {g:0,cmd:'ps -eo user,pid,cmd',sub:'какие программы запущены и от чьего имени',test:function(e){return e.cmd==='ps'&&e.ps&&e.ps!=='-'},
+    then:function(){nar(3,M('Процесс — это запущенная программа. У каждого свой номер (PID) и хозяин. Программа может всё, что может её хозяин. А хозяин магазина — <b>root</b>.')+So('И что? Работает же.')+M('Найдут в магазине дыру — злодей получит не магазин, а весь сервер. Посмотрим, кто так настроил.'))}},
+   {g:1,cmd:'cat /etc/systemd/system/shop.service',sub:'файл, по которому запускают магазин',test:function(e){return e.cmd==='cat'&&e.path==='/etc/systemd/system/shop.service'&&e.ok},
+    then:function(){$('unit').hidden=false;nar(3,M('По таким файлам systemd запускает службы. Строка <code>User=</code> решает, от чьего имени. Поставь служебного пользователя <code>shop</code> — переключатель под терминалом.'))}},
+   {g:2,cmd:'sudo systemctl daemon-reload',sub:'systemd перечитает файлы служб',test:function(e){return e.cmd==='systemctl'&&e.sc==='reload'&&e.ok},
+    then:function(){nar(3,M('systemd перечитывает файлы служб только по команде <code>daemon-reload</code>. Теперь перезапусти магазин.'))}},
+   {g:2,cmd:'sudo systemctl restart shop',sub:'перезапустить магазин',test:function(e){return e.cmd==='systemctl'&&e.sc==='restart'&&e.ok},
+    then:function(){nar(3,M('Магазин перезапущен, у процесса новый PID. А Товарищ уже нашёл в магазине дыру. Посмотрим, что он через неё получит.'))}},
+   {g:3,act:'Пусть атакует ▶',sub:'Товарищ лезет через дыру в магазине',danger:1,run:function(){attack3()}}
+  ]},
+ {goals:['К журналам: <code>cd</code>','Осмотреться: <code>ls</code>','Промахи: <code>grep</code>','Свои следы: <code>grep sudo</code>','Закрыть дверь'],
+  alts:['tail auth.log','cat /etc/ssh/sshd_config','grep -c "Failed password" auth.log'],
+  steps:[
+   {g:0,cmd:'cd /var/log',sub:'в папку журналов',test:function(e){return e.cmd==='cd'&&S.cwd==='/var/log'},
+    then:function(){nar(4,M('<code>/var/log</code> — память сервера. Программы записывают сюда всё, что с ними происходит.'))}},
+   {g:1,cmd:function(){return S.cwd==='/var/log'?'ls':'ls /var/log'},sub:'какие журналы есть',test:function(e){return e.cmd==='ls'&&e.target==='/var/log'},
+    then:function(){nar(4,M('<code>auth.log</code> — журнал входов: кто, когда, откуда, удачно или нет. И каждый sudo. Читать его можно группе <code>adm</code> — помнишь, ты в ней.'))}},
+   {g:2,cmd:function(){return 'grep "Failed password" '+logPath()},sub:'найти неудачные входы',test:function(e){return e.cmd==='grep'&&e.file==='/var/log/auth.log'&&/fail/i.test(e.pattern||'')},
+    then:function(){nar(4,'<p class="xl-big">Один адрес. Шесть промахов за полминуты.</p><p class="xl-lead"><code>203.0.113.77</code> перебирает имена: root, admin, tovarisch777. Это подбор пароля — брутфорс. Боты так стучатся в каждый сервер в интернете, круглые сутки.</p>'+So('А нас в журнале тоже видно?')+M('Проверь: <code>grep sudo</code>.'))}},
+   {g:3,cmd:function(){return 'grep sudo '+logPath()},sub:'а что журнал знает про тебя',test:function(e){return e.cmd==='grep'&&e.file==='/var/log/auth.log'&&/sudo/.test(e.pattern||'')},
+    then:function(){$('ssh').hidden=false;nar(4,M('Каждый твой sudo записан: кто, из какой папки, какая команда. По журналу находят и злодеев, и чужие ошибки. А теперь закроем дверь. Выбери защиту — панель под терминалом.'))}},
+   {g:4,act:'Пусть стучится ▶',sub:'Товарищ снова подбирает пароль',danger:1,run:function(){attack4()}}
+  ]}
+];
+function T(i){return terms[i]}
+function curStep(i){return LV[i].steps[stp[i]]}
+function renderGoals(i){
+  var ul=$('g'+i),s=curStep(i),gi=s?s.g:99;
+  ul.innerHTML=LV[i].goals.map(function(g,k){return '<li class="'+(k<gi||G.clear[i]||(i===0&&lv[0].classList.contains('is-clear'))?'is-done':k===gi?'is-cur':'')+'">'+g+'</li>'}).join('');
+}
+function val(f){return typeof f==='function'?f():f}
+function setDock(i){
+  var dock=$('dock'+i);if(!dock) return;
+  var hadFocus=dock.contains(document.activeElement);
+  var s=curStep(i),h='',done=lv[i].classList.contains('is-clear');
+  if(s&&!done){
+    if(s.act) h+='<button type="button" class="xl-cmd xl-act is-new" data-act="1"><span class="xl-cv">'+(s.danger?'⚡<i> ХОД</i>':'◆<i> ДЕЙСТВИЕ</i>')+'</span><span class="xl-cb"><code style="font-family:var(--f-cap);font-weight:400">'+esc(val(s.act))+'</code><small>'+esc(s.sub)+'</small></span></button>';
+    else h+='<button type="button" class="xl-cmd is-new" data-cmd="'+esc(val(s.cmd))+'"><span class="xl-cv">▶<i> ВЫПОЛНИТЬ</i></span><span class="xl-cb"><code>'+esc(val(s.cmd))+'</code><small>'+esc(s.sub)+'</small></span></button>';
+  }
+  if(!done&&S.on&&LV[i].alts.length&&(stp[i]>0||i>0)) h+='<div class="xl-alt"><span>или сам:</span>'+LV[i].alts.map(function(a){return '<button type="button" class="xl-chip" data-cmd="'+esc(a)+'">'+esc(a)+'</button>'}).join('')+'</div>';
+  dock.innerHTML=h;
+  dock.querySelectorAll('[data-cmd]').forEach(function(b){b.addEventListener('click',function(){var t=T(i);if(t.isBusy) return;t.type(b.getAttribute('data-cmd'))})});
+  var ab=dock.querySelector('[data-act]');if(ab) ab.addEventListener('click',function(){if(T(i).isBusy) return;curStep(i).run()});
+  setDocks();
+  if(hadFocus){var f=dock.querySelector('button');if(f)try{f.focus({preventScroll:true})}catch(e){}}
+}
+function setDocks(){terms.forEach(function(t){var d=$('dock'+t.idx);if(d)d.querySelectorAll('button').forEach(function(b){b.disabled=t.isBusy})})}
+function advance(i){stp[i]++;renderGoals(i);setDock(i)}
+function onEvent(i,ev,fromChip){
+  paintMap();
+  if(i!==cur||lv[i].classList.contains('is-clear')) return;
+  var s=curStep(i);if(!s||!s.test) return;
+  if(!s.test(ev)){
+    /* шаг 3 уровня 2: можно сразу набрать sudo chmod */
+    if(i===2&&stp[2]===2&&ev.cmd==='chmod'&&ev.path==='/etc/shop/db.conf'){nar(2,M('Сначала проверь, видно ли пароль: <code>cat</code>.'))}
+    return;
+  }
+  G.score+=10;$('score').textContent=G.score;
+  var r=s.then(ev);
+  if(r==='stay') return;
+  if(lv[i].classList.contains('is-clear')){renderGoals(i);setDock(i);return}
+  if(i===2&&stp[2]===3&&!ev.sudo){advance(2);return}
+  advance(i);
+}
+
+/* ---------- level actions ---------- */
+function clear(i){
+  lv[i].classList.add('is-clear');renderGoals(i);setDock(i);
+  if(i<4) unlock(i+1);
+  var nb=lv[i].querySelector('.xl-next button');
+  if(root.contains(document.activeElement)&&lv[i].contains(document.activeElement)) try{nb.focus({preventScroll:true})}catch(e){}
+}
+function win(i){
+  G.clear[i]=1;var pts=100+(G.fails[i]?0:50);G.score+=pts;paint();
+  $('mv'+i).classList.add('is-x');
+  floatAt($('dock'+i)||lv[i],'+'+pts+(G.fails[i]?'':' ★'));
+  clear(i);
+  say('Уровень '+i+' пройден. Плюс '+pts+' очков.');
+}
+function decode(){
+  var s=curStep(2);if(!s||!s.act) return;
+  stp[2]++;renderGoals(2);
+  perm.classList.add('is-split');setDock(2);
+  $('dock2').innerHTML='';
+  nar(2,'');
+  later(function(){
+    perm.classList.add('is-named');boom(perm,'777!','is-r',70,78);
+    nar(2,V('Семь, семь, семь. <b>Моя подпись!</b> Всем всё: читать, менять, запускать.')+
+      M('Вот откуда у него имя. Каждая семёрка — это r + w + x = 4 + 2 + 1. Последняя — самая опасная: «остальные» — это любой пользователь и любая программа на сервере.'));
+    setDock(2);
+    say('Права 777: владелец, группа и остальные могут читать, менять и запускать.');
+  },1500);
+}
+function applied(e){
+  var m=e.mode;if(m==null) return;
+  P.u=(m>>6)&7;P.g=(m>>3)&7;P.o=m&7;paintPerm();
+  if(permGood()){
+    perm.classList.add('is-fixed');setPermEdit(false);$('ptarget').hidden=true;
+    var ps=$('pstamp');ps.textContent='ПРАВА ОТОЗВАНЫ';perm.classList.remove('is-named');void ps.offsetWidth;perm.classList.add('is-named');
+    nar(2,M('Тишина — значит получилось. Права теперь <b>'+modeNum()+'</b>. Проверь глазами.'));
+    stp[2]=5;renderGoals(2);setDock(2);boom(perm,'640!','is-g',70,78);
+    say('Права изменены на '+modeNum());
+    return;
+  }
+  var node=FS['/etc/shop/db.conf'];
+  if(P.o){
+    node.m=511;
+    hack(2,'Права <code>'+modeNum()+'</code>: остальным всё ещё можно <code>'+bitsStr(P.o).replace(/-/g,'')+'</code>. Товарищ зашёл под чужой учёткой и прочитал пароль базы.',
+      'Остальные — это я. Спасибо за доступ!',function(){stp[2]=S.sudoOK?4:3;renderGoals(2);setDock(2);root.querySelector('.xl-pr-c[data-c="o"] .xl-bit').focus({preventScroll:true})});
+    return;
+  }
+  node.m=511;G.fails[2]++;
+  var w;
+  if(!(P.g&4)) w='Магазин упал: ошибка 500. Он работает в группе <code>shop</code> и больше не может прочитать конфиг. Группе нужно <code>r</code>.';
+  else if(P.g&2) w='Лишнее: группа <code>shop</code> может <b>менять</b> конфиг. Взломают магазин — перепишут и настройки. Группе хватит <code>r</code>.';
+  else if((P.g|P.u)&1) w='Лишнее: <code>x</code> — право запускать. Конфиг — не программа, ему x не нужен.';
+  else w='root должен хотя бы читать файл. Владельцу — <code>rw</code>.';
+  nar(2,'<div class="xl-warn">'+w+' Время откатилось к 777 — попробуй ещё.</div>');
+  stp[2]=S.sudoOK?4:3;renderGoals(2);setDock(2);
+  say('Не то. '+w.replace(/<[^>]+>/g,''));
+}
+function attack3(){
+  if(S.appUser==='root'){
+    var msg=S.unitUser==='shop'&&S.loadedUser!=='shop'?'Файл поправлен, но systemd его не перечитал — магазин так и работает от root.':
+      S.unitUser==='shop'?'Файл поправлен, но магазин не перезапущен — процесс всё ещё от root.':'Магазин работает от root — и взломщик получил root.';
+    hack(3,msg+'<span class="xl-mini"><span class="xl-mh">ТЕРМИНАЛ ТОВАРИЩА · через дыру в магазине</span>$ whoami\nroot\n$ head -1 /etc/shadow\nroot:$y$j9T$Lk2v0sT1$Hq8mW1yQ4c…</span>',
+      'Корона ваша — теперь моя!',function(){stp[3]=2;renderGoals(3);setDock(3);var sw=$('sw');if(S.unitUser!=='shop')sw.classList.add('is-hint');try{(S.unitUser!=='shop'?sw:$('dock3').querySelector('button')).focus({preventScroll:true})}catch(e){}});
+    return;
+  }
+  $('sw').disabled=true;
+  $('res3').innerHTML='<div class="xl-gate"><span class="xl-stampok">КЛЕТКА<small>root не достался</small></span><p class="xl-why2">Дыру нашли, но взломщик заперт в правах <code>shop</code>.</p></div>'+
+    '<div class="xl-mini"><span class="xl-mh">ТЕРМИНАЛ ТОВАРИЩА · через дыру в магазине</span>$ whoami\nshop\n$ cat /etc/shadow\ncat: /etc/shadow: Permission denied\n$ ls /root\nls: cannot open directory \'/root\': Permission denied</div>';
+  boom($('res3'),'МИМО!','is-g',70,20);
+  nar(3,M('Это и есть <b>принцип наименьших привилегий</b>: каждому ровно столько прав, сколько нужно для работы. Пароль от своей базы магазин видит — без него он не работает. Но не больше.')+V('Ничего. У меня ещё есть дверь.'));
+  win(3);
+}
+function attack4(){
+  var v=$('sshopt').querySelector('[aria-checked=true]').getAttribute('data-v');
+  if(v==='port'){G.fails[4]++;$('warn4').innerHTML='Ботов стало меньше: они стучатся в стандартный порт 22. Но Товарищ просканировал порты и нашёл <code>2222</code> за минуту. Это маскировка, а не замок.';say($('warn4').textContent);return}
+  if(v==='wipe'){
+    hack(4,'Журнала нет — и никто не заметил, что на 214-й попытке пароль root подошёл.','Нет журнала — нет свидетелей!',function(){var b=$('sshopt').querySelector('[aria-checked=true]');$('sshopt').classList.add('is-hint');try{b.focus({preventScroll:true})}catch(e){}});
+    return;
+  }
+  S.sshFixed=true;$('warn4').innerHTML='';
+  $('sshopt').dataset.lock=1;
+  $('res4').innerHTML='<div class="xl-gate"><span class="xl-stampok">ОТКАЗ<small>Permission denied (publickey)</small></span><p class="xl-why2">Root по SSH не входит, пароли не принимаются — только ключ, которого у Товарища нет.</p></div>'+
+    '<div class="xl-mini"><span class="xl-mh">ТЕРМИНАЛ ТОВАРИЩА</span>$ ssh root@shop-01\nroot@shop-01: Permission denied (publickey).</div>'+
+    '<p class="xl-lead" style="margin-top:14px">А <b>fail2ban</b> читает тот же auth.log и после нескольких промахов закрывает адресу дверь.</p>';
+  boom($('res4'),'ОТКАЗ!','is-g',70,20);
+  win(4);
+}
+
+/* ---------- hack overlay ---------- */
+var onRew=null,hackLvl=0;
+function hack(i,msg,line,cb){
+  G.fails[i]++;G.hacks++;G.score=Math.max(0,G.score-20);paint();
+  hud.classList.remove('is-hit');void hud.offsetWidth;hud.classList.add('is-hit');setTimeout(function(){hud.classList.remove('is-hit')},700);
+  hackLvl=i;onRew=cb;$('hkw').innerHTML=msg;$('hks').textContent=line;
+  var h=$('hack');h.hidden=false;h.classList.remove('is-rewind');
+  later(function(){$('rewind').focus()},60);
+  say('Взлом! '+$('hkw').textContent);
+}
+function rewind(){
+  var h=$('hack');if(h.hidden) return;
+  h.classList.add('is-rewind');
+  setTimeout(function(){
+    h.hidden=true;h.classList.remove('is-rewind');
+    var tgt=hackLvl===2?perm:hackLvl===3?$('unit'):$('ssh');
+    tgt.scrollIntoView({behavior:'auto',block:'center'});
+    if(onRew) onRew();
+    say('Время откатилось. Попробуй другую защиту.');
+  },RM?0:650);
+}
+$('rewind').addEventListener('click',rewind);
+$('hack').addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();rewind()} if(e.key==='Tab'){e.preventDefault();$('rewind').focus()}});
+
+/* ---------- switch & radio ---------- */
+$('sw').addEventListener('click',function(){
+  var sw=this;if(sw.disabled) return;
+  var on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',on?'true':'false');sw.classList.remove('is-hint');
+  sw.querySelectorAll('[data-on]').forEach(function(e){e.textContent=e.getAttribute(on?'data-on':'data-off')});
+  S.unitUser=on?'shop':'root';
+  if(cur===3&&stp[3]>2){stp[3]=2;renderGoals(3);setDock(3)}
+  say(on?'В файле службы теперь User=shop. Перечитай и перезапусти.':'В файле службы снова User=root.');
+});
+(function(){
+  var g=$('sshopt'),bs=[].slice.call(g.querySelectorAll('[role=radio]'));
+  function pick(b){bs.forEach(function(x){x.setAttribute('aria-checked',x===b?'true':'false');x.tabIndex=x===b?0:-1})}
+  bs.forEach(function(b,i){
+    b.tabIndex=b.getAttribute('aria-checked')==='true'?0:-1;
+    b.addEventListener('click',function(){if(!g.dataset.lock){pick(b);g.classList.remove('is-hint');$('warn4').innerHTML=''}});
+    b.addEventListener('keydown',function(e){
+      var d=(e.key==='ArrowDown'||e.key==='ArrowRight')?1:(e.key==='ArrowUp'||e.key==='ArrowLeft')?-1:0;
+      if(!d||g.dataset.lock) return;e.preventDefault();var n=bs[(i+d+bs.length)%bs.length];pick(n);n.focus();$('warn4').innerHTML='';
+    });
+  });
+})();
+
+/* ---------- build terminals ---------- */
+for(var ti=0;ti<5;ti++) Term(ti,$('ts'+ti));
+paintPerm();
+[0,1,2,3,4].forEach(function(i){renderGoals(i)});
+
+/* ---------- mission start ---------- */
+var mission=$('mission');
+if(!RM&&'IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){mission.classList.add('is-seen');io.disconnect()}})},{threshold:.3});
+  io.observe(mission);
+} else mission.classList.add('is-seen');
+$('go').addEventListener('click',function(){
+  this.disabled=true;this.textContent='Миссия принята ✓';
+  hud.classList.add('is-on');paint();unlock(0);
+  say('Миссия принята. Брифинг открыт.');goTo(lv[0]);
+});
+root.querySelectorAll('[data-goto]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var id=b.getAttribute('data-goto');
+    if(id==='final'){var f=$('final');$('fscore').textContent=G.score;$('ffails').textContent=G.hacks;f.classList.add('is-show');
+      f.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});later(function(){try{f.focus({preventScroll:true})}catch(e){}},500);say('Сервер сдан. Счёт '+G.score);return}
+    goTo($(id));
+  });
+});
+
+/* ---------- battle ---------- */
+var MOVES=[
+  {v:'Папке с сайтом — <code>chmod 777</code>! Пусть никто не мучается с доступом.',o:[
+    ['Оставить 777, но спрятать папку поглубже',0,'Права не прячутся: ls -l покажет их любому, кто дойдёт.'],
+    ['Права только владельцу и группе приложения, остальным — 0',1,'Нет лишних «остальных» — нет лишних читателей и писателей.'],
+    ['chmod 000 для всех — надёжнее некуда',0,'Магазин упадёт: ему тоже нечего будет прочитать.']]},
+  {v:'Запущу-ка магазин от <b>root</b>. Так ему ничего не мешает!',o:[
+    ['Оставить root, но придумать пароль подлиннее',0,'Пароль ни при чём: дыра в магазине сразу даст права root.'],
+    ['Свой служебный пользователь shop без лишних прав',1,'Взломают магазин — получат только права shop, а не сервер.']]},
+  {v:'Стучусь по SSH: root, пароль, root, пароль… <b>214 попыток</b> в минуту!',o:[
+    ['Удалить auth.log, чтобы не мешал',0,'Без журнала ты слепая: удачную попытку никто не увидит.'],
+    ['Запретить вход root и пароли: только ключи плюс fail2ban',1,'Подбирать нечего, а fail2ban закрывает адрес после промахов.'],
+    ['Переименовать сервер в shop-02',0,'Боты стучатся по адресу, а не по имени.']]}
+];
+var B={k:0,hp:100,first:0,missed:false};
+function bRender(){
+  var m=MOVES[B.k];$('bstep').textContent='ХОД '+(B.k+1)+' / 3';
+  $('bmove').innerHTML=m.v;$('bfb').innerHTML='';B.missed=false;
+  var box=$('bopts');box.innerHTML='';
+  m.o.forEach(function(o){
+    var b=document.createElement('button');b.type='button';b.className='xl-bopt';b.textContent=o[0];
+    b.addEventListener('click',function(){bPick(b,o)});box.appendChild(b);
+  });
+}
+function bPaint(){$('hpf').style.width=B.hp+'%';$('hpn').textContent='HP '+B.hp;$('hpbar').setAttribute('aria-valuenow',B.hp)}
+function bPick(b,o){
+  if(o[1]){
+    if(!B.missed) B.first++;
+    B.hp=B.k===2?0:B.hp-33;bPaint();
+    $('bopts').querySelectorAll('button').forEach(function(x){x.disabled=true});b.classList.add('is-hit');
+    $('bfb').innerHTML='<b class="xl-hitw">УДАР!</b>'+esc(o[2]);
+    var f=$('bface');f.classList.remove('is-hurt');void f.offsetWidth;f.classList.add('is-hurt');
+    boom($('battle'),'УДАР!','',22,22);
+    say('Удар! '+o[2]+' Здоровье Товарища '+B.hp);
+    later(function(){
+      if(B.k<2){B.k++;bRender();var first=$('bopts').querySelector('button');if(first)first.focus({preventScroll:true})}
+      else bEnd();
+    },1500);
+  } else {
+    B.missed=true;b.disabled=true;b.classList.add('is-miss');
+    $('bfb').innerHTML='<b class="xl-missw">промах</b>'+esc(o[2]);say('Промах. '+o[2]);
+  }
+}
+function bEnd(){
+  $('bface').classList.add('is-ko');$('bplay').hidden=true;$('bend').hidden=false;$('bstep').textContent='БОЙ ОКОНЧЕН';
+  $('bsc').textContent='Удары с первой попытки: '+B.first+' из 3.'+(B.first===3?' Чистая победа!':'');
+  $('bagain').focus({preventScroll:true});say('Товарищ 777 повержен. '+$('bsc').textContent);
+}
+$('bagain').addEventListener('click',function(){
+  B={k:0,hp:100,first:0,missed:false};$('bface').classList.remove('is-ko','is-hurt');$('bplay').hidden=false;$('bend').hidden=true;bPaint();bRender();
+  $('bopts').querySelector('button').focus();
+});
+bPaint();bRender();
+
+/* ---------- interview ---------- */
+$('ivb').addEventListener('click',function(){
+  var a=$('iva'),open=a.hidden;a.hidden=!open;this.setAttribute('aria-expanded',open?'true':'false');
+  this.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+});
+})();</script>

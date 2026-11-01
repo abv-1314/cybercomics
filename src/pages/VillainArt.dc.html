@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Портреты злодеев</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.va{position:absolute;inset:0;overflow:hidden;background:var(--bg,transparent);touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+.va-img{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:cover;transform-origin:var(--o,50% 50%);transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+.va.play .va-img.zoom{transform:scale(var(--z,1.35))}
+.va.play .va-img.thrust{transform:scale(var(--z,1.5)) rotate(-2deg);transition:transform .7s cubic-bezier(.3,1.45,.5,1)}
+.va-glass{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--o,50% 50%), rgba(255,255,255,.8), rgba(255,255,255,0) 32%)}
+@keyframes va-knock{0%,40%{opacity:0}50%{opacity:.9}100%{opacity:0}}
+.va.play .va-glass{animation:va-knock .9s ease-out both}
+.va-cable{position:absolute;z-index:0;left:calc(var(--cx,63%) - 5px);top:0;width:10px;height:30%;box-sizing:border-box;background:#1f6fd1;border-left:2px solid #141414;border-right:2px solid #141414}
+.va.play .va-img.slide{transform:translateY(10%) rotate(1.5deg);transition:transform 1.2s cubic-bezier(.35,1.35,.45,1)}
+@keyframes va-recoil{0%,100%{transform:translate(0,0)}25%{transform:translate(1.5%,1%)}50%{transform:translate(-.8%,0)}}
+.va.play .va-img.recoil{animation:va-recoil .4s ease-out both}
+.va-drop{position:absolute;z-index:3;left:var(--tx,5%);top:var(--ty,5%);width:12px;height:12px;margin:-6px 0 0 -6px;box-sizing:border-box;border-radius:50%;background:#8dff3c;border:2px solid #141414;opacity:0;pointer-events:none}
+@keyframes va-squirt{0%{left:var(--tx,5%);top:var(--ty,5%);transform:scale(.4);opacity:0}15%{opacity:1}90%{opacity:1}100%{left:58%;top:56%;transform:scale(3);opacity:0}}
+.va.play .va-drop{animation:va-squirt .45s cubic-bezier(.5,0,.8,.5) both}
+.va-splat{position:absolute;z-index:3;left:58%;top:56%;width:50%;transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none;overflow:visible}
+@keyframes va-splat{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}60%{transform:translate(-50%,-50%) scale(1.1);opacity:.95}100%{transform:translate(-50%,-50%) scale(1);opacity:.9}}
+.va.play .va-splat{animation:va-splat .3s cubic-bezier(.2,1.3,.4,1) .42s both}
+.va-drip{position:absolute;z-index:3;top:62%;width:12px;height:18%;box-sizing:border-box;border:2px solid #141414;border-top:none;border-radius:0 0 6px 6px;background:#8dff3c;transform:scaleY(0);transform-origin:50% 0;opacity:.9;pointer-events:none}
+@keyframes va-drip{0%{transform:scaleY(0)}100%{transform:scaleY(1)}}
+.va.play .va-drip{animation:va-drip 1.4s cubic-bezier(.5,0,.6,1) .7s both}
+@keyframes va-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-1.5%) rotate(-.8deg)}45%{transform:translateX(1.5%) rotate(.8deg)}70%{transform:translateX(-.6%)}}
+.va.play .va-img.shake{animation:va-shake .4s ease-in-out both}
+.va-key{position:absolute;z-index:3;top:58%;width:46px;opacity:0;pointer-events:none;filter:drop-shadow(2px 2px 0 #141414)}
+@keyframes va-fall{0%{top:58%;opacity:0;transform:rotate(0) scale(.8)}10%{opacity:1}65%{top:82%;transform:rotate(var(--r,90deg)) scale(1.5)}78%{top:76%;transform:rotate(calc(var(--r,90deg) + 20deg)) scale(1.5)}100%{top:82%;opacity:1;transform:rotate(calc(var(--r,90deg) + 12deg)) scale(1.5)}}
+.va.play .va-key{animation:va-fall 1s cubic-bezier(.45,0,.7,1) both}
+.va-ghost{transform-box:fill-box;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,1.4,.5,1)}
+@keyframes va-boo{0%{opacity:1}20%{opacity:.35}35%{opacity:1}50%{opacity:.55}65%,100%{opacity:1}}
+.va.play .va-ghost{transform:translateY(-14%) scale(1.22);animation:va-boo .8s ease-out both}
+.va-sfx{position:absolute;z-index:4;left:var(--sx,12px);top:var(--sy,auto);bottom:var(--sb,14px);opacity:0;pointer-events:none;white-space:nowrap;font-family:'Rubik Mono One',sans-serif;font-size:17px;line-height:1;color:#ffd60a;-webkit-text-stroke:1.5px #141414;paint-order:stroke fill;text-shadow:2px 2px 0 #141414}
+@keyframes va-pop{0%{transform:scale(.3) rotate(-14deg);opacity:0}100%{transform:scale(1) rotate(-6deg);opacity:1}}
+.va.play .va-sfx{animation:va-pop .3s cubic-bezier(.2,1.4,.4,1) var(--d,.45s) both}
+.va-eye{position:absolute;z-index:3;transform:translate(-50%,-50%);border-radius:50%;background:#fff6a8;box-shadow:0 0 6px 3px #ffd60a, 0 0 14px 6px rgba(255,214,10,.55);opacity:0;pointer-events:none}
+@keyframes va-eyes{0%,100%{opacity:0;transform:translate(-50%,-50%) scaleY(1)}12%{opacity:1}38%{opacity:1;transform:translate(-50%,-50%) scaleY(1)}44%{transform:translate(-50%,-50%) scaleY(.1)}50%{opacity:1;transform:translate(-50%,-50%) scaleY(1)}75%{opacity:.85}}
+.va.play .va-eye{animation:va-eyes 1.6s ease-in-out infinite}
+.va-pst{position:absolute;inset:0;z-index:1;overflow:hidden;container-type:size;background:var(--bg,#ffd60a);font-family:'Rubik Mono One',sans-serif;color:#141414}
+.va-pst-rays{position:absolute;inset:-20%;background:repeating-conic-gradient(from 0deg at 50% 41%,rgba(255,255,255,.2) 0 7deg,rgba(255,255,255,0) 7deg 15deg);transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.va-pst-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(20,20,20,.34) 30%,transparent 33%);background-size:9px 9px;-webkit-mask-image:radial-gradient(circle at 50% 41%,transparent 28%,#000 78%);mask-image:radial-gradient(circle at 50% 41%,transparent 28%,#000 78%)}
+.va-pst-tag{position:absolute;right:5cqw;top:5cqh;padding:1.2cqmin 2.6cqmin;font-family:'Russo One',sans-serif;font-size:max(11px,4.4cqw);line-height:1;letter-spacing:.06em;background:#141414;color:#ffd60a;transform:rotate(3deg)}
+.va-pst-em{position:absolute;left:50%;top:41%;width:50cqmin;height:50cqmin;margin:-25cqmin 0 0 -25cqmin;box-sizing:border-box;display:grid;place-items:center;border-radius:50%;background:#141414;border:1.6cqmin solid #fff7e3;box-shadow:0 0 0 3px #141414,2.4cqmin 2.4cqmin 0 3px #141414;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.va-pst-em span{display:block;max-width:86%;text-align:center;line-height:1;white-space:nowrap;color:var(--bg,#ffd60a);text-shadow:.8cqmin .8cqmin 0 rgba(255,255,255,.18)}
+.va-pst-name{position:absolute;left:5cqw;right:5cqw;bottom:5cqh;line-height:1.02;color:#ffffff;-webkit-text-stroke:max(1.5px,.7cqw) #141414;paint-order:stroke fill;text-shadow:1.2cqw 1.2cqw 0 #141414;transform:rotate(-3deg);transform-origin:0 100%;overflow-wrap:normal;word-break:keep-all}
+.va.play .va-pst-em{transform:rotate(-8deg) scale(1.07)}
+.va.play .va-pst-rays{transform:rotate(14deg)}
+@media (prefers-reduced-motion: reduce){.va *{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootCls}}" style="{{rootStyle}}" onPointerEnter="{{start}}" onPointerLeave="{{stop}}" onTouchMove="{{start}}">
+  <sc-if value="{{poster}}" hint-placeholder-val="{{false}}">
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="{{pst.emStyle}}">{{pst.emblem}}</span></span>
+      <span class="va-pst-name" style="{{pst.nameStyle}}">{{pst.name}}</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{v1}}" hint-placeholder-val="{{false}}">
+    <img class="va-img " src="/_blob/40522caf67506d1d8a1711a08454e769" alt="" style="object-position: 50% var(--oy, 0%); ">
+  </sc-if>
+  <sc-if value="{{v2}}" hint-placeholder-val="{{true}}">
+    <img class="va-img " src="/_blob/514e6e80025fe9d5923d48bbb8ffecaf" alt="" style="object-position: 50% var(--oy, 0%); ">
+  </sc-if>
+  <sc-if value="{{v3}}" hint-placeholder-val="{{false}}">
+    <img class="va-img recoil" src="/_blob/f6d4ece1d46d17878f4a78cd6cd908a5" alt="" style="object-position: 50% var(--oy, 0%); ">
+    <span class="va-drop" style="--tx: 5%; --ty: 5%; animation-delay: 0s"></span><span class="va-drop" style="--tx: 5%; --ty: 5%; animation-delay: 0.07s"></span><span class="va-drop" style="--tx: 5%; --ty: 5%; animation-delay: 0.14s"></span>
+    <svg class="va-splat" viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M100 30 Q118 50 132 36 Q134 62 160 60 Q146 82 172 98 Q148 108 160 132 Q132 128 128 156 Q110 140 96 166 Q86 140 62 152 Q66 126 38 124 Q56 106 30 92 Q58 84 46 60 Q72 66 76 40 Q92 56 100 30 Z" style="fill: #8dff3c; stroke: #141414; stroke-width: 5; stroke-linejoin: round"></path>
+          <circle cx="176" cy="54" r="8" style="fill: #8dff3c; stroke: #141414; stroke-width: 4"></circle>
+          <circle cx="26" cy="150" r="7" style="fill: #8dff3c; stroke: #141414; stroke-width: 4"></circle>
+          <ellipse cx="82" cy="78" rx="16" ry="9" style="fill: #ffffff; opacity: .7" transform="rotate(-30 82 78)"></ellipse>
+        </svg>
+    <span class="va-drip" style="left: 48%"></span><span class="va-drip" style="left: 57%; height: 14%; animation-delay: .85s"></span><span class="va-drip" style="left: 63%; height: 24%; animation-delay: .95s"></span>
+    <span class="va-sfx" style="--d: .4s">ПШШ!</span>
+  </sc-if>
+  <sc-if value="{{ghost}}" hint-placeholder-val="{{false}}">
+    <svg class="va-img" viewBox="0 0 300 375" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="background: #7b4dff">
+          <rect x="24" y="44" width="252" height="296" style="fill: #ffffff; stroke: #141414; stroke-width: 5"></rect>
+          <rect x="24" y="44" width="252" height="34" style="fill: #ffd60a; stroke: #141414; stroke-width: 5"></rect>
+          <circle cx="44" cy="61" r="6" style="fill: #ff3b3b; stroke: #141414; stroke-width: 3"></circle>
+          <circle cx="63" cy="61" r="6" style="fill: #ffffff; stroke: #141414; stroke-width: 3"></circle>
+          <rect x="80" y="51" width="182" height="20" style="fill: #ffffff; stroke: #141414; stroke-width: 3"></rect>
+          <text x="88" y="66" style="font-family: ui-monospace, Consolas, monospace; font-size: 13px; font-weight: 700; fill: #e3262d">?q=&lt;script&gt;</text>
+          <rect x="42" y="96" width="110" height="10" style="fill: #e3dcff"></rect>
+          <rect x="42" y="114" width="190" height="10" style="fill: #e3dcff"></rect>
+          <g class="va-ghost">
+            <g transform="translate(20 100) scale(1.3)">
+              <path d="M50 150 L56 78 C56 30 144 30 144 78 L150 150 Q140 138 130 150 Q120 140 110 150 Q100 138 90 150 Q80 140 70 150 Q60 138 50 150 Z" style="fill: #ffffff; stroke: #141414; stroke-width: 3; stroke-linejoin: round"></path>
+              <path d="M126 44 C140 56 144 78 146 110 L148 146 Q140 138 132 148 C134 110 134 70 126 44 Z" style="fill: #e3dcff"></path>
+              <path d="M72 68 L94 76 Q92 90 80 88 Q70 84 72 68 Z" style="fill: #141414"></path>
+              <path d="M128 68 L106 76 Q108 90 120 88 Q130 84 128 68 Z" style="fill: #141414"></path>
+              <circle cx="84" cy="80" r="3" style="fill: #c9ff3b"></circle><circle cx="116" cy="80" r="3" style="fill: #c9ff3b"></circle>
+              <path d="M80 102 Q100 122 120 102 Q100 110 80 102 Z" style="fill: #141414"></path>
+              <path d="M88 105 L92 111 L96 106 M104 106 L108 111 L112 105" style="fill: #ffffff"></path>
+            </g>
+          </g>
+          <rect x="26.5" y="268" width="247" height="69.5" style="fill: #ffffff"></rect>
+          <path d="M26 268 H274" style="stroke: #141414; stroke-width: 3; stroke-dasharray: 8 6"></path>
+          <rect x="42" y="284" width="150" height="10" style="fill: #e3dcff"></rect>
+          <rect x="42" y="302" width="200" height="10" style="fill: #e3dcff"></rect>
+        </svg>
+    <span class="va-sfx" style="--d: .3s">БУ!</span>
+  </sc-if>
+  <sc-if value="{{v5}}" hint-placeholder-val="{{false}}">
+    <img class="va-img " src="/_blob/2871ddc0547fea9d62c83365e76e7ab1" alt="" style="object-position: 50% var(--oy, 0%); ">
+  </sc-if>
+  <sc-if value="{{v6}}" hint-placeholder-val="{{false}}">
+    <span class="va-cable" style="--cx: 63%"></span>
+    <img class="va-img slide" src="/_blob/b22c2c3c1d7460c06a98b2235425b27a" alt="" style="object-position: 50% var(--oy, 0%); --o: 63% 0%">
+    <span class="va-sfx" style="--d: .8s">ВЖЖЖ!</span>
+  </sc-if>
+  <sc-if value="{{v7}}" hint-placeholder-val="{{false}}">
+    <img class="va-img thrust" src="/_blob/61d2fd71e56001a5bf9abae0dba0bfa3" alt="" style="object-position: 50% var(--oy, 0%); --o: 27% 76%; --z: 1.6">
+    <span class="va-glass" style="--o: 27% 76%"></span>
+    <span class="va-sfx" style="--d: .4s">ВАШ БИЛЕТ!</span>
+  </sc-if>
+  <sc-if value="{{v8}}" hint-placeholder-val="{{false}}">
+    <img class="va-img " src="/_blob/de2ab356956cf23de58721cd3bb69056" alt="" style="object-position: 50% var(--oy, 0%); ">
+  </sc-if>
+  <sc-if value="{{v9}}" hint-placeholder-val="{{false}}">
+    <img class="va-img " src="/_blob/21cf2a6d96e6d7f14f40bc7226037139" alt="" style="object-position: 50% var(--oy, 0%); ">
+    <span class="va-eye" style="left: 47.6%; top: 8.43%; width: 1.88%; height: 1.07%; animation-delay: 0.0s"></span>
+    <span class="va-eye" style="left: 51.6%; top: 8.43%; width: 1.88%; height: 1.07%; animation-delay: 0.0s"></span>
+    <span class="va-eye" style="left: 24.0%; top: 11.73%; width: 1.88%; height: 1.07%; animation-delay: 0.37s"></span>
+    <span class="va-eye" style="left: 27.8%; top: 11.73%; width: 2.29%; height: 1.07%; animation-delay: 0.37s"></span>
+    <span class="va-eye" style="left: 71.8%; top: 12.16%; width: 2.08%; height: 0.89%; animation-delay: 0.74s"></span>
+    <span class="va-eye" style="left: 75.6%; top: 12.16%; width: 1.88%; height: 0.89%; animation-delay: 0.74s"></span>
+    <span class="va-eye" style="left: 34.3%; top: 19.73%; width: 2.08%; height: 1.07%; animation-delay: 1.11s"></span>
+    <span class="va-eye" style="left: 38.5%; top: 19.73%; width: 2.29%; height: 1.07%; animation-delay: 1.11s"></span>
+    <span class="va-eye" style="left: 60.0%; top: 19.84%; width: 2.29%; height: 1.24%; animation-delay: 1.48s"></span>
+    <span class="va-eye" style="left: 64.2%; top: 19.84%; width: 2.29%; height: 1.24%; animation-delay: 1.48s"></span>
+    <span class="va-eye" style="left: 10.1%; top: 23.15%; width: 2.08%; height: 1.24%; animation-delay: 0.25s"></span>
+    <span class="va-eye" style="left: 14.2%; top: 23.04%; width: 2.29%; height: 1.24%; animation-delay: 0.25s"></span>
+    <span class="va-eye" style="left: 85.1%; top: 23.36%; width: 2.29%; height: 1.07%; animation-delay: 0.62s"></span>
+    <span class="va-eye" style="left: 89.1%; top: 23.47%; width: 2.29%; height: 1.07%; animation-delay: 0.62s"></span>
+    <span class="va-eye" style="left: 21.1%; top: 33.49%; width: 2.5%; height: 1.24%; animation-delay: 0.99s"></span>
+    <span class="va-eye" style="left: 25.8%; top: 33.39%; width: 2.92%; height: 1.24%; animation-delay: 0.99s"></span>
+    <span class="va-eye" style="left: 74.4%; top: 33.39%; width: 2.71%; height: 1.42%; animation-delay: 1.36s"></span>
+    <span class="va-eye" style="left: 79.1%; top: 33.39%; width: 2.71%; height: 1.24%; animation-delay: 1.36s"></span>
+    <span class="va-eye" style="left: 46.1%; top: 37.23%; width: 4.79%; height: 2.13%; animation-delay: 0.13s"></span>
+    <span class="va-eye" style="left: 53.6%; top: 37.23%; width: 4.79%; height: 2.13%; animation-delay: 0.13s"></span>
+    <span class="va-eye" style="left: 8.2%; top: 48.43%; width: 2.71%; height: 1.6%; animation-delay: 0.5s"></span>
+    <span class="va-eye" style="left: 13.4%; top: 48.21%; width: 3.33%; height: 1.6%; animation-delay: 0.5s"></span>
+    <span class="va-eye" style="left: 86.3%; top: 48.43%; width: 3.54%; height: 1.6%; animation-delay: 0.87s"></span>
+    <span class="va-eye" style="left: 91.5%; top: 48.53%; width: 2.92%; height: 1.42%; animation-delay: 0.87s"></span>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["v1","v2","v3","v4","v5","v6","v7","v8","v9","poster"],"default":"v2"},"vname":{"editor":"text","default":"Лагоед"},"emblem":{"editor":"text","default":"✂"},"color":{"editor":"text","default":"#19c3ff"},"preview":{"editor":"boolean","default":false},"fit":{"editor":"enum","options":["cover","square"],"default":"cover"},"$preview":{"width":300,"height":375}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { play: false }; }
+  componentWillUnmount() { if (this._t) clearTimeout(this._t); }
+  renderVals() {
+    const k = this.props.kind ?? 'v2';
+    const BG = { v1: '#20a9fa', v2: '#f10c15', v3: '#fd4f8f', v4: '#7b4dff', v5: '#fe7506', v6: '#08c447', v7: '#18a5fc', v8: '#b3f23d', v9: '#fcd004' };
+    const play = !!(this.state && this.state.play) || !!this.props.preview;
+    const o = {
+      rootCls: 'va' + (play ? ' play' : ''),
+      rootStyle: '--bg: ' + (k === 'poster' ? (this.props.color || '#ffd60a') : (BG[k] || 'transparent')) + '; --oy: ' + (this.props.fit === 'square' ? ({ v7: '38%', v8: '12%' }[k] || '0%') : '0%'),
+      ghost: k === 'v4',
+      // Постер без портрета (выпуски Фундамента): имя злодея, эмблема, растр и цвет выпуска.
+      poster: k === 'poster',
+      pst: (() => {
+        const name = String(this.props.vname || '');
+        const em = String(this.props.emblem || (name ? name[0] : '?'));
+        const words = name.split(/\s+/).filter(Boolean);
+        const L = Math.max(4, ...words.map((w) => w.length));
+        const E = Math.max(1, Array.from(em).length);
+        return {
+          name, emblem: em,
+          // Имя помещается по ширине самого длинного слова и по высоте (каждое слово — своя строка).
+          nameStyle: 'font-size:min(' + Math.min(13, 86 / (L * 0.95)).toFixed(2) + 'cqw,' + (26 / Math.max(1, words.length)).toFixed(2) + 'cqh)',
+          emStyle: 'font-size:' + Math.min(26, 38 / (E * 0.82)).toFixed(2) + 'cqmin'
+        };
+      })(),
+      // Мышь: сценка играет, пока курсор на персонаже. Палец: касание или свайп по персонажу запускает её, через 3 с она сбрасывается.
+      start: (e) => {
+        const touch = !e || e.type === 'touchmove' || (e.pointerType && e.pointerType !== 'mouse');
+        if (touch && this.state && this.state.play) return;
+        if (this._t) clearTimeout(this._t);
+        if (touch) this._t = setTimeout(() => this.setState({ play: false }), 3000);
+        if (!(this.state && this.state.play)) this.setState({ play: true });
+      },
+      stop: (e) => {
+        if (e && e.pointerType && e.pointerType !== 'mouse') return;
+        if (this._t) clearTimeout(this._t);
+        this.setState({ play: false });
+      }
+    };
+    ['v1','v2','v3','v5','v6','v7','v8','v9'].forEach((x) => { o[x] = k === x; });
+    return o;
+  }
+}
+</script>
+</body>
+</html>

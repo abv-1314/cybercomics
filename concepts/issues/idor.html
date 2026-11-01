@@ -1,0 +1,718 @@
+<section class="ix ix-idor" data-ix="idor" aria-label="Выпуск 2: Мистер IDOR и чужие заказы">
+
+<div class="ix-idor-story">
+
+  <div class="ix-idor-hud" aria-hidden="true">
+    <span class="ix-idor-hud-l">ЗАЩИТА ЗАКАЗОВ</span>
+    <span class="ix-idor-bar"><i></i><b>0%</b></span>
+    <span class="ix-idor-pips"><span>1</span><span>2</span><span>3</span></span>
+  </div>
+  <div class="ix-idor-sr" aria-live="polite" data-live></div>
+
+  <!-- ========== MISSION ========== -->
+  <div class="ix-idor-mission" id="ix-idor-mission">
+    <div class="ix-idor-eye" aria-hidden="true">
+      <div class="ix-idor-crop">
+        <img src="IMGROOT/villain-2.webp" alt="">
+        <span class="ix-idor-ret"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#ffd60a" stroke-width="5"/><circle cx="50" cy="50" r="24" fill="none" stroke="#ffd60a" stroke-width="2.5" stroke-dasharray="6 5"/><path d="M50 0v22M50 78v22M0 50h22M78 50h22" stroke="#ffd60a" stroke-width="5"/></svg></span>
+      </div>
+      <span class="ix-idor-tag">ЦЕЛЬ: МИСТЕР IDOR</span>
+    </div>
+    <div class="ix-idor-mbody">
+      <p class="ix-idor-kick">ВХОДЯЩЕЕ ЗАДАНИЕ</p>
+      <h2 class="ix-idor-mt" id="ix-idor-mt">Одна<br>цифра</h2>
+      <p class="ix-idor-msub">Мистер IDOR не взламывает. Он&nbsp;меняет <em>один номер</em> в&nbsp;адресе. Сыграй за него, а&nbsp;потом закрой дыру.</p>
+      <ol class="ix-idor-moves" aria-label="Шаги миссии">
+        <li data-mv="1"><b>01</b><span>Поменяй цифру</span></li>
+        <li data-mv="2"><b>02</b><span>Почини сервер</span></li>
+        <li data-mv="3"><b>03</b><span>Проверь UUID</span></li>
+      </ol>
+      <button class="ix-idor-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ========== L1 ========== -->
+  <section class="ix-idor-lvl ix-idor-locked" id="ix-idor-l1" aria-labelledby="ix-idor-t1">
+    <div class="ix-idor-lh"><span class="ix-idor-ln">ШАГ 1 / 3</span><h3 class="ix-idor-lt" id="ix-idor-t1">Чужой заказ</h3><span class="ix-idor-ok">ПРОЙДЕНО</span></div>
+    <div class="ix-idor-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="ix-idor-lb">
+      <div class="ix-idor-say"><span class="ix-idor-who">ДЯДЯ МИША</span><span class="ix-idor-bub">Ты — Алиса. Вошла со своим паролем и открыла свой заказ. Видишь номер в адресе?</span></div>
+
+      <div class="ix-idor-br" data-br="1">
+        <div class="ix-idor-url"><span class="ix-idor-lock" aria-hidden="true">🔒</span><span class="ix-idor-host">shop.example/orders/</span><span class="ix-idor-num" aria-hidden="true">12<span class="ix-idor-od"><span class="ix-idor-ods">0123456789</span></span></span><span class="ix-idor-sr" data-url-sr>shop.example/orders/123</span></div>
+        <div class="ix-idor-load" aria-hidden="true"></div>
+        <div class="ix-idor-page" aria-live="polite" data-page></div>
+        <div class="ix-idor-net" data-net>GET /orders/123 → <b class="ix-idor-c200">200 OK</b></div>
+      </div>
+
+      <div class="ix-idor-act"><button class="ix-idor-btn ix-idor-y" type="button" data-act="bump1">Поменять номер: +1</button></div>
+      <p class="ix-idor-legal">Учебный магазин. На настоящих сайтах так проверять нельзя.</p>
+
+      <div class="ix-idor-after">
+        <div class="ix-idor-say"><span class="ix-idor-who ix-idor-sonya">СОНЯ</span><span class="ix-idor-bub">Подожди. Алиса же вошла под своим паролем. Почему сервер показал ей чужое?</span></div>
+        <div class="ix-idor-say"><span class="ix-idor-who">ДЯДЯ МИША</span><span class="ix-idor-bub">Сервер задал только один вопрос из двух.</span></div>
+        <div class="ix-idor-two">
+          <p><span class="ix-idor-mk ix-idor-mk-ok" aria-label="есть">✓</span><span><b>Кто ты?</b> Аутентификация: пароль, код, токен. Алиса прошла честно.</span></p>
+          <p><span class="ix-idor-mk ix-idor-mk-no" aria-label="нет">✗</span><span><b>Чей это заказ?</b> Авторизация. Этот вопрос сервер забыл.</span></p>
+        </div>
+        <p class="ix-idor-def"><b>IDOR</b> (Insecure Direct Object Reference) — прямая ссылка на объект без проверки прав. Это часть Broken Access Control, риска №1 в&nbsp;OWASP Top&nbsp;10:2025.</p>
+        <div class="ix-idor-act"><button class="ix-idor-btn" type="button" data-goto="ix-idor-l2">Чинить сервер ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L2 ========== -->
+  <section class="ix-idor-lvl ix-idor-locked" id="ix-idor-l2" aria-labelledby="ix-idor-t2">
+    <div class="ix-idor-lh"><span class="ix-idor-ln">ШАГ 2 / 3</span><h3 class="ix-idor-lt" id="ix-idor-t2">Почини сервер</h3><span class="ix-idor-ok">ЗАКРЫТО</span></div>
+    <div class="ix-idor-lockcap"><span>🔒 Сначала поменяй цифру</span></div>
+    <div class="ix-idor-lb">
+      <div class="ix-idor-say"><span class="ix-idor-who">ДЯДЯ МИША</span><span class="ix-idor-bub">Вот код сервера. Вход он проверяет. А чей заказ — нет.</span></div>
+<pre class="ix-idor-code" data-code aria-label="Код сервера">@app.get("/orders/&lt;int:order_id&gt;")
+@login_required  <span class="ix-idor-cm"># вход проверили</span>
+def get_order(order_id):
+<span data-codeline><span class="ix-idor-badl">  <span class="ix-idor-cm"># чей заказ — не проверили</span>
+  order = Order.query.get_or_404(
+      order_id)</span></span>
+  return jsonify(order.to_dict())</pre>
+
+      <p class="ix-idor-q">Куда поставить проверку «чей заказ»?</p>
+      <div class="ix-idor-choices" data-fix>
+        <button class="ix-idor-ch" type="button" data-v="js"><b>В браузер</b><span>Скрипт прячет страницу, если номер не мой</span></button>
+        <button class="ix-idor-ch" type="button" data-v="body"><b>Спрятать номер</b><span>Передавать его не в адресе, а в теле запроса</span></button>
+        <button class="ix-idor-ch" type="button" data-v="srv"><b>На сервер</b><span>Искать заказ только среди заказов того, кто вошёл</span></button>
+      </div>
+      <p class="ix-idor-fb" data-fb aria-live="polite"></p>
+
+      <div class="ix-idor-after">
+        <div class="ix-idor-say"><span class="ix-idor-who">ДЯДЯ МИША</span><span class="ix-idor-bub">Теперь сыграй за Мистера IDOR ещё раз. Листай номера.</span></div>
+        <div class="ix-idor-br" data-br="2">
+          <div class="ix-idor-url"><span class="ix-idor-lock" aria-hidden="true">🔒</span><span class="ix-idor-host">shop.example/orders/</span><span class="ix-idor-num" aria-hidden="true">12<span class="ix-idor-od"><span class="ix-idor-ods">0123456789</span></span></span><span class="ix-idor-sr" data-url-sr>shop.example/orders/123</span></div>
+          <div class="ix-idor-load" aria-hidden="true"></div>
+          <div class="ix-idor-page" aria-live="polite" data-page></div>
+          <div class="ix-idor-net" data-net>GET /orders/123 → <b class="ix-idor-c200">200 OK</b></div>
+        </div>
+        <div class="ix-idor-act ix-idor-pair">
+          <button class="ix-idor-btn" type="button" data-act="dec">Номер −1</button>
+          <button class="ix-idor-btn ix-idor-y" type="button" data-act="inc">Номер +1</button>
+        </div>
+        <p class="ix-idor-note" data-why404>Почему 404, а не 403? Так сервер даже не подтверждает, что заказ №124 существует. 403 «нельзя» — тоже честный ответ. Главное, что не 200.</p>
+        <div class="ix-idor-act"><button class="ix-idor-btn" type="button" data-goto="ix-idor-l3">А если UUID? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L3 ========== -->
+  <section class="ix-idor-lvl ix-idor-locked" id="ix-idor-l3" aria-labelledby="ix-idor-t3">
+    <div class="ix-idor-lh"><span class="ix-idor-ln">ШАГ 3 / 3</span><h3 class="ix-idor-lt" id="ix-idor-t3">А если UUID?</h3><span class="ix-idor-ok">ПОНЯТО</span></div>
+    <div class="ix-idor-lockcap"><span>🔒 Сначала почини сервер</span></div>
+    <div class="ix-idor-lb">
+      <div class="ix-idor-say"><span class="ix-idor-who ix-idor-sonya">СОНЯ</span><span class="ix-idor-bub">А давайте вместо 124 длинный случайный номер? Его же не угадать!</span></div>
+      <div class="ix-idor-say"><span class="ix-idor-who">ДЯДЯ МИША</span><span class="ix-idor-bub">Это UUID. Представь: разработчик поставил UUID, но проверку владельца не написал.</span></div>
+
+      <div class="ix-idor-uuid">
+        <span class="ix-idor-ulab">ЗАКАЗ БОБА ТЕПЕРЬ:</span>
+        <code>/orders/9f1c2a7e-4b3d-<wbr>4e8a-a1f0-7c55d2e93b14</code>
+      </div>
+      <div class="ix-idor-say"><span class="ix-idor-who ix-idor-v">МИСТЕР IDOR</span><span class="ix-idor-bub">Угадывать? Зачем. Боб сам кинул ссылку на заказ в общий чат класса.</span></div>
+
+      <p class="ix-idor-q">Мистер IDOR открывает эту ссылку. Что он увидит?</p>
+      <div class="ix-idor-choices ix-idor-two-ch" data-uuid>
+        <button class="ix-idor-ch" type="button" data-v="no"><b>Ошибку 404</b><span>UUID же не угадать</span></button>
+        <button class="ix-idor-ch" type="button" data-v="yes"><b>Заказ Боба</b><span>Номер у него уже есть</span></button>
+      </div>
+      <p class="ix-idor-fb" data-fb aria-live="polite"></p>
+
+      <div class="ix-idor-after">
+        <p class="ix-idor-big">UUID прячет номер.<br><span>Проверку прав он не&nbsp;добавляет.</span></p>
+        <p class="ix-idor-def">Номера утекают в ссылках, логах и ответах других страниц. Исправление одно — сервер проверяет владельца каждого объекта при каждом запросе.</p>
+        <div class="ix-idor-act"><button class="ix-idor-btn ix-idor-y" type="button" data-goto="ix-idor-battle">К битве с Мистером IDOR ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="ix-idor-hack" role="dialog" aria-modal="true" aria-labelledby="ix-idor-hk" hidden>
+  <div class="ix-idor-hkin">
+    <div class="ix-idor-hkface" aria-hidden="true"><img src="IMGROOT/villain-2.webp" alt=""></div>
+    <p class="ix-idor-hkt" id="ix-idor-hk">ВЗЛОМ!</p>
+    <div class="ix-idor-hkcard">
+      <span>Заказ №124 · <b>Боб М.</b></span>
+      <span>+7 900 •••-45-67</span>
+      <span>ул. Лесная, 7, кв. 3</span>
+    </div>
+    <p class="ix-idor-hksay">Никаких взломов. Только одна цифра.</p>
+    <button class="ix-idor-btn ix-idor-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="ix-idor-battle" id="ix-idor-battle" aria-labelledby="ix-idor-bt" tabindex="-1">
+  <div class="ix-idor-bh">
+    <span class="ix-idor-bface" aria-hidden="true"><img src="IMGROOT/villain-2.webp" alt=""></span>
+    <div class="ix-idor-bhx">
+      <h2 class="ix-idor-bt" id="ix-idor-bt">Битва со злодеем</h2>
+      <div class="ix-idor-hp" role="img" aria-label="Здоровье Мистера IDOR" data-hp-wrap><i data-hp></i><b data-hp-t>МИСТЕР IDOR · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-idor-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="ix-idor-iv" aria-labelledby="ix-idor-ivt">
+  <p class="ix-idor-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ix-idor-ivq" id="ix-idor-ivt">Как бы ты искал IDOR в приложении и как объяснил бы разработчикам исправление?</h2>
+  <div class="ix-idor-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: сколько аккаунтов тебе нужно? И где в запросах прячутся номера объектов?</span>
+  </div>
+  <button class="ix-idor-btn ix-idor-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-idor-iva">Показать сильный ответ</button>
+  <div class="ix-idor-iva" id="ix-idor-iva" hidden>
+    <ol>
+      <li><b>Два аккаунта и роль.</b> Завожу двух пользователей одного уровня и одного с другой ролью. Только на своём тестовом стенде.</li>
+      <li><b>Карта номеров.</b> Прохожу функции приложения и отмечаю все запросы, где есть номер объекта: в адресе, параметрах, теле.</li>
+      <li><b>Повтор от чужого имени.</b> Повторяю эти запросы от другого пользователя. Получил чужие данные или сделал чужое действие — это IDOR.</li>
+      <li><b>Исправление.</b> Проверка прав на сервере при каждом обращении к объекту, запрет по умолчанию, логика доступа в одном месте. В CI — тесты авторизации, в логах — тревога на массовые отказы.</li>
+    </ol>
+    <p class="ix-idor-ivx"><b>Ошибка новичка:</b> «Заменим номера на UUID — и готово». Угадать станет сложнее, но права так никто и не проверил.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="ix-idor-cs" aria-labelledby="ix-idor-cst">
+  <h2 class="ix-idor-cst" id="ix-idor-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ix-idor-csl">
+    <li><span class="ix-idor-csn" aria-hidden="true">01</span><div><b>Два вопроса</b><p>«Кто ты?» — аутентификация. «Что тебе можно?» — авторизация. IDOR ломает второй.</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">02</span><div><b>Каждый объект</b><p>Сервер сверяет владельца при каждом запросе, а не один раз при входе.</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">03</span><div><b>Запрет по умолчанию</b><p>Всё запрещено, пока явно не разрешено, а логика доступа живёт в одном месте.</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">04</span><div><b>UUID — не исправление</b><p>Угадать сложнее, но номера утекают в ссылках и логах, а проверки прав всё нет.</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">05</span><div><b>Горизонтально и вертикально</b><p>Чужой заказ — горизонтальное нарушение (в API — BOLA), функция админа — вертикальное (BFLA).</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">06</span><div><b>Тест «A не видит B»</b><p>Сканер не знает, чей заказ, а тест авторизации в CI уронит сборку при ошибке.</p></div></li>
+    <li><span class="ix-idor-csn" aria-hidden="true">07</span><div><b>Журнал отказов</b><p>Отказы пишутся в журнал, а массовый перебор номеров поднимает тревогу.</p></div></li>
+  </ol>
+  <p class="ix-idor-train"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (раздел Access control), OWASP Juice Shop, picoCTF. Чужие сайты и чужие заказы трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-idor{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--vred:#f00d15;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-idor *,.ix-idor *::before,.ix-idor *::after{box-sizing:border-box}
+.ix-idor button{font:inherit;color:inherit}
+.ix-idor :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-idor [hidden]{display:none !important}
+.ix-idor p{margin:0}
+.ix-idor .ix-idor-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-idor .ix-idor-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-idor .ix-idor-hud.ix-idor-on{display:flex;animation:ix-idor-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-idor .ix-idor-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-idor .ix-idor-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-idor .ix-idor-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-idor .ix-idor-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-idor .ix-idor-hud.ix-idor-hit{animation:ix-idor-shake .4s}
+.ix-idor .ix-idor-hud.ix-idor-hit .ix-idor-bar{border-color:var(--red)}
+.ix-idor .ix-idor-pips{display:flex;gap:4px}
+.ix-idor .ix-idor-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-idor .ix-idor-pips span.ix-idor-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION */
+.ix-idor .ix-idor-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-idor .ix-idor-eye{position:relative;background:var(--vred);display:flex;align-items:center;border-right:3px solid var(--ink);overflow:hidden}
+.ix-idor .ix-idor-crop{position:relative;width:100%;aspect-ratio:6/5;overflow:hidden}
+.ix-idor .ix-idor-crop img{position:absolute;left:0;top:0;width:100%;height:auto;transform:translateY(-12.5%);display:block}
+.ix-idor .ix-idor-crop::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.5) 1.1px,transparent 1.8px);background-size:7px 7px;mix-blend-mode:multiply;opacity:.45;pointer-events:none}
+.ix-idor .ix-idor-ret{position:absolute;z-index:2;left:41.7%;top:66.7%;width:34%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
+.ix-idor .ix-idor-ret svg{display:block;width:100%;height:100%;overflow:visible}
+.ix-idor .ix-idor-tag{position:absolute;z-index:3;left:12px;bottom:12px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px;border:2px solid var(--yel)}
+.ix-idor .ix-idor-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,214,10,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-idor .ix-idor-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--yel)}
+.ix-idor .ix-idor-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:48px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-idor .ix-idor-msub{font-size:20px;line-height:1.4}
+.ix-idor .ix-idor-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-idor .ix-idor-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ix-idor .ix-idor-moves li{border:2px solid #fff;padding:8px 8px 10px;position:relative}
+.ix-idor .ix-idor-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-idor .ix-idor-moves span{display:block;font-family:var(--f-cap);font-size:14px;line-height:1.2;margin-top:4px}
+.ix-idor .ix-idor-moves li.ix-idor-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-idor .ix-idor-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-idor .ix-idor-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--red)}
+.ix-idor .ix-idor-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--red)}
+.ix-idor.ix-idor-anim .ix-idor-ret{animation:ix-idor-lock 1s cubic-bezier(.2,1.4,.4,1) .3s both}
+.ix-idor.ix-idor-anim .ix-idor-go:not(:disabled){animation:ix-idor-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-idor .ix-idor-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-idor .ix-idor-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-idor .ix-idor-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-idor .ix-idor-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-idor .ix-idor-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-idor .ix-idor-clear .ix-idor-ok{display:inline-block}
+.ix-idor .ix-idor-lb{padding:22px 20px 24px}
+.ix-idor .ix-idor-locked{pointer-events:none;user-select:none}
+.ix-idor .ix-idor-locked .ix-idor-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-idor .ix-idor-lockcap{display:none}
+.ix-idor .ix-idor-locked .ix-idor-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-idor .ix-idor-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-idor .ix-idor-after{display:none;margin-top:28px}
+.ix-idor .ix-idor-lvl.ix-idor-clear .ix-idor-after{display:block;animation:ix-idor-up .4s ease-out}
+
+.ix-idor .ix-idor-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-idor .ix-idor-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-idor .ix-idor-who.ix-idor-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-idor .ix-idor-who.ix-idor-v{background:var(--red);color:#fff}
+.ix-idor .ix-idor-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+
+/* browser */
+.ix-idor .ix-idor-br{position:relative;margin:22px 0 0;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);overflow:hidden}
+.ix-idor .ix-idor-url{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#ece6d6;border-bottom:3px solid var(--ink);min-height:64px;flex-wrap:nowrap;overflow:hidden}
+.ix-idor .ix-idor-lock{font-size:15px;flex:0 0 auto}
+.ix-idor .ix-idor-host{font-family:var(--code);font-size:16px;font-weight:700;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ix-idor .ix-idor-num{flex:0 0 auto;display:inline-flex;align-items:center;font-family:var(--code);font-weight:800;font-size:32px;line-height:1;background:var(--yel);border:3px solid var(--ink);padding:3px 8px;border-radius:6px;margin-left:2px}
+.ix-idor .ix-idor-od{display:inline-block;height:1em;overflow:hidden;vertical-align:top;position:relative}
+.ix-idor .ix-idor-ods{display:block;width:1ch;word-break:break-all;line-height:1;transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+.ix-idor .ix-idor-num.ix-idor-hot{background:var(--red);color:#fff;animation:ix-idor-shake .35s .55s}
+.ix-idor .ix-idor-load{height:4px;background:var(--red);transform:scaleX(0);transform-origin:left}
+.ix-idor .ix-idor-br.ix-idor-loading .ix-idor-load{animation:ix-idor-load .5s ease-in forwards}
+.ix-idor .ix-idor-page{position:relative;padding:18px 18px 16px;min-height:208px}
+.ix-idor .ix-idor-ord{display:grid;gap:6px}
+.ix-idor .ix-idor-ord h4{margin:0 0 4px;font-family:var(--f-cap);font-weight:400;font-size:22px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.ix-idor .ix-idor-ord dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.ix-idor .ix-idor-ord dt{color:var(--muted);font-size:16px;padding-top:2px}
+.ix-idor .ix-idor-ord dd{margin:0;font-weight:500;font-size:18px;overflow-wrap:anywhere}
+.ix-idor .ix-idor-badge{font-family:var(--f-cap);font-size:13px;padding:3px 10px;border:2px solid var(--ink);background:var(--green)}
+.ix-idor .ix-idor-ord.ix-idor-foreign{animation:ix-idor-glitch .45s steps(3)}
+.ix-idor .ix-idor-ord.ix-idor-foreign .ix-idor-badge{background:var(--red);color:#fff}
+.ix-idor .ix-idor-ord.ix-idor-foreign dd{background:rgba(255,59,59,.14)}
+.ix-idor .ix-idor-err{display:flex;align-items:center;gap:16px;flex-wrap:wrap;min-height:172px}
+.ix-idor .ix-idor-stamp{display:inline-flex;flex-direction:column;align-items:center;border:5px solid currentColor;padding:6px 16px;font-family:var(--f-mono);font-size:44px;line-height:1;transform:rotate(-6deg);color:#c81e1e}
+.ix-idor .ix-idor-stamp small{font-family:var(--f-cap);font-size:13px;margin-top:4px}
+.ix-idor .ix-idor-err .ix-idor-stamp{animation:ix-idor-stampin .45s cubic-bezier(.2,1.6,.4,1)}
+.ix-idor .ix-idor-err p{flex:1 1 180px;font-family:var(--f-hand);font-size:24px;line-height:1.2}
+.ix-idor .ix-idor-net{padding:9px 14px;border-top:2px dashed #bbb;font-family:var(--code);font-size:15px;color:var(--muted)}
+.ix-idor .ix-idor-c200{color:var(--gdk)}
+.ix-idor .ix-idor-c200.ix-idor-alarm{color:#fff;background:var(--red);padding:0 5px}
+.ix-idor .ix-idor-c404{color:#c81e1e}
+
+.ix-idor .ix-idor-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-idor .ix-idor-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--red);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-idor .ix-idor-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--red)}
+.ix-idor .ix-idor-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--red)}
+.ix-idor .ix-idor-btn.ix-idor-y{background:var(--yel);color:var(--ink)}
+.ix-idor .ix-idor-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--red)}
+.ix-idor .ix-idor-pair .ix-idor-btn{flex:1 1 140px}
+.ix-idor .ix-idor-legal{margin-top:12px;font-size:16px;color:var(--muted)}
+.ix-idor .ix-idor-note{margin-top:18px;font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+
+.ix-idor .ix-idor-two{margin:22px 0 0;display:grid;gap:14px}
+.ix-idor .ix-idor-two p{display:flex;gap:14px;align-items:flex-start;font-size:19px;line-height:1.35}
+.ix-idor .ix-idor-two b{display:block;font-family:var(--f-cap);font-weight:400;font-size:25px;line-height:1.15;margin-bottom:2px}
+.ix-idor .ix-idor-mk{flex:0 0 48px;height:48px;display:grid;place-items:center;border:3px solid var(--ink);font-size:28px;font-weight:700;line-height:1}
+.ix-idor .ix-idor-mk-ok{background:var(--green)}
+.ix-idor .ix-idor-mk-no{background:var(--red);color:#fff}
+.ix-idor .ix-idor-def{margin-top:22px;font-size:18px;line-height:1.5}
+
+/* code */
+.ix-idor .ix-idor-code{margin:20px 0 0;padding:16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre;overflow-x:auto}
+.ix-idor .ix-idor-cm{color:#9d9785}
+.ix-idor .ix-idor-badl{background:rgba(255,59,59,.3);box-shadow:inset 3px 0 0 var(--red)}
+.ix-idor .ix-idor-goodl{background:rgba(46,229,157,.22);box-shadow:inset 3px 0 0 var(--green)}
+.ix-idor .ix-idor-code.ix-idor-fixed{box-shadow:5px 5px 0 var(--green)}
+.ix-idor .ix-idor-code.ix-idor-fixed [data-codeline]{animation:ix-idor-up .45s ease-out}
+
+.ix-idor .ix-idor-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-idor .ix-idor-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-idor .ix-idor-choices.ix-idor-two-ch{grid-template-columns:1fr 1fr}
+.ix-idor .ix-idor-ch{min-height:92px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-idor .ix-idor-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-idor .ix-idor-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-idor .ix-idor-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+.ix-idor .ix-idor-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-idor .ix-idor-ch.ix-idor-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.7;cursor:default}
+.ix-idor .ix-idor-ch.ix-idor-right{background:var(--green)}
+.ix-idor .ix-idor-ch.ix-idor-right span{color:var(--ink)}
+.ix-idor .ix-idor-ch:disabled{cursor:default;transform:none}
+.ix-idor .ix-idor-fb{margin-top:14px;font-size:18px;line-height:1.4;min-height:0}
+.ix-idor .ix-idor-fb:empty{display:none}
+.ix-idor .ix-idor-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-idor .ix-idor-fb.ix-idor-bad b{color:#c81e1e}
+.ix-idor .ix-idor-fb.ix-idor-good b{color:var(--gdk)}
+
+.ix-idor .ix-idor-uuid{margin:20px 0 18px;padding:14px 16px;border:3px solid var(--ink);background:var(--yel);box-shadow:4px 4px 0 var(--ink)}
+.ix-idor .ix-idor-ulab{display:block;font-family:var(--f-cap);font-size:13px;margin-bottom:4px}
+.ix-idor .ix-idor-uuid code{font-family:var(--code);font-weight:800;font-size:18px;line-height:1.4;overflow-wrap:anywhere}
+.ix-idor .ix-idor-big{font-family:var(--f-mono);font-size:28px;line-height:1.15}
+.ix-idor .ix-idor-big span{color:#c81e1e}
+
+/* HACK overlay */
+.ix-idor .ix-idor-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--vred);color:#fff;
+  background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-idor .ix-idor-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-idor .ix-idor-hkface{position:relative;width:min(70vw,260px);aspect-ratio:1;border:4px solid var(--ink);overflow:hidden;background:var(--vred);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg)}
+.ix-idor .ix-idor-hkface img{position:absolute;left:-16%;top:0;width:150%;height:auto;transform:translateY(-17%)}
+.ix-idor .ix-idor-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-idor .ix-idor-hkcard{display:grid;gap:2px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 18px;font-family:var(--code);font-size:16px;transform:rotate(1.5deg)}
+.ix-idor .ix-idor-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-idor.ix-idor-anim .ix-idor-hack:not([hidden]) .ix-idor-hkin{animation:ix-idor-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-idor.ix-idor-anim .ix-idor-hack.ix-idor-rw{animation:ix-idor-fade .6s ease-in forwards}
+.ix-idor.ix-idor-anim .ix-idor-hack.ix-idor-rw .ix-idor-hkin{animation:ix-idor-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-idor .ix-idor-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);scroll-margin-top:16px;outline:none}
+.ix-idor .ix-idor-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-idor .ix-idor-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--red);background:var(--vred);position:relative}
+.ix-idor .ix-idor-bface img{position:absolute;left:-55%;top:0;width:210%;height:auto;transform:translateY(-13%)}
+.ix-idor .ix-idor-bface.ix-idor-ow{animation:ix-idor-shake .4s}
+.ix-idor .ix-idor-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-idor .ix-idor-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+.ix-idor .ix-idor-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-idor .ix-idor-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-idor .ix-idor-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-idor .ix-idor-bbody{position:relative;padding:22px 20px 26px}
+.ix-idor .ix-idor-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-idor .ix-idor-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red);margin-bottom:22px}
+.ix-idor .ix-idor-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-idor .ix-idor-bopts{display:grid;gap:10px}
+.ix-idor .ix-idor-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-idor .ix-idor-bo:hover{background:#262626}
+.ix-idor .ix-idor-bo.ix-idor-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-idor .ix-idor-bo.ix-idor-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-idor .ix-idor-bo:disabled{cursor:default}
+.ix-idor .ix-idor-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-idor .ix-idor-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-idor .ix-idor-bfb.ix-idor-good b{color:var(--green)}
+.ix-idor .ix-idor-bfb.ix-idor-bad b{color:#ff8a8a}
+.ix-idor .ix-idor-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-idor-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-idor .ix-idor-win{display:grid;gap:16px;justify-items:start}
+.ix-idor .ix-idor-wface{position:relative;width:100%;max-width:420px;aspect-ratio:6/5;overflow:hidden;border:3px solid #fff;background:var(--vred)}
+.ix-idor .ix-idor-wface img{position:absolute;left:0;top:0;width:100%;height:auto;transform:translateY(-12.5%);filter:grayscale(1) contrast(1.2)}
+.ix-idor .ix-idor-wface span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.92);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-idor.ix-idor-anim .ix-idor-wface span{animation:ix-idor-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+@keyframes ix-idor-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+.ix-idor .ix-idor-wint{font-family:var(--f-mono);font-size:30px;line-height:1.1;color:var(--green)}
+.ix-idor .ix-idor-wins{font-size:20px}
+.ix-idor .ix-idor-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-idor .ix-idor-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+.ix-idor .ix-idor-battle .ix-idor-btn{box-shadow:4px 4px 0 var(--red)}
+
+/* INTERVIEW */
+.ix-idor .ix-idor-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-idor .ix-idor-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:#c81e1e;margin-bottom:10px}
+.ix-idor .ix-idor-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-idor .ix-idor-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-idor .ix-idor-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-idor .ix-idor-think span{font-size:18px;line-height:1.45}
+.ix-idor .ix-idor-iva{margin-top:24px;animation:ix-idor-up .4s ease-out}
+.ix-idor .ix-idor-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixidor}
+.ix-idor .ix-idor-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixidor}
+.ix-idor .ix-idor-iva li::before{content:counter(ixidor);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-idor .ix-idor-iva li b{font-weight:700}
+.ix-idor .ix-idor-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-idor .ix-idor-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-idor .ix-idor-cs{margin-top:72px}
+.ix-idor .ix-idor-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-idor .ix-idor-csl{list-style:none;margin:0;padding:0}
+.ix-idor .ix-idor-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-idor .ix-idor-csl li:last-child{border-bottom:0}
+.ix-idor .ix-idor-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-idor .ix-idor-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-idor .ix-idor-csl p{font-size:18px;line-height:1.45}
+.ix-idor .ix-idor-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-idor-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-idor-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-idor-lock{from{opacity:0;transform:translate(-50%,-50%) scale(2.6) rotate(45deg)}to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}}
+@keyframes ix-idor-pulse{0%,100%{box-shadow:5px 5px 0 var(--red)}50%{box-shadow:5px 5px 0 var(--red),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-idor-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-idor-load{to{transform:scaleX(1)}}
+@keyframes ix-idor-glitch{0%{transform:translateX(-8px) skewX(8deg);filter:hue-rotate(90deg)}50%{transform:translateX(6px) skewX(-6deg)}100%{transform:none;filter:none}}
+@keyframes ix-idor-stampin{from{opacity:0;transform:rotate(-6deg) scale(2.6)}to{opacity:1;transform:rotate(-6deg) scale(1)}}
+@keyframes ix-idor-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-idor-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-idor-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-idor-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+
+@media (min-width:761px){
+  .ix-idor .ix-idor-num{font-size:40px}
+  .ix-idor .ix-idor-host{font-size:18px}
+  .ix-idor .ix-idor-crop{aspect-ratio:9/10}
+  .ix-idor .ix-idor-crop img{transform:translateY(-8.33%)}
+  .ix-idor .ix-idor-ret{top:55%}
+}
+@media (max-width:760px){
+  .ix-idor .ix-idor-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--red)}
+  .ix-idor .ix-idor-eye{border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-idor .ix-idor-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-idor .ix-idor-mt{font-size:40px}
+  .ix-idor .ix-idor-moves span{font-size:13px}
+  .ix-idor .ix-idor-go{align-self:stretch}
+  .ix-idor .ix-idor-choices,.ix-idor .ix-idor-choices.ix-idor-two-ch{grid-template-columns:1fr}
+  .ix-idor .ix-idor-ch{min-height:72px}
+}
+@media (max-width:520px){
+  .ix-idor .ix-idor-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-idor .ix-idor-lh{padding:12px 14px}
+  .ix-idor .ix-idor-lt{font-size:20px}
+  .ix-idor .ix-idor-lb{padding:18px 14px 20px}
+  .ix-idor .ix-idor-bub{font-size:21px}
+  .ix-idor .ix-idor-url{padding:8px 10px;gap:4px}
+  .ix-idor .ix-idor-host{font-size:14px}
+  .ix-idor .ix-idor-num{font-size:28px;padding:3px 6px}
+  .ix-idor .ix-idor-page{padding:16px 14px 14px}
+  .ix-idor .ix-idor-ord dl{grid-template-columns:1fr;gap:0}
+  .ix-idor .ix-idor-ord dd{margin-bottom:6px}
+  .ix-idor .ix-idor-ord dt{font-size:15px;padding-top:0}
+  .ix-idor .ix-idor-stamp{font-size:36px}
+  .ix-idor .ix-idor-code{font-size:13px;padding:12px}
+  .ix-idor .ix-idor-q{font-size:20px}
+  .ix-idor .ix-idor-two b{font-size:23px}
+  .ix-idor .ix-idor-big{font-size:23px}
+  .ix-idor .ix-idor-hkt{font-size:46px}
+  .ix-idor .ix-idor-bh{padding:16px 14px;gap:12px}
+  .ix-idor .ix-idor-bface{width:68px;height:68px}
+  .ix-idor .ix-idor-bt{font-size:20px}
+  .ix-idor .ix-idor-bbody{padding:18px 14px 22px}
+  .ix-idor .ix-idor-vsay{font-size:22px}
+  .ix-idor .ix-idor-iv{padding:22px 16px 24px}
+  .ix-idor .ix-idor-ivq{font-size:22px}
+  .ix-idor .ix-idor-iva li{padding-left:42px;font-size:18px}
+  .ix-idor .ix-idor-cst{font-size:25px}
+  .ix-idor .ix-idor-csl li{gap:14px}
+  .ix-idor .ix-idor-csn{flex-basis:54px;font-size:30px}
+  .ix-idor .ix-idor-hud{padding:7px 10px;gap:8px}
+  .ix-idor .ix-idor-hud-l{font-size:10px}
+  .ix-idor .ix-idor-pips span{width:22px;height:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-idor *,.ix-idor *::before,.ix-idor *::after{animation:none !important;transition:none !important}
+  .ix-idor .ix-idor-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-idor'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ix-idor-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+
+  /* HUD */
+  var hud=q('.ix-idor-hud'), fill=q('.ix-idor-bar i'), barT=q('.ix-idor-bar b'), pips=qa('.ix-idor-pips span');
+  var S={def:0,steps:[0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ix-idor-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('ix-idor-hit');void hud.offsetWidth;hud.classList.add('ix-idor-hit');setTimeout(function(){hud.classList.remove('ix-idor-hit')},700)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('ix-idor-x');
+    var lv=q('#ix-idor-l'+(i+1)); lv.classList.add('ix-idor-clear');
+    var nx=q('#ix-idor-l'+(i+2)); if(nx) nx.classList.remove('ix-idor-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    var f=t.classList.contains('ix-idor-battle')?t:t.querySelector('.ix-idor-lb button');
+    if(f) setTimeout(function(){f.focus({preventScroll:true})},RM?0:500);
+  })});
+
+  /* ORDERS (учебные, вымышленные) */
+  var ORD={
+    123:{who:'Алиса К.',mine:true,rows:[['Товар','Кроссовки, 1 шт.'],['Адрес','ул. Садовая, 12'],['Статус','В пути']]},
+    124:{who:'Боб М.',rows:[['Телефон','+7 900 •••-45-67'],['Адрес','ул. Лесная, 7, кв. 3'],['Товар','Наушники — подарок маме']]},
+    125:{who:'Вера Т.',rows:[['Телефон','+7 911 •••-08-21'],['Адрес','пр. Мира, 40'],['Товар','Чехол для телефона']]},
+    122:{who:'Глеб П.',rows:[['Телефон','+7 926 •••-77-10'],['Адрес','ул. Речная, 3'],['Товар','Настольная игра']]}
+  };
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function orderHTML(n){
+    var o=ORD[n]||{who:'Покупатель №'+n,rows:[['Товар','—']]};
+    var h='<div class="ix-idor-ord'+(o.mine?'':' ix-idor-foreign')+'"><h4>Заказ №'+n+' · '+esc(o.who)+' <span class="ix-idor-badge">'+(o.mine?'ТВОЙ ЗАКАЗ':'ЧУЖОЙ!')+'</span></h4><dl>';
+    o.rows.forEach(function(r){h+='<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>'});
+    return h+'</dl></div>';
+  }
+  function makeBrowser(el){
+    var B={el:el,n:123,ods:q('.ix-idor-ods',el),num:q('.ix-idor-num',el),page:q('[data-page]',el),net:q('[data-net]',el),sr:q('[data-url-sr]',el)};
+    B.setDigit=function(){B.ods.style.transform='translateY(-'+(B.n%10)+'em)';B.sr.textContent='shop.example/orders/'+B.n};
+    B.render=function(fixed){
+      if(fixed && B.n!==123){
+        B.page.innerHTML='<div class="ix-idor-err"><span class="ix-idor-stamp">404<small>НЕ НАЙДЕНО</small></span><p>Среди заказов Алисы №'+B.n+' нет. Сервер молчит.</p></div>';
+        B.net.innerHTML='GET /orders/'+B.n+' → <b class="ix-idor-c404">404 Not Found</b>';
+      } else {
+        B.page.innerHTML=orderHTML(B.n);
+        var foreign=B.n!==123;
+        B.net.innerHTML='GET /orders/'+B.n+' → <b class="ix-idor-c200'+(foreign?' ix-idor-alarm':'')+'">200 OK</b>'+(foreign?' — сервер не возразил':'');
+      }
+      B.num.classList.toggle('ix-idor-hot',!fixed && B.n!==123);
+    };
+    B.nav=function(n,fixed){
+      B.n=n; B.setDigit();
+      el.classList.remove('ix-idor-loading'); void el.offsetWidth; el.classList.add('ix-idor-loading');
+      return wait(650).then(function(){B.render(fixed); el.classList.remove('ix-idor-loading')});
+    };
+    B.setDigit(); B.render(false);
+    return B;
+  }
+  var B1=makeBrowser(q('[data-br="1"]')), B2=makeBrowser(q('[data-br="2"]'));
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-idor-l1');
+    if(!hud.classList.contains('ix-idor-on')){
+      hud.classList.add('ix-idor-on'); paint();
+      l1.classList.remove('ix-idor-locked');
+      startBtn.textContent='Миссия начата ▼';
+      say('Миссия принята. Шаг первый открыт.');
+    }
+    go(l1); setTimeout(function(){q('[data-act="bump1"]').focus({preventScroll:true})},RM?0:500);
+  });
+
+  /* L1: change the number → HACK */
+  var bump=q('[data-act="bump1"]'), hack=q('.ix-idor-hack'), lastFocus=null;
+  bump.addEventListener('click',function(){
+    if(bump.disabled) return; bump.disabled=true;
+    B1.nav(124,false).then(function(){
+      hit(); say('Заказ 124 открылся. Это чужой заказ Боба: телефон, адрес и покупки.');
+      return wait(1100);
+    }).then(function(){ openHack(); });
+  });
+  function openHack(){
+    lastFocus=document.activeElement; hack.hidden=false; hack.classList.remove('ix-idor-rw');
+    setTimeout(function(){q('[data-act="rewind"]').focus()},30);
+  }
+  function closeHack(){
+    if(hack.hidden) return;
+    hack.classList.add('ix-idor-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('ix-idor-rw');
+      return B1.nav(123,false);
+    }).then(function(){
+      bump.textContent='Номер снова 123'; step(0,10);
+      say('Время откачено. Шаг первый пройден.');
+      var a=q('#ix-idor-l1 .ix-idor-after'); go(a);
+      setTimeout(function(){var b=q('#ix-idor-l1 [data-goto]'); b&&b.focus({preventScroll:true})},RM?0:500);
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]').focus()}
+  });
+
+  /* L2: fix the server */
+  var fixWrap=q('[data-fix]'), fb2=q('#ix-idor-l2 [data-fb]'), code=q('[data-code]');
+  var FIX={
+    js:'Мистер IDOR шлёт запрос мимо твоего скрипта. Браузер — его территория, сервер ответит всё равно.',
+    body:'Номер в теле запроса меняется так же легко. Неважно, где номер, — важно, кто его проверяет.'
+  };
+  qa('.ix-idor-ch',fixWrap).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    var v=b.getAttribute('data-v');
+    if(v!=='srv'){
+      b.classList.add('ix-idor-wrong'); b.disabled=true; hit();
+      fb2.className='ix-idor-fb ix-idor-bad'; fb2.innerHTML='<b>ВЗЛОМ!</b>'+FIX[v];
+      return;
+    }
+    qa('.ix-idor-ch',fixWrap).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-idor-right');
+    fb2.className='ix-idor-fb ix-idor-good'; fb2.innerHTML='<b>Точно.</b>Сервер ищет заказ только среди заказов того, кто вошёл. Чужой — значит, не найден.';
+    q('[data-codeline]',code).innerHTML='<span class="ix-idor-goodl">  <span class="ix-idor-cm"># ищем только среди своих</span>\n  order = Order.query.filter_by(\n      id=order_id,\n      owner_id=current_user.id\n  ).first_or_404()  <span class="ix-idor-cm"># чужой — 404</span></span>';
+    code.classList.add('ix-idor-fixed');
+    step(1,60); say('Сервер починен. Защита 60 процентов. Попробуй снова поменять номер.');
+  })});
+  var dec=q('[data-act="dec"]'), inc=q('[data-act="inc"]'), busy=false;
+  function nav2(d){
+    if(busy) return; var n=Math.max(120,Math.min(129,B2.n+d)); if(n===B2.n) return;
+    busy=true; B2.nav(n,true).then(function(){
+      busy=false; dec.disabled=B2.n<=120; inc.disabled=B2.n>=129;
+      say(B2.n===123?'Заказ 123: твой, ответ 200.':'Заказ '+B2.n+': ответ 404, не найдено.');
+    });
+  }
+  dec.addEventListener('click',function(){nav2(-1)}); inc.addEventListener('click',function(){nav2(1)});
+
+  /* L3: UUID */
+  var uWrap=q('[data-uuid]'), fb3=q('#ix-idor-l3 [data-fb]');
+  qa('.ix-idor-ch',uWrap).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    if(b.getAttribute('data-v')==='no'){
+      b.classList.add('ix-idor-wrong'); b.disabled=true; hit();
+      fb3.className='ix-idor-fb ix-idor-bad'; fb3.innerHTML='<b>Увы.</b>Номер не надо угадывать, если он уже есть в ссылке. Проверки владельца нет — сервер ответит 200.';
+      return;
+    }
+    qa('.ix-idor-ch',uWrap).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-idor-right');
+    fb3.className='ix-idor-fb ix-idor-good'; fb3.innerHTML='<b>Да.</b>У него есть номер, а сервер не спрашивает, чей заказ. 200 OK — и данные Боба у злодея.';
+    step(2,100); say('Шаг третий пройден. Защита 100 процентов.');
+  })});
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Поменяю /orders/124 на /orders/125. И на 126. Номеров много!',q:'Чем ответишь?',
+     o:[['Спрятать номер в адресе за кнопку',0,'Кнопку нажимать не обязательно: запрос можно отправить напрямую.'],
+        ['Проверять владельца на сервере при каждом запросе',1,'Каждый чужой номер — 404. Перебирай сколько хочешь.']]},
+    {v:'Я обычный покупатель. Кнопки «Админка» у меня нет, но адрес /admin/users я знаю.',q:'Что закроет вертикальную дыру?',
+     o:[['Убрать кнопку из меню',0,'Кнопки нет, а адрес работает. Меню — не охрана.'],
+        ['Переименовать /admin в /x7k-secret',0,'Секретные адреса утекают, как и UUID. Прав это не проверяет.'],
+        ['Сервер проверяет роль на этом адресе',1,'Не админ — 403. Это защита от BFLA.']]},
+    {v:'Завтра вы добавите /orders/124/invoice и забудете проверку. Я подожду.',q:'Как поймать это до релиза?',
+     o:[['Тест в CI: «пользователь A не видит заказ B»',1,'Забыли проверку — тест падает, сборка не выходит.'],
+        ['Сканер уязвимостей сам найдёт',0,'Сканер не знает, что заказ 124 — Боба. Такие ошибки он почти не видит.'],
+        ['Перед релизом попросить всех быть внимательнее',0,'Внимательность устаёт. Правило в тесте — нет.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ix-idor-bface');
+  var BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='МИСТЕР IDOR · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Мистера IDOR: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="ix-idor-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="ix-idor-vsay">'+esc(m.v)+'</p><p class="ix-idor-bq">'+esc(m.q)+'</p><div class="ix-idor-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="ix-idor-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="ix-idor-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.ix-idor-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var m=MOVES[BS.i], o=m.o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('ix-idor-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='ix-idor-bfb ix-idor-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]);
+      return;
+    }
+    qa('.ix-idor-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-idor-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('ix-idor-ow'); void face.offsetWidth; face.classList.add('ix-idor-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='ix-idor-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='ix-idor-bfb ix-idor-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='ix-idor-act';
+    nb.innerHTML='<button type="button" class="ix-idor-btn ix-idor-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){ BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin(); });
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.ix-idor-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="ix-idor-win"><div class="ix-idor-wface" aria-hidden="true"><img src="'+face.querySelector('img').getAttribute('src')+'" alt=""><span>ПОВЕРЖЕН</span></div><p class="ix-idor-wint">Мистер IDOR повержен</p><p class="ix-idor-wins">С первого раза: <b>'+BS.first+'/3</b></p><p class="ix-idor-rule">Сервер проверяет не только «кто ты», но и «чьё это» — на каждый объект.</p><button type="button" class="ix-idor-btn ix-idor-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Мистер IDOR повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-idor-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>

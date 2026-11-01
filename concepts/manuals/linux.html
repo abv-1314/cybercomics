@@ -1,0 +1,56 @@
+<!-- Шпаргалка Барахолки: команды Linux. Две страницы: первая — превью. -->
+
+<section class="mn-page" id="lx-1" data-title="Где я, файлы и поиск" data-preview>
+  <span class="mn-tag">Шпаргалка · Linux</span>
+  <h2 class="mn-h1">Linux: команды на каждый день</h2>
+  <p class="pen">Сначала думай, потом Enter. Застрял — <code>man команда</code> или <code>команда --help</code>.</p>
+
+  <h3 class="mn-h3">Где я и что тут</h3>
+  <div class="mn-cmd"><code>pwd</code> · <code>ls -la</code>
+    <p><code>pwd</code> — в какой папке стою, <code>ls</code> — что тут лежит.</p>
+    <ul><li><code>-l</code> — подробно: права, владелец, размер, дата.</li><li><code>-a</code> — показать и скрытые файлы (их имена начинаются с точки).</li></ul></div>
+  <div class="mn-cmd"><code>cd /var/log</code> · <code>cd ..</code> · <code>cd ~</code>
+    <ul><li>Путь с <code>/</code> в начале — от корня, без него — от текущей папки.</li><li><code>..</code> — на папку выше, <code>~</code> — домой.</li></ul></div>
+
+  <h3 class="mn-h3">Файлы и папки</h3>
+  <div class="mn-cmd"><code>mkdir -p proekt/src</code><ul><li><code>-p</code> — создать и все промежуточные папки, без ошибки, если уже есть.</li></ul></div>
+  <div class="mn-cmd"><code>cp -r src backup</code> · <code>mv old.txt new.txt</code>
+    <ul><li><code>-r</code> — копировать папку целиком, со всем внутри. <code>mv</code> переносит и переименовывает.</li></ul></div>
+  <div class="mn-cmd"><code>rm file.txt</code> · <code>rm -r папка</code>
+    <ul><li>Корзины нет: удалено — значит, удалено.</li><li><code>-r</code> — с содержимым. С <code>-f</code> (без вопросов) будь вдвойне осторожен.</li></ul></div>
+  <div class="mn-cmd"><code>cat</code> · <code>less</code> · <code>head -n 20</code> · <code>tail -f</code>
+    <ul><li><code>cat</code> — вывести файл целиком, <code>less</code> — листать (выход: <code>q</code>).</li><li><code>head -n 20</code> — первые 20 строк. <code>tail -f</code> — следить за концом файла вживую, удобно для журналов.</li></ul></div>
+
+  <h3 class="mn-h3">Поиск</h3>
+  <div class="mn-cmd"><code>grep -rin "password" .</code>
+    <ul><li><code>-r</code> — во всех файлах папки, <code>-i</code> — без разницы, большие буквы или маленькие, <code>-n</code> — с номерами строк.</li></ul></div>
+  <div class="mn-cmd"><code>find . -name "*.log"</code><ul><li>Найти файлы по имени, начиная с текущей папки (<code>.</code>).</li></ul></div>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="lx-2" data-title="Права, процессы, диск и сеть">
+  <h3 class="mn-h3">Права</h3>
+  <p><code>-rw-r-----</code>: тип, потом по три буквы для <b>владельца</b>, <b>группы</b> и <b>остальных</b>. <code>r</code> = 4 читать, <code>w</code> = 2 менять, <code>x</code> = 1 запускать (для папки — входить).</p>
+  <div class="mn-cmd"><code>chmod 640 db.conf</code>
+    <ul><li>6 = 4+2 владельцу (читать и менять), 4 группе (читать), 0 остальным.</li><li>Частые: папка и скрипт <code>755</code>, секрет <code>600</code> или <code>640</code>.</li></ul></div>
+  <div class="mn-cmd"><code>chown root:shop db.conf</code><ul><li>Сменить владельца и группу: <code>владелец:группа</code>.</li></ul></div>
+  <div class="mn-cmd"><code>sudo команда</code> · <code>whoami</code> · <code>id</code>
+    <ul><li><code>sudo</code> — выполнить с правами root. <code>whoami</code> и <code>id</code> — кто я и в каких я группах.</li></ul></div>
+  <div class="mn-warn"><h4>«Permission denied» — не повод для 777</h4><p>Права <code>777</code> — «всем всё». Сначала выясни, кому именно и какой доступ нужен. И службы не запускают от root.</p></div>
+
+  <h3 class="mn-h3">Процессы</h3>
+  <div class="mn-cmd"><code>ps aux</code> · <code>top</code>
+    <ul><li><code>a</code> — процессы всех пользователей, <code>u</code> — с владельцем и нагрузкой, <code>x</code> — и те, что без терминала. <code>top</code> — то же вживую (выход: <code>q</code>).</li></ul></div>
+  <div class="mn-cmd"><code>kill 1234</code> · <code>kill -9 1234</code>
+    <ul><li>Попросить процесс с номером 1234 завершиться. <code>-9</code> — убить без разговоров, если не слушается.</li></ul></div>
+
+  <h3 class="mn-h3">Диск, сеть и мелочи</h3>
+  <div class="mn-cmd"><code>df -h</code> · <code>du -sh папка</code> · <code>free -h</code>
+    <ul><li><code>-h</code> — размеры по-человечески (K, M, G). <code>du -s</code> — итог по папке, <code>free</code> — память.</li></ul></div>
+  <div class="mn-cmd"><code>ip a</code> · <code>ss -tulpn</code> · <code>curl -I https://example.com</code>
+    <ul><li><code>ip a</code> — мои адреса. <code>ss</code>: <code>-t</code> TCP, <code>-u</code> UDP, <code>-l</code> кто слушает, <code>-p</code> какая программа, <code>-n</code> номера вместо имён.</li><li><code>curl -I</code> — показать только заголовки ответа сайта.</li></ul></div>
+  <div class="mn-cmd"><code>|</code> · <code>&gt;</code> · <code>&gt;&gt;</code> · <code>history</code>
+    <ul><li><code>|</code> — передать вывод следующей команде: <code>ps aux | grep nginx</code>. <code>&gt;</code> — записать в файл (перезапишет), <code>&gt;&gt;</code> — дописать в конец.</li></ul></div>
+  <p class="pen">Потренироваться без риска — <a href="Issue17.dc.html">выпуск №17 «Linux и терминал»</a> с тренажёром и задачи для новичков на <a href="https://picoctf.org" rel="noopener">picoCTF</a>.</p>
+  <span class="mn-pg">2</span>
+</section>

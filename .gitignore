@@ -1,0 +1,6 @@
+node_modules/
+dist/
+preview/
+*.zip
+*.bak
+.DS_Store

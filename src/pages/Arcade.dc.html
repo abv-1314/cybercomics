@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CyberComics — Разминка</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;family=Rubik+Mono+One&amp;family=Rubik:wght@400;500;700&amp;family=Neucha&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fff7e3}
+a{color:#141414}a:hover{color:#c81e1e}
+.ac{min-height:100vh;font-family:Rubik,system-ui,sans-serif;color:#141414;background-color:#fff7e3;background-image:radial-gradient(rgba(20,20,20,.1) 1.2px,transparent 1.4px);background-size:14px 14px}
+.ac button{font:inherit;color:#141414}
+.ac button:focus-visible,.ac input:focus-visible,.ac [tabindex]:focus-visible{outline:3px solid #2f6bff;outline-offset:2px}
+.ac-btn{cursor:pointer;min-height:46px;padding:0 18px;font-family:'Russo One',sans-serif;font-size:16px;background:#ffd60a;border:3px solid #141414;box-shadow:3px 3px 0 #141414;transition:transform .12s}
+.ac-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #141414}
+.ac-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #141414}
+.ac-btn:disabled{cursor:default;opacity:.45;transform:none;box-shadow:3px 3px 0 #141414}
+.ac-ghost{background:#ffffff}
+.ac-back{align-self:flex-start;cursor:pointer;background:none;border:0;padding:6px 0;font-family:'Russo One',sans-serif;font-size:15px;text-decoration:underline;text-underline-offset:4px}
+.ac-h1{align-self:flex-start;margin:0;padding:0 10px 0 4px;font-family:'Russo One',sans-serif;font-weight:400;font-size:clamp(38px,5vw,52px);line-height:1.12;letter-spacing:.01em;color:#141414;background:linear-gradient(transparent 58%,#ffd60a 58% 90%,transparent 90%)}
+/* Заголовки разделов хаба — как на главной: косая плашка, но шрифт легче (Russo One) */
+.ac-sec{align-self:flex-start;margin:0;padding:4px 14px;font-family:'Russo One',sans-serif;font-weight:400;font-size:24px;line-height:1.2;letter-spacing:.02em;color:#ffd60a;background:#141414;transform:skew(-6deg)}
+.ac-sec-y{color:#141414;background:#ffd60a;border:3px solid #141414}
+.ac-h2{margin:0;font-family:'Rubik Mono One',sans-serif;font-size:22px;line-height:1.15}
+.ac-lead{margin:0;font-size:18px;line-height:1.5;color:#3b352b;max-width:600px}
+.ac-chip{font-family:'Russo One',sans-serif;font-size:13px;padding:3px 9px;border:2px solid #141414;background:#ffffff}
+.ac-sub{margin:0;font-size:16px;line-height:1.5;color:#4a4335}
+
+/* hub */
+.ac-cws{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.ac-cwc{display:flex;flex-direction:column;gap:10px;background:#ffffff;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:18px;transition:transform .18s}
+.ac-cwc:hover{transform:translateY(-4px) rotate(-.4deg)}
+.ac-mini{display:grid;gap:2px;align-self:flex-start;transform:rotate(-2deg);margin:4px 0 6px}
+.ac-mini span{display:block;width:11px;height:11px}
+.ac-mini .m{background:#fff7e3;border:1.5px solid #141414;box-sizing:border-box}
+.ac-mini .m.f{background:#ffd60a}
+.ac-mini .m.d{background:#7fe0aa}
+.ac-cwc h3{margin:0;font-family:'Russo One',sans-serif;font-size:19px;font-weight:400}
+.ac-cwc p{margin:0;font-size:14px;line-height:1.45;color:#4a4335;flex:1}
+.ac-meta{font-size:13px;color:#6b6252}
+.ac-games{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.ac-card{display:flex;flex-direction:column;gap:10px;background:#ffffff;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:0 0 18px;transition:transform .18s}
+.ac-card:hover{transform:translateY(-4px) rotate(-.4deg)}
+.ac-card-top{position:relative;height:86px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.4px,transparent 1.8px);background-size:10px 10px;font-family:'Rubik Mono One',sans-serif;font-size:26px;color:#ffffff;-webkit-text-stroke:2px #141414;paint-order:stroke fill;text-shadow:3px 3px 0 #141414}
+.ac-new{position:absolute;right:10px;top:10px;font-family:'Russo One',sans-serif;font-size:11px;padding:2px 7px;color:#ffffff;background:#e3262d;border:2px solid #141414;-webkit-text-stroke:0;text-shadow:none;transform:rotate(4deg)}
+.ac-card h3{margin:0;padding:0 18px;font-family:'Russo One',sans-serif;font-size:19px;font-weight:400}
+.ac-card p{margin:0;padding:0 18px;font-size:14px;line-height:1.45;color:#4a4335;flex:1}
+.ac-card .ac-meta{padding:0 18px}
+.ac-card .ac-btn{margin:0 18px;align-self:flex-start}
+
+/* panel */
+.ac-panel{background:#ffffff;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:24px;display:flex;flex-direction:column;gap:16px}
+.ac-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ac-win{display:flex;flex-direction:column;gap:10px;align-items:flex-start;background:#bff5d6;border:3px solid #141414;padding:18px 20px;animation:ac-pop .45s cubic-bezier(.2,1.4,.4,1)}
+.ac-lose{background:#ffe0e0}
+@keyframes ac-pop{from{transform:scale(.92);opacity:0}}
+
+/* crossword */
+.cw-wrap{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.cw-left{flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.cw-grid{display:grid;gap:3px;width:100%}
+.cw-x{aspect-ratio:1/1}
+.cw-c{position:relative;aspect-ratio:1/1}
+.cw-in{display:block;width:100%;height:100%;box-sizing:border-box;margin:0;padding:0;text-align:center;font-family:'Russo One',sans-serif;font-size:clamp(13px,2vw,21px);text-transform:uppercase;color:#141414;background:#ffffff;border:2px solid #141414;border-radius:0;caret-color:transparent;cursor:pointer;transition:background .15s}
+.cw-in.act{background:#fff1a8}
+.cw-in.sel{background:#ffd60a}
+.cw-in.ok{background:#bff5d6}
+.cw-in.bad{background:#ffc2c2}
+.cw-n{position:absolute;left:3px;top:1px;font-size:9px;font-weight:700;line-height:1;pointer-events:none;color:#3b352b}
+.cw-clue{background:#141414;color:#ffffff;padding:12px 14px;font-size:16px;line-height:1.4}
+.cw-clue b{color:#ffd60a;font-family:'Russo One',sans-serif;font-weight:400}
+.cw-side{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.cw-list{display:flex;flex-direction:column;gap:4px}
+.cw-lh{font-family:'Russo One',sans-serif;font-size:16px;padding:0 8px 4px}
+.cw-li{display:flex;gap:8px;text-align:left;cursor:pointer;background:none;border:0;padding:6px 8px;font-size:15px;line-height:1.35}
+.cw-li:hover{background:#fff7e3}
+.cw-li.on{background:#fff1a8}
+.cw-li.done{color:#2a8a57;text-decoration:line-through;text-decoration-thickness:1.5px}
+.cw-li b{flex:0 0 22px;font-family:'Russo One',sans-serif;font-weight:400}
+
+/* wordle */
+.wd-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;outline:none}
+.wd-board{display:grid;grid-template-rows:repeat(6,1fr);gap:6px}
+.wd-row{display:grid;grid-template-columns:repeat(5,56px);gap:6px}
+.wd-row.shake{animation:wd-shake .4s}
+@keyframes wd-shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.wd-t{width:56px;height:56px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:'Russo One',sans-serif;font-size:26px;background:#ffffff;border:3px solid #d8cfb8}
+.wd-t.fill{border-color:#141414;animation:wd-pop .12s}
+@keyframes wd-pop{50%{transform:scale(1.08)}}
+.wd-t.g{background:#3fbf7f;border-color:#141414;color:#ffffff;animation:wd-flip .45s both}
+.wd-t.y{background:#ffd60a;border-color:#141414;animation:wd-flip .45s both}
+.wd-t.n{background:#8f8778;border-color:#141414;color:#ffffff;animation:wd-flip .45s both}
+@keyframes wd-flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+.wd-kb{display:flex;flex-direction:column;gap:6px;width:100%;max-width:620px}
+.wd-kr{display:flex;justify-content:center;gap:5px}
+.wd-k{flex:1 1 0;min-width:0;max-width:46px;height:52px;padding:0;cursor:pointer;font-family:'Russo One',sans-serif;font-size:17px;background:#ffffff;border:2px solid #141414;box-shadow:2px 2px 0 #141414}
+.wd-k.wide{max-width:84px;flex:1.6 1 0;font-size:13px}
+.wd-k.g{background:#3fbf7f;color:#ffffff}
+.wd-k.y{background:#ffd60a}
+.wd-k.n{background:#8f8778;color:#ffffff}
+.wd-k:active{transform:translate(2px,2px);box-shadow:0 0 0 #141414}
+
+/* connections */
+.cn-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cn-t{min-height:72px;padding:6px;cursor:pointer;font-family:'Russo One',sans-serif;font-size:16px;line-height:1.2;overflow-wrap:anywhere;background:#f3ecd9;border:3px solid #141414;transition:transform .12s,background .12s}
+.cn-t:hover{transform:translateY(-2px)}
+.cn-t.on{background:#141414;color:#ffd60a}
+.cn-g{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px;text-align:center;border:3px solid #141414;animation:ac-pop .4s cubic-bezier(.2,1.4,.4,1)}
+.cn-g b{font-family:'Russo One',sans-serif;font-weight:400;font-size:17px;text-transform:uppercase}
+.cn-g span{font-size:15px}
+.cn-dots{display:flex;gap:6px;align-items:center;font-size:14px}
+.cn-dot{width:14px;height:14px;border-radius:50%;background:#141414}
+.cn-dot.off{background:#d8cfb8}
+
+/* filword */
+.fw-wrap{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.fw-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;flex:1 1 380px;max-width:500px;min-width:0}
+.fw-c{aspect-ratio:1/1;padding:0;cursor:pointer;font-family:'Russo One',sans-serif;font-size:clamp(15px,2.4vw,22px);background:#ffffff;border:2px solid #141414;transition:background .15s,transform .1s}
+.fw-c:hover{transform:scale(1.06)}
+.fw-c.st{background:#ffd60a;transform:scale(1.08)}
+.fw-words{flex:1 1 200px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.fw-w{font-family:'Russo One',sans-serif;font-size:16px;padding:6px 10px;border:2px solid #141414;background:#ffffff}
+.fw-w.found{text-decoration:line-through;opacity:.75}
+
+/* quiz / odd */
+.q-card{background:#ffe066;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:24px;font-family:Neucha,cursive;font-size:clamp(22px,3vw,30px);line-height:1.25;transform:rotate(-.5deg)}
+.q-two{display:flex;flex-wrap:wrap;gap:12px}
+.q-two .ac-btn{flex:1 1 180px;min-height:54px;font-size:18px}
+.q-res{display:flex;flex-direction:column;gap:8px;border:3px solid #141414;padding:16px 18px;animation:ac-pop .35s cubic-bezier(.2,1.4,.4,1)}
+.od-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.od-b{min-height:84px;cursor:pointer;font-family:'Russo One',sans-serif;font-size:20px;background:#ffffff;border:3px solid #141414;box-shadow:4px 4px 0 #141414;transition:transform .12s}
+.od-b:hover{transform:translate(-1px,-1px) rotate(-.6deg)}
+.od-b.right{background:#bff5d6}
+.od-b.wrong{background:#ffc2c2}
+
+/* pairs */
+.pr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pr-t{height:116px;padding:0;cursor:pointer;background:transparent;border:0;perspective:700px}
+.pr-in{position:relative;display:block;width:100%;height:100%;transition:transform .45s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.pr-open .pr-in{transform:rotateY(180deg)}
+.pr-f{position:absolute;inset:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;border:3px solid #141414;box-shadow:3px 3px 0 #141414;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pr-b{background:#ffd60a;background-image:radial-gradient(rgba(0,0,0,.18) 1.4px,transparent 1.8px);background-size:10px 10px;font-family:'Rubik Mono One',sans-serif;font-size:24px}
+.pr-fr{transform:rotateY(180deg);font-size:14px;line-height:1.3;font-weight:500;background:#ffffff}
+.pr-term .pr-fr{background:#9ee7ff;font-family:'Russo One',sans-serif;font-size:17px;font-weight:400}
+.pr-done .pr-fr{background:#bff5d6}
+
+@media (max-width:640px){
+  .pr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ac-panel{padding:16px}
+  .cw-n{font-size:7px;left:2px}
+  .cw-grid{gap:2px}
+  .wd-row{grid-template-columns:repeat(5,48px)}
+  .wd-t{width:48px;height:48px;font-size:22px}
+  .wd-k{height:46px;font-size:14px}
+  .wd-kr{gap:3px}
+  .cn-t{font-size:13px;min-height:62px}
+  .cn-grid{gap:6px}
+  .fw-grid{gap:3px}
+}
+@media (prefers-reduced-motion: reduce){.ac *{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="ac">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="Main.dc.html" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="Main.dc.html#vypuski" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Выпуски</a>
+      <a href="Main.dc.html#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="Review.dc.html" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="Arcade.dc.html" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Разминка</a>
+      <a href="Shop.dc.html" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">{{bitsLabel}}</span>
+    <sc-if value="{{ccUser}}" hint-placeholder-val="{{false}}"><a href="Main.dc.html" title="Профиль — на главной" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 14px; background: #141414; color: #ffffff; border: 3px solid #141414">Привет, {{ccUser}}</a></sc-if>
+  </header>
+
+  <main style="max-width: 1100px; margin: 0 auto; padding: 36px 16px 72px; display: flex; flex-direction: column; gap: 30px">
+
+    <sc-if value="{{isHub}}" hint-placeholder-val="{{true}}">
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <h1 class="ac-h1">Разминка</h1>
+        <p class="ac-lead">Короткие игры между выпусками. Пять минут — и термины запоминаются сами.</p>
+      </section>
+
+      <section style="display: flex; flex-direction: column; gap: 16px">
+        <h2 class="ac-sec">Кроссворды</h2>
+        <div class="ac-cws">
+          <sc-for list="{{cwCards}}" as="c" hint-placeholder-count="4">
+            <article class="ac-cwc">
+              <span class="ac-mini" style="{{c.miniStyle}}" aria-hidden="true"><sc-for list="{{c.mini}}" as="m" hint-placeholder-count="100"><span class="{{m.cls}}"></span></sc-for></span>
+              <h3>{{c.title}}</h3>
+              <p>{{c.desc}}</p>
+              <span class="ac-meta">{{c.meta}}</span>
+              <button type="button" class="ac-btn" style="align-self: flex-start" onClick="{{c.open}}">{{c.btn}}</button>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="display: flex; flex-direction: column; gap: 16px">
+        <h2 class="ac-sec ac-sec-y">Игры</h2>
+        <div class="ac-games">
+          <sc-for list="{{games}}" as="g" hint-placeholder-count="6">
+            <article class="ac-card">
+              <div class="ac-card-top" style="{{g.topStyle}}">{{g.mark}}<sc-if value="{{g.isNew}}" hint-placeholder-val="{{false}}"><span class="ac-new">новое</span></sc-if></div>
+              <h3>{{g.title}}</h3>
+              <p>{{g.desc}}</p>
+              <span class="ac-meta">{{g.best}}</span>
+              <button type="button" class="ac-btn ac-ghost" onClick="{{g.play}}">Играть</button>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isCw}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Кроссворд">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">{{cw.title}}</h1>
+          <span class="ac-chip">{{cw.counter}}</span>
+        </div>
+        <div class="cw-wrap">
+          <div class="cw-left">
+            <div class="cw-clue" aria-live="polite"><b>{{cw.activeNum}}</b> {{cw.activeClue}}</div>
+            <div class="cw-grid" style="{{cw.gridStyle}}">
+              <sc-for list="{{cw.cells}}" as="x" hint-placeholder-count="120">
+                <sc-if value="{{x.blk}}" hint-placeholder-val="{{true}}"><span class="cw-x"></span></sc-if>
+                <sc-if value="{{x.cell}}" hint-placeholder-val="{{false}}">
+                  <span class="cw-c">
+                    <input class="{{x.cls}}" id="{{x.id}}" value="{{x.val}}" aria-label="{{x.aria}}" autocomplete="off" autocapitalize="characters" spellcheck="false" onChange="{{x.change}}" onKeyDown="{{x.key}}" onFocus="{{x.focus}}" onClick="{{x.click}}">
+                    <sc-if value="{{x.hasNum}}" hint-placeholder-val="{{false}}"><span class="cw-n">{{x.num}}</span></sc-if>
+                  </span>
+                </sc-if>
+              </sc-for>
+            </div>
+            <div class="ac-row">
+              <button type="button" class="ac-btn" onClick="{{cw.check}}">Проверить</button>
+              <button type="button" class="ac-btn ac-ghost" onClick="{{cw.hint}}">Открыть букву</button>
+              <button type="button" class="ac-btn ac-ghost" onClick="{{cw.reset}}">Сначала</button>
+            </div>
+            <span class="ac-meta">{{cw.note}}</span>
+            <sc-if value="{{cw.solved}}" hint-placeholder-val="{{false}}">
+              <div class="ac-win">
+                <span class="ac-h2">Кроссворд разгадан!</span>
+                <span style="font-size: 16px">{{cw.winText}}</span>
+                <div class="ac-row">
+                  <sc-if value="{{cw.hasNext}}" hint-placeholder-val="{{false}}"><button type="button" class="ac-btn" onClick="{{cw.next}}">{{cw.nextLabel}}</button></sc-if>
+                  <button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          <div class="cw-side">
+            <div class="cw-list">
+              <span class="cw-lh">По горизонтали</span>
+              <sc-for list="{{cw.across}}" as="c" hint-placeholder-count="6"><button type="button" class="{{c.cls}}" onClick="{{c.pick}}"><b>{{c.n}}</b><span>{{c.clue}}</span></button></sc-for>
+            </div>
+            <div class="cw-list">
+              <span class="cw-lh">По вертикали</span>
+              <sc-for list="{{cw.down}}" as="c" hint-placeholder-count="5"><button type="button" class="{{c.cls}}" onClick="{{c.pick}}"><b>{{c.n}}</b><span>{{c.clue}}</span></button></sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isWd}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Кибер-Вордл">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Кибер-Вордл</h1>
+          <span class="ac-chip">{{wd.chip}}</span>
+        </div>
+        <p class="ac-sub">Угадай слово из мира безопасности за 6 попыток. Зелёная буква стоит на месте, жёлтая есть в слове, но в другом месте, серой нет совсем.</p>
+        <div class="wd-wrap" tabindex="0" onKeyDown="{{wd.key}}" aria-label="Поле игры: можно печатать с клавиатуры">
+          <div class="wd-board">
+            <sc-for list="{{wd.rows}}" as="r" hint-placeholder-count="6">
+              <div class="{{r.cls}}"><sc-for list="{{r.tiles}}" as="t" hint-placeholder-count="5"><span class="{{t.cls}}" style="{{t.style}}">{{t.ch}}</span></sc-for></div>
+            </sc-for>
+          </div>
+          <span class="ac-meta" aria-live="polite">{{wd.msg}}</span>
+          <sc-if value="{{wd.over}}" hint-placeholder-val="{{false}}">
+            <div class="{{wd.endCls}}" style="align-self: stretch">
+              <span class="ac-h2">{{wd.endTitle}}</span>
+              <span style="font-size: 16px; line-height: 1.45">{{wd.endText}}</span>
+              <div class="ac-row">
+                <button type="button" class="ac-btn" onClick="{{wd.again}}">Новое слово</button>
+                <button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button>
+              </div>
+            </div>
+          </sc-if>
+          <div class="wd-kb">
+            <sc-for list="{{wd.kb}}" as="row" hint-placeholder-count="3">
+              <div class="wd-kr"><sc-for list="{{row.keys}}" as="k" hint-placeholder-count="11"><button type="button" class="{{k.cls}}" onClick="{{k.press}}" aria-label="{{k.aria}}">{{k.label}}</button></sc-for></div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isCn}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Связи">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Связи</h1>
+          <span class="ac-chip">{{cn.chip}}</span>
+        </div>
+        <p class="ac-sub">Раздели 16 слов на 4 группы по 4. Выбери четыре слова, которые связаны, и нажми «Проверить». Осторожно: некоторые слова подходят сразу в несколько групп.</p>
+        <sc-for list="{{cn.groups}}" as="g" hint-placeholder-count="0">
+          <div class="cn-g" style="{{g.style}}"><b>{{g.title}}</b><span>{{g.items}}</span></div>
+        </sc-for>
+        <sc-if value="{{cn.playing}}" hint-placeholder-val="{{true}}">
+          <div class="cn-grid">
+            <sc-for list="{{cn.tiles}}" as="t" hint-placeholder-count="16"><button type="button" class="{{t.cls}}" onClick="{{t.tap}}" aria-pressed="{{t.pressed}}">{{t.text}}</button></sc-for>
+          </div>
+          <div class="ac-row" style="justify-content: space-between">
+            <span class="cn-dots">Ошибок можно сделать: <sc-for list="{{cn.dots}}" as="d" hint-placeholder-count="4"><span class="{{d.cls}}"></span></sc-for></span>
+            <div class="ac-row">
+              <button type="button" class="ac-btn ac-ghost" onClick="{{cn.shuffle}}">Перемешать</button>
+              <button type="button" class="ac-btn ac-ghost" onClick="{{cn.clear}}">Снять выбор</button>
+              <button type="button" class="ac-btn" onClick="{{cn.submit}}" disabled="{{cn.cantSubmit}}">Проверить</button>
+            </div>
+          </div>
+          <span class="ac-meta" aria-live="polite">{{cn.msg}}</span>
+        </sc-if>
+        <sc-if value="{{cn.over}}" hint-placeholder-val="{{false}}">
+          <div class="{{cn.endCls}}">
+            <span class="ac-h2">{{cn.endTitle}}</span>
+            <span style="font-size: 16px">{{cn.endText}}</span>
+            <div class="ac-row">
+              <button type="button" class="ac-btn" onClick="{{cn.next}}">Следующая головоломка</button>
+              <button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isFw}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Филворд">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Филворд</h1>
+          <span class="ac-chip">{{fw.chip}}</span>
+        </div>
+        <p class="ac-sub">Слова спрятаны слева направо и сверху вниз. Нажми на первую букву слова, потом на последнюю.</p>
+        <div class="fw-wrap">
+          <div class="fw-grid">
+            <sc-for list="{{fw.cells}}" as="c" hint-placeholder-count="81"><button type="button" class="{{c.cls}}" style="{{c.style}}" onClick="{{c.tap}}" aria-label="{{c.aria}}">{{c.ch}}</button></sc-for>
+          </div>
+          <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+            <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Найди слова</span>
+            <div class="fw-words"><sc-for list="{{fw.words}}" as="w" hint-placeholder-count="7"><span class="{{w.cls}}" style="{{w.style}}">{{w.text}}</span></sc-for></div>
+            <span class="ac-meta" aria-live="polite">{{fw.msg}}</span>
+            <sc-if value="{{fw.done}}" hint-placeholder-val="{{false}}">
+              <div class="ac-win">
+                <span class="ac-h2">Все слова найдены!</span>
+                <span style="font-size: 16px">{{fw.doneText}}</span>
+                <div class="ac-row"><button type="button" class="ac-btn" onClick="{{fw.again}}">Новое поле</button><button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button></div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isOd}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Найди лишнее">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Найди лишнее</h1>
+          <span class="ac-chip">{{od.chip}}</span>
+        </div>
+        <sc-if value="{{od.playing}}" hint-placeholder-val="{{true}}">
+          <p class="ac-sub">Три слова из одной компании. Какое четвёртое тут чужое?</p>
+          <div class="od-grid">
+            <sc-for list="{{od.opts}}" as="o" hint-placeholder-count="4"><button type="button" class="{{o.cls}}" onClick="{{o.tap}}">{{o.text}}</button></sc-for>
+          </div>
+          <sc-if value="{{od.answered}}" hint-placeholder-val="{{false}}">
+            <div class="q-res" style="{{od.resStyle}}">
+              <span style="font-family: 'Russo One', sans-serif; font-size: 20px">{{od.resTitle}}</span>
+              <span style="font-size: 16px; line-height: 1.45">{{od.why}}</span>
+              <button type="button" class="ac-btn" style="align-self: flex-start" onClick="{{od.next}}">{{od.nextLabel}}</button>
+            </div>
+          </sc-if>
+        </sc-if>
+        <sc-if value="{{od.done}}" hint-placeholder-val="{{false}}">
+          <div class="ac-win">
+            <span class="ac-h2">{{od.doneTitle}}</span>
+            <span style="font-size: 16px">{{od.doneText}}</span>
+            <div class="ac-row"><button type="button" class="ac-btn" onClick="{{od.again}}">Ещё раз</button><button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button></div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isMy}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Правда или миф">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Правда или миф</h1>
+          <span class="ac-chip">{{my.chip}}</span>
+        </div>
+        <sc-if value="{{my.playing}}" hint-placeholder-val="{{true}}">
+          <div class="q-card">«{{my.q.text}}»</div>
+          <sc-if value="{{my.ask}}" hint-placeholder-val="{{true}}">
+            <div class="q-two">
+              <button type="button" class="ac-btn" style="background: #bff5d6" onClick="{{my.yes}}">Правда</button>
+              <button type="button" class="ac-btn" style="background: #ffc2c2" onClick="{{my.no}}">Миф</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{my.answered}}" hint-placeholder-val="{{false}}">
+            <div class="q-res" style="{{my.resStyle}}">
+              <span style="font-family: 'Russo One', sans-serif; font-size: 20px">{{my.resTitle}}</span>
+              <span style="font-size: 16px; line-height: 1.45">{{my.q.why}}</span>
+              <button type="button" class="ac-btn" style="align-self: flex-start" onClick="{{my.next}}">{{my.nextLabel}}</button>
+            </div>
+          </sc-if>
+        </sc-if>
+        <sc-if value="{{my.done}}" hint-placeholder-val="{{false}}">
+          <div class="ac-win">
+            <span class="ac-h2">{{my.doneTitle}}</span>
+            <span style="font-size: 16px">{{my.doneText}}</span>
+            <div class="ac-row"><button type="button" class="ac-btn" onClick="{{my.again}}">Ещё раз</button><button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button></div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isPr}}" hint-placeholder-val="{{false}}">
+      <button type="button" class="ac-back" onClick="{{toHub}}">← Все игры</button>
+      <section class="ac-panel" aria-label="Пары">
+        <div class="ac-row" style="justify-content: space-between">
+          <h1 class="ac-h2">Пары</h1>
+          <span class="ac-chip">{{pr.chip}}</span>
+        </div>
+        <p class="ac-sub">Открывай по две карточки и находи пары: голубая — термин, белая — что он значит.</p>
+        <div class="pr-grid">
+          <sc-for list="{{pr.tiles}}" as="t" hint-placeholder-count="16">
+            <button type="button" class="{{t.cls}}" onClick="{{t.flip}}" aria-label="{{t.aria}}"><span class="pr-in"><span class="pr-f pr-b">?</span><span class="pr-f pr-fr">{{t.text}}</span></span></button>
+          </sc-for>
+        </div>
+        <sc-if value="{{pr.done}}" hint-placeholder-val="{{false}}">
+          <div class="ac-win">
+            <span class="ac-h2">{{pr.doneTitle}}</span>
+            <span style="font-size: 16px">{{pr.doneText}}</span>
+            <div class="ac-row"><button type="button" class="ac-btn" onClick="{{pr.again}}">Ещё раз</button><button type="button" class="ac-btn ac-ghost" onClick="{{toHub}}">Все игры</button></div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+  </main>
+  <footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // имя — из общего профиля (вход только на главной), прогресс и биты — под этим именем
+    const user = window.CC ? CC.getUser() : null;
+    const s = this.loadSaved(user);
+    this.state = {
+      mode: 'hub', user: user, bits: window.CC ? CC.bits() : 0, best: s.best, cwAll: s.cwAll, cwDone: s.cwDone,
+      cwId: 'base', sel: null, dir: 'a', checked: false, hints: 0, note: '', cwGain: 0,
+      wd: null, cn: null, cnIdx: s.cnIdx, fw: null, od: null, my: null, pr: null
+    };
+  }
+  componentWillUnmount() { if (this._pt) clearTimeout(this._pt); }
+  key(u) { return 'cc-arcade-v3::' + (u || 'гость'); }
+  loadSaved(u) {
+    let s = {};
+    try { s = JSON.parse(window.localStorage.getItem(this.key(u)) || '{}') || {}; } catch (e) { s = {}; }
+    return { best: s.best || {}, cwAll: s.cwAll || {}, cwDone: s.cwDone || {}, cnIdx: s.cnIdx || 0 };
+  }
+  persist(n) {
+    const s = Object.assign({}, this.state, n || {});
+    try { window.localStorage.setItem(this.key(s.user), JSON.stringify({ best: s.best, cwAll: s.cwAll, cwDone: s.cwDone, cnIdx: s.cnIdx })); } catch (e) {}
+  }
+  shuffle(n) { const a = []; for (let i = 0; i < n; i++) a.push(i); for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  shuf(arr) { return this.shuffle(arr.length).map((i) => arr[i]); }
+  award(gain, key, val, better) {
+    const best = Object.assign({}, this.state.best);
+    const isNew = key ? (best[key] === undefined || better(val, best[key])) : false;
+    if (isNew) best[key] = val;
+    // биты Разминки копятся в общем профиле (их потом тратят в Барахолке)
+    const n = { best, bits: window.CC ? CC.addBits(gain) : this.state.bits + gain };
+    this.persist(n);
+    return Object.assign(n, { isNew });
+  }
+
+  data() {
+    if (this._D) return this._D;
+    const CWRAW = [
+      { id: 'base', title: 'Словарь безопасника', desc: 'Главные слова из выпусков: от фишинга до файрвола.', H: 10, W: 12, words: [
+        ['ФАЙРВОЛ', 5, 0, 'a', 'Пропускает или блокирует сетевой трафик по правилам'], ['ЭКСПЛОИТ', 0, 5, 'd', 'Код или приём, который использует уязвимость'],
+        ['УТЕЧКА', 0, 1, 'd', 'Данные оказались там, где их быть не должно'], ['ТОКЕН', 7, 5, 'a', 'Пропуск, который сервер выдаёт после входа'],
+        ['ХЕШ', 2, 0, 'a', 'Отпечаток данных: развернуть обратно нельзя'], ['БОТНЕТ', 4, 9, 'd', 'Сеть заражённых устройств под чужим управлением'],
+        ['ПАТЧ', 3, 5, 'a', 'Обновление, которое закрывает уязвимость'], ['ПАРОЛЬ', 3, 3, 'd', 'Секрет, который лучше делать длинной фразой'],
+        ['БЭКАП', 0, 4, 'a', 'Резервная копия: спасает от шифровальщика'], ['ЛОГИ', 5, 8, 'a', 'Журналы событий, по ним расследуют инциденты'],
+        ['ФИШИНГ', 2, 11, 'd', 'Письмо-ловушка, которое выманивает пароль'] ] },
+      { id: 'web', title: 'Как устроен веб', desc: 'Запросы, ответы, заголовки и куки — азбука веб-безопасности.', H: 11, W: 11, words: [
+        ['ЗАГОЛОВОК', 7, 1, 'a', 'Строка вида «Имя: значение» в запросе или ответе'], ['ПОРТ', 6, 8, 'd', 'Номер «двери» на сервере: 80 или 443'],
+        ['РЕДИРЕКТ', 9, 1, 'a', 'Перенаправление на другой адрес, коды 301 и 302'], ['БРАУЗЕР', 3, 1, 'd', 'Программа, через которую ты открываешь сайты'],
+        ['ПРОКСИ', 4, 0, 'a', 'Посредник между тобой и сервером, например Burp'], ['КУКИ', 2, 3, 'd', 'Небольшие данные, которые браузер хранит для сайта'],
+        ['ДОМЕН', 6, 6, 'd', 'Имя сайта вроде example.com'], ['СЕССИЯ', 0, 5, 'd', 'Время после входа, пока сервер тебя помнит'],
+        ['СЕРВЕР', 3, 5, 'a', 'Компьютер, который принимает запросы и отвечает на них'], ['ОТВЕТ', 0, 9, 'd', 'Его сервер присылает с кодом 200 или 404'],
+        ['ЗАПРОС', 0, 0, 'a', 'Его браузер отправляет серверу: GET или POST'] ] },
+      { id: 'crypto', title: 'Шифры и ключи', desc: 'Криптография без формул: хеши, подписи, сертификаты.', H: 10, W: 13, words: [
+        ['ЦЕЛОСТНОСТЬ', 3, 0, 'a', 'Свойство «данные не изменили по дороге»'], ['ПЕРЕБОР', 0, 1, 'd', 'Атака, когда пробуют все варианты подряд'],
+        ['ХЕШ', 1, 0, 'a', 'Результат функции, который нельзя развернуть обратно'], ['СОЛЬ', 0, 10, 'd', 'Случайная добавка к паролю перед хешированием'],
+        ['СЕРТИФИКАТ', 0, 5, 'd', 'Документ сайта для HTTPS, его выдаёт удостоверяющий центр'], ['КОЛЛИЗИЯ', 7, 5, 'a', 'Два разных входа дали одинаковый хеш'],
+        ['ПОДПИСЬ', 2, 3, 'd', 'Доказывает, что сообщение отправил владелец ключа'], ['ЭНТРОПИЯ', 0, 12, 'd', 'Мера случайности: чем больше, тем труднее угадать'],
+        ['ШИФР', 6, 9, 'd', 'Способ сделать текст нечитаемым без ключа'], ['КЛЮЧ', 6, 7, 'd', 'Без него зашифрованное не прочитать'] ] },
+      { id: 'devsec', title: 'Путь кода', desc: 'От коммита до релиза: слова DevSecOps-инженера.', H: 10, W: 13, words: [
+        ['РЕПОЗИТОРИЙ', 4, 1, 'a', 'Хранилище кода в Git'], ['СЕКРЕТ', 1, 9, 'd', 'Пароль или ключ, которому не место в коде'],
+        ['ОБЛАКО', 4, 4, 'd', 'Арендованные чужие серверы: AWS, Yandex Cloud'], ['ПАЙПЛАЙН', 6, 0, 'a', 'Цепочка автоматических шагов от коммита до выката'],
+        ['КОММИТ', 8, 4, 'a', 'Сохранённая порция изменений в Git'], ['ОБРАЗ', 0, 5, 'd', 'Шаблон, из которого запускают контейнер'],
+        ['ДЕПЛОЙ', 0, 1, 'a', 'Выкатка новой версии на сервер'], ['РЕЛИЗ', 2, 8, 'a', 'Готовая версия продукта для пользователей'],
+        ['СКАНЕР', 2, 0, 'a', 'Инструмент, который сам ищет уязвимости'] ] }
+    ];
+    const CW = CWRAW.map((p) => {
+      const sol = {};
+      p.words.forEach((w) => { for (let i = 0; i < w[0].length; i++) sol[(w[3] === 'a' ? w[1] : w[1] + i) + '-' + (w[3] === 'a' ? w[2] + i : w[2])] = w[0][i]; });
+      const starts = Array.from(new Set(p.words.map((w) => w[1] * p.W + w[2]))).sort((a, b) => a - b);
+      const words = p.words.map((w) => {
+        const cells = [];
+        for (let i = 0; i < w[0].length; i++) cells.push(w[3] === 'a' ? w[1] + '-' + (w[2] + i) : (w[1] + i) + '-' + w[2]);
+        return { d: w[3], clue: w[4], n: starts.indexOf(w[1] * p.W + w[2]) + 1, cells };
+      }).sort((a, b) => a.n - b.n || (a.d === 'a' ? -1 : 1));
+      return { id: p.id, title: p.title, desc: p.desc, H: p.H, W: p.W, sol, words };
+    });
+    const WD = [
+      ['ТОКЕН', 'пропуск, который сервер выдаёт после входа'], ['ВИРУС', 'вредоносная программа, которая заражает другие файлы'],
+      ['ЛОГИН', 'имя, под которым входят в систему'], ['ХАКЕР', 'человек, который разбирается в системах глубже других'],
+      ['БЭКАП', 'резервная копия данных'], ['ТРОЯН', 'вредонос, который притворяется полезной программой'],
+      ['АУДИТ', 'проверка безопасности по правилам'], ['ДОМЕН', 'имя сайта вроде example.com'],
+      ['ЧЕРВЬ', 'вредонос, который сам расползается по сети'], ['АДМИН', 'администратор с широкими правами'],
+      ['ВЗЛОМ', 'получение доступа туда, куда не пускали'], ['КАПЧА', 'тест «докажи, что ты не робот»']
+    ];
+    const CN = [
+      [ ['Сканеры в пайплайне', ['SAST', 'DAST', 'SCA', 'IaC-скан']], ['Веб-атаки', ['XSS', 'CSRF', 'SSRF', 'SQLi']],
+        ['Факторы входа', ['Пароль', 'Отпечаток', 'SMS-код', 'YubiKey']], ['Хеш-функции', ['SHA-256', 'MD5', 'bcrypt', 'Argon2']] ],
+      [ ['Протоколы', ['HTTP', 'DNS', 'TLS', 'SSH']], ['Номера портов', ['22', '53', '80', '443']],
+        ['Вредоносы', ['Троян', 'Червь', 'Руткит', 'Шифровальщик']], ['Профессии в ИБ', ['Пентестер', 'SOC-аналитик', 'AppSec', 'DevSecOps']] ],
+      [ ['Инструменты', ['Nmap', 'Burp Suite', 'Wireshark', 'Trivy']], ['HTTP-методы', ['GET', 'POST', 'PUT', 'DELETE']],
+        ['Коды ответа', ['200', '301', '403', '404']], ['Атрибуты cookie', ['Secure', 'HttpOnly', 'SameSite', 'Path']] ]
+    ];
+    const FW = ['ВИРУС', 'ТОКЕН', 'ЛОГИН', 'ПАРОЛЬ', 'КЛЮЧ', 'ШИФР', 'ПАТЧ', 'БЭКАП', 'ДОМЕН', 'СЕРВЕР', 'ФИШИНГ', 'ТРОЯН', 'ЧЕРВЬ', 'АУДИТ', 'ЛОГИ', 'ВЗЛОМ', 'ХАКЕР', 'КАПЧА', 'ФАЙРВОЛ', 'СЕССИЯ', 'ПОРТ', 'ПРОКСИ'];
+    const OD = [
+      [['SAST', 'DAST', 'SCA', 'VPN'], 3, 'VPN шифрует канал связи. Остальные три — сканеры, которые ищут уязвимости.'],
+      [['XSS', 'CSRF', 'SSRF', 'MFA'], 3, 'MFA — защита входа. Остальные — атаки на веб-приложения.'],
+      [['MD5', 'SHA-256', 'AES', 'bcrypt'], 2, 'AES — шифрование, его можно расшифровать ключом. Остальные — хеш-функции, обратно не разворачиваются.'],
+      [['GET', 'POST', 'DELETE', 'HTTPS'], 3, 'HTTPS — протокол. GET, POST и DELETE — методы HTTP-запроса.'],
+      [['200', '404', '503', '443'], 3, '443 — номер порта HTTPS. Остальные — коды ответа сервера.'],
+      [['Троян', 'Червь', 'Руткит', 'Файрвол'], 3, 'Файрвол защищает сеть. Остальные — виды вредоносных программ.'],
+      [['Nmap', 'Wireshark', 'Burp Suite', 'Jenkins'], 3, 'Jenkins собирает и выкатывает код. Остальные — инструменты, которыми исследуют сеть и веб.'],
+      [['Конфиденциальность', 'Целостность', 'Доступность', 'Скорость'], 3, 'Первые три — триада CIA, основа ИБ. Скорость в неё не входит.'],
+      [['RBAC', 'ABAC', 'ACL', 'DDoS'], 3, 'DDoS — атака на доступность. Остальные — способы управлять правами доступа.'],
+      [['Docker', 'Kubernetes', 'Terraform', 'Photoshop'], 3, 'Photoshop рисует картинки. Остальные — инструменты инфраструктуры, которые тоже надо защищать.']
+    ];
+    const M = [
+      { text: 'Замочек в адресной строке значит, что сайт честный', truth: false, why: 'Замок — это HTTPS: канал зашифрован. Фишинговый сайт тоже может получить сертификат.' },
+      { text: 'Длинная фраза из четырёх слов надёжнее короткого пароля со спецсимволами', truth: true, why: 'Длина важнее сложности: такую фразу подбирать гораздо дольше, а помнить проще.' },
+      { text: 'Режим инкогнито прячет меня от провайдера', truth: false, why: 'Инкогнито не сохраняет историю на твоём устройстве. Провайдер и сайты видят всё как обычно.' },
+      { text: 'Двухфакторная защита помогает, даже если пароль утёк', truth: true, why: 'Нужен ещё второй фактор: код или ключ. Одного пароля злоумышленнику уже мало.' },
+      { text: 'Обновления нужны только ради новых функций', truth: false, why: 'Многие обновления закрывают уязвимости. Откладывать их — подарок атакующему.' },
+      { text: 'Антивирус полностью защищает от фишинга', truth: false, why: 'Фишинг обманывает человека, а не компьютер. Антивирус ловит часть ссылок, но не все.' },
+      { text: 'HTTPS шифрует данные между браузером и сервером', truth: true, why: 'Да, это его работа. Но честность самого сервера он не проверяет.' },
+      { text: 'Хранить пароли как MD5-хеш — нормально', truth: false, why: 'MD5 слишком быстрый для перебора. Для паролей берут bcrypt или Argon2.' },
+      { text: 'Один пароль на разных сайтах — это опасно', truth: true, why: 'Утечёт с одного сайта — его попробуют на всех остальных.' },
+      { text: 'Если сайт на HTTPS, XSS не страшна', truth: false, why: 'XSS выполняется внутри страницы, HTTPS тут не помогает. Помогают экранирование, CSP и HttpOnly.' }
+    ];
+    const PAIRS = [
+      ['XSS', 'Чужой скрипт выполняется в браузере жертвы'], ['SQL-инъекция', 'Ввод пользователя меняет запрос к базе'],
+      ['CSRF', 'Чужой сайт отправляет запрос от твоего имени'], ['IDOR', 'Меняешь id в адресе и видишь чужие данные'],
+      ['MFA', 'Кроме пароля нужен второй фактор'], ['Хеш', 'Отпечаток данных, который нельзя развернуть'],
+      ['SAST', 'Проверка исходного кода без запуска'], ['SBOM', 'Список всех компонентов приложения']
+    ];
+    this._D = { CW, WD, CN, FW, OD, M, PAIRS };
+    return this._D;
+  }
+
+  go(mode, arg) {
+    if (this._pt) { clearTimeout(this._pt); this._pt = null; }
+    const D = this.data();
+    const n = { mode };
+    if (mode === 'cw') { n.cwId = arg; n.sel = null; n.dir = 'a'; n.checked = false; n.hints = 0; n.note = ''; n.cwGain = 0; }
+    if (mode === 'wd') { const prev = this.state.wd ? this.state.wd.t : -1; let t = Math.floor(Math.random() * D.WD.length); if (t === prev) t = (t + 1) % D.WD.length; n.wd = { t, rows: [], cur: '', over: false, win: false, msg: '', shakeAt: 0 }; }
+    if (mode === 'cn') { const idx = arg === undefined ? this.state.cnIdx % D.CN.length : arg; n.cnIdx = idx; n.cn = { order: this.shuf(D.CN[idx].reduce((a, g, gi) => a.concat(g[1].map((t) => ({ t, g: gi }))), [])), sel: [], solved: [], left: 4, msg: '', over: false }; }
+    if (mode === 'fw') n.fw = this.fwMake();
+    if (mode === 'od') n.od = { order: this.shuffle(D.OD.length).slice(0, 8), i: 0, pick: null, score: 0, fin: false, opts: null };
+    if (mode === 'my') n.my = { order: this.shuffle(D.M.length), i: 0, ans: null, score: 0, fin: false };
+    if (mode === 'pr') n.pr = this.prInit();
+    if (mode === 'od') n.od.opts = this.shuffle(4);
+    this.setState(n);
+    if (mode === 'cw') { const P = D.CW.find((p) => p.id === arg); this.focusCell(this.firstEmpty(P.words[0], arg)); }
+    if (mode === 'wd') setTimeout(() => { const el = document.querySelector('.wd-wrap'); if (el) el.focus(); }, 30);
+  }
+
+  /* ---------- кроссворды ---------- */
+  puzzle() { return this.data().CW.find((p) => p.id === this.state.cwId); }
+  vals() { return this.state.cwAll[this.state.cwId] || {}; }
+  wordsAt(k) { return this.puzzle().words.filter((w) => w.cells.indexOf(k) >= 0); }
+  curWord() { const st = this.state; if (!st.sel) return null; const ws = this.wordsAt(st.sel); return ws.find((w) => w.d === st.dir) || ws[0] || null; }
+  firstEmpty(w, id) { const v = this.state.cwAll[id || this.state.cwId] || {}; return w.cells.find((k) => !v[k]) || w.cells[0]; }
+  focusCell(k) { setTimeout(() => { const el = document.getElementById('cw-' + k); if (el) el.focus(); }, 0); }
+  cwSet(k, ch, extraHints) {
+    const P = this.puzzle();
+    const v = Object.assign({}, this.vals());
+    if (ch) v[k] = ch; else delete v[k];
+    const cwAll = Object.assign({}, this.state.cwAll, { [P.id]: v });
+    const n = { cwAll, checked: false };
+    const hints = this.state.hints + (extraHints || 0);
+    if (extraHints) n.hints = hints;
+    const solved = Object.keys(P.sol).every((x) => v[x] === P.sol[x]);
+    if (solved && !this.state.cwDone[P.id]) {
+      const gain = Math.max(10, 40 - hints * 3);
+      const a = this.award(gain, null);
+      Object.assign(n, { bits: a.bits, cwDone: Object.assign({}, this.state.cwDone, { [P.id]: true }), cwGain: gain, note: '' });
+    }
+    this.setState(n);
+    this.persist(n);
+  }
+  cwType(k, raw) {
+    const LAT = 'qwertyuiop[]asdfghjkl;\'zxcvbnm,.`';
+    const RU = 'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ';
+    let s = String(raw || '').slice(-1);
+    const li = LAT.indexOf(s.toLowerCase());
+    s = li >= 0 ? RU[li] : s.toUpperCase();
+    if (s === 'Ё') s = 'Е';
+    if (!/^[А-Я]$/.test(s)) { if (!raw) this.cwSet(k, ''); return; }
+    this.cwSet(k, s);
+    const w = this.curWord();
+    if (w) { const nx = w.cells[w.cells.indexOf(k) + 1]; if (nx) this.focusCell(nx); }
+  }
+  cwKey(k, e) {
+    const w = this.curWord();
+    if (e.key === 'Backspace' && !this.vals()[k] && w) {
+      const i = w.cells.indexOf(k);
+      if (i > 0) { e.preventDefault(); this.cwSet(w.cells[i - 1], ''); this.focusCell(w.cells[i - 1]); }
+      return;
+    }
+    const mv = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] }[e.key];
+    if (mv) {
+      e.preventDefault();
+      const { sol } = this.puzzle();
+      let [r, c] = k.split('-').map(Number);
+      for (let s = 0; s < 14; s++) { r += mv[0]; c += mv[1]; if (sol[r + '-' + c]) { this.setState({ dir: mv[0] ? 'd' : 'a' }); this.focusCell(r + '-' + c); break; } }
+    }
+  }
+  cwFocus(k) {
+    const ws = this.wordsAt(k);
+    if (!ws.length) return;
+    const dir = ws.some((w) => w.d === this.state.dir) ? this.state.dir : ws[0].d;
+    if (this.state.sel !== k || this.state.dir !== dir) this.setState({ sel: k, dir });
+  }
+  cwClick(k) { if (this.state.sel === k && this.wordsAt(k).length > 1) this.setState({ dir: this.state.dir === 'a' ? 'd' : 'a' }); }
+  cwVals() {
+    const P = this.puzzle();
+    const D = this.data();
+    const st = this.state;
+    const v = this.vals();
+    const cur = this.curWord();
+    const curSet = cur ? cur.cells : [];
+    const numAt = {};
+    P.words.forEach((w) => { numAt[w.cells[0]] = w.n; });
+    const okWord = (w) => w.cells.every((k) => v[k] === P.sol[k]);
+    const okCells = {};
+    P.words.forEach((w) => { if (okWord(w)) w.cells.forEach((k) => { okCells[k] = true; }); });
+    const cells = [];
+    for (let r = 0; r < P.H; r++) for (let c = 0; c < P.W; c++) {
+      const k = r + '-' + c;
+      if (!P.sol[k]) { cells.push({ blk: true, cell: false }); continue; }
+      const val = v[k] || '';
+      const bad = st.checked && val && val !== P.sol[k];
+      cells.push({
+        blk: false, cell: true, id: 'cw-' + k, val, num: numAt[k] || '', hasNum: !!numAt[k],
+        aria: 'Клетка, строка ' + (r + 1) + ', столбец ' + (c + 1),
+        cls: 'cw-in' + (k === st.sel ? ' sel' : curSet.indexOf(k) >= 0 ? ' act' : '') + (bad ? ' bad' : okCells[k] && k !== st.sel ? ' ok' : ''),
+        change: (e) => this.cwType(k, e && e.target ? e.target.value : ''),
+        key: (e) => this.cwKey(k, e), focus: () => this.cwFocus(k), click: () => this.cwClick(k)
+      });
+    }
+    const item = (w) => ({
+      n: w.n, clue: w.clue,
+      cls: 'cw-li' + (cur === w ? ' on' : '') + (okWord(w) ? ' done' : ''),
+      pick: () => { const f = this.firstEmpty(w); this.setState({ dir: w.d, sel: f }); this.focusCell(f); }
+    });
+    const doneN = P.words.filter(okWord).length;
+    const idx = D.CW.indexOf(P);
+    const nextP = D.CW.slice(idx + 1).concat(D.CW.slice(0, idx)).find((p) => !st.cwDone[p.id]);
+    return {
+      title: P.title, cells, gridStyle: 'grid-template-columns:repeat(' + P.W + ',minmax(0,1fr));max-width:' + Math.round(P.W * 47) + 'px',
+      across: P.words.filter((w) => w.d === 'a').map(item), down: P.words.filter((w) => w.d === 'd').map(item),
+      activeNum: cur ? cur.n + (cur.d === 'a' ? ' по горизонтали.' : ' по вертикали.') : 'Нажми на клетку,',
+      activeClue: cur ? cur.clue : 'чтобы начать. Повторный клик по клетке меняет направление.',
+      counter: 'Разгадано ' + doneN + ' из ' + P.words.length,
+      solved: !!st.cwDone[P.id] && doneN === P.words.length,
+      winText: 'Все ' + P.words.length + ' слов на месте. ' + (st.cwGain ? 'Начислено ' + st.cwGain + ' бит.' : ''),
+      hasNext: !!nextP, nextLabel: nextP ? 'Следующий: «' + nextP.title + '»' : '', next: () => nextP && this.go('cw', nextP.id),
+      note: st.note,
+      check: () => {
+        const wrong = Object.keys(v).filter((k) => v[k] !== P.sol[k]).length;
+        this.setState({ checked: true, note: wrong ? 'Неверных букв: ' + wrong + '. Они подсвечены красным.' : 'Ошибок нет. Продолжай!' });
+      },
+      hint: () => {
+        const k = st.sel && v[st.sel] !== P.sol[st.sel] ? st.sel : Object.keys(P.sol).find((x) => v[x] !== P.sol[x]);
+        if (!k) return;
+        this.setState({ note: 'Буква открыта. Каждая подсказка немного уменьшает награду.' });
+        this.cwSet(k, P.sol[k], 1);
+        this.focusCell(k);
+      },
+      reset: () => {
+        const n = { cwAll: Object.assign({}, st.cwAll, { [P.id]: {} }), cwDone: Object.assign({}, st.cwDone, { [P.id]: false }), checked: false, hints: 0, note: '', cwGain: 0 };
+        this.setState(n); this.persist(n);
+      }
+    };
+  }
+
+  /* ---------- Вордл ---------- */
+  wdScore(g, t) {
+    const res = ['n', 'n', 'n', 'n', 'n'];
+    const left = {};
+    for (let i = 0; i < 5; i++) { if (g[i] === t[i]) res[i] = 'g'; else left[t[i]] = (left[t[i]] || 0) + 1; }
+    for (let i = 0; i < 5; i++) { if (res[i] !== 'g' && left[g[i]]) { res[i] = 'y'; left[g[i]] -= 1; } }
+    return res;
+  }
+  wdPress(ch) {
+    const D = this.data();
+    const g = this.state.wd;
+    if (!g || g.over) return;
+    const target = D.WD[g.t][0];
+    if (ch === 'ENTER') {
+      if (g.cur.length < 5) { this.setState({ wd: Object.assign({}, g, { msg: 'Нужно пять букв.', shakeAt: Date.now() }) }); return; }
+      const rows = g.rows.concat([{ w: g.cur, r: this.wdScore(g.cur, target) }]);
+      const win = g.cur === target;
+      const over = win || rows.length >= 6;
+      const n = { wd: Object.assign({}, g, { rows, cur: '', win, over, msg: '' }) };
+      if (over) {
+        const gain = win ? (7 - rows.length) * 5 : 0;
+        const a = this.award(gain, win ? 'wd' : null, rows.length, (v, p) => v < p);
+        n.bits = a.bits; n.best = a.best; n.wd.gain = gain; n.wd.isNew = a.isNew;
+      }
+      this.setState(n);
+      return;
+    }
+    if (ch === 'BACK') { this.setState({ wd: Object.assign({}, g, { cur: g.cur.slice(0, -1), msg: '' }) }); return; }
+    if (g.cur.length < 5) this.setState({ wd: Object.assign({}, g, { cur: g.cur + ch, msg: '' }) });
+  }
+  wdVals() {
+    const D = this.data();
+    const g = this.state.wd;
+    const word = D.WD[g.t];
+    const rows = [];
+    for (let i = 0; i < 6; i++) {
+      const done = g.rows[i];
+      const isCur = !done && i === g.rows.length && !g.over;
+      const tiles = [];
+      for (let j = 0; j < 5; j++) {
+        if (done) tiles.push({ ch: done.w[j], cls: 'wd-t ' + done.r[j], style: 'animation-delay:' + (j * 0.12) + 's' });
+        else { const ch = isCur ? (g.cur[j] || '') : ''; tiles.push({ ch, cls: 'wd-t' + (ch ? ' fill' : ''), style: '' }); }
+      }
+      rows.push({ tiles, cls: 'wd-row' + (isCur && g.shakeAt && Date.now() - g.shakeAt < 450 ? ' shake' : '') });
+    }
+    const ks = {};
+    const rank = { g: 3, y: 2, n: 1 };
+    g.rows.forEach((r) => { for (let j = 0; j < 5; j++) { const c = r.w[j]; if (!ks[c] || rank[r.r[j]] > rank[ks[c]]) ks[c] = r.r[j]; } });
+    const kb = ['ЙЦУКЕНГШЩЗХЪ', 'ФЫВАПРОЛДЖЭ', 'ЯЧСМИТЬБЮ'].map((line, li) => {
+      const keys = line.split('').map((c) => ({ label: c, aria: c, cls: 'wd-k' + (ks[c] ? ' ' + ks[c] : ''), press: () => this.wdPress(c) }));
+      if (li === 2) { keys.unshift({ label: 'Ввод', aria: 'Ввод', cls: 'wd-k wide', press: () => this.wdPress('ENTER') }); keys.push({ label: '⌫', aria: 'Стереть', cls: 'wd-k wide', press: () => this.wdPress('BACK') }); }
+      return { keys };
+    });
+    return {
+      rows, kb, msg: g.msg, over: g.over,
+      chip: 'Попытка ' + Math.min(g.rows.length + 1, 6) + ' из 6',
+      endCls: g.win ? 'ac-win' : 'ac-win ac-lose',
+      endTitle: g.win ? 'Угадал: ' + word[0] + '!' : 'Это было слово ' + word[0],
+      endText: word[0][0] + word[0].slice(1).toLowerCase() + ' — ' + word[1] + '. ' + (g.win ? (g.isNew ? 'Новый рекорд! ' : '') + 'Начислено ' + g.gain + ' бит.' : 'В следующий раз получится.'),
+      again: () => this.go('wd'),
+      key: (e) => {
+        const LAT = 'qwertyuiop[]asdfghjkl;\'zxcvbnm,.';
+        const RU = 'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ';
+        if (e.key === 'Enter') { e.preventDefault(); this.wdPress('ENTER'); return; }
+        if (e.key === 'Backspace') { e.preventDefault(); this.wdPress('BACK'); return; }
+        if (!e.key || e.key.length !== 1 || e.ctrlKey || e.metaKey) return;
+        let c = e.key; const li = LAT.indexOf(c.toLowerCase()); c = li >= 0 ? RU[li] : c.toUpperCase();
+        if (c === 'Ё') c = 'Е';
+        if (/^[А-Я]$/.test(c)) { e.preventDefault(); this.wdPress(c); }
+      }
+    };
+  }
+
+  /* ---------- Связи ---------- */
+  cnVals() {
+    const D = this.data();
+    const g = this.state.cn;
+    const P = D.CN[this.state.cnIdx];
+    const COL = ['#ffe066', '#9ee7ff', '#b6f2a8', '#ffb3d9'];
+    const tiles = g.order.filter((x) => g.solved.indexOf(x.g) < 0);
+    const shown = g.over ? [0, 1, 2, 3].sort((a, b) => (g.solved.indexOf(a) < 0) - (g.solved.indexOf(b) < 0)) : g.solved;
+    const set = (n) => this.setState({ cn: Object.assign({}, g, n) });
+    return {
+      chip: 'Головоломка ' + (this.state.cnIdx + 1) + ' из ' + D.CN.length,
+      groups: shown.map((gi) => ({ title: P[gi][0], items: P[gi][1].join(', '), style: 'background:' + COL[gi] })),
+      playing: !g.over, over: g.over,
+      tiles: tiles.map((x) => { const on = g.sel.indexOf(x.t) >= 0; return { text: x.t, pressed: on ? 'true' : 'false', cls: 'cn-t' + (on ? ' on' : ''),
+        tap: () => { if (on) set({ sel: g.sel.filter((s) => s !== x.t), msg: '' }); else if (g.sel.length < 4) set({ sel: g.sel.concat([x.t]), msg: '' }); } }; }),
+      dots: [0, 1, 2, 3].map((i) => ({ cls: 'cn-dot' + (i < g.left ? '' : ' off') })),
+      cantSubmit: g.sel.length !== 4,
+      msg: g.msg,
+      shuffle: () => set({ order: this.shuf(g.order) }),
+      clear: () => set({ sel: [], msg: '' }),
+      submit: () => {
+        if (g.sel.length !== 4) return;
+        const gs = g.sel.map((t) => g.order.find((x) => x.t === t).g);
+        if (gs.every((x) => x === gs[0])) {
+          const solved = g.solved.concat([gs[0]]);
+          const over = solved.length === 4;
+          const n = { solved, sel: [], msg: 'Есть! «' + P[gs[0]][0] + '».', over, win: over };
+          if (over) { const gain = 10 + g.left * 5; const a = this.award(gain, null); n.gain = gain; this.setState({ cn: Object.assign({}, g, n), bits: a.bits }); }
+          else set(n);
+        } else {
+          const cnt = {}; gs.forEach((x) => { cnt[x] = (cnt[x] || 0) + 1; });
+          const oneAway = Object.values(cnt).some((c) => c === 3);
+          const left = g.left - 1;
+          set({ left, msg: oneAway ? 'Почти! Одно слово лишнее.' : 'Не та четвёрка. Попробуй по-другому.', over: left <= 0, win: false });
+        }
+      },
+      endCls: g.win ? 'ac-win' : 'ac-win ac-lose',
+      endTitle: g.win ? 'Все связи найдены!' : 'Попытки закончились',
+      endText: g.win ? 'Ошибок: ' + (4 - g.left) + '. Начислено ' + (g.gain || 0) + ' бит.' : 'Вот какие были группы. Следующая головоломка — новый шанс.',
+      next: () => { const idx = (this.state.cnIdx + 1) % D.CN.length; this.persist({ cnIdx: idx }); this.go('cn', idx); }
+    };
+  }
+
+  /* ---------- Филворд ---------- */
+  fwMake() {
+    const D = this.data();
+    const N = 9;
+    const grid = {};
+    const placed = [];
+    const pool = this.shuf(D.FW);
+    for (const w of pool) {
+      if (placed.length >= 7) break;
+      for (let a = 0; a < 120; a++) {
+        const d = Math.random() < 0.5 ? 'a' : 'd';
+        const r = Math.floor(Math.random() * (d === 'd' ? N - w.length + 1 : N));
+        const c = Math.floor(Math.random() * (d === 'a' ? N - w.length + 1 : N));
+        const cells = [];
+        let ok = true;
+        for (let i = 0; i < w.length; i++) { const k = (d === 'd' ? r + i : r) + '-' + (d === 'a' ? c + i : c); if (grid[k] && grid[k] !== w[i]) { ok = false; break; } cells.push(k); }
+        if (!ok) continue;
+        cells.forEach((k, i) => { grid[k] = w[i]; });
+        placed.push({ w, cells });
+        break;
+      }
+    }
+    const AB = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЭЮЯ';
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) { const k = r + '-' + c; if (!grid[k]) grid[k] = AB[Math.floor(Math.random() * AB.length)]; }
+    return { N, grid, placed, found: [], start: null, msg: '' };
+  }
+  fwTap(k) {
+    const g = this.state.fw;
+    if (!g || g.found.length === g.placed.length) return;
+    if (!g.start) { this.setState({ fw: Object.assign({}, g, { start: k, msg: 'Теперь нажми на последнюю букву.' }) }); return; }
+    if (g.start === k) { this.setState({ fw: Object.assign({}, g, { start: null, msg: '' }) }); return; }
+    const [r1, c1] = g.start.split('-').map(Number);
+    const [r2, c2] = k.split('-').map(Number);
+    let cells = [];
+    if (r1 === r2) for (let c = Math.min(c1, c2); c <= Math.max(c1, c2); c++) cells.push(r1 + '-' + c);
+    else if (c1 === c2) for (let r = Math.min(r1, r2); r <= Math.max(r1, r2); r++) cells.push(r + '-' + c1);
+    const s = cells.map((x) => g.grid[x]).join('');
+    const hit = g.placed.findIndex((p, i) => g.found.indexOf(i) < 0 && p.w === s && p.cells.join() === cells.join());
+    if (hit >= 0) {
+      const found = g.found.concat([hit]);
+      const n = { fw: Object.assign({}, g, { found, start: null, msg: 'Нашёл: ' + s + '!' }) };
+      if (found.length === g.placed.length) { const a = this.award(20, null); n.bits = a.bits; }
+      this.setState(n);
+    } else this.setState({ fw: Object.assign({}, g, { start: null, msg: cells.length ? 'Такого слова тут нет. Попробуй ещё.' : 'Слова идут только по прямой: вправо или вниз.' }) });
+  }
+  fwVals() {
+    const g = this.state.fw;
+    const COL = ['#ffe066', '#9ee7ff', '#b6f2a8', '#ffb3d9', '#ffc078', '#d4c4ff', '#7fe0aa'];
+    const colorOf = {};
+    g.found.forEach((i) => { g.placed[i].cells.forEach((k) => { colorOf[k] = COL[i % COL.length]; }); });
+    const cells = [];
+    for (let r = 0; r < g.N; r++) for (let c = 0; c < g.N; c++) {
+      const k = r + '-' + c;
+      cells.push({ ch: g.grid[k], cls: 'fw-c' + (g.start === k ? ' st' : ''), style: colorOf[k] ? 'background:' + colorOf[k] : '', aria: 'Буква ' + g.grid[k], tap: () => this.fwTap(k) });
+    }
+    return {
+      cells,
+      words: g.placed.map((p, i) => { const f = g.found.indexOf(i) >= 0; return { text: p.w, cls: 'fw-w' + (f ? ' found' : ''), style: f ? 'background:' + COL[i % COL.length] : '' }; }),
+      chip: 'Найдено ' + g.found.length + ' из ' + g.placed.length,
+      msg: g.msg, done: g.found.length === g.placed.length,
+      doneText: 'Начислено 20 бит. Каждое новое поле собирается заново.',
+      again: () => this.go('fw')
+    };
+  }
+
+  /* ---------- Найди лишнее ---------- */
+  odVals() {
+    const D = this.data();
+    const g = this.state.od;
+    const q = D.OD[g.order[Math.min(g.i, g.order.length - 1)]];
+    const total = g.order.length;
+    const answered = g.pick !== null;
+    const right = answered && g.pick === q[1];
+    return {
+      chip: g.fin ? 'Готово' : (g.i + 1) + ' из ' + total,
+      playing: !g.fin, done: g.fin, answered,
+      opts: g.opts.map((oi) => ({
+        text: q[0][oi],
+        cls: 'od-b' + (answered && oi === q[1] ? ' right' : '') + (answered && oi === g.pick && oi !== q[1] ? ' wrong' : ''),
+        tap: () => { if (!answered) this.setState({ od: Object.assign({}, g, { pick: oi, score: g.score + (oi === q[1] ? 1 : 0) }) }); }
+      })),
+      resTitle: right ? 'Точно! Лишнее — ' + q[0][q[1]] + '.' : 'Не то. Лишнее — ' + q[0][q[1]] + '.',
+      resStyle: right ? 'background:#bff5d6' : 'background:#ffe0e0',
+      why: q[2],
+      nextLabel: g.i + 1 >= total ? 'Итог' : 'Дальше',
+      next: () => {
+        const i = g.i + 1;
+        if (i >= total) { const gain = g.score * 3; const a = this.award(gain, 'od', g.score, (v, p) => v > p); this.setState({ od: Object.assign({}, g, { i, fin: true, gain, isNew: a.isNew }), bits: a.bits, best: a.best }); }
+        else this.setState({ od: Object.assign({}, g, { i, pick: null, opts: this.shuffle(4) }) });
+      },
+      doneTitle: g.score + ' из ' + total,
+      doneText: (g.score === total ? 'Ни одной ошибки! ' : '') + (g.isNew ? 'Новый рекорд! ' : '') + 'Начислено ' + (g.gain || 0) + ' бит.',
+      again: () => this.go('od')
+    };
+  }
+
+  /* ---------- Правда или миф ---------- */
+  myVals() {
+    const D = this.data();
+    const g = this.state.my;
+    const q = D.M[g.order[Math.min(g.i, g.order.length - 1)]];
+    const total = g.order.length;
+    const answer = (v) => { if (g.ans) return; const right = v === q.truth; this.setState({ my: Object.assign({}, g, { ans: { right }, score: g.score + (right ? 1 : 0) }) }); };
+    const right = g.ans && g.ans.right;
+    return {
+      q, chip: g.fin ? 'Готово' : (g.i + 1) + ' из ' + total,
+      playing: !g.fin, done: g.fin, ask: !g.fin && !g.ans, answered: !g.fin && !!g.ans,
+      yes: () => answer(true), no: () => answer(false),
+      resTitle: g.ans ? (right ? 'Верно! ' : 'Мимо. ') + (q.truth ? 'Это правда.' : 'Это миф.') : '',
+      resStyle: right ? 'background:#bff5d6' : 'background:#ffe0e0',
+      nextLabel: g.i + 1 >= total ? 'Итог' : 'Дальше',
+      next: () => {
+        const i = g.i + 1;
+        if (i >= total) { const gain = g.score * 3; const a = this.award(gain, 'my', g.score, (v, p) => v > p); this.setState({ my: Object.assign({}, g, { i, fin: true, gain, isNew: a.isNew }), bits: a.bits, best: a.best }); }
+        else this.setState({ my: Object.assign({}, g, { i, ans: null }) });
+      },
+      doneTitle: g.score + ' из ' + total,
+      doneText: (g.score >= 9 ? 'Мифы тебя не берут. ' : g.score >= 6 ? 'Неплохо, но пара мифов ещё живёт. ' : 'Объяснения уже в голове — со второго раза пойдёт лучше. ') + (g.isNew ? 'Новый рекорд! ' : '') + 'Начислено ' + (g.gain || 0) + ' бит.',
+      again: () => this.go('my')
+    };
+  }
+
+  /* ---------- Пары ---------- */
+  prInit() {
+    const tiles = [];
+    this.data().PAIRS.forEach((p, i) => { tiles.push({ p: i, side: 'term', text: p[0] }); tiles.push({ p: i, side: 'def', text: p[1] }); });
+    return { tiles: this.shuf(tiles), open: [], done: {}, moves: 0, lock: false, fin: false };
+  }
+  prFlip(i) {
+    const g = this.state.pr;
+    if (!g || g.lock || g.fin) return;
+    const t = g.tiles[i];
+    if (g.done[t.p] || g.open.indexOf(i) >= 0) return;
+    const open = g.open.concat([i]);
+    if (open.length < 2) { this.setState({ pr: Object.assign({}, g, { open }) }); return; }
+    const moves = g.moves + 1;
+    if (g.tiles[open[0]].p === t.p) {
+      const done = Object.assign({}, g.done, { [t.p]: true });
+      const fin = Object.keys(done).length === this.data().PAIRS.length;
+      const n = Object.assign({}, g, { open: [], done, moves, fin });
+      if (fin) { const gain = Math.max(10, 40 - Math.max(0, moves - 8) * 2); const a = this.award(gain, 'pr', moves, (v, p) => v < p); n.gain = gain; n.isNew = a.isNew; this.setState({ pr: n, bits: a.bits, best: a.best }); }
+      else this.setState({ pr: n });
+    } else {
+      this.setState({ pr: Object.assign({}, g, { open, moves, lock: true }) });
+      this._pt = setTimeout(() => { this._pt = null; const c = this.state.pr; if (c) this.setState({ pr: Object.assign({}, c, { open: [], lock: false }) }); }, 900);
+    }
+  }
+  prVals() {
+    const g = this.state.pr;
+    return {
+      tiles: g.tiles.map((t, i) => { const open = g.open.indexOf(i) >= 0 || !!g.done[t.p]; return { text: t.text, aria: open ? t.text : 'Закрытая карточка', flip: () => this.prFlip(i), cls: 'pr-t ' + (t.side === 'term' ? 'pr-term' : 'pr-def') + (open ? ' pr-open' : '') + (g.done[t.p] ? ' pr-done' : '') }; }),
+      chip: 'Пар ' + Object.keys(g.done).length + ' из 8 · ходов ' + g.moves,
+      done: g.fin, again: () => this.go('pr'),
+      doneTitle: 'Все пары собраны. Ходов: ' + g.moves,
+      doneText: (g.moves <= 12 ? 'Отличная память! ' : 'Меньше 12 ходов — уровень мастера. ') + (g.isNew ? 'Новый рекорд! ' : '') + 'Начислено ' + (g.gain || 0) + ' бит.'
+    };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const D = this.data();
+    const b = st.best || {};
+    const cwCards = D.CW.map((P) => {
+      const v = st.cwAll[P.id] || {};
+      const mini = [];
+      for (let r = 0; r < P.H; r++) for (let c = 0; c < P.W; c++) { const k = r + '-' + c; mini.push({ cls: P.sol[k] ? 'm' + (st.cwDone[P.id] ? ' d' : v[k] ? ' f' : '') : '' }); }
+      const filled = Object.keys(P.sol).filter((k) => v[k]).length;
+      return {
+        title: P.title, desc: P.desc, mini,
+        miniStyle: 'grid-template-columns:repeat(' + P.W + ',11px)',
+        meta: st.cwDone[P.id] ? 'Разгадан' : filled ? 'Заполнено ' + Math.round(filled / Object.keys(P.sol).length * 100) + '%' : P.words.length + ' слов',
+        btn: st.cwDone[P.id] ? 'Открыть' : filled ? 'Продолжить' : 'Разгадывать',
+        open: () => this.go('cw', P.id)
+      };
+    });
+    const games = [
+      { mark: 'В О Р Д Л', title: 'Кибер-Вордл', desc: 'Угадай слово из пяти букв за шесть попыток. Цвет подсказывает, где ты близко.', color: '#7fe0aa', isNew: true, best: b.wd !== undefined ? 'Лучший результат: с ' + b.wd + '-й попытки' : 'Ещё не играл', play: () => this.go('wd') },
+      { mark: '4 × 4', title: 'Связи', desc: 'Разложи 16 слов на четыре группы. Звучит просто, но есть ловушки.', color: '#d4c4ff', isNew: true, best: 'Головоломок: ' + D.CN.length, play: () => this.go('cn') },
+      { mark: 'А Б В', title: 'Филворд', desc: 'Найди спрятанные слова в поле из букв. Каждый раз новое поле.', color: '#ffc078', isNew: true, best: 'Бесконечно новые поля', play: () => this.go('fw') },
+      { mark: '3 + 1', title: 'Найди лишнее', desc: 'Из четырёх слов одно не из этой компании. Какое?', color: '#ffb3d9', isNew: true, best: b.od !== undefined ? 'Рекорд: ' + b.od + ' из 8' : 'Ещё не играл', play: () => this.go('od') },
+      { mark: 'A = Б', title: 'Пары', desc: 'Переворачивай карточки и собирай пары «термин — что он значит».', color: '#9ee7ff', best: b.pr !== undefined ? 'Рекорд (ходов): ' + b.pr : 'Ещё не играл', play: () => this.go('pr') },
+      { mark: '?!', title: 'Правда или миф', desc: 'Десять утверждений, в которые верят даже айтишники.', color: '#ffe066', best: b.my !== undefined ? 'Рекорд: ' + b.my + ' из 10' : 'Ещё не играл', play: () => this.go('my') }
+    ].map((g) => Object.assign(g, { topStyle: 'background-color:' + g.color, isNew: !!g.isNew }));
+    return {
+      bitsLabel: st.bits + ' бит',
+      isHub: st.mode === 'hub', isCw: st.mode === 'cw', isWd: st.mode === 'wd' && !!st.wd, isCn: st.mode === 'cn' && !!st.cn,
+      isFw: st.mode === 'fw' && !!st.fw, isOd: st.mode === 'od' && !!st.od, isMy: st.mode === 'my' && !!st.my, isPr: st.mode === 'pr' && !!st.pr,
+      ccUser: window.CC ? (CC.getUser() || '') : '',
+      toHub: () => this.go('hub'),
+      cwCards, games,
+      cw: st.mode === 'cw' ? this.cwVals() : { cells: [], across: [], down: [] },
+      wd: st.mode === 'wd' && st.wd ? this.wdVals() : { rows: [], kb: [] },
+      cn: st.mode === 'cn' && st.cn ? this.cnVals() : { groups: [], tiles: [], dots: [] },
+      fw: st.mode === 'fw' && st.fw ? this.fwVals() : { cells: [], words: [] },
+      od: st.mode === 'od' && st.od ? this.odVals() : { opts: [] },
+      my: st.mode === 'my' && st.my ? this.myVals() : { q: {} },
+      pr: st.mode === 'pr' && st.pr ? this.prVals() : { tiles: [] }
+    };
+  }
+}
+</script>
+</body>
+</html>

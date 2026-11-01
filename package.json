@@ -1,0 +1,13 @@
+{
+  "name": "cybercomics",
+  "private": true,
+  "description": "CyberComics — кибербезопасность в комиксах",
+  "scripts": {
+    "build": "node src/build.js && node src/prerender.js",
+    "preview": "PREVIEW=1 node src/build.js && PREVIEW=1 node src/prerender.js"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  },
+  "engines": { "node": ">=22" }
+}

@@ -1,0 +1,69 @@
+<!-- Шпаргалка Барахолки: порты TCP и UDP. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="pt-1" data-title="Что такое порт · самые нужные" data-preview>
+  <span class="mn-tag">Шпаргалка · Порты</span>
+  <h2 class="mn-h1">Порты, которые надо знать</h2>
+  <p class="pen">IP-адрес — адрес дома. Порт — номер двери. За каждой дверью живёт своя программа.</p>
+  <ul>
+    <li>Номера от 1 до 65 535, отдельно у <b>TCP</b> (вежливый: договорился, потом говорит) и у <b>UDP</b> (бросил письмо и дальше).</li>
+    <li>Номер — это <span class="ul">договорённость</span>, а не закон: SSH можно поднять и на 2222. Но по умолчанию все стучат в привычные двери.</li>
+  </ul>
+
+  <h3 class="mn-h3">Шесть дверей в лицо</h3>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Порт</th><th>Кто живёт</th></tr></thead>
+    <tbody>
+      <tr><td><code>22</code> TCP</td><td>SSH — вход админа по сети, с шифрованием.</td></tr>
+      <tr><td><code>53</code> UDP/TCP</td><td>DNS — справочная «имя → IP». Короткие ответы по UDP, длинные по TCP.</td></tr>
+      <tr><td><code>80</code> TCP</td><td>HTTP — сайт без шифрования.</td></tr>
+      <tr><td><code>443</code> TCP</td><td>HTTPS — сайт с замочком. HTTP/3 ходит сюда же, но по UDP (QUIC).</td></tr>
+      <tr><td><code>3306</code> TCP</td><td>MySQL — база данных.</td></tr>
+      <tr><td><code>3389</code> TCP</td><td>RDP — удалённый рабочий стол Windows.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">Диапазоны (по IANA)</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><b>0–1023</b></td><td>Известные (well-known): о них договорились заранее.</td></tr>
+      <tr><td><b>1024–49151</b></td><td>Зарегистрированные: базы данных, игры, программы.</td></tr>
+      <tr><td><b>49152–65535</b></td><td>Динамические: временные «двери выхода» для твоих соединений.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Linux по умолчанию берёт временные порты из 32768–60999. Это тоже нормально.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="pt-2" data-title="Ещё два десятка и что не открывать в интернет">
+  <h3 class="mn-h3">Ещё порты, которые встретятся</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>20, 21</code></td><td>FTP — передача файлов. Без шифрования.</td></tr>
+      <tr><td><code>23</code></td><td>Telnet — удалённый вход без шифрования. Предок SSH, сегодня не нужен.</td></tr>
+      <tr><td><code>25</code></td><td>SMTP — почта между серверами.</td></tr>
+      <tr><td><code>587</code>, <code>465</code></td><td>SMTP для отправки почты из почтовой программы, с шифрованием.</td></tr>
+      <tr><td><code>67, 68</code> UDP</td><td>DHCP — раздаёт устройствам IP-адреса в сети.</td></tr>
+      <tr><td><code>110</code> / <code>995</code></td><td>POP3 / POP3 с шифрованием — забрать почту.</td></tr>
+      <tr><td><code>143</code> / <code>993</code></td><td>IMAP / IMAP с шифрованием — читать почту на сервере.</td></tr>
+      <tr><td><code>123</code> UDP</td><td>NTP — сверка часов.</td></tr>
+      <tr><td><code>445</code></td><td>SMB — общие папки Windows.</td></tr>
+      <tr><td><code>1433</code></td><td>Microsoft SQL Server.</td></tr>
+      <tr><td><code>5432</code></td><td>PostgreSQL.</td></tr>
+      <tr><td><code>6379</code></td><td>Redis — быстрая база в памяти.</td></tr>
+      <tr><td><code>8080</code></td><td>Запасной HTTP: часто тут сидят тестовые серверы.</td></tr>
+      <tr><td><code>9200</code></td><td>Elasticsearch — поиск.</td></tr>
+      <tr><td><code>27017</code></td><td>MongoDB.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-warn">
+    <h4>Эти двери в интернет не открывай</h4>
+    <p><b>Базы данных</b> (3306, 5432, 1433, 6379, 27017, 9200), <b>RDP</b> 3389, <b>SMB</b> 445 и <b>Telnet</b> 23. Их постоянно ищут сканеры. База должна быть видна только своему приложению, а вход админа — через VPN или SSH по ключу.</p>
+  </div>
+  <div class="mn-stick g">
+    <h4>Правило охранника</h4>
+    <p>Закрыто всё, что не нужно. Межсетевой экран пропускает только нужные двери, а лишние службы просто выключены. Посмотреть, кто слушает порты на твоём Linux: <code>ss -tulpn</code>.</p>
+  </div>
+  <p class="pen">Как стучатся в двери и что такое сканирование портов — <a href="Issue13.dc.html">выпуск №13 «TCP, UDP и порты»</a>. Сканировать можно только свои машины и учебные стенды.</p>
+  <span class="mn-pg">2</span>
+</section>

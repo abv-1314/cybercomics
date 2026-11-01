@@ -1,0 +1,1059 @@
+<section class="ix ix-api" data-ix="api" aria-label="Выпуск 16: Болтун. Клиент, сервер и API">
+
+<!-- ============ ПОСТЕР ЗЛОДЕЯ ============ -->
+<div class="page poster-pg" role="group" aria-label="Злодей выпуска: Болтун">
+  <div class="pn" style="--span:12">
+    <div class="fr poster">
+      <div class="po-burst" aria-hidden="true"></div>
+      <span class="po-tag">Злодей выпуска</span>
+      <div class="mouth" aria-hidden="true">
+        <span class="br br-l">{</span>
+        <span class="spill">
+          <i style="--i:0">"password_hash"</i>
+          <i style="--i:1">"phone"</i>
+          <i style="--i:2">"address"</i>
+          <i style="--i:3">"email"</i>
+          <i style="--i:4">"role"</i>
+          <i style="--i:5">"birthday"</i>
+        </span>
+        <span class="br br-r">}</span>
+      </div>
+      <h2 class="po-name">Болтун</h2>
+      <div class="bl v po-bl"><b class="who">Болтун</b>Вы спросили только имя? Держите всё!</div>
+      <span class="sfx po-sfx" aria-hidden="true">БЛА-БЛА!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 1 · ТОЛЬКО ИМЯ ============ -->
+<div class="chap"><span class="chap-n">Стр. 1</span><h2 class="chap-t">Только имя</h2></div>
+<div class="page" role="group" aria-label="Страница 1: приложение Сони">
+  <div class="pn" style="--span:5">
+    <div class="fr f-yel talk">
+      <p class="cap w">Соня ставит приложение пункта выдачи «Сосны». Входит — и видит только своё имя.</p>
+      <div class="bl"><b class="who s">Соня</b>Тут одно имя. Что здесь вообще можно взломать?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Экран показывает то, что решил показать. А что ему прислали — давай посмотрим.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-dots lab wow" id="ix-api-wow">
+      <div class="dev" id="ix-api-dev">
+        <div class="dt">
+          <div class="dt-bar"><span class="dt-dot" aria-hidden="true"></span>DevTools · Network</div>
+          <p class="dt-row"><b class="m-get">GET</b> /api/v1/users/me <span class="st-ok">200</span></p>
+          <pre class="json" id="ix-api-wjson" aria-label="Ответ сервера в формате JSON"></pre>
+        </div>
+        <div class="app half ha">
+          <div class="app-top">Сосны · пункт выдачи</div>
+          <div class="app-body">
+            <span class="ava">С</span>
+            <p class="app-hi">Привет, Соня!</p>
+            <p class="app-ok">Ничего лишнего</p>
+          </div>
+        </div>
+        <div class="app half hb" aria-hidden="true">
+          <div class="app-top">Сосны · пункт выдачи</div>
+          <div class="app-body">
+            <span class="ava">С</span>
+            <p class="app-hi">Привет, Соня!</p>
+            <p class="app-ok">Ничего лишнего</p>
+          </div>
+        </div>
+        <svg class="crack" viewBox="0 0 100 160" preserveAspectRatio="none" aria-hidden="true"><polyline points="52,0 46,29 55,54 44,83 53,112 47,138 51,160"/><polyline points="46,29 30,36 18,33"/><polyline points="55,54 72,60 86,57"/><polyline points="44,83 26,92"/><polyline points="53,112 74,120"/></svg>
+      </div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-api-wbtn">Открыть DevTools</button>
+        <p class="res" id="ix-api-wres" aria-live="polite">DevTools — инструменты разработчика в браузере. Там видно каждый ответ сервера.</p>
+      </div>
+      <span class="sfx wow-sfx" aria-hidden="true">ХРУСТЬ!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СПЛЭШ: РАЗОБЛАЧЕНИЕ ============ -->
+<div class="splash" id="ix-api-splash" hidden>
+  <div class="sp">
+    <div class="sp-burst" aria-hidden="true"></div>
+    <div class="sp-dots" aria-hidden="true"></div>
+    <div class="sp-txt">
+      <span class="sp-who">Стр. 2 · Разоблачение</span>
+      <h2 aria-label="Спрятано в интерфейсе ≠ спрятано" class="sp-h" id="ix-api-sph" tabindex="-1"><span>Спрятано</span> <span>в интерфейсе</span> <span>≠ спрятано</span></h2>
+    </div>
+    <div class="sp-card">
+      <ol class="beats">
+        <li><code class="chip">password_hash</code><span>Хеш пароля. Не сам пароль, но слабый пароль по нему подбирают у себя на компьютере — без лимитов сайта.</span></li>
+        <li><code class="chip">phone</code><span>Телефон Сони. Приложение его нигде не показывает.</span></li>
+        <li><code class="chip">invited_by</code><span>Чужой человек: имя и домашний адрес Олега, который пригласил Соню.</span></li>
+      </ol>
+    </div>
+    <div class="bl v sp-bl"><b class="who">Болтун</b>Меня спросили имя. Я ответил подробно.</div>
+  </div>
+  <p class="sp-after">Приложение просто не нарисовало эти поля. Но ответ уже лежит в телефоне целиком — его видит любой, кто откроет DevTools или перехватит запрос.</p>
+</div>
+
+<!-- ============ СТР. 3 · КТО ЕСТЬ КТО ============ -->
+<div class="chap"><span class="chap-n">Стр. 3</span><h2 class="chap-t">Кто есть кто</h2></div>
+<div class="page" role="group" aria-label="Страница 3: клиент, API и сервер">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink talk slim">
+      <div class="bl"><b class="who m">Дядя Миша</b>Как так вышло? Представь пункт выдачи. В нём три участника.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:4">
+    <div class="fr f-dots role">
+      <span class="r-k">Клиент</span>
+      <b class="r-big">ТЫ</b>
+      <p>Браузер или приложение. Просит и показывает. Целиком в руках того, кто держит телефон.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:4">
+    <div class="fr f-yel role">
+      <span class="r-k">API</span>
+      <b class="r-big">ОКНО</b>
+      <p>Окошко выдачи. Правила: что можно попросить и в каком виде получить ответ.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:4">
+    <div class="fr f-red role">
+      <span class="r-k">Сервер</span>
+      <b class="r-big">СКЛАД</b>
+      <p>Компьютер компании. Там база: все посылки, телефоны, адреса. И все проверки.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-dots talk">
+      <p class="small dark"><b>API</b> — Application Programming Interface, «интерфейс для программ». Так одна программа просит что-то у другой.</p>
+      <div class="bl"><b class="who s">Соня</b>А Болтун тогда кто?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Окошко, которое на вопрос «как меня зовут?» выносит со склада всю коробку. С чужими вещами в придачу.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-red rule">
+      <p class="rule-h">Всё, что ушло клиенту, — уже не секрет.</p>
+      <p>Данные, код, ключи: их можно открыть, прочитать и подменить. Поэтому проверки и фильтры живут только на сервере.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 4 · МЕНЮ ОКОШКА (REST) ============ -->
+<div class="chap"><span class="chap-n">Стр. 4</span><h2 class="chap-t">Язык окошка</h2></div>
+<div class="page" role="group" aria-label="Страница 4: основы REST">
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who m">Дядя Миша</b>Многие API говорят по правилам REST. Адрес — ЧТО ты хочешь. Метод — ЧТО С ЭТИМ СДЕЛАТЬ. Ответ — код и JSON.</div>
+      <p class="small dark"><b>Эндпоинт</b> — адрес одной функции API, например <code class="ic">/api/orders/77</code>. <b>JSON</b> — текст из пар «ключ: значение».</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots lab" id="ix-api-rest">
+      <p class="q-tag" id="ix-api-mlab">1 · Выбери метод</p>
+      <div class="meth" role="group" aria-labelledby="ix-api-mlab">
+        <button type="button" class="mb" data-m="0" aria-pressed="true"><b>GET</b><span>получить</span></button>
+        <button type="button" class="mb" data-m="1" aria-pressed="false"><b>POST</b><span>создать</span></button>
+        <button type="button" class="mb" data-m="2" aria-pressed="false"><b>PUT</b><span>заменить</span></button>
+        <button type="button" class="mb" data-m="3" aria-pressed="false"><b>DELETE</b><span>удалить</span></button>
+      </div>
+      <div class="rr">
+        <div class="rr-col">
+          <p class="q-tag">2 · Запрос</p>
+          <pre class="req" id="ix-api-rq"></pre>
+          <p class="human" id="ix-api-rh"></p>
+        </div>
+        <div class="rr-col">
+          <p class="q-tag">3 · Ответ</p>
+          <div class="resp" id="ix-api-rs"><p class="wait">Окошко ждёт запроса…</p></div>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-api-rbtn">Отправить запрос</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink codes-pn">
+      <p class="lay-h">Код ответа — первое слово окошка</p>
+      <div class="codes">
+        <div class="cg"><span class="cg-h ok">2xx · успех</span><p><b>200</b> держи</p><p><b>201</b> создано</p><p><b>204</b> готово, без тела</p></div>
+        <div class="cg"><span class="cg-h cl">4xx · ошибка в запросе</span><p><b>401</b> кто ты?</p><p><b>403</b> тебе нельзя</p><p><b>404</b> такого нет</p><p><b>429</b> слишком часто</p></div>
+        <div class="cg"><span class="cg-h sv">5xx · ошибка сервера</span><p><b>500</b> склад сломался</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 5 · КОД ПОЛУЧЕНИЯ (ТОКЕН) ============ -->
+<div class="chap"><span class="chap-n">Стр. 5</span><h2 class="chap-t">Код получения</h2></div>
+<div class="page" role="group" aria-label="Страница 5: токен и API-ключ">
+  <div class="pn" style="--span:5">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who s">Соня</b>А как окошко понимает, что это я?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Как в пункте выдачи — по коду. После входа приложение получает токен и прикладывает его к каждому запросу.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-dots lab" id="ix-api-tok">
+      <p class="q-tag">Запрос</p>
+      <pre class="req" id="ix-api-tq"></pre>
+      <div class="resp" id="ix-api-ts"><p class="wait">Ответа пока нет.</p></div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-api-tbtn">Отправить без токена</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-ink talk">
+      <p class="lay-h">API-ключ</p>
+      <p class="big">Тот же пропуск, но для программы: один сервис просит другой. В приложение ключ не кладут — всё, что лежит в клиенте, можно достать.</p>
+      <p class="small lt">Почему ключам не место в коде — в выпуске №8.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-dots talk">
+      <p class="big">Токен отвечает на вопрос <mark>«кто ты?»</mark></p>
+      <p class="big">На вопрос <mark class="rd">«твоя ли это посылка?»</mark> отвечает сервер. Каждый раз.</p>
+      <p class="small dark">Как устроен популярный токен JWT — в выпуске №7.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 6 · ЧУЖАЯ ПОСЫЛКА (BOLA) ============ -->
+<div class="chap"><span class="chap-n">Стр. 6</span><h2 class="chap-t pk">Чужая посылка</h2></div>
+<div class="page" role="group" aria-label="Страница 6: BOLA">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots lab" id="ix-api-bola">
+      <p class="cap w">Соня смотрит свой заказ №77. Токен — её, настоящий. А если поменять одну цифру?</p>
+      <pre class="req" id="ix-api-bq"></pre>
+      <div class="resp" id="ix-api-bs"><p class="wait">Нажми кнопку — и смотри, что ответит окошко.</p></div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-api-bbtn">Поменять номер на 78</button>
+      </div>
+      <div class="bl v doc-bl" id="ix-api-bvil" hidden><b class="who">Болтун</b>Токен настоящий? Значит, отдам любой заказ!</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-red talk">
+      <div class="bl"><b class="who m">Дядя Миша</b>Это BOLA — Broken Object Level Authorization. Сервер проверил, КТО ты, но не проверил, ЧЬЁ это.</div>
+      <p class="big">В вебе ту же ошибку зовут IDOR. <a class="lnk" href="../idor/">Подробно в выпуске №2 →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 7 · ТЫСЯЧА ПОПЫТОК (RATE LIMIT) ============ -->
+<div class="chap"><span class="chap-n">Стр. 7</span><h2 class="chap-t">10 000 попыток</h2></div>
+<div class="page" role="group" aria-label="Страница 7: ограничение частоты запросов">
+  <div class="pn" style="--span:5">
+    <div class="fr f-yel talk">
+      <p class="cap w">Болтун отвечает всем и сколько угодно раз. Злодей хочет забрать посылку Олега и перебирает код получения: 0000, 0001, 0002…</p>
+      <div class="bl"><b class="who s">Соня</b>Кодов же 10 000!</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Для программы это пара минут. Если окошко не считает попытки.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-ink lab rate" id="ix-api-rate">
+      <p class="q-tag lt">Попыток подобрать код</p>
+      <p class="rt-n" id="ix-api-rn" aria-hidden="true">0</p>
+      <p class="rt-code" id="ix-api-rc">Код: ????</p>
+      <div class="rt-bar" aria-hidden="true"><i id="ix-api-rbar"></i></div>
+      <p class="say lt" id="ix-api-rsay" aria-live="polite">Лимита нет. Окошко ответит на каждую попытку.</p>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-api-rtbtn">Перебрать коды</button>
+      </div>
+      <span class="stamp429" id="ix-api-r429" aria-hidden="true">429</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots talk">
+      <p class="big"><b>Rate limiting</b> — ограничение частоты: не больше N запросов в минуту с одного токена или адреса. Лишние получают ответ <code class="ic">429 Too Many Requests</code>.</p>
+      <p class="small dark">Лимиты спасают не только от перебора: без них злодей скачает базу запрос за запросом или завалит сервер.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 8 · БОЛТУН ЗАМОЛКАЕТ ============ -->
+<div class="chap"><span class="chap-n">Стр. 8</span><h2 class="chap-t gr">Починка</h2></div>
+<div class="page" role="group" aria-label="Страница 8: фильтр полей на сервере">
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who s">Соня</b>Давай просто спрячем лишнее в приложении?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Оно уже спрятано — и что толку? Чинить надо на складе: окошко отдаёт только то, что нужно этому экрану.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots lab" id="ix-api-fix">
+      <p class="q-tag">Ответ сервера</p>
+      <pre class="json json-l" id="ix-api-fjson" aria-label="Ответ сервера"></pre>
+      <div class="dock">
+        <button class="btn btn-g" type="button" id="ix-api-fbtn">Отфильтровать на сервере</button>
+        <p class="res" id="ix-api-fres" aria-live="polite"></p>
+      </div>
+      <div class="bl v doc-bl" id="ix-api-fvil" hidden><b class="who">Болтун</b>Э-э… Мне больше нечего сказать.</div>
+      <span class="sfx fix-sfx" aria-hidden="true">ЩЁЛК!</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-dots codep">
+      <span class="tagx bad">Так нельзя</span>
+<pre class="code"><code>@app.get("/api/v1/users/me")
+def me():
+    user = db.get_user(current_user.id)
+    return user.to_dict()  # вся строка из базы</code></pre>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-dots codep">
+      <span class="tagx good">Так правильно</span>
+<pre class="code"><code>@app.get("/api/v1/users/me")
+def me():
+    user = db.get_user(current_user.id)
+    return {"id": user.id, "name": user.name}</code></pre>
+      <p class="small">Отдаём по списку «можно». Новое поле в базе само наружу не утечёт.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink layers">
+      <p class="lay-h">Ещё три правила склада</p>
+      <div class="lay"><b>Проверяй владельца</b><span>На каждый запрос к заказу, профилю, файлу: принадлежит ли он владельцу токена.</span></div>
+      <div class="lay"><b>Фильтруй вход</b><span>Принимай только ожидаемые поля. Иначе кто-то пришлёт <code class="ic">"role": "admin"</code> — это mass assignment.</span></div>
+      <div class="lay"><b>Опиши ответ</b><span>Схема API (например, OpenAPI) фиксирует поля ответа. Автотест ловит лишние.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ДОСЬЕ: OWASP API TOP 10 ============ -->
+<div class="chap"><span class="chap-n">Досье</span><h2 class="chap-t">Рейтинг</h2></div>
+<div class="page" role="group" aria-label="OWASP API Security Top 10">
+  <div class="pn" style="--span:12">
+    <div class="fr f-red owasp">
+      <p class="ow-lab">OWASP API Security Top 10 · редакция 2023</p>
+      <p class="ow-h">Первая четвёрка — вся про этот выпуск</p>
+      <ol class="ow">
+        <li><span class="ow-n">API1</span><div><b>Broken Object Level Authorization</b><p>Чужой объект по номеру. Наша «чужая посылка».</p></div></li>
+        <li><span class="ow-n">API2</span><div><b>Broken Authentication</b><p>Сломанная проверка «кто ты»: токены, пароли, входы.</p></div></li>
+        <li><span class="ow-n">API3</span><div><b>Broken Object Property Level Authorization</b><p>Лишние поля в ответе — Болтун — и лишние поля, принятые в запросе.</p></div></li>
+        <li><span class="ow-n">API4</span><div><b>Unrestricted Resource Consumption</b><p>Нет лимитов: перебор, выкачка, падение сервера.</p></div></li>
+      </ol>
+      <p class="ow-foot">Остальные шесть — от SSRF (выпуск №6) до неосторожной работы с чужими API.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t pk">Битва</h2></div>
+<div class="battle" id="ix-api-battle">
+  <div class="bt-top">
+    <div class="bt-face" aria-hidden="true"><span>{…}</span></div>
+    <div class="bt-hp">
+      <p class="bt-name">Болтун</p>
+      <div class="hp" role="progressbar" aria-label="Здоровье Болтуна" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-api-hp"><i id="ix-api-hpbar"></i></div>
+      <p class="bt-step" id="ix-api-step">Ход 1 из 3</p>
+    </div>
+  </div>
+  <div class="bt-body" id="ix-api-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Собеседование</h2></div>
+<div class="iv">
+  <p class="iv-lab">Вопрос с собеседования</p>
+  <p class="iv-q">API отдаёт пользователю его профиль. Какие две главные ошибки здесь бывают и как их найти?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: одна ошибка — «отдал лишнее», другая — «отдал чужое». И где должна жить защита?</div>
+  <button class="btn" type="button" id="ix-api-ivb" aria-expanded="false" aria-controls="ix-api-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-api-iva" hidden>
+    <div class="iv-p"><b>Лишние поля.</b> Сервер сериализует объект из базы целиком, а клиент «прячет» ненужное. Хеш пароля, телефон, связанные записи видны в ответе. В OWASP API Top 10 это API3:2023.</div>
+    <div class="iv-p"><b>Чужой объект.</b> BOLA, API1:2023: сервер проверяет токен, но не владельца. Меняешь id в запросе — получаешь чужие данные.</div>
+    <div class="iv-p"><b>Исправление.</b> Только на сервере: ответ собирается по списку разрешённых полей, на каждый объект — проверка владельца. Плюс rate limiting, чтобы id нельзя было перебирать.</div>
+    <div class="iv-p"><b>Как найти.</b> Смотреть сырые ответы в DevTools или прокси, а не экран. Два тестовых аккаунта: запросить объекты одного токеном другого. В CI — тесты авторизации и проверка ответа по схеме OpenAPI.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> «приложение же не показывает эти поля» или «у нас id длинные, не угадают». Защита на клиенте и сложные id — не проверка прав.</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Запомни</span><h2 class="chap-t">Шпаргалка</h2></div>
+<p class="cs-lab">Шпаргалка: что важно знать</p>
+<ol class="cs">
+  <li><span class="cs-n">01</span><div><b>Клиент — в чужих руках</b><p>Всё, что пришло в браузер или приложение, можно увидеть и подменить.</p></div></li>
+  <li><span class="cs-n">02</span><div><b>API — окошко с правилами</b><p>Эндпоинт говорит «что», метод — «что сделать»: GET, POST, PUT, DELETE.</p></div></li>
+  <li><span class="cs-n">03</span><div><b>Код ответа — по первой цифре</b><p>2xx — успех, 4xx — ошибка в запросе, 5xx — ошибка сервера.</p></div></li>
+  <li><span class="cs-n">04</span><div><b>Токен — это «кто ты»</b><p>Он не отвечает на вопрос «что тебе можно». Это сервер проверяет сам.</p></div></li>
+  <li><span class="cs-n">05</span><div><b>Проверяй владельца</b><p>BOLA — первое место в OWASP API Security Top 10.</p></div></li>
+  <li><span class="cs-n">06</span><div><b>Фильтруй поля на сервере</b><p>Спрятано в интерфейсе ≠ спрятано. Чего нет в ответе, того не украдут.</p></div></li>
+  <li><span class="cs-n">07</span><div><b>Ставь лимиты</b><p>Слишком частые запросы получают 429 — и перебор не работает.</p></div></li>
+</ol>
+<p class="legal"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (раздел API testing), OWASP crAPI и OWASP Juice Shop — учебные дырявые приложения, picoCTF. Чужие сайты и API трогать нельзя.</p>
+<p class="end-row"><span class="end">Конец выпуска №16</span></p>
+</section>
+
+<style>
+.ix-api{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--r:#ff3b3b;--rd:#c8102e;--g:#2ee59d;--gap:12px;--m:16px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;display:block;color:var(--ink);font:400 18px/1.45 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-api *,.ix-api *::before,.ix-api *::after{box-sizing:border-box}
+.ix-api p{margin:0}
+.ix-api [hidden]{display:none !important}
+.ix-api :focus-visible{outline:4px solid var(--r);outline-offset:3px}
+.ix-api code.ic{font:700 .9em/1 var(--mono);background:var(--ink);color:#fff;padding:2px 6px;border-radius:3px;white-space:nowrap}
+
+/* главы */
+.ix-api .chap{display:flex;align-items:center;gap:14px;margin:56px 0 0;flex-wrap:wrap}
+.ix-api .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--y);padding:8px 12px;transform:rotate(-3deg)}
+.ix-api .chap-t{margin:0;font:400 clamp(26px,5.4vw,42px)/1.05 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-api .chap-t.pk{color:var(--r)}
+.ix-api .chap-t.gr{color:var(--g)}
+
+/* страница и панели */
+.ix-api .page{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-api .poster-pg{margin-top:8px}
+.ix-api .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-api .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:24px;--tl:0px;--tr:0px;--br:0px;--bl:0px;clip-path:polygon(0 var(--tl),100% var(--tr),100% calc(100% - var(--br)),0 calc(100% - var(--bl)))}
+.ix-api .pn:nth-child(odd)>.fr{--br:14px}
+.ix-api .pn:nth-child(even)>.fr{--tl:14px}
+.ix-api .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.09) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-api .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-api .f-red{background-color:var(--r);background-image:radial-gradient(rgba(20,20,20,.16) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-api .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(255,255,255,.07) 1.4px,transparent 1.9px);background-size:9px 9px}
+
+/* SFX, реплики, плашки */
+.ix-api .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,56px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--y));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--r));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-api .cap{display:inline-block;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.32 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:560px;position:relative;z-index:2;align-self:flex-start}
+.ix-api .cap.w{background:#fff}
+.ix-api .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:24px;padding:9px 18px 12px;font:400 23px/1.2 Neucha,cursive;max-width:min(460px,100%);box-shadow:3px 3px 0 var(--ink);width:max-content}
+.ix-api .bl::after{content:"";position:absolute;left:var(--tx,32px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-api .bl.r{margin-left:auto;--tx:calc(100% - 56px)}
+.ix-api .bl.v{background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--r)}
+.ix-api .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-api .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-api .who.m{--dot:var(--g)}
+.ix-api .who.s{--dot:var(--y)}
+.ix-api .bl.v .who{color:var(--r);--dot:var(--r)}
+.ix-api .talk{display:flex;flex-direction:column;gap:26px;justify-content:center}
+.ix-api .talk.slim{padding-top:20px;padding-bottom:30px}
+.ix-api .small{font-size:16px;line-height:1.45;color:#3d382f}
+.ix-api .small.dark{color:var(--ink);font-size:17px}
+.ix-api .small.lt{color:#d9d3c4}
+.ix-api .small b{font-family:'Russo One';font-weight:400}
+.ix-api .big{font:500 20px/1.4 Rubik}
+.ix-api .big b{font-family:'Russo One';font-weight:400}
+.ix-api mark{background:var(--y);color:var(--ink);padding:0 4px;font-weight:700}
+.ix-api mark.rd{background:var(--r)}
+.ix-api .lnk{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);font:400 19px/1.2 'Russo One';text-decoration:underline 3px;text-underline-offset:5px}
+.ix-api .lnk:hover{background:var(--ink);color:var(--y);text-decoration:none;padding:0 6px}
+.ix-api .lay-h{font:400 clamp(20px,3vw,28px)/1.15 'Russo One';color:var(--y)}
+
+/* ===== ПОСТЕР ===== */
+.ix-api .poster{min-height:520px;padding:30px 30px 34px;background:var(--r);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto 1fr auto;gap:10px 24px;align-items:center}
+.ix-api .poster::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.28) 1.5px,transparent 2px) 0 0/8px 8px;pointer-events:none}
+.ix-api .po-burst{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 34% 50%,#ff3b3b 0 4deg,#ff5b55 4deg 8deg)}
+.ix-api .po-tag{position:relative;z-index:2;grid-column:1/-1;justify-self:start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--ink);color:var(--y);padding:9px 12px;transform:rotate(-2deg)}
+.ix-api .mouth{position:relative;z-index:2;grid-column:1;grid-row:2/4;display:flex;align-items:center;justify-content:center;min-height:330px}
+.ix-api .br{font:400 clamp(170px,26vw,270px)/.8 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;text-shadow:10px 10px 0 var(--ink);position:relative;z-index:2}
+.ix-api .br-l{transform:rotate(-8deg) translateX(14px)}
+.ix-api .br-r{transform:rotate(10deg) translateX(-14px)}
+.ix-api .spill{position:relative;z-index:3;display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin:0 -30px}
+.ix-api .spill i{font:700 clamp(14px,1.8vw,18px)/1 var(--mono);font-style:normal;background:#fff;color:var(--ink);border:3px solid var(--ink);padding:6px 9px;box-shadow:4px 4px 0 var(--ink);white-space:nowrap;transform:translateX(calc(var(--i) * 9px)) rotate(calc(-6deg + var(--i) * 3deg));animation:ixapi-spill 3.2s ease-in-out calc(var(--i) * -.45s) infinite}
+.ix-api .spill i:nth-child(1){background:var(--y)}
+.ix-api .spill i:nth-child(3){background:var(--y)}
+@keyframes ixapi-spill{0%,100%{translate:0 0}50%{translate:10px 4px}}
+.ix-api .po-name{position:relative;z-index:2;grid-column:2;grid-row:2;margin:0;font:400 clamp(52px,8.6vw,96px)/.95 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;text-shadow:8px 8px 0 var(--ink);letter-spacing:-.03em;transform:rotate(-4deg);align-self:end}
+.ix-api .po-bl{grid-column:2;grid-row:3;align-self:start;margin-top:18px;font-size:25px}
+.ix-api .po-sfx{--fs:clamp(40px,6vw,64px);--rot:-9deg;--ss:var(--ink);right:4%;top:28px;color:var(--y)}
+
+/* ===== WOW: ПРИЛОЖЕНИЕ ТРЕСКАЕТСЯ ===== */
+.ix-api .lab{padding:28px 26px 30px}
+.ix-api .wow{display:flex;flex-direction:column;justify-content:center}
+.ix-api .dev{position:relative;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);overflow:hidden;background:var(--ink)}
+.ix-api .dt{position:relative;min-height:440px;padding:0 0 12px;display:flex;flex-direction:column;color:#fff}
+.ix-api .dt-bar{display:flex;align-items:center;gap:8px;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.06em;background:#2b2b2b;padding:11px 14px;border-bottom:2px solid #444}
+.ix-api .dt-dot{width:10px;height:10px;border-radius:50%;background:var(--r)}
+.ix-api .dt-row{font:600 15px/1.3 var(--mono);padding:10px 14px;border-bottom:2px solid #333;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ix-api .m-get{background:var(--g);color:var(--ink);padding:2px 6px;border-radius:3px}
+.ix-api .st-ok{background:#fff;color:var(--ink);padding:2px 6px;border-radius:3px;margin-left:auto}
+.ix-api .json{margin:0;padding:12px 14px 4px;font:600 15px/1.5 var(--mono);color:#f4f1e8;white-space:pre-wrap;overflow-wrap:anywhere;flex:1;overflow:hidden}
+.ix-api .json .ln{display:block;padding:1px 4px;border-radius:3px;transition:background .25s,opacity .3s}
+.ix-api .json .k{color:var(--y)}
+.ix-api .json .tg{display:none}
+.ix-api .json.gone .last .cm{display:none}
+.ix-api .json.flag .ln.leak{background:var(--r);color:#fff}
+.ix-api .json.flag .ln.leak .k{color:#fff}
+.ix-api .json.flag .ln.leak .tg{display:inline-block;margin-left:8px;font:400 12px/1 'Russo One';text-transform:uppercase;letter-spacing:.05em;background:#fff;color:var(--ink);padding:4px 6px;border:2px solid var(--ink);vertical-align:2px;white-space:nowrap}
+.ix-api .json .ln.typing{opacity:0}
+.ix-api .json.flag .ln.leak{animation:ixapi-flash .5s ease-out both;animation-delay:calc(var(--d,0) * .25s)}
+@keyframes ixapi-flash{0%{background:#fff;transform:translateX(-6px)}100%{background:var(--r);transform:none}}
+.ix-api .json.gone-on .ln.leak,.ix-api .json.gone-on .ln.extra{text-decoration:line-through 2px var(--r);opacity:.35}
+.ix-api .json.gone .ln.leak,.ix-api .json.gone .ln.extra{display:none}
+.ix-api .json.gone .ln.keep{background:var(--g);color:var(--ink)}
+.ix-api .json.gone .ln.keep .k{color:var(--ink)}
+
+.ix-api .half{position:absolute;inset:0;background:#fff;color:var(--ink);transition:transform .7s cubic-bezier(.6,-0.2,.7,1),opacity .7s ease}
+.ix-api .ha{clip-path:polygon(0 0,52% 0,46% 18%,55% 34%,44% 52%,53% 70%,47% 86%,51% 100%,0 100%)}
+.ix-api .hb{clip-path:polygon(52% 0,100% 0,100% 100%,51% 100%,47% 86%,53% 70%,44% 52%,55% 34%,46% 18%)}
+.ix-api .app-top{background:var(--r);color:#fff;font:400 15px/1 'Russo One';padding:15px 16px;border-bottom:4px solid var(--ink)}
+.ix-api .app-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;height:calc(100% - 50px);padding:20px;text-align:center;background:radial-gradient(rgba(20,20,20,.06) 1.4px,transparent 1.9px) 0 0/9px 9px}
+.ix-api .ava{width:96px;height:96px;border-radius:50%;background:var(--y);border:4px solid var(--ink);display:grid;place-items:center;font:400 44px/1 'Russo One';box-shadow:5px 5px 0 var(--ink)}
+.ix-api .app-hi{font:400 clamp(28px,4vw,36px)/1.1 'Russo One'}
+.ix-api .app-ok{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.06em;color:#00714a;border:3px solid currentColor;padding:7px 10px;transform:rotate(-3deg)}
+.ix-api .crack{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;opacity:0}
+.ix-api .crack polyline{fill:none;stroke:var(--ink);stroke-width:3px;vector-effect:non-scaling-stroke;stroke-linejoin:bevel}
+.ix-api .dt{visibility:hidden}
+.ix-api .dev{background:#fff}
+.ix-api .dev.cracked{background:var(--ink)}
+.ix-api .dev.cracked .dt{visibility:visible}
+.ix-api .dev.cracked .ha{transform:translate(-9px,3px) rotate(-1.2deg)}
+.ix-api .dev.cracked .hb{transform:translate(9px,-3px) rotate(1.2deg)}
+.ix-api .dev.cracked:not(.open) .half{transition:transform .12s ease-out}
+.ix-api .dev.cracked .crack{opacity:1}
+.ix-api .dev.cracked{animation:ixapi-shake .35s linear}
+.ix-api .dev.open .crack{opacity:0;transition:opacity .2s}
+.ix-api .dev.open .ha{transform:translateX(-112%) rotate(-9deg);opacity:0}
+.ix-api .dev.open .hb{transform:translateX(112%) rotate(9deg);opacity:0}
+.ix-api .dev.open .half{visibility:hidden;transition:transform .7s cubic-bezier(.6,-0.2,.7,1),opacity .7s ease,visibility 0s .7s}
+.ix-api .wow-sfx{--fs:50px;right:14px;top:10px;--rot:9deg;opacity:0}
+.ix-api .wow.boom .wow-sfx{opacity:1;animation:ixapi-pop .45s cubic-bezier(.2,1.8,.4,1) both}
+
+/* док и кнопки */
+.ix-api .dock{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:22px}
+.ix-api .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 19px/1.1 'Russo One',sans-serif;cursor:pointer;border-radius:4px}
+.ix-api .btn:hover{background:#ffe14d}
+.ix-api .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-api .btn[aria-disabled="true"]{opacity:.55;cursor:wait}
+.ix-api .btn.hot{background:var(--r);color:#fff}
+.ix-api .btn-g{background:var(--g)}
+.ix-api .btn-g:hover{background:#6ff0bb}
+.ix-api .f-ink .btn{box-shadow:5px 5px 0 var(--r)}
+.ix-api .res{font:400 18px/1.35 'Russo One';flex:1 1 260px}
+.ix-api .doc-bl{margin-top:26px}
+.ix-api .q-tag{font:400 14px/1.2 'Russo One';text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.ix-api .q-tag.lt{color:var(--y)}
+
+/* ===== СПЛЭШ ===== */
+.ix-api .splash{position:relative;background:var(--ink);padding:var(--gap);margin-top:44px}
+.ix-api .sp{position:relative;overflow:hidden;clip-path:polygon(0 0,100% 40px,100% 100%,0 calc(100% - 40px));background:var(--r);padding:70px 36px 80px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:28px 30px}
+.ix-api .sp-burst{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 28% 45%,#ff3b3b 0 2.6deg,#ff6a64 2.6deg 5.2deg)}
+.ix-api .sp-dots{position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.22) 1.8px,transparent 2.3px) 0 0/11px 11px;pointer-events:none}
+.ix-api .sp-txt{position:relative;z-index:3}
+.ix-api .sp-who{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--ink);color:var(--y);padding:8px 11px;transform:rotate(-2deg)}
+.ix-api .sp-h{margin:16px 0 0;font:400 clamp(34px,5.4vw,58px)/1.02 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);letter-spacing:-.03em;outline:none}
+.ix-api .sp-h span{display:block}
+.ix-api .sp-h span:nth-child(2){font-size:.62em;margin:.15em 0 .2em .2em}
+.ix-api .sp-h span:nth-child(3){color:var(--y)}
+.ix-api .sp-card{position:relative;z-index:4;background:#fff;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:18px 20px 20px;transform:rotate(2deg)}
+.ix-api .beats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.ix-api .beats li{display:flex;flex-direction:column;align-items:flex-start;gap:6px;font:400 21px/1.2 Neucha,cursive}
+.ix-api .beats li+li{border-top:3px dashed rgba(20,20,20,.25);padding-top:12px}
+.ix-api .chip{font:800 17px/1 var(--mono);padding:6px 8px;border:2px solid var(--ink);background:var(--r);color:#fff;white-space:nowrap}
+.ix-api .sp-bl{grid-column:1/-1;justify-self:start;font-size:25px;margin-top:6px}
+.ix-api .sp-after{margin:22px 4px 0;color:#fff;font:500 20px/1.4 Rubik;max-width:720px}
+.ix-api .splash.go .sp-h span{animation:ixapi-slam .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-api .splash.go .sp-h span:nth-child(2){animation-delay:.12s}
+.ix-api .splash.go .sp-h span:nth-child(3){animation-delay:.3s}
+.ix-api .splash.go .sp-card{animation:ixapi-card .5s cubic-bezier(.2,1.3,.4,1) .5s both}
+.ix-api .splash.go .sp-bl{animation:ixapi-up .4s ease-out .9s both}
+@keyframes ixapi-slam{from{opacity:0;transform:translateX(-60px) skewX(-12deg)}to{opacity:1;transform:none}}
+@keyframes ixapi-card{from{opacity:0;transform:rotate(12deg) scale(.6)}to{opacity:1;transform:rotate(2deg)}}
+@keyframes ixapi-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ixapi-pop{from{opacity:0;transform:rotate(-30deg) scale(2.4)}to{opacity:1;transform:rotate(var(--rot,-10deg)) scale(1)}}
+@keyframes ixapi-shake{0%,100%{transform:none}25%{transform:translate(-6px,3px)}50%{transform:translate(5px,-4px)}75%{transform:translate(-3px,2px)}}
+
+/* ===== РОЛИ ===== */
+.ix-api .role{display:flex;flex-direction:column;gap:10px;padding:26px 22px 30px}
+.ix-api .r-k{align-self:flex-start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:#fff;padding:7px 10px}
+.ix-api .r-big{font:400 clamp(40px,5.4vw,56px)/1 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ink);letter-spacing:-.04em;margin:6px 0 4px}
+.ix-api .role p{font-size:18px;line-height:1.4}
+.ix-api .rule{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:28px 24px}
+.ix-api .rule-h{font:400 clamp(24px,3.2vw,30px)/1.15 'Russo One'}
+.ix-api .rule p:not(.rule-h){font-size:18px;line-height:1.4}
+
+/* ===== REST-ЛАБ ===== */
+.ix-api .meth{display:flex;flex-wrap:wrap;gap:10px}
+.ix-api .mb{min-height:56px;min-width:118px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;padding:8px 14px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;border-radius:4px;text-align:left}
+.ix-api .mb b{font:800 18px/1 var(--mono)}
+.ix-api .mb span{font:400 15px/1 Rubik}
+.ix-api .mb:hover{background:#fff4c2}
+.ix-api .mb[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--r)}
+.ix-api .mb[aria-pressed="true"] b{color:var(--y)}
+.ix-api .rr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;margin-top:24px}
+.ix-api .rr-col{min-width:0}
+.ix-api .req{margin:0;font:600 17px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 14px;min-height:60px}
+.ix-api .req .m{background:var(--ink);color:var(--y);padding:1px 6px;border-radius:3px;font-weight:800}
+.ix-api .req .h{color:#5e584c}
+.ix-api .req .hv{background:var(--y);padding:0 4px}
+.ix-api .req .num{background:var(--r);color:#fff;padding:0 5px;border-radius:3px;display:inline-block}
+.ix-api .req .num.pop{animation:ixapi-num .45s cubic-bezier(.2,1.8,.4,1)}
+@keyframes ixapi-num{0%{transform:scale(2.2) rotate(-12deg)}100%{transform:none}}
+.ix-api .human{margin-top:14px;font:400 22px/1.25 Neucha,cursive;border-left:6px solid var(--y);padding-left:12px}
+.ix-api .resp{position:relative;margin-top:14px;background:var(--ink);color:#f4f1e8;border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(20,20,20,.35);padding:12px 14px;min-height:110px;font:600 16px/1.5 var(--mono);overflow:hidden}
+.ix-api .rr .resp{margin-top:0}
+.ix-api .resp .wait{font:400 17px/1.4 Rubik;color:#b9b2a3}
+.ix-api .resp .stt{display:inline-block;font:400 18px/1 'Russo One';padding:7px 10px 6px;margin-bottom:10px;border:2px solid #fff}
+.ix-api .resp .stt.s2{background:var(--g);color:var(--ink);border-color:var(--g)}
+.ix-api .resp .stt.s4{background:var(--r);color:#fff;border-color:var(--r)}
+.ix-api .resp pre{margin:0;font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-api .resp .k{color:var(--y)}
+.ix-api .resp .bad{background:var(--r);color:#fff;border-radius:3px;padding:0 3px}
+.ix-api .resp .note{font:400 16px/1.4 Rubik;color:#d9d3c4;margin-top:6px}
+.ix-api .resp.in{animation:ixapi-in .4s cubic-bezier(.2,1.3,.4,1)}
+@keyframes ixapi-in{from{opacity:0;transform:translateY(-14px) rotate(-1deg)}to{opacity:1;transform:none}}
+.ix-api .stampx{position:absolute;right:12px;top:10px;font:400 20px/1 'Rubik Mono One';color:var(--r);background:#fff;border:4px solid var(--r);padding:6px 10px;transform:rotate(8deg);animation:ixapi-pop2 .4s cubic-bezier(.2,1.8,.4,1) both}
+.ix-api .stampx.okk{color:#00714a;border-color:#00a86b}
+@keyframes ixapi-pop2{from{opacity:0;transform:rotate(-20deg) scale(2.4)}to{opacity:1;transform:rotate(8deg) scale(1)}}
+
+/* коды */
+.ix-api .codes-pn{padding:26px 24px 28px}
+.ix-api .codes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 26px;margin-top:16px}
+.ix-api .cg{display:flex;flex-direction:column;gap:8px}
+.ix-api .cg-h{align-self:flex-start;font:400 15px/1 'Russo One';padding:7px 9px;margin-bottom:4px}
+.ix-api .cg-h.ok{background:var(--g);color:var(--ink)}
+.ix-api .cg-h.cl{background:var(--y);color:var(--ink)}
+.ix-api .cg-h.sv{background:var(--r);color:#fff}
+.ix-api .cg p{font-size:18px;line-height:1.3}
+.ix-api .cg b{display:inline-block;min-width:48px;font:800 19px/1 var(--mono);color:var(--y)}
+
+/* ===== RATE ===== */
+.ix-api .rate{display:flex;flex-direction:column}
+.ix-api .rt-n{font:400 clamp(64px,10vw,96px)/1 'Rubik Mono One',sans-serif;color:#fff;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.ix-api .rt-code{margin-top:8px;font:700 22px/1.2 var(--mono);color:var(--y)}
+.ix-api .rt-bar{margin-top:16px;height:16px;border:3px solid #fff;position:relative;overflow:hidden}
+.ix-api .rt-bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--r)}
+.ix-api .rate.limited .rt-bar i{background:var(--g)}
+.ix-api .say{margin-top:20px;font:500 19px/1.4 Rubik;border-left:8px solid var(--y);padding:2px 0 2px 14px;max-width:720px}
+.ix-api .say.lt{color:#fff}
+.ix-api .say.bad{border-color:var(--r)}
+.ix-api .say.ok{border-color:var(--g)}
+.ix-api .stamp429{position:absolute;right:20px;top:84px;font:400 52px/1 'Rubik Mono One';color:var(--r);border:6px solid var(--r);padding:6px 12px;transform:rotate(10deg);opacity:0;pointer-events:none;background:var(--ink)}
+.ix-api .rate.slam .stamp429{opacity:1;animation:ixapi-pop2 .45s cubic-bezier(.2,1.8,.4,1) both}
+
+/* ===== ПОЧИНКА ===== */
+.ix-api #ix-api-fix .json{background:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 rgba(20,20,20,.35);padding:14px 16px;max-width:640px}
+.ix-api .fix-sfx{--fs:48px;--sc:#fff;--ss:var(--g);right:18px;top:14px;--rot:9deg;opacity:0}
+.ix-api #ix-api-fix.done .fix-sfx{opacity:1;animation:ixapi-pop .45s cubic-bezier(.2,1.8,.4,1) both}
+.ix-api .codep{display:flex;flex-direction:column;gap:14px}
+.ix-api .tagx{align-self:flex-start;font:400 15px/1 'Russo One';text-transform:uppercase;padding:8px 10px;border:3px solid var(--ink);transform:rotate(-2deg)}
+.ix-api .tagx.bad{background:var(--r);color:#fff}
+.ix-api .tagx.good{background:var(--g)}
+.ix-api .code{margin:0;background:var(--ink);color:#f4f1e8;padding:14px 16px;font:500 15px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;border-radius:4px}
+.ix-api .layers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 30px;padding:30px 28px}
+.ix-api .layers .lay-h{grid-column:1/-1}
+.ix-api .lay b{display:block;font:400 19px/1.2 'Russo One';color:var(--g);margin-bottom:6px}
+.ix-api .lay span{display:block;font-size:18px;line-height:1.4}
+
+/* ===== OWASP ===== */
+.ix-api .owasp{padding:30px 28px 32px}
+.ix-api .ow-lab{display:inline-block;font:400 14px/1.2 'Russo One';text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:#fff;padding:8px 11px;transform:rotate(-2deg)}
+.ix-api .ow-h{margin-top:14px;font:400 clamp(24px,3.6vw,34px)/1.15 'Russo One'}
+.ix-api .ow{list-style:none;margin:18px 0 0;padding:0;max-width:780px}
+.ix-api .ow li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start;padding:14px 0;border-top:2px solid rgba(20,20,20,.3)}
+.ix-api .ow li:first-child{border-top:0}
+.ix-api .ow-n{font:400 26px/1 'Rubik Mono One';color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-api .ow b{display:block;font:400 19px/1.2 'Russo One';overflow-wrap:anywhere}
+.ix-api .ow p{font-size:18px;line-height:1.4;margin-top:3px}
+.ix-api .ow-foot{margin-top:14px;font:500 18px/1.4 Rubik}
+
+/* ===== БИТВА ===== */
+.ix-api .battle{margin-top:18px;background:var(--ink);color:#fff;padding:var(--gap);box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-api .bt-top{display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--gap)}
+.ix-api .bt-face{position:relative;height:180px;background:var(--r);overflow:hidden;display:grid;place-items:center}
+.ix-api .bt-face::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.26) 1.2px,transparent 1.7px) 0 0/7px 7px}
+.ix-api .bt-face span{position:relative;z-index:1;font:400 64px/1 'Rubik Mono One';color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ink);letter-spacing:-.06em;transform:rotate(-6deg)}
+.ix-api .battle.hit .bt-face{animation:ixapi-shake .3s linear}
+.ix-api .bt-hp{background:var(--r);padding:20px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:var(--ink)}
+.ix-api .bt-name{font:400 clamp(20px,3vw,28px)/1.1 'Rubik Mono One';color:#fff;-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-api .hp{height:28px;border:3px solid var(--ink);background:#fff;position:relative;overflow:hidden}
+.ix-api .hp i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--g);border-right:3px solid var(--ink);transition:width .5s ease}
+.ix-api .bt-step{font:400 16px/1 'Russo One'}
+.ix-api .bt-body{background:#fff;color:var(--ink);margin-top:var(--gap);padding:26px 24px 28px;position:relative;overflow:hidden}
+.ix-api .bt-say{font:400 24px/1.25 Neucha,cursive;max-width:620px;padding-right:40px}
+.ix-api .bt-lab{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
+.ix-api .opts{display:flex;flex-direction:column;gap:12px;max-width:640px}
+.ix-api .opt{min-height:56px;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font:500 18px/1.3 Rubik;cursor:pointer;border-radius:4px}
+.ix-api .opt:hover{background:#fff4c2}
+.ix-api .opt.miss{background:#eee;color:#6b6458;box-shadow:none;text-decoration:line-through}
+.ix-api .opt.win{background:var(--g)}
+.ix-api .fb{margin-top:18px;font:500 19px/1.35 Rubik;border-left:8px solid var(--r);padding:2px 0 2px 14px;max-width:640px}
+.ix-api .fb:empty{display:none}
+.ix-api .fb.ok{border-color:var(--g)}
+.ix-api .fb b{font:400 22px/1 'Rubik Mono One';margin-right:8px}
+.ix-api .bt-sfx{--fs:54px;right:14px;top:10px;--rot:9deg}
+.ix-api .bt-next{margin-top:20px}
+.ix-api .bt-end h3{margin:0;font:400 clamp(24px,4vw,38px)/1.1 'Rubik Mono One';color:var(--r);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);outline:none}
+.ix-api .bt-end p{margin-top:12px;font:500 20px/1.4 Rubik}
+
+/* ===== СОБЕСЕДОВАНИЕ ===== */
+.ix-api .iv{margin-top:18px;background:var(--ink);color:#fff;padding:30px 28px 32px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-api .iv-lab{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--y);color:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-api .iv-q{margin-top:16px;font:400 clamp(24px,3.6vw,34px)/1.2 'Russo One'}
+.ix-api .iv-think{margin:18px 0 22px;font-size:19px;line-height:1.45;color:#e9e4d6;max-width:700px}
+.ix-api .iv-think b{color:var(--y);font-weight:600}
+.ix-api .iv .btn{box-shadow:5px 5px 0 var(--r)}
+.ix-api .iv-a{margin-top:26px;display:flex;flex-direction:column;gap:18px;max-width:760px}
+.ix-api .iv-p{font-size:20px;line-height:1.45;padding-left:16px;border-left:5px solid var(--g)}
+.ix-api .iv-p b{display:block;font:400 20px/1.2 'Russo One';color:var(--g);margin-bottom:4px}
+.ix-api .iv-err{font-size:19px;line-height:1.45;background:var(--r);color:var(--ink);padding:14px 16px;margin-top:6px}
+.ix-api .iv-err b{font-family:'Russo One';font-weight:400}
+
+/* ===== ШПАРГАЛКА ===== */
+.ix-api .cs-lab{margin-top:18px;font:400 20px/1.2 'Russo One'}
+.ix-api .cs{list-style:none;margin:10px 0 0;padding:0;max-width:760px}
+.ix-api .cs li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;padding:18px 0;border-top:1.5px solid rgba(20,20,20,.2)}
+.ix-api .cs li:first-child{border-top:0}
+.ix-api .cs-n{font:400 40px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-api .cs b{display:block;font:400 21px/1.2 'Russo One';margin-bottom:4px}
+.ix-api .cs p{font-size:18px;line-height:1.4}
+.ix-api .legal{margin-top:26px;font-size:18px;line-height:1.45;border-left:6px solid var(--g);padding-left:14px;max-width:760px}
+.ix-api .legal b{font-family:'Russo One';font-weight:400}
+.ix-api .end-row{margin-top:36px}
+.ix-api .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--y);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== ТЕЛЕФОН ===== */
+@media (max-width:860px){
+  .ix-api .layers{grid-template-columns:minmax(0,1fr)}
+  .ix-api .rr{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+  .ix-api{--gap:10px}
+  .ix-api .page{grid-template-columns:minmax(0,1fr)}
+  .ix-api .pn{grid-column:1/-1}
+  .ix-api .pn>.fr{padding:30px 16px 32px}
+  .ix-api .pn:nth-child(odd)>.fr{--tl:0px;--tr:var(--m);--br:var(--m);--bl:0px}
+  .ix-api .pn:nth-child(even)>.fr{--tl:var(--m);--tr:0px;--br:0px;--bl:var(--m)}
+  .ix-api .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-api .poster-pg .pn>.fr{clip-path:none}
+  .ix-api .poster{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;min-height:0;padding:24px 16px 34px;gap:8px}
+  .ix-api .mouth{grid-column:1;grid-row:auto;min-height:250px;margin-top:6px}
+  .ix-api .br{font-size:150px;-webkit-text-stroke:5px var(--ink);text-shadow:7px 7px 0 var(--ink)}
+  .ix-api .spill{margin:0 -22px}
+  .ix-api .spill i{font-size:14px;padding:5px 7px}
+  .ix-api .po-name{grid-column:1;grid-row:auto;font-size:clamp(46px,14vw,64px);-webkit-text-stroke:3px var(--ink);text-shadow:6px 6px 0 var(--ink);justify-self:start}
+  .ix-api .po-bl{grid-column:1;grid-row:auto;font-size:23px;margin-top:22px}
+  .ix-api .po-sfx{--fs:34px;top:18px;right:14px;--rot:-6deg}
+  .ix-api .po-tag{margin-top:52px}
+  .ix-api .bl{font-size:22px;max-width:100%}
+  .ix-api .json{font-size:14px;padding:10px 10px 4px}
+  .ix-api .wow-sfx{--fs:34px;top:14px;right:8px}
+  .ix-api .btn{width:100%}
+  .ix-api .sp{grid-template-columns:minmax(0,1fr);padding:48px 16px 60px;clip-path:polygon(0 0,100% 26px,100% 100%,0 calc(100% - 26px))}
+  .ix-api .sp-h{font-size:clamp(30px,9.4vw,42px);-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--ink)}
+  .ix-api .sp-card{padding:14px 14px 16px;box-shadow:7px 7px 0 var(--ink);transform:rotate(1deg)}
+  .ix-api .sp-bl{font-size:22px}
+  .ix-api .sp-after{font-size:18px}
+  .ix-api .r-big{font-size:44px}
+  .ix-api .meth{display:grid;grid-template-columns:1fr 1fr}
+  .ix-api .mb{min-width:0}
+  .ix-api .req{font-size:15px;padding:10px 12px}
+  .ix-api .resp{font-size:14px;padding:10px 12px}
+  .ix-api .codes{grid-template-columns:minmax(0,1fr)}
+  .ix-api .stamp429{font-size:34px;right:12px;top:70px;border-width:4px}
+  .ix-api .stampx{font-size:16px;right:8px;top:8px}
+  .ix-api .fix-sfx{--fs:34px;top:18px;right:10px}
+  .ix-api .ow li{grid-template-columns:minmax(0,1fr);gap:6px}
+  .ix-api .ow-n{font-size:22px}
+  .ix-api .bt-top{grid-template-columns:110px minmax(0,1fr)}
+  .ix-api .bt-face{height:130px}
+  .ix-api .bt-face span{font-size:36px;-webkit-text-stroke:2px var(--ink);text-shadow:3px 3px 0 var(--ink)}
+  .ix-api .bt-hp{padding:14px}
+  .ix-api .bt-body{padding:50px 16px 24px}
+  .ix-api .bt-sfx{--fs:38px;right:8px;top:6px}
+  .ix-api .iv{padding:26px 16px 28px}
+  .ix-api .cs li{grid-template-columns:62px minmax(0,1fr);gap:12px}
+  .ix-api .cs-n{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-api *,.ix-api *::before,.ix-api *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+  var root = document.querySelector('.ix-api'); if (!root) return;
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(id){ return root.querySelector('#ix-api-' + id); }
+  function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function hl(s){ return esc(s).replace(/"([^"\n]+)":/g, '<span class="k">"$1"</span>:'); }
+  function later(fn, ms){ return setTimeout(fn, RM ? 0 : ms); }
+  function replay(node, cls){ node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); }
+
+  /* --- ответ «Болтуна» на GET /api/v1/users/me --- */
+  var PROFILE = [
+    ['{', ''],
+    ['  "id": 1042,', 'keep'],
+    ['  "name": "Соня"', 'keep last', '', ','],
+    ['  "email": "sonya@example.com",', 'extra'],
+    ['  "password_hash": "$2b$12$Kq3f…9xV2",', 'leak', 'хеш пароля'],
+    ['  "phone": "+7 999 123-45-67",', 'leak', 'телефон'],
+    ['  "role": "user",', 'extra'],
+    ['  "invited_by": {', 'leak'],
+    ['    "name": "Олег Петров",', 'leak'],
+    ['    "address": "ул. Лесная, 7, кв. 12"', 'leak', 'чужой адрес'],
+    ['  }', 'leak'],
+    ['}', '']
+  ];
+  function fillJson(pre){
+    pre.textContent = '';
+    var d = 0;
+    PROFILE.forEach(function(L){
+      var s = el('span', 'ln' + (L[1] ? ' ' + L[1] : ''));
+      s.innerHTML = hl(L[0]) + (L[3] ? '<span class="cm">' + L[3] + '</span>' : '');
+      if (L[1] === 'leak') s.style.setProperty('--d', d++);
+      if (L[2]){ var t = el('span', 'tg', L[2]); s.appendChild(t); }
+      pre.appendChild(s);
+    });
+    return pre.querySelectorAll('.ln');
+  }
+
+  /* --- WOW: приложение трескается --- */
+  var wow = $('wow'), dev = $('dev'), wjson = $('wjson'), wbtn = $('wbtn'), wres = $('wres'), splash = $('splash');
+  var wstep = 0, busy = false;
+  var wlines = fillJson(wjson);
+  function wowOpen(){
+    busy = true; wbtn.setAttribute('aria-disabled', 'true');
+    wlines.forEach(function(l){ l.classList.add('typing'); });
+    dev.classList.add('cracked'); replay(wow, 'boom');
+    wres.textContent = 'Хрусть! Экран — только витрина. Под ним то, что прислал сервер.';
+    later(function(){
+      dev.classList.add('open');
+      var i = 0;
+      (function tick(){
+        if (i < wlines.length){ wlines[i++].classList.remove('typing'); later(tick, 70); return; }
+        busy = false; wbtn.removeAttribute('aria-disabled'); wstep = 1;
+        wbtn.textContent = 'Найти лишнее'; wbtn.classList.add('hot');
+        wres.textContent = 'Это ответ на запрос «покажи мой профиль». Экран взял из него одно имя.';
+      })();
+    }, 480);
+  }
+  function wowFlag(){
+    wjson.classList.add('flag');
+    wres.textContent = 'Экрану нужно одно поле — имя. Пришло семь. Среди них хеш пароля, телефон и чужой адрес.';
+    splash.hidden = false;
+    wstep = 2; wbtn.textContent = 'Смотреть разоблачение';
+  }
+  function wowSplash(){
+    replay(splash, 'go');
+    splash.scrollIntoView({behavior: RM ? 'auto' : 'smooth', block: 'start'});
+    $('sph').focus({preventScroll: true});
+    wstep = 3; wbtn.textContent = 'Собрать экран заново'; wbtn.classList.remove('hot');
+  }
+  function wowReset(){
+    dev.classList.remove('cracked', 'open'); wow.classList.remove('boom'); wjson.classList.remove('flag');
+    wstep = 0; wbtn.textContent = 'Открыть DevTools';
+    wres.textContent = 'Экран снова целый. Но ответ сервера от этого не изменился.';
+  }
+  wbtn.addEventListener('click', function(){
+    if (busy) return;
+    [wowOpen, wowFlag, wowSplash, wowReset][wstep]();
+  });
+
+  /* --- универсальный вывод ответа --- */
+  function showResp(box, code, cls, body, note, stamp){
+    box.textContent = '';
+    box.appendChild(el('span', 'stt ' + cls, code));
+    if (body){ var p = el('pre'); p.innerHTML = body; box.appendChild(p); }
+    if (note) box.appendChild(el('p', 'note', note));
+    if (stamp){ var s = el('span', 'stampx' + (stamp[1] ? ' okk' : ''), stamp[0]); s.setAttribute('aria-hidden', 'true'); box.appendChild(s); }
+    replay(box, 'in');
+  }
+  function waitResp(box, txt){ box.textContent = ''; box.appendChild(el('p', 'wait', txt)); box.classList.remove('in'); }
+  function reqHtml(m, path, extra){ return '<span class="m">' + m + '</span> ' + path + (extra || ''); }
+
+  /* --- REST: язык окошка --- */
+  var R = [
+    {m: 'GET', p: '/api/orders/77', h: '«Покажите мой заказ 77»', s: '200 OK',
+     j: '{\n  "id": 77,\n  "item": "наушники",\n  "status": "ждёт в пункте"\n}'},
+    {m: 'POST', p: '/api/orders', b: '{ "item": "чехол" }', h: '«Оформите новый заказ: чехол»', s: '201 Created',
+     j: '{\n  "id": 81,\n  "item": "чехол",\n  "status": "оформлен"\n}'},
+    {m: 'PUT', p: '/api/orders/77/point', b: '{ "point": "ул. Мира, 3" }', h: '«Замените пункт выдачи у заказа 77»', s: '200 OK',
+     j: '{\n  "id": 77,\n  "point": "ул. Мира, 3"\n}'},
+    {m: 'DELETE', p: '/api/orders/81', h: '«Отмените заказ 81»', s: '204 No Content',
+     n: 'Тела нет: «готово, больше сказать нечего».'}
+  ];
+  var rq = $('rq'), rh = $('rh'), rs = $('rs'), mbs = root.querySelectorAll('.mb'), cur = 0;
+  function pickM(i){
+    cur = i;
+    mbs.forEach(function(b, k){ b.setAttribute('aria-pressed', String(k === i)); });
+    var r = R[i];
+    rq.innerHTML = reqHtml(r.m, r.p, r.b ? '\n\n' + hl(r.b) : '');
+    rh.textContent = 'По-человечески: ' + r.h;
+    waitResp(rs, 'Окошко ждёт запроса…');
+  }
+  mbs.forEach(function(b, k){ b.addEventListener('click', function(){ pickM(k); }); });
+  $('rbtn').addEventListener('click', function(){
+    var r = R[cur];
+    showResp(rs, r.s, 's2', r.j ? hl(r.j) : '', r.n || '');
+  });
+  pickM(0);
+
+  /* --- Токен --- */
+  var tq = $('tq'), ts = $('ts'), tbtn = $('tbtn'), tstep = 0;
+  function tokReq(on){
+    tq.innerHTML = reqHtml('GET', '/api/orders/77', '\n<span class="h">Authorization:</span> ' + (on ? '<span class="hv">Bearer eyJhbGciOiJIUzI1NiJ9…</span>' : '<span class="h">— нет —</span>'));
+  }
+  tokReq(false);
+  tbtn.addEventListener('click', function(){
+    if (tstep === 0){
+      showResp(ts, '401 Unauthorized', 's4', hl('{\n  "error": "кто вы? нужен токен"\n}'), 'Без кода получения окошко ничего не выдаёт.');
+      tstep = 1; tbtn.textContent = 'Приложить токен и отправить';
+    } else if (tstep === 1){
+      tokReq(true);
+      showResp(ts, '200 OK', 's2', hl('{\n  "id": 77,\n  "item": "наушники"\n}'), 'Токен узнали — это Соня.');
+      tstep = 2; tbtn.textContent = 'Сначала';
+    } else {
+      tokReq(false); waitResp(ts, 'Ответа пока нет.');
+      tstep = 0; tbtn.textContent = 'Отправить без токена';
+    }
+  });
+
+  /* --- BOLA --- */
+  var bola = $('bola'), bq = $('bq'), bs = $('bs'), bbtn = $('bbtn'), bvil = $('bvil'), bstep = 0;
+  function bolaReq(n, pop){
+    bq.innerHTML = reqHtml('GET', '/api/orders/<span class="num' + (pop ? ' pop' : '') + '">' + n + '</span>', '\n<span class="h">Authorization:</span> Bearer eyJ…  <span class="h">(токен Сони)</span>');
+  }
+  bolaReq(77, false);
+  bbtn.addEventListener('click', function(){
+    if (bstep === 0){
+      bolaReq(78, true);
+      showResp(bs, '200 OK', 's2',
+        hl('{\n  "id": 78,\n  "recipient": "Олег Петров",\n') + '  <span class="bad">' + hl('"phone": "+7 999 765-43-21"') + '</span>,\n  <span class="bad">' + hl('"address": "ул. Лесная, 7, кв. 12"') + '</span>\n}',
+        'Заказ Олега. Сервер проверил только, что токен настоящий.', ['ЧУЖОЕ!', 0]);
+      replay(bola, 'hit'); bvil.hidden = false;
+      bstep = 1; bbtn.textContent = 'Включить проверку владельца'; bbtn.classList.add('hot');
+    } else if (bstep === 1){
+      bola.classList.remove('hit'); bvil.hidden = true;
+      showResp(bs, '403 Forbidden', 's4', hl('{\n  "error": "это не ваш заказ"\n}'),
+        'Сервер сверил: владелец заказа 78 — Олег, токен — Сони. Отказ. Некоторые API отвечают 404, чтобы не выдавать даже то, что заказ существует.', ['ЗАКРЫТО', 1]);
+      bstep = 2; bbtn.textContent = 'Ещё раз'; bbtn.classList.remove('hot');
+    } else {
+      bolaReq(77, false); waitResp(bs, 'Нажми кнопку — и смотри, что ответит окошко.');
+      bstep = 0; bbtn.textContent = 'Поменять номер на 78';
+    }
+  });
+
+  /* --- Rate limiting --- */
+  var rate = $('rate'), rn = $('rn'), rc = $('rc'), rbar = $('rbar'), rsay = $('rsay'), rtbtn = $('rtbtn'), rstep = 0, rbusy = false;
+  function setN(n){ rn.textContent = n.toLocaleString('ru-RU'); rbar.style.width = Math.min(100, n / 100) + '%'; }
+  function pad(n){ return ('000' + n).slice(-4); }
+  function run(target, ms, onTick, done){
+    rbusy = true; rtbtn.setAttribute('aria-disabled', 'true');
+    if (RM){ onTick(target); rbusy = false; rtbtn.removeAttribute('aria-disabled'); done(); return; }
+    var t0 = performance.now();
+    (function f(t){
+      var k = Math.min(1, (t - t0) / ms);
+      onTick(Math.round(target * k));
+      if (k < 1) requestAnimationFrame(f); else { rbusy = false; rtbtn.removeAttribute('aria-disabled'); done(); }
+    })(t0);
+  }
+  rtbtn.addEventListener('click', function(){
+    if (rbusy) return;
+    if (rstep === 0){
+      rsay.className = 'say lt'; rsay.textContent = 'Перебираю…';
+      run(4818, 1800, function(n){ setN(n); rc.textContent = 'Код: ' + pad(Math.max(0, n - 1)); }, function(){
+        rc.textContent = 'Код: 4817 — подошёл!';
+        rsay.className = 'say lt bad';
+        rsay.textContent = 'Код подобран с 4818-й попытки. Окошко ответило на каждую. Посылка Олега — у злодея.';
+        rstep = 1; rtbtn.textContent = 'Включить лимит: 5 в минуту'; rtbtn.classList.add('hot');
+      });
+    } else if (rstep === 1){
+      rate.classList.add('limited'); rate.classList.remove('slam'); setN(0); rc.textContent = 'Код: ????';
+      rsay.className = 'say lt'; rsay.textContent = 'Пробую снова…';
+      rtbtn.classList.remove('hot');
+      run(6, 1500, function(n){ setN(Math.min(n, 5)); if (n) rc.textContent = n > 5 ? 'Попытка 6 → 429 Too Many Requests' : 'Код: ' + pad(n - 1) + ' — нет'; }, function(){
+        replay(rate, 'slam');
+        rsay.className = 'say lt ok';
+        rsay.textContent = 'Шестая попытка — ответ 429. При пяти попытках в минуту 10 000 кодов перебирать почти 33 часа. А после нескольких ошибок код можно и заблокировать.';
+        rstep = 2; rtbtn.textContent = 'Ещё раз';
+      });
+    } else {
+      rate.classList.remove('limited', 'slam'); setN(0); rc.textContent = 'Код: ????';
+      rsay.className = 'say lt'; rsay.textContent = 'Лимита нет. Окошко ответит на каждую попытку.';
+      rstep = 0; rtbtn.textContent = 'Перебрать коды';
+    }
+  });
+
+  /* --- Починка: фильтр на сервере --- */
+  var fix = $('fix'), fjson = $('fjson'), fbtn = $('fbtn'), fres = $('fres'), fvil = $('fvil'), fdone = false, fbusy = false;
+  fillJson(fjson);
+  fbtn.addEventListener('click', function(){
+    if (fbusy) return;
+    if (!fdone){
+      fbusy = true; fjson.classList.add('gone-on');
+      later(function(){
+        fjson.classList.remove('gone-on'); fjson.classList.add('gone'); replay(fix, 'done');
+        fres.textContent = 'Было 7 полей — осталось 2. Экран тот же, а красть нечего.';
+        fvil.hidden = false; fdone = true; fbusy = false;
+        fbtn.textContent = 'Вернуть как было';
+      }, 750);
+    } else {
+      fjson.classList.remove('gone', 'gone-on'); fix.classList.remove('done');
+      fres.textContent = ''; fvil.hidden = true; fdone = false;
+      fbtn.textContent = 'Отфильтровать на сервере';
+    }
+  });
+
+  /* --- Битва --- */
+  var MOVES = [
+    {say: 'Приложение просит имя — а я отдаю весь профиль с хешем пароля. Пусть экран сам прячет!',
+     o: [['Собирать ответ на сервере по списку разрешённых полей', 1, 'Чего нет в ответе, того не увидят ни в DevTools, ни при перехвате.'],
+         ['Скрыть лишние поля в приложении', 0, 'Скрыто на экране, но ответ уже в телефоне. DevTools всё покажет.'],
+         ['Переименовать password_hash в x1', 0, 'Новое имя ничего не прячет: значение всё равно уходит клиенту.']]},
+    {say: 'Токен настоящий? Тогда отдам любой заказ — какой номер ни попросят!',
+     o: [['Сделать номера заказов длинными и случайными', 0, 'Такой номер труднее угадать, но он может утечь. А проверки прав всё ещё нет.'],
+         ['Проверять, что заказ принадлежит владельцу токена', 1, 'Чужой номер — отказ, даже с настоящим токеном.'],
+         ['Убрать номер заказа из адресной строки', 0, 'Номер всё равно есть в запросе, и его видно в DevTools.']]},
+    {say: 'Отвечаю всем и сколько угодно раз. Перебирайте коды хоть всю ночь!',
+     o: [['Попросить в правилах сервиса не перебирать', 0, 'Злодеи правила не читают.'],
+         ['Отвечать на перебор ошибкой 500', 0, '500 значит «сервер сломался». Это не защита, и лимита по-прежнему нет.'],
+         ['Лимит запросов на токен и адрес, ответ 429', 1, 'Пять попыток в минуту — и перебор растягивается больше чем на сутки.']]}
+  ];
+  var bt = $('bt'), hp = $('hp'), hpbar = $('hpbar'), stepEl = $('step'), battle = $('battle');
+  var bc, hpv, score, tried;
+  function setHp(v){ hpv = v; hpbar.style.width = v + '%'; hp.setAttribute('aria-valuenow', v); }
+  function start(){ bc = 0; score = 0; setHp(100); move(false); }
+  function move(focus){
+    var m = MOVES[bc]; tried = false;
+    stepEl.textContent = 'Ход ' + (bc + 1) + ' из 3';
+    bt.textContent = '';
+    bt.appendChild(el('p', 'bt-say', 'Болтун: «' + m.say + '»'));
+    bt.appendChild(el('p', 'bt-lab', 'Выбери защиту'));
+    var box = el('div', 'opts'), fb = el('p', 'fb'); fb.setAttribute('aria-live', 'polite');
+    m.o.forEach(function(o){
+      var b = el('button', 'opt', o[0]); b.type = 'button';
+      b.addEventListener('click', function(){
+        if (b.disabled) return;
+        if (o[1]){
+          if (!tried) score++;
+          box.querySelectorAll('.opt').forEach(function(x){ x.disabled = true; });
+          b.classList.add('win');
+          fb.className = 'fb ok'; fb.textContent = ''; fb.appendChild(el('b', '', 'УДАР!')); fb.appendChild(document.createTextNode(o[2]));
+          setHp(bc === 2 ? 0 : hpv - 34);
+          replay(battle, 'hit');
+          var sfx = el('span', 'sfx bt-sfx', 'БАМ!'); sfx.setAttribute('aria-hidden', 'true'); bt.appendChild(sfx);
+          var nx = el('button', 'btn bt-next', bc === 2 ? 'Заставить замолчать' : 'Следующий ход'); nx.type = 'button';
+          nx.addEventListener('click', function(){ bc++; if (bc < 3) move(true); else end(); });
+          bt.appendChild(nx); nx.focus({preventScroll: true});
+        } else {
+          tried = true; b.disabled = true; b.classList.add('miss');
+          fb.className = 'fb'; fb.textContent = ''; fb.appendChild(el('b', '', 'промах')); fb.appendChild(document.createTextNode(o[2]));
+          var nxt = box.querySelector('.opt:not([disabled])'); if (nxt) nxt.focus({preventScroll: true});
+        }
+      });
+      box.appendChild(b);
+    });
+    bt.appendChild(box); bt.appendChild(fb);
+    if (focus) box.querySelector('.opt').focus({preventScroll: true});
+  }
+  function end(){
+    stepEl.textContent = 'Бой окончен';
+    bt.textContent = '';
+    var w = el('div', 'bt-end');
+    var h = el('h3', '', 'Болтун повержен'); h.tabIndex = -1; w.appendChild(h);
+    w.appendChild(el('p', '', 'Счёт: ' + score + ' из 3 с первой попытки. ' + (score === 3 ? 'Окошко отдаёт только своё, только нужное и в меру.' : 'Ещё раз — и будет чисто.')));
+    var again = el('button', 'btn bt-next', 'Ещё раз'); again.type = 'button';
+    again.addEventListener('click', function(){ start(); bt.querySelector('.opt').focus({preventScroll: true}); });
+    w.appendChild(again);
+    var sfx = el('span', 'sfx bt-sfx', 'ТСС!'); sfx.setAttribute('aria-hidden', 'true'); w.appendChild(sfx);
+    bt.appendChild(w); h.focus({preventScroll: true});
+  }
+  start();
+
+  /* --- Собеседование --- */
+  var ivb = $('ivb'), iva = $('iva');
+  ivb.addEventListener('click', function(){
+    var open = iva.hidden; iva.hidden = !open;
+    ivb.setAttribute('aria-expanded', String(open));
+    ivb.textContent = open ? 'Скрыть ответ' : 'Показать сильный ответ';
+  });
+})();</script>

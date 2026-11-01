@@ -1,0 +1,738 @@
+<section class="ix ix-sekrety-v-git" data-ix="sekrety-v-git" aria-label="Выпуск №8: секреты в Git и конвейер защиты — фильм, битва, вопрос с собеседования, шпаргалка, карта конвейера">
+
+<div class="cut bleed" aria-hidden="true">Пятница · завод · <b>конвейер сборки</b></div>
+
+<section class="track bleed" id="ix-sekrety-v-git-film" aria-label="Сцена: коммит с ключом едет по конвейеру">
+  <h2 class="sr">Сцена: ключ от облака на конвейере</h2>
+  <div class="stage">
+    <div class="bg" aria-hidden="true"><div class="sky"></div><svg class="plant" preserveAspectRatio="xMidYMax slice" viewBox="0 0 2400 520"></svg><div class="raster"></div></div>
+    <div class="world" aria-hidden="true">
+      <div class="floor"></div><div class="hz"></div>
+      <div class="belt"></div><div class="rollers"></div>
+      <div class="vault">
+        <div class="sign vsign">VAULT</div>
+        <div class="beam"><i></i><span>хранилище секретов</span></div>
+        <div class="vdoor"><div class="vwheel"><i></i><i></i><i></i></div><span class="vslot"></span></div>
+        <svg class="vkey" viewBox="0 0 80 40"><use href="#ix-sekrety-v-git-key"/></svg>
+      </div>
+      <div class="stack">
+        <div class="plat"><span>public · история коммитов</span></div>
+        <div class="plate p1"><b>c0de11</b> начало проекта</div>
+        <div class="plate p2"><b>9e4b02</b> меню и кнопки</div>
+        <div class="plate p4"><b>b7e2f0</b> удалил config.js</div>
+        <div class="bots"></div>
+      </div>
+      <div class="clock">ПТ 18:55</div>
+      <div class="prod"><div class="sign">PROD</div><div class="beam"><i></i><span>пользователи</span></div><div class="pdoor"></div></div>
+
+      <div class="crate c1">
+        <div class="hd"><span>COMMIT a1f3c9</span><span>фикс</span></div>
+        <div class="cd"><div class="cf">config.js</div><div>CLOUD_KEY =</div><div class="kl"><span class="ky">"ck_live_7Hq2…"<svg viewBox="0 0 80 40"><use href="#ix-sekrety-v-git-key"/></svg></span></div></div>
+        <span class="tagx"></span>
+      </div>
+      <div class="crate c2">
+        <div class="hd"><span>COMMIT d41e07</span><span>тест</span></div>
+        <div class="cd"><div class="cf">config.js</div><div>CLOUD_KEY =</div><div class="kl"><span class="ky">"ck_live_Zp81…"<svg viewBox="0 0 80 40"><use href="#ix-sekrety-v-git-key"/></svg></span><span class="safe">secrets.get("cloud")</span></div></div>
+        <span class="tagx nv">--no-verify</span>
+      </div>
+      <div class="stop s1"><b>✕ gitleaks: найден секрет</b>config.js:2 · CLOUD_KEY<br>коммит остановлен</div>
+      <div class="stop s2"><b>✕ поиск секретов в CI</b>config.js:2 · CLOUD_KEY<br>сборка остановлена</div>
+    </div>
+
+    <div class="cu" aria-hidden="true"><div class="cu-frame"><img src="IMGROOT/villain-8.webp" alt=""></div><div class="sfx">ЦАП!</div><div class="stamp">ОТОЗВАН</div></div>
+    <svg class="fkey" viewBox="0 0 80 40" aria-hidden="true"><use href="#ix-sekrety-v-git-key"/></svg>
+
+    <div class="lb t" aria-hidden="true"></div><div class="lb b" aria-hidden="true"></div>
+    <div class="bar" aria-hidden="true"></div>
+    <div class="chap" aria-hidden="true">Прогон 1 · защита выключена</div>
+
+    <ol class="caps">
+      <li class="cap n">Пятница, 18:55. Соня спешит домой. Прямо в коде у неё — <em>ключ от облака</em>.</li>
+      <li class="cap n">Проверки выключены. Коммит проехал без остановок — прямо в <em>публичный репозиторий</em>.</li>
+      <li class="cap v"><span class="who">Утечкин</span>Боты постоянно просматривают новые публичные коммиты. Твой ключ я нашёл за минуты.</li>
+      <li class="cap p"><span class="who">Дядя Миша</span>Файл пропал только из новой версии. Старый коммит с ключом — в <em>истории</em>, в форках и чужих копиях.</li>
+      <li class="cap p"><span class="who">Дядя Миша</span>Считай ключ украденным. Первым делом — <em>отозвать и заменить</em>. Потом журналы: что успели сделать.</li>
+      <li class="cap n">Теперь чистим историю. Это <em>уборка, а не защита</em>: копию уже скачали, но ключ отозван.</li>
+      <li class="cap p"><span class="who">Дядя Миша</span>Новый ключ живёт в <em>хранилище секретов</em>. В коде — только имя, значение приходит при запуске.</li>
+      <li class="cap n">Понедельник. Соня снова спешит — и снова вставила ключ в код. Теперь включаем защиту на каждом посту.</li>
+      <li class="cap n"><em>IDE</em>: редактор подсветил ключ. Соня: «Потом поправлю». Едем дальше.</li>
+      <li class="cap p"><span class="who">Дядя Миша</span><em>Стоп!</em> Проверка перед коммитом нашла ключ. Он не попал даже в локальную историю.</li>
+      <li class="cap n">Соня пропустила хук флагом <code>--no-verify</code>. Хук живёт на одном компьютере — нужна вторая линия.</li>
+      <li class="cap n"><em>Git</em>: в главную ветку — только через проверку изменений и ревью.</li>
+      <li class="cap n"><em>CI</em>: каждое изменение автоматически собирается и проверяется.</li>
+      <li class="cap n"><em>SAST</em> читает твой код, не запуская его, и ищет ошибки вроде инъекций и XSS.</li>
+      <li class="cap n"><em>SCA</em> проверяет чужой код: библиотеки и их версии — по базам уязвимостей.</li>
+      <li class="cap p"><span class="who">Дядя Миша</span><em>Стоп!</em> Поиск секретов поймал ключ. Но он уже побывал в репозитории — значит, ключ меняем.</li>
+      <li class="cap n">Новый ключ — в хранилище, в коде только имя. Сборка снова зелёная.</li>
+      <li class="cap n"><em>Скан контейнеров</em> ищет известные уязвимости в образах после сборки.</li>
+      <li class="cap n"><em>Скан IaC</em> ловит опасные настройки облака прямо в коде — до выкладки.</li>
+      <li class="cap n"><em>Deploy</em>: ключи для выкладки короткоживущие, через OIDC. Красть нечего.</li>
+      <li class="cap n"><em>DAST</em> проверяет работающее приложение снаружи, на тестовом стенде.</li>
+      <li class="cap n"><em>Runtime</em>: мониторинг ловит атаки и аномалии прямо в проде. Все двенадцать постов горят.</li>
+      <li class="cap v"><span class="who">Утечкин</span>Двенадцать постов, и каждый видит своё. Ловить тут нечего…</li>
+    </ol>
+
+    <div class="dock">
+      <button type="button" class="back" aria-label="Предыдущий кадр" hidden><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M9 1.5v9L1.5 6z" fill="currentColor"/></svg></button>
+      <button type="button" class="act" aria-describedby="ix-sekrety-v-git-meta"><span class="lb2">Отправить коммит</span><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12" width="11" height="11"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span class="fl" aria-hidden="true"></span></button>
+      <div class="dk-meta" id="ix-sekrety-v-git-meta"><span class="hnt">Листай <i aria-hidden="true">↓</i><br><span>или жми</span></span><span class="cnt"><small>кадр</small><b>1</b>/23</span></div>
+    </div>
+    <p class="sr" aria-live="polite"></p>
+  </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <symbol id="ix-sekrety-v-git-key" viewBox="0 0 80 40"><g stroke="#0c1009" stroke-width="3.5" stroke-linejoin="round"><circle cx="18" cy="20" r="13" fill="currentColor"/><path d="M29 16h46v8h-6v8h-7v-8h-5v6h-7v-6H29z" fill="currentColor"/></g><circle cx="18" cy="20" r="4.5" fill="#0c1009"/></symbol>
+  </defs></svg>
+</section>
+
+<div class="out bleed" aria-hidden="true"></div>
+
+<section class="after" tabindex="-1" aria-labelledby="ix-sekrety-v-git-h-steps">
+  <span class="kicker">Разбор · после утечки</span>
+  <h2 class="h2" id="ix-sekrety-v-git-h-steps">Ключ утёк. По порядку</h2>
+  <p class="lede">Удалить файл — первое желание. И самое бесполезное: ключ уже в <b>истории Git</b>, в форках и чужих копиях.</p>
+  <ol class="steps">
+    <li class="one"><b>Отозвать и заменить ключ</b><span>Немедленно. Это шаг номер один.</span></li>
+    <li><b>Проверить журналы</b><span>Пользовался ли кто-то ключом и что успел сделать.</span></li>
+    <li><b>Убрать последствия</b><span>Удалить чужие ресурсы, проверить доступы.</span></li>
+    <li><b>Почистить историю</b><span>Это уборка, а не защита.</span></li>
+    <li><b>Поставить контроль</b><span>Разобрать причину, чтобы не повторилось.</span></li>
+  </ol>
+</section>
+
+<section class="battle" aria-labelledby="ix-sekrety-v-git-h-battle">
+  <span class="kicker">Финал · битва</span>
+  <h2 class="h2" id="ix-sekrety-v-git-h-battle">Битва со злодеем</h2>
+  <p class="lede">Утечкин делает три хода. На каждый выбери защиту.</p>
+  <div class="arena">
+    <div class="foe">
+      <div class="foe-ava"><img src="IMGROOT/villain-8.webp" alt="Утечкин"><span class="hitfx"></span></div>
+      <div class="foe-meta"><div class="foe-name">Утечкин</div>
+        <div class="hp" role="meter" aria-label="Здоровье Утечкина" aria-valuemin="0" aria-valuemax="3" aria-valuenow="3"><i></i><i></i><i></i></div></div>
+      <div class="bang" aria-hidden="true"></div>
+    </div>
+    <div class="move">
+      <div class="mv-n">Ход 1 из 3</div>
+      <p class="mv-say"></p>
+      <div class="opts" role="group" aria-label="Выбери защиту"></div>
+      <p class="mv-res" aria-live="polite"></p>
+      <button type="button" class="go nextmv" hidden>Следующий ход ▶</button>
+    </div>
+    <div class="won" hidden>
+      <div class="won-t">Утечкин повержен</div>
+      <p class="won-s"></p>
+      <p class="won-q">«Ни одного ключа в коде… Пойду на другой завод.»</p>
+      <button type="button" class="go again">Ещё раз ↻</button>
+    </div>
+  </div>
+</section>
+
+<section class="iv bleed" aria-labelledby="ix-sekrety-v-git-h-iv">
+  <div class="iv-in">
+    <span class="iv-lbl"><i aria-hidden="true"></i>Вопрос с собеседования · junior AppSec</span>
+    <h2 class="iv-q" id="ix-sekrety-v-git-h-iv">«Сборка упала после SCA: критическая уязвимость в зависимости. <span>Твои действия?</span>»</h2>
+    <p class="iv-think"><b>Подумай сам.</b> Можно ли просто выключить проверку? Что надо узнать про уязвимость, прежде чем чинить?</p>
+    <button type="button" class="go iv-btn" aria-expanded="false" aria-controls="ix-sekrety-v-git-iva">Показать сильный ответ</button>
+    <div class="iv-a" id="ix-sekrety-v-git-iva" hidden>
+      <p class="iv-no">Сильный ответ: <b>проверку не выключаю.</b></p>
+      <ul class="iv-pts">
+        <li><b>Читаю отчёт.</b>Какая библиотека, прямая или транзитивная зависимость, что за уязвимость.</li>
+        <li><b>Оцениваю реальный риск.</b>Условия эксплуатации, есть ли публичный эксплойт, используем ли уязвимую функцию, доступен ли компонент извне.</li>
+        <li><b>Чиню.</b>Есть исправленная версия — обновляю и прогоняю тесты. Нет — компенсирующие меры и задача на отслеживание.</li>
+        <li><b>Если риск принимают — оформляю.</b>Решение с ответственным и сроком, исключение в сканере с комментарием и датой окончания. На будущее — автообновление зависимостей.</li>
+      </ul>
+      <p class="iv-trap"><b>Ошибка новичка:</b> тихо отключить SCA, «чтобы успеть к релизу», или навсегда добавить уязвимость в исключения без срока и ответственного.</p>
+    </div>
+  </div>
+</section>
+
+<section class="notes" aria-labelledby="ix-sekrety-v-git-h-notes">
+  <span class="kicker">Шпаргалка · выпуск №8</span>
+  <h2 class="notes-h" id="ix-sekrety-v-git-h-notes">Что важно знать</h2>
+  <ol class="fnl">
+    <li><h3>Удалить — не значит спасти</h3><p>Ключ остаётся в истории Git, в форках и чужих копиях, поэтому после публикации считай его украденным.</p></li>
+    <li><h3>Первым делом — отозвать</h3><p>Отзови и замени ключ, потом проверь журналы и убери последствия.</p></li>
+    <li><h3>Чистка истории — это уборка</h3><p>Её делают после отзыва ключа: уже скачанные копии она не вернёт.</p></li>
+    <li><h3>Лови до коммита</h3><p>Проверка перед коммитом, например gitleaks, не пускает секрет даже в локальную историю.</p></li>
+    <li><h3>Три линии против утечки</h3><p>Перед коммитом, при отправке на платформу и в CI — каждая страхует предыдущую.</p></li>
+    <li><h3>В коде ключей нет</h3><p>Ключи живут в хранилище секретов, файлы с ними — в .gitignore, а CI получает короткоживущие ключи через OIDC.</p></li>
+    <li><h3>Каждый пост видит своё</h3><p>SAST смотрит твой код, SCA — библиотеки, DAST — живое приложение, а логические ошибки вроде IDOR ловят тесты и ревью.</p></li>
+  </ol>
+</section>
+
+<section class="map bleed" aria-labelledby="ix-sekrety-v-git-h-map">
+  <div class="map-in">
+    <span class="kicker k2">Карта конвейера</span>
+    <h2 class="map-h" id="ix-sekrety-v-git-h-map">Контроль → против чего → где</h2>
+    <p class="map-l">Чем раньше нашли проблему, тем дешевле её исправить. Но один инструмент не ловит всё.</p>
+    <ol class="mrows">
+      <li><b>Проверка перед коммитом</b><span>ключи и пароли до того, как они попадут в историю</span><small>машина разработчика · pre-commit</small></li>
+      <li><b>SAST</b><span>ошибки в своём коде: инъекции, XSS</span><small>редактор · проверка изменений</small></li>
+      <li><b>Ревью и тесты</b><span>логические ошибки вроде IDOR, которые сканеры почти не видят</span><small>проверка изменений</small></li>
+      <li><b>SCA</b><span>известные уязвимости в библиотеках</span><small>проверка изменений · постоянный мониторинг</small></li>
+      <li><b>Поиск секретов</b><span>ключи и пароли в коде и истории</span><small>при отправке · в CI</small></li>
+      <li><b>Скан контейнеров</b><span>уязвимости в образах</span><small>после сборки</small></li>
+      <li><b>Скан IaC</b><span>опасные настройки облака в коде</span><small>до выкладки инфраструктуры</small></li>
+      <li><b>DAST</b><span>ошибки работающего приложения</span><small>тестовый стенд</small></li>
+      <li><b>Мониторинг</b><span>атаки и аномалии</span><small>продакшн</small></li>
+    </ol>
+  </div>
+</section>
+
+<p class="legal"><b>Тренируйся легально:</b> picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Сканеры секретов запускай только на своих репозиториях, а найденный чужой ключ не пробуй — сообщи владельцу.</p>
+
+</section>
+<style>
+.ix-sekrety-v-git{--ink:#0c1009;--night:#060a05;--acid:#a8f03c;--acid2:#dcffa8;--yel:#ffd60a;--red:#ff4d3d;--paper:#fff7e3;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  display:block;position:relative;color:#141414;font:400 18px/1.55 Rubik,system-ui,sans-serif;text-align:left}
+.ix-sekrety-v-git *,.ix-sekrety-v-git *::before,.ix-sekrety-v-git *::after{box-sizing:border-box}
+.ix-sekrety-v-git .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0}
+.ix-sekrety-v-git :focus-visible{outline:3px solid #ff2e93;outline-offset:3px}
+.ix-sekrety-v-git .bleed{width:var(--ixvw,100vw);margin-left:calc(50% - var(--ixvw,100vw) / 2);position:relative}
+.ix-sekrety-v-git [hidden]{display:none!important}
+
+/* ---------- film ---------- */
+.ix-sekrety-v-git .cut{background:var(--ink);color:var(--paper);text-align:center;padding:16px;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.ix-sekrety-v-git .cut b{color:var(--acid);font-weight:400}
+.ix-sekrety-v-git .track{background:var(--night)}
+.ix-sekrety-v-git .stage{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;background:var(--night);color:#fff;isolation:isolate}
+.ix-sekrety-v-git .track.live{height:1360vh;height:1360svh}
+.ix-sekrety-v-git .track.live .stage{position:sticky;top:0}
+.ix-sekrety-v-git .track.rm .stage{height:min(100svh,860px)}
+.ix-sekrety-v-git .bg{position:absolute;inset:0;overflow:hidden}
+.ix-sekrety-v-git .sky{position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 64%,#22420f 0%,transparent 72%),linear-gradient(#020401 0%,#071005 55%,#0d1909 100%)}
+.ix-sekrety-v-git .plant{position:absolute;left:0;top:0;width:300%;height:60%;display:block}
+.ix-sekrety-v-git .raster{position:absolute;inset:0;background:radial-gradient(rgba(168,240,60,.09) 1.2px,transparent 1.8px) 0 0/7px 7px;mix-blend-mode:screen;pointer-events:none}
+.ix-sekrety-v-git .world{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0}
+.ix-sekrety-v-git .world>*{position:absolute}
+.ix-sekrety-v-git .floor{left:-1400px;width:8200px;top:24px;height:1200px;background:linear-gradient(#142010,#060a05 420px)}
+.ix-sekrety-v-git .hz{left:-1400px;width:8200px;top:52px;height:7px;background:repeating-linear-gradient(-45deg,rgba(168,240,60,.55) 0 9px,transparent 9px 18px)}
+.ix-sekrety-v-git .belt{left:-1200px;width:7800px;top:0;height:26px;border-top:3px solid #4b5b40;border-bottom:3px solid #000;background:repeating-linear-gradient(90deg,#29331f 0 20px,#161d11 20px 40px)}
+.ix-sekrety-v-git .rollers{left:-1200px;width:7800px;top:26px;height:18px;background:radial-gradient(circle at 50% 30%,#3d4a35 0 6px,#000 6.5px 8px,transparent 8.5px) 0 0/40px 18px}
+
+.ix-sekrety-v-git .st,.ix-sekrety-v-git .vault,.ix-sekrety-v-git .prod{top:-304px;width:268px;height:304px;margin-left:-134px}
+.ix-sekrety-v-git .sign{position:absolute;left:50%;top:0;transform:translateX(-50%);height:46px;padding:2px 15px 0;display:flex;align-items:center;font:400 22px/1 "Russo One",sans-serif;letter-spacing:.02em;white-space:nowrap;color:#617056;border:2.5px solid #34412c;border-radius:8px;background:#0a1107;transition:color .25s,border-color .25s,box-shadow .25s,text-shadow .25s}
+.ix-sekrety-v-git .on>.sign{color:#f2ffe0;border-color:var(--acid);text-shadow:0 0 6px var(--acid),0 0 18px var(--acid);box-shadow:0 0 16px rgba(168,240,60,.8),inset 0 0 12px rgba(168,240,60,.45)}
+.ix-sekrety-v-git .alarm>.sign{color:#ffe6e1;border-color:var(--red);text-shadow:0 0 6px var(--red),0 0 18px var(--red);box-shadow:0 0 18px var(--red),inset 0 0 12px rgba(255,77,61,.5)}
+.ix-sekrety-v-git .skip>.sign{color:#fff3c2;border-color:var(--yel);box-shadow:0 0 12px rgba(255,214,10,.5)}
+.ix-sekrety-v-git .beam{position:absolute;left:0;right:0;top:54px;height:24px;background:linear-gradient(#2d3926,#141b10);border:2px solid #000;display:flex;align-items:center;justify-content:center;gap:7px;font:400 13px/1 "Russo One",sans-serif;letter-spacing:.03em;color:#83927a;white-space:nowrap}
+.ix-sekrety-v-git .beam i{flex:none;width:9px;height:9px;border-radius:50%;background:#3d4a35}
+.ix-sekrety-v-git .on>.beam{color:var(--acid2)}.ix-sekrety-v-git .on>.beam i{background:var(--acid);box-shadow:0 0 8px var(--acid)}
+.ix-sekrety-v-git .alarm>.beam{color:#ffc2b9}.ix-sekrety-v-git .alarm>.beam i{background:var(--red);box-shadow:0 0 8px var(--red)}
+.ix-sekrety-v-git .skip>.beam{color:#ffe68a}.ix-sekrety-v-git .skip>.beam i{background:var(--yel)}
+.ix-sekrety-v-git .pl{position:absolute;top:76px;bottom:-26px;width:16px;background:linear-gradient(90deg,#3d4a35,#182014);border:2px solid #000}
+.ix-sekrety-v-git .pl.l{left:6px}.ix-sekrety-v-git .pl.r{right:6px}
+.ix-sekrety-v-git .cur{position:absolute;left:24px;right:24px;top:78px;bottom:0;opacity:0;background:linear-gradient(rgba(168,240,60,0),rgba(168,240,60,.18));border-left:1px solid rgba(168,240,60,.55);border-right:1px solid rgba(168,240,60,.55);transition:opacity .25s}
+.ix-sekrety-v-git .on>.cur{opacity:1}
+.ix-sekrety-v-git .alarm>.cur{opacity:1;background:linear-gradient(rgba(255,77,61,.08),rgba(255,77,61,.32));border-color:rgba(255,77,61,.7)}
+.ix-sekrety-v-git .sw{position:absolute;left:24px;right:24px;top:78px;height:4px;background:var(--acid2);box-shadow:0 0 14px var(--acid),0 0 30px var(--acid);opacity:0}
+.ix-sekrety-v-git .alarm>.sw{background:#ffd0c9;box-shadow:0 0 14px var(--red),0 0 30px var(--red)}
+.ix-sekrety-v-git .gl{position:absolute;left:-50px;right:-50px;top:296px;height:70px;border-radius:50%;background:radial-gradient(closest-side,rgba(168,240,60,.38),transparent);opacity:0;transition:opacity .3s}
+.ix-sekrety-v-git .on>.gl{opacity:1}
+.ix-sekrety-v-git .alarm>.gl{opacity:1;background:radial-gradient(closest-side,rgba(255,77,61,.45),transparent)}
+
+.ix-sekrety-v-git .vdoor{position:absolute;left:50%;bottom:28px;width:176px;height:176px;margin-left:-88px;border-radius:50%;border:4px solid #000;background:radial-gradient(circle at 38% 34%,#5a6a4f 0%,#2a3423 55%,#141b10 100%);box-shadow:0 0 0 7px #222c1c,0 0 0 10px #000,0 0 30px rgba(168,240,60,.15)}
+.ix-sekrety-v-git .vwheel{position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px 0 0 -46px;border-radius:50%;border:5px solid #9fb08f}
+.ix-sekrety-v-git .vwheel i{position:absolute;left:50%;top:-14px;bottom:-14px;width:7px;margin-left:-3.5px;background:#9fb08f;border-radius:4px}
+.ix-sekrety-v-git .vwheel i:nth-child(2){transform:rotate(60deg)}.ix-sekrety-v-git .vwheel i:nth-child(3){transform:rotate(-60deg)}
+.ix-sekrety-v-git .vslot{position:absolute;left:50%;top:18px;width:60px;height:8px;margin-left:-30px;background:#000;border-radius:4px}
+.ix-sekrety-v-git .vault.on .vdoor{box-shadow:0 0 0 7px #222c1c,0 0 0 10px #000,0 0 36px rgba(168,240,60,.6)}
+.ix-sekrety-v-git .vkey{position:absolute;left:50%;top:0;width:70px;height:35px;margin-left:-35px;color:var(--acid);opacity:0;filter:drop-shadow(0 0 8px rgba(168,240,60,.8))}
+.ix-sekrety-v-git .prod .pdoor{position:absolute;left:30px;right:30px;top:80px;bottom:0;background:linear-gradient(#0f1a0b,#1d3311);border:3px solid #000;opacity:.9}
+.ix-sekrety-v-git .prod.on .pdoor{background:linear-gradient(#234a0e,#a8f03c);box-shadow:0 0 40px rgba(168,240,60,.7)}
+
+.ix-sekrety-v-git .stack{left:0;top:0;width:0;height:0}
+.ix-sekrety-v-git .plat{position:absolute;left:-134px;width:268px;top:-348px;height:24px;background:linear-gradient(#34412c,#182014);border:2px solid #000;display:flex;align-items:center;justify-content:center;font:400 13px/1 "Russo One",sans-serif;color:var(--acid);letter-spacing:.04em;white-space:nowrap}
+.ix-sekrety-v-git .plate{position:absolute;left:-118px;width:236px;height:40px;padding:0 10px;display:flex;align-items:center;gap:9px;background:#1b2416;border:2px solid #000;border-left:6px solid #5d6e50;font:400 15px/1 Rubik,sans-serif;color:#dfe9d2;white-space:nowrap;overflow:hidden}
+.ix-sekrety-v-git .plate b{font:600 14px/1 var(--mono);color:#9fb38d}
+.ix-sekrety-v-git .p1{top:-390px}.ix-sekrety-v-git .p2{top:-434px}.ix-sekrety-v-git .p4{top:-602px;border-left-color:var(--acid);opacity:0}
+.ix-sekrety-v-git .bots{position:absolute;left:-130px;width:260px;top:-560px;height:4px;background:#ffb8ae;box-shadow:0 0 12px var(--red),0 0 30px var(--red);opacity:0}
+
+.ix-sekrety-v-git .crate{left:0;top:0;width:236px;height:124px;background:linear-gradient(#27321f,#121910);border:3px solid #000;border-radius:4px;box-shadow:0 0 0 2px #3d4a35,6px 8px 0 rgba(0,0,0,.55);color:#e9f5da;transform-origin:50% 100%;will-change:transform}
+.ix-sekrety-v-git .crate .hd{height:28px;background:var(--acid);color:var(--ink);font:400 14px/28px "Russo One",sans-serif;padding:0 10px;display:flex;justify-content:space-between;letter-spacing:.03em;border-bottom:3px solid #000}
+.ix-sekrety-v-git .crate .cd{padding:6px 10px 0;font:500 14px/1.5 var(--mono);white-space:nowrap}
+.ix-sekrety-v-git .crate .cf{color:#97ab86}
+.ix-sekrety-v-git .crate .kl{position:relative;height:22px}
+.ix-sekrety-v-git .crate .ky{position:absolute;left:0;top:0;display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;padding:0 5px;border-radius:2px;transition:opacity .25s}
+.ix-sekrety-v-git .crate .ky svg{width:28px;height:14px;color:#ffd0c9}
+.ix-sekrety-v-git .crate .safe{position:absolute;left:0;top:0;color:var(--ink);background:var(--acid);padding:0 5px;border-radius:2px;opacity:0;transition:opacity .25s}
+.ix-sekrety-v-git .crate.fixed .ky{opacity:0}.ix-sekrety-v-git .crate.fixed .safe{opacity:1}
+.ix-sekrety-v-git .crate.dead .ky{background:#4a4f47;color:#b8bdb3;text-decoration:line-through}
+.ix-sekrety-v-git .crate.wiped .ky{background:#24301d;color:transparent;text-decoration:none}
+.ix-sekrety-v-git .crate.wiped .ky::after{content:"▒▒▒▒ вычищено";position:absolute;left:5px;color:#7f9470}
+.ix-sekrety-v-git .crate.wiped .ky svg{display:none}
+.ix-sekrety-v-git .tagx{position:absolute;right:-20px;top:34px;padding:6px 9px 5px;font:400 13px/1 "Russo One",sans-serif;letter-spacing:.03em;border:2.5px solid #000;box-shadow:3px 3px 0 #000;transform:rotate(6deg);white-space:nowrap;opacity:0;transition:opacity .2s}
+.ix-sekrety-v-git .tagx.t-here{opacity:1;background:var(--red);color:#fff}
+.ix-sekrety-v-git .tagx.t-dead{opacity:1;background:#e9e2d0;color:#b3261e}
+.ix-sekrety-v-git .tagx.t-wiped{opacity:1;background:var(--acid);color:var(--ink)}
+.ix-sekrety-v-git .tagx.nv{top:-24px;right:-24px;background:var(--yel);color:var(--ink);font-family:var(--mono);font-weight:700}
+.ix-sekrety-v-git .crate.nvon .tagx.nv{opacity:1}
+@media (prefers-reduced-motion:no-preference){.ix-sekrety-v-git .crate:not(.fixed):not(.dead):not(.wiped) .ky{animation:ixsv-pulse 1.6s ease-in-out infinite}}
+@keyframes ixsv-pulse{50%{box-shadow:0 0 0 3px rgba(255,77,61,.35),0 0 16px rgba(255,77,61,.8)}}
+
+.ix-sekrety-v-git .stop{left:0;top:0;width:256px;margin-left:-128px;background:#0b0f0a;border:3px solid var(--red);border-radius:4px;box-shadow:0 0 24px rgba(255,77,61,.6),5px 5px 0 #000;font:500 14px/1.45 var(--mono);color:#ffe1dc;padding:8px 11px 9px;opacity:0;transform-origin:50% 100%}
+.ix-sekrety-v-git .stop b{display:block;font:400 15px/1.25 "Russo One",sans-serif;color:#ff7a6c;margin-bottom:3px}
+
+.ix-sekrety-v-git .cu{position:absolute;inset:0;z-index:3;visibility:hidden;background:radial-gradient(80% 70% at 60% 35%,#244a10 0%,#060a05 80%)}
+.ix-sekrety-v-git .cu-frame{position:absolute;overflow:hidden}
+.ix-sekrety-v-git .cu-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform-origin:30% 60%}
+.ix-sekrety-v-git .cu-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(6,10,5,.30) 1.5px,transparent 2.1px) 0 0/6px 6px,linear-gradient(180deg,transparent 62%,rgba(6,10,5,.55) 78%,#060a05 100%)}
+.ix-sekrety-v-git .land .cu-frame{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 86%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 86%,transparent 100%)}
+.ix-sekrety-v-git .sfx{position:absolute;left:0;top:0;font:400 58px/1 "Rubik Mono One",sans-serif;color:var(--acid);-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:5px 5px 0 #000;opacity:0;white-space:nowrap}
+.ix-sekrety-v-git .stamp{position:absolute;left:0;top:0;font:400 30px/1 "Rubik Mono One",sans-serif;color:var(--red);border:5px solid var(--red);padding:9px 14px 8px;border-radius:6px;background:rgba(12,16,9,.6);opacity:0;white-space:nowrap;box-shadow:0 0 0 3px #000}
+.ix-sekrety-v-git .fkey{position:absolute;left:0;top:0;width:80px;height:40px;z-index:4;color:var(--red);opacity:0;pointer-events:none;filter:drop-shadow(0 0 10px rgba(255,77,61,.9)) drop-shadow(3px 3px 0 #000);transform-origin:50% 50%}
+.ix-sekrety-v-git .fkey.gray{color:#8b8f86;filter:drop-shadow(3px 3px 0 #000)}
+
+.ix-sekrety-v-git .lb{position:absolute;left:0;right:0;height:0;background:#000;z-index:8;pointer-events:none}
+.ix-sekrety-v-git .lb.t{top:0}.ix-sekrety-v-git .lb.b{bottom:0}
+.ix-sekrety-v-git .bar{position:absolute;z-index:10;left:0;top:0;height:3px;width:100%;background:var(--acid);transform-origin:0 0;transform:scaleX(0);box-shadow:0 0 10px var(--acid)}
+.ix-sekrety-v-git .chap{position:absolute;z-index:10;left:16px;top:16px;max-width:calc(100% - 32px);font:400 12px/1.25 "Russo One",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--acid);background:rgba(0,0,0,.66);border:1.5px solid rgba(168,240,60,.55);padding:7px 10px;border-radius:4px}
+.ix-sekrety-v-git .chap.alt{color:var(--yel);border-color:rgba(255,214,10,.55)}
+
+.ix-sekrety-v-git .caps{list-style:none;margin:0;padding:0}
+.ix-sekrety-v-git .stage .caps{position:absolute;z-index:11;left:16px;right:16px;bottom:calc(88px + env(safe-area-inset-bottom));margin:0 auto;max-width:560px}
+.ix-sekrety-v-git .stage .cap{position:absolute;left:0;right:0;bottom:0;opacity:0;visibility:hidden;transform:translateY(22px);transition:opacity .4s ease,transform .5s cubic-bezier(.2,.8,.2,1),visibility 0s .4s}
+.ix-sekrety-v-git .stage .cap.on{opacity:1;visibility:visible;transform:none;transition:opacity .4s ease,transform .5s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.ix-sekrety-v-git .cap{padding:12px 16px 14px;font-size:19px;line-height:1.32}
+.ix-sekrety-v-git .cap .who{display:block;font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.ix-sekrety-v-git .cap.n{background:var(--ink);color:var(--paper);border-left:6px solid var(--acid);font-family:"Russo One",sans-serif;font-size:18px;box-shadow:5px 5px 0 #000}
+.ix-sekrety-v-git .cap.n em{font-style:normal;color:var(--acid)}
+.ix-sekrety-v-git .cap.v{background:rgba(9,18,6,.94);color:#fff;border:2px solid var(--acid);border-radius:14px;box-shadow:0 0 22px rgba(168,240,60,.45),5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;line-height:1.22}
+.ix-sekrety-v-git .cap.v .who{color:var(--acid)}
+.ix-sekrety-v-git .cap.p{background:var(--yel);color:var(--ink);border:3px solid #000;border-radius:14px;box-shadow:5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;line-height:1.22}
+.ix-sekrety-v-git .cap.p .who{color:#5b4a00}
+.ix-sekrety-v-git .cap.p em{font-style:normal;background:#fff;padding:0 .2em}
+.ix-sekrety-v-git .cap code{font:600 .82em/1 var(--mono);background:var(--yel);color:var(--ink);padding:.12em .3em;border-radius:3px}
+@media (min-width:900px) and (min-aspect-ratio:1/1){
+  .ix-sekrety-v-git .stage .caps{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:118px;margin:0}
+  .ix-sekrety-v-git .chap{left:clamp(24px,5vw,72px);top:24px;font-size:13px}
+  .ix-sekrety-v-git .cap.v,.ix-sekrety-v-git .cap.p{font-size:28px}
+}
+.ix-sekrety-v-git .dock{position:absolute;z-index:12;left:16px;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.ix-sekrety-v-git .act{position:relative;flex:0 1 auto;min-width:0;min-height:54px;padding:0 16px 0 18px;border:3px solid #000;border-radius:2px;background:var(--yel);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;box-shadow:4px 4px 0 #000,0 0 26px rgba(255,214,10,.4);cursor:pointer;display:inline-flex;align-items:center;gap:12px;overflow:hidden;text-align:left;transition:transform .12s ease,box-shadow .12s ease,background .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ix-sekrety-v-git .act:hover{background:#ffe14d}
+.ix-sekrety-v-git .act .ic{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--yel);line-height:0}
+.ix-sekrety-v-git .act .lb2{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-sekrety-v-git .act .fl{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--ink);transform-origin:0 50%;transform:scaleX(var(--f,0))}
+.ix-sekrety-v-git .act.press{transform:translate(3px,3px);box-shadow:1px 1px 0 #000}
+.ix-sekrety-v-git .act.busy{cursor:progress}
+.ix-sekrety-v-git .act.swap .lb2,.ix-sekrety-v-git .act.swap .ic{animation:ixsv-in .32s cubic-bezier(.2,1.4,.4,1)}
+@keyframes ixsv-in{from{opacity:0;transform:translateY(8px)}}
+.ix-sekrety-v-git .back{flex:none;width:48px;height:54px;border:3px solid #000;background:#1b2416;color:var(--acid);box-shadow:4px 4px 0 #000;cursor:pointer;display:grid;place-items:center}
+.ix-sekrety-v-git .back:disabled{opacity:.4;cursor:default}
+.ix-sekrety-v-git .dk-meta{margin-left:auto;flex:none;font:400 12px/1.3 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#e4f5d2;text-align:right;text-shadow:0 1px 3px #000,0 0 8px #000}
+.ix-sekrety-v-git .dk-meta .cnt{display:none;white-space:nowrap}.ix-sekrety-v-git .dk-meta .cnt b{font-weight:400;font-size:17px;color:var(--yel)}
+.ix-sekrety-v-git .dk-meta .cnt small{display:block;font-size:10px;letter-spacing:.12em;color:#a9bf98}
+.ix-sekrety-v-git .dk-meta.go2 .cnt{display:block}.ix-sekrety-v-git .dk-meta.go2 .hnt{display:none}
+.ix-sekrety-v-git .dk-meta .hnt span{color:var(--yel)}
+.ix-sekrety-v-git .track.rm .dk-meta .cnt{display:block}.ix-sekrety-v-git .track.rm .dk-meta .hnt{display:none}
+@media (max-width:420px){.ix-sekrety-v-git .act{font-size:16px;padding:0 12px 0 14px;gap:10px}.ix-sekrety-v-git .dock{gap:10px}}
+@media (min-width:900px) and (min-aspect-ratio:1/1){.ix-sekrety-v-git .dock{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:44px;margin:0}}
+.ix-sekrety-v-git .out{height:80px;background:linear-gradient(var(--night),transparent)}
+
+.ix-sekrety-v-git .clock{left:-150px;top:-412px;width:200px;text-align:center;font:400 34px/1 "Russo One",sans-serif;letter-spacing:.06em;color:#ffd0c9;padding:12px 0 10px;border:2.5px solid var(--red);border-radius:10px;background:#140806;text-shadow:0 0 8px var(--red),0 0 22px var(--red);box-shadow:0 0 18px rgba(255,77,61,.6),inset 0 0 14px rgba(255,77,61,.4)}
+/* ---------- article parts ---------- */
+.ix-sekrety-v-git .kicker{display:inline-block;font:400 13px/1 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--acid);padding:7px 11px 6px;transform:rotate(-1.5deg)}
+.ix-sekrety-v-git .h2{font:400 clamp(28px,7vw,44px)/1.08 "Russo One",sans-serif;margin:14px 0 14px;letter-spacing:-.005em;color:#141414}
+.ix-sekrety-v-git .lede{font-size:19px;line-height:1.55;margin:0 0 24px;max-width:36em}
+.ix-sekrety-v-git .lede b{background:linear-gradient(transparent 58%,var(--acid) 58%);font-weight:500}
+.ix-sekrety-v-git .after{max-width:760px;margin:0 auto;padding:28px 0 72px;outline:none}
+.ix-sekrety-v-git .steps{list-style:none;margin:0;padding:0;counter-reset:st;border-top:3px solid #141414}
+.ix-sekrety-v-git .steps li{counter-increment:st;display:grid;grid-template-columns:52px 1fr;column-gap:14px;padding:16px 0;border-bottom:1px solid rgba(20,20,20,.18)}
+.ix-sekrety-v-git .steps li::before{content:counter(st);grid-row:1/3;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#141414;color:var(--acid);font:400 20px/1 "Russo One",sans-serif}
+.ix-sekrety-v-git .steps li.one::before{background:var(--acid);color:#141414;box-shadow:0 0 0 3px #141414}
+.ix-sekrety-v-git .steps b{font:400 21px/1.25 "Russo One",sans-serif;padding-top:2px;justify-self:start}
+.ix-sekrety-v-git .steps span{font-size:18px;line-height:1.5;color:#2b2720}
+.ix-sekrety-v-git .steps li.one b{background:linear-gradient(transparent 55%,var(--acid) 55%)}
+
+.ix-sekrety-v-git .battle{max-width:760px;margin:0 auto;padding:0 0 72px}
+.ix-sekrety-v-git .go{min-height:54px;padding:10px 20px 9px;border:3px solid #000;background:var(--yel);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;cursor:pointer;box-shadow:4px 4px 0 #000;display:inline-flex;align-items:center;gap:10px;text-align:left}
+.ix-sekrety-v-git .go:hover{background:#ffe14d}
+.ix-sekrety-v-git .go:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.ix-sekrety-v-git .arena{position:relative;color:#fff;border:3px solid #000;box-shadow:8px 8px 0 #141414;padding:20px 16px 22px;overflow:hidden;background:radial-gradient(rgba(168,240,60,.09) 1.2px,transparent 1.8px) 0 0/7px 7px,radial-gradient(90% 70% at 85% 0%,#22420f 0%,transparent 70%),linear-gradient(#030502,#0d1909)}
+.ix-sekrety-v-git .foe{position:relative;display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ix-sekrety-v-git .foe-ava{position:relative;flex:none;width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid var(--acid);background:var(--acid);box-shadow:0 0 18px rgba(168,240,60,.55)}
+.ix-sekrety-v-git .foe-ava img{width:100%;height:100%;object-fit:cover;object-position:42% 18%;transform:scale(2.2);transform-origin:42% 22%;display:block}
+.ix-sekrety-v-git .hitfx{position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:0;transition:opacity .25s}
+.ix-sekrety-v-git .arena.hit .hitfx{opacity:.7}
+.ix-sekrety-v-git .foe-meta{flex:1;min-width:0}
+.ix-sekrety-v-git .foe-name{font:400 13px/1 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--acid);margin-bottom:9px}
+.ix-sekrety-v-git .hp{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:260px;padding:4px;border:2px solid #000;background:#000;transform:skewX(-12deg)}
+.ix-sekrety-v-git .hp i{display:block;height:14px;background:var(--red);box-shadow:inset 0 -4px 0 rgba(0,0,0,.2);transition:background .35s}
+.ix-sekrety-v-git .hp i.gone{background:#1d2618;box-shadow:none}
+.ix-sekrety-v-git .bang{position:absolute;right:0;top:50%;font:400 26px/1 "Rubik Mono One",sans-serif;transform:translateY(-50%) rotate(-8deg) scale(.6);opacity:0;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:4px 4px 0 #000;transition:opacity .2s,transform .35s cubic-bezier(.2,1.6,.4,1);pointer-events:none}
+.ix-sekrety-v-git .bang.on{opacity:1;transform:translateY(-50%) rotate(-8deg) scale(1)}
+.ix-sekrety-v-git .bang.ok{color:var(--yel)}.ix-sekrety-v-git .bang.miss{color:#c8c0b0;font-size:20px}
+@media (prefers-reduced-motion:no-preference){.ix-sekrety-v-git .arena.hit .foe-ava{animation:ixsv-shake .4s}}
+@keyframes ixsv-shake{20%{transform:translateX(-6px) rotate(-4deg)}40%{transform:translateX(6px) rotate(3deg)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.ix-sekrety-v-git .mv-n{font:400 13px/1 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--yel)}
+.ix-sekrety-v-git .mv-say{margin:10px 0 18px;font-family:Neucha,cursive;font-size:27px;line-height:1.22;color:#fff}
+.ix-sekrety-v-git .opts{display:grid;gap:10px}
+.ix-sekrety-v-git .opt{min-height:54px;text-align:left;padding:13px 15px;border:2.5px solid rgba(168,240,60,.5);background:rgba(6,12,4,.8);color:#fff;font:400 17px/1.3 "Russo One",sans-serif;cursor:pointer;border-radius:4px;display:flex;align-items:center;gap:12px;transition:background .2s,border-color .2s}
+.ix-sekrety-v-git .opt::before{content:"";flex:none;width:22px;height:22px;background:no-repeat center/18px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6z' fill='%23a8f03c'/%3E%3C/svg%3E")}
+.ix-sekrety-v-git .opt:hover:not(:disabled){border-color:var(--acid);background:rgba(168,240,60,.12)}
+.ix-sekrety-v-git .opt:disabled{cursor:default}
+.ix-sekrety-v-git .opt.right{background:var(--acid);color:var(--ink);border-color:#000}
+.ix-sekrety-v-git .opt.right::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6z' fill='%230c1009'/%3E%3C/svg%3E")}
+.ix-sekrety-v-git .opt.wrong{border-color:#ff7a6c;color:#ffd6d0;background:rgba(255,77,61,.16)}
+.ix-sekrety-v-git .opt.wrong::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5L5 19' stroke='%23ff7a6c' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ix-sekrety-v-git .opt.off{opacity:.5}
+.ix-sekrety-v-git .mv-res{margin:16px 0 0;min-height:1.5em;font-size:18px;line-height:1.55;color:#eef3e6}
+.ix-sekrety-v-git .mv-res b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-sekrety-v-git .mv-res .ok{color:var(--acid)}.ix-sekrety-v-git .mv-res .no{color:#ff8f82}
+.ix-sekrety-v-git .nextmv{margin-top:14px}
+.ix-sekrety-v-git .won-t{font:400 clamp(26px,7vw,40px)/1.1 "Rubik Mono One",sans-serif;color:var(--acid);-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:4px 4px 0 #000}
+.ix-sekrety-v-git .won-s{margin:14px 0 4px;font:400 19px/1.4 "Russo One",sans-serif}
+.ix-sekrety-v-git .won-q{margin:0 0 20px;font-family:Neucha,cursive;font-size:23px;color:#c3d4b4}
+.ix-sekrety-v-git .arena.over .foe-ava{filter:grayscale(1) brightness(.75);border-color:#666;box-shadow:none}
+.ix-sekrety-v-git .arena.over .foe-ava::after{content:"";position:absolute;left:-10%;right:-10%;top:47%;height:6px;background:var(--red);transform:rotate(-35deg);box-shadow:0 0 0 2px #000}
+
+.ix-sekrety-v-git .iv{background:var(--night);color:var(--paper);padding:76px 16px 84px;border-block:4px solid #000;background-image:radial-gradient(rgba(168,240,60,.08) 1.2px,transparent 1.8px),radial-gradient(60% 45% at 50% 100%,#1f3d0e 0%,transparent 70%),linear-gradient(#020401,#071005 60%,#0d1909);background-size:7px 7px,100% 100%,100% 100%}
+.ix-sekrety-v-git .iv-in{max-width:760px;margin:0 auto}
+.ix-sekrety-v-git .iv-lbl{display:inline-flex;align-items:center;gap:9px;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.05em;color:var(--yel);border:1.5px solid rgba(255,214,10,.5);padding:8px 12px 7px;border-radius:3px}
+.ix-sekrety-v-git .iv-lbl i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(255,77,61,.25)}
+.ix-sekrety-v-git .iv-q{font:400 clamp(30px,8.4vw,54px)/1.1 "Russo One",sans-serif;margin:22px 0 22px;color:var(--paper);text-wrap:balance}
+.ix-sekrety-v-git .iv-q span{color:var(--acid)}
+.ix-sekrety-v-git .iv-think{font-family:Neucha,cursive;font-size:25px;line-height:1.3;color:#dcd5c3;margin:0 0 30px;max-width:28em}
+.ix-sekrety-v-git .iv-think b{font:400 .8em "Russo One",sans-serif;color:var(--paper);margin-right:4px}
+.ix-sekrety-v-git .go.iv-btn{min-height:62px;padding:14px 26px 13px;font-size:19px;box-shadow:5px 5px 0 #000}
+.ix-sekrety-v-git .iv-a{margin-top:40px}
+.ix-sekrety-v-git .iv-no{margin:0 0 6px;font:400 24px/1.25 "Russo One",sans-serif;color:var(--paper)}
+.ix-sekrety-v-git .iv-no b{font-weight:400;color:var(--acid)}
+.ix-sekrety-v-git .iv-pts{list-style:none;margin:0;padding:0}
+.ix-sekrety-v-git .iv-pts li{padding:20px 0;border-bottom:1px solid rgba(255,247,227,.14);font-size:18.5px;line-height:1.6;color:#e8e2d3}
+.ix-sekrety-v-git .iv-pts li b{display:block;font:400 21px/1.25 "Russo One",sans-serif;color:var(--acid);margin-bottom:6px}
+.ix-sekrety-v-git .iv-trap{margin:26px 0 0;padding:16px 18px;background:rgba(255,77,61,.16);border-left:5px solid var(--red);font-size:18px;line-height:1.55;color:#f6ece8}
+.ix-sekrety-v-git .iv-trap b{font-family:"Russo One",sans-serif;font-weight:400;color:#ff9a8e}
+@media (prefers-reduced-motion:no-preference){.ix-sekrety-v-git .iv-a{animation:ixsv-rise .45s cubic-bezier(.2,.8,.2,1)}.ix-sekrety-v-git .iv-lbl i{animation:ixsv-blink 1.6s steps(1) infinite}}
+@keyframes ixsv-rise{from{opacity:0;transform:translateY(10px)}}
+@keyframes ixsv-blink{0%,70%{opacity:1}71%,100%{opacity:.25}}
+
+.ix-sekrety-v-git .notes{max-width:760px;margin:0 auto;padding:72px 0 64px}
+.ix-sekrety-v-git .notes .kicker{background:#141414;color:var(--yel)}
+.ix-sekrety-v-git .notes-h{font:400 clamp(34px,9.4vw,60px)/1.04 "Rubik Mono One",sans-serif;letter-spacing:-.02em;word-spacing:-.2em;margin:16px 0 26px}
+.ix-sekrety-v-git .fnl{list-style:none;margin:0;padding:0;counter-reset:fn;border-top:3px solid #141414}
+.ix-sekrety-v-git .fnl li{counter-increment:fn;display:grid;grid-template-columns:64px 1fr;column-gap:14px;padding:24px 0;border-bottom:1px solid rgba(20,20,20,.2)}
+.ix-sekrety-v-git .fnl li::before{content:counter(fn,decimal-leading-zero);grid-row:1/3;font:400 38px/1 "Rubik Mono One",sans-serif;color:var(--yel);-webkit-text-stroke:2px #141414;paint-order:stroke fill;text-shadow:3px 3px 0 #141414;padding-top:2px}
+.ix-sekrety-v-git .fnl h3{margin:0 0 6px;font:400 21px/1.25 "Russo One",sans-serif;color:#141414}
+.ix-sekrety-v-git .fnl p{margin:0;font-size:18px;line-height:1.55;color:#2b2720}
+@media (min-width:720px){.ix-sekrety-v-git .fnl li{grid-template-columns:96px 1fr;padding:28px 0}.ix-sekrety-v-git .fnl li::before{font-size:50px}.ix-sekrety-v-git .fnl h3{font-size:23px}.ix-sekrety-v-git .fnl p{font-size:19px}}
+
+.ix-sekrety-v-git .map{background:var(--ink);color:var(--paper);padding:72px 16px 70px;background-image:radial-gradient(rgba(168,240,60,.07) 1.2px,transparent 1.8px);background-size:7px 7px}
+.ix-sekrety-v-git .map-in{max-width:760px;margin:0 auto}
+.ix-sekrety-v-git .kicker.k2{background:var(--acid);color:var(--ink)}
+.ix-sekrety-v-git .map-h{font:400 clamp(28px,7.4vw,46px)/1.1 "Russo One",sans-serif;margin:16px 0 12px;color:var(--paper)}
+.ix-sekrety-v-git .map-l{font-size:19px;line-height:1.5;color:#cdd8c1;margin:0 0 30px;max-width:34em}
+.ix-sekrety-v-git .mrows{list-style:none;margin:0;padding:0 0 0 30px;position:relative}
+.ix-sekrety-v-git .mrows::before{content:"";position:absolute;left:8px;top:10px;bottom:10px;width:4px;background:repeating-linear-gradient(#a8f03c 0 10px,transparent 10px 18px);opacity:.7}
+.ix-sekrety-v-git .mrows li{position:relative;display:grid;gap:3px;padding:15px 0 16px;border-bottom:1px solid rgba(255,247,227,.12)}
+.ix-sekrety-v-git .mrows li::before{content:"";position:absolute;left:-28px;top:21px;width:16px;height:16px;border-radius:50%;background:var(--ink);border:3px solid var(--acid);box-shadow:0 0 10px rgba(168,240,60,.6)}
+.ix-sekrety-v-git .mrows b{font:400 21px/1.25 "Russo One",sans-serif;color:var(--acid)}
+.ix-sekrety-v-git .mrows span{font-size:18px;line-height:1.45;color:#f3eee2}
+.ix-sekrety-v-git .mrows small{font:400 15px/1.3 "Russo One",sans-serif;letter-spacing:.04em;color:#a9bf98;text-transform:uppercase}
+@media (min-width:720px){.ix-sekrety-v-git .mrows li{grid-template-columns:230px 1fr;column-gap:20px}.ix-sekrety-v-git .mrows small{grid-column:2}}
+.ix-sekrety-v-git .legal{max-width:760px;margin:0 auto;padding:28px 0 8px;font-size:17px;line-height:1.55;border-top:0}
+.ix-sekrety-v-git .legal b{font-family:"Russo One",sans-serif;font-weight:400}
+
+@media (prefers-reduced-motion:reduce){.ix-sekrety-v-git *,.ix-sekrety-v-git *::before,.ix-sekrety-v-git *::after{transition:none!important;animation:none!important}}
+</style>
+<script>
+(function(){
+"use strict";
+var root=document.querySelector('.ix-sekrety-v-git');if(!root)return;
+var D=document,W0=window;
+var RM=W0.matchMedia&&W0.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function q(s,el){return (el||root).querySelector(s)}
+function qa(s,el){return [].slice.call((el||root).querySelectorAll(s))}
+function clamp(v,a,b){a=a==null?0:a;b=b==null?1:b;return v<a?a:v>b?b:v}
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+function mix(a,b,t){return a+(b-a)*t}
+function setVW(){root.style.setProperty('--ixvw',D.documentElement.clientWidth+'px')}
+setVW();
+
+/* ---------- factory skyline ---------- */
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+(function(svg){
+  var r=rng(8),h='',x=0,w,bh,i,j,top;
+  while(x<2400){w=70+r()*110;bh=120+r()*170;top=520-bh;
+    h+='<rect x="'+x.toFixed(0)+'" y="'+top.toFixed(0)+'" width="'+w.toFixed(0)+'" height="'+bh.toFixed(0)+'" fill="#0b1508"/>';
+    var n=Math.max(2,Math.round(w/36)),tw=w/n,pts='';
+    for(i=0;i<n;i++){pts+=(x+i*tw).toFixed(0)+','+top.toFixed(0)+' '+(x+i*tw).toFixed(0)+','+(top-26).toFixed(0)+' '+(x+(i+1)*tw).toFixed(0)+','+top.toFixed(0)+' ';}
+    h+='<polygon points="'+pts+'" fill="#0b1508"/>';
+    if(r()<.45){var cx=x+w*(.2+r()*.6),ch=60+r()*110;h+='<rect x="'+cx.toFixed(0)+'" y="'+(top-ch).toFixed(0)+'" width="14" height="'+ch.toFixed(0)+'" fill="#0b1508"/><rect x="'+(cx-2).toFixed(0)+'" y="'+(top-ch).toFixed(0)+'" width="18" height="6" fill="#16260f"/>';
+      if(r()<.5)h+='<circle cx="'+(cx+7).toFixed(0)+'" cy="'+(top-ch-8).toFixed(0)+'" r="3" fill="#ff4d3d" opacity=".8"/>';}
+    for(i=top+18;i<505;i+=22){for(j=x+10;j<x+w-14;j+=18){var qv=r();if(qv<.14)h+='<rect x="'+j.toFixed(0)+'" y="'+i.toFixed(0)+'" width="9" height="11" fill="'+(qv<.04?'#ffd60a':'#a8f03c')+'" opacity="'+(.18+r()*.35).toFixed(2)+'"/>';}}
+    x+=w+(r()<.3?30:3);}
+  h+='<rect x="0" y="470" width="2400" height="8" fill="#16260f"/><rect x="0" y="482" width="2400" height="4" fill="#16260f"/>';
+  svg.innerHTML=h;
+})(q('.plant'));
+
+/* ---------- data ---------- */
+var G=400,VX=-420,X=function(i){return i*G};
+var ST=[['IDE','подсказки в редакторе'],['PRE-COMMIT','секреты до коммита'],['GIT','ревью перед main'],['CI','сборка и проверки'],['SAST','ошибки в своём коде'],['SCA','дыры в библиотеках'],['SECRETS','ключи в коде и истории'],['CONTAINER','уязвимости в образах'],['IaC','настройки облака'],['DEPLOY','короткие ключи OIDC'],['DAST','проверка снаружи'],['RUNTIME','атаки в проде']];
+var N=23;
+var BEATS=['Отправить коммит','Подождать 3 минуты','Удалить файл','Отозвать ключ','Почистить историю','Убрать ключ в сейф','Запустить второй прогон','Включить защиту','Включить защиту','Обойти проверку','Включить защиту','Включить защиту','Включить защиту','Включить защиту','Включить защиту','Заменить ключ','Включить защиту','Включить защиту','Включить защиту','Включить защиту','Включить защиту','Заглянуть к Утечкину','К разбору'];
+/* station switched on by the transition into frame k */
+var ONAT={8:0,9:1,11:2,12:3,13:4,14:5,15:6,17:7,18:8,19:9,20:10,21:11};
+var C2X={7:X(0),8:X(0),9:X(1),10:X(2),11:X(2),12:X(3),13:X(4),14:X(5),15:X(6),16:X(6),17:X(7),18:X(8),19:X(9),20:X(10),21:X(11),22:X(12)};
+var MOVE=function(k){return k>7&&C2X[k]!==C2X[k-1]};
+function lampsAt(k){var L=[],i;for(i=0;i<12;i++)L.push(0);
+  for(var f=8;f<=k;f++){if(ONAT[f]!=null)L[ONAT[f]]=1;}
+  if(k===9)L[1]=2;if(k===10)L[1]=3;if(k===15)L[6]=2;return L;}
+var LAMPS=[];for(var kk=0;kk<N;kk++)LAMPS.push(lampsAt(kk));
+function chapFor(k){
+  if(k<=2)return['Прогон 1 · защита выключена',0];
+  if(k<=6)return['После утечки · по порядку',1];
+  if(k===7)return['Прогон 2 · защита на каждом посту',0];
+  if(k===22)return['Финал',0];
+  if(k===10)return['Прогон 2 · проверку обошли',0];
+  var s=k===16?6:ONAT[k];
+  return['Прогон 2 · пост '+(s+1)+' из 12 · '+ST[s][0],0];
+}
+
+/* ---------- build stations ---------- */
+var world=q('.world'),stEls=[];
+ST.forEach(function(s,i){
+  var el=D.createElement('div');el.className='st';el.style.left=X(i)+'px';
+  el.innerHTML='<div class="gl"></div><div class="cur"></div><div class="sw"></div><i class="pl l"></i><i class="pl r"></i><div class="beam"><i></i><span>выкл</span></div><div class="sign">'+s[0]+'</div>';
+  world.insertBefore(el,q('.vault'));
+  stEls.push({el:el,txt:el.querySelector('.beam span'),sw:el.querySelector('.sw'),st:-1});
+});
+q('.vault').style.left=VX+'px';q('.prod').style.left=X(12)+'px';
+q('.stack').style.left=X(2)+'px';
+
+/* ---------- scene ---------- */
+function Scene(stage){
+  this.s=stage;var g=function(c){return stage.querySelector(c)};
+  this.world=g('.world');this.plant=g('.plant');this.belt=g('.belt');
+  this.c1=g('.c1');this.c2=g('.c2');this.tag1=g('.c1 .tagx');this.p4=g('.p4');this.bots=g('.bots');
+  this.s1=g('.s1');this.s2=g('.s2');this.vault=g('.vault');this.vkey=g('.vkey');this.wheel=g('.vwheel');this.prod=g('.prod');this.clock=g('.clock');
+  this.cu=g('.cu');this.cuf=g('.cu-frame');this.img=g('.cu-frame img');this.sfx=g('.sfx');this.stamp=g('.stamp');this.fkey=g('.fkey');
+  this.lbT=g('.lb.t');this.lbB=g('.lb.b');this.bar=g('.bar');this.chap=g('.chap');
+  this.caps=[].slice.call(stage.querySelectorAll('.cap'));this.ci=-1;this.ck=-1;
+  this.layout();
+}
+Scene.prototype.layout=function(){
+  var W=this.s.clientWidth,H=this.s.clientHeight;this.W=W;this.H=H;
+  var port=W/H<1.05;this.port=port;this.s.classList.toggle('land',!port);
+  this.S=port?clamp(W/390,.86,1.25):clamp(H/720,.9,1.4);
+  this.ax=port?.5:.6;
+  /* free area above captions + dock */
+  var free=port?H-Math.max(250,H*.3):H;this.ay=port?free*.56:H*.46;
+  if(port&&free<470)this.S*=Math.max(.72,free/470);
+  var ar=720/960,iw,ih,ix,iy;
+  if(port){ih=Math.max(H*1.02,W/ar);iw=ih*ar;ix=clamp(W/2-iw*.38,W-iw,0);iy=-H*.08;}
+  else{ih=H*1.08;iw=ih*ar;ix=clamp(W*.64-iw/2,0,W-iw);iy=-H*.04;}
+  this.im={x:ix,y:iy,w:iw,h:ih};
+  var f=this.cuf.style;f.left=ix+'px';f.top=iy+'px';f.width=iw+'px';f.height=ih+'px';
+  this.hand={x:ix+iw*.30,y:iy+ih*.655};
+  this.maxR=Math.hypot(W,H)*1.1;
+  var sw=this.sfx.offsetWidth||200;
+  this.sfxP={x:clamp(this.hand.x+iw*.12,12,W-sw-12),y:clamp(iy+ih*.34,70,H)};
+  this.ck=-1;
+};
+Scene.prototype.toScreen=function(x,y){return{x:(x-this.cam.x)*this.Z+this.W*this.ax,y:(y-this.cam.y)*this.Z+this.ay}};
+Scene.prototype.render=function(t){
+  t=clamp(t,0,N-1);
+  var k=t<=0?0:Math.ceil(t-1e-6),u=k===0?1:clamp(t-(k-1));
+  var ph=function(a,b){return ease(clamp((u-a)/(b-a)))};
+  var W=this.W,H=this.H,self=this;
+  /* --- crate 1 (a1f3c9) --- */
+  var c1={x:X(2),y:-436},STK={x:X(2),y:-436};
+  if(k===0){c1={x:0,y:0};}
+  else if(k===1){c1={x:mix(0,X(2),ph(.04,.6)),y:mix(0,STK.y,ph(.62,.95))};}
+  var c1s=1;
+  /* --- crate 2 (d41e07) --- */
+  var c2x=X(0),c2y=0,c2op=0,shake=0;
+  if(k>=7){c2op=1;
+    if(k===7){c2y=mix(-560,0,ph(.5,.82));c2op=ph(.5,.6);}
+    else{var a=C2X[k-1],b=C2X[k];
+      c2x=mix(a,b,k===10?ph(.2,.9):ph(.04,.52));
+      if(k===9||k===15)shake=(u>.56&&u<.72)?Math.sin(u*120)*5:0;}
+  }
+  /* --- camera --- */
+  var cam={x:0,y:-160,z:1.08};
+  var BY=-160,SY=-418,SZ=.92;
+  if(k===0){cam={x:0,y:BY,z:1.12};}
+  else if(k===1){cam={x:c1.x,y:mix(BY,SY,ph(.6,.95)),z:mix(1.12,SZ,ph(.04,.5))};}
+  else if(k>=2&&k<=5){cam={x:X(2),y:SY,z:SZ};}
+  else if(k===6){var pv=ph(.04,.5);cam={x:mix(X(2),VX,pv),y:mix(SY,BY,pv),z:mix(SZ,1.04,pv)};}
+  else if(k===7){cam={x:mix(VX,0,ph(.06,.5)),y:BY,z:1.04};}
+  else{var zz=1.04;if(k===9||k===15)zz=mix(1.04,1.1,ph(.55,.8));if(k===10||k===16)zz=mix(1.1,1.04,ph(.1,.6));cam={x:c2x,y:BY,z:zz};}
+  this.cam=cam;var Z=cam.z*this.S;this.Z=Z;
+  var Tx=W*this.ax-cam.x*Z,Ty=this.ay-cam.y*Z;
+  this.world.style.transform='translate('+Tx.toFixed(1)+'px,'+Ty.toFixed(1)+'px) scale('+Z.toFixed(4)+')';
+  this.plant.style.transform='translate('+(-(cam.x+600)*Z*.1).toFixed(1)+'px,'+(Ty-this.H*.6+6).toFixed(1)+'px)';
+  var beltX=k<=6?c1.x:c2x;this.belt.style.backgroundPosition=(k===1?c1.x:k>=7?c2x:0).toFixed(1)+'px 0';
+  /* place crates */
+  this.c1.style.transform='translate('+(c1.x-118).toFixed(1)+'px,'+(c1.y-124).toFixed(1)+'px) scale('+c1s+')';
+  this.c2.style.transform='translate('+(c2x-118+shake).toFixed(1)+'px,'+(c2y-124).toFixed(1)+'px)';
+  this.c2.style.opacity=c2op;
+  /* crate 1 states */
+  var dead=k>4||(k===4&&u>.62),wiped=k>5||(k===5&&u>.55);
+  this.c1.classList.toggle('dead',dead&&!wiped);this.c1.classList.toggle('wiped',wiped);
+  var tg='';if(k===3&&u>.86||k===4&&u<=.62)tg='here';else if(k===4||(k===5&&u<=.55))tg='dead';else if(k>=5)tg='wiped';
+  if(tg!==this.tg){this.tg=tg;this.tag1.className='tagx'+(tg?' t-'+tg:'');this.tag1.textContent=tg==='here'?'ключ всё ещё тут':tg==='dead'?'ключ отозван':tg==='wiped'?'вычищен из истории':'';}
+  /* b7e2 plate drops on top */
+  var p4o=k>3?1:k===3?ph(.4,.5):0,p4y=k===3?mix(-260,0,ph(.4,.84)):0;
+  this.p4.style.opacity=p4o;this.p4.style.transform='translateY('+p4y.toFixed(1)+'px)';
+  /* bots scanline */
+  var bo=k===2?(u<.36?1:0):0;this.bots.style.opacity=bo?(.6+.4*Math.sin(u*60)):0;
+  this.bots.style.transform='translateY('+(((u*2.8)%1)*124).toFixed(1)+'px)';
+  /* crate 2 states */
+  this.c2.classList.toggle('fixed',k>16||(k===16&&u>.12));
+  this.c2.classList.toggle('nvon',k>=10&&k<=15&&!(k===10&&u<.3));
+  /* stop cards */
+  var s1=k===9?ph(.62,.72):k===10?1-ph(0,.2):0,s2=k===15?ph(.62,.72):k===16?1-ph(0,.2):0;
+  this.s1.style.opacity=s1;this.s1.style.transform='translate('+X(1)+'px,-216px) scale('+mix(.7,1,s1)+')';
+  this.s2.style.opacity=s2;this.s2.style.transform='translate('+X(6)+'px,-216px) scale('+mix(.7,1,s2)+')';
+  /* lamps */
+  var mv=MOVE(k),lt=mv?.56:.12,L=(k>0&&u<lt)?LAMPS[k-1]:LAMPS[k],ii;
+  for(ii=0;ii<12;ii++){var se=stEls[ii],v=L[ii];
+    if(se.st!==v){se.st=v;se.el.className='st'+(v===1?' on':v===2?' alarm':v===3?' skip':'');se.txt.textContent=v===0?'выкл':v===2?'секрет найден!':v===3?'пропущен':ST[ii][1];}
+    var sweep=0;if(ONAT[k]===ii||(k===16&&ii===6)){sweep=u>lt&&u<lt+.34?(u-lt)/.34:0;}
+    se.sw.style.opacity=sweep>0?1-sweep*.6:0;se.sw.style.transform='translateY('+(sweep*218).toFixed(1)+'px)';
+  }
+  /* vault */
+  var vk=k===6?ph(.52,.82):0;
+  this.vkey.style.opacity=k===6?(u>.5&&u<.84?1:0):0;
+  this.vkey.style.transform='translateY('+mix(-40,150,vk).toFixed(1)+'px) rotate(90deg)';
+  this.vault.classList.toggle('on',k>6||(k===6&&u>.84));
+  this.wheel.style.transform='rotate('+((k>6?1:k===6?ph(.82,1):0)*300).toFixed(1)+'deg)';
+  this.prod.classList.toggle('on',k===22&&u>.5);
+  var night=k<7?'ПТ 18:55':'ПН 10:04';if(night!==this.clk){this.clk=night;this.clock.textContent=night;}
+  /* --- close-up --- */
+  var iris=0,gray=0;
+  if(k===2)iris=ph(.32,.66);else if(k===3)iris=1-ph(0,.3);else if(k===4)iris=ph(.04,.4);else if(k===5)iris=1-ph(0,.3);
+  else if(k===22){iris=ph(.56,.86);gray=ph(.7,.95);}
+  var O=this.hand;
+  if(iris<.002){this.cu.style.visibility='hidden';}
+  else{this.cu.style.visibility='visible';this.cu.style.clipPath='circle('+(iris*this.maxR).toFixed(1)+'px at '+O.x.toFixed(1)+'px '+O.y.toFixed(1)+'px)';}
+  this.img.style.transform='scale('+(1.14-.14*iris).toFixed(4)+')';
+  this.img.style.filter=gray>0?'grayscale('+gray.toFixed(3)+') brightness('+(1-.25*gray).toFixed(3)+')':'';
+  var lb=iris*H*.05;this.lbT.style.height=lb+'px';this.lbB.style.height=lb+'px';
+  /* flying key */
+  var fo=0,fx=O.x,fy=O.y,fs=1.7,fr=-18,fg=false;
+  if(k===2){var from=this.toScreen(X(2)-40,STK.y-34),fp=ph(.24,.72);
+    fo=u>.22?1:0;fx=mix(from.x,O.x,fp);fy=mix(from.y,O.y,fp)-Math.sin(fp*Math.PI)*H*.12;fs=mix(.5,1.7,fp);fr=mix(0,-378,fp);}
+  else if(k===3){fo=1-ph(0,.12);}
+  else if(k===4){fo=iris>.35?1:0;fg=u>.62;}
+  else if(k===5){fo=1-ph(0,.12);fg=true;}
+  this.fkey.style.opacity=fo;this.fkey.classList.toggle('gray',fg);
+  this.fkey.style.transform='translate('+(fx-40).toFixed(1)+'px,'+(fy-20).toFixed(1)+'px) rotate('+fr.toFixed(1)+'deg) scale('+fs.toFixed(3)+')';
+  var so=k===2?ph(.7,.78):k===3?1:0;
+  this.sfx.style.opacity=so;this.sfx.style.transform='translate('+this.sfxP.x.toFixed(1)+'px,'+this.sfxP.y.toFixed(1)+'px) rotate(-9deg) scale('+mix(.5,1,so).toFixed(3)+')';
+  var sto=k===4?ph(.6,.66):k===5?1:0,sts=k===4?mix(2.4,1,ph(.6,.7)):1;
+  this.stamp.style.opacity=sto;this.stamp.style.transform='translate('+(O.x-70).toFixed(1)+'px,'+(O.y-120).toFixed(1)+'px) rotate(-12deg) scale('+sts.toFixed(3)+')';
+  /* chrome */
+  this.bar.style.transform='scaleX('+(t/(N-1)).toFixed(4)+')';
+  var ck=Math.round(t);if(ck!==this.ck){this.ck=ck;var c=chapFor(ck);this.chap.textContent=c[0];this.chap.classList.toggle('alt',c[1]===1);}
+  var ci=Math.round(t);
+  if(ci!==this.ci){this.ci=ci;for(var j=0;j<this.caps.length;j++)this.caps[j].classList.toggle('on',j===ci);}
+};
+
+var track=q('.track'),stage=q('.stage'),sc=new Scene(stage);
+var dock=q('.dock'),act=q('.act'),albl=q('.act .lb2'),aic=q('.act .ic'),back=q('.back'),meta=q('.dk-meta'),cntB=q('.dk-meta .cnt b'),live=q('.stage p.sr'),after=q('.after');
+var ICO={play:'<svg viewBox="0 0 12 12" width="11" height="11"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg>',
+  dn:'<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 1.5v8M2.5 6.5 6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
+var shown=-1;
+function setLabel(i,anim){
+  albl.textContent=BEATS[Math.min(i,N-1)];
+  aic.innerHTML=ICO[i>=N-1?'dn':'play'];
+  cntB.textContent=String(Math.min(i+1,N));
+  meta.classList.toggle('go2',i>0);
+  if(anim){act.classList.remove('swap');void act.offsetWidth;act.classList.add('swap');}
+}
+function capText(i){var c=sc.caps[i];if(!c)return'';var w=c.querySelector('.who'),tx=c.textContent;if(w)tx=w.textContent+': '+tx.slice(w.textContent.length);return tx.replace(/\s+/g,' ').trim();}
+function press(){act.classList.remove('press');void act.offsetWidth;act.classList.add('press');setTimeout(function(){act.classList.remove('press')},140);}
+function gotoAfter(){var y=after.getBoundingClientRect().top+W0.pageYOffset-8;return y;}
+
+if(RM){
+  track.classList.add('rm');back.hidden=false;
+  var T=0;
+  var show=function(){sc.render(T);setLabel(T,false);back.disabled=T<=0;act.style.setProperty('--f',0);};
+  act.addEventListener('click',function(){
+    if(T>=N-1){W0.scrollTo(0,gotoAfter());after.focus({preventScroll:true});return;}
+    T++;show();live.textContent=capText(T);
+  });
+  back.addEventListener('click',function(){if(T>0){T--;show();live.textContent=capText(T);}});
+  W0.addEventListener('resize',function(){setVW();sc.layout();sc.render(T);});
+  if(D.fonts&&D.fonts.ready)D.fonts.ready.then(function(){sc.layout();sc.render(T);});
+  show();
+}else{
+  track.classList.add('live');
+  var target=0,cur=0,raf=0,playing=null;
+  var trackT=function(){var r=track.getBoundingClientRect(),vh=stage.clientHeight;return clamp(-r.top/Math.max(1,r.height-vh))*(N-1);};
+  var yFor=function(tt){var top=track.getBoundingClientRect().top+W0.pageYOffset;return top+tt/(N-1)*Math.max(1,track.offsetHeight-stage.clientHeight);};
+  var tick=function(){raf=0;var d=target-cur;cur=Math.abs(d)<.0008?target:cur+d*.16;sc.render(cur);if(cur!==target)raf=requestAnimationFrame(tick);};
+  var syncDock=function(){var tt=trackT(),i=Math.floor(tt+.02);
+    if(i!==shown&&!playing){setLabel(i,shown!==-1);shown=i;}
+    act.style.setProperty('--f',i>=N-1?0:clamp(tt-i).toFixed(3));};
+  var onScroll=function(){target=trackT();if(!raf)raf=requestAnimationFrame(tick);if(!playing)syncDock();else act.style.setProperty('--f',clamp(target-Math.floor(target+.02)).toFixed(3));};
+  var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){W0.addEventListener('scroll',onScroll,{passive:true});onScroll();}else W0.removeEventListener('scroll',onScroll);},{rootMargin:'120px 0px'});
+  io.observe(track);
+  var rs=function(){setVW();sc.layout();target=trackT();cur=target;sc.render(cur);syncDock();};
+  W0.addEventListener('resize',rs);
+  if(D.fonts&&D.fonts.ready)D.fonts.ready.then(rs);
+  target=trackT();cur=target;sc.render(cur);syncDock();
+  var eio=function(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2};
+  var stopPlay=function(){if(!playing)return;cancelAnimationFrame(playing.raf);playing=null;act.classList.remove('busy');act.removeAttribute('aria-busy');shown=-1;syncDock();};
+  var glide=function(y1,dur,done){var y0=W0.pageYOffset,t0=0,pl={raf:0};playing=pl;
+    var step=function(now){if(playing!==pl)return;if(!t0)t0=now;var kx=clamp((now-t0)/dur);
+      W0.scrollTo(0,Math.round(y0+(y1-y0)*eio(kx)));
+      if(kx<1)pl.raf=requestAnimationFrame(step);else{playing=null;done();}};
+    pl.raf=requestAnimationFrame(step);};
+  act.addEventListener('click',function(){
+    if(playing)return;
+    var tt=trackT(),i=Math.floor(tt+.02);press();
+    act.classList.add('busy');act.setAttribute('aria-busy','true');
+    var fin=function(){act.classList.remove('busy');act.removeAttribute('aria-busy');};
+    if(i>=N-1){glide(gotoAfter(),800,function(){fin();shown=-1;syncDock();after.focus({preventScroll:true});});return;}
+    var e=i+1,dur=clamp((e-tt)*1500,700,1600);
+    glide(yFor(e),dur,function(){fin();setLabel(e,true);shown=e;syncDock();live.textContent=capText(e);});
+  });
+  ['wheel','touchstart'].forEach(function(ev){W0.addEventListener(ev,stopPlay,{passive:true})});
+  W0.addEventListener('keydown',function(e){if(playing&&!(e.target===act&&(e.key==='Enter'||e.key===' ')))stopPlay();});
+}
+
+/* ---------- battle ---------- */
+var MOVES=[
+  {say:'Пятница, вечер. Ты закоммитишь ключ — а я подберу его в публичном репозитории.',ok:'pre',
+   opts:[['sast','SAST'],['pre','Проверка секретов перед коммитом'],['dast','DAST на тестовом стенде']],
+   hit:'Gitleaks на машине разработчика остановит коммит — ключ не попадёт даже в историю.',
+   why:{sast:'SAST ищет ошибки в коде вроде инъекций. Ключи ловят сканеры секретов.',dast:'DAST проверяет работающее приложение — ключ в репозитории он не увидит.'}},
+  {say:'Ключ уже утёк. Удаляй файл сколько хочешь — я им всё равно воспользуюсь.',ok:'rev',
+   opts:[['del','Удалить файл новым коммитом'],['priv','Сделать репозиторий приватным'],['rev','Отозвать и заменить ключ']],
+   hit:'Отозванный ключ ничего не открывает. Дальше — журналы и чистка истории.',
+   why:{del:'Ключ остался в истории, форках и копиях — и он всё ещё работает.',priv:'Копии уже скачаны, а ключ всё ещё действует.'}},
+  {say:'Ладно, в коде пусто. Тогда утащу постоянный ключ из настроек CI.',ok:'oidc',
+   opts:[['oidc','Короткоживущие ключи через OIDC'],['b64','Спрятать ключ в base64'],['cont','Скан контейнеров']],
+   hit:'Ключ выдаётся на одну задачу и быстро сгорает. Красть нечего.',
+   why:{b64:'base64 — не шифрование: раскодируется за секунду.',cont:'Он ищет уязвимости в образах, а ключи CI не защищает.'}}
+];
+var arena=q('.arena'),mvN=q('.mv-n'),mvSay=q('.mv-say'),opts=q('.opts'),mvRes=q('.mv-res'),mvNext=q('.nextmv'),won=q('.won'),wonS=q('.won-s'),hpEl=q('.hp'),hpI=qa('.hp i'),bang=q('.bang'),moveEl=q('.move'),again=q('.again');
+var mi=0,hp=3,clean=0,missed=false,fxT=0;
+function fx(cls,txt){arena.classList.remove('hit','miss');void arena.offsetWidth;arena.classList.add(cls);bang.className='bang '+(cls==='hit'?'ok':'miss');bang.textContent=txt;void bang.offsetWidth;bang.classList.add('on');
+  clearTimeout(fxT);fxT=setTimeout(function(){bang.classList.remove('on');arena.classList.remove('hit','miss')},1100);}
+function renderMove(){var m=MOVES[mi];missed=false;
+  mvN.textContent='Ход '+(mi+1)+' из 3';mvSay.textContent='«'+m.say+'»';mvRes.innerHTML='';mvNext.hidden=true;opts.innerHTML='';
+  m.opts.forEach(function(o){var b=D.createElement('button');b.type='button';b.className='opt';b.dataset.id=o[0];b.textContent=o[1];opts.appendChild(b);});}
+opts.addEventListener('click',function(e){
+  var b=e.target.closest('.opt');if(!b||b.disabled)return;var m=MOVES[mi],id=b.dataset.id;
+  if(id===m.ok){hp--;hpI[hp].classList.add('gone');hpEl.setAttribute('aria-valuenow',hp);if(!missed)clean++;
+    qa('.opt',opts).forEach(function(o){o.disabled=true;if(o!==b)o.classList.add('off')});b.classList.add('right');
+    fx('hit','УДАР!');mvRes.innerHTML='<b class="ok">Удар!</b> '+m.hit;
+    if(hp===0)setTimeout(finish,RM?0:900);else{mvNext.hidden=false;mvNext.focus({preventScroll:true});}
+  }else{missed=true;b.disabled=true;b.classList.add('wrong');fx('miss','промах');mvRes.innerHTML='<b class="no">Промах.</b> '+m.why[id];}
+});
+mvNext.addEventListener('click',function(){mi++;renderMove();var f=q('.opt',opts);if(f)f.focus({preventScroll:true});});
+function finish(){arena.classList.add('over');moveEl.hidden=true;won.hidden=false;
+  wonS.textContent='Счёт: '+clean+' из 3 с первой попытки'+(clean===3?'. Чистая победа!':'.');again.focus({preventScroll:true});}
+again.addEventListener('click',function(){mi=0;hp=3;clean=0;hpI.forEach(function(i){i.classList.remove('gone')});hpEl.setAttribute('aria-valuenow',3);
+  arena.classList.remove('over');won.hidden=true;moveEl.hidden=false;renderMove();q('.opt',opts).focus({preventScroll:true});});
+renderMove();
+
+/* ---------- interview ---------- */
+var ivBtn=q('.iv-btn'),ivA=q('.iv-a');
+ivBtn.addEventListener('click',function(){var open=ivA.hidden;ivA.hidden=!open;ivBtn.setAttribute('aria-expanded',String(open));ivBtn.textContent=open?'Скрыть ответ':'Показать сильный ответ';});
+})();
+</script>

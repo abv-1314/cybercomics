@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CyberComics — Барахолка</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&amp;family=Rubik+Mono+One&amp;family=Rubik:wght@400;500;700&amp;family=Neucha&amp;display=swap" rel="stylesheet">
+<style>
+/* ===== Барахолка: ночной рынок Сетеграда. Классы bh-* (шапка bh-hd общая с методичками). ===== */
+.bh{--ink:#141414;--night:#0d1130;--y:#ffd60a;--p:#ff2e93;--g:#2ee59d;--b:#19c3ff;--o:#ff8c1a;--r:#e8262b;--paper:#fffdf6;
+  min-height:100vh;font-family:Rubik,system-ui,sans-serif;font-size:18px;line-height:1.5;color:#fff7e3;
+  background-color:var(--night);background-image:radial-gradient(rgba(255,255,255,.05) 1.2px,transparent 1.5px),linear-gradient(180deg,#070a1f 0,#141046 520px,#0d1130 1100px);
+  background-size:16px 16px,100% 100%;overflow-x:clip}
+.bh *,.bh *::before,.bh *::after{box-sizing:border-box}
+.bh a{color:inherit}
+.bh :focus-visible{outline:4px solid var(--y);outline-offset:3px}
+.bh .bh-item :focus-visible,.bh .zk :focus-visible,.bh-hd :focus-visible{outline-color:#e8262b}
+.bh h1,.bh h2,.bh h3,.bh p,.bh ul,.bh ol{margin:0}
+/* шапка сайта */
+.bh-hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 16px;background:#ffd60a;color:#141414;border-bottom:3px solid #141414;box-shadow:0 4px 0 #141414;position:relative;z-index:5;font-family:Rubik,system-ui,sans-serif}
+.bh-logo{font-family:'Rubik Mono One',sans-serif;font-size:20px;text-decoration:none;color:#141414;text-shadow:2px 2px 0 #fff;padding:6px 0}
+.bh-logo span{color:#e3262d}
+.bh-nav{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 auto}
+.bh-nav a{display:inline-flex;align-items:center;min-height:44px;font-family:'Russo One',sans-serif;font-size:16px;text-decoration:none;padding:6px 12px;background:#fff;color:#141414;border:3px solid #141414;box-shadow:3px 3px 0 #141414}
+.bh-nav a[aria-current="page"]{background:#141414;color:#ffd60a;box-shadow:none}
+.bh-nav a:hover{transform:translate(-1px,-1px)}
+.bh-me{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.bh-chip{display:inline-flex;align-items:center;min-height:44px;font-family:'Russo One',sans-serif;font-size:16px;padding:6px 12px;background:#fff;color:#141414;border:3px solid #141414}
+.bh-hi{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Russo One',sans-serif;font-size:16px;padding:6px 14px;background:#141414;color:#ffffff;border:3px solid #141414}
+@media (max-width:600px){.bh-nav{order:3;flex-basis:100%}.bh-nav a{padding:6px 10px}}
+/* гирлянды */
+.bh-sky{position:relative}
+.bh-lights{position:absolute;left:0;right:0;pointer-events:none;z-index:1}
+.bh-lights svg{position:absolute;left:0;top:0;width:100%;overflow:visible}
+.bh-bulb{position:absolute;width:14px;height:18px;margin-left:-7px;border-radius:50% 50% 45% 45%;background:var(--c);box-shadow:0 0 10px 2px var(--c),0 0 26px 6px color-mix(in srgb,var(--c) 45%,transparent);animation:bh-tw 3.4s ease-in-out infinite;animation-delay:var(--d)}
+.bh-bulb::before{content:"";position:absolute;left:4px;top:-6px;width:6px;height:7px;background:#2a2a35;border-radius:2px}
+@keyframes bh-tw{0%,100%{opacity:1}50%{opacity:.45}}
+/* вывеска */
+.bh-hero{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:78px 16px 40px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:start}
+.bh-kick{font-family:Neucha,cursive;font-size:24px;color:#ffe78a;letter-spacing:.02em}
+.bh-sign{display:inline-block;margin:10px 0 18px;padding:14px 18px 16px;border:4px solid #ffd60a;border-radius:14px;box-shadow:0 0 12px #ffd60a,inset 0 0 12px rgba(255,214,10,.55),0 0 40px rgba(255,214,10,.35);background:rgba(10,8,30,.55);max-width:100%}
+.bh-sign h1{font-family:'Rubik Mono One',sans-serif;font-weight:400;font-size:clamp(30px,5.9vw,78px);line-height:1;letter-spacing:-.01em;color:#fff;white-space:nowrap}
+.bh-sign h1 span{display:inline-block;text-shadow:0 0 4px #fff,0 0 12px #ff2e93,0 0 26px #ff2e93,0 0 52px #ff2e93;animation:bh-on 1.1s steps(1,end) both;animation-delay:calc(var(--i) * 90ms)}
+.bh-sign h1 span.bh-buzz{animation:bh-on 1.1s steps(1,end) both,bh-buzz 6s infinite;animation-delay:calc(var(--i) * 90ms),2.2s}
+@keyframes bh-on{0%{opacity:.12;text-shadow:none}30%{opacity:1}38%{opacity:.2}52%{opacity:1;text-shadow:0 0 4px #fff,0 0 12px #ff2e93,0 0 26px #ff2e93,0 0 52px #ff2e93}100%{opacity:1}}
+@keyframes bh-buzz{0%,91%,100%{opacity:1}92%{opacity:.25}94%{opacity:1}96%{opacity:.4}}
+.bh-sub{display:block;font-family:'Russo One',sans-serif;font-size:clamp(16px,2.2vw,22px);color:#ffd60a;text-shadow:0 0 10px rgba(255,214,10,.6);margin-top:8px;letter-spacing:.06em;text-transform:uppercase}
+.bh-lead{font-size:clamp(19px,2.2vw,23px);line-height:1.5;max-width:560px;color:#fff7e3}
+.bh-lead b{color:#ffd60a}
+.bh-jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.bh-jump a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;font-family:'Russo One',sans-serif;font-size:16px;text-decoration:none;color:#141414;background:#fff7e3;border:3px solid #141414;box-shadow:3px 3px 0 #ffd60a}
+.bh-jump a:hover{background:#ffd60a}
+/* чек-кошелёк */
+.bh-receipt{position:relative;background:#fffdf6;color:#141414;padding:20px 20px 30px;font-size:18px;transform:rotate(1.2deg);filter:drop-shadow(8px 10px 0 rgba(0,0,0,.45))}
+.bh-receipt::after{content:"";position:absolute;left:0;right:0;bottom:-11px;height:12px;background:linear-gradient(135deg,#fffdf6 6px,transparent 6.5px) 0 0/12px 12px repeat-x,linear-gradient(-135deg,#fffdf6 6px,transparent 6.5px) 0 0/12px 12px repeat-x}
+.bh-receipt h2{font-family:'Russo One',sans-serif;font-size:18px;font-weight:400;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px dashed #8d8577;padding-bottom:8px}
+.bh-big{display:flex;align-items:baseline;gap:10px;margin:10px 0 6px}
+.bh-big b{display:inline-block;font-family:'Russo One',sans-serif;font-weight:400;font-size:64px;line-height:1;color:#141414}
+.bh-big span{font-family:Neucha,cursive;font-size:28px}
+.bh-big.bh-shake b{animation:bh-shake .5s ease-in-out}
+@keyframes bh-shake{0%,100%{transform:none}25%{transform:translateX(-4px) rotate(-2deg)}75%{transform:translateX(4px) rotate(2deg)}}
+.bh-row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dotted #b8b0a0;font-size:17px}
+.bh-row b{font-family:'Russo One',sans-serif;font-weight:400;white-space:nowrap}
+.bh-earn{margin-top:12px;font-family:Neucha,cursive;font-size:21px;line-height:1.3;color:#1f48b8}
+.bh-earn a{color:#1f48b8}
+/* обложка тетради */
+.bh-feature{position:relative;justify-self:center;width:min(100%,360px)}
+.nb{position:relative;display:block;aspect-ratio:3/4;width:100%;border:3px solid #141414;border-radius:6px 14px 14px 6px;background-color:var(--cv,#ff8c1a);
+  background-image:radial-gradient(rgba(20,20,20,.16) 1.4px,transparent 1.9px);background-size:10px 10px;box-shadow:10px 12px 0 rgba(0,0,0,.45);color:#141414;text-decoration:none;overflow:hidden;transition:transform .2s}
+.nb::before{content:"";position:absolute;left:0;top:0;bottom:0;width:30px;background:radial-gradient(circle at 15px 50%,#0d1130 6px,#cfcfd6 6.5px 9px,transparent 9.5px) 0 0/30px 30px repeat-y;border-right:3px solid rgba(20,20,20,.5)}
+a.nb:hover{transform:rotate(-1.5deg) translateY(-4px)}
+.nb-label{position:absolute;left:16%;right:8%;top:20%;padding:16px 16px 18px;background:#fff;border:3px solid #141414;transform:rotate(-2deg);
+  background-image:linear-gradient(#cfe0f0 1px,transparent 1px),linear-gradient(90deg,#cfe0f0 1px,transparent 1px);background-size:20px 20px}
+.nb-label b{display:block;font-family:Neucha,cursive;font-weight:400;font-size:clamp(44px,8vw,62px);line-height:1;color:#1f48b8}
+.nb-label span{display:block;font-family:Neucha,cursive;font-size:24px;line-height:1.15;color:#141414;margin-top:6px}
+.nb-no{position:absolute;left:16%;top:7%;font-family:'Russo One',sans-serif;font-size:16px;background:#141414;color:#fff;padding:3px 10px}
+.nb-st{position:absolute;font-family:Neucha,cursive;font-size:20px;line-height:1.1;padding:8px 12px;white-space:nowrap;border:2px solid #141414;background:#fff27a;box-shadow:3px 3px 0 rgba(20,20,20,.35);max-width:70%}
+.nb-st.s1{right:6%;bottom:25%;transform:rotate(6deg)}
+.nb-st.s2{left:20%;bottom:8%;transform:rotate(-5deg);background:#ffd0e6}
+/* бирка с ценой */
+.bh-tag{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:flex-start;padding:8px 14px 9px 30px;min-width:124px;background:#f6dfa2;color:#141414;
+  clip-path:polygon(18px 0,100% 0,100% 100%,18px 100%,0 50%);transform-origin:0 50%;transform:rotate(-5deg);animation:bh-swing 4.5s ease-in-out infinite}
+.bh-tag::before{content:"";position:absolute;left:12px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#0d1130;box-shadow:inset 0 0 0 2px #8a6d2c}
+.bh-tag b{font-family:Neucha,cursive;font-weight:400;font-size:30px;line-height:1}
+.bh-tag small{font-family:Rubik,sans-serif;font-size:16px;line-height:1.2}
+.bh-feature .bh-tag{right:-10px;top:-18px}
+@keyframes bh-swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(3deg)}}
+/* прилавки */
+.bh-stall{position:relative;z-index:2;max-width:1200px;margin:64px auto 0;padding:0 16px}
+.bh-awn{height:44px;border:3px solid #141414;border-bottom:0;background:repeating-linear-gradient(90deg,var(--a1,#e8262b) 0 48px,var(--a2,#fff7e3) 48px 96px);position:relative}
+.bh-awn::after{content:"";position:absolute;left:0;right:0;top:100%;height:22px;background:radial-gradient(circle at 24px 0,var(--a1,#e8262b) 21px,transparent 22px) 0 0/96px 22px repeat-x,radial-gradient(circle at 72px 0,var(--a2,#fff7e3) 21px,transparent 22px) 0 0/96px 22px repeat-x;z-index:2}
+.bh-board{position:absolute;left:50%;top:-30px;transform:translateX(-50%) rotate(-1.5deg);z-index:3;background:#141414;color:#ffd60a;border:3px solid #ffd60a;padding:8px 18px;font-family:'Rubik Mono One',sans-serif;font-weight:400;font-size:clamp(17px,3vw,24px);white-space:nowrap;box-shadow:0 0 18px rgba(255,214,10,.45)}
+.bh-counter{background:linear-gradient(180deg,#232a5c,#171c42);border:3px solid #141414;border-top:0;padding:50px 20px 30px;box-shadow:0 10px 0 #070a1f}
+.bh-intro{max-width:760px;margin:0 0 30px;font-size:19px;color:#ece7ff}
+.bh-intro b{color:#ffd60a;font-weight:500}
+.bh-grid{display:grid;gap:30px}
+.bh-grid.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr))}
+.bh-grid.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.bh-grid.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+/* карточка товара */
+.bh-item{position:relative;display:flex;flex-direction:column;background:var(--paper);color:#141414;border:3px solid #141414;box-shadow:7px 7px 0 #070a1f}
+.bh-item:nth-child(odd){transform:rotate(-.5deg)}.bh-item:nth-child(even){transform:rotate(.45deg)}
+.bh-item .bh-tag{right:14px;top:-16px}
+.bh-cover{position:relative;padding:26px 20px 18px;display:flex;justify-content:center;background:#1a1f45;border-bottom:3px solid #141414;overflow:hidden}
+.bh-cover .nb{width:min(74%,300px)}
+.bh-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.bh-kind{align-self:flex-start;font-family:'Russo One',sans-serif;font-size:16px;background:#141414;color:#ffd60a;padding:3px 10px}
+.bh-item h3{font-family:'Russo One',sans-serif;font-weight:400;font-size:24px;line-height:1.2}
+.bh-item p{font-size:18px;line-height:1.5;color:#2b2720}
+.bh-item p a{color:#1f48b8}
+.bh-inside{list-style:none;padding:0;display:grid;gap:4px}
+.bh-inside li{position:relative;padding-left:26px;font-size:18px;line-height:1.4}
+.bh-inside li::before{content:"✓";position:absolute;left:2px;top:0;font-family:Neucha,cursive;font-size:22px;color:#0f8a57}
+.bh-acts{margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-top:6px}
+.bh-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:10px 18px;font-family:'Russo One',sans-serif;font-size:18px;line-height:1.15;text-align:center;text-decoration:none;cursor:pointer;
+  color:#141414;background:#ffd60a;border:3px solid #141414;box-shadow:4px 4px 0 #141414;transition:transform .12s,box-shadow .12s}
+.bh-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #141414}
+.bh-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #141414}
+.bh-btn.own{background:#2ee59d}
+.bh-btn.poor{background:#fff;border-style:dashed;box-shadow:none}
+.bh-btn.poor:hover{transform:none;background:#fff6c7}
+.bh-btn.ghost{background:transparent;box-shadow:none;border-color:transparent;text-decoration:underline;text-underline-offset:4px;padding-left:8px;padding-right:8px}
+.bh-btn.ghost:hover{transform:none;color:#1f48b8}
+.bh-btn.sm{min-height:44px;font-size:16px;padding:8px 14px}
+/* штамп «твоё» и полёт битов */
+.bh-stamp{position:absolute;z-index:4;left:14px;top:14px;padding:6px 14px;font-family:'Rubik Mono One',sans-serif;font-size:20px;color:#d0191f;border:4px solid #d0191f;border-radius:8px;background:rgba(255,253,246,.94);transform:rotate(-12deg);letter-spacing:.04em;pointer-events:none}
+.bh-item.is-new .bh-stamp{animation:bh-slam .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes bh-slam{0%{opacity:0;transform:rotate(-30deg) scale(2.6)}100%{opacity:1;transform:rotate(-12deg) scale(1)}}
+.bh-item.is-new .bh-cover > *{animation:bh-thud .45s .28s ease-out}
+@keyframes bh-thud{0%,100%{translate:0 0}35%{translate:0 6px}}
+.bh-minus{position:absolute;z-index:5;right:18px;top:12px;font-family:'Russo One',sans-serif;font-size:32px;color:#ffd60a;-webkit-text-stroke:1.5px #141414;paint-order:stroke fill;text-shadow:3px 3px 0 #141414;animation:bh-rise 1.6s ease-out forwards;pointer-events:none}
+@keyframes bh-rise{0%{opacity:0;transform:translateY(20px) scale(.6)}15%{opacity:1;transform:translateY(0) scale(1.1)}100%{opacity:0;transform:translateY(-90px) scale(1)}}
+.bh-fly{position:absolute;z-index:5;left:50%;top:30%;font-family:ui-monospace,Menlo,monospace;font-style:normal;font-weight:700;font-size:24px;color:#ffd60a;text-shadow:0 0 8px #ffd60a,1px 1px 0 #141414;pointer-events:none;animation:bh-burst 1.1s ease-out forwards;opacity:0}
+@keyframes bh-burst{0%{opacity:1;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3)}}
+/* не хватает битов */
+.bh-short{border:3px dashed #141414;background:#fff6c7;padding:14px 16px;display:grid;gap:8px;font-size:18px;outline:none}
+.bh-short b.bh-need{font-family:'Russo One',sans-serif;font-weight:400;font-size:22px;color:#b3141a}
+.bh-short ul{padding-left:0;list-style:none;display:grid;gap:2px}
+.bh-short li a{display:inline-flex;align-items:center;min-height:44px;font-weight:500;color:#1f48b8;text-underline-offset:3px}
+.bh-short .pen{font-family:Neucha,cursive;font-size:21px;color:#1f48b8}
+/* шпаргалка-листок */
+.sh{position:relative;width:min(84%,270px);aspect-ratio:1/1.15;background-color:#fffdf6;border:3px solid #141414;padding:24px 14px 12px 34px;transform:rotate(-2deg);box-shadow:6px 6px 0 rgba(0,0,0,.45);color:#141414;text-decoration:none;display:block;overflow:hidden;
+  background-image:linear-gradient(90deg,transparent 24px,#e8262b 24px 26px,transparent 26px),linear-gradient(#cfe0f0 1px,transparent 1px);background-size:100% 100%,100% 26px}
+.sh::before{content:"";position:absolute;left:50%;top:6px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0 2px,#c81e1e 3px);border:2px solid #141414}
+.sh b{display:block;font-family:Neucha,cursive;font-weight:400;font-size:36px;line-height:1.05;color:#1f48b8;margin:4px 0 8px}
+.sh code{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:17px;line-height:30px;white-space:pre}
+.sh code i{font-style:normal;background:linear-gradient(transparent 50%,#fff27a 50%)}
+/* значки */
+.bd{width:136px;height:136px;margin:0 auto;border-radius:50%;display:grid;place-items:center;text-align:center;border:4px solid #141414;background:var(--bc);color:#141414;
+  box-shadow:inset 0 0 0 6px rgba(255,255,255,.55),inset 0 -12px 0 rgba(0,0,0,.12),5px 6px 0 rgba(0,0,0,.45);position:relative}
+.bd b{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:var(--bs,32px);line-height:1}
+.bd span span{display:block;font-family:Neucha,cursive;font-size:19px;line-height:1.05;margin-top:4px;padding:0 12px}
+.bd.on::after{content:"на тебе";position:absolute;bottom:-12px;left:50%;transform:translateX(-50%) rotate(-3deg);font-family:'Russo One',sans-serif;font-size:16px;background:#2ee59d;border:2px solid #141414;padding:1px 8px;white-space:nowrap}
+.bh-badges .bh-cover{padding:28px 16px 24px}
+.bh-badges .bh-body{gap:8px}
+.bh-badges h3{font-size:21px}
+/* зачётка */
+.zk{background-color:#fffdf6;color:#141414;border:3px solid #141414;box-shadow:7px 7px 0 #070a1f;padding:22px 20px 22px 66px;display:grid;gap:16px;
+  background-image:linear-gradient(90deg,transparent 46px,#e8262b 46px 48px,transparent 48px),linear-gradient(#cfe0f0 1px,transparent 1px);background-size:100% 100%,100% 32px}
+.zk-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:baseline}
+.zk-head h3{font-family:Neucha,cursive;font-weight:400;font-size:36px;line-height:1.1;color:#1f48b8}
+.zk-meter{height:22px;border:3px solid #141414;background:#fff}
+.zk-meter i{display:block;height:100%;background:repeating-linear-gradient(-45deg,#2ee59d 0 10px,#1fc786 10px 20px);border-right:3px solid #141414}
+.zk-list{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:2px 28px}
+.zk-list li{display:flex;align-items:center;gap:12px;min-height:50px;border-bottom:1px dotted #b8b0a0}
+.zk-n{font-family:'Russo One',sans-serif;font-size:16px;min-width:42px}
+.zk-list a{flex:1;color:#141414;text-decoration:none;font-size:18px;line-height:1.25;padding:8px 0}
+.zk-list a:hover{text-decoration:underline}
+.zk-ok{flex:none;font-family:'Russo One',sans-serif;font-size:16px;color:#0f6b44;border:3px solid #0f8a57;border-radius:6px;padding:1px 8px;transform:rotate(-6deg);background:#e4fbf0}
+.zk-no{flex:none;font-family:Neucha,cursive;font-size:20px;color:#5f584b}
+.zk-note{font-family:Neucha,cursive;font-size:23px;color:#1f48b8}
+/* скоро */
+.bh-soonstamp{position:absolute;z-index:4;right:12px;top:12px;font-family:'Russo One',sans-serif;font-size:16px;background:#ff2e93;color:#fff;border:3px solid #141414;padding:3px 10px;transform:rotate(5deg)}
+.ps{width:min(88%,320px);aspect-ratio:4/3;border:3px solid #141414;position:relative;overflow:hidden;box-shadow:6px 6px 0 rgba(0,0,0,.45)}
+.ps.map{background-color:#0d1130;background-image:linear-gradient(rgba(25,195,255,.35) 2px,transparent 2px),linear-gradient(90deg,rgba(25,195,255,.35) 2px,transparent 2px);background-size:38px 38px}
+.ps.map i{position:absolute;border:3px solid #141414;background:var(--c)}
+.ps.map b{position:absolute;left:10px;bottom:8px;font-family:'Rubik Mono One',sans-serif;font-weight:400;font-size:22px;color:#fff;text-shadow:2px 2px 0 #141414}
+.ps.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#141414;padding:4px}
+.ps.gal img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block;min-height:0}
+.bh-rub{max-width:1200px;margin:64px auto 0;padding:0 16px;position:relative;z-index:2}
+.bh-rub-in{border:3px dashed rgba(255,247,227,.55);padding:24px 20px;display:grid;gap:14px;background:rgba(7,10,31,.5)}
+.bh-rub h2{font-family:'Russo One',sans-serif;font-weight:400;font-size:26px;line-height:1.2;color:#fff7e3}
+.bh-rub p{color:#ddd8f3;max-width:760px}
+.bh-rub ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.bh-rub li{font-family:Neucha,cursive;font-size:22px;color:#fff7e3;padding:6px 14px;border:2px solid rgba(255,247,227,.5);border-radius:999px}
+/* тост и подвал */
+.bh-toast{position:fixed;z-index:20;left:50%;bottom:18px;transform:translateX(-50%);width:min(560px,calc(100% - 32px));background:#2ee59d;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:12px 16px;font-family:'Russo One',sans-serif;font-size:18px;line-height:1.3;animation:bh-pop .35s ease-out}
+@keyframes bh-pop{0%{opacity:0;transform:translate(-50%,20px)}100%{opacity:1;transform:translate(-50%,0)}}
+.bh-ft{position:relative;z-index:2;margin-top:72px;border-top:3px solid #141414;background:#ffd60a;color:#141414;padding:16px;text-align:center;font-size:16px;line-height:1.6}
+.bh-ft a{color:#141414}
+@media (max-width:900px){
+  .bh-hero{grid-template-columns:minmax(0,1fr);padding-top:70px;gap:30px}
+  .bh-sign h1{font-size:clamp(30px,10.5vw,80px)}
+  .bh-feature{width:min(76%,320px);margin:10px auto 0}
+  .bh-receipt{transform:rotate(.8deg)}
+}
+@media (max-width:600px){
+  .bh-sign{padding:10px 12px 12px}
+  .bh-counter{padding:48px 14px 24px}
+  .bh-big b{font-size:56px}
+  .bh-cover .nb{width:min(80%,280px)}
+  .bh-cover .nb-label span{font-size:19px}
+  .bh-cover .nb-st{font-size:17px;padding:5px 9px}
+  .bh-cover .nb-st.s1{bottom:24%}
+  .bh-grid{padding-top:14px}
+  .zk{padding:18px 14px 18px 46px;background-image:linear-gradient(90deg,transparent 30px,#e8262b 30px 32px,transparent 32px),linear-gradient(#cfe0f0 1px,transparent 1px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .bh *,.bh *::before,.bh *::after{animation:none!important;transition:none!important}
+  .bh-fly,.bh-minus{display:none}
+}
+</style>
+</helmet>
+<div class="bh">
+
+  <header class="bh-hd">
+    <a class="bh-logo" href="Main.dc.html">Cyber<span>Comics</span></a>
+    <nav class="bh-nav" aria-label="Основная навигация">
+      <a href="Main.dc.html#vypuski">Выпуски</a>
+      <a href="Main.dc.html">Город</a>
+      <a href="Review.dc.html">Прокачаться</a>
+      <a href="Arcade.dc.html">Разминка</a>
+      <a href="Shop.dc.html" aria-current="page">Барахолка</a>
+    </nav>
+    <div class="bh-me">
+      <sc-if value="{{hi}}"><span class="bh-hi">{{hi}}</span></sc-if>
+      <span class="bh-chip">{{bitsLabel}}</span>
+    </div>
+  </header>
+
+  <div class="bh-sky">
+    <div class="bh-lights" aria-hidden="true" style="top: 6px; height: 70px">
+      <svg viewBox="0 0 100 64" preserveAspectRatio="none" style="height: 64px"><path d="M0 0 Q50 64 100 0" fill="none" stroke="#3a3a4d" stroke-width="2" vector-effect="non-scaling-stroke"></path></svg>
+      <sc-for list="{{bulbs}}" as="b" hint-placeholder-count="17"><i class="bh-bulb" style="{{b.style}}"></i></sc-for>
+    </div>
+
+    <section class="bh-hero" aria-labelledby="bh-title">
+      <div>
+        <p class="bh-kick">Сетеград. Полночь. Под мостом зажглись фонари…</p>
+        <div class="bh-sign">
+          <h1 id="bh-title" aria-label="Барахолка"><span style="--i:0" aria-hidden="true">Б</span><span style="--i:1" aria-hidden="true">А</span><span style="--i:2" aria-hidden="true">Р</span><span style="--i:3" aria-hidden="true">А</span><span style="--i:4" class="bh-buzz" aria-hidden="true">Х</span><span style="--i:5" aria-hidden="true">О</span><span style="--i:6" aria-hidden="true">Л</span><span style="--i:7" aria-hidden="true">К</span><span style="--i:8" aria-hidden="true">А</span></h1>
+          <span class="bh-sub">ночной рынок Сетеграда</span>
+        </div>
+        <p class="bh-lead">Рубли тут не берут. Только <b>биты</b>, которые ты заработал за чтение выпусков и верные ответы. Купил — твоё навсегда.</p>
+        <nav class="bh-jump" aria-label="Прилавки">
+          <a href="#tetradi">Тетради</a>
+          <a href="#shpargalki">Шпаргалки</a>
+          <a href="#znachki">Значки</a>
+          <a href="#zachetka">Зачётка</a>
+          <a href="#skoro">Скоро</a>
+        </nav>
+      </div>
+
+      <div style="display: grid; gap: 40px">
+        <div class="bh-feature">
+          <a class="nb" href="MGit.dc.html" style="--cv: #ff8c1a" aria-label="Git: тетрадь выживания — полистать превью">
+            <span class="nb-no" aria-hidden="true">Тетрадь №1</span>
+            <span class="nb-label" aria-hidden="true"><b>Git</b><span>тетрадь выживания</span></span>
+            <span class="nb-st s1" aria-hidden="true">не делай --force</span>
+            <span class="nb-st s2" aria-hidden="true">+ шпаргалка команд</span>
+          </a>
+          <span class="bh-tag" aria-hidden="true"><b>{{gitPrice}} бит</b><small>{{gitTagNote}}</small></span>
+        </div>
+
+        <section class="bh-receipt" aria-labelledby="bh-wallet">
+          <h2 id="bh-wallet">Твой кошелёк</h2>
+          <div class="{{bigCls}}"><b>{{dispBits}}</b><span>бит в кармане</span></div>
+          <sc-if value="{{hasBreak}}">
+            <div class="bh-row"><span>Прочитано выпусков: {{readN}} × 50</span><b>+{{readBits}}</b></div>
+            <div class="bh-row"><span>Верных ответов: {{rightN}} × 10</span><b>+{{rightBits}}</b></div>
+            <sc-if value="{{extraBits}}"><div class="bh-row"><span>Заработано в Разминке</span><b>+{{extraBits}}</b></div></sc-if>
+          </sc-if>
+          <div class="bh-row"><span>Потрачено на Барахолке</span><b>−{{spent}}</b></div>
+          <sc-if value="{{badgeOn}}"><div class="bh-row"><span>Значок на тебе</span><b>{{badgeOn}}</b></div></sc-if>
+          <p class="bh-earn">Как заработать: <b>+50</b> за прочитанный выпуск, <b>+10</b> за каждый верный ответ. <a href="Main.dc.html#vypuski">К выпускам →</a></p>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <section class="bh-stall" id="tetradi" aria-labelledby="h-tetradi" style="--a1: #e8262b; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-tetradi">Тетради</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Методички, как будто их написал друг-отличник: клетка, поля, маркер и стрелки. Сначала можно <b>полистать превью</b>, а целиком тетрадь открывается после покупки. Есть кнопка «Распечатать» на A4.</p>
+      <div class="bh-grid g2">
+        <sc-for list="{{manuals}}" as="it" hint-placeholder-count="2">
+          <article class="{{it.cls}}" aria-labelledby="{{it.hid}}">
+            <sc-if value="{{it.owned}}"><span class="bh-stamp" aria-hidden="true">ТВОЁ</span></sc-if>
+            <sc-if value="{{it.isNew}}">
+              <span class="bh-minus" aria-hidden="true">−{{it.price}}</span>
+              <sc-for list="{{flyers}}" as="f" hint-placeholder-count="10"><i class="bh-fly" style="{{f.style}}" aria-hidden="true">{{f.t}}</i></sc-for>
+            </sc-if>
+            <sc-if value="{{it.notOwned}}"><span class="bh-tag" aria-hidden="true"><b>{{it.price}} бит</b><small>{{it.tagNote}}</small></span></sc-if>
+            <div class="bh-cover">
+              <a class="nb" href="{{it.href}}" style="{{it.coverStyle}}" tabindex="-1" aria-hidden="true">
+                <span class="nb-no">{{it.no}}</span>
+                <span class="nb-label"><b style="{{it.titleStyle}}">{{it.big}}</b><span>{{it.small}}</span></span>
+                <span class="nb-st s1">{{it.st1}}</span>
+                <span class="nb-st s2">{{it.st2}}</span>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">{{it.kind}}</span>
+              <h3 id="{{it.hid}}">{{it.title}}</h3>
+              <p>{{it.desc}}</p>
+              <ul class="bh-inside">
+                <sc-for list="{{it.inside}}" as="x" hint-placeholder-count="5"><li>{{x}}</li></sc-for>
+              </ul>
+              <div class="bh-acts">
+                <sc-if value="{{it.owned}}"><a class="bh-btn own" href="{{it.href}}" data-open="{{it.id}}">Открыть тетрадь →</a></sc-if>
+                <sc-if value="{{it.notOwned}}">
+                  <button type="button" class="{{it.btnCls}}" onClick="{{it.buy}}" aria-expanded="{{it.expanded}}" aria-controls="{{it.sid}}">{{it.btn}}</button>
+                  <a class="bh-btn ghost" href="{{it.href}}">Полистать превью</a>
+                </sc-if>
+              </div>
+              <div id="{{it.sid}}">
+                <sc-if value="{{it.short}}">
+                  <div class="bh-short" role="status" data-short="{{it.id}}" tabindex="-1">
+                    <b class="bh-need">Не хватает {{it.need}} бит</b>
+                    <span>{{it.needHow}}</span>
+                    <ul>
+                      <sc-for list="{{it.earn}}" as="e" hint-placeholder-count="3"><li><a href="{{e.href}}">{{e.label}}</a></li></sc-for>
+                    </ul>
+                    <span class="pen">{{it.needPen}}</span>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="shpargalki" aria-labelledby="h-shp" style="--a1: #19c3ff; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-shp">Шпаргалки</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Один лист — одна тема. Повесь над столом или держи в телефоне. <b>Дешевле тетрадей</b>: хватит трёх выпусков.</p>
+      <div class="bh-grid g3">
+        <sc-for list="{{sheets}}" as="it" hint-placeholder-count="3">
+          <article class="{{it.cls}}" aria-labelledby="{{it.hid}}">
+            <sc-if value="{{it.owned}}"><span class="bh-stamp" aria-hidden="true">ТВОЁ</span></sc-if>
+            <sc-if value="{{it.isNew}}">
+              <span class="bh-minus" aria-hidden="true">−{{it.price}}</span>
+              <sc-for list="{{flyers}}" as="f" hint-placeholder-count="10"><i class="bh-fly" style="{{f.style}}" aria-hidden="true">{{f.t}}</i></sc-for>
+            </sc-if>
+            <sc-if value="{{it.notOwned}}"><span class="bh-tag" aria-hidden="true"><b>{{it.price}} бит</b><small>{{it.tagNote}}</small></span></sc-if>
+            <div class="bh-cover">
+              <a class="sh" href="{{it.href}}" tabindex="-1" aria-hidden="true">
+                <b>{{it.big}}</b>
+                <sc-for list="{{it.lines}}" as="l" hint-placeholder-count="4"><code>{{l.a}}<i>{{l.b}}</i></code></sc-for>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">{{it.kind}}</span>
+              <h3 id="{{it.hid}}">{{it.title}}</h3>
+              <p>{{it.desc}}</p>
+              <div class="bh-acts">
+                <sc-if value="{{it.owned}}"><a class="bh-btn own" href="{{it.href}}" data-open="{{it.id}}">Открыть лист →</a></sc-if>
+                <sc-if value="{{it.notOwned}}">
+                  <button type="button" class="{{it.btnCls}}" onClick="{{it.buy}}" aria-expanded="{{it.expanded}}" aria-controls="{{it.sid}}">{{it.btn}}</button>
+                  <a class="bh-btn ghost" href="{{it.href}}">Превью</a>
+                </sc-if>
+              </div>
+              <div id="{{it.sid}}">
+                <sc-if value="{{it.short}}">
+                  <div class="bh-short" role="status" data-short="{{it.id}}" tabindex="-1">
+                    <b class="bh-need">Не хватает {{it.need}} бит</b>
+                    <span>{{it.needHow}}</span>
+                    <ul>
+                      <sc-for list="{{it.earn}}" as="e" hint-placeholder-count="3"><li><a href="{{e.href}}">{{e.label}}</a></li></sc-for>
+                    </ul>
+                    <span class="pen">{{it.needPen}}</span>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall bh-badges" id="znachki" aria-labelledby="h-zn" style="--a1: #2ee59d; --a2: #141a33">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-zn">Значки</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Значки для профиля читателя. Купи и <b>приколи один</b>: он появится в твоём кошельке, а когда у профиля появится своя страница, переедет туда.</p>
+      <div class="bh-grid g4">
+        <sc-for list="{{badges}}" as="it" hint-placeholder-count="5">
+          <article class="{{it.cls}}" aria-labelledby="{{it.hid}}">
+            <sc-if value="{{it.isNew}}">
+              <span class="bh-minus" aria-hidden="true">−{{it.price}}</span>
+              <sc-for list="{{flyers}}" as="f" hint-placeholder-count="10"><i class="bh-fly" style="{{f.style}}" aria-hidden="true">{{f.t}}</i></sc-for>
+            </sc-if>
+            <sc-if value="{{it.notOwned}}"><span class="bh-tag" aria-hidden="true"><b>{{it.price}} бит</b></span></sc-if>
+            <div class="bh-cover"><span class="{{it.bdCls}}" style="{{it.bdStyle}}" aria-hidden="true"><span><b>{{it.big}}</b><span>{{it.small}}</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="{{it.hid}}">{{it.title}}</h3>
+              <p>{{it.desc}}</p>
+              <div class="bh-acts">
+                <sc-if value="{{it.owned}}"><button type="button" class="bh-btn own sm" onClick="{{it.equip}}" aria-pressed="{{it.onAria}}" data-open="{{it.id}}">{{it.equipLabel}}</button></sc-if>
+                <sc-if value="{{it.notOwned}}"><button type="button" class="{{it.btnCls}}" onClick="{{it.buy}}" aria-expanded="{{it.expanded}}" aria-controls="{{it.sid}}">{{it.btn}}</button></sc-if>
+              </div>
+              <div id="{{it.sid}}">
+                <sc-if value="{{it.short}}">
+                  <div class="bh-short" role="status" data-short="{{it.id}}" tabindex="-1">
+                    <b class="bh-need">Не хватает {{it.need}} бит</b>
+                    <span>{{it.needHow}}</span>
+                    <ul>
+                      <sc-for list="{{it.earn}}" as="e" hint-placeholder-count="3"><li><a href="{{e.href}}">{{e.label}}</a></li></sc-for>
+                    </ul>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="zachetka" aria-labelledby="h-zk" style="--a1: #ffd60a; --a2: #141414">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-zk">Зачётка</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Твоя зачётная книжка: какие выпуски уже зачтены. Нажми на выпуск, чтобы его прочитать.</p>
+      <div class="zk">
+        <div class="zk-head"><h3>Зачётка: {{zkName}}</h3><span style="font-family: 'Russo One', sans-serif; font-size: 20px">{{zkDone}} из {{zkAll}}</span></div>
+        <div class="zk-meter" role="img" aria-label="{{zkAria}}"><i style="{{zkBar}}"></i></div>
+        <ul class="zk-list">
+          <sc-for list="{{zk}}" as="z" hint-placeholder-count="12">
+            <li><span class="zk-n">№{{z.n}}</span><a href="{{z.href}}">{{z.t}}</a><sc-if value="{{z.ok}}"><span class="zk-ok">зачёт</span></sc-if><sc-if value="{{z.no}}"><span class="zk-no">ещё нет</span></sc-if></li>
+          </sc-for>
+        </ul>
+        <p class="zk-note">{{zkNote}}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="skoro" aria-labelledby="h-soon" style="--a1: #ff2e93; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-soon">Скоро привезут</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Этих вещей ещё нет на прилавке. Купить их пока нельзя, а биты никуда не денутся.</p>
+      <div class="bh-grid g2">
+        <article class="bh-item" aria-labelledby="h-map">
+          <span class="bh-soonstamp" aria-hidden="true">скоро</span>
+          <div class="bh-cover"><div class="ps map" aria-hidden="true"><i style="--c: #ffd60a; left: 8%; top: 14%; width: 26%; height: 30%"></i><i style="--c: #ff3b3b; left: 40%; top: 10%; width: 22%; height: 44%"></i><i style="--c: #2ee59d; left: 68%; top: 22%; width: 24%; height: 28%"></i><i style="--c: #8a5cff; left: 12%; top: 58%; width: 76%; height: 14%"></i><b>БАЙТСК</b></div></div>
+          <div class="bh-body">
+            <span class="bh-kind">Постер A3</span>
+            <h3 id="h-map">Карта Сетеграда</h3>
+            <p>Все районы города и Фундамент под ним: где живёт какой злодей и в каком он выпуске.</p>
+          </div>
+        </article>
+        <article class="bh-item" aria-labelledby="h-gal">
+          <span class="bh-soonstamp" aria-hidden="true">скоро</span>
+          <div class="bh-cover"><div class="ps gal" aria-hidden="true"><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/40522caf67506d1d8a1711a08454e769" alt=""><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/514e6e80025fe9d5923d48bbb8ffecaf" alt=""><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/f6d4ece1d46d17878f4a78cd6cd908a5" alt=""><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/2871ddc0547fea9d62c83365e76e7ab1" alt=""><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/b22c2c3c1d7460c06a98b2235425b27a" alt=""><img loading="lazy" decoding="async" width="720" height="960" src="/_blob/61d2fd71e56001a5bf9abae0dba0bfa3" alt=""></div></div>
+          <div class="bh-body">
+            <span class="bh-kind">Постер A3</span>
+            <h3 id="h-gal">Галерея злодеев</h3>
+            <p>Доска розыска: портреты, клички и чем каждый опасен. Пока злодеи висят в <a href="Issue9.dc.html">выпуске №9</a>.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-rub" aria-labelledby="h-rub">
+    <div class="bh-rub-in">
+      <h2 id="h-rub">Когда-нибудь: толстые методички</h2>
+      <p>Большие тетради с задачами и разбором для тех, кто идёт в AppSec всерьёз. Мы их только пишем: цен и оплаты нет, и до готовности не будет. Всё, что выше, по-прежнему только за биты.</p>
+      <ul>
+        <li>Сети с нуля до Wireshark</li>
+        <li>Веб-уязвимости: журнал лабораторных</li>
+        <li>Собеседование Junior AppSec</li>
+        <li>Linux для безопасника</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="bh-ft">
+    CyberComics · Сетеград, ночной рынок · Покупки за биты хранятся в этом браузере.<br>
+    Тренируйся только легально: <a href="https://picoctf.org" rel="noopener">picoCTF</a>, <a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Academy</a>, <a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a>, <a href="https://tryhackme.com" rel="noopener">TryHackMe</a>.
+  </footer>
+
+  <sc-if value="{{toast}}"><div class="bh-toast" role="status">{{toast}}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":4200}}'>
+/* ---------- Кошелёк Барахолки ----------
+ * Пока в cc.js нет методов покупок, работаем через безопасную обёртку:
+ *   заработано = CC.bits(); потрачено и купленное — localStorage 'cc-shop:' + имя
+ *   (имя из CC.getUser() или localStorage 'cc-user' {name}, иначе 'guest').
+ * Если в cc.js появятся CC.buy(id, price) и CC.owned(id), обёртка отдаёт покупки им
+ * (тогда CC.bits() считается уже за вычетом трат).
+ * Обёртка живёт в window.CCShop: ею же пользуется страница методички (Manual). */
+(function () {
+  if (typeof window === 'undefined' || window.CCShop) return;
+  const ISSUES = /*CC_ISSUES*/[];
+  const CATALOG = [
+    { id: 'git', type: 'manual', page: 'MGit', price: 350, rel: [18, 8], title: 'Git: тетрадь выживания' },
+    { id: 'owasp', type: 'manual', page: 'MOwasp', price: 450, rel: [9, 2, 3, 6], title: 'OWASP Top 10:2025 — конспект' },
+    { id: 'http', type: 'sheet', page: 'MHttp', price: 120, rel: [1], title: 'HTTP-коды на одном листе' },
+    { id: 'ports', type: 'sheet', page: 'MPorts', price: 120, rel: [13, 12], title: 'Порты, которые надо знать' },
+    { id: 'linux', type: 'sheet', page: 'MLinux', price: 150, rel: [17, 19], title: 'Linux: команды на каждый день' },
+    { id: 'b-200', type: 'badge', price: 60, rel: [1], title: 'Значок «200 OK»' },
+    { id: 'b-teapot', type: 'badge', price: 80, rel: [1], title: 'Значок «418»' },
+    { id: 'b-noforce', type: 'badge', price: 80, rel: [18], title: 'Значок «Без --force»' },
+    { id: 'b-env', type: 'badge', price: 100, rel: [8], title: 'Значок «.env в .gitignore»' },
+    { id: 'b-council', type: 'badge', price: 150, rel: [9], title: 'Значок «Совет распущен»' }
+  ];
+  let LS = null;
+  try { LS = window.localStorage; } catch (e) { LS = null; }
+  const mem = {};
+  function cc() { return window.CC || null; }
+  function userName() {
+    try { const c = cc(); if (c && typeof c.getUser === 'function') { const u = c.getUser(); const n = u && (typeof u === 'string' ? u : u.name); if (n) return String(n); } } catch (e) {}
+    try { const u = JSON.parse((LS && LS.getItem('cc-user')) || 'null'); if (u && u.name) return String(u.name); } catch (e) {}
+    return 'guest';
+  }
+  function key() { return 'cc-shop:' + userName(); }
+  function load() {
+    let s = null;
+    try { s = JSON.parse((LS && LS.getItem(key())) || 'null'); } catch (e) { s = null; }
+    if (!s) s = mem[key()] || null;
+    s = s && typeof s === 'object' ? s : {};
+    return { owned: s.owned && typeof s.owned === 'object' ? s.owned : {}, spent: Number(s.spent) > 0 ? Math.round(Number(s.spent)) : 0, badge: typeof s.badge === 'string' ? s.badge : '' };
+  }
+  function save(s) { mem[key()] = s; try { if (LS) LS.setItem(key(), JSON.stringify(s)); } catch (e) {} }
+  function native() { const c = cc(); return !!(c && typeof c.buy === 'function' && typeof c.owned === 'function'); }
+  function earned() { try { const c = cc(); return c && typeof c.bits === 'function' ? Math.max(0, Number(c.bits()) || 0) : 0; } catch (e) { return 0; } }
+  function item(id) { return CATALOG.find((x) => x.id === id) || null; }
+  const S = {
+    ISSUES, CATALOG, item, user: userName,
+    named() { return userName() !== 'guest'; },
+    earned,
+    spent() { try { const c = cc(); if (native() && typeof c.spent === 'function') return Math.max(0, Number(c.spent()) || 0); } catch (e) {} return native() ? 0 : load().spent; },
+    total() { try { const c = cc(); if (c && typeof c.earned === 'function') return Math.max(0, Number(c.earned()) || 0); } catch (e) {} return native() ? earned() + S.spent() : earned(); },
+    balance() { return native() ? earned() : Math.max(0, earned() - load().spent); },
+    owned(id) {
+      try { if (native() && cc().owned(id)) return true; } catch (e) {}
+      return !!load().owned[id];
+    },
+    buy(id) {
+      const it = item(id); if (!it) return { ok: false, need: 0 };
+      if (S.owned(id)) return { ok: true, already: true };
+      const bal = S.balance();
+      if (bal < it.price) return { ok: false, need: it.price - bal };
+      if (native()) { try { const r = cc().buy(id, it.price); return r === false ? { ok: false, need: Math.max(0, it.price - S.balance()) } : { ok: true }; } catch (e) { return { ok: false, need: 0 }; } }
+      const s = load(); s.owned[id] = Date.now(); s.spent += it.price; save(s);
+      return { ok: true };
+    },
+    badge() { const b = load().badge; return b && S.owned(b) ? b : ''; },
+    setBadge(id) { const s = load(); s.badge = s.badge === id ? '' : id; save(s); return s.badge; },
+    isRead(n) { try { const c = cc(); return !!(c && c.isRead(n)); } catch (e) { return false; } },
+    rightN() { try { const c = cc(); return c && typeof c.rightCount === 'function' ? c.rightCount() : null; } catch (e) { return null; } },
+    reduced() { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } },
+    /* Куда сходить за битами: сначала непрочитанные выпуски по теме товара, потом любые непрочитанные. */
+    earnLinks(id, max) {
+      const it = item(id) || { rel: [] };
+      const unread = ISSUES.filter((x) => !S.isRead(x.n));
+      const first = (it.rel || []).map((n) => unread.find((x) => x.n === n)).filter(Boolean);
+      const rest = unread.filter((x) => first.indexOf(x) === -1);
+      return first.concat(rest).slice(0, max || 3).map((x) => ({ href: 'Issue' + x.n + '.dc.html', label: '№' + x.n + ' ' + x.t + ' · +50 бит' }));
+    },
+    needHow(need) {
+      const unread = ISSUES.filter((x) => !S.isRead(x.n)).length;
+      const iss = Math.ceil(need / 50), q = Math.ceil(need / 10);
+      if (!ISSUES.length || unread >= iss) return 'Это ' + iss + ' ' + S.plural(iss, 'выпуск', 'выпуска', 'выпусков') + ' (по +50) или ' + q + ' ' + S.plural(q, 'верный ответ', 'верных ответа', 'верных ответов') + ' в квизах (по +10). Начни отсюда:';
+      if (unread > 0) return 'Непрочитанных выпусков осталось ' + unread + ' — это +' + unread * 50 + '. Остальное добери верными ответами в квизах (по +10).';
+      return 'Ты прочитал всё, что уже вышло! Добери битами за верные ответы в квизах или дождись новых выпусков.';
+    },
+    plural(n, one, few, many) { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : (a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many); }
+  };
+  window.CCShop = S;
+})();
+
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { short: null, just: null, disp: null, shake: false, toast: '' }; }
+  componentWillUnmount() { clearTimeout(this._tt); clearTimeout(this._ts); if (this._raf) cancelAnimationFrame(this._raf); }
+  countDown(from, to) {
+    const S = window.CCShop;
+    if (S.reduced() || from === to) { this.setState({ disp: null }); return; }
+    const t0 = performance.now(), dur = 900;
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      this.setState({ disp: Math.round(from + (to - from) * e) });
+      if (k < 1) this._raf = requestAnimationFrame(step); else this.setState({ disp: null });
+    };
+    this._raf = requestAnimationFrame(step);
+  }
+  buy(id) {
+    const S = window.CCShop; const it = S.item(id);
+    const before = S.balance();
+    const r = S.buy(id);
+    if (!r.ok) {
+      const open = this.state.short !== id;
+      this.setState({ short: open ? id : null });
+      if (open) setTimeout(() => { const el = document.querySelector('[data-short="' + id + '"]'); if (el) el.focus({ preventScroll: true }); }, 30);
+      return;
+    }
+    clearTimeout(this._ts); clearTimeout(this._tt);
+    this.setState({ just: id, short: null, shake: true, disp: before, toast: 'Куплено: ' + it.title + '. Списано ' + it.price + ' бит. Это твоё навсегда.' });
+    this.countDown(before, S.balance());
+    this._ts = setTimeout(() => this.setState({ shake: false }), 700);
+    this._tt = setTimeout(() => this.setState({ toast: '' }), 5200);
+    setTimeout(() => { const el = document.querySelector('[data-open="' + id + '"]'); if (el) el.focus({ preventScroll: true }); }, 40);
+  }
+  equip(id) {
+    const S = window.CCShop; const on = S.setBadge(id);
+    clearTimeout(this._tt);
+    this.setState({ toast: on ? 'Значок приколот: ' + S.item(id).title.replace('Значок ', '') : 'Значок снят' });
+    this._tt = setTimeout(() => this.setState({ toast: '' }), 3200);
+  }
+  renderVals() {
+    const S = window.CCShop;
+    const st = this.state || {};
+    const bal = S.balance();
+    const shown = st.disp === null || st.disp === undefined ? bal : st.disp;
+    const rn = S.rightN();
+    const readN = S.ISSUES.filter((x) => S.isRead(x.n)).length;
+    const name = S.named() ? S.user() : '';
+    const tagNote = (p) => (bal >= p ? 'тебе хватает' : 'ещё ' + (p - bal));
+    const base = (it, extra) => {
+      const owned = S.owned(it.id), afford = bal >= it.price, short = !owned && st.short === it.id;
+      const need = Math.max(0, it.price - bal);
+      return Object.assign({
+        id: it.id, price: it.price, title: it.title, owned, notOwned: !owned, isNew: owned && st.just === it.id,
+        hid: 'h-' + it.id, sid: 's-' + it.id, href: it.page ? it.page + '.dc.html' : '#',
+        cls: 'bh-item' + (owned && st.just === it.id ? ' is-new' : ''),
+        btn: afford ? 'Купить за ' + it.price + ' бит' : 'Не хватает ' + need + ' бит',
+        btnCls: 'bh-btn' + (afford ? '' : ' poor'), expanded: afford ? undefined : (short ? 'true' : 'false'),
+        buy: () => this.buy(it.id), tagNote: tagNote(it.price),
+        short, need, needHow: S.needHow(need), earn: short ? S.earnLinks(it.id, 3) : [],
+        needPen: 'Биты не сгорают: вернёшься — товар будет ждать.'
+      }, extra || {});
+    };
+    const M = {
+      git: { kind: 'Тетрадь · 10 страниц', no: 'Тетрадь №1', big: 'Git', small: 'тетрадь выживания', st1: 'не делай --force', st2: '+ шпаргалка', coverStyle: '--cv:#ff8c1a',
+        desc: 'Всё, чтобы не потерять код и не слить пароль: от первого коммита до «я всё сломал, спасите».',
+        inside: ['Репозиторий, коммит, ветка — на картинках', 'Merge и конфликт без паники', 'Remote, push и pull: кто кому что отправляет', 'Аптечка: как откатить любую ошибку', 'Шпаргалка команд с разбором каждого флага'] },
+      owasp: { kind: 'Конспект · 8 страниц', no: 'Тетрадь №2', big: 'OWASP', small: 'Top 10:2025, конспект', st1: 'A01 → A10', st2: 'чем не путать', coverStyle: '--cv:#ff3b3b', titleStyle: 'font-size:clamp(36px,7vw,52px)',
+        desc: 'Все десять категорий редакции 2025: смысл одной фразой, сценарий, защита и с какой соседкой не путать.',
+        inside: ['Все 10 категорий по порядку', 'Что изменилось с 2021 года', 'Пары, которые путают на собесе', 'Как отвечать на «назови Top 10»', 'Где тренироваться легально'] }
+    };
+    const manuals = ['git', 'owasp'].map((id) => base(S.item(id), M[id]));
+    const SH = {
+      http: { kind: 'Шпаргалка · лист с двух сторон', big: 'HTTP-коды', desc: 'От 200 до 504: что значит каждый код, чем 401 отличается от 403 и какие ответы говорят «сломалось на сервере».',
+        lines: [{ a: '200 ', b: 'OK' }, { a: '401 ', b: 'кто ты?' }, { a: '403 ', b: 'нельзя' }, { a: '404 ', b: 'нет такого' }] },
+      ports: { kind: 'Шпаргалка · лист с двух сторон', big: 'Порты', desc: '22, 53, 80, 443 и ещё два десятка: какой сервис обычно где живёт и какие порты нельзя открывать в интернет.',
+        lines: [{ a: '22   ', b: 'SSH' }, { a: '53   ', b: 'DNS' }, { a: '443  ', b: 'HTTPS' }, { a: '3306 ', b: 'MySQL' }] },
+      linux: { kind: 'Шпаргалка · 2 страницы', big: 'Linux', desc: 'Команды терминала на каждый день: файлы, поиск, права, процессы и сеть. У каждой — что значат её флаги.',
+        lines: [{ a: 'ls ', b: '-la' }, { a: 'grep ', b: '-ri' }, { a: 'chmod ', b: '644' }, { a: 'cd ', b: '~' }] }
+    };
+    const sheets = ['http', 'ports', 'linux'].map((id) => base(S.item(id), SH[id]));
+    const BD = {
+      'b-200': { big: '200', small: 'OK', bc: '#2ee59d', desc: 'Всё в порядке. Для тех, кто прочитал выпуск про HTTP.' },
+      'b-teapot': { big: '418', small: 'я чайник', bc: '#19c3ff', desc: 'Настоящий код из шуточного RFC 2324. Дядя Миша одобряет.' },
+      'b-noforce': { big: '--force', small: 'не сегодня', bc: '#ff8c1a', bs: '24px', desc: 'Для тех, кто не переписывает чужую историю.' },
+      'b-env': { big: '.env', small: 'в .gitignore', bc: '#ffd60a', desc: 'Секреты не едут в репозиторий. Никогда.' },
+      'b-council': { big: 'A01–A10', small: 'Совет распущен', bc: '#ff2e93', bs: '21px', desc: 'Знаешь всю десятку OWASP по порядку.' }
+    };
+    const myBadge = S.badge();
+    const badges = Object.keys(BD).map((id) => {
+      const d = BD[id], on = myBadge === id;
+      return base(S.item(id), {
+        big: d.big, small: d.small, desc: d.desc,
+        bdCls: 'bd' + (on ? ' on' : ''), bdStyle: '--bc:' + d.bc + (d.bs ? ';--bs:' + d.bs : ''),
+        equip: () => this.equip(id), equipLabel: on ? 'Снять значок' : 'Приколоть', onAria: on ? 'true' : 'false'
+      });
+    });
+    const flyers = [];
+    if (!S.reduced()) for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2; flyers.push({ t: i % 2 ? '1' : '0', style: '--dx:' + Math.round(Math.cos(a) * 130) + 'px;--dy:' + Math.round(Math.sin(a) * 110 - 30) + 'px;animation-delay:' + (i * 25) + 'ms' }); }
+    const bulbs = [];
+    const C = ['#ffd60a', '#ff2e93', '#2ee59d', '#19c3ff', '#ff8c1a'];
+    for (let i = 0; i < 17; i++) { const x = (i + 0.5) / 17; bulbs.push({ style: '--c:' + C[i % 5] + ';--d:' + ((i * 370) % 3400) + 'ms;left:' + (x * 100).toFixed(2) + '%;top:' + (4 * 32 * x * (1 - x) + 1).toFixed(1) + 'px' }); }
+    const zk = S.ISSUES.map((x) => ({ n: x.n, t: x.t, href: 'Issue' + x.n + '.dc.html', ok: S.isRead(x.n), no: !S.isRead(x.n) }));
+    const zkDone = zk.filter((z) => z.ok).length, zkAll = zk.length || 1;
+    const left = zk.length - zkDone;
+    return {
+      hi: name ? 'Привет, ' + name : '',
+      bitsLabel: bal + ' бит',
+      dispBits: shown, bigCls: 'bh-big' + (st.shake ? ' bh-shake' : ''),
+      hasBreak: rn !== null && S.ISSUES.length > 0, readN, readBits: readN * 50, rightN: rn || 0, rightBits: (rn || 0) * 10, spent: S.spent(), extraBits: Math.max(0, S.total() - readN * 50 - (rn || 0) * 10) || '',
+      badgeOn: myBadge && BD[myBadge] ? BD[myBadge].big : '',
+      gitPrice: S.item('git').price, gitTagNote: tagNote(S.item('git').price),
+      manuals, sheets, badges, flyers, bulbs, toast: st.toast,
+      zk, zkDone, zkAll: zk.length, zkName: name || 'читатель', zkBar: 'width:' + Math.round((zkDone / zkAll) * 100) + '%' + (zkDone ? '' : ';border-right:0'),
+      zkAria: 'Зачтено ' + zkDone + ' из ' + zk.length + ' выпусков',
+      zkNote: zkDone === 0 ? 'Пока пусто. Первый выпуск — и первые 50 бит уже твои.' : (left === 0 ? 'Всё зачтено! Ты прочитал каждый вышедший выпуск.' : 'Осталось ' + left + ' — это ещё +' + left * 50 + ' бит.')
+    };
+  }
+}
+</script>
+</body>
+</html>
