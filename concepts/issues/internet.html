@@ -295,6 +295,7 @@
 .ix-internet .globe{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
 .ix-internet .L{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden}
 .ix-internet .L svg{display:block}
+.ix-internet .L-city.nomask{-webkit-mask-image:none;mask-image:none}
 .ix-internet .L-room{width:2400px;height:2000px}
 .ix-internet .L-city{width:4000px;height:4000px;-webkit-mask-image:radial-gradient(farthest-corner,#000 var(--m,100%),transparent calc(var(--m,100%) + 22%));mask-image:radial-gradient(farthest-corner,#000 var(--m,100%),transparent calc(var(--m,100%) + 22%))}
 .ix-internet .wifi path{opacity:.12;transition:opacity .25s}
@@ -928,7 +929,10 @@ Scene.prototype.render=function(p){
   var cw=4000*Sc,cs=this.city.style,cityOp=clamp((cw/W-.1)/.3);
   if(cover||cw<2||cityOp<=0){cs.visibility='hidden';}
   else{cs.visibility='visible';cs.transform='translate('+ctx0.x.toFixed(2)+'px,'+ctx0.y.toFixed(2)+'px) scale('+Sc.toFixed(6)+')';
-    cs.opacity=cityOp.toFixed(3);cs.setProperty('--m',(clamp((cw/W-.9)/2.2)*100).toFixed(1)+'%');}
+    cs.opacity=cityOp.toFixed(3);
+    /* iOS Safari: маска на слое шириной в десятки тысяч px съедает память и роняет вкладку. Когда город крупнее 3 экранов, маска всё равно ничего не прячет — снимаем её. */
+    var mOn=cw/W<3.1;if(this._mOn!==mOn){this.city.classList.toggle('nomask',!mOn);this._mOn=mOn;}
+    if(mOn)cs.setProperty('--m',(clamp((cw/W-.9)/2.2)*100).toFixed(1)+'%');}
   var gs=S/this.minWH,ga=cover?0:Math.max(clamp((40-gs)/24),clamp((1.3-cw/W)/1.0));
   this.drawGlobe(R,cam,ga,p);
   // room details
