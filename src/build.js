@@ -420,6 +420,7 @@ function page({ file, route, title, description, comp, props, image, jsonld, noi
     '<meta name="site-root" content="' + root + '">',
     '<link rel="icon" href="' + root + 'assets/favicon.svg" type="image/svg+xml">',
     '<link rel="icon" href="' + root + 'favicon.ico" sizes="48x48">',
+    '<link rel="icon" href="' + root + 'assets/icon-192.png" type="image/png" sizes="192x192">',
     '<link rel="apple-touch-icon" href="' + root + 'assets/apple-touch-icon.png">',
     PREVIEW ? "" : '<link rel="manifest" href="' + root + 'assets/site.webmanifest">',
     // file:// (PREVIEW) не даёт грузить шрифт с crossorigin: preload только для настоящего сайта.
@@ -533,7 +534,7 @@ page({ file: "arkada/index.html", route: "arkada/", comp: "Arcade",
 // 404: пути от корня сайта (/assets/…), потому что страница показывается по любому адресу. noindex ставит seo.js.
 write("404.html", '<!doctype html>\n<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Страница не найдена — CyberComics</title>' +
   '<meta name="description" content="Такой страницы на CyberComics нет. Все выпуски про кибербезопасность — на главной.">' +
-  '<meta name="theme-color" content="#ffd60a"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48">' +
+  '<meta name="theme-color" content="#ffd60a"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">' +
   '<link rel="stylesheet" href="/assets/fonts.css"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff7e3;font-family:Rubik,system-ui,sans-serif;color:#141414;padding:16px;box-sizing:border-box}main{max-width:520px;background:#fff;border:3px solid #141414;box-shadow:8px 8px 0 #141414;padding:28px}h1{margin:0 0 12px;font-family:"Rubik Mono One",sans-serif;font-size:34px;color:#ff2e93;-webkit-text-stroke:2px #141414;paint-order:stroke fill;text-shadow:4px 4px 0 #141414}a{display:inline-block;margin-top:12px;font-family:"Russo One",sans-serif;color:#141414;text-decoration:none;padding:12px 18px;background:#ffd60a;border:3px solid #141414;box-shadow:4px 4px 0 #141414}</style></head>' +
   '<body><main><h1>404</h1><p>Злодеи утащили эту страницу. Возможно, её никогда и не было.</p><a href="/">На главную</a> <a href="/#vypuski">Все выпуски</a></main></body></html>\n');
 

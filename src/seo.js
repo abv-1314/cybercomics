@@ -107,6 +107,11 @@ const PAGE_SEO = {
 const AUDIENCE = { "@type": "EducationalAudience", educationalRole: "student", audienceType: "студенты и начинающие в IT" };
 // Подтверждение прав в Яндекс.Вебмастере и Google Search Console (мета-тег на главной): только буквы, цифры, «_» и «-».
 const verif = (v) => (/^[A-Za-z0-9_-]{8,100}$/.test(v || "") ? v : "");
+// Дата запуска сайта на cybercomics.ru: datePublished для выпусков.
+const LAUNCH = "2026-11-01";
+// Серия комиксов: общий узел для всех выпусков.
+const series = (ctx, org) => ({ "@type": "ComicSeries", "@id": ctx.base + "/#series", name: "CyberComics: злодеи Сетеграда", url: ctx.base + "/",
+  inLanguage: "ru", genre: ["образование", "кибербезопасность"], publisher: { "@id": org["@id"] }, isAccessibleForFree: true });
 const SITE_DESC = "Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.";
 
 // ---------- Вспомогательное ----------
@@ -316,7 +321,8 @@ function processPage(pg, ctx) {
   else if (d && slug) {
     const cfg = ISSUE_SEO[slug] || {};
     const art = {
-      "@type": ["Article", "LearningResource"], "@id": url + "#article", url, mainEntityOfPage: url,
+      "@type": ["Article", "LearningResource", "ComicIssue"], "@id": url + "#article", url, mainEntityOfPage: url,
+      issueNumber: String(n), partOfSeries: { "@id": ctx.base + "/#series" }, datePublished: LAUNCH,
       headline: clip(d.title, 110), name: d.title, alternativeHeadline: cfg.t || undefined, description: desc, inLanguage: "ru", image: [ogAbs],
       dateModified: day(lastmod), author: { "@id": org["@id"] }, publisher: { "@id": org["@id"] },
       isPartOf: { "@id": site["@id"] }, position: Number(n), isAccessibleForFree: true,
@@ -328,7 +334,7 @@ function processPage(pg, ctx) {
     const crumbs = { "@type": "BreadcrumbList", "@id": url + "#breadcrumbs", itemListElement: [
       { "@type": "ListItem", position: 1, name: BRAND, item: ctx.base + "/" },
       { "@type": "ListItem", position: 2, name: d.title, item: url }] };
-    graph = [org, site, art, crumbs];
+    graph = [org, site, series(ctx, org), art, crumbs];
     // FAQPage — только если на странице есть видимый конспект с этими же вопросами.
     if (html.indexOf('data-seo="konspekt"') !== -1) {
       const kt = keyTerm(d, cfg), qa = [];
@@ -408,6 +414,25 @@ function apply(dist, opts) {
 
   // llms.txt: краткая карта сайта для ИИ-ассистентов (формат llmstxt.org).
   const issues = live.filter((p) => p.d).sort((a, b) => Number(a.n) - Number(b.n));
+
+  // Главная: серия комиксов + список всех выпусков (ItemList). Повторный запуск ничего не дублирует.
+  const homeFile = path.join(dist, "index.html");
+  if (!ctx.preview && fs.existsSync(homeFile) && issues.length) {
+    let h = fs.readFileSync(homeFile, "utf8");
+    const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    if (m) {
+      const data = JSON.parse(m[1]);
+      const g = data["@graph"] || [data];
+      const org = g.find((x) => x["@type"] === "Organization") || { "@id": ctx.base + "/#org" };
+      const keep = g.filter((x) => x["@type"] !== "ComicSeries" && x["@type"] !== "ItemList");
+      keep.push(series(ctx, org), { "@type": "ItemList", "@id": ctx.base + "/#issues", name: "Выпуски CyberComics", numberOfItems: issues.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: issues.map((p, i) => ({ "@type": "ListItem", position: i + 1, url: p.url, name: plain(p.d.title) })) });
+      const out = JSON.stringify({ "@context": "https://schema.org", "@graph": keep }).replace(/</g, "\\u003c");
+      h = h.slice(0, m.index) + '<script type="application/ld+json">' + out + "</script>" + h.slice(m.index + m[0].length);
+      fs.writeFileSync(homeFile, h);
+    }
+  }
   const group = (name, list) => list.length ? "\n## " + name + "\n\n" + list.map((p) => "- [№" + p.n + ". " + plain(p.d.title) + "](" + p.url + "): " + plain(p.desc)).join("\n") + "\n" : "";
   const found = issues.filter((p) => p.d.district === "Фундамент"), web = issues.filter((p) => p.d.district !== "Фундамент");
   const llms = "# CyberComics\n\n> " + SITE_DESC + "\n\n" +

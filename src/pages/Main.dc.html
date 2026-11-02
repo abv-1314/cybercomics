@@ -474,6 +474,7 @@ a.cc-step.is-next:hover{color:#ffd60a}
                 <li><a href="{{t.href}}" class="{{t.cls}}" aria-label="{{t.aria}}"><span class="cc-step-n" aria-hidden="true">{{t.n}}</span><span>{{t.label}}</span><span class="cc-step-st">{{t.st}}</span></a></li>
               </sc-for>
             </ol>
+            <a href="#vypuski" style="display: block; padding: 12px 14px; border: 3px dashed #141414; color: #141414; text-decoration: none; font-size: 16px; line-height: 1.45"><b style="font-family: 'Russo One', sans-serif">{{cur.afterHead}}</b><br>{{cur.afterText}}</a>
           </sc-if>
           <sc-if value="{{cur.isChips}}" hint-placeholder-val="{{false}}">
             <div style="display: flex; flex-wrap: wrap; gap: 8px">
@@ -754,7 +755,9 @@ class Component extends DCLogic {
     const cur = {
       name: DN[k], tag: info[k].tag, what: info[k].what, who: info[k].who, topics,
       isBase: k === 'base', isChips: k !== 'base' && !isSoonD, isSoon: isSoonD, steps, soonText: info[k].soon.join(' · '),
-      progress: k === 'base' ? ('Пройдено шагов: ' + stepsRead + ' из ' + STEPS.length) : (its.length ? ('Прочитано ' + readN + ' из ' + its.length + ' выпусков') : 'Район откроется в следующих сезонах'),
+      afterHead: 'Это только Фундамент. Всего выпусков: ' + A.length + ' →',
+      afterText: 'Дальше по пути: ' + Object.keys(DN).filter((d) => d !== 'base' && A.some((a) => a.dist === d)).map((d) => DN[d] + ' (' + A.filter((a) => a.dist === d).length + ')').join(', ') + '. Все выпуски ниже на этой странице.',
+      progress: k === 'base' ? ('Фундамент: пройдено шагов ' + stepsRead + ' из ' + STEPS.length) : (its.length ? ('Прочитано ' + readN + ' из ' + its.length + ' выпусков') : 'Район откроется в следующих сезонах'),
       badge: 'align-self:flex-start;font-family:Russo One,sans-serif;font-size:14px;padding:3px 8px;border:2px solid #141414;background:' + (info[k].tag === 'СКОРО' ? '#e2ddd0' : '#2ee59d')
     };
 
