@@ -785,17 +785,17 @@ class Component extends DCLogic {
     if (st.cat === 'Фундамент') list.sort((x, y) => (stepOf(x.issue) || 99) - (stepOf(y.issue) || 99));
     const MOT = ['Всё, что пришло от клиента, — моё оружие.', 'Зачем взламывать, если можно просто поменять цифру?', 'Одна кавычка — и ваша база говорит со мной.', 'Я живу в вашем комментарии и жду каждого читателя.', 'Твой браузер сам принесёт мне твои cookie.', 'Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер.', 'Подпись? А кто её проверяет?', 'Один git push — и ключи от облака у всего интернета.', 'Нас десять. И мы в каждом втором приложении.'];
     const PLAIN = ['HTTP: о чём на самом деле шепчутся браузер и сервер', 'IDOR: как одна цифра в адресе открывает чужие данные', 'SQL-инъекция: когда данные становятся кодом', 'XSS: как чужой скрипт оказывается в твоём браузере', 'CSRF: как сайт заставляют действовать твоими руками', 'SSRF: как сервер обращают против своей же сети', 'JWT: что внутри токена и почему подпись важна', 'Секреты в Git и как их ловит пайплайн', 'OWASP Top 10:2025 — вся банда на одной карте'];
-    // Слайдер злодеев идёт по пути новичка (шаг 1, 2, 3…), а не по номерам выпусков.
-    const SL = path.map((n) => by[n]).concat(A.filter((a) => path.indexOf(a.issue) < 0));
-    const slide0 = st.slide === null || st.slide === undefined ? Math.max(0, SL.indexOf(nextUp)) : st.slide;
+    // Слайдер злодеев: все выпуски по номерам, с №1. Шаги пути новичка тут не показываем, чтобы не путать с номерами.
+    const SL = A.slice().sort((x, y) => x.issue - y.issue);
+    const slide0 = st.slide === null || st.slide === undefined ? 0 : st.slide;
     const si = ((slide0 % SL.length) + SL.length) % SL.length;
     const sa = SL[si];
     const ai = A.indexOf(sa);
     const slideItem = {
       issue: sa.issue, villain: sa.villain, motto: sa.motto || MOT[ai], plain: sa.plain || PLAIN[ai], emblem: sa.emblem, district: DN[sa.dist], minutes: sa.minutes,
       stars: '★'.repeat(sa.diff) + '☆'.repeat(3 - sa.diff), color: sa.color, art: sa.art || 'v' + sa.issue, read: !!sa.read,
-      status: ((t) => t.charAt(0).toUpperCase() + t.slice(1))((stepOf(sa.issue) ? 'Шаг ' + stepOf(sa.issue) + ' · ' : '') + (sa.read ? 'прочитан ✓' : (sa === nextUp ? 'следующий' : 'впереди'))),
-      cta: ((sn) => sa.read ? (sn ? 'Перечитать шаг ' + sn : 'Перечитать выпуск №' + sa.issue) : (sa === nextUp && !readTotal ? 'Читать первый выпуск' : (sn ? 'Читать шаг ' + sn + ' из ' + STEPS.length : 'Читать выпуск №' + sa.issue)))(stepOf(sa.issue)),
+      status: sa.read ? 'Прочитан ✓' : (sa === nextUp ? 'Следующий' : 'Впереди'),
+      cta: (sa.read ? 'Перечитать выпуск №' : 'Читать выпуск №') + sa.issue,
       total: A.length,
       href: 'Issue' + sa.issue + '.dc.html',
       onPrev: () => flipTo(si - 1, 'p'),
