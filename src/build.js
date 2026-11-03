@@ -152,6 +152,8 @@ MANUALS.forEach((m) => {
   else console.warn("  нет методички concepts/manuals/" + m[3] + ".html — страница " + m[2] + " пропущена");
 });
 Object.keys(SLUGS).forEach((n) => { LINKS["Issue" + n] = "vypuski/" + SLUGS[n] + "/"; });
+// Каталог всех выпусков (/vypuski/): ссылка «Vypuski.dc.html» из шаблонов ведёт туда.
+LINKS.Vypuski = "vypuski/";
 // PREVIEW=1: ссылки ведут прямо на index.html (для просмотра без веб-сервера).
 const PREVIEW = !!process.env.PREVIEW;
 const href = (route) => (PREVIEW ? route + "index.html" : route);
@@ -296,6 +298,51 @@ patch(P.IssueReader, "logic", "    const d = ISSUES[n];",
 patch(P.IssueReader, "logic", "      d, num: n, blocks, quiz,", "      d, num: n, blocks, quiz, noIx: !ix,");
 patch(P.IssueReader, "template", '      <section aria-label="Проверь себя"', '      <sc-if value="{{noIx}}">\n      <section aria-label="Проверь себя"');
 patch(P.IssueReader, "template", '      <nav aria-label="Другие выпуски"', '      </sc-if>\n\n      <nav aria-label="Другие выпуски"');
+
+// ---------- 3г. «Читай также»: 2–4 ссылки на связанные выпуски и шпаргалку Барахолки ----------
+// Блок стоит после тела выпуска (перед «предыдущий/следующий»), шапку выпуска не трогает.
+// Текст ссылки — с главным термином (для поиска и для читателя), а не имя злодея.
+const ANCHOR = {
+  1: "HTTP: запрос, ответ, коды и cookie", 2: "IDOR и Broken Access Control", 3: "SQL-инъекция: пример и защита",
+  4: "XSS: виды атаки и защита", 5: "CSRF: SameSite и CSRF-токены", 6: "SSRF: атака на внутреннюю сеть",
+  7: "JWT: подпись, атаки и хранение токена", 8: "Секреты в Git: что делать, если утёк ключ", 9: "OWASP Top 10:2025 на русском",
+  10: "Как работает интернет: путь пакета", 11: "Модель OSI и TCP/IP", 12: "IP-адрес, маска подсети и NAT",
+  13: "TCP и UDP: отличия и порты", 14: "Как работает DNS", 15: "HTTPS и TLS: как шифруется соединение",
+  16: "Что такое API: клиент, сервер, REST", 17: "Linux для начинающих: терминал и права", 18: "Git для начинающих: коммиты и ветки",
+  19: "Bash: конвейеры, потоки и скрипты", 20: "Python для безопасника: первый скрипт", 21: "SQL для начинающих: SELECT и JOIN",
+  22: "Криптография: хеши, шифрование и подписи",
+  MHttp: "Коды ответа HTTP: шпаргалка", MPorts: "Список портов TCP и UDP: шпаргалка", MLinux: "Команды Linux: шпаргалка",
+  MGit: "Команды Git: шпаргалка", MOwasp: "OWASP Top 10:2025: шпаргалка"
+};
+const RELATED_MAP = {
+  1: [15, 14, 4, "MHttp"], 2: [9, 16, 7], 3: [21, 4, 9], 4: [5, 1, 9], 5: [4, 1, 7], 6: [16, 12, 9], 7: [22, 5, 16],
+  8: [18, 19, 9, "MGit"], 9: [2, 3, 4, "MOwasp"], 10: [11, 12, 14], 11: [10, 13, 12, "MPorts"], 12: [11, 13, 6],
+  13: [11, 12, 14, "MPorts"], 14: [10, 1, 15], 15: [1, 22, 14, "MHttp"], 16: [1, 7, 6, "MHttp"], 17: [19, 18, "MLinux"],
+  18: [8, 19, "MGit"], 19: [17, 20, "MLinux"], 20: [19, 16, 21], 21: [3, 20, 2], 22: [15, 7, 8]
+};
+const RELATED = {};
+const KICK = "align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;";
+Object.keys(ISSUES).forEach((n) => {
+  const list = (RELATED_MAP[n] || []).filter((t) => (typeof t === "number" ? ISSUES[t] && SLUGS[t] : LINKS[t])).slice(0, 4)
+    .map((t) => typeof t === "number"
+      ? { href: "Issue" + t + ".dc.html", label: ANCHOR[t] || ISSUES[t].title, kicker: "Выпуск №" + t, kStyle: KICK + "background:#141414;color:#ffd60a" }
+      : { href: t + ".dc.html", label: ANCHOR[t], kicker: "Шпаргалка Барахолки", kStyle: KICK + "background:#ff2e93;color:#ffffff" });
+  if (list.length >= 2) RELATED[n] = list;
+});
+patch(P.IssueReader, "logic", "noIx: !ix,", "noIx: !ix, related: (" + JSON.stringify(RELATED) + ")[n] || [], hasRelated: !!(" + JSON.stringify(Object.keys(RELATED).reduce((o, k) => (o[k] = 1, o), {})) + ")[n],");
+patch(P.IssueReader, "template", '      </sc-if>\n\n      <nav aria-label="Другие выпуски"',
+  '      </sc-if>\n\n' +
+  '      <sc-if value="{{hasRelated}}" hint-placeholder-val="{{false}}">\n' +
+  '      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">\n' +
+  '        <h2 style="margin: 0; font-family: \'Russo One\', sans-serif; font-size: 22px">Читай также</h2>\n' +
+  '        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">\n' +
+  '          <sc-for list="{{related}}" as="r" hint-placeholder-count="3">\n' +
+  '            <a href="{{r.href}}" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="{{r.kStyle}}">{{r.kicker}}</span> <span style="font-family: \'Russo One\', sans-serif; font-size: 17px; line-height: 1.3">{{r.label}}</span></a>\n' +
+  '          </sc-for>\n' +
+  '        </div>\n' +
+  '        <a href="Vypuski.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>\n' +
+  '      </section>\n' +
+  '      </sc-if>\n\n      <nav aria-label="Другие выпуски"');
 
 // ---------- 4. Файлы движка ----------
 copyDir(path.join(SRC, "static"), path.join(DIST, "assets"));
@@ -462,6 +509,63 @@ Object.keys(ISSUES).forEach((k) => {
       about: SEO[n].split(":")[0], isPartOf: { "@type": "Periodical", name: "CyberComics" }, position: n } });
 });
 
+// ---------- Каталог /vypuski/: все выпуски по пути новичка ----------
+// Простая страница без компонентов (видна поисковикам сразу, без JS). title/description, canonical,
+// хлебные крошки и ItemList ставит src/seo.js (PAGE_SEO["vypuski/"]). Шаги — из CC (src/runtime/cc.js).
+{
+  const route = "vypuski/", root = "../";
+  const ISEO = require("./seo").ISSUE_SEO;
+  const stepsM = read("runtime/cc.js").match(/const STEPS = \[([\d,\s]+)\]/);
+  const STEPS = stepsM ? stepsM[1].split(",").map(Number) : [];
+  const all = Object.keys(ISSUES).map(Number).sort((a, b) => a - b);
+  const found = STEPS.filter((n) => ISSUES[n] && SLUGS[n]);
+  const web = all.filter((n) => found.indexOf(n) === -1);
+  const plural = (k, one, few, many) => (k % 10 === 1 && k % 100 !== 11 ? one : k % 10 >= 2 && k % 10 <= 4 && (k % 100 < 12 || k % 100 > 14) ? few : many);
+  const stars = (d) => "★".repeat(d) + "☆".repeat(3 - d);
+  const item = (n, step) => {
+    const d = ISSUES[n], seoT = (ISEO[SLUGS[n]] || {}).t || d.title;
+    return '<li><a class="ct-link" href="' + root + HREFS["Issue" + n] + '">' + esc(seoT) + "</a>" +
+      '<span class="ct-meta">' + (step ? "Шаг " + step + " · " : "") + "№" + n + " · злодей " + esc(d.villain) + " · " + d.minutes + " мин · сложность " + stars(d.diff) + "</span>" +
+      '<span class="ct-sub">' + esc(d.sub) + "</span></li>";
+  };
+  const manuals = MANUALS.filter((m) => LINKS[m[0]]).map((m) => '<li><a class="ct-link" href="' + root + HREFS[m[0]] + '">' + esc(ANCHOR[m[0]] || m[4].replace(/ — CyberComics$/, "")) + "</a></li>").join("");
+  const first = found[0];
+  const nav = [["Выпуски", HREFS.Vypuski, true], ["Прокачаться", HREFS.Review], ["Разминка", HREFS.Arcade], ["Барахолка", HREFS.Shop]]
+    .map(([t, h, cur]) => '<a href="' + root + h + '"' + (cur ? ' aria-current="page"' : "") + ">" + t + "</a>").join("");
+  const body =
+    '<header class="ct-top"><a class="ct-logo" href="' + root + HREFS.Main + '">Cyber<span>Comics</span></a><nav aria-label="Основная навигация">' + nav + "</nav></header>\n" +
+    "<main>\n" +
+    '<p class="ct-crumbs"><a href="' + root + HREFS.Main + '">CyberComics</a> / Выпуски</p>\n' +
+    "<h1>Все выпуски: кибербезопасность в комиксах</h1>\n" +
+    '<p class="lead">' + all.length + " " + plural(all.length, "интерактивный комикс", "интерактивных комикса", "интерактивных комиксов") + " про кибербезопасность для начинающих. Сначала фундамент: как работают интернет, сети, DNS, HTTP и HTTPS, Linux, Git, SQL и криптография. " +
+    "Потом веб-уязвимости из OWASP Top 10:2025: IDOR, SQL-инъекции, XSS, CSRF, SSRF и JWT. В каждом выпуске история, битва со злодеем-уязвимостью, квиз и вопрос с собеседования junior AppSec.</p>\n" +
+    (first ? '<p>Новичку: начни с шага 1, <a href="' + root + HREFS["Issue" + first] + '">' + esc((ISEO[SLUGS[first]] || {}).t || ISSUES[first].title) + "</a>, и иди по шагам.</p>\n" : "") +
+    (found.length ? "<h2>Фундамент: сети, системы и инструменты</h2>\n<ol class=\"ct-list\">" + found.map((n, i) => item(n, i + 1)).join("") + "</ol>\n" : "") +
+    (web.length ? "<h2>Веб-уязвимости и AppSec: OWASP Top 10:2025</h2>\n<ol class=\"ct-list\">" + web.map((n) => item(n, 0)).join("") + "</ol>\n" : "") +
+    (manuals ? '<h2>Шпаргалки и методички</h2>\n<p>В <a href="' + root + HREFS.Shop + '">Барахолке</a> лежат шпаргалки к выпускам:</p>\n<ul class="ct-man">' + manuals + "</ul>\n" : "") +
+    "</main>\n" +
+    "<footer>CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.</footer>\n";
+  write(route + "index.html", '<!doctype html>\n<html lang="ru">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n' +
+    "<title>Все выпуски — CyberComics</title>\n" + '<meta name="description" content="Все выпуски CyberComics про кибербезопасность для начинающих.">\n' +
+    '<meta property="og:image" content="' + root + 'assets/og/home.jpg">\n' +
+    '<meta name="theme-color" content="#ffd60a">\n<link rel="icon" href="' + root + 'assets/favicon.svg" type="image/svg+xml">\n<link rel="icon" href="' + root + 'favicon.ico" sizes="48x48">\n' +
+    '<link rel="apple-touch-icon" href="' + root + 'assets/apple-touch-icon.png">\n<link rel="stylesheet" href="' + asset(root, "assets/fonts.css") + '">\n' +
+    "<style>body{margin:0;background:#fff7e3;color:#141414;font:18px/1.6 Rubik,system-ui,sans-serif}" +
+    ".ct-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:8px 16px;border-bottom:3px solid #141414;background:#ffd60a;box-shadow:0 4px 0 #141414}" +
+    ".ct-logo{font:20px 'Rubik Mono One',sans-serif;color:#141414;text-decoration:none;text-shadow:2px 2px 0 #fff;display:inline-flex;align-items:center;min-height:44px;margin-right:auto}.ct-logo span{color:#e3262d}" +
+    ".ct-top nav{display:flex;flex-wrap:wrap;gap:6px}.ct-top nav a{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:6px 12px;font:16px 'Russo One',sans-serif;color:#141414;text-decoration:none;background:#fff;border:3px solid #141414}" +
+    ".ct-top nav a[aria-current]{background:#141414;color:#ffd60a}" +
+    "main{max-width:880px;margin:0 auto;padding:20px 16px 48px;box-sizing:border-box}.ct-crumbs{font-size:15px;margin:0 0 6px;color:#5b5446}" +
+    "h1{font:clamp(28px,7.5vw,40px)/1.15 'Russo One',sans-serif;margin:6px 0 14px;overflow-wrap:break-word}h2{font:24px/1.25 'Russo One',sans-serif;margin:32px 0 12px}" +
+    ".lead{font-size:19px}a{color:#141414;text-underline-offset:3px}" +
+    ".ct-list{list-style:none;padding:0;margin:0;display:grid;gap:12px}.ct-list li{background:#fff;border:3px solid #141414;box-shadow:4px 4px 0 #141414;padding:12px 16px;display:flex;flex-direction:column;gap:4px}" +
+    ".ct-link{font:18px/1.3 'Russo One',sans-serif;color:#141414;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}.ct-link:hover{color:#c81e1e}" +
+    ".ct-meta{font-size:14px;color:#5b5446}.ct-sub{font-size:16px;line-height:1.45}" +
+    ".ct-man{padding-left:22px}.ct-man li{margin:4px 0}.ct-man .ct-link{font-size:17px}" +
+    "footer{border-top:3px solid #141414;background:#ffd60a;padding:14px 16px;font-size:16px;line-height:1.4;text-align:center}</style>\n</head>\n<body>\n" +
+    body + legalScripts(root) + "<script>CCLegal.start();</script>\n</body>\n</html>\n");
+}
+
 page({ file: "povtorenie/index.html", route: "povtorenie/", comp: "Review",
   title: "Прокачаться — повторение по выпускам — CyberComics",
   description: "Прокачайся по выпускам CyberComics: вопросы возвращаются, пока не запомнятся. Прогресс сохраняется под твоим именем в браузере." });
@@ -536,7 +640,7 @@ write("404.html", '<!doctype html>\n<html lang="ru"><head><meta charset="utf-8">
   '<meta name="description" content="Такой страницы на CyberComics нет. Все выпуски про кибербезопасность — на главной.">' +
   '<meta name="theme-color" content="#ffd60a"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">' +
   '<link rel="stylesheet" href="/assets/fonts.css"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff7e3;font-family:Rubik,system-ui,sans-serif;color:#141414;padding:16px;box-sizing:border-box}main{max-width:520px;background:#fff;border:3px solid #141414;box-shadow:8px 8px 0 #141414;padding:28px}h1{margin:0 0 12px;font-family:"Rubik Mono One",sans-serif;font-size:34px;color:#ff2e93;-webkit-text-stroke:2px #141414;paint-order:stroke fill;text-shadow:4px 4px 0 #141414}a{display:inline-block;margin-top:12px;font-family:"Russo One",sans-serif;color:#141414;text-decoration:none;padding:12px 18px;background:#ffd60a;border:3px solid #141414;box-shadow:4px 4px 0 #141414}</style></head>' +
-  '<body><main><h1>404</h1><p>Злодеи утащили эту страницу. Возможно, её никогда и не было.</p><a href="/">На главную</a> <a href="/#vypuski">Все выпуски</a></main></body></html>\n');
+  '<body><main><h1>404</h1><p>Злодеи утащили эту страницу. Возможно, её никогда и не было.</p><a href="/">На главную</a> <a href="/vypuski/">Все выпуски</a></main></body></html>\n');
 
 write("robots.txt", "User-agent: *\nAllow: /\n" + (SITE_URL ? "Sitemap: " + SITE_URL + "/sitemap.xml\n" : ""));
 if (SITE_URL) {

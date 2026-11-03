@@ -12,7 +12,7 @@
  * Подтверждение прав (мета-тег только на главной): YANDEX_VERIFICATION (Яндекс.Вебмастер), GOOGLE_VERIFICATION (Search Console).
  * Адрес сайта: SITE_URL. Если не задан, ставится заглушка https://cybercomics.invalid
  * и в консоли печатается предупреждение: такую сборку выкладывать нельзя.
- * IndexNow: INDEXNOW_KEY (8–128 символов: буквы, цифры, «-»). Тогда в корень кладётся <ключ>.txt. */
+ * IndexNow: ключ в INDEXNOW_KEY ниже (или из переменной окружения), файл <ключ>.txt кладётся в корень. Пинг шлёт хостинг (deploy/pull.sh). */
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -85,22 +85,27 @@ const PAGE_SEO = {
     d: "Прокачайся после выпусков CyberComics: вопросы из квизов по сетям, вебу и OWASP возвращаются, пока не запомнятся. Прогресс хранится в браузере." },
   "arkada/": { name: "Разминка", index: true, t: "Разминка: кроссворды и игры про IT — CyberComics",
     d: "Кроссворды, вордл, филворд и игры «Правда или миф» по темам кибербезопасности, сетей и веба. Разминка для мозга после выпусков CyberComics." },
+  // Каталог всех выпусков (страницу пишет build.js). Список выпусков (ItemList) добавляет apply().
+  "vypuski/": { name: "Выпуски", t: "Все выпуски: кибербезопасность для начинающих — CyberComics",
+    d: "Все выпуски CyberComics по порядку: как работают сети, DNS, HTTP, Linux, Git, SQL и криптография, затем OWASP Top 10:2025, XSS, SQL-инъекции, CSRF и JWT." },
+  // Шпаргалки нацелены на запросы «… шпаргалка» и «список …», а запросы «… для начинающих» / «что такое …»
+  // остаются выпускам: так страницы не спорят друг с другом в выдаче (аудит 03.11, раздел 1.6).
   "baraholka/": { name: "Барахолка", t: "Барахолка: методички и шпаргалки по IT — CyberComics",
     d: "Методички в стиле тетради (Git, OWASP Top 10:2025) и шпаргалки по HTTP-кодам, портам и Linux. Открываются за биты, которые зарабатываешь за выпуски." },
   "baraholka/git/": { kind: "manual", parent: "baraholka/", name: "Git: тетрадь выживания", about: "Git",
-    t: "Git для начинающих: методичка-тетрадь — CyberComics",
-    d: "Git простыми словами: репозиторий, коммит, ветка, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить. Шпаргалка команд." },
+    t: "Команды Git: шпаргалка-тетрадь для начинающих — CyberComics",
+    d: "Шпаргалка команд Git для начинающих: init, add, commit, branch, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить." },
   "baraholka/owasp/": { kind: "manual", parent: "baraholka/", name: "OWASP Top 10:2025 — конспект", about: "OWASP Top 10",
-    t: "OWASP Top 10:2025 конспект на русском — CyberComics",
-    d: "Конспект OWASP Top 10:2025 на русском: все 10 категорий одной фразой, пример, как защититься и чем не путать с соседней категорией. Методичка-тетрадь." },
+    t: "OWASP Top 10:2025 шпаргалка: все категории кратко",
+    d: "Шпаргалка по OWASP Top 10:2025: все 10 категорий кратко, одной фразой, с примером и защитой, и чем не путать с соседней категорией. Методичка-тетрадь." },
   "baraholka/http-kody/": { kind: "manual", parent: "baraholka/", name: "HTTP-коды: шпаргалка", about: "Коды состояния HTTP",
-    t: "Коды ответа HTTP: шпаргалка 2xx–5xx — CyberComics",
+    t: "Коды ответа HTTP шпаргалка: 2xx, 3xx, 4xx, 5xx — CyberComics",
     d: "Шпаргалка по кодам ответа HTTP: 2xx, 3xx, 4xx и 5xx, чем 401 отличается от 403 и что коды ответа говорят о безопасности сайта." },
   "baraholka/porty/": { kind: "manual", parent: "baraholka/", name: "Порты TCP и UDP: шпаргалка", about: "Порты TCP и UDP",
-    t: "Порты TCP и UDP: шпаргалка — CyberComics",
-    d: "Шпаргалка по портам: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет." },
+    t: "Список портов TCP и UDP: шпаргалка — CyberComics",
+    d: "Список портов TCP и UDP шпаргалкой: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет." },
   "baraholka/linux/": { kind: "manual", parent: "baraholka/", name: "Команды Linux: шпаргалка", about: "Командная строка Linux",
-    t: "Команды Linux для начинающих: шпаргалка — CyberComics",
+    t: "Команды Linux шпаргалка: файлы, права, сеть — CyberComics",
     d: "Шпаргалка по командам Linux на каждый день: файлы, поиск, права, процессы, диск и сеть, с объяснением каждого флага." }
 };
 // Кому адресованы материалы (schema.org audience): взрослые, студенты и новички.
@@ -109,6 +114,9 @@ const AUDIENCE = { "@type": "EducationalAudience", educationalRole: "student", a
 const verif = (v) => (/^[A-Za-z0-9_-]{8,100}$/.test(v || "") ? v : "");
 // Дата запуска сайта на cybercomics.ru: datePublished для выпусков.
 const LAUNCH = "2026-11-01";
+// IndexNow (Яндекс): ключ публичный по протоколу, лежит в корне сайта как <ключ>.txt.
+// Тот же ключ записан в deploy/pull.sh: хостинг пингует Яндекс сам, когда забрал новую сборку.
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "1607fd8910c8d318dc19014d5b8daf71";
 // Серия комиксов: общий узел для всех выпусков.
 const series = (ctx, org) => ({ "@type": "ComicSeries", "@id": ctx.base + "/#series", name: "CyberComics: злодеи Сетеграда", url: ctx.base + "/",
   inLanguage: "ru", genre: ["образование", "кибербезопасность"], publisher: { "@id": org["@id"] }, isAccessibleForFree: true });
@@ -290,6 +298,7 @@ function processPage(pg, ctx) {
   const pageSrc = comp ? path.join(ctx.src, "pages", comp + ".dc.html") : null;
   let lastmod;
   if (d && slug) lastmod = maxDate([mtime(path.join(ctx.ixDir, slug + ".html")), mtime(path.join(ctx.ixDir, slug + ".meta.json"))]) || mtime(pageSrc);
+  else if (pg.route === "vypuski/") lastmod = maxDate([mtime(path.join(ctx.src, "build.js"))].concat(Object.keys(ISSUE_SEO).map((s) => mtime(path.join(ctx.ixDir, s + ".html")))));
   else if (pg.route === "") lastmod = maxDate([mtime(pageSrc)].concat(Object.keys(ISSUE_SEO).map((s) => mtime(path.join(ctx.ixDir, s + ".html")))));
   else if (comp === "Manual" && props.id) {
     const mf = (html.match(/<template id="mn-src"/) && cfgPage) ? pg.route.split("/").filter(Boolean).pop() : "";
@@ -333,7 +342,8 @@ function processPage(pg, ctx) {
     };
     const crumbs = { "@type": "BreadcrumbList", "@id": url + "#breadcrumbs", itemListElement: [
       { "@type": "ListItem", position: 1, name: BRAND, item: ctx.base + "/" },
-      { "@type": "ListItem", position: 2, name: d.title, item: url }] };
+      ...(fs.existsSync(path.join(ctx.dist, "vypuski", "index.html")) ? [{ "@type": "ListItem", position: 2, name: PAGE_SEO["vypuski/"].name, item: ctx.base + "/vypuski/" }] : []),
+      { "@type": "ListItem", name: d.title, item: url }].map((x, i) => Object.assign(x, { position: i + 1 })) };
     graph = [org, site, series(ctx, org), art, crumbs];
     // FAQPage — только если на странице есть видимый конспект с этими же вопросами.
     if (html.indexOf('data-seo="konspekt"') !== -1) {
@@ -415,24 +425,37 @@ function apply(dist, opts) {
   // llms.txt: краткая карта сайта для ИИ-ассистентов (формат llmstxt.org).
   const issues = live.filter((p) => p.d).sort((a, b) => Number(a.n) - Number(b.n));
 
-  // Главная: серия комиксов + список всех выпусков (ItemList). Повторный запуск ничего не дублирует.
-  const homeFile = path.join(dist, "index.html");
-  if (!ctx.preview && fs.existsSync(homeFile) && issues.length) {
+  // Главная и каталог /vypuski/: серия комиксов + список всех выпусков (ItemList). Повторный запуск ничего не дублирует.
+  // В каталоге порядок как на странице: путь новичка (шаги Фундамента из src/runtime/cc.js), потом остальные по номеру.
+  let steps = [];
+  try { const m = fs.readFileSync(path.join(ctx.src, "runtime", "cc.js"), "utf8").match(/const STEPS = \[([\d,\s]+)\]/); if (m) steps = m[1].split(",").map(Number); } catch (e) { /* нет cc.js: по номеру */ }
+  const rank = (p) => { const i = steps.indexOf(Number(p.n)); return i === -1 ? 1000 + Number(p.n) : i; };
+  const pathOrder = issues.slice().sort((a, b) => rank(a) - rank(b));
+  [["", issues], ["vypuski/", pathOrder]].forEach(([route, list]) => {
+  const homeFile = path.join(dist, route, "index.html");
+  const catalog = route !== "";
+  const cat = catalog && done.find((p) => p.route === route);
+  if (catalog && (!cat || cat.noindex)) return;
+  if (!ctx.preview && fs.existsSync(homeFile) && list.length) {
     let h = fs.readFileSync(homeFile, "utf8");
     const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     if (m) {
       const data = JSON.parse(m[1]);
       const g = data["@graph"] || [data];
       const org = g.find((x) => x["@type"] === "Organization") || { "@id": ctx.base + "/#org" };
-      const keep = g.filter((x) => x["@type"] !== "ComicSeries" && x["@type"] !== "ItemList");
-      keep.push(series(ctx, org), { "@type": "ItemList", "@id": ctx.base + "/#issues", name: "Выпуски CyberComics", numberOfItems: issues.length,
+      const keep = g.filter((x) => x["@type"] !== "ComicSeries" && x["@type"] !== "ItemList" && x["@type"] !== "CollectionPage");
+      const listId = ctx.base + "/" + route + "#issues";
+      keep.push(series(ctx, org), { "@type": "ItemList", "@id": listId, name: "Выпуски CyberComics", numberOfItems: list.length,
         itemListOrder: "https://schema.org/ItemListOrderAscending",
-        itemListElement: issues.map((p, i) => ({ "@type": "ListItem", position: i + 1, url: p.url, name: plain(p.d.title) })) });
+        itemListElement: list.map((p, i) => ({ "@type": "ListItem", position: i + 1, url: p.url, name: catalog ? plain((ISSUE_SEO[p.slug] || {}).t || p.d.title) : plain(p.d.title) })) });
+      if (catalog) keep.push({ "@type": "CollectionPage", "@id": cat.url + "#page", url: cat.url, name: cat.title, description: cat.desc, inLanguage: "ru",
+        isPartOf: { "@id": ctx.base + "/#website" }, breadcrumb: { "@id": cat.url + "#breadcrumbs" }, mainEntity: { "@id": listId }, audience: AUDIENCE });
       const out = JSON.stringify({ "@context": "https://schema.org", "@graph": keep }).replace(/</g, "\\u003c");
       h = h.slice(0, m.index) + '<script type="application/ld+json">' + out + "</script>" + h.slice(m.index + m[0].length);
       fs.writeFileSync(homeFile, h);
     }
   }
+  });
   const group = (name, list) => list.length ? "\n## " + name + "\n\n" + list.map((p) => "- [№" + p.n + ". " + plain(p.d.title) + "](" + p.url + "): " + plain(p.desc)).join("\n") + "\n" : "";
   const found = issues.filter((p) => p.d.district === "Фундамент"), web = issues.filter((p) => p.d.district !== "Фундамент");
   const llms = "# CyberComics\n\n> " + SITE_DESC + "\n\n" +
@@ -446,8 +469,8 @@ function apply(dist, opts) {
   if (!ctx.preview) fs.writeFileSync(path.join(dist, "llms.txt"), llms);
 
   // IndexNow: файл ключа в корне.
-  const key = process.env.INDEXNOW_KEY || "";
-  if (key && !ctx.preview) {
+  const key = INDEXNOW_KEY;
+  if (key && !ctx.preview && ctx.real) {
     if (!/^[A-Za-z0-9-]{8,128}$/.test(key)) console.warn("  seo: INDEXNOW_KEY должен быть 8–128 символов: буквы, цифры, «-»");
     else fs.writeFileSync(path.join(dist, key + ".txt"), key);
   }
@@ -462,7 +485,7 @@ function apply(dist, opts) {
 
 // ---------- IndexNow: сообщить Яндексу (и Bing) об адресах после выкладки ----------
 function ping(dist) {
-  const key = process.env.INDEXNOW_KEY || "", site = (process.env.SITE_URL || "").replace(/\/$/, "");
+  const key = INDEXNOW_KEY, site = (process.env.SITE_URL || "").replace(/\/$/, "");
   if (!key || !site) { console.error("Нужны SITE_URL и INDEXNOW_KEY (тот же, что при сборке)."); process.exit(1); }
   const xml = fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8");
   const urlList = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g)).map((m) => m[1].replace(/&amp;/g, "&"));

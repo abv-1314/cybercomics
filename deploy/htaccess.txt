@@ -18,8 +18,6 @@ RewriteRule ^ https://cybercomics.ru%{REQUEST_URI} [R=301,L]
 RewriteRule ^lavka/?$ https://cybercomics.ru/baraholka/ [R=301,L]
 # убранная страница «Родителям» -> главная
 RewriteRule ^roditelyam/?$ https://cybercomics.ru/ [R=301,L]
-# каталога /vypuski/ пока нет (без него Apache отдал бы 403) -> список выпусков на главной
-RewriteRule ^vypuski/?$ https://cybercomics.ru/#vypuski [R=302,NE,L]
 # /index.html и /папка/index.html -> адрес со слешем (без дублей)
 RewriteCond %{THE_REQUEST} \s/+((?:[^\s?]*/)?)index\.html[\s?] [NC]
 RewriteRule ^ https://cybercomics.ru/%1 [R=301,L]
