@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Барахолка: методички и шпаргалки по IT — CyberComics</title>
+<meta name="description" content="Методички в стиле тетради (Git, OWASP Top 10:2025) и шпаргалки по HTTP-кодам, портам и Linux. Открываются за биты, которые зарабатываешь за выпуски.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/baraholka/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Барахолка: методички и шпаргалки по IT — CyberComics">
+<meta property="og:description" content="Методички в стиле тетради (Git, OWASP Top 10:2025) и шпаргалки по HTTP-кодам, портам и Linux. Открываются за биты, которые зарабатываешь за выпуски.">
+<meta property="og:url" content="https://cybercomics.ru/baraholka/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/baraholka.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Барахолка: методички и шпаргалки по IT — CyberComics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Барахолка: методички и шпаргалки по IT — CyberComics">
+<meta name="twitter:description" content="Методички в стиле тетради (Git, OWASP Top 10:2025) и шпаргалки по HTTP-кодам, портам и Linux. Открываются за биты, которые зарабатываешь за выпуски.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/baraholka.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/baraholka/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Барахолка","item":"https://cybercomics.ru/baraholka/"}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" href="../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="manifest" href="../assets/site.webmanifest">
+<link rel="preload" href="../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div class="bh">
+
+  <header class="bh-hd">
+    <a class="bh-logo" href="../">Cyber<span>Comics</span></a>
+    <nav class="bh-nav" aria-label="Основная навигация">
+      <a href="../#vypuski">Выпуски</a>
+      <a href="../">Город</a>
+      <a href="../povtorenie/">Прокачаться</a>
+      <a href="../arkada/">Разминка</a>
+      <a href="../baraholka/" aria-current="page">Барахолка</a>
+    </nav>
+    <div class="bh-me">
+      
+      <span class="bh-chip">0 бит</span>
+    </div>
+  </header>
+
+  <div class="bh-sky">
+    <div class="bh-lights" aria-hidden="true" style="top: 6px; height: 70px">
+      <svg viewBox="0 0 100 64" preserveAspectRatio="none" style="height: 64px"><path d="M0 0 Q50 64 100 0" fill="none" stroke="#3a3a4d" stroke-width="2" vector-effect="non-scaling-stroke"></path></svg>
+      <i class="bh-bulb" style="--c:#ffd60a;--d:0ms;left:2.94%;top:4.7px"></i><i class="bh-bulb" style="--c:#ff2e93;--d:370ms;left:8.82%;top:11.3px"></i><i class="bh-bulb" style="--c:#2ee59d;--d:740ms;left:14.71%;top:17.1px"></i><i class="bh-bulb" style="--c:#19c3ff;--d:1110ms;left:20.59%;top:21.9px"></i><i class="bh-bulb" style="--c:#ff8c1a;--d:1480ms;left:26.47%;top:25.9px"></i><i class="bh-bulb" style="--c:#ffd60a;--d:1850ms;left:32.35%;top:29.0px"></i><i class="bh-bulb" style="--c:#ff2e93;--d:2220ms;left:38.24%;top:31.2px"></i><i class="bh-bulb" style="--c:#2ee59d;--d:2590ms;left:44.12%;top:32.6px"></i><i class="bh-bulb" style="--c:#19c3ff;--d:2960ms;left:50.00%;top:33.0px"></i><i class="bh-bulb" style="--c:#ff8c1a;--d:3330ms;left:55.88%;top:32.6px"></i><i class="bh-bulb" style="--c:#ffd60a;--d:300ms;left:61.76%;top:31.2px"></i><i class="bh-bulb" style="--c:#ff2e93;--d:670ms;left:67.65%;top:29.0px"></i><i class="bh-bulb" style="--c:#2ee59d;--d:1040ms;left:73.53%;top:25.9px"></i><i class="bh-bulb" style="--c:#19c3ff;--d:1410ms;left:79.41%;top:21.9px"></i><i class="bh-bulb" style="--c:#ff8c1a;--d:1780ms;left:85.29%;top:17.1px"></i><i class="bh-bulb" style="--c:#ffd60a;--d:2150ms;left:91.18%;top:11.3px"></i><i class="bh-bulb" style="--c:#ff2e93;--d:2520ms;left:97.06%;top:4.7px"></i>
+    </div>
+
+    <section class="bh-hero" aria-labelledby="bh-title">
+      <div>
+        <p class="bh-kick">Сетеград. Полночь. Под мостом зажглись фонари…</p>
+        <div class="bh-sign">
+          <h1 id="bh-title" aria-label="Барахолка"><span style="--i:0" aria-hidden="true">Б</span><span style="--i:1" aria-hidden="true">А</span><span style="--i:2" aria-hidden="true">Р</span><span style="--i:3" aria-hidden="true">А</span><span style="--i:4" class="bh-buzz" aria-hidden="true">Х</span><span style="--i:5" aria-hidden="true">О</span><span style="--i:6" aria-hidden="true">Л</span><span style="--i:7" aria-hidden="true">К</span><span style="--i:8" aria-hidden="true">А</span></h1>
+          <span class="bh-sub">ночной рынок Сетеграда</span>
+        </div>
+        <p class="bh-lead">Рубли тут не берут. Только <b>биты</b>, которые ты заработал за чтение выпусков и верные ответы. Купил — твоё навсегда.</p>
+        <nav class="bh-jump" aria-label="Прилавки">
+          <a href="#tetradi">Тетради</a>
+          <a href="#shpargalki">Шпаргалки</a>
+          <a href="#znachki">Значки</a>
+          <a href="#zachetka">Зачётка</a>
+          <a href="#skoro">Скоро</a>
+        </nav>
+      </div>
+
+      <div style="display: grid; gap: 40px">
+        <div class="bh-feature">
+          <a class="nb" href="../baraholka/git/" style="--cv: #ff8c1a" aria-label="Git: тетрадь выживания — полистать превью">
+            <span class="nb-no" aria-hidden="true">Тетрадь №1</span>
+            <span class="nb-label" aria-hidden="true"><b>Git</b><span>тетрадь выживания</span></span>
+            <span class="nb-st s1" aria-hidden="true">не делай --force</span>
+            <span class="nb-st s2" aria-hidden="true">+ шпаргалка команд</span>
+          </a>
+          <span class="bh-tag" aria-hidden="true"><b>350 бит</b><small>ещё 350</small></span>
+        </div>
+
+        <section class="bh-receipt" aria-labelledby="bh-wallet">
+          <h2 id="bh-wallet">Твой кошелёк</h2>
+          <div class="bh-big"><b>0</b><span>бит в кармане</span></div>
+          
+            <div class="bh-row"><span>Прочитано выпусков: 0 × 50</span><b>+0</b></div>
+            <div class="bh-row"><span>Верных ответов: 0 × 10</span><b>+0</b></div>
+            
+          
+          <div class="bh-row"><span>Потрачено на Барахолке</span><b>−0</b></div>
+          
+          <p class="bh-earn">Как заработать: <b>+50</b> за прочитанный выпуск, <b>+10</b> за каждый верный ответ. <a href="../#vypuski">К выпускам →</a></p>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <section class="bh-stall" id="tetradi" aria-labelledby="h-tetradi" style="--a1: #e8262b; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-tetradi">Тетради</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Методички, как будто их написал друг-отличник: клетка, поля, маркер и стрелки. Сначала можно <b>полистать превью</b>, а целиком тетрадь открывается после покупки. Есть кнопка «Распечатать» на A4.</p>
+      <div class="bh-grid g2">
+        
+          <article class="bh-item" aria-labelledby="h-git" data-rt-off="">
+            
+            
+            <span class="bh-tag" aria-hidden="true"><b>350 бит</b><small>ещё 350</small></span>
+            <div class="bh-cover">
+              <a class="nb" href="../baraholka/git/" style="--cv:#ff8c1a" tabindex="-1" aria-hidden="true">
+                <span class="nb-no">Тетрадь №1</span>
+                <span class="nb-label"><b>Git</b><span>тетрадь выживания</span></span>
+                <span class="nb-st s1">не делай --force</span>
+                <span class="nb-st s2">+ шпаргалка</span>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">Тетрадь · 10 страниц</span>
+              <h3 id="h-git">Git: тетрадь выживания</h3>
+              <p>Всё, чтобы не потерять код и не слить пароль: от первого коммита до «я всё сломал, спасите».</p>
+              <ul class="bh-inside">
+                <li>Репозиторий, коммит, ветка — на картинках</li><li>Merge и конфликт без паники</li><li>Remote, push и pull: кто кому что отправляет</li><li>Аптечка: как откатить любую ошибку</li><li>Шпаргалка команд с разбором каждого флага</li>
+              </ul>
+              <div class="bh-acts">
+                
+                
+                  <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-git">Не хватает 350 бит</button>
+                  <a class="bh-btn ghost" href="../baraholka/git/">Полистать превью</a>
+                
+              </div>
+              <div id="s-git">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-owasp" data-rt-off="">
+            
+            
+            <span class="bh-tag" aria-hidden="true"><b>450 бит</b><small>ещё 450</small></span>
+            <div class="bh-cover">
+              <a class="nb" href="../baraholka/owasp/" style="--cv:#ff3b3b" tabindex="-1" aria-hidden="true">
+                <span class="nb-no">Тетрадь №2</span>
+                <span class="nb-label"><b style="font-size:clamp(36px,7vw,52px)">OWASP</b><span>Top 10:2025, конспект</span></span>
+                <span class="nb-st s1">A01 → A10</span>
+                <span class="nb-st s2">чем не путать</span>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">Конспект · 8 страниц</span>
+              <h3 id="h-owasp">OWASP Top 10:2025 — конспект</h3>
+              <p>Все десять категорий редакции 2025: смысл одной фразой, сценарий, защита и с какой соседкой не путать.</p>
+              <ul class="bh-inside">
+                <li>Все 10 категорий по порядку</li><li>Что изменилось с 2021 года</li><li>Пары, которые путают на собесе</li><li>Как отвечать на «назови Top 10»</li><li>Где тренироваться легально</li>
+              </ul>
+              <div class="bh-acts">
+                
+                
+                  <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-owasp">Не хватает 450 бит</button>
+                  <a class="bh-btn ghost" href="../baraholka/owasp/">Полистать превью</a>
+                
+              </div>
+              <div id="s-owasp">
+                
+              </div>
+            </div>
+          </article>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="shpargalki" aria-labelledby="h-shp" style="--a1: #19c3ff; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-shp">Шпаргалки</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Один лист — одна тема. Повесь над столом или держи в телефоне. <b>Дешевле тетрадей</b>: хватит трёх выпусков.</p>
+      <div class="bh-grid g3">
+        
+          <article class="bh-item" aria-labelledby="h-http" data-rt-off="">
+            
+            
+            <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+            <div class="bh-cover">
+              <a class="sh" href="../baraholka/http-kody/" tabindex="-1" aria-hidden="true">
+                <b>HTTP-коды</b>
+                <code>200 <i>OK</i></code><code>401 <i>кто ты?</i></code><code>403 <i>нельзя</i></code><code>404 <i>нет такого</i></code>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">Шпаргалка · лист с двух сторон</span>
+              <h3 id="h-http">HTTP-коды на одном листе</h3>
+              <p>От 200 до 504: что значит каждый код, чем 401 отличается от 403 и какие ответы говорят «сломалось на сервере».</p>
+              <div class="bh-acts">
+                
+                
+                  <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-http">Не хватает 120 бит</button>
+                  <a class="bh-btn ghost" href="../baraholka/http-kody/">Превью</a>
+                
+              </div>
+              <div id="s-http">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-ports" data-rt-off="">
+            
+            
+            <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+            <div class="bh-cover">
+              <a class="sh" href="../baraholka/porty/" tabindex="-1" aria-hidden="true">
+                <b>Порты</b>
+                <code>22   <i>SSH</i></code><code>53   <i>DNS</i></code><code>443  <i>HTTPS</i></code><code>3306 <i>MySQL</i></code>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">Шпаргалка · лист с двух сторон</span>
+              <h3 id="h-ports">Порты, которые надо знать</h3>
+              <p>22, 53, 80, 443 и ещё два десятка: какой сервис обычно где живёт и какие порты нельзя открывать в интернет.</p>
+              <div class="bh-acts">
+                
+                
+                  <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-ports">Не хватает 120 бит</button>
+                  <a class="bh-btn ghost" href="../baraholka/porty/">Превью</a>
+                
+              </div>
+              <div id="s-ports">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-linux" data-rt-off="">
+            
+            
+            <span class="bh-tag" aria-hidden="true"><b>150 бит</b><small>ещё 150</small></span>
+            <div class="bh-cover">
+              <a class="sh" href="../baraholka/linux/" tabindex="-1" aria-hidden="true">
+                <b>Linux</b>
+                <code>ls <i>-la</i></code><code>grep <i>-ri</i></code><code>chmod <i>644</i></code><code>cd <i>~</i></code>
+              </a>
+            </div>
+            <div class="bh-body">
+              <span class="bh-kind">Шпаргалка · 2 страницы</span>
+              <h3 id="h-linux">Linux: команды на каждый день</h3>
+              <p>Команды терминала на каждый день: файлы, поиск, права, процессы и сеть. У каждой — что значат её флаги.</p>
+              <div class="bh-acts">
+                
+                
+                  <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-linux">Не хватает 150 бит</button>
+                  <a class="bh-btn ghost" href="../baraholka/linux/">Превью</a>
+                
+              </div>
+              <div id="s-linux">
+                
+              </div>
+            </div>
+          </article>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall bh-badges" id="znachki" aria-labelledby="h-zn" style="--a1: #2ee59d; --a2: #141a33">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-zn">Значки</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Значки для профиля читателя. Купи и <b>приколи один</b>: он появится в твоём кошельке, а когда у профиля появится своя страница, переедет туда.</p>
+      <div class="bh-grid g4">
+        
+          <article class="bh-item" aria-labelledby="h-b-200" data-rt-off="">
+            
+            <span class="bh-tag" aria-hidden="true"><b>60 бит</b></span>
+            <div class="bh-cover"><span class="bd" style="--bc:#2ee59d" aria-hidden="true"><span><b>200</b><span>OK</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="h-b-200">Значок «200 OK»</h3>
+              <p>Всё в порядке. Для тех, кто прочитал выпуск про HTTP.</p>
+              <div class="bh-acts">
+                
+                <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-b-200">Не хватает 60 бит</button>
+              </div>
+              <div id="s-b-200">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-b-teapot" data-rt-off="">
+            
+            <span class="bh-tag" aria-hidden="true"><b>80 бит</b></span>
+            <div class="bh-cover"><span class="bd" style="--bc:#19c3ff" aria-hidden="true"><span><b>418</b><span>я чайник</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="h-b-teapot">Значок «418»</h3>
+              <p>Настоящий код из шуточного RFC 2324. Дядя Миша одобряет.</p>
+              <div class="bh-acts">
+                
+                <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-b-teapot">Не хватает 80 бит</button>
+              </div>
+              <div id="s-b-teapot">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-b-noforce" data-rt-off="">
+            
+            <span class="bh-tag" aria-hidden="true"><b>80 бит</b></span>
+            <div class="bh-cover"><span class="bd" style="--bc:#ff8c1a;--bs:24px" aria-hidden="true"><span><b>--force</b><span>не сегодня</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="h-b-noforce">Значок «Без --force»</h3>
+              <p>Для тех, кто не переписывает чужую историю.</p>
+              <div class="bh-acts">
+                
+                <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-b-noforce">Не хватает 80 бит</button>
+              </div>
+              <div id="s-b-noforce">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-b-env" data-rt-off="">
+            
+            <span class="bh-tag" aria-hidden="true"><b>100 бит</b></span>
+            <div class="bh-cover"><span class="bd" style="--bc:#ffd60a" aria-hidden="true"><span><b>.env</b><span>в .gitignore</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="h-b-env">Значок «.env в .gitignore»</h3>
+              <p>Секреты не едут в репозиторий. Никогда.</p>
+              <div class="bh-acts">
+                
+                <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-b-env">Не хватает 100 бит</button>
+              </div>
+              <div id="s-b-env">
+                
+              </div>
+            </div>
+          </article>
+        
+          <article class="bh-item" aria-labelledby="h-b-council" data-rt-off="">
+            
+            <span class="bh-tag" aria-hidden="true"><b>150 бит</b></span>
+            <div class="bh-cover"><span class="bd" style="--bc:#ff2e93;--bs:21px" aria-hidden="true"><span><b>A01–A10</b><span>Совет распущен</span></span></span></div>
+            <div class="bh-body">
+              <h3 id="h-b-council">Значок «Совет распущен»</h3>
+              <p>Знаешь всю десятку OWASP по порядку.</p>
+              <div class="bh-acts">
+                
+                <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="s-b-council">Не хватает 150 бит</button>
+              </div>
+              <div id="s-b-council">
+                
+              </div>
+            </div>
+          </article>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="zachetka" aria-labelledby="h-zk" style="--a1: #ffd60a; --a2: #141414">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-zk">Зачётка</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Твоя зачётная книжка: какие выпуски уже зачтены. Нажми на выпуск, чтобы его прочитать.</p>
+      <div class="zk">
+        <div class="zk-head"><h3>Зачётка: читатель</h3><span style="font-family: 'Russo One', sans-serif; font-size: 20px">0 из 22</span></div>
+        <div class="zk-meter" role="img" aria-label="Зачтено 0 из 22 выпусков"><i style="width:0%;border-right:0"></i></div>
+        <ul class="zk-list">
+          
+            <li><span class="zk-n">№1</span><a href="../vypuski/http/">HTTP: о чём шепчутся браузер и сервер</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№2</span><a href="../vypuski/idor/">Мистер IDOR и чужие заказы</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№3</span><a href="../vypuski/sql-injection/">Доктор Инъекция: когда данные становятся кодом</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№4</span><a href="../vypuski/xss/">Скрипт-Призрак вселяется в браузер</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№5</span><a href="../vypuski/csrf/">Подделыватель и чужие руки</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№6</span><a href="../vypuski/ssrf/">Прокси-Паук плетёт сеть изнутри</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№7</span><a href="../vypuski/jwt/">Токенщик и поддельные пропуска</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№8</span><a href="../vypuski/sekrety-v-git/">Утечкин и конвейер защиты</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№9</span><a href="../vypuski/owasp-top-10-2025/">OWASP Top 10:2025 — галерея злодеев</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№10</span><a href="../vypuski/internet/">Как работает интернет: путь одного пакета</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№11</span><a href="../vypuski/osi/">Модели OSI и TCP/IP: сеть как матрёшка</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№12</span><a href="../vypuski/ip/">Сети и IP-адреса: кто есть кто в сети</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№13</span><a href="../vypuski/tcp-udp-porty/">TCP, UDP и порты: 65 535 дверей сервера</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№14</span><a href="../vypuski/dns/">DNS: телефонная книга интернета</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№15</span><a href="../vypuski/https-tls/">HTTPS и TLS: паспорт сайта и опечатанный кейс</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№16</span><a href="../vypuski/api/">Клиент, сервер и API</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№17</span><a href="../vypuski/linux/">Linux и терминал: права, root и журналы</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№18</span><a href="../vypuski/git/">Git: вагоны, ветки и замок на main</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№19</span><a href="../vypuski/bash/">Bash: командная строка безопасника</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№20</span><a href="../vypuski/python/">Python: первый скрипт и змей из pip</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№21</span><a href="../vypuski/sql-bazy/">SQL и базы данных: где живут все данные</a><span class="zk-no">ещё нет</span></li>
+          
+            <li><span class="zk-n">№22</span><a href="../vypuski/kriptografiya/">Криптография: хеши, ключи и подписи</a><span class="zk-no">ещё нет</span></li>
+          
+        </ul>
+        <p class="zk-note">Пока пусто. Первый выпуск — и первые 50 бит уже твои.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-stall" id="skoro" aria-labelledby="h-soon" style="--a1: #ff2e93; --a2: #fff7e3">
+    <div class="bh-awn" aria-hidden="true"></div>
+    <h2 class="bh-board" id="h-soon">Скоро привезут</h2>
+    <div class="bh-counter">
+      <p class="bh-intro">Этих вещей ещё нет на прилавке. Купить их пока нельзя, а биты никуда не денутся.</p>
+      <div class="bh-grid g2">
+        <article class="bh-item" aria-labelledby="h-map">
+          <span class="bh-soonstamp" aria-hidden="true">скоро</span>
+          <div class="bh-cover"><div class="ps map" aria-hidden="true"><i style="--c: #ffd60a; left: 8%; top: 14%; width: 26%; height: 30%"></i><i style="--c: #ff3b3b; left: 40%; top: 10%; width: 22%; height: 44%"></i><i style="--c: #2ee59d; left: 68%; top: 22%; width: 24%; height: 28%"></i><i style="--c: #8a5cff; left: 12%; top: 58%; width: 76%; height: 14%"></i><b>БАЙТСК</b></div></div>
+          <div class="bh-body">
+            <span class="bh-kind">Постер A3</span>
+            <h3 id="h-map">Карта Сетеграда</h3>
+            <p>Все районы города и Фундамент под ним: где живёт какой злодей и в каком он выпуске.</p>
+          </div>
+        </article>
+        <article class="bh-item" aria-labelledby="h-gal">
+          <span class="bh-soonstamp" aria-hidden="true">скоро</span>
+          <div class="bh-cover"><div class="ps gal" aria-hidden="true"><img loading="lazy" decoding="async" width="720" height="899" srcset="../assets/img/villain-1-360.webp 360w, ../assets/img/villain-1-540.webp 540w, ../assets/img/villain-1.webp 720w" sizes="120px" src="../assets/img/villain-1.webp" alt=""><img loading="lazy" decoding="async" width="720" height="960" srcset="../assets/img/villain-2-360.webp 360w, ../assets/img/villain-2-540.webp 540w, ../assets/img/villain-2.webp 720w" sizes="120px" src="../assets/img/villain-2.webp" alt=""><img loading="lazy" decoding="async" width="720" height="960" srcset="../assets/img/villain-3-360.webp 360w, ../assets/img/villain-3-540.webp 540w, ../assets/img/villain-3.webp 720w" sizes="120px" src="../assets/img/villain-3.webp" alt=""><img loading="lazy" decoding="async" width="720" height="960" srcset="../assets/img/villain-5-360.webp 360w, ../assets/img/villain-5-540.webp 540w, ../assets/img/villain-5.webp 720w" sizes="120px" src="../assets/img/villain-5.webp" alt=""><img loading="lazy" decoding="async" width="720" height="960" srcset="../assets/img/villain-6-360.webp 360w, ../assets/img/villain-6-540.webp 540w, ../assets/img/villain-6.webp 720w" sizes="120px" src="../assets/img/villain-6.webp" alt=""><img loading="lazy" decoding="async" width="720" height="960" srcset="../assets/img/villain-7-360.webp 360w, ../assets/img/villain-7-540.webp 540w, ../assets/img/villain-7.webp 720w" sizes="120px" src="../assets/img/villain-7.webp" alt=""></div></div>
+          <div class="bh-body">
+            <span class="bh-kind">Постер A3</span>
+            <h3 id="h-gal">Галерея злодеев</h3>
+            <p>Доска розыска: портреты, клички и чем каждый опасен. Пока злодеи висят в <a href="../vypuski/owasp-top-10-2025/">выпуске №9</a>.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bh-rub" aria-labelledby="h-rub">
+    <div class="bh-rub-in">
+      <h2 id="h-rub">Когда-нибудь: толстые методички</h2>
+      <p>Большие тетради с задачами и разбором для тех, кто идёт в AppSec всерьёз. Мы их только пишем: цен и оплаты нет, и до готовности не будет. Всё, что выше, по-прежнему только за биты.</p>
+      <ul>
+        <li>Сети с нуля до Wireshark</li>
+        <li>Веб-уязвимости: журнал лабораторных</li>
+        <li>Собеседование Junior AppSec</li>
+        <li>Linux для безопасника</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="bh-ft">
+    CyberComics · Сетеград, ночной рынок · Покупки за биты хранятся в этом браузере.<br>
+    Тренируйся только легально: <a href="https://picoctf.org" rel="noopener">picoCTF</a>, <a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Academy</a>, <a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a>, <a href="https://tryhackme.com" rel="noopener">TryHackMe</a>.
+  <div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+
+  
+</div></div>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../assets/js/dc.js?v=f583bdab"></script>
+<script src="../assets/js/cc.js?v=5d45b314"></script>
+<script src="../assets/js/components-shop.js?v=60732a6b"></script>
+<script src="../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../privacy/","soglasie":"../soglasie/"};</script>
+<script src="../assets/js/legal.js"></script>
+<script>DC.mount("Shop", document.getElementById("app"), {});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

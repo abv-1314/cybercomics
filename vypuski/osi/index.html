@@ -1,0 +1,1823 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Модель OSI и TCP/IP простыми словами — CyberComics</title>
+<meta name="description" content="7 уровней OSI и 4 уровня TCP/IP, инкапсуляция, на каком уровне живут ARP-спуфинг, SYN flood, XSS и SQLi и чем фаервол отличается от WAF.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/osi/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Модель OSI и TCP/IP простыми словами — CyberComics">
+<meta property="og:description" content="7 уровней OSI и 4 уровня TCP/IP, инкапсуляция, на каком уровне живут ARP-спуфинг, SYN flood, XSS и SQLi и чем фаервол отличается от WAF.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/osi/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-osi.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Модели OSI и TCP/IP: сеть как матрёшка">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Модель OSI и TCP/IP простыми словами — CyberComics">
+<meta name="twitter:description" content="7 уровней OSI и 4 уровня TCP/IP, инкапсуляция, на каком уровне живут ARP-спуфинг, SYN flood, XSS и SQLi и чем фаервол отличается от WAF.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-osi.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/osi/#article","url":"https://cybercomics.ru/vypuski/osi/","mainEntityOfPage":"https://cybercomics.ru/vypuski/osi/","issueNumber":"11","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"Модели OSI и TCP/IP: сеть как матрёшка","name":"Модели OSI и TCP/IP: сеть как матрёшка","alternativeHeadline":"Модель OSI и TCP/IP простыми словами","description":"7 уровней OSI и 4 уровня TCP/IP, инкапсуляция, на каком уровне живут ARP-спуфинг, SYN flood, XSS и SQLi и чем фаервол отличается от WAF.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-osi.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":11,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"начальный","timeRequired":"PT10M","teaches":["Чем 7 уровней OSI отличаются от 4 уровней TCP/IP","Как сообщение заворачивается в сегмент, пакет, кадр и биты","На каком уровне живут ARP-спуфинг, IP-спуфинг, SYN flood, XSS и SQLi","Чем фаервол отличается от WAF и зачем про OSI спрашивают на собеседовании"],"about":{"@type":"Thing","name":"Модель OSI"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/osi/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"Модели OSI и TCP/IP: сеть как матрёшка","item":"https://cybercomics.ru/vypuski/osi/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/osi/#faq","mainEntity":[{"@type":"Question","name":"Что такое модель OSI?","acceptedAnswer":{"@type":"Answer","text":"Модель OSI — учебная схема сети из 7 уровней: от физического (провод) до прикладного (программа)."}},{"@type":"Question","name":"Расскажи про модель OSI. На каких уровнях живут ARP, IP, TCP и HTTP, и где работают фаервол и WAF?","acceptedAnswer":{"@type":"Answer","text":"OSI — 7 уровней: физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной; в интернете работает TCP/IP из 4 уровней. При отправке данные заворачиваются в сегмент (TCP), пакет (IP), кадр (Ethernet или Wi-Fi) и биты, и каждый уровень читает только свой заголовок. ARP — L2 (ARP-спуфинг), IP — L3 (IP-спуфинг), TCP — L4 (SYN flood), HTTP — L7 (XSS, SQL-инъекции). Классический фаервол фильтрует по адресам и портам на L3–L4, WAF разбирает HTTP на L7; они работают вместе, а не вместо друг друга."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #ff2e93; --oy: 0%">
+  
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="font-size:23.17cqmin">L?</span></span>
+      <span class="va-pst-name" style="font-size:min(12.93cqw,26.00cqh)">Путаник</span>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#ff2e93">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №11</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Фундамент</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">10 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★☆☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">Модели OSI и TCP/IP: сеть как матрёшка</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Семь этажей сети, инкапсуляция и то, на каком этаже живёт каждая атака и каждая защита</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Путаник:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Сайт не грузится — меняйте кабель. Кабель выдернут — переписывайте сайт!</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Чем 7 уровней OSI отличаются от 4 уровней TCP/IP</li><li>Как сообщение заворачивается в сегмент, пакет, кадр и биты</li><li>На каком уровне живут ARP-спуфинг, IP-спуфинг, SYN flood, XSS и SQLi</li><li>Чем фаервол отличается от WAF и зачем про OSI спрашивают на собеседовании</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Путаник — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-osi" data-ix="osi" aria-label="Выпуск 11: модели OSI и TCP/IP">
+
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="ix-osi-doll" vector-effect="non-scaling-stroke" d="M50 2C66 2 78 14 78 30C78 40 75 46 72 50C88 60 98 84 98 108C98 126 92 138 78 138L22 138C8 138 2 126 2 108C2 84 12 60 28 50C25 46 22 40 22 30C22 14 34 2 50 2Z"></path>
+    <clipPath id="ix-osi-dclip"><use href="#ix-osi-doll"></use></clipPath>
+    <pattern id="ix-osi-dots" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".55" fill="#141414" fill-opacity=".16"></circle></pattern>
+    <pattern id="ix-osi-bits" width="24" height="10" patternUnits="userSpaceOnUse"><rect width="24" height="10" fill="#141414"></rect><text x="0" y="7.5" font-family="monospace" font-weight="700" font-size="7.2" fill="#2ee59d">0110</text><text x="12" y="7.5" font-family="monospace" font-weight="700" font-size="7.2" fill="#ffd60a" fill-opacity=".85">10</text></pattern>
+  </defs>
+</svg>
+
+<!-- ============ ПРОЛОГ: ПОСТЕР ПУТАНИКА ============ -->
+<div class="page" role="group" aria-label="Пролог: злодей Путаник">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cold">
+      <span class="tag">Злодей выпуска №11</span>
+      <h2 class="vname" aria-label="Путаник"><span class="vl a">П</span><span class="vl s1">У</span><span class="vl s2">Т</span><span class="vl a">А</span><span class="vl s3">Н</span><span class="vl s4">И</span><span class="vl a">К</span></h2>
+      <div class="knot" aria-hidden="true">
+        <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet">
+          <path class="k-ink" pathLength="100" d="M18 150C90 150 110 60 190 60S290 190 220 190S150 50 280 48S380 170 330 172S300 70 410 70S520 168 470 170S430 100 582 96"></path>
+          <path class="k-cbl" pathLength="100" d="M18 150C90 150 110 60 190 60S290 190 220 190S150 50 280 48S380 170 330 172S300 70 410 70S520 168 470 170S430 100 582 96"></path>
+          <g class="plug" transform="translate(8 150) rotate(180)"><rect x="-6" y="-13" width="34" height="26" rx="3"></rect><rect x="-14" y="-9" width="10" height="18" rx="1" class="pin"></rect></g>
+          <g class="plug" transform="translate(592 96)"><rect x="-6" y="-13" width="34" height="26" rx="3"></rect><rect x="-14" y="-9" width="10" height="18" rx="1" class="pin"></rect></g>
+        </svg>
+        <span class="st" style="--sx:6%;--sy:8%;--r:-12deg">L7</span>
+        <span class="st" style="--sx:24%;--sy:66%;--r:9deg">L2</span>
+        <span class="st" style="--sx:41%;--sy:2%;--r:-5deg">L4</span>
+        <span class="st pk" style="--sx:56%;--sy:70%;--r:14deg">L1</span>
+        <span class="st" style="--sx:70%;--sy:6%;--r:-16deg">L3</span>
+        <span class="st" style="--sx:86%;--sy:58%;--r:7deg">L6</span>
+      </div>
+      <div class="cold-row">
+      <p class="motto">«Сайт не грузится — меняйте кабель. Кабель выдернут — переписывайте сайт!»</p>
+      <div class="bl v cold-bl"><b class="who v">Путаник</b>Я всегда точно знаю, кто виноват. Только не того.</div>
+      </div>
+      <span class="sfx cold-sfx" aria-hidden="true">ВСЁ НЕ ТО!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 1 · БЕЛЫЙ ЭКРАН ============ -->
+<div class="chap"><span class="chap-n">Стр. 1</span><h2 class="chap-t">Белый экран</h2></div>
+<div class="page" role="group" aria-label="Страница 1: дневник не открывается">
+  <div class="pn" style="--span:7">
+    <div class="fr f-yel talk">
+      <p class="cap w">Вечер. Соня открывает электронный дневник, а там белый экран и вечная крутилка.</p>
+      <div class="bl"><b class="who s">Соня</b>Дядя Миша, дневник взломали?</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Конечно, взломали! SQL-инъекция! Срочно переписывайте сайт!</div>
+      <span class="sfx p1-sfx" aria-hidden="true">ПАНИКА!</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots talk">
+      <div class="bl r"><b class="who m">Дядя Миша</b>Не суетись. Сеть похожа на дом с этажами: внизу провод, наверху сайт. Сломаться может любой этаж. Давай сначала посмотрим, как твоё сообщение вообще уходит из ноутбука.</div>
+      <p class="big">Сетевики договорились делить работу на <b>уровни</b>. Каждый уровень отвечает за своё и не лезет к соседям.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 2 · МАТРЁШКА (WOW) ============ -->
+<div class="chap"><span class="chap-n">Стр. 2</span><h2 class="chap-t pk">Матрёшка</h2></div>
+<div class="page" role="group" aria-label="Страница 2: инкапсуляция как матрёшка">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots mat" id="ix-osi-mat" data-s="0">
+      <div class="mat-head">
+        <p class="cap w">Соня просит оценки. Каждый уровень надевает на запрос свою «матрёшку» со своей наклейкой.</p>
+        <p class="route" aria-hidden="true"><span class="rt-a">Ноутбук Сони</span><i class="rt-w"></i><span class="rt-b">Сервер дневника</span></p>
+      </div>
+      <div class="mat-grid">
+        <div class="stage" aria-hidden="true">
+          <div class="dolls" id="ix-osi-dolls">
+            <div class="sh off" data-l="1" style="--k:4"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use></svg><span class="bd">L1</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"></path></svg></div></div>
+            <div class="sh off" data-l="2" style="--k:3"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use></svg><span class="bd">L2</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"></path></svg></div></div>
+            <div class="sh off" data-l="3" style="--k:2"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use></svg><span class="bd">L3</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"></path></svg></div></div>
+            <div class="sh off" data-l="4" style="--k:1"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use></svg><span class="bd">L4</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"></path></svg></div></div>
+            <div class="sh core" data-l="7" style="--k:0"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use></svg><span class="bd">L7</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"></use><use href="#ix-osi-doll" class="dt"></use></svg><span class="note">GET<br>/ocenki</span></div></div>
+          </div>
+          <span class="sfx mat-sfx" id="ix-osi-msfx"></span>
+        </div>
+        <div class="read">
+          <p class="rd-tag" id="ix-osi-rtag">L7 · Прикладной</p>
+          <h3 class="rd-h" id="ix-osi-rh">Данные</h3>
+          <p class="rd-p" id="ix-osi-rp"></p>
+          <p class="rd-lab">Что едет по проводу, по порядку</p>
+          <p class="xray" id="ix-osi-xray" aria-label="Состав посылки"></p>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-go">Завернуть в сегмент</button>
+        <p class="ctr" id="ix-osi-ctr" aria-hidden="true">шаг 1/11</p>
+      </div>
+      <p class="sr" id="ix-osi-live" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who s">Соня</b>А зачем столько обёрток? Можно же просто кинуть запрос в провод.</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Каждому нужна своя наклейка. Роутеру — адрес, серверу — порт, проводу — сигнал. И каждый читает только свою.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <p class="term"><b>Инкапсуляция</b> — так это называется по-взрослому. На отправке матрёшки надевают сверху вниз, на приёме снимают снизу вверх.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 3 · СЕМЬ ЭТАЖЕЙ ============ -->
+<div class="chap"><span class="chap-n">Стр. 3</span><h2 class="chap-t">Семь этажей</h2></div>
+<div class="page" role="group" aria-label="Страница 3: модель OSI и TCP/IP">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots floors" id="ix-osi-floors">
+      <div class="fl-top">
+        <p class="cap w" id="ix-osi-fcap">Модель OSI: 7 уровней. Её учат, чтобы говорить на одном языке.</p>
+      </div>
+      <div class="tower" id="ix-osi-tower">
+        <div class="grp" data-g="app"><span class="gtag">Прикладной</span>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">7</b><span class="fname">Прикладной</span><span class="fex">HTTP, DNS, почта. То, с чем говорит программа</span></div>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">6</b><span class="fname">Представления</span><span class="fex">Кодировки, сжатие, шифрование</span></div>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">5</b><span class="fname">Сеансовый</span><span class="fex">Начать, держать и закончить разговор</span></div>
+        </div>
+        <div class="grp" data-g="tr"><span class="gtag">Транспортный</span>
+          <div class="fl" style="--fc:var(--y)"><b class="fn">4</b><span class="fname">Транспортный</span><span class="fex">TCP и UDP, порты. Сегмент</span></div>
+        </div>
+        <div class="grp" data-g="net"><span class="gtag">Межсетевой</span>
+          <div class="fl" style="--fc:var(--p)"><b class="fn">3</b><span class="fname">Сетевой</span><span class="fex">IP-адреса, маршрутизатор. Пакет</span></div>
+        </div>
+        <div class="grp" data-g="link"><span class="gtag">Сетевой доступ</span>
+          <div class="fl" style="--fc:var(--c)"><b class="fn">2</b><span class="fname">Канальный</span><span class="fex">Ethernet, Wi-Fi, MAC, коммутатор. Кадр</span></div>
+          <div class="fl" style="--fc:var(--ink)"><b class="fn">1</b><span class="fname">Физический</span><span class="fex">Кабель, радиоволны, свет. Биты</span></div>
+        </div>
+      </div>
+      <p class="fl-say" id="ix-osi-fsay" aria-live="polite">Считаем снизу: 1 — провод, 7 — программа.</p>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-fold" aria-pressed="false">Сложить в TCP/IP</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Семь этажей? В интернете их четыре! Значит, OSI — враньё!</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Не враньё, а карта. OSI — язык, на котором объясняют. TCP/IP — то, что реально работает в интернете. Этажи 5–7 там живут внутри программы.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-yel mnem">
+      <p class="mn-lab">Запомни снизу вверх</p>
+      <p class="mn"><span><b>Ф</b>едя</span> <span><b>К</b>упил</span> <span><b>С</b>амокат,</span> <span><b>Т</b>еперь</span> <span><b>С</b>оседи</span> <span><b>П</b>адают</span> <span><b>П</b>остоянно</span></p>
+      <p class="mn-key">Физический · Канальный · Сетевой · Транспортный · Сеансовый · Представления · Прикладной</p>
+      <p class="mn-en">На собеседовании по-английски: <b>Please Do Not Throw Sausage Pizza Away</b> — тоже от 1 к 7.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СПЛЭШ: ПО ЭТАЖАМ ============ -->
+<div class="chap"><span class="chap-n">Стр. 4</span><h2 class="chap-t pk">По этажам!</h2></div>
+<div class="splash" id="ix-osi-splash">
+  <div class="sp">
+    <div class="sp-burst" aria-hidden="true"></div>
+    <div class="sp-dots" aria-hidden="true"></div>
+    <div class="sp-top">
+      <span class="sp-who">Кульминация</span>
+      <h2 aria-label="У каждой атаки свой этаж" class="sp-h"><span>У каждой атаки</span> <span>свой этаж</span></h2>
+      <div class="bl v sp-bl" id="ix-osi-spbl"><b class="who v">Путаник</b><span>ARP-спуфинг — это взлом сайта! А XSS — провод перегрелся!</span></div>
+    </div>
+    <div class="sp-card">
+      <div class="atw" id="ix-osi-atw">
+        <div class="ar" data-f="7"><b class="an">L7</b><span class="aname">Прикладной</span><div class="slot"><span class="chip" data-to="2" id="ix-osi-c-arp">ARP-спуфинг</span></div></div>
+        <div class="ar thin" data-f="6"><b class="an">L6</b><span class="aname">Представления</span><div class="slot"></div></div>
+        <div class="ar thin" data-f="5"><b class="an">L5</b><span class="aname">Сеансовый</span><div class="slot"></div></div>
+        <div class="ar" data-f="4"><b class="an">L4</b><span class="aname">Транспортный</span><div class="slot"><span class="chip" data-to="3" id="ix-osi-c-ip">IP-спуфинг</span></div></div>
+        <div class="ar" data-f="3"><b class="an">L3</b><span class="aname">Сетевой</span><div class="slot"><span class="chip" data-to="4" id="ix-osi-c-syn">SYN flood</span></div></div>
+        <div class="ar" data-f="2"><b class="an">L2</b><span class="aname">Канальный</span><div class="slot"></div></div>
+        <div class="ar" data-f="1"><b class="an">L1</b><span class="aname">Физический</span><div class="slot"><span class="chip" data-to="7" id="ix-osi-c-xss">XSS и SQLi</span></div></div>
+      </div>
+      <div class="dock">
+        <button class="btn hot" type="button" id="ix-osi-sort">Разложить по этажам</button>
+      </div>
+      <span class="sfx sp-sfx" id="ix-osi-spsfx" aria-hidden="true">ПО МЕСТАМ!</span>
+    </div>
+  </div>
+  <div class="atk" id="ix-osi-atk" hidden="">
+    <div class="ak"><p class="ak-h"><span>L2</span>ARP-спуфинг</p><p>В локальной сети злодей рассылает: «MAC-адрес роутера — мой». Компьютеры верят, и чужой трафик идёт через него.</p><p class="ak-d"><b>Защита:</b> проверка ARP на коммутаторе (Dynamic ARP Inspection), HTTPS и VPN, чтобы перехваченное было нечитаемо.</p></div>
+    <div class="ak"><p class="ak-h"><span>L3</span>IP-спуфинг</p><p>В пакете подделан адрес отправителя. Ответ уйдёт настоящему владельцу адреса, поэтому так маскируют DDoS-атаки.</p><p class="ak-d"><b>Защита:</b> провайдеры и сети на входе отбрасывают пакеты с чужими обратными адресами.</p></div>
+    <div class="ak"><p class="ak-h"><span>L4</span>SYN flood</p><p>Тысячи «привет» (SYN) без завершения рукопожатия TCP. Сервер держит полуоткрытые соединения, пока очередь не переполнится.</p><p class="ak-d"><b>Защита:</b> SYN cookies, лимиты соединений, защита от DDoS у провайдера.</p></div>
+    <div class="ak"><p class="ak-h"><span>L7</span>XSS и SQL-инъекции</p><p>Живут в самих данных, внутри HTTP-запроса. Для нижних этажей это обычная посылка на открытый порт 443.</p><p class="ak-d"><b>Защита:</b> исправлять код (экранирование вывода, параметризованные запросы), WAF — вторым слоем.</p></div>
+  </div>
+</div>
+
+<!-- ============ СТР. 5 · ВАХТЁР И УЧИТЕЛЬ ============ -->
+<div class="chap"><span class="chap-n">Стр. 5</span><h2 class="chap-t">Фаервол и WAF</h2></div>
+<div class="page" role="group" aria-label="Страница 5: фаервол и WAF">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots gate" id="ix-osi-gate">
+      <p class="cap w">Две охраны на разных этажах. Пропусти три запроса и посмотри, кто что видит.</p>
+      <div class="req" id="ix-osi-req"><span class="rq-n" id="ix-osi-rqn">Запрос 1 из 3</span><code class="rq" id="ix-osi-rq"></code></div>
+      <div class="lane">
+        <div class="gt" id="ix-osi-g1"><p class="gt-h">Фаервол</p><p class="gt-l">L3–L4 · читает наклейки IP и TCP: адрес и порт</p><p class="gt-v" id="ix-osi-v1"></p></div>
+        <i class="arw" aria-hidden="true"></i>
+        <div class="gt" id="ix-osi-g2"><p class="gt-h">WAF</p><p class="gt-l">L7 · открывает матрёшку до данных и читает HTTP</p><p class="gt-v" id="ix-osi-v2"></p></div>
+        <i class="arw" aria-hidden="true"></i>
+        <div class="gt srv" id="ix-osi-g3"><p class="gt-h">Сервер</p><p class="gt-l">отвечает на запрос</p><p class="gt-v" id="ix-osi-v3"></p></div>
+      </div>
+      <p class="say" id="ix-osi-gsay" aria-live="polite">Нажми кнопку — запрос пойдёт через охрану.</p>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-pass">Пропустить запрос</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who m">Дядя Миша</b>Фаервол — вахтёр: смотрит, кто пришёл и в какую дверь. WAF — учитель: разворачивает записку и читает, что в ней.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-ink facts">
+      <p><b>WAF видит HTTP</b> только после расшифровки TLS. Поэтому его ставят там, где HTTPS заканчивается: на обратном прокси или в CDN.</p>
+      <p><b>WAF — второй слой.</b> Главная защита от XSS и SQLi — исправленный код.</p>
+      <p><b>Бывают NGFW</b> — «фаерволы нового поколения», которые заглядывают глубже. Но классический фаервол смотрит на адреса и порты.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 6 · КТО ВИНОВАТ ============ -->
+<div class="chap"><span class="chap-n">Стр. 6</span><h2 class="chap-t">Кто виноват</h2></div>
+<div class="page" role="group" aria-label="Страница 6: развязка и собеседование">
+  <div class="pn" style="--span:7">
+    <div class="fr f-cyan talk">
+      <div class="bl"><b class="who s">Соня</b>Так почему дневник не открывался?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Wi-Fi есть, а дальше роутера пакеты не уходят. Роутер завис. Это сеть, а не сайт. Перезагрузили — работает.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Э-э… Значит, виноват DNS!</div>
+      <span class="sfx p6-sfx" aria-hidden="true">ПФФ</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots why">
+      <p class="why-h">Зачем про OSI спрашивают на собеседовании</p>
+      <ol class="why-l">
+        <li><b>Общий язык.</b> «Проблема на L2» понятно любому сетевику и безопаснику без долгих объяснений.</li>
+        <li><b>Поиск поломки.</b> Кто думает слоями, ищет снизу вверх, а не паникует, как Путаник.</li>
+        <li><b>Где работает защита.</b> Фаервол, WAF, TLS — у каждого свой этаж и свои слепые зоны.</li>
+        <li><b>Проверка базы.</b> Кто путает TCP и HTTP, тому трудно разбирать атаки дальше.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t pk">Битва</h2></div>
+<div class="battle" id="ix-osi-battle">
+  <div class="bt-top">
+    <div class="bt-face" aria-hidden="true"><span class="bf-l">L?</span></div>
+    <div class="bt-hp">
+      <p class="bt-name">Путаник</p>
+      <div class="hp" role="progressbar" aria-label="Здоровье злодея" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-osi-hp"><i id="ix-osi-hpbar"></i></div>
+      <p class="bt-step" id="ix-osi-step">Ход 1 из 3</p>
+    </div>
+  </div>
+  <div class="bt-body" id="ix-osi-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Собеседование</h2></div>
+<div class="iv">
+  <p class="iv-lab">Вопрос с собеседования</p>
+  <p class="iv-q">Расскажи про модель OSI. На каких уровнях живут ARP, IP, TCP и HTTP, и где работают фаервол и WAF?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: назови обе модели, объясни матрёшку и привяжи к этажам хотя бы по одной атаке и защите.</div>
+  <button class="btn" type="button" id="ix-osi-ivb" aria-expanded="false" aria-controls="ix-osi-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-osi-iva" hidden="">
+    <div class="iv-p"><b>Две модели.</b> OSI — 7 уровней: физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной. В интернете работает TCP/IP из 4: сетевой доступ, межсетевой, транспортный, прикладной.</div>
+    <div class="iv-p"><b>Инкапсуляция.</b> Данные → сегмент (TCP) → пакет (IP) → кадр (Ethernet, Wi-Fi) → биты. Каждый уровень добавляет свой заголовок и читает только его. На приёме всё снимается в обратном порядке.</div>
+    <div class="iv-p"><b>Атаки по этажам.</b> ARP — L2, ARP-спуфинг подменяет MAC в локальной сети. IP — L3, IP-спуфинг подделывает адрес отправителя. TCP — L4, SYN flood забивает очередь соединений. HTTP — L7, здесь XSS и SQL-инъекции.</div>
+    <div class="iv-p"><b>Защита по этажам.</b> Классический фаервол фильтрует по адресам и портам (L3–L4). WAF разбирает HTTP (L7). Они не заменяют друг друга, а работают слоями.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> зубрить семь названий и думать, что фаервол остановит XSS. Порт 443 открыт — значит, атака внутри HTTP пройдёт мимо него.</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Запомни</span><h2 class="chap-t">Шпаргалка</h2></div>
+<p class="cs-lab">Шпаргалка: что важно знать</p>
+<ol class="cs">
+  <li><span class="cs-n">01</span><div><b>Семь и четыре</b><p>OSI из 7 уровней — чтобы объяснять. TCP/IP из 4 — то, что работает в интернете.</p></div></li>
+  <li><span class="cs-n">02</span><div><b>Федя купил самокат</b><p>Физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной — снизу вверх.</p></div></li>
+  <li><span class="cs-n">03</span><div><b>Матрёшка</b><p>Данные → сегмент → пакет → кадр → биты. На приёме всё снимается обратно.</p></div></li>
+  <li><span class="cs-n">04</span><div><b>Каждый читает своё</b><p>Коммутатор смотрит MAC (L2), роутер — IP (L3), сервер — порт (L4) и HTTP (L7).</p></div></li>
+  <li><span class="cs-n">05</span><div><b>Атаки по этажам</b><p>ARP-спуфинг — L2, IP-спуфинг — L3, SYN flood — L4, XSS и SQLi — L7.</p></div></li>
+  <li><span class="cs-n">06</span><div><b>Фаервол — не WAF</b><p>Фаервол смотрит адреса и порты, WAF читает содержимое HTTP.</p></div></li>
+  <li><span class="cs-n">07</span><div><b>Ищи снизу</b><p>Когда «ничего не работает», проверяй с первого этажа, а не вини сразу сайт.</p></div></li>
+</ol>
+<p class="legal"><b>Тренируйся легально:</b> TryHackMe (комнаты по сетевым основам), picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Сеть можно разглядывать в Wireshark только свою. Чужие сайты и сети трогать нельзя.</p>
+<p class="end-row"><span class="end">Конец выпуска №11</span></p>
+</section>
+
+<style>
+.ix-osi{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--p:#ff2e93;--g:#2ee59d;--c:#19c3ff;--gap:12px;--m:16px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;display:block;color:var(--ink);font:400 18px/1.45 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-osi *,.ix-osi *::before,.ix-osi *::after{box-sizing:border-box}
+.ix-osi p{margin:0}
+.ix-osi h2,.ix-osi h3{margin:0;font-weight:400}
+.ix-osi [hidden]{display:none !important}
+.ix-osi :focus-visible{outline:4px solid var(--p);outline-offset:3px}
+.ix-osi .defs{position:absolute;width:0;height:0;overflow:hidden}
+.ix-osi .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* главы */
+.ix-osi .chap{display:flex;align-items:center;gap:14px;margin:56px 0 0;flex-wrap:wrap}
+.ix-osi .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--y);padding:8px 12px;transform:rotate(-3deg)}
+.ix-osi .chap-t{font:400 clamp(26px,5.4vw,42px)/1.05 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-osi .chap-t.pk{color:var(--p)}
+
+/* страница и панели */
+.ix-osi .page{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .page:first-of-type{margin-top:8px}
+.ix-osi .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-osi .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:24px;--tl:0px;--tr:0px;--br:0px;--bl:0px;clip-path:polygon(0 var(--tl),100% var(--tr),100% calc(100% - var(--br)),0 calc(100% - var(--bl)))}
+.ix-osi .pn:nth-child(odd)>.fr{--br:14px}
+.ix-osi .pn:nth-child(even)>.fr{--tl:14px}
+.ix-osi .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.09) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-osi .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-osi .f-cyan{background-color:var(--c);background-image:radial-gradient(rgba(20,20,20,.15) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-osi .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(255,46,147,.2) 1.4px,transparent 1.9px);background-size:9px 9px}
+
+/* SFX, плашки, реплики */
+.ix-osi .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,56px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--y));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--p));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-osi .cap{display:inline-block;align-self:flex-start;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.32 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:560px;position:relative;z-index:2}
+.ix-osi .cap.w{background:#fff}
+.ix-osi .tag{display:inline-block;align-self:flex-start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--p);color:#fff;padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+.ix-osi .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:24px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:min(460px,100%);box-shadow:3px 3px 0 var(--ink);width:max-content}
+.ix-osi .bl::after{content:"";position:absolute;left:var(--tx,32px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-osi .bl.r{margin-left:auto;--tx:calc(100% - 56px)}
+.ix-osi .bl.v{background:#24101b;color:#fff;border-color:var(--p);box-shadow:4px 4px 0 var(--p)}
+.ix-osi .bl.v::after{border-color:var(--p)}
+.ix-osi .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-osi .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-osi .who.m{--dot:var(--g)}
+.ix-osi .who.s{--dot:var(--y)}
+.ix-osi .who.v{color:#ff8cc4;--dot:var(--p)}
+.ix-osi .talk{display:flex;flex-direction:column;gap:26px;justify-content:center}
+.ix-osi .big{font:500 20px/1.4 Rubik;max-width:640px}
+.ix-osi .big b{background:var(--ink);color:var(--y);padding:0 6px;font-weight:600}
+.ix-osi .term{font-size:20px;line-height:1.45}
+.ix-osi .term b{display:block;font:400 26px/1.1 'Rubik Mono One';color:var(--p);margin-bottom:10px}
+
+/* ===== ПРОЛОГ ===== */
+.ix-osi .cold{display:flex;flex-direction:column;gap:20px;min-height:560px;padding:34px 28px 116px;background-color:#1a0d14;background-image:radial-gradient(rgba(255,46,147,.32) 1.5px,transparent 2px);background-size:10px 10px}
+.ix-osi .vname{position:relative;font:400 clamp(38px,12.2vw,118px)/1 'Rubik Mono One',sans-serif;color:var(--p);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--y);white-space:nowrap;letter-spacing:0;margin-top:6px}
+.ix-osi .vl{display:inline-block}
+.ix-osi .vl.s2,.ix-osi .vl.s4{color:#fff}
+.ix-osi .knot{position:relative;width:100%;max-width:760px;margin:0 auto}
+.ix-osi .knot svg{display:block;width:100%;height:auto;overflow:visible}
+.ix-osi .k-ink,.ix-osi .k-cbl{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ix-osi .k-ink{stroke:var(--ink);stroke-width:22}
+.ix-osi .k-cbl{stroke:var(--p);stroke-width:12}
+.ix-osi .plug rect{fill:#fff;stroke:var(--ink);stroke-width:4}
+.ix-osi .plug .pin{fill:var(--y)}
+.ix-osi .st{position:absolute;left:var(--sx);top:var(--sy);transform:rotate(var(--r));font:400 clamp(15px,3.4vw,24px)/1 'Russo One';background:#fff;color:var(--ink);border:3px solid var(--ink);padding:6px 8px;box-shadow:3px 3px 0 var(--ink)}
+.ix-osi .st.pk{background:var(--y)}
+.ix-osi .motto{font:400 clamp(19px,2.6vw,24px)/1.3 'Russo One';color:var(--y);max-width:620px}
+.ix-osi .cold-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px 34px}
+.ix-osi .cold-row .motto{flex:1 1 320px}
+.ix-osi .cold-bl{font-size:24px;margin-bottom:8px}
+.ix-osi .cold-sfx{--fs:clamp(34px,7vw,64px);--rot:-8deg;--sc:#fff;right:3%;top:auto;bottom:30px}
+
+.ix-osi.anim .cold.go .k-ink,.ix-osi.anim .cold.go .k-cbl{stroke-dasharray:100;animation:ixosi-draw 1.6s cubic-bezier(.5,0,.3,1) both}
+.ix-osi.anim .cold.go .st{animation:ixosi-stick .45s cubic-bezier(.2,1.8,.4,1) both,ixosi-jig 3.4s ease-in-out infinite}
+.ix-osi.anim .cold.go .st:nth-of-type(1){animation-delay:.9s,1.4s}
+.ix-osi.anim .cold.go .st:nth-of-type(2){animation-delay:1s,2.1s}
+.ix-osi.anim .cold.go .st:nth-of-type(3){animation-delay:1.1s,1.7s}
+.ix-osi.anim .cold.go .st:nth-of-type(4){animation-delay:1.2s,2.6s}
+.ix-osi.anim .cold.go .st:nth-of-type(5){animation-delay:1.3s,1.9s}
+.ix-osi.anim .cold.go .st:nth-of-type(6){animation-delay:1.4s,2.3s}
+.ix-osi.anim .cold.go .vl.s1{animation:ixosi-swR 4.2s ease-in-out 1.6s infinite}
+.ix-osi.anim .cold.go .vl.s2{animation:ixosi-swL 4.2s ease-in-out 1.6s infinite}
+.ix-osi.anim .cold.go .vl.s3{animation:ixosi-swR 4.2s ease-in-out 3.7s infinite}
+.ix-osi.anim .cold.go .vl.s4{animation:ixosi-swL 4.2s ease-in-out 3.7s infinite}
+.ix-osi.anim .cold-sfx{opacity:0}
+.ix-osi.anim .cold.go .cold-sfx{animation:ixosi-pop .5s cubic-bezier(.2,1.7,.4,1) 1.7s both}
+@keyframes ixosi-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ixosi-stick{from{opacity:0;transform:rotate(calc(var(--r) - 40deg)) scale(2)}to{opacity:1;transform:rotate(var(--r)) scale(1)}}
+@keyframes ixosi-jig{0%,100%{transform:rotate(var(--r))}50%{transform:rotate(calc(var(--r) * -1)) translateY(-4px)}}
+@keyframes ixosi-swR{0%,30%,100%{transform:none}38%,58%{transform:translateX(100%) translateY(-.12em) rotate(8deg)}66%{transform:none}}
+@keyframes ixosi-swL{0%,30%,100%{transform:none}38%,58%{transform:translateX(-100%) translateY(.12em) rotate(-8deg)}66%{transform:none}}
+@keyframes ixosi-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(var(--rot)) scale(1)}}
+
+/* стр.1 */
+.ix-osi .p1-sfx{--fs:40px;--rot:8deg;right:12px;bottom:14px;--sc:var(--p);--ss:var(--y)}
+.ix-osi .f-ink.talk{padding-bottom:70px}
+
+/* ===== МАТРЁШКА ===== */
+.ix-osi .mat{padding:26px 26px 28px;--w0:132px;--sw:54px}
+.ix-osi .mat-head{display:flex;flex-direction:column;gap:14px}
+.ix-osi .route{display:flex;align-items:center;gap:10px;font:400 15px/1.1 'Russo One';max-width:620px}
+.ix-osi .route span{padding:8px 10px;border:3px solid var(--ink);background:#fff;transition:background .3s,color .3s}
+.ix-osi .rt-w{flex:1;height:6px;min-width:30px;background:repeating-linear-gradient(90deg,var(--ink) 0 10px,transparent 10px 16px)}
+.ix-osi .mat:not(.srv) .rt-a,.ix-osi .mat.srv .rt-b{background:var(--ink);color:var(--y)}
+.ix-osi .mat.fly .rt-w{animation:ixosi-wire .4s linear infinite;background:repeating-linear-gradient(90deg,var(--p) 0 10px,transparent 10px 16px)}
+@keyframes ixosi-wire{to{background-position:16px 0}}
+.ix-osi .mat-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:12px}
+.ix-osi .stage{position:relative;height:calc((var(--w0) + 4 * var(--sw)) * 1.4 + 26px);overflow:hidden}
+.ix-osi .dolls{position:absolute;inset:0;transition:transform .5s cubic-bezier(.5,0,.75,0)}
+.ix-osi .dolls.away{transform:translateX(125%) rotate(10deg)}
+.ix-osi .dolls.back{transform:translateX(-125%) rotate(-10deg);transition:none}
+.ix-osi .dolls.land{transition:transform .55s cubic-bezier(.2,1.3,.4,1)}
+.ix-osi .sh{position:absolute;bottom:12px;left:50%;width:calc(var(--w0) + var(--k) * var(--sw));aspect-ratio:100/140;transform:translateX(-50%);z-index:calc(10 - var(--k));--f:#fff}
+.ix-osi .hf{position:absolute;inset:0;transition:transform .65s cubic-bezier(.3,1.3,.5,1),opacity .35s ease}
+.ix-osi .hf.t{clip-path:inset(0 0 45.7% 0)}
+.ix-osi .hf.b{clip-path:inset(54.3% 0 0 0)}
+.ix-osi .hf svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.ix-osi .fill{fill:var(--f);stroke:var(--ink);stroke-width:3.5px}
+.ix-osi .dt{fill:url(#ix-osi-dots);stroke:none}
+.ix-osi .seam{fill:none;stroke:var(--ink);stroke-width:2.5px;stroke-dasharray:5 4;vector-effect:non-scaling-stroke}
+.ix-osi .sh.core{--f:var(--g)}
+.ix-osi .sh[data-l="4"]{--f:var(--y)}
+.ix-osi .sh[data-l="3"]{--f:var(--p)}
+.ix-osi .sh[data-l="2"]{--f:var(--c)}
+.ix-osi .sh[data-l="1"] .fill{fill:url(#ix-osi-bits)}
+.ix-osi .sh[data-l="1"] .seam{stroke:var(--y)}
+.ix-osi .bd{position:absolute;left:50%;top:calc(var(--sw) * .7 - 19px);transform:translateX(-50%);width:44px;height:38px;display:grid;place-items:center;background:#fff;border:3px solid var(--ink);border-radius:50%;font:400 16px/1 'Russo One';color:var(--ink)}
+.ix-osi .sh[data-l="1"] .bd{background:var(--y)}
+.ix-osi .core .bd{top:calc(21.4% - 19px);background:var(--ink);color:#fff}
+.ix-osi .note{position:absolute;left:0;right:0;top:63%;text-align:center;font:800 15px/1.15 var(--mono)}
+.ix-osi .sh.off .hf.t{transform:translate(-10%,-34%) rotate(-14deg);opacity:0}
+.ix-osi .sh.off .hf.b{transform:translateY(24%) rotate(5deg);opacity:0}
+.ix-osi .mat-sfx{--fs:46px;right:2%;top:6%;opacity:0}
+.ix-osi .mat-sfx.on{opacity:1}
+.ix-osi.anim .mat-sfx.on{animation:ixosi-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-osi.anim .dolls.thud .sh:not(.off){animation:ixosi-thud .35s ease-out}
+@keyframes ixosi-thud{0%{transform:translateX(-50%)}35%{transform:translateX(-50%) scale(1.04,.96)}100%{transform:translateX(-50%)}}
+
+.ix-osi .read{display:flex;flex-direction:column;gap:10px;min-width:0}
+.ix-osi .rd-tag{align-self:flex-start;font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.05em;background:var(--ink);color:var(--y);padding:8px 10px;transform:rotate(-2deg)}
+.ix-osi .rd-h{font:400 clamp(30px,4.2vw,42px)/1.05 'Rubik Mono One';color:var(--ink)}
+.ix-osi .rd-p{font:400 19px/1.45 Rubik;min-height:5.8em}
+.ix-osi .rd-p code,.ix-osi .say code{font:700 17px/1 var(--mono);background:var(--ink);color:#fff;padding:2px 6px;white-space:nowrap}
+.ix-osi .rd-lab{margin-top:6px;font:400 14px/1.2 'Russo One';text-transform:uppercase;letter-spacing:.05em;color:#4a4438}
+.ix-osi .xray{display:flex;flex-wrap:wrap;gap:6px;min-height:44px;align-items:center}
+.ix-osi .xc{font:700 16px/1 var(--mono);padding:8px 9px;border:2px solid var(--ink);background:var(--xc,#fff);white-space:nowrap}
+.ix-osi .xc.new{box-shadow:3px 3px 0 var(--ink)}
+.ix-osi.anim .xc.new{animation:ixosi-chip .4s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes ixosi-chip{from{opacity:0;transform:translateY(-14px) scale(1.3)}to{opacity:1;transform:none}}
+.ix-osi .xc.bits{background:var(--ink);color:var(--g);letter-spacing:.06em;white-space:normal;overflow-wrap:anywhere;max-width:100%}
+.ix-osi .dock{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:24px;position:relative;z-index:5}
+.ix-osi .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 19px/1 'Russo One',sans-serif;cursor:pointer;border-radius:4px}
+.ix-osi .btn:hover{background:#ffe14d}
+.ix-osi .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-osi .btn[disabled]{opacity:.6;cursor:wait}
+.ix-osi .btn.hot{background:var(--p);color:#fff}
+.ix-osi .btn.hot:hover{background:#ff4fa6}
+.ix-osi .ctr{font:400 16px/1 'Russo One';color:#4a4438}
+
+/* ===== ЭТАЖИ ===== */
+.ix-osi .floors{display:flex;flex-direction:column;gap:20px;padding:26px 26px 28px}
+.ix-osi .tower{display:flex;flex-direction:column;max-width:720px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.ix-osi .grp{display:flex;flex-direction:column;--gc:var(--g)}
+.ix-osi .grp+.grp{border-top:2px solid rgba(20,20,20,.2)}
+.ix-osi .grp[data-g="tr"]{--gc:var(--y)}
+.ix-osi .grp[data-g="net"]{--gc:var(--p)}
+.ix-osi .grp[data-g="link"]{--gc:var(--c)}
+.ix-osi .gtag{display:none;font:400 20px/1 'Russo One';background:var(--gc);padding:10px 14px;border-bottom:3px solid var(--ink)}
+.ix-osi .gtag::before{content:"TCP/IP · ";font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.ix-osi .fl{display:grid;grid-template-columns:52px minmax(0,1fr);column-gap:14px;align-items:baseline;padding:11px 14px 12px 0;border-left:16px solid var(--fc);transition:padding .3s}
+.ix-osi .fl+.fl{border-top:2px solid rgba(20,20,20,.12)}
+.ix-osi .fn{grid-row:span 2;justify-self:center;font:400 30px/1 'Rubik Mono One'}
+.ix-osi .fname{font:400 21px/1.15 'Russo One'}
+.ix-osi .fex{font-size:17px;line-height:1.35;color:#3d382f;overflow:hidden;max-height:3em;transition:max-height .3s,opacity .3s}
+.ix-osi .floors.tcp .grp{border-top:4px solid var(--ink)}
+.ix-osi .floors.tcp .grp:first-child{border-top:0}
+.ix-osi .floors.tcp .gtag{display:block}
+.ix-osi .floors.tcp .fl{padding-top:6px;padding-bottom:6px;border-left-color:var(--gc)}
+.ix-osi .floors.tcp .fex{max-height:0;opacity:0}
+.ix-osi .floors.tcp .fname{font-size:17px;color:#4a4438}
+.ix-osi .floors.tcp .fn{font-size:20px;color:#4a4438}
+.ix-osi.anim .floors.tcp .gtag{animation:ixosi-drop .35s cubic-bezier(.2,1.5,.4,1) both}
+.ix-osi.anim .floors.tcp .grp:nth-child(2) .gtag{animation-delay:.07s}
+.ix-osi.anim .floors.tcp .grp:nth-child(3) .gtag{animation-delay:.14s}
+.ix-osi.anim .floors.tcp .grp:nth-child(4) .gtag{animation-delay:.21s}
+@keyframes ixosi-drop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.ix-osi .fl-say{font:500 20px/1.4 Rubik;border-left:8px solid var(--y);padding:2px 0 2px 14px;max-width:720px}
+.ix-osi .floors .dock{margin-top:0}
+
+.ix-osi .mnem{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ix-osi .mn-lab{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em}
+.ix-osi .mn{font:400 30px/1.2 Neucha,cursive}
+.ix-osi .mn span{white-space:nowrap}
+.ix-osi .mn b{font:400 1.15em/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill}
+.ix-osi .mn-key{font-size:17px;line-height:1.4;color:#2b261d}
+.ix-osi .mn-en{font-size:17px;line-height:1.4;border-top:2px solid rgba(20,20,20,.25);padding-top:12px}
+.ix-osi .mn-en b{font-weight:600}
+
+/* ===== СПЛЭШ ===== */
+.ix-osi .splash{position:relative;background:var(--ink);padding:var(--gap);margin-top:18px}
+.ix-osi .sp{position:relative;overflow:hidden;clip-path:polygon(0 0,100% 34px,100% 100%,0 calc(100% - 34px));background:var(--p);padding:60px 32px 84px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.ix-osi .sp-burst{position:absolute;inset:-30%;background:repeating-conic-gradient(from 0deg at 28% 40%,#ff2e93 0 2.6deg,#ff79b7 2.6deg 5.2deg)}
+.ix-osi .sp-dots{position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.2) 1.8px,transparent 2.3px) 0 0/11px 11px;pointer-events:none}
+.ix-osi .sp-top{position:relative;z-index:3;display:flex;flex-direction:column;gap:22px}
+.ix-osi .sp-who{align-self:flex-start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--ink);color:var(--y);padding:8px 11px;transform:rotate(-2deg)}
+.ix-osi .sp-h{font:400 clamp(30px,5vw,54px)/1.02 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);letter-spacing:-.02em}
+.ix-osi .sp-h span{display:block}
+.ix-osi .sp-h span:nth-child(2){color:var(--y)}
+.ix-osi .sp-bl{max-width:420px}
+.ix-osi .sp-card{position:relative;z-index:4;background:#fff;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:16px 18px 20px;transform:rotate(1.2deg)}
+.ix-osi .atw{display:flex;flex-direction:column}
+.ix-osi .ar{display:grid;grid-template-columns:50px minmax(0,1fr) auto;align-items:center;column-gap:10px;min-height:52px;padding:6px 0;border-top:2px solid rgba(20,20,20,.14)}
+.ix-osi .ar:first-child{border-top:0}
+.ix-osi .ar.thin{min-height:34px;padding:2px 0;color:#8a8478}
+.ix-osi .ar.thin .an{font-size:16px;color:#8a8478}
+.ix-osi .ar.thin .aname{font-size:15px}
+.ix-osi .an{font:400 20px/1 'Rubik Mono One'}
+.ix-osi .aname{font:400 18px/1.1 'Russo One'}
+.ix-osi .slot{display:flex;justify-content:flex-end;min-width:0}
+.ix-osi .chip{display:inline-block;font:400 17px/1 'Russo One';background:#fff;color:var(--ink);border:3px dashed var(--p);padding:9px 11px;transform:rotate(-3deg);white-space:nowrap;position:relative}
+.ix-osi .chip::after{content:"?";position:absolute;right:-10px;top:-12px;width:24px;height:24px;display:grid;place-items:center;background:var(--p);color:#fff;border:2px solid var(--ink);border-radius:50%;font-size:14px}
+.ix-osi .sorted .chip{background:var(--g);border:3px solid var(--ink);transform:rotate(0);box-shadow:3px 3px 0 var(--ink)}
+.ix-osi .sorted .chip::after{content:"✓";background:var(--ink)}
+.ix-osi .sp-card .dock{margin-top:16px}
+.ix-osi .sp-sfx{--fs:clamp(34px,5vw,54px);--rot:-9deg;--ss:var(--ink);left:-14px;bottom:-30px;opacity:0}
+.ix-osi .sorted .sp-sfx{opacity:1}
+.ix-osi.anim .sorted .sp-sfx{animation:ixosi-pop .5s cubic-bezier(.2,1.7,.4,1) .55s both}
+.ix-osi .atk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 30px;color:#fff;padding:30px 20px 18px}
+.ix-osi.anim .atk:not([hidden]) .ak{animation:ixosi-up .4s ease-out both}
+.ix-osi.anim .atk .ak:nth-child(2){animation-delay:.1s}
+.ix-osi.anim .atk .ak:nth-child(3){animation-delay:.2s}
+.ix-osi.anim .atk .ak:nth-child(4){animation-delay:.3s}
+@keyframes ixosi-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ix-osi .ak{display:flex;flex-direction:column;gap:8px;font-size:18px;line-height:1.45}
+.ix-osi .ak-h{display:flex;align-items:center;gap:10px;font:400 22px/1.15 'Russo One';color:var(--y)}
+.ix-osi .ak-h span{font:400 15px/1 'Rubik Mono One';background:var(--p);color:#fff;padding:6px 7px;border:2px solid #fff}
+.ix-osi .ak-d{color:#e9e4d6}
+.ix-osi .ak-d b{color:var(--g);font-weight:600}
+
+/* ===== ФАЕРВОЛ И WAF ===== */
+.ix-osi .gate{display:flex;flex-direction:column;gap:20px;padding:26px 26px 28px}
+.ix-osi .req{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.ix-osi .rq-n{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.05em;background:var(--ink);color:var(--y);padding:8px 10px}
+.ix-osi .rq{font:700 18px/1.35 var(--mono);background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 12px;overflow-wrap:anywhere;max-width:100%}
+.ix-osi .rq em{font-style:normal;background:var(--p);color:#fff;padding:0 3px}
+.ix-osi .lane{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr) 34px minmax(0,1fr);align-items:stretch}
+.ix-osi .gt{position:relative;display:flex;flex-direction:column;gap:6px;background:#fff;border:3px solid var(--ink);padding:16px 14px 14px;min-height:170px;transition:background .25s,transform .25s}
+.ix-osi .gt-h{font:400 clamp(18px,2.4vw,24px)/1.05 'Rubik Mono One'}
+.ix-osi .gt-l{font-size:17px;line-height:1.3;color:#3d382f}
+.ix-osi .gt-v{margin-top:auto;align-self:flex-start;font:400 19px/1 'Russo One';text-transform:uppercase;padding:8px 10px;border:3px solid currentColor;transform:rotate(-4deg);visibility:hidden}
+.ix-osi .gt.lit{background:#fff4c2;transform:translateY(-4px)}
+.ix-osi .gt.ok .gt-v{visibility:visible;color:#00714a;background:#e3fff2}
+.ix-osi .gt.no{background:#ffe0ee}
+.ix-osi .gt.no .gt-v{visibility:visible;color:#c4005d;background:#fff}
+.ix-osi .gt.na{opacity:.45}
+.ix-osi .gt.na .gt-v{visibility:visible;color:#6b6458}
+.ix-osi .gt.srv.ok{background:var(--g)}
+.ix-osi .arw{align-self:center;justify-self:center;width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:18px solid var(--ink)}
+.ix-osi .say{font:500 20px/1.4 Rubik;border-left:8px solid var(--y);padding:2px 0 2px 14px;max-width:760px;min-height:2.8em}
+.ix-osi .say.bad{border-color:var(--p)}
+.ix-osi .say.ok{border-color:var(--g)}
+.ix-osi .gate .dock{margin-top:0}
+.ix-osi.anim .gt.no{animation:ixosi-shake .3s linear}
+@keyframes ixosi-shake{0%,100%{transform:none}25%{transform:translate(-5px,2px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-2px,2px)}}
+.ix-osi .facts{display:flex;flex-direction:column;gap:16px;justify-content:center}
+.ix-osi .facts p{font-size:18px;line-height:1.45}
+.ix-osi .facts b{color:var(--y);font-weight:600}
+
+/* стр.6 */
+.ix-osi .p6-sfx{--fs:44px;--rot:-8deg;right:16px;bottom:16px;--sc:#fff}
+.ix-osi .why{padding:28px 26px 30px}
+.ix-osi .why-h{font:400 clamp(22px,3.2vw,30px)/1.15 'Russo One';max-width:640px}
+.ix-osi .why-l{list-style:none;counter-reset:w;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 34px}
+.ix-osi .why-l li{counter-increment:w;position:relative;padding-left:52px;font-size:19px;line-height:1.42}
+.ix-osi .why-l li::before{content:counter(w);position:absolute;left:0;top:-4px;font:400 34px/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-osi .why-l b{display:block;font:400 21px/1.2 'Russo One';font-weight:400;margin-bottom:2px}
+
+/* ===== БИТВА ===== */
+.ix-osi .battle{position:relative;margin-top:18px;background:var(--ink);color:#fff;padding:var(--gap);box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .bt-top{display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--gap)}
+.ix-osi .bt-face{position:relative;height:180px;background:#1a0d14;overflow:hidden;display:grid;place-items:center;background-image:radial-gradient(rgba(255,46,147,.4) 1.5px,transparent 2px);background-size:9px 9px}
+.ix-osi .bf-l{font:400 76px/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--y);transform:rotate(-8deg)}
+.ix-osi .battle.ko .bf-l{opacity:.3}
+.ix-osi .battle.hit .bt-face{animation:ixosi-shake .3s linear}
+.ix-osi .bt-hp{background:var(--p);padding:20px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:var(--ink)}
+.ix-osi .bt-name{font:400 clamp(20px,3vw,28px)/1.1 'Rubik Mono One';color:#fff;-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-osi .hp{height:28px;border:3px solid var(--ink);background:#fff;position:relative;overflow:hidden}
+.ix-osi .hp i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--g);border-right:3px solid var(--ink);transition:width .5s ease}
+.ix-osi .bt-step{font:400 16px/1 'Russo One'}
+.ix-osi .bt-body{background:#fff;color:var(--ink);margin-top:var(--gap);padding:26px 24px 28px;position:relative;overflow:hidden}
+.ix-osi .bt-say{font:400 24px/1.25 Neucha,cursive;max-width:620px}
+.ix-osi .bt-say code{font:700 18px/1 var(--mono);background:var(--p);color:#fff;padding:2px 6px}
+.ix-osi .bt-lab{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
+.ix-osi .opts{display:flex;flex-direction:column;gap:12px;max-width:620px}
+.ix-osi .opt{min-height:56px;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font:500 18px/1.3 Rubik;cursor:pointer;border-radius:4px}
+.ix-osi .opt:hover{background:#fff4c2}
+.ix-osi .opt.miss{background:#eee;color:#6b6458;box-shadow:none;text-decoration:line-through}
+.ix-osi .opt.win{background:var(--g)}
+.ix-osi .fb{margin-top:18px;font:500 19px/1.35 Rubik;border-left:8px solid var(--p);padding:2px 0 2px 14px;max-width:620px}
+.ix-osi .fb:empty{display:none}
+.ix-osi .fb.ok{border-color:var(--g)}
+.ix-osi .fb b{font:400 22px/1 'Rubik Mono One';margin-right:8px}
+.ix-osi .bt-sfx{--fs:50px;left:34px;top:116px;--rot:-9deg;--ss:var(--y)}
+.ix-osi .bt-next{margin-top:20px}
+.ix-osi .bt-end h3{font:400 clamp(24px,4vw,38px)/1.1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);outline:none}
+.ix-osi .bt-end p{margin-top:12px;font:500 20px/1.4 Rubik}
+
+/* ===== СОБЕСЕДОВАНИЕ ===== */
+.ix-osi .iv{margin-top:18px;background:var(--ink);color:#fff;padding:30px 28px 32px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .iv-lab{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--y);color:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-osi .iv-q{margin-top:16px;font:400 clamp(23px,3.4vw,32px)/1.22 'Russo One';max-width:820px}
+.ix-osi .iv-think{margin:18px 0 22px;font-size:19px;line-height:1.45;color:#e9e4d6;max-width:700px}
+.ix-osi .iv-think b{color:var(--y);font-weight:600}
+.ix-osi .iv-a{margin-top:26px;display:flex;flex-direction:column;gap:18px;max-width:780px}
+.ix-osi .iv-p{font-size:20px;line-height:1.45;padding-left:16px;border-left:5px solid var(--g)}
+.ix-osi .iv-p b{display:block;font:400 20px/1.2 'Russo One';color:var(--g);margin-bottom:4px}
+.ix-osi .iv-err{font-size:19px;line-height:1.45;background:var(--p);color:#fff;padding:14px 16px;margin-top:6px}
+.ix-osi .iv-err b{font-family:'Russo One';font-weight:400}
+
+/* ===== ШПАРГАЛКА ===== */
+.ix-osi .cs-lab{margin-top:18px;font:400 20px/1.2 'Russo One'}
+.ix-osi .cs{list-style:none;margin:10px 0 0;padding:0;max-width:760px}
+.ix-osi .cs li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;padding:18px 0;border-top:1.5px solid rgba(20,20,20,.2)}
+.ix-osi .cs li:first-child{border-top:0}
+.ix-osi .cs-n{font:400 40px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-osi .cs b{display:block;font:400 21px/1.2 'Russo One';margin-bottom:4px}
+.ix-osi .cs p{font-size:18px;line-height:1.4}
+.ix-osi .legal{margin-top:26px;font-size:18px;line-height:1.45;border-left:6px solid var(--g);padding-left:14px;max-width:760px}
+.ix-osi .legal b{font-family:'Russo One';font-weight:400}
+.ix-osi .end-row{margin-top:36px}
+.ix-osi .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--y);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== ТЕЛЕФОН ===== */
+@media (max-width:700px){
+  .ix-osi{--gap:10px}
+  .ix-osi .page{grid-template-columns:minmax(0,1fr)}
+  .ix-osi .pn{grid-column:1/-1}
+  .ix-osi .pn>.fr{padding:30px 16px 32px}
+  .ix-osi .pn:nth-child(odd)>.fr{--tl:0px;--tr:var(--m);--br:var(--m);--bl:0px}
+  .ix-osi .pn:nth-child(even)>.fr{--tl:var(--m);--tr:0px;--br:0px;--bl:var(--m)}
+  .ix-osi .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-osi .bl{font-size:22px;max-width:100%}
+  .ix-osi .cold{min-height:0;gap:18px;padding:30px 16px 40px}
+  .ix-osi .vname{-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--y)}
+  .ix-osi .cold-sfx{top:auto;bottom:10px;right:8px}
+  .ix-osi .cold-bl{margin-bottom:30px}
+  .ix-osi .st{padding:4px 6px;border-width:2px}
+  .ix-osi .p1-sfx{--fs:32px}
+  .ix-osi .mat{--w0:106px;--sw:42px}
+  .ix-osi .route{font-size:14px;gap:6px}
+  .ix-osi .route span{padding:7px 8px}
+  .ix-osi .mat-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+  .ix-osi .bd{width:38px;height:34px;font-size:14px;top:calc(var(--sw) * .7 - 17px)}
+  .ix-osi .core .bd{top:calc(21.4% - 17px)}
+  .ix-osi .note{font-size:13px}
+  .ix-osi .mat-sfx{--fs:30px;right:auto;left:0;top:1%}
+  .ix-osi .rd-p{min-height:0}
+  .ix-osi .btn{width:100%}
+  .ix-osi .fl{grid-template-columns:44px minmax(0,1fr);column-gap:10px;border-left-width:12px}
+  .ix-osi .fn{font-size:24px}
+  .ix-osi .fname{font-size:19px}
+  .ix-osi .tower{box-shadow:6px 6px 0 var(--ink)}
+  .ix-osi .mn{font-size:27px}
+  .ix-osi .sp{grid-template-columns:minmax(0,1fr);padding:44px 14px 70px;clip-path:polygon(0 0,100% 22px,100% 100%,0 calc(100% - 22px))}
+  .ix-osi .sp-h{font-size:clamp(26px,8vw,36px);-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--ink)}
+  .ix-osi .sp-card{padding:12px 12px 16px;transform:none;box-shadow:6px 6px 0 var(--ink)}
+  .ix-osi .ar{grid-template-columns:44px minmax(0,1fr) auto;column-gap:8px}
+  .ix-osi .an{font-size:17px}
+  .ix-osi .aname{font-size:16px}
+  .ix-osi .chip{font-size:15px;padding:8px 8px}
+  .ix-osi .sp-sfx{left:auto;right:-4px;bottom:-34px}
+  .ix-osi .atk{grid-template-columns:minmax(0,1fr);padding:26px 6px 14px}
+  .ix-osi .lane{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 26px auto 26px auto}
+  .ix-osi .arw{transform:rotate(90deg);border-top-width:11px;border-bottom-width:11px;border-left-width:14px}
+  .ix-osi .gt{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;align-items:center;padding:12px 12px}
+  .ix-osi .gt-v{grid-row:1/3;grid-column:2;margin:0;font-size:16px;padding:6px 8px}
+  .ix-osi .gt-h{font-size:19px}
+  .ix-osi .gt-l{font-size:16px}
+  .ix-osi .rq{font-size:16px}
+  .ix-osi .say{font-size:19px}
+  .ix-osi .why{padding:28px 16px 30px}
+  .ix-osi .why-l{grid-template-columns:minmax(0,1fr)}
+  .ix-osi .bt-top{grid-template-columns:110px minmax(0,1fr)}
+  .ix-osi .bt-face{height:130px}
+  .ix-osi .bf-l{font-size:44px}
+  .ix-osi .bt-hp{padding:14px}
+  .ix-osi .bt-body{padding:22px 16px 24px}
+  .ix-osi .bt-sfx{--fs:30px;left:14px;top:96px}
+  .ix-osi .iv{padding:26px 16px 28px}
+  .ix-osi .cs li{grid-template-columns:62px minmax(0,1fr);gap:12px}
+  .ix-osi .cs-n{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-osi *,.ix-osi *::before,.ix-osi *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое модель OSI?</h2><p class="lead"><b>Модель OSI</b> — учебная схема сети из 7 уровней: от физического (провод) до прикладного (программа).</p><h2>О чём выпуск</h2><ul><li>Чем 7 уровней OSI отличаются от 4 уровней TCP/IP</li><li>Как сообщение заворачивается в сегмент, пакет, кадр и биты</li><li>На каком уровне живут ARP-спуфинг, IP-спуфинг, SYN flood, XSS и SQLi</li><li>Чем фаервол отличается от WAF и зачем про OSI спрашивают на собеседовании</li></ul><h2>Словарик</h2><dl><dt>Модель OSI</dt><dd>Учебная схема сети из 7 уровней: от физического (провод) до прикладного (программа).</dd><dt>TCP/IP</dt><dd>Модель, по которой реально работает интернет: 4 уровня — сетевой доступ, межсетевой, транспортный, прикладной.</dd><dt>Инкапсуляция</dt><dd>Каждый уровень добавляет к данным свой заголовок: данные → сегмент → пакет → кадр → биты.</dd><dt>ARP</dt><dd>Протокол локальной сети, который узнаёт MAC-адрес устройства по его IP-адресу (уровень L2).</dd><dt>SYN flood</dt><dd>Атака на L4: тысячи запросов на соединение TCP без завершения рукопожатия забивают очередь сервера.</dd><dt>WAF</dt><dd>Фильтр веб-приложения: разбирает HTTP-запросы (L7) и блокирует похожие на XSS и SQL-инъекции.</dd></dl><h2>Вопрос с собеседования</h2><h3>Расскажи про модель OSI. На каких уровнях живут ARP, IP, TCP и HTTP, и где работают фаервол и WAF?</h3><p>OSI — 7 уровней: физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной; в интернете работает TCP/IP из 4 уровней. При отправке данные заворачиваются в сегмент (TCP), пакет (IP), кадр (Ethernet или Wi-Fi) и биты, и каждый уровень читает только свой заголовок. ARP — L2 (ARP-спуфинг), IP — L3 (IP-спуфинг), TCP — L4 (SYN flood), HTTP — L7 (XSS, SQL-инъекции). Классический фаервол фильтрует по адресам и портам на L3–L4, WAF разбирает HTTP на L7; они работают вместе, а не вместо друг друга.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/internet/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №10</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Как работает интернет: путь пакета</span></a>
+          
+            <a href="../../vypuski/tcp-udp-porty/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №13</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">TCP и UDP: отличия и порты</span></a>
+          
+            <a href="../../vypuski/ip/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №12</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">IP-адрес, маска подсети и NAT</span></a>
+          
+            <a href="../../baraholka/porty/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#ff2e93;color:#ffffff">Шпаргалка Барахолки</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Список портов TCP и UDP: шпаргалка</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/internet/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №10 Лагоед</a>
+        <a href="../../vypuski/ip/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №12 Самозванец →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fosi%2F&amp;text=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C%20OSI%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%207%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5%D0%B9%2C%20TCP%2FIP%2C%20%D0%B8%D0%BD%D0%BA%D0%B0%D0%BF%D1%81%D1%83%D0%BB%D1%8F%D1%86%D0%B8%D1%8F%20%D0%B8%20%D0%B0%D1%82%D0%B0%D0%BA%D0%B8%20%D0%BF%D0%BE%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D1%8F%D0%BC" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fosi%2F&amp;title=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C%20OSI%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%207%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5%D0%B9%2C%20TCP%2FIP%2C%20%D0%B8%D0%BD%D0%BA%D0%B0%D0%BF%D1%81%D1%83%D0%BB%D1%8F%D1%86%D0%B8%D1%8F%20%D0%B8%20%D0%B0%D1%82%D0%B0%D0%BA%D0%B8%20%D0%BF%D0%BE%20%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D1%8F%D0%BC" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="11">
+<section class="ix ix-osi" data-ix="osi" aria-label="Выпуск 11: модели OSI и TCP/IP">
+
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="ix-osi-doll" vector-effect="non-scaling-stroke" d="M50 2C66 2 78 14 78 30C78 40 75 46 72 50C88 60 98 84 98 108C98 126 92 138 78 138L22 138C8 138 2 126 2 108C2 84 12 60 28 50C25 46 22 40 22 30C22 14 34 2 50 2Z"/>
+    <clipPath id="ix-osi-dclip"><use href="#ix-osi-doll"/></clipPath>
+    <pattern id="ix-osi-dots" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".55" fill="#141414" fill-opacity=".16"/></pattern>
+    <pattern id="ix-osi-bits" width="24" height="10" patternUnits="userSpaceOnUse"><rect width="24" height="10" fill="#141414"/><text x="0" y="7.5" font-family="monospace" font-weight="700" font-size="7.2" fill="#2ee59d">0110</text><text x="12" y="7.5" font-family="monospace" font-weight="700" font-size="7.2" fill="#ffd60a" fill-opacity=".85">10</text></pattern>
+  </defs>
+</svg>
+
+<!-- ============ ПРОЛОГ: ПОСТЕР ПУТАНИКА ============ -->
+<div class="page" role="group" aria-label="Пролог: злодей Путаник">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cold">
+      <span class="tag">Злодей выпуска №11</span>
+      <h2 class="vname" aria-label="Путаник"><span class="vl a">П</span><span class="vl s1">У</span><span class="vl s2">Т</span><span class="vl a">А</span><span class="vl s3">Н</span><span class="vl s4">И</span><span class="vl a">К</span></h2>
+      <div class="knot" aria-hidden="true">
+        <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet">
+          <path class="k-ink" pathLength="100" d="M18 150C90 150 110 60 190 60S290 190 220 190S150 50 280 48S380 170 330 172S300 70 410 70S520 168 470 170S430 100 582 96"/>
+          <path class="k-cbl" pathLength="100" d="M18 150C90 150 110 60 190 60S290 190 220 190S150 50 280 48S380 170 330 172S300 70 410 70S520 168 470 170S430 100 582 96"/>
+          <g class="plug" transform="translate(8 150) rotate(180)"><rect x="-6" y="-13" width="34" height="26" rx="3"/><rect x="-14" y="-9" width="10" height="18" rx="1" class="pin"/></g>
+          <g class="plug" transform="translate(592 96)"><rect x="-6" y="-13" width="34" height="26" rx="3"/><rect x="-14" y="-9" width="10" height="18" rx="1" class="pin"/></g>
+        </svg>
+        <span class="st" style="--sx:6%;--sy:8%;--r:-12deg">L7</span>
+        <span class="st" style="--sx:24%;--sy:66%;--r:9deg">L2</span>
+        <span class="st" style="--sx:41%;--sy:2%;--r:-5deg">L4</span>
+        <span class="st pk" style="--sx:56%;--sy:70%;--r:14deg">L1</span>
+        <span class="st" style="--sx:70%;--sy:6%;--r:-16deg">L3</span>
+        <span class="st" style="--sx:86%;--sy:58%;--r:7deg">L6</span>
+      </div>
+      <div class="cold-row">
+      <p class="motto">«Сайт не грузится — меняйте кабель. Кабель выдернут — переписывайте сайт!»</p>
+      <div class="bl v cold-bl"><b class="who v">Путаник</b>Я всегда точно знаю, кто виноват. Только не того.</div>
+      </div>
+      <span class="sfx cold-sfx" aria-hidden="true">ВСЁ НЕ ТО!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 1 · БЕЛЫЙ ЭКРАН ============ -->
+<div class="chap"><span class="chap-n">Стр. 1</span><h2 class="chap-t">Белый экран</h2></div>
+<div class="page" role="group" aria-label="Страница 1: дневник не открывается">
+  <div class="pn" style="--span:7">
+    <div class="fr f-yel talk">
+      <p class="cap w">Вечер. Соня открывает электронный дневник, а там белый экран и вечная крутилка.</p>
+      <div class="bl"><b class="who s">Соня</b>Дядя Миша, дневник взломали?</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Конечно, взломали! SQL-инъекция! Срочно переписывайте сайт!</div>
+      <span class="sfx p1-sfx" aria-hidden="true">ПАНИКА!</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots talk">
+      <div class="bl r"><b class="who m">Дядя Миша</b>Не суетись. Сеть похожа на дом с этажами: внизу провод, наверху сайт. Сломаться может любой этаж. Давай сначала посмотрим, как твоё сообщение вообще уходит из ноутбука.</div>
+      <p class="big">Сетевики договорились делить работу на <b>уровни</b>. Каждый уровень отвечает за своё и не лезет к соседям.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 2 · МАТРЁШКА (WOW) ============ -->
+<div class="chap"><span class="chap-n">Стр. 2</span><h2 class="chap-t pk">Матрёшка</h2></div>
+<div class="page" role="group" aria-label="Страница 2: инкапсуляция как матрёшка">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots mat" id="ix-osi-mat" data-s="0">
+      <div class="mat-head">
+        <p class="cap w">Соня просит оценки. Каждый уровень надевает на запрос свою «матрёшку» со своей наклейкой.</p>
+        <p class="route" aria-hidden="true"><span class="rt-a">Ноутбук Сони</span><i class="rt-w"></i><span class="rt-b">Сервер дневника</span></p>
+      </div>
+      <div class="mat-grid">
+        <div class="stage" aria-hidden="true">
+          <div class="dolls" id="ix-osi-dolls">
+            <div class="sh off" data-l="1" style="--k:4"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/></svg><span class="bd">L1</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"/></svg></div></div>
+            <div class="sh off" data-l="2" style="--k:3"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/></svg><span class="bd">L2</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"/></svg></div></div>
+            <div class="sh off" data-l="3" style="--k:2"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/></svg><span class="bd">L3</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"/></svg></div></div>
+            <div class="sh off" data-l="4" style="--k:1"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/></svg><span class="bd">L4</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/><path class="seam" d="M0 76H100" clip-path="url(#ix-osi-dclip)"/></svg></div></div>
+            <div class="sh core" data-l="7" style="--k:0"><div class="hf t"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/></svg><span class="bd">L7</span></div><div class="hf b"><svg viewBox="0 0 100 140" preserveAspectRatio="none"><use href="#ix-osi-doll" class="fill"/><use href="#ix-osi-doll" class="dt"/></svg><span class="note">GET<br>/ocenki</span></div></div>
+          </div>
+          <span class="sfx mat-sfx" id="ix-osi-msfx"></span>
+        </div>
+        <div class="read">
+          <p class="rd-tag" id="ix-osi-rtag">L7 · Прикладной</p>
+          <h3 class="rd-h" id="ix-osi-rh">Данные</h3>
+          <p class="rd-p" id="ix-osi-rp"></p>
+          <p class="rd-lab">Что едет по проводу, по порядку</p>
+          <p class="xray" id="ix-osi-xray" aria-label="Состав посылки"></p>
+        </div>
+      </div>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-go">Завернуть в сегмент</button>
+        <p class="ctr" id="ix-osi-ctr" aria-hidden="true">шаг 1/11</p>
+      </div>
+      <p class="sr" id="ix-osi-live" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="pn" style="--span:7">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who s">Соня</b>А зачем столько обёрток? Можно же просто кинуть запрос в провод.</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Каждому нужна своя наклейка. Роутеру — адрес, серверу — порт, проводу — сигнал. И каждый читает только свою.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <p class="term"><b>Инкапсуляция</b> — так это называется по-взрослому. На отправке матрёшки надевают сверху вниз, на приёме снимают снизу вверх.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 3 · СЕМЬ ЭТАЖЕЙ ============ -->
+<div class="chap"><span class="chap-n">Стр. 3</span><h2 class="chap-t">Семь этажей</h2></div>
+<div class="page" role="group" aria-label="Страница 3: модель OSI и TCP/IP">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots floors" id="ix-osi-floors">
+      <div class="fl-top">
+        <p class="cap w" id="ix-osi-fcap">Модель OSI: 7 уровней. Её учат, чтобы говорить на одном языке.</p>
+      </div>
+      <div class="tower" id="ix-osi-tower">
+        <div class="grp" data-g="app"><span class="gtag">Прикладной</span>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">7</b><span class="fname">Прикладной</span><span class="fex">HTTP, DNS, почта. То, с чем говорит программа</span></div>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">6</b><span class="fname">Представления</span><span class="fex">Кодировки, сжатие, шифрование</span></div>
+          <div class="fl" style="--fc:var(--g)"><b class="fn">5</b><span class="fname">Сеансовый</span><span class="fex">Начать, держать и закончить разговор</span></div>
+        </div>
+        <div class="grp" data-g="tr"><span class="gtag">Транспортный</span>
+          <div class="fl" style="--fc:var(--y)"><b class="fn">4</b><span class="fname">Транспортный</span><span class="fex">TCP и UDP, порты. Сегмент</span></div>
+        </div>
+        <div class="grp" data-g="net"><span class="gtag">Межсетевой</span>
+          <div class="fl" style="--fc:var(--p)"><b class="fn">3</b><span class="fname">Сетевой</span><span class="fex">IP-адреса, маршрутизатор. Пакет</span></div>
+        </div>
+        <div class="grp" data-g="link"><span class="gtag">Сетевой доступ</span>
+          <div class="fl" style="--fc:var(--c)"><b class="fn">2</b><span class="fname">Канальный</span><span class="fex">Ethernet, Wi-Fi, MAC, коммутатор. Кадр</span></div>
+          <div class="fl" style="--fc:var(--ink)"><b class="fn">1</b><span class="fname">Физический</span><span class="fex">Кабель, радиоволны, свет. Биты</span></div>
+        </div>
+      </div>
+      <p class="fl-say" id="ix-osi-fsay" aria-live="polite">Считаем снизу: 1 — провод, 7 — программа.</p>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-fold" aria-pressed="false">Сложить в TCP/IP</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Семь этажей? В интернете их четыре! Значит, OSI — враньё!</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Не враньё, а карта. OSI — язык, на котором объясняют. TCP/IP — то, что реально работает в интернете. Этажи 5–7 там живут внутри программы.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-yel mnem">
+      <p class="mn-lab">Запомни снизу вверх</p>
+      <p class="mn"><span><b>Ф</b>едя</span> <span><b>К</b>упил</span> <span><b>С</b>амокат,</span> <span><b>Т</b>еперь</span> <span><b>С</b>оседи</span> <span><b>П</b>адают</span> <span><b>П</b>остоянно</span></p>
+      <p class="mn-key">Физический · Канальный · Сетевой · Транспортный · Сеансовый · Представления · Прикладной</p>
+      <p class="mn-en">На собеседовании по-английски: <b>Please Do Not Throw Sausage Pizza Away</b> — тоже от 1 к 7.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СПЛЭШ: ПО ЭТАЖАМ ============ -->
+<div class="chap"><span class="chap-n">Стр. 4</span><h2 class="chap-t pk">По этажам!</h2></div>
+<div class="splash" id="ix-osi-splash">
+  <div class="sp">
+    <div class="sp-burst" aria-hidden="true"></div>
+    <div class="sp-dots" aria-hidden="true"></div>
+    <div class="sp-top">
+      <span class="sp-who">Кульминация</span>
+      <h2 aria-label="У каждой атаки свой этаж" class="sp-h"><span>У каждой атаки</span> <span>свой этаж</span></h2>
+      <div class="bl v sp-bl" id="ix-osi-spbl"><b class="who v">Путаник</b><span>ARP-спуфинг — это взлом сайта! А XSS — провод перегрелся!</span></div>
+    </div>
+    <div class="sp-card">
+      <div class="atw" id="ix-osi-atw">
+        <div class="ar" data-f="7"><b class="an">L7</b><span class="aname">Прикладной</span><div class="slot"><span class="chip" data-to="2" id="ix-osi-c-arp">ARP-спуфинг</span></div></div>
+        <div class="ar thin" data-f="6"><b class="an">L6</b><span class="aname">Представления</span><div class="slot"></div></div>
+        <div class="ar thin" data-f="5"><b class="an">L5</b><span class="aname">Сеансовый</span><div class="slot"></div></div>
+        <div class="ar" data-f="4"><b class="an">L4</b><span class="aname">Транспортный</span><div class="slot"><span class="chip" data-to="3" id="ix-osi-c-ip">IP-спуфинг</span></div></div>
+        <div class="ar" data-f="3"><b class="an">L3</b><span class="aname">Сетевой</span><div class="slot"><span class="chip" data-to="4" id="ix-osi-c-syn">SYN flood</span></div></div>
+        <div class="ar" data-f="2"><b class="an">L2</b><span class="aname">Канальный</span><div class="slot"></div></div>
+        <div class="ar" data-f="1"><b class="an">L1</b><span class="aname">Физический</span><div class="slot"><span class="chip" data-to="7" id="ix-osi-c-xss">XSS и SQLi</span></div></div>
+      </div>
+      <div class="dock">
+        <button class="btn hot" type="button" id="ix-osi-sort">Разложить по этажам</button>
+      </div>
+      <span class="sfx sp-sfx" id="ix-osi-spsfx" aria-hidden="true">ПО МЕСТАМ!</span>
+    </div>
+  </div>
+  <div class="atk" id="ix-osi-atk" hidden>
+    <div class="ak"><p class="ak-h"><span>L2</span>ARP-спуфинг</p><p>В локальной сети злодей рассылает: «MAC-адрес роутера — мой». Компьютеры верят, и чужой трафик идёт через него.</p><p class="ak-d"><b>Защита:</b> проверка ARP на коммутаторе (Dynamic ARP Inspection), HTTPS и VPN, чтобы перехваченное было нечитаемо.</p></div>
+    <div class="ak"><p class="ak-h"><span>L3</span>IP-спуфинг</p><p>В пакете подделан адрес отправителя. Ответ уйдёт настоящему владельцу адреса, поэтому так маскируют DDoS-атаки.</p><p class="ak-d"><b>Защита:</b> провайдеры и сети на входе отбрасывают пакеты с чужими обратными адресами.</p></div>
+    <div class="ak"><p class="ak-h"><span>L4</span>SYN flood</p><p>Тысячи «привет» (SYN) без завершения рукопожатия TCP. Сервер держит полуоткрытые соединения, пока очередь не переполнится.</p><p class="ak-d"><b>Защита:</b> SYN cookies, лимиты соединений, защита от DDoS у провайдера.</p></div>
+    <div class="ak"><p class="ak-h"><span>L7</span>XSS и SQL-инъекции</p><p>Живут в самих данных, внутри HTTP-запроса. Для нижних этажей это обычная посылка на открытый порт 443.</p><p class="ak-d"><b>Защита:</b> исправлять код (экранирование вывода, параметризованные запросы), WAF — вторым слоем.</p></div>
+  </div>
+</div>
+
+<!-- ============ СТР. 5 · ВАХТЁР И УЧИТЕЛЬ ============ -->
+<div class="chap"><span class="chap-n">Стр. 5</span><h2 class="chap-t">Фаервол и WAF</h2></div>
+<div class="page" role="group" aria-label="Страница 5: фаервол и WAF">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots gate" id="ix-osi-gate">
+      <p class="cap w">Две охраны на разных этажах. Пропусти три запроса и посмотри, кто что видит.</p>
+      <div class="req" id="ix-osi-req"><span class="rq-n" id="ix-osi-rqn">Запрос 1 из 3</span><code class="rq" id="ix-osi-rq"></code></div>
+      <div class="lane">
+        <div class="gt" id="ix-osi-g1"><p class="gt-h">Фаервол</p><p class="gt-l">L3–L4 · читает наклейки IP и TCP: адрес и порт</p><p class="gt-v" id="ix-osi-v1"></p></div>
+        <i class="arw" aria-hidden="true"></i>
+        <div class="gt" id="ix-osi-g2"><p class="gt-h">WAF</p><p class="gt-l">L7 · открывает матрёшку до данных и читает HTTP</p><p class="gt-v" id="ix-osi-v2"></p></div>
+        <i class="arw" aria-hidden="true"></i>
+        <div class="gt srv" id="ix-osi-g3"><p class="gt-h">Сервер</p><p class="gt-l">отвечает на запрос</p><p class="gt-v" id="ix-osi-v3"></p></div>
+      </div>
+      <p class="say" id="ix-osi-gsay" aria-live="polite">Нажми кнопку — запрос пойдёт через охрану.</p>
+      <div class="dock">
+        <button class="btn" type="button" id="ix-osi-pass">Пропустить запрос</button>
+      </div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-yel talk">
+      <div class="bl"><b class="who m">Дядя Миша</b>Фаервол — вахтёр: смотрит, кто пришёл и в какую дверь. WAF — учитель: разворачивает записку и читает, что в ней.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:6">
+    <div class="fr f-ink facts">
+      <p><b>WAF видит HTTP</b> только после расшифровки TLS. Поэтому его ставят там, где HTTPS заканчивается: на обратном прокси или в CDN.</p>
+      <p><b>WAF — второй слой.</b> Главная защита от XSS и SQLi — исправленный код.</p>
+      <p><b>Бывают NGFW</b> — «фаерволы нового поколения», которые заглядывают глубже. Но классический фаервол смотрит на адреса и порты.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 6 · КТО ВИНОВАТ ============ -->
+<div class="chap"><span class="chap-n">Стр. 6</span><h2 class="chap-t">Кто виноват</h2></div>
+<div class="page" role="group" aria-label="Страница 6: развязка и собеседование">
+  <div class="pn" style="--span:7">
+    <div class="fr f-cyan talk">
+      <div class="bl"><b class="who s">Соня</b>Так почему дневник не открывался?</div>
+      <div class="bl r"><b class="who m">Дядя Миша</b>Wi-Fi есть, а дальше роутера пакеты не уходят. Роутер завис. Это сеть, а не сайт. Перезагрузили — работает.</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:5">
+    <div class="fr f-ink talk">
+      <div class="bl v"><b class="who v">Путаник</b>Э-э… Значит, виноват DNS!</div>
+      <span class="sfx p6-sfx" aria-hidden="true">ПФФ</span>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots why">
+      <p class="why-h">Зачем про OSI спрашивают на собеседовании</p>
+      <ol class="why-l">
+        <li><b>Общий язык.</b> «Проблема на L2» понятно любому сетевику и безопаснику без долгих объяснений.</li>
+        <li><b>Поиск поломки.</b> Кто думает слоями, ищет снизу вверх, а не паникует, как Путаник.</li>
+        <li><b>Где работает защита.</b> Фаервол, WAF, TLS — у каждого свой этаж и свои слепые зоны.</li>
+        <li><b>Проверка базы.</b> Кто путает TCP и HTTP, тому трудно разбирать атаки дальше.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t pk">Битва</h2></div>
+<div class="battle" id="ix-osi-battle">
+  <div class="bt-top">
+    <div class="bt-face" aria-hidden="true"><span class="bf-l">L?</span></div>
+    <div class="bt-hp">
+      <p class="bt-name">Путаник</p>
+      <div class="hp" role="progressbar" aria-label="Здоровье злодея" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-osi-hp"><i id="ix-osi-hpbar"></i></div>
+      <p class="bt-step" id="ix-osi-step">Ход 1 из 3</p>
+    </div>
+  </div>
+  <div class="bt-body" id="ix-osi-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Собеседование</h2></div>
+<div class="iv">
+  <p class="iv-lab">Вопрос с собеседования</p>
+  <p class="iv-q">Расскажи про модель OSI. На каких уровнях живут ARP, IP, TCP и HTTP, и где работают фаервол и WAF?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: назови обе модели, объясни матрёшку и привяжи к этажам хотя бы по одной атаке и защите.</div>
+  <button class="btn" type="button" id="ix-osi-ivb" aria-expanded="false" aria-controls="ix-osi-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-osi-iva" hidden>
+    <div class="iv-p"><b>Две модели.</b> OSI — 7 уровней: физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной. В интернете работает TCP/IP из 4: сетевой доступ, межсетевой, транспортный, прикладной.</div>
+    <div class="iv-p"><b>Инкапсуляция.</b> Данные → сегмент (TCP) → пакет (IP) → кадр (Ethernet, Wi-Fi) → биты. Каждый уровень добавляет свой заголовок и читает только его. На приёме всё снимается в обратном порядке.</div>
+    <div class="iv-p"><b>Атаки по этажам.</b> ARP — L2, ARP-спуфинг подменяет MAC в локальной сети. IP — L3, IP-спуфинг подделывает адрес отправителя. TCP — L4, SYN flood забивает очередь соединений. HTTP — L7, здесь XSS и SQL-инъекции.</div>
+    <div class="iv-p"><b>Защита по этажам.</b> Классический фаервол фильтрует по адресам и портам (L3–L4). WAF разбирает HTTP (L7). Они не заменяют друг друга, а работают слоями.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> зубрить семь названий и думать, что фаервол остановит XSS. Порт 443 открыт — значит, атака внутри HTTP пройдёт мимо него.</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Запомни</span><h2 class="chap-t">Шпаргалка</h2></div>
+<p class="cs-lab">Шпаргалка: что важно знать</p>
+<ol class="cs">
+  <li><span class="cs-n">01</span><div><b>Семь и четыре</b><p>OSI из 7 уровней — чтобы объяснять. TCP/IP из 4 — то, что работает в интернете.</p></div></li>
+  <li><span class="cs-n">02</span><div><b>Федя купил самокат</b><p>Физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной — снизу вверх.</p></div></li>
+  <li><span class="cs-n">03</span><div><b>Матрёшка</b><p>Данные → сегмент → пакет → кадр → биты. На приёме всё снимается обратно.</p></div></li>
+  <li><span class="cs-n">04</span><div><b>Каждый читает своё</b><p>Коммутатор смотрит MAC (L2), роутер — IP (L3), сервер — порт (L4) и HTTP (L7).</p></div></li>
+  <li><span class="cs-n">05</span><div><b>Атаки по этажам</b><p>ARP-спуфинг — L2, IP-спуфинг — L3, SYN flood — L4, XSS и SQLi — L7.</p></div></li>
+  <li><span class="cs-n">06</span><div><b>Фаервол — не WAF</b><p>Фаервол смотрит адреса и порты, WAF читает содержимое HTTP.</p></div></li>
+  <li><span class="cs-n">07</span><div><b>Ищи снизу</b><p>Когда «ничего не работает», проверяй с первого этажа, а не вини сразу сайт.</p></div></li>
+</ol>
+<p class="legal"><b>Тренируйся легально:</b> TryHackMe (комнаты по сетевым основам), picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Сеть можно разглядывать в Wireshark только свою. Чужие сайты и сети трогать нельзя.</p>
+<p class="end-row"><span class="end">Конец выпуска №11</span></p>
+</section>
+
+<style>
+.ix-osi{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--p:#ff2e93;--g:#2ee59d;--c:#19c3ff;--gap:12px;--m:16px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;display:block;color:var(--ink);font:400 18px/1.45 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-osi *,.ix-osi *::before,.ix-osi *::after{box-sizing:border-box}
+.ix-osi p{margin:0}
+.ix-osi h2,.ix-osi h3{margin:0;font-weight:400}
+.ix-osi [hidden]{display:none !important}
+.ix-osi :focus-visible{outline:4px solid var(--p);outline-offset:3px}
+.ix-osi .defs{position:absolute;width:0;height:0;overflow:hidden}
+.ix-osi .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* главы */
+.ix-osi .chap{display:flex;align-items:center;gap:14px;margin:56px 0 0;flex-wrap:wrap}
+.ix-osi .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--y);padding:8px 12px;transform:rotate(-3deg)}
+.ix-osi .chap-t{font:400 clamp(26px,5.4vw,42px)/1.05 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-osi .chap-t.pk{color:var(--p)}
+
+/* страница и панели */
+.ix-osi .page{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .page:first-of-type{margin-top:8px}
+.ix-osi .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-osi .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:24px;--tl:0px;--tr:0px;--br:0px;--bl:0px;clip-path:polygon(0 var(--tl),100% var(--tr),100% calc(100% - var(--br)),0 calc(100% - var(--bl)))}
+.ix-osi .pn:nth-child(odd)>.fr{--br:14px}
+.ix-osi .pn:nth-child(even)>.fr{--tl:14px}
+.ix-osi .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.09) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-osi .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-osi .f-cyan{background-color:var(--c);background-image:radial-gradient(rgba(20,20,20,.15) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-osi .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(255,46,147,.2) 1.4px,transparent 1.9px);background-size:9px 9px}
+
+/* SFX, плашки, реплики */
+.ix-osi .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,56px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--y));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--p));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-osi .cap{display:inline-block;align-self:flex-start;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.32 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:560px;position:relative;z-index:2}
+.ix-osi .cap.w{background:#fff}
+.ix-osi .tag{display:inline-block;align-self:flex-start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--p);color:#fff;padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+.ix-osi .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:24px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:min(460px,100%);box-shadow:3px 3px 0 var(--ink);width:max-content}
+.ix-osi .bl::after{content:"";position:absolute;left:var(--tx,32px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-osi .bl.r{margin-left:auto;--tx:calc(100% - 56px)}
+.ix-osi .bl.v{background:#24101b;color:#fff;border-color:var(--p);box-shadow:4px 4px 0 var(--p)}
+.ix-osi .bl.v::after{border-color:var(--p)}
+.ix-osi .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-osi .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-osi .who.m{--dot:var(--g)}
+.ix-osi .who.s{--dot:var(--y)}
+.ix-osi .who.v{color:#ff8cc4;--dot:var(--p)}
+.ix-osi .talk{display:flex;flex-direction:column;gap:26px;justify-content:center}
+.ix-osi .big{font:500 20px/1.4 Rubik;max-width:640px}
+.ix-osi .big b{background:var(--ink);color:var(--y);padding:0 6px;font-weight:600}
+.ix-osi .term{font-size:20px;line-height:1.45}
+.ix-osi .term b{display:block;font:400 26px/1.1 'Rubik Mono One';color:var(--p);margin-bottom:10px}
+
+/* ===== ПРОЛОГ ===== */
+.ix-osi .cold{display:flex;flex-direction:column;gap:20px;min-height:560px;padding:34px 28px 116px;background-color:#1a0d14;background-image:radial-gradient(rgba(255,46,147,.32) 1.5px,transparent 2px);background-size:10px 10px}
+.ix-osi .vname{position:relative;font:400 clamp(38px,12.2vw,118px)/1 'Rubik Mono One',sans-serif;color:var(--p);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--y);white-space:nowrap;letter-spacing:0;margin-top:6px}
+.ix-osi .vl{display:inline-block}
+.ix-osi .vl.s2,.ix-osi .vl.s4{color:#fff}
+.ix-osi .knot{position:relative;width:100%;max-width:760px;margin:0 auto}
+.ix-osi .knot svg{display:block;width:100%;height:auto;overflow:visible}
+.ix-osi .k-ink,.ix-osi .k-cbl{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ix-osi .k-ink{stroke:var(--ink);stroke-width:22}
+.ix-osi .k-cbl{stroke:var(--p);stroke-width:12}
+.ix-osi .plug rect{fill:#fff;stroke:var(--ink);stroke-width:4}
+.ix-osi .plug .pin{fill:var(--y)}
+.ix-osi .st{position:absolute;left:var(--sx);top:var(--sy);transform:rotate(var(--r));font:400 clamp(15px,3.4vw,24px)/1 'Russo One';background:#fff;color:var(--ink);border:3px solid var(--ink);padding:6px 8px;box-shadow:3px 3px 0 var(--ink)}
+.ix-osi .st.pk{background:var(--y)}
+.ix-osi .motto{font:400 clamp(19px,2.6vw,24px)/1.3 'Russo One';color:var(--y);max-width:620px}
+.ix-osi .cold-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px 34px}
+.ix-osi .cold-row .motto{flex:1 1 320px}
+.ix-osi .cold-bl{font-size:24px;margin-bottom:8px}
+.ix-osi .cold-sfx{--fs:clamp(34px,7vw,64px);--rot:-8deg;--sc:#fff;right:3%;top:auto;bottom:30px}
+
+.ix-osi.anim .cold.go .k-ink,.ix-osi.anim .cold.go .k-cbl{stroke-dasharray:100;animation:ixosi-draw 1.6s cubic-bezier(.5,0,.3,1) both}
+.ix-osi.anim .cold.go .st{animation:ixosi-stick .45s cubic-bezier(.2,1.8,.4,1) both,ixosi-jig 3.4s ease-in-out infinite}
+.ix-osi.anim .cold.go .st:nth-of-type(1){animation-delay:.9s,1.4s}
+.ix-osi.anim .cold.go .st:nth-of-type(2){animation-delay:1s,2.1s}
+.ix-osi.anim .cold.go .st:nth-of-type(3){animation-delay:1.1s,1.7s}
+.ix-osi.anim .cold.go .st:nth-of-type(4){animation-delay:1.2s,2.6s}
+.ix-osi.anim .cold.go .st:nth-of-type(5){animation-delay:1.3s,1.9s}
+.ix-osi.anim .cold.go .st:nth-of-type(6){animation-delay:1.4s,2.3s}
+.ix-osi.anim .cold.go .vl.s1{animation:ixosi-swR 4.2s ease-in-out 1.6s infinite}
+.ix-osi.anim .cold.go .vl.s2{animation:ixosi-swL 4.2s ease-in-out 1.6s infinite}
+.ix-osi.anim .cold.go .vl.s3{animation:ixosi-swR 4.2s ease-in-out 3.7s infinite}
+.ix-osi.anim .cold.go .vl.s4{animation:ixosi-swL 4.2s ease-in-out 3.7s infinite}
+.ix-osi.anim .cold-sfx{opacity:0}
+.ix-osi.anim .cold.go .cold-sfx{animation:ixosi-pop .5s cubic-bezier(.2,1.7,.4,1) 1.7s both}
+@keyframes ixosi-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ixosi-stick{from{opacity:0;transform:rotate(calc(var(--r) - 40deg)) scale(2)}to{opacity:1;transform:rotate(var(--r)) scale(1)}}
+@keyframes ixosi-jig{0%,100%{transform:rotate(var(--r))}50%{transform:rotate(calc(var(--r) * -1)) translateY(-4px)}}
+@keyframes ixosi-swR{0%,30%,100%{transform:none}38%,58%{transform:translateX(100%) translateY(-.12em) rotate(8deg)}66%{transform:none}}
+@keyframes ixosi-swL{0%,30%,100%{transform:none}38%,58%{transform:translateX(-100%) translateY(.12em) rotate(-8deg)}66%{transform:none}}
+@keyframes ixosi-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(var(--rot)) scale(1)}}
+
+/* стр.1 */
+.ix-osi .p1-sfx{--fs:40px;--rot:8deg;right:12px;bottom:14px;--sc:var(--p);--ss:var(--y)}
+.ix-osi .f-ink.talk{padding-bottom:70px}
+
+/* ===== МАТРЁШКА ===== */
+.ix-osi .mat{padding:26px 26px 28px;--w0:132px;--sw:54px}
+.ix-osi .mat-head{display:flex;flex-direction:column;gap:14px}
+.ix-osi .route{display:flex;align-items:center;gap:10px;font:400 15px/1.1 'Russo One';max-width:620px}
+.ix-osi .route span{padding:8px 10px;border:3px solid var(--ink);background:#fff;transition:background .3s,color .3s}
+.ix-osi .rt-w{flex:1;height:6px;min-width:30px;background:repeating-linear-gradient(90deg,var(--ink) 0 10px,transparent 10px 16px)}
+.ix-osi .mat:not(.srv) .rt-a,.ix-osi .mat.srv .rt-b{background:var(--ink);color:var(--y)}
+.ix-osi .mat.fly .rt-w{animation:ixosi-wire .4s linear infinite;background:repeating-linear-gradient(90deg,var(--p) 0 10px,transparent 10px 16px)}
+@keyframes ixosi-wire{to{background-position:16px 0}}
+.ix-osi .mat-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:center;margin-top:12px}
+.ix-osi .stage{position:relative;height:calc((var(--w0) + 4 * var(--sw)) * 1.4 + 26px);overflow:hidden}
+.ix-osi .dolls{position:absolute;inset:0;transition:transform .5s cubic-bezier(.5,0,.75,0)}
+.ix-osi .dolls.away{transform:translateX(125%) rotate(10deg)}
+.ix-osi .dolls.back{transform:translateX(-125%) rotate(-10deg);transition:none}
+.ix-osi .dolls.land{transition:transform .55s cubic-bezier(.2,1.3,.4,1)}
+.ix-osi .sh{position:absolute;bottom:12px;left:50%;width:calc(var(--w0) + var(--k) * var(--sw));aspect-ratio:100/140;transform:translateX(-50%);z-index:calc(10 - var(--k));--f:#fff}
+.ix-osi .hf{position:absolute;inset:0;transition:transform .65s cubic-bezier(.3,1.3,.5,1),opacity .35s ease}
+.ix-osi .hf.t{clip-path:inset(0 0 45.7% 0)}
+.ix-osi .hf.b{clip-path:inset(54.3% 0 0 0)}
+.ix-osi .hf svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.ix-osi .fill{fill:var(--f);stroke:var(--ink);stroke-width:3.5px}
+.ix-osi .dt{fill:url(#ix-osi-dots);stroke:none}
+.ix-osi .seam{fill:none;stroke:var(--ink);stroke-width:2.5px;stroke-dasharray:5 4;vector-effect:non-scaling-stroke}
+.ix-osi .sh.core{--f:var(--g)}
+.ix-osi .sh[data-l="4"]{--f:var(--y)}
+.ix-osi .sh[data-l="3"]{--f:var(--p)}
+.ix-osi .sh[data-l="2"]{--f:var(--c)}
+.ix-osi .sh[data-l="1"] .fill{fill:url(#ix-osi-bits)}
+.ix-osi .sh[data-l="1"] .seam{stroke:var(--y)}
+.ix-osi .bd{position:absolute;left:50%;top:calc(var(--sw) * .7 - 19px);transform:translateX(-50%);width:44px;height:38px;display:grid;place-items:center;background:#fff;border:3px solid var(--ink);border-radius:50%;font:400 16px/1 'Russo One';color:var(--ink)}
+.ix-osi .sh[data-l="1"] .bd{background:var(--y)}
+.ix-osi .core .bd{top:calc(21.4% - 19px);background:var(--ink);color:#fff}
+.ix-osi .note{position:absolute;left:0;right:0;top:63%;text-align:center;font:800 15px/1.15 var(--mono)}
+.ix-osi .sh.off .hf.t{transform:translate(-10%,-34%) rotate(-14deg);opacity:0}
+.ix-osi .sh.off .hf.b{transform:translateY(24%) rotate(5deg);opacity:0}
+.ix-osi .mat-sfx{--fs:46px;right:2%;top:6%;opacity:0}
+.ix-osi .mat-sfx.on{opacity:1}
+.ix-osi.anim .mat-sfx.on{animation:ixosi-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-osi.anim .dolls.thud .sh:not(.off){animation:ixosi-thud .35s ease-out}
+@keyframes ixosi-thud{0%{transform:translateX(-50%)}35%{transform:translateX(-50%) scale(1.04,.96)}100%{transform:translateX(-50%)}}
+
+.ix-osi .read{display:flex;flex-direction:column;gap:10px;min-width:0}
+.ix-osi .rd-tag{align-self:flex-start;font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.05em;background:var(--ink);color:var(--y);padding:8px 10px;transform:rotate(-2deg)}
+.ix-osi .rd-h{font:400 clamp(30px,4.2vw,42px)/1.05 'Rubik Mono One';color:var(--ink)}
+.ix-osi .rd-p{font:400 19px/1.45 Rubik;min-height:5.8em}
+.ix-osi .rd-p code,.ix-osi .say code{font:700 17px/1 var(--mono);background:var(--ink);color:#fff;padding:2px 6px;white-space:nowrap}
+.ix-osi .rd-lab{margin-top:6px;font:400 14px/1.2 'Russo One';text-transform:uppercase;letter-spacing:.05em;color:#4a4438}
+.ix-osi .xray{display:flex;flex-wrap:wrap;gap:6px;min-height:44px;align-items:center}
+.ix-osi .xc{font:700 16px/1 var(--mono);padding:8px 9px;border:2px solid var(--ink);background:var(--xc,#fff);white-space:nowrap}
+.ix-osi .xc.new{box-shadow:3px 3px 0 var(--ink)}
+.ix-osi.anim .xc.new{animation:ixosi-chip .4s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes ixosi-chip{from{opacity:0;transform:translateY(-14px) scale(1.3)}to{opacity:1;transform:none}}
+.ix-osi .xc.bits{background:var(--ink);color:var(--g);letter-spacing:.06em;white-space:normal;overflow-wrap:anywhere;max-width:100%}
+.ix-osi .dock{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:24px;position:relative;z-index:5}
+.ix-osi .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 19px/1 'Russo One',sans-serif;cursor:pointer;border-radius:4px}
+.ix-osi .btn:hover{background:#ffe14d}
+.ix-osi .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-osi .btn[disabled]{opacity:.6;cursor:wait}
+.ix-osi .btn.hot{background:var(--p);color:#fff}
+.ix-osi .btn.hot:hover{background:#ff4fa6}
+.ix-osi .ctr{font:400 16px/1 'Russo One';color:#4a4438}
+
+/* ===== ЭТАЖИ ===== */
+.ix-osi .floors{display:flex;flex-direction:column;gap:20px;padding:26px 26px 28px}
+.ix-osi .tower{display:flex;flex-direction:column;max-width:720px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.ix-osi .grp{display:flex;flex-direction:column;--gc:var(--g)}
+.ix-osi .grp+.grp{border-top:2px solid rgba(20,20,20,.2)}
+.ix-osi .grp[data-g="tr"]{--gc:var(--y)}
+.ix-osi .grp[data-g="net"]{--gc:var(--p)}
+.ix-osi .grp[data-g="link"]{--gc:var(--c)}
+.ix-osi .gtag{display:none;font:400 20px/1 'Russo One';background:var(--gc);padding:10px 14px;border-bottom:3px solid var(--ink)}
+.ix-osi .gtag::before{content:"TCP/IP · ";font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.ix-osi .fl{display:grid;grid-template-columns:52px minmax(0,1fr);column-gap:14px;align-items:baseline;padding:11px 14px 12px 0;border-left:16px solid var(--fc);transition:padding .3s}
+.ix-osi .fl+.fl{border-top:2px solid rgba(20,20,20,.12)}
+.ix-osi .fn{grid-row:span 2;justify-self:center;font:400 30px/1 'Rubik Mono One'}
+.ix-osi .fname{font:400 21px/1.15 'Russo One'}
+.ix-osi .fex{font-size:17px;line-height:1.35;color:#3d382f;overflow:hidden;max-height:3em;transition:max-height .3s,opacity .3s}
+.ix-osi .floors.tcp .grp{border-top:4px solid var(--ink)}
+.ix-osi .floors.tcp .grp:first-child{border-top:0}
+.ix-osi .floors.tcp .gtag{display:block}
+.ix-osi .floors.tcp .fl{padding-top:6px;padding-bottom:6px;border-left-color:var(--gc)}
+.ix-osi .floors.tcp .fex{max-height:0;opacity:0}
+.ix-osi .floors.tcp .fname{font-size:17px;color:#4a4438}
+.ix-osi .floors.tcp .fn{font-size:20px;color:#4a4438}
+.ix-osi.anim .floors.tcp .gtag{animation:ixosi-drop .35s cubic-bezier(.2,1.5,.4,1) both}
+.ix-osi.anim .floors.tcp .grp:nth-child(2) .gtag{animation-delay:.07s}
+.ix-osi.anim .floors.tcp .grp:nth-child(3) .gtag{animation-delay:.14s}
+.ix-osi.anim .floors.tcp .grp:nth-child(4) .gtag{animation-delay:.21s}
+@keyframes ixosi-drop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.ix-osi .fl-say{font:500 20px/1.4 Rubik;border-left:8px solid var(--y);padding:2px 0 2px 14px;max-width:720px}
+.ix-osi .floors .dock{margin-top:0}
+
+.ix-osi .mnem{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ix-osi .mn-lab{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em}
+.ix-osi .mn{font:400 30px/1.2 Neucha,cursive}
+.ix-osi .mn span{white-space:nowrap}
+.ix-osi .mn b{font:400 1.15em/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill}
+.ix-osi .mn-key{font-size:17px;line-height:1.4;color:#2b261d}
+.ix-osi .mn-en{font-size:17px;line-height:1.4;border-top:2px solid rgba(20,20,20,.25);padding-top:12px}
+.ix-osi .mn-en b{font-weight:600}
+
+/* ===== СПЛЭШ ===== */
+.ix-osi .splash{position:relative;background:var(--ink);padding:var(--gap);margin-top:18px}
+.ix-osi .sp{position:relative;overflow:hidden;clip-path:polygon(0 0,100% 34px,100% 100%,0 calc(100% - 34px));background:var(--p);padding:60px 32px 84px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.ix-osi .sp-burst{position:absolute;inset:-30%;background:repeating-conic-gradient(from 0deg at 28% 40%,#ff2e93 0 2.6deg,#ff79b7 2.6deg 5.2deg)}
+.ix-osi .sp-dots{position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.2) 1.8px,transparent 2.3px) 0 0/11px 11px;pointer-events:none}
+.ix-osi .sp-top{position:relative;z-index:3;display:flex;flex-direction:column;gap:22px}
+.ix-osi .sp-who{align-self:flex-start;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--ink);color:var(--y);padding:8px 11px;transform:rotate(-2deg)}
+.ix-osi .sp-h{font:400 clamp(30px,5vw,54px)/1.02 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);letter-spacing:-.02em}
+.ix-osi .sp-h span{display:block}
+.ix-osi .sp-h span:nth-child(2){color:var(--y)}
+.ix-osi .sp-bl{max-width:420px}
+.ix-osi .sp-card{position:relative;z-index:4;background:#fff;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:16px 18px 20px;transform:rotate(1.2deg)}
+.ix-osi .atw{display:flex;flex-direction:column}
+.ix-osi .ar{display:grid;grid-template-columns:50px minmax(0,1fr) auto;align-items:center;column-gap:10px;min-height:52px;padding:6px 0;border-top:2px solid rgba(20,20,20,.14)}
+.ix-osi .ar:first-child{border-top:0}
+.ix-osi .ar.thin{min-height:34px;padding:2px 0;color:#8a8478}
+.ix-osi .ar.thin .an{font-size:16px;color:#8a8478}
+.ix-osi .ar.thin .aname{font-size:15px}
+.ix-osi .an{font:400 20px/1 'Rubik Mono One'}
+.ix-osi .aname{font:400 18px/1.1 'Russo One'}
+.ix-osi .slot{display:flex;justify-content:flex-end;min-width:0}
+.ix-osi .chip{display:inline-block;font:400 17px/1 'Russo One';background:#fff;color:var(--ink);border:3px dashed var(--p);padding:9px 11px;transform:rotate(-3deg);white-space:nowrap;position:relative}
+.ix-osi .chip::after{content:"?";position:absolute;right:-10px;top:-12px;width:24px;height:24px;display:grid;place-items:center;background:var(--p);color:#fff;border:2px solid var(--ink);border-radius:50%;font-size:14px}
+.ix-osi .sorted .chip{background:var(--g);border:3px solid var(--ink);transform:rotate(0);box-shadow:3px 3px 0 var(--ink)}
+.ix-osi .sorted .chip::after{content:"✓";background:var(--ink)}
+.ix-osi .sp-card .dock{margin-top:16px}
+.ix-osi .sp-sfx{--fs:clamp(34px,5vw,54px);--rot:-9deg;--ss:var(--ink);left:-14px;bottom:-30px;opacity:0}
+.ix-osi .sorted .sp-sfx{opacity:1}
+.ix-osi.anim .sorted .sp-sfx{animation:ixosi-pop .5s cubic-bezier(.2,1.7,.4,1) .55s both}
+.ix-osi .atk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 30px;color:#fff;padding:30px 20px 18px}
+.ix-osi.anim .atk:not([hidden]) .ak{animation:ixosi-up .4s ease-out both}
+.ix-osi.anim .atk .ak:nth-child(2){animation-delay:.1s}
+.ix-osi.anim .atk .ak:nth-child(3){animation-delay:.2s}
+.ix-osi.anim .atk .ak:nth-child(4){animation-delay:.3s}
+@keyframes ixosi-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ix-osi .ak{display:flex;flex-direction:column;gap:8px;font-size:18px;line-height:1.45}
+.ix-osi .ak-h{display:flex;align-items:center;gap:10px;font:400 22px/1.15 'Russo One';color:var(--y)}
+.ix-osi .ak-h span{font:400 15px/1 'Rubik Mono One';background:var(--p);color:#fff;padding:6px 7px;border:2px solid #fff}
+.ix-osi .ak-d{color:#e9e4d6}
+.ix-osi .ak-d b{color:var(--g);font-weight:600}
+
+/* ===== ФАЕРВОЛ И WAF ===== */
+.ix-osi .gate{display:flex;flex-direction:column;gap:20px;padding:26px 26px 28px}
+.ix-osi .req{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.ix-osi .rq-n{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.05em;background:var(--ink);color:var(--y);padding:8px 10px}
+.ix-osi .rq{font:700 18px/1.35 var(--mono);background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 12px;overflow-wrap:anywhere;max-width:100%}
+.ix-osi .rq em{font-style:normal;background:var(--p);color:#fff;padding:0 3px}
+.ix-osi .lane{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr) 34px minmax(0,1fr);align-items:stretch}
+.ix-osi .gt{position:relative;display:flex;flex-direction:column;gap:6px;background:#fff;border:3px solid var(--ink);padding:16px 14px 14px;min-height:170px;transition:background .25s,transform .25s}
+.ix-osi .gt-h{font:400 clamp(18px,2.4vw,24px)/1.05 'Rubik Mono One'}
+.ix-osi .gt-l{font-size:17px;line-height:1.3;color:#3d382f}
+.ix-osi .gt-v{margin-top:auto;align-self:flex-start;font:400 19px/1 'Russo One';text-transform:uppercase;padding:8px 10px;border:3px solid currentColor;transform:rotate(-4deg);visibility:hidden}
+.ix-osi .gt.lit{background:#fff4c2;transform:translateY(-4px)}
+.ix-osi .gt.ok .gt-v{visibility:visible;color:#00714a;background:#e3fff2}
+.ix-osi .gt.no{background:#ffe0ee}
+.ix-osi .gt.no .gt-v{visibility:visible;color:#c4005d;background:#fff}
+.ix-osi .gt.na{opacity:.45}
+.ix-osi .gt.na .gt-v{visibility:visible;color:#6b6458}
+.ix-osi .gt.srv.ok{background:var(--g)}
+.ix-osi .arw{align-self:center;justify-self:center;width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:18px solid var(--ink)}
+.ix-osi .say{font:500 20px/1.4 Rubik;border-left:8px solid var(--y);padding:2px 0 2px 14px;max-width:760px;min-height:2.8em}
+.ix-osi .say.bad{border-color:var(--p)}
+.ix-osi .say.ok{border-color:var(--g)}
+.ix-osi .gate .dock{margin-top:0}
+.ix-osi.anim .gt.no{animation:ixosi-shake .3s linear}
+@keyframes ixosi-shake{0%,100%{transform:none}25%{transform:translate(-5px,2px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-2px,2px)}}
+.ix-osi .facts{display:flex;flex-direction:column;gap:16px;justify-content:center}
+.ix-osi .facts p{font-size:18px;line-height:1.45}
+.ix-osi .facts b{color:var(--y);font-weight:600}
+
+/* стр.6 */
+.ix-osi .p6-sfx{--fs:44px;--rot:-8deg;right:16px;bottom:16px;--sc:#fff}
+.ix-osi .why{padding:28px 26px 30px}
+.ix-osi .why-h{font:400 clamp(22px,3.2vw,30px)/1.15 'Russo One';max-width:640px}
+.ix-osi .why-l{list-style:none;counter-reset:w;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 34px}
+.ix-osi .why-l li{counter-increment:w;position:relative;padding-left:52px;font-size:19px;line-height:1.42}
+.ix-osi .why-l li::before{content:counter(w);position:absolute;left:0;top:-4px;font:400 34px/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-osi .why-l b{display:block;font:400 21px/1.2 'Russo One';font-weight:400;margin-bottom:2px}
+
+/* ===== БИТВА ===== */
+.ix-osi .battle{position:relative;margin-top:18px;background:var(--ink);color:#fff;padding:var(--gap);box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .bt-top{display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--gap)}
+.ix-osi .bt-face{position:relative;height:180px;background:#1a0d14;overflow:hidden;display:grid;place-items:center;background-image:radial-gradient(rgba(255,46,147,.4) 1.5px,transparent 2px);background-size:9px 9px}
+.ix-osi .bf-l{font:400 76px/1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--y);transform:rotate(-8deg)}
+.ix-osi .battle.ko .bf-l{opacity:.3}
+.ix-osi .battle.hit .bt-face{animation:ixosi-shake .3s linear}
+.ix-osi .bt-hp{background:var(--p);padding:20px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:var(--ink)}
+.ix-osi .bt-name{font:400 clamp(20px,3vw,28px)/1.1 'Rubik Mono One';color:#fff;-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-osi .hp{height:28px;border:3px solid var(--ink);background:#fff;position:relative;overflow:hidden}
+.ix-osi .hp i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--g);border-right:3px solid var(--ink);transition:width .5s ease}
+.ix-osi .bt-step{font:400 16px/1 'Russo One'}
+.ix-osi .bt-body{background:#fff;color:var(--ink);margin-top:var(--gap);padding:26px 24px 28px;position:relative;overflow:hidden}
+.ix-osi .bt-say{font:400 24px/1.25 Neucha,cursive;max-width:620px}
+.ix-osi .bt-say code{font:700 18px/1 var(--mono);background:var(--p);color:#fff;padding:2px 6px}
+.ix-osi .bt-lab{font:400 15px/1 'Russo One';text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
+.ix-osi .opts{display:flex;flex-direction:column;gap:12px;max-width:620px}
+.ix-osi .opt{min-height:56px;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font:500 18px/1.3 Rubik;cursor:pointer;border-radius:4px}
+.ix-osi .opt:hover{background:#fff4c2}
+.ix-osi .opt.miss{background:#eee;color:#6b6458;box-shadow:none;text-decoration:line-through}
+.ix-osi .opt.win{background:var(--g)}
+.ix-osi .fb{margin-top:18px;font:500 19px/1.35 Rubik;border-left:8px solid var(--p);padding:2px 0 2px 14px;max-width:620px}
+.ix-osi .fb:empty{display:none}
+.ix-osi .fb.ok{border-color:var(--g)}
+.ix-osi .fb b{font:400 22px/1 'Rubik Mono One';margin-right:8px}
+.ix-osi .bt-sfx{--fs:50px;left:34px;top:116px;--rot:-9deg;--ss:var(--y)}
+.ix-osi .bt-next{margin-top:20px}
+.ix-osi .bt-end h3{font:400 clamp(24px,4vw,38px)/1.1 'Rubik Mono One';color:var(--p);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);outline:none}
+.ix-osi .bt-end p{margin-top:12px;font:500 20px/1.4 Rubik}
+
+/* ===== СОБЕСЕДОВАНИЕ ===== */
+.ix-osi .iv{margin-top:18px;background:var(--ink);color:#fff;padding:30px 28px 32px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-osi .iv-lab{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--y);color:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-osi .iv-q{margin-top:16px;font:400 clamp(23px,3.4vw,32px)/1.22 'Russo One';max-width:820px}
+.ix-osi .iv-think{margin:18px 0 22px;font-size:19px;line-height:1.45;color:#e9e4d6;max-width:700px}
+.ix-osi .iv-think b{color:var(--y);font-weight:600}
+.ix-osi .iv-a{margin-top:26px;display:flex;flex-direction:column;gap:18px;max-width:780px}
+.ix-osi .iv-p{font-size:20px;line-height:1.45;padding-left:16px;border-left:5px solid var(--g)}
+.ix-osi .iv-p b{display:block;font:400 20px/1.2 'Russo One';color:var(--g);margin-bottom:4px}
+.ix-osi .iv-err{font-size:19px;line-height:1.45;background:var(--p);color:#fff;padding:14px 16px;margin-top:6px}
+.ix-osi .iv-err b{font-family:'Russo One';font-weight:400}
+
+/* ===== ШПАРГАЛКА ===== */
+.ix-osi .cs-lab{margin-top:18px;font:400 20px/1.2 'Russo One'}
+.ix-osi .cs{list-style:none;margin:10px 0 0;padding:0;max-width:760px}
+.ix-osi .cs li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;padding:18px 0;border-top:1.5px solid rgba(20,20,20,.2)}
+.ix-osi .cs li:first-child{border-top:0}
+.ix-osi .cs-n{font:400 40px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-osi .cs b{display:block;font:400 21px/1.2 'Russo One';margin-bottom:4px}
+.ix-osi .cs p{font-size:18px;line-height:1.4}
+.ix-osi .legal{margin-top:26px;font-size:18px;line-height:1.45;border-left:6px solid var(--g);padding-left:14px;max-width:760px}
+.ix-osi .legal b{font-family:'Russo One';font-weight:400}
+.ix-osi .end-row{margin-top:36px}
+.ix-osi .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--y);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== ТЕЛЕФОН ===== */
+@media (max-width:700px){
+  .ix-osi{--gap:10px}
+  .ix-osi .page{grid-template-columns:minmax(0,1fr)}
+  .ix-osi .pn{grid-column:1/-1}
+  .ix-osi .pn>.fr{padding:30px 16px 32px}
+  .ix-osi .pn:nth-child(odd)>.fr{--tl:0px;--tr:var(--m);--br:var(--m);--bl:0px}
+  .ix-osi .pn:nth-child(even)>.fr{--tl:var(--m);--tr:0px;--br:0px;--bl:var(--m)}
+  .ix-osi .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-osi .bl{font-size:22px;max-width:100%}
+  .ix-osi .cold{min-height:0;gap:18px;padding:30px 16px 40px}
+  .ix-osi .vname{-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--y)}
+  .ix-osi .cold-sfx{top:auto;bottom:10px;right:8px}
+  .ix-osi .cold-bl{margin-bottom:30px}
+  .ix-osi .st{padding:4px 6px;border-width:2px}
+  .ix-osi .p1-sfx{--fs:32px}
+  .ix-osi .mat{--w0:106px;--sw:42px}
+  .ix-osi .route{font-size:14px;gap:6px}
+  .ix-osi .route span{padding:7px 8px}
+  .ix-osi .mat-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+  .ix-osi .bd{width:38px;height:34px;font-size:14px;top:calc(var(--sw) * .7 - 17px)}
+  .ix-osi .core .bd{top:calc(21.4% - 17px)}
+  .ix-osi .note{font-size:13px}
+  .ix-osi .mat-sfx{--fs:30px;right:auto;left:0;top:1%}
+  .ix-osi .rd-p{min-height:0}
+  .ix-osi .btn{width:100%}
+  .ix-osi .fl{grid-template-columns:44px minmax(0,1fr);column-gap:10px;border-left-width:12px}
+  .ix-osi .fn{font-size:24px}
+  .ix-osi .fname{font-size:19px}
+  .ix-osi .tower{box-shadow:6px 6px 0 var(--ink)}
+  .ix-osi .mn{font-size:27px}
+  .ix-osi .sp{grid-template-columns:minmax(0,1fr);padding:44px 14px 70px;clip-path:polygon(0 0,100% 22px,100% 100%,0 calc(100% - 22px))}
+  .ix-osi .sp-h{font-size:clamp(26px,8vw,36px);-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--ink)}
+  .ix-osi .sp-card{padding:12px 12px 16px;transform:none;box-shadow:6px 6px 0 var(--ink)}
+  .ix-osi .ar{grid-template-columns:44px minmax(0,1fr) auto;column-gap:8px}
+  .ix-osi .an{font-size:17px}
+  .ix-osi .aname{font-size:16px}
+  .ix-osi .chip{font-size:15px;padding:8px 8px}
+  .ix-osi .sp-sfx{left:auto;right:-4px;bottom:-34px}
+  .ix-osi .atk{grid-template-columns:minmax(0,1fr);padding:26px 6px 14px}
+  .ix-osi .lane{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 26px auto 26px auto}
+  .ix-osi .arw{transform:rotate(90deg);border-top-width:11px;border-bottom-width:11px;border-left-width:14px}
+  .ix-osi .gt{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;align-items:center;padding:12px 12px}
+  .ix-osi .gt-v{grid-row:1/3;grid-column:2;margin:0;font-size:16px;padding:6px 8px}
+  .ix-osi .gt-h{font-size:19px}
+  .ix-osi .gt-l{font-size:16px}
+  .ix-osi .rq{font-size:16px}
+  .ix-osi .say{font-size:19px}
+  .ix-osi .why{padding:28px 16px 30px}
+  .ix-osi .why-l{grid-template-columns:minmax(0,1fr)}
+  .ix-osi .bt-top{grid-template-columns:110px minmax(0,1fr)}
+  .ix-osi .bt-face{height:130px}
+  .ix-osi .bf-l{font-size:44px}
+  .ix-osi .bt-hp{padding:14px}
+  .ix-osi .bt-body{padding:22px 16px 24px}
+  .ix-osi .bt-sfx{--fs:30px;left:14px;top:96px}
+  .ix-osi .iv{padding:26px 16px 28px}
+  .ix-osi .cs li{grid-template-columns:62px minmax(0,1fr);gap:12px}
+  .ix-osi .cs-n{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-osi *,.ix-osi *::before,.ix-osi *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+  var root = document.querySelector('.ix-osi'); if (!root) return;
+  var RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if (!RM) root.classList.add('anim');
+  function $(id){ return root.querySelector('#ix-osi-' + id); }
+  function el(tag, cls, txt){ var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function rich(box, parts){ /* parts: строки; [текст] — код */
+    box.textContent = '';
+    parts.forEach(function(p){ box.appendChild(typeof p === 'string' ? document.createTextNode(p) : el('code', '', p[0])); });
+  }
+  function later(fn, ms){ return setTimeout(fn, RM ? 0 : ms); }
+
+  /* --- пролог: анимация, когда постер на экране --- */
+  var cold = root.querySelector('.cold');
+  if (cold){
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(en){ en.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add('go'); io.unobserve(x.target); } }); }, {threshold: .25});
+      io.observe(cold);
+    } else cold.classList.add('go');
+  }
+
+  /* --- матрёшка --- */
+  var mat = $('mat'), dolls = $('dolls'), go = $('go'), ctr = $('ctr'), live = $('live');
+  var rtag = $('rtag'), rh = $('rh'), rp = $('rp'), xray = $('xray'), msfx = $('msfx');
+  var shells = {}; dolls.querySelectorAll('.sh[data-l]').forEach(function(s){ shells[s.getAttribute('data-l')] = s; });
+  var SPAN = {4: [1, 8], 3: [2, 7], 2: [3, 6], 1: [4, 5]};
+  var XC = {
+    mac: ['MAC', 'var(--c)'], ip: ['IP', 'var(--p)'], tcp: ['TCP :443', 'var(--y)'], data: ['GET /ocenki', 'var(--g)'], fcs: ['FCS', 'var(--c)']
+  };
+  var STEPS = [
+    {tag: 'L7 · Прикладной', h: 'Данные', p: ['Браузер Сони пишет HTTP-запрос ', ['GET /ocenki'], ' — «дай мои оценки». Это слои 5–7: по HTTPS данные ещё и шифрует TLS.'], b: 'Завернуть в сегмент'},
+    {tag: 'L4 · Транспортный · TCP', h: 'Сегмент', p: ['TCP клеит наклейку с портами: от ', ['51544'], ' к ', ['443'], '. Плюс номер по порядку, чтобы собрать куски, даже если придут вразнобой.'], b: 'Завернуть в пакет', sfx: 'ЩЁЛК!'},
+    {tag: 'L3 · Сетевой · IP', h: 'Пакет', p: ['IP клеит адреса: от ', ['192.168.1.23'], ' к ', ['203.0.113.10'], '. По ним роутеры ведут пакет через весь интернет.'], b: 'Завернуть в кадр', sfx: 'ЩЁЛК!'},
+    {tag: 'L2 · Канальный · Wi-Fi', h: 'Кадр', p: ['Наклейка с MAC-адресами: от ноутбука Сони до домашнего роутера, только до ближайшего соседа. В хвост — контрольная сумма (FCS), чтобы заметить помехи.'], b: 'Превратить в биты', sfx: 'ЩЁЛК!'},
+    {tag: 'L1 · Физический', h: 'Биты', p: ['Всё вместе становится нулями и единицами: радиоволнами Wi-Fi, током в кабеле или светом в оптике.'], b: 'Отправить в сеть', sfx: '0101!', hot: 1},
+    {tag: 'В пути', h: 'Роутеры', p: ['Каждый роутер снимает кадр, читает IP и надевает новый кадр. MAC-адреса меняются на каждом шаге, IP едут до конца. (Домашний роутер ещё подменяет обратный адрес на свой внешний — это NAT.)'], b: 'Снять биты', sfx: 'ВЖУХ!'},
+    {tag: 'L1 сервера: биты → кадр', h: 'Кадр', p: ['Сетевая карта сервера ловит сигнал и собирает биты обратно в кадр.'], b: 'Снять кадр', sfx: 'ЧПОК!'},
+    {tag: 'L2 сервера снял кадр', h: 'Пакет', p: ['«MAC-адрес мой? Контрольная сумма сошлась? Да». Свою наклейку прочитал, внутрь не смотрит — снимает кадр.'], b: 'Снять пакет', sfx: 'ЧПОК!'},
+    {tag: 'L3 сервера снял пакет', h: 'Сегмент', p: ['Адрес получателя ', ['203.0.113.10'], ' — мой. Пакет снят, содержимое уходит к TCP.'], b: 'Снять сегмент', sfx: 'ЧПОК!'},
+    {tag: 'L4 сервера снял сегмент', h: 'Данные', p: ['Порт ', ['443'], ' — это веб-сервер. TCP собирает куски по порядку и подтверждает получение.'], b: 'Прочитать запрос', sfx: 'ЧПОК!'},
+    {tag: 'L7 сервера читает', h: 'Готово', p: ['Сервер читает ', ['GET /ocenki'], ' и отправляет оценки обратно — такой же матрёшкой. Каждый слой прочитал только свою наклейку.'], b: 'Собрать заново', sfx: 'ЕСТЬ!', hot: 1}
+  ];
+  var s = 0, busy = false, prevX = [];
+  function outer(n){ for (var l = 1; l <= 4; l++){ if (n >= SPAN[l][0] && n <= SPAN[l][1]) return l; } return 7; }
+  function chips(o){ return o === 1 ? ['bits'] : o === 2 ? ['mac', 'ip', 'tcp', 'data', 'fcs'] : o === 3 ? ['ip', 'tcp', 'data'] : o === 4 ? ['tcp', 'data'] : ['data']; }
+  function drawX(o){
+    var ks = chips(o); xray.textContent = '';
+    ks.forEach(function(k){
+      var c;
+      if (k === 'bits') c = el('span', 'xc bits new', '01000111 01000101 01010100 00100000 00101111 …');
+      else { c = el('span', 'xc' + (prevX.indexOf(k) < 0 && prevX.length ? ' new' : ''), XC[k][0]); c.style.setProperty('--xc', XC[k][1]); }
+      xray.appendChild(c);
+    });
+    prevX = ks;
+  }
+  function sfx(t){
+    msfx.classList.remove('on'); msfx.textContent = t || '';
+    if (t){ void msfx.offsetWidth; msfx.classList.add('on'); }
+  }
+  function render(withFx){
+    var st = STEPS[s];
+    for (var l = 1; l <= 4; l++) shells[l].classList.toggle('off', !(s >= SPAN[l][0] && s <= SPAN[l][1]));
+    rtag.textContent = st.tag; rh.textContent = st.h; rich(rp, st.p);
+    drawX(outer(s));
+    go.textContent = st.b; go.classList.toggle('hot', !!st.hot);
+    ctr.textContent = 'шаг ' + (s + 1) + '/' + STEPS.length;
+    mat.setAttribute('data-s', s);
+    if (withFx){
+      sfx(st.sfx);
+      dolls.classList.remove('thud'); void dolls.offsetWidth; dolls.classList.add('thud');
+      live.textContent = st.h + '. ' + rp.textContent;
+    }
+  }
+  function travel(){
+    busy = true; go.setAttribute('aria-disabled', 'true');
+    mat.classList.add('fly'); dolls.classList.add('away'); go.textContent = 'В пути…'; ctr.textContent = 'шаг 6/' + STEPS.length;
+    s = 5; rtag.textContent = STEPS[5].tag; rh.textContent = STEPS[5].h; rich(rp, STEPS[5].p); sfx(STEPS[5].sfx);
+    later(function(){
+      dolls.classList.remove('away'); dolls.classList.add('back'); mat.classList.add('srv');
+      void dolls.offsetWidth;
+      dolls.classList.remove('back'); dolls.classList.add('land');
+      later(function(){ dolls.classList.remove('land'); mat.classList.remove('fly'); busy = false; go.removeAttribute('aria-disabled'); render(false); live.textContent = STEPS[5].h + '. ' + rp.textContent; }, 600);
+    }, 520);
+  }
+  go.addEventListener('click', function(){
+    if (busy) return;
+    if (s === 4){ travel(); return; }
+    if (s === STEPS.length - 1){ s = 0; prevX = []; mat.classList.remove('srv'); render(true); sfx(''); return; }
+    s++; render(true);
+  });
+  render(false);
+
+  /* --- этажи: OSI ↔ TCP/IP --- */
+  var floors = $('floors'), fold = $('fold'), fsay = $('fsay'), fcap = $('fcap');
+  fold.addEventListener('click', function(){
+    var on = !floors.classList.contains('tcp');
+    floors.classList.toggle('tcp', on);
+    fold.setAttribute('aria-pressed', String(on));
+    fold.textContent = on ? 'Обратно в OSI' : 'Сложить в TCP/IP';
+    fcap.textContent = on ? 'Модель TCP/IP: 4 уровня. Так устроен настоящий интернет.' : 'Модель OSI: 7 уровней. Её учат, чтобы говорить на одном языке.';
+    fsay.textContent = on ? '7, 6 и 5 сливаются в прикладной уровень, 2 и 1 — в сетевой доступ. Наклейки из матрёшки — это TCP, IP и MAC.' : 'Считаем снизу: 1 — провод, 7 — программа.';
+  });
+
+  /* --- сплэш: раскладываем атаки по этажам --- */
+  var splash = $('splash'), sortB = $('sort'), atw = $('atw'), atk = $('atk'), spbl = $('spbl').querySelector('span');
+  var chipEls = [].slice.call(atw.querySelectorAll('.chip'));
+  var home = chipEls.map(function(c){ return c.parentNode; });
+  function slotOf(f){ return atw.querySelector('.ar[data-f="' + f + '"] .slot'); }
+  function flip(moves){
+    var first = chipEls.map(function(c){ return c.getBoundingClientRect(); });
+    moves();
+    if (RM || !chipEls[0].animate) return;
+    chipEls.forEach(function(c, i){
+      var r = c.getBoundingClientRect(), dx = first[i].left - r.left, dy = first[i].top - r.top;
+      if (!dx && !dy) return;
+      c.animate([{transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(-12deg) scale(1.15)'}, {transform: 'none'}], {duration: 650, delay: i * 70, easing: 'cubic-bezier(.3,1.4,.5,1)', fill: 'backwards'});
+    });
+  }
+  sortB.addEventListener('click', function(){
+    var sorted = !splash.classList.contains('sorted');
+    flip(function(){
+      chipEls.forEach(function(c, i){ (sorted ? slotOf(c.getAttribute('data-to')) : home[i]).appendChild(c); });
+      splash.classList.toggle('sorted', sorted);
+    });
+    atk.hidden = !sorted;
+    spbl.textContent = sorted ? 'Э-э… Я так и говорил. Почти.' : 'ARP-спуфинг — это взлом сайта! А XSS — провод перегрелся!';
+    sortB.textContent = sorted ? 'Перемешать снова' : 'Разложить по этажам';
+    sortB.classList.toggle('hot', !sorted);
+  });
+
+  /* --- фаервол и WAF --- */
+  var REQ = [
+    {q: ['с 198.51.100.7 → порт ', ['22'], ' (SSH)'], g: ['no', 'na', 'na'], v: ['стоп', 'не дошёл', 'не дошёл'], cls: 'bad',
+     say: 'Фаервол: порт 22 снаружи закрыт для всех. До WAF запрос даже не дошёл.'},
+    {q: ['→ порт 443 · GET /search?q=котики'], g: ['ok', 'ok', 'ok'], v: ['пропуск', 'пропуск', 'ответ'], cls: 'ok',
+     say: 'Порт открыт, внутри обычный поиск. Оба охранника пропускают, сервер отвечает.'},
+    {q: ['→ порт 443 · comment=', ['<script>alert(1)<\/script>']], g: ['ok', 'no', 'na'], v: ['пропуск', 'стоп', 'не дошёл'], cls: 'bad',
+     say: 'Фаервол пропустил: порт 443 открыт, а внутрь он не смотрит. WAF развернул HTTP и нашёл тег script.'}
+  ];
+  var rq = $('rq'), rqn = $('rqn'), pass = $('pass'), gsay = $('gsay');
+  var G = [$('g1'), $('g2'), $('g3')], V = [$('v1'), $('v2'), $('v3')];
+  var ri = 0, gbusy = false, ran = false;
+  function showReq(){
+    var r = REQ[ri]; rqn.textContent = 'Запрос ' + (ri + 1) + ' из 3';
+    rq.textContent = '';
+    r.q.forEach(function(p){ rq.appendChild(typeof p === 'string' ? document.createTextNode(p) : el('em', '', p[0])); });
+    G.forEach(function(g, i){ g.className = 'gt' + (i === 2 ? ' srv' : ''); V[i].textContent = ''; });
+  }
+  function runReq(){
+    var r = REQ[ri]; gbusy = true; pass.setAttribute('aria-disabled', 'true');
+    gsay.className = 'say'; gsay.textContent = 'Проверяем…';
+    var i = 0;
+    (function nextGate(){
+      var g = G[i];
+      if (r.g[i] === 'na'){ for (; i < 3; i++){ G[i].classList.add('na'); V[i].textContent = r.v[i]; } return finish(); }
+      g.classList.add('lit');
+      later(function(){
+        g.classList.remove('lit'); g.classList.add(r.g[i]); V[i].textContent = r.v[i];
+        i++;
+        if (i < 3) later(nextGate, 260); else finish();
+      }, 420);
+    })();
+    function finish(){
+      gsay.className = 'say ' + r.cls; gsay.textContent = r.say;
+      gbusy = false; ran = true; pass.removeAttribute('aria-disabled');
+      pass.textContent = ri < 2 ? 'Пропустить запрос ' + (ri + 2) : 'Начать сначала';
+    }
+  }
+  pass.addEventListener('click', function(){
+    if (gbusy) return;
+    if (ran){
+      if (ri < 2){ ri++; showReq(); runReq(); }
+      else { ri = 0; ran = false; showReq(); gsay.className = 'say'; gsay.textContent = 'Нажми кнопку — запрос пойдёт через охрану.'; pass.textContent = 'Пропустить запрос'; }
+      return;
+    }
+    runReq();
+  });
+  showReq();
+
+  /* --- битва --- */
+  var MOVES = [
+    {say: ['Разошлю по школьной сети: ', '«MAC роутера — мой!»', ' И весь трафик пойдёт через меня.'],
+     o: [['Поставить WAF перед сайтом', 0, 'WAF читает HTTP на L7. Подмену MAC на L2 он не видит.'],
+         ['Проверка ARP на коммутаторе и HTTPS', 1, 'Коммутатор отбросит поддельные ARP-ответы, а HTTPS сделает перехваченное нечитаемым.'],
+         ['Сменить пароль от дневника', 0, 'Пароль ни при чём: атака идёт на L2, в локальной сети.']]},
+    {say: ['Завалю сервер приветствиями: ', 'SYN, SYN, SYN…', ' А рукопожатие не закончу никогда!'],
+     o: [['Экранировать вывод на страницах', 0, 'Это защита от XSS на L7, а SYN flood бьёт по L4.'],
+         ['Купить кабель подлиннее', 0, 'Кабель (L1) ни при чём: переполняется очередь соединений на L4.'],
+         ['SYN cookies и защита от DDoS', 1, 'Сервер не тратит память на полуоткрытые соединения, а лишнее режут ещё у провайдера.']]},
+    {say: ['Спрячу ', '<script>', ' в комментарий. Ваш фаервол меня не видит: порт 443 открыт!'],
+     o: [['Закрыть порт 443 на фаерволе', 0, 'Тогда сайт сломается у всех. Атака живёт внутри HTTP, а не в порте.'],
+         ['Экранировать вывод в коде и поставить WAF', 1, 'Код превращает script в обычный текст, а WAF ловит атаку вторым слоем на L7.'],
+         ['Сменить IP-адрес сервера', 0, 'Атака придёт и на новый адрес: она в данных, а не в адресе.']]}
+  ];
+  var bt = $('bt'), hp = $('hp'), hpbar = $('hpbar'), stepEl = $('step'), battle = $('battle');
+  var cur, hpv, score, tried;
+  function setHp(v){ hpv = v; hpbar.style.width = v + '%'; hp.setAttribute('aria-valuenow', v); }
+  function boom(t){ var o = battle.querySelector('.bt-sfx'); if (o) o.remove(); if (!t) return; var sf = el('span', 'sfx bt-sfx', t); sf.setAttribute('aria-hidden', 'true'); battle.appendChild(sf); }
+  function start(){ battle.classList.remove('ko'); cur = 0; score = 0; setHp(100); move(false); }
+  function move(focus){
+    var m = MOVES[cur]; tried = false; boom('');
+    stepEl.textContent = 'Ход ' + (cur + 1) + ' из 3';
+    bt.textContent = '';
+    var sy = el('p', 'bt-say'); sy.appendChild(document.createTextNode('Путаник: «' + m.say[0]));
+    sy.appendChild(el('code', '', m.say[1])); sy.appendChild(document.createTextNode(m.say[2] + '»'));
+    bt.appendChild(sy);
+    bt.appendChild(el('p', 'bt-lab', 'Выбери защиту'));
+    var box = el('div', 'opts'), fb = el('p', 'fb'); fb.setAttribute('aria-live', 'polite');
+    m.o.forEach(function(o){
+      var b = el('button', 'opt', o[0]); b.type = 'button';
+      b.addEventListener('click', function(){
+        if (b.disabled) return;
+        if (o[1]){
+          if (!tried) score++;
+          box.querySelectorAll('.opt').forEach(function(x){ x.disabled = true; });
+          b.classList.add('win');
+          fb.className = 'fb ok'; fb.textContent = ''; fb.appendChild(el('b', '', 'УДАР!')); fb.appendChild(document.createTextNode(o[2]));
+          setHp(cur === 2 ? 0 : hpv - 34);
+          battle.classList.remove('hit'); void battle.offsetWidth; battle.classList.add('hit');
+          boom('БАМ!');
+          var nx = el('button', 'btn bt-next', cur === 2 ? 'Добить Путаника' : 'Следующий ход'); nx.type = 'button';
+          nx.addEventListener('click', function(){ cur++; if (cur < 3) move(true); else end(); });
+          bt.appendChild(nx); nx.focus({preventScroll: true});
+        } else {
+          tried = true; b.disabled = true; b.classList.add('miss');
+          fb.className = 'fb'; fb.textContent = ''; fb.appendChild(el('b', '', 'промах')); fb.appendChild(document.createTextNode(o[2]));
+        }
+      });
+      box.appendChild(b);
+    });
+    bt.appendChild(box); bt.appendChild(fb);
+    if (focus) box.querySelector('.opt').focus({preventScroll: true});
+  }
+  function end(){
+    battle.classList.add('ko');
+    stepEl.textContent = 'Бой окончен';
+    bt.textContent = '';
+    var w = el('div', 'bt-end');
+    var h = el('h3', '', 'Путаник повержен'); h.tabIndex = -1; w.appendChild(h);
+    w.appendChild(el('p', '', 'Счёт: ' + score + ' из 3 с первой попытки. ' + (score === 3 ? 'Каждую атаку — на свой этаж!' : 'Ещё раз — и будет чисто.')));
+    var again = el('button', 'btn bt-next', 'Ещё раз'); again.type = 'button';
+    again.addEventListener('click', function(){ start(); bt.querySelector('.opt').focus({preventScroll: true}); });
+    w.appendChild(again);
+    boom('КО!');
+    bt.appendChild(w); h.focus({preventScroll: true});
+  }
+  start();
+
+  /* --- собеседование --- */
+  var ivb = $('ivb'), iva = $('iva');
+  ivb.addEventListener('click', function(){
+    var open = iva.hidden; iva.hidden = !open;
+    ivb.setAttribute('aria-expanded', String(open));
+    ivb.textContent = open ? 'Скрыть ответ' : 'Показать сильный ответ';
+  });
+})();</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое модель OSI?</h2><p class="lead"><b>Модель OSI</b> — учебная схема сети из 7 уровней: от физического (провод) до прикладного (программа).</p><h2>О чём выпуск</h2><ul><li>Чем 7 уровней OSI отличаются от 4 уровней TCP/IP</li><li>Как сообщение заворачивается в сегмент, пакет, кадр и биты</li><li>На каком уровне живут ARP-спуфинг, IP-спуфинг, SYN flood, XSS и SQLi</li><li>Чем фаервол отличается от WAF и зачем про OSI спрашивают на собеседовании</li></ul><h2>Словарик</h2><dl><dt>Модель OSI</dt><dd>Учебная схема сети из 7 уровней: от физического (провод) до прикладного (программа).</dd><dt>TCP/IP</dt><dd>Модель, по которой реально работает интернет: 4 уровня — сетевой доступ, межсетевой, транспортный, прикладной.</dd><dt>Инкапсуляция</dt><dd>Каждый уровень добавляет к данным свой заголовок: данные → сегмент → пакет → кадр → биты.</dd><dt>ARP</dt><dd>Протокол локальной сети, который узнаёт MAC-адрес устройства по его IP-адресу (уровень L2).</dd><dt>SYN flood</dt><dd>Атака на L4: тысячи запросов на соединение TCP без завершения рукопожатия забивают очередь сервера.</dd><dt>WAF</dt><dd>Фильтр веб-приложения: разбирает HTTP-запросы (L7) и блокирует похожие на XSS и SQL-инъекции.</dd></dl><h2>Вопрос с собеседования</h2><h3>Расскажи про модель OSI. На каких уровнях живут ARP, IP, TCP и HTTP, и где работают фаервол и WAF?</h3><p>OSI — 7 уровней: физический, канальный, сетевой, транспортный, сеансовый, представления, прикладной; в интернете работает TCP/IP из 4 уровней. При отправке данные заворачиваются в сегмент (TCP), пакет (IP), кадр (Ethernet или Wi-Fi) и биты, и каждый уровень читает только свой заголовок. ARP — L2 (ARP-спуфинг), IP — L3 (IP-спуфинг), TCP — L4 (SYN flood), HTTP — L7 (XSS, SQL-инъекции). Классический фаервол фильтрует по адресам и портам на L3–L4, WAF разбирает HTTP на L7; они работают вместе, а не вместо друг друга.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/osi/","text":"Модель OSI простыми словами: 7 уровней, TCP/IP, инкапсуляция и атаки по уровням"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"11"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

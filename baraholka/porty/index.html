@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Список портов TCP и UDP: шпаргалка — CyberComics</title>
+<meta name="description" content="Список портов TCP и UDP шпаргалкой: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/baraholka/porty/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Список портов TCP и UDP: шпаргалка — CyberComics">
+<meta property="og:description" content="Список портов TCP и UDP шпаргалкой: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет.">
+<meta property="og:url" content="https://cybercomics.ru/baraholka/porty/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/baraholka-porty.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Список портов TCP и UDP: шпаргалка — CyberComics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Список портов TCP и UDP: шпаргалка — CyberComics">
+<meta name="twitter:description" content="Список портов TCP и UDP шпаргалкой: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/baraholka-porty.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"LearningResource","@id":"https://cybercomics.ru/baraholka/porty/#resource","url":"https://cybercomics.ru/baraholka/porty/","mainEntityOfPage":"https://cybercomics.ru/baraholka/porty/","name":"Порты TCP и UDP: шпаргалка","description":"Список портов TCP и UDP шпаргалкой: 22 SSH, 53 DNS, 80 и 443 HTTP и HTTPS, порты баз данных, диапазоны портов и какие порты нельзя открывать в интернет.","inLanguage":"ru","dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"learningResourceType":"шпаргалка","about":{"@type":"Thing","name":"Порты TCP и UDP"},"educationalLevel":"начальный","audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"},"image":["https://cybercomics.ru/assets/og/baraholka-porty.jpg"]},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/baraholka/porty/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Барахолка","item":"https://cybercomics.ru/baraholka/"},{"@type":"ListItem","position":3,"name":"Порты TCP и UDP: шпаргалка","item":"https://cybercomics.ru/baraholka/porty/"}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div class="bh">
+
+  <header class="bh-hd mn-chrome">
+    <a class="bh-logo" href="../../">Cyber<span>Comics</span></a>
+    <nav class="bh-nav" aria-label="Основная навигация">
+      <a href="../../#vypuski">Выпуски</a>
+      <a href="../../">Город</a>
+      <a href="../../povtorenie/">Прокачаться</a>
+      <a href="../../arkada/">Разминка</a>
+      <a href="../../baraholka/" aria-current="page">Барахолка</a>
+    </nav>
+    <div class="bh-me">
+      
+      <span class="bh-chip">0 бит</span>
+    </div>
+  </header>
+
+  <div class="mn-wrap">
+    <a class="mn-crumb mn-chrome" href="../../baraholka/#shpargalki">← на Барахолку</a>
+
+    <div class="mn-top mn-chrome">
+      <div>
+        <span class="mn-kind">Шпаргалка · Порты</span>
+        <h1 class="mn-title">Порты, которые надо знать</h1>
+        <p class="mn-sub">Какой сервис обычно на каком порту, что такое диапазоны портов и какие двери не открывать в интернет.</p>
+      </div>
+      
+      
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+          <p>Ниже — начало листа. Купи, и откроется всё. Распечатать тоже можно.</p>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-top">Не хватает 120 бит</button>
+          <div id="mn-short-top" style="width: 100%">
+            
+          </div>
+        </div>
+      
+    </div>
+
+    <nav class="mn-toc mn-chrome" aria-label="Оглавление" id="mn-toc">
+      <h2>Что внутри</h2>
+      <ol>
+        
+          <li><a href="#pt-1">Что такое порт · самые нужные</a></li>
+        
+          <li><span class="lk">Ещё два десятка и что не открывать в интернет</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+      </ol>
+    </nav>
+
+    <div id="mn-host" class="mn-book is-preview" data-keep="">
+<!-- Шпаргалка Барахолки: порты TCP и UDP. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="pt-1" data-title="Что такое порт · самые нужные" data-preview="">
+  <span class="mn-tag">Шпаргалка · Порты</span>
+  <h2 class="mn-h1">Порты, которые надо знать</h2>
+  <p class="pen">IP-адрес — адрес дома. Порт — номер двери. За каждой дверью живёт своя программа.</p>
+  <ul>
+    <li>Номера от 1 до 65 535, отдельно у <b>TCP</b> (вежливый: договорился, потом говорит) и у <b>UDP</b> (бросил письмо и дальше).</li>
+    <li>Номер — это <span class="ul">договорённость</span>, а не закон: SSH можно поднять и на 2222. Но по умолчанию все стучат в привычные двери.</li>
+  </ul>
+
+  <h3 class="mn-h3">Шесть дверей в лицо</h3>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Порт</th><th>Кто живёт</th></tr></thead>
+    <tbody>
+      <tr><td><code class="nw">22</code> TCP</td><td>SSH — вход админа по сети, с шифрованием.</td></tr>
+      <tr><td><code class="nw">53</code> UDP/TCP</td><td>DNS — справочная «имя → IP». Короткие ответы по UDP, длинные по TCP.</td></tr>
+      <tr><td><code class="nw">80</code> TCP</td><td>HTTP — сайт без шифрования.</td></tr>
+      <tr><td><code class="nw">443</code> TCP</td><td>HTTPS — сайт с замочком. HTTP/3 ходит сюда же, но по UDP (QUIC).</td></tr>
+      <tr><td><code class="nw">3306</code> TCP</td><td>MySQL — база данных.</td></tr>
+      <tr><td><code class="nw">3389</code> TCP</td><td>RDP — удалённый рабочий стол Windows.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">Диапазоны (по IANA)</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><b>0–1023</b></td><td>Известные (well-known): о них договорились заранее.</td></tr>
+      <tr><td><b>1024–49151</b></td><td>Зарегистрированные: базы данных, игры, программы.</td></tr>
+      <tr><td><b>49152–65535</b></td><td>Динамические: временные «двери выхода» для твоих соединений.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>Linux по умолчанию берёт временные порты из 32768–60999. Это тоже нормально.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+
+</div>
+
+    
+      <section class="mn-locked mn-chrome" aria-labelledby="mn-lock-h">
+        <h2 id="mn-lock-h">Дальше ещё 1 страница</h2>
+        <p>Здесь кончается открытый разворот. Целый лист стоит 120 бит: это примерно 2–3 выпусков с квизами.</p>
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-bottom">Не хватает 120 бит</button>
+          <div id="mn-short-bottom" style="width: 100%; text-align: left">
+            
+          </div>
+        </div>
+      </section>
+    
+
+    
+  </div>
+
+  <footer class="bh-ft mn-chrome">
+    CyberComics · Сетеград, ночной рынок · Покупки за биты хранятся в этом браузере.<br>
+    Тренируйся только легально: <a href="https://picoctf.org" rel="noopener">picoCTF</a>, <a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Academy</a>, <a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a>, <a href="https://tryhackme.com" rel="noopener">TryHackMe</a>.
+  <div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+
+  
+</div></div>
+<template id="mn-src" data-id="ports">
+<!-- Шпаргалка Барахолки: порты TCP и UDP. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="pt-1" data-title="Что такое порт · самые нужные" data-preview>
+  <span class="mn-tag">Шпаргалка · Порты</span>
+  <h2 class="mn-h1">Порты, которые надо знать</h2>
+  <p class="pen">IP-адрес — адрес дома. Порт — номер двери. За каждой дверью живёт своя программа.</p>
+  <ul>
+    <li>Номера от 1 до 65 535, отдельно у <b>TCP</b> (вежливый: договорился, потом говорит) и у <b>UDP</b> (бросил письмо и дальше).</li>
+    <li>Номер — это <span class="ul">договорённость</span>, а не закон: SSH можно поднять и на 2222. Но по умолчанию все стучат в привычные двери.</li>
+  </ul>
+
+  <h3 class="mn-h3">Шесть дверей в лицо</h3>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Порт</th><th>Кто живёт</th></tr></thead>
+    <tbody>
+      <tr><td><code>22</code> TCP</td><td>SSH — вход админа по сети, с шифрованием.</td></tr>
+      <tr><td><code>53</code> UDP/TCP</td><td>DNS — справочная «имя → IP». Короткие ответы по UDP, длинные по TCP.</td></tr>
+      <tr><td><code>80</code> TCP</td><td>HTTP — сайт без шифрования.</td></tr>
+      <tr><td><code>443</code> TCP</td><td>HTTPS — сайт с замочком. HTTP/3 ходит сюда же, но по UDP (QUIC).</td></tr>
+      <tr><td><code>3306</code> TCP</td><td>MySQL — база данных.</td></tr>
+      <tr><td><code>3389</code> TCP</td><td>RDP — удалённый рабочий стол Windows.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">Диапазоны (по IANA)</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><b>0–1023</b></td><td>Известные (well-known): о них договорились заранее.</td></tr>
+      <tr><td><b>1024–49151</b></td><td>Зарегистрированные: базы данных, игры, программы.</td></tr>
+      <tr><td><b>49152–65535</b></td><td>Динамические: временные «двери выхода» для твоих соединений.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Linux по умолчанию берёт временные порты из 32768–60999. Это тоже нормально.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="pt-2" data-title="Ещё два десятка и что не открывать в интернет">
+  <h3 class="mn-h3">Ещё порты, которые встретятся</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>20, 21</code></td><td>FTP — передача файлов. Без шифрования.</td></tr>
+      <tr><td><code>23</code></td><td>Telnet — удалённый вход без шифрования. Предок SSH, сегодня не нужен.</td></tr>
+      <tr><td><code>25</code></td><td>SMTP — почта между серверами.</td></tr>
+      <tr><td><code>587</code>, <code>465</code></td><td>SMTP для отправки почты из почтовой программы, с шифрованием.</td></tr>
+      <tr><td><code>67, 68</code> UDP</td><td>DHCP — раздаёт устройствам IP-адреса в сети.</td></tr>
+      <tr><td><code>110</code> / <code>995</code></td><td>POP3 / POP3 с шифрованием — забрать почту.</td></tr>
+      <tr><td><code>143</code> / <code>993</code></td><td>IMAP / IMAP с шифрованием — читать почту на сервере.</td></tr>
+      <tr><td><code>123</code> UDP</td><td>NTP — сверка часов.</td></tr>
+      <tr><td><code>445</code></td><td>SMB — общие папки Windows.</td></tr>
+      <tr><td><code>1433</code></td><td>Microsoft SQL Server.</td></tr>
+      <tr><td><code>5432</code></td><td>PostgreSQL.</td></tr>
+      <tr><td><code>6379</code></td><td>Redis — быстрая база в памяти.</td></tr>
+      <tr><td><code>8080</code></td><td>Запасной HTTP: часто тут сидят тестовые серверы.</td></tr>
+      <tr><td><code>9200</code></td><td>Elasticsearch — поиск.</td></tr>
+      <tr><td><code>27017</code></td><td>MongoDB.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-warn">
+    <h4>Эти двери в интернет не открывай</h4>
+    <p><b>Базы данных</b> (3306, 5432, 1433, 6379, 27017, 9200), <b>RDP</b> 3389, <b>SMB</b> 445 и <b>Telnet</b> 23. Их постоянно ищут сканеры. База должна быть видна только своему приложению, а вход админа — через VPN или SSH по ключу.</p>
+  </div>
+  <div class="mn-stick g">
+    <h4>Правило охранника</h4>
+    <p>Закрыто всё, что не нужно. Межсетевой экран пропускает только нужные двери, а лишние службы просто выключены. Посмотреть, кто слушает порты на твоём Linux: <code>ss -tulpn</code>.</p>
+  </div>
+  <p class="pen">Как стучатся в двери и что такое сканирование портов — <a href="../../vypuski/tcp-udp-porty/">выпуск №13 «TCP, UDP и порты»</a>. Сканировать можно только свои машины и учебные стенды.</p>
+  <span class="mn-pg">2</span>
+</section>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-manual.js?v=3ee64698"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/"};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("Manual", document.getElementById("app"), {"id":"ports"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

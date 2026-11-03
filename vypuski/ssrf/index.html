@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>SSRF простыми словами: что это и как защититься</title>
+<meta name="description" content="SSRF: как сервер заставляют ходить во внутреннюю сеть и к служебному сервису облака, почему запрет по списку адресов не работает и как защищаться слоями.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/ssrf/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="SSRF простыми словами: что это и как защититься">
+<meta property="og:description" content="SSRF: как сервер заставляют ходить во внутреннюю сеть и к служебному сервису облака, почему запрет по списку адресов не работает и как защищаться слоями.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/ssrf/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-ssrf.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Прокси-Паук плетёт сеть изнутри">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SSRF простыми словами: что это и как защититься">
+<meta name="twitter:description" content="SSRF: как сервер заставляют ходить во внутреннюю сеть и к служебному сервису облака, почему запрет по списку адресов не работает и как защищаться слоями.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-ssrf.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/ssrf/#article","url":"https://cybercomics.ru/vypuski/ssrf/","mainEntityOfPage":"https://cybercomics.ru/vypuski/ssrf/","issueNumber":"6","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"Прокси-Паук плетёт сеть изнутри","name":"Прокси-Паук плетёт сеть изнутри","alternativeHeadline":"SSRF простыми словами: что это и как защититься","description":"SSRF: как сервер заставляют ходить во внутреннюю сеть и к служебному сервису облака, почему запрет по списку адресов не работает и как защищаться слоями.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-ssrf.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":6,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"продвинутый","timeRequired":"PT12M","teaches":["Почему опасно скачивать файлы по ссылке от пользователя","Что сервер видит такого, чего не видит интернет","Почему запрет по списку адресов не работает","Как защищаться слоями"],"about":{"@type":"Thing","name":"SSRF"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/ssrf/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"Прокси-Паук плетёт сеть изнутри","item":"https://cybercomics.ru/vypuski/ssrf/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/ssrf/#faq","mainEntity":[{"@type":"Question","name":"Что такое SSRF?","acceptedAnswer":{"@type":"Answer","text":"SSRF — Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему."}},{"@type":"Question","name":"Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?","acceptedAnswer":{"@type":"Answer","text":"Главный риск — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Также: разведка внутренней сети, обход межсетевого экрана, огромные файлы. Защита слоями: список разрешённых доменов и только https, проверка реального IP с отказом во внутренних диапазонах, запрет перенаправлений, ограничение исходящего трафика, защищённый режим метаданных и минимальные права роли, лимиты размера и времени, никакого сырого ответа пользователю. В пайплайне — SAST, скан IaC, мониторинг исходящих запросов."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #08c447; --oy: 0%">
+  
+  
+  
+  
+  
+  
+  
+    <span class="va-cable" style="--cx: 63%"></span>
+    <img loading="eager" fetchpriority="high" decoding="async" width="720" height="960" srcset="../../assets/img/villain-6-360.webp 360w, ../../assets/img/villain-6-540.webp 540w, ../../assets/img/villain-6.webp 720w" sizes="720px" class="va-img slide" src="../../assets/img/villain-6.webp" alt="" style="object-position: 50% var(--oy, 0%); --o: 63% 0%">
+    <span class="va-sfx" style="--d: .8s">ВЖЖЖ!</span>
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#2ee59d">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №6</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Веб-квартал</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">12 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★★★</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">Прокси-Паук плетёт сеть изнутри</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">SSRF: как сервер обращают против своей же сети</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Прокси-Паук:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер.</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Почему опасно скачивать файлы по ссылке от пользователя</li><li>Что сервер видит такого, чего не видит интернет</li><li>Почему запрет по списку адресов не работает</li><li>Как защищаться слоями</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Прокси-Паук — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-ssrf" data-ix="ssrf" aria-label="Выпуск 6: Прокси-Паук плетёт сеть изнутри">
+
+<div class="ix-ssrf-hud" aria-hidden="true">
+  <span class="ix-ssrf-hud-l">ЗАЩИТА СЕРВЕРА</span>
+  <span class="ix-ssrf-bar"><i></i><b>0%</b></span>
+  <span class="ix-ssrf-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+</div>
+<div class="ix-ssrf-sr" aria-live="polite" data-live=""></div>
+
+<!-- ========== MISSION ========== -->
+<div class="ix-ssrf-mission" id="ix-ssrf-mission">
+  <div class="ix-ssrf-eye" aria-hidden="true">
+    <svg class="ix-ssrf-mweb" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round">
+      <path d="M200 200L200 0M200 200L400 40M200 200L400 260M200 200L300 400M200 200L80 400M200 200L0 250M200 200L0 30"></path>
+      <path d="M200 120Q238 128 262 153Q282 186 274 220Q262 252 238 268Q203 278 168 274Q130 258 126 223Q122 188 136 158Q160 128 200 120"></path>
+      <path d="M200 60Q273 74 316 117Q350 176 338 238Q320 298 274 330Q206 356 136 340Q74 312 62 238Q54 172 84 118Q130 72 200 60"></path>
+    </g></svg>
+    <div class="ix-ssrf-drop"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+    <span class="ix-ssrf-tag">ЦЕЛЬ: ПРОКСИ-ПАУК</span>
+  </div>
+  <div class="ix-ssrf-mbody">
+    <p class="ix-ssrf-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ВЫПУСК 6</p>
+    <h2 aria-label="Порви паутину" class="ix-ssrf-mt" id="ix-ssrf-mt"><span>Порви</span> <span>паутину</span></h2>
+    <p class="ix-ssrf-msub">Паук не может войти в&nbsp;сеть компании. <em>Твой сервер</em> — может. Ты&nbsp;разработчик, и&nbsp;сегодня ты защищаешь его изнутри.</p>
+    <ol class="ix-ssrf-moves" aria-label="Уровни миссии">
+      <li data-mv="1"><b>01</b><span>Свои хосты</span></li>
+      <li data-mv="2"><b>02</b><span>Реальный адрес</span></li>
+      <li data-mv="3"><b>03</b><span>Без поворотов</span></li>
+      <li data-mv="4"><b>04</b><span>Слои сети</span></li>
+    </ol>
+    <button class="ix-ssrf-go" type="button" data-act="start">Принять миссию ▶</button>
+  </div>
+</div>
+
+<!-- ========== ACT 0: THE WEB ========== -->
+<section class="ix-ssrf-act ix-ssrf-locked" id="ix-ssrf-act" aria-labelledby="ix-ssrf-at">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">БРИФИНГ</span><h3 class="ix-ssrf-lt" id="ix-ssrf-at">Сеть изнутри</h3></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say" data-say="a"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Твой сервис аватарок: «Вставьте ссылку на картинку — мы её загрузим». Сервер сам сходит по ссылке и принесёт фото.</span></div>
+    <div class="ix-ssrf-mapslot" data-mapslot="act"></div>
+    <div class="ix-ssrf-steps">
+      <div class="ix-ssrf-stp" data-stp="0">
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s0">Загрузить фото по ссылке</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="1" hidden="">
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">А что плохого? Сервер просто скачает картинку.</span></div>
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Сервер стоит <b>внутри периметра</b> — за границей, которая отделяет сеть компании от интернета. Ему видно то, чего снаружи не видит никто.</span></div>
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s1">Показать, что видит сервер</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="2" hidden="">
+        <p class="ix-ssrf-big">Админка, база, служебный сервис облака с&nbsp;ключами.<br><span>Из интернета до них не&nbsp;дотянуться.</span></p>
+        <button class="ix-ssrf-btn ix-ssrf-r" type="button" data-act="s2">Вставить ссылку Паука</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="3" hidden="">
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер. И он вежливо приносит мне ответы.</span></div>
+        <p class="ix-ssrf-big">Это <b class="ix-ssrf-hl">SSRF</b> — подделка запроса на стороне сервера.<br><span>Атакующий заставляет сервер сходить туда, куда нужно атакующему.</span></p>
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s3">Чинить сервер ▼</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 1 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l1" data-lvl="1" aria-labelledby="ix-ssrf-t1">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 1 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t1">Свои хосты</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди брифинг</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">Давай просто запретим внутренние адреса в ссылке!</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Первый слой решает, куда загрузчику вообще можно ходить. Выбирай, как.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Запретить «плохие» адреса</b><span>Ищем внутренние адреса в тексте ссылки</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Разрешить только свои хосты</b><span>Только нужные фотохостинги и только https</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Ссылка на внутреннюю админку, записанная по-другому</b><i data-why-w="">Один адрес пишется десятком способов. Список запрета его не узнал.</i><i data-why-g="">Хоста нет в списке разрешённых — загрузчик не идёт.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="block" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Та же админка, обычное написание</b><i data-why-w="">Это написание в списке запрета есть.</i><i data-why-g="">Не из списка разрешённых — значит, нельзя.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Фото кота с разрешённого фотохостинга</b><i data-why-w="">Обычная картинка, всё работает.</i><i data-why-g="">Обычная картинка по https, всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Не «запрещено плохое»,<br><span>а «разрешено только нужное».</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l2">Уровень 2 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 2 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l2" data-lvl="2" aria-labelledby="ix-ssrf-t2">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 2 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t2">Реальный адрес</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 1</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Ваш список разрешает целый фотохостинг. А там любой может завести своё имя — и направить его внутрь.</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Имя в ссылке — это вывеска. Куда пойдёт запрос, решает IP-адрес, в который это имя превратится.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Ещё раз проверить текст ссылки</b><span>Имя же из разрешённого списка</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Узнать IP самому и отклонить внутренние</b><span>И подключиться именно к проверенному адресу</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Разрешённое имя указывает в базу данных</b><i data-why-w="">Текст ссылки чистый, а адрес — внутренний.</i><i data-why-g="">IP из внутреннего диапазона — отказ.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Имя сначала ведёт наружу, а через секунду — внутрь</b><i data-why-w="">Проверили одно, подключились к другому.</i><i data-why-g="">Подключаемся к тому адресу, который уже проверили.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Обычное фото с фотохостинга</b><i data-why-w="">Адрес внешний — всё работает.</i><i data-why-g="">Адрес внешний — всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Проверяй не текст ссылки,<br><span>а куда реально пойдёт запрос.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l3">Уровень 3 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 3 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l3" data-lvl="3" aria-labelledby="ix-ssrf-t3">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 3 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t3">Без поворотов</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 2</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Адрес проверен: он снаружи. Но внешний сайт может ответить «картинка переехала, иди туда» — это перенаправление.</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Ваш сервер такой вежливый. Ему говорят «иди внутрь» — и он идёт.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Идти по перенаправлениям сам</b><span>Так удобнее, первый адрес ведь проверен</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Не идти вслепую</b><span>Не следовать или прогонять каждый новый адрес через уровни 1 и 2</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Внешний сайт отправляет к служебному сервису облака</b><i data-why-w="">Проверили только первый адрес.</i><i data-why-g="">Новый адрес внутренний — перенаправление не выполнено.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Три перенаправления подряд, последнее — внутрь</b><i data-why-w="">Сервер шёл, пока не пришёл.</i><i data-why-g="">Каждый шаг проверен, последний не прошёл.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Фото, которое честно переехало на тот же хостинг</b><i data-why-w="">Всё работает.</i><i data-why-g="">Новый адрес прошёл проверки — всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Проверка один раз — не проверка.<br><span>Каждый поворот — заново.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l4">Уровень 4 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 4 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l4" data-lvl="4" aria-labelledby="ix-ssrf-t4">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 4 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t4">Слои сети</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 3</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">Три проверки в коде уже есть. Зачем ещё?</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Код иногда ломается. Представь: в новой версии кто-то случайно сломал проверку адреса. Последний слой — сама сеть и облако.</span></div>
+    <div class="ix-ssrf-case">
+      <p class="ix-ssrf-casek">РЕАЛЬНЫЙ СЛУЧАЙ · 2019</p>
+      <p>Утечка в банке Capital One — данные около 100&nbsp;миллионов клиентов — началась с SSRF. Через сервер атакующий добрался до служебного сервиса облака, получил временные ключи, а у ключей оказалось слишком много прав.</p>
+      <p class="ix-ssrf-chain"><span>SSRF</span><i>→</i><span>служебный сервис</span><i>→</i><span>ключи</span><i>→</i><span>лишние права</span><i>→</i><span>данные</span></p>
+    </div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Пропустить</b><span>Трёх проверок в коде хватит</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Закрыть сеть и урезать права</b><span>Сегментация, IMDSv2, минимум прав у роли</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Загрузчик тянется во внутреннюю сеть</b><i data-why-w="">Сети всё равно, куда ходит сервер.</i><i data-why-g="">Исходящий трафик загрузчика во внутреннюю сеть закрыт.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Простой запрос к служебному сервису облака</b><i data-why-w="">Сервис отдал временные ключи.</i><i data-why-g="">Защищённый режим (IMDSv2) сначала требует сессионный токен особым запросом. Простой запрос по ссылке его не получит.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Ключ всё-таки утёк</b><i data-why-w="">У роли права на всё — данные клиентов скачаны.</i><i data-why-g="">У роли минимум прав: только папка с аватарками.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Один слой сломается.<br><span>Все сразу — нет.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-final">К паутине ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL: TEAR THE WEB ========== -->
+<section class="ix-ssrf-final" id="ix-ssrf-final" aria-labelledby="ix-ssrf-ft" hidden="" tabindex="-1">
+  <p class="ix-ssrf-kick">ФИНАЛ</p>
+  <h3 class="ix-ssrf-ft" id="ix-ssrf-ft">Четыре слоя готовы</h3>
+  <div class="ix-ssrf-mapslot" data-mapslot="final"></div>
+  <button class="ix-ssrf-go" type="button" data-act="tear">Порвать паутину</button>
+  <div class="ix-ssrf-fafter" hidden="">
+    <div class="ix-ssrf-fstats"><span>Уровней с первой попытки <b data-first="">0/4</b></span><span>Взломов по пути <b data-hacks="">0</b></span></div>
+    <p class="ix-ssrf-rule">Сервер ходит по чужой ссылке? Разрешай нужное, проверяй реальный адрес, не иди по поворотам, закрой сеть.</p>
+    <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-battle">К битве с Пауком ▼</button>
+  </div>
+</section>
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="ix-ssrf-hack" role="dialog" aria-modal="true" aria-labelledby="ix-ssrf-hk" hidden="">
+  <div class="ix-ssrf-hkin">
+    <div class="ix-ssrf-hkface" aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+    <p class="ix-ssrf-hkt" id="ix-ssrf-hk">ВЗЛОМ!</p>
+    <div class="ix-ssrf-hkcard" data-hkcard=""></div>
+    <p class="ix-ssrf-hksay" data-hksay=""></p>
+    <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="ix-ssrf-battle" id="ix-ssrf-battle" aria-labelledby="ix-ssrf-bt" tabindex="-1">
+  <div class="ix-ssrf-bh">
+    <span class="ix-ssrf-bface" aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></span>
+    <div class="ix-ssrf-bhx">
+      <h2 class="ix-ssrf-bt" id="ix-ssrf-bt">Битва со злодеем</h2>
+      <div class="ix-ssrf-hp" role="img" aria-label="Здоровье Прокси-Паука: 3 из 3" data-hp-wrap=""><i data-hp=""></i><b data-hp-t="">ПРОКСИ-ПАУК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-ssrf-bbody" data-battle="" aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="ix-ssrf-iv" aria-labelledby="ix-ssrf-ivt">
+  <p class="ix-ssrf-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ix-ssrf-ivq" id="ix-ssrf-ivt">Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?</h2>
+  <div class="ix-ssrf-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: что видит сервер изнутри, чего не видит интернет? И сколько слоёв защиты ты успел поставить за эту миссию?</span>
+  </div>
+  <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-ssrf-iva">Показать сильный ответ</button>
+  <div class="ix-ssrf-iva" id="ix-ssrf-iva" hidden="">
+    <ol>
+      <li><b>Назвать риск.</b> Главный — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Ещё — разведка внутренней сети, обход межсетевого экрана, огромные файлы.</li>
+      <li><b>Проверять адрес.</b> Список разрешённых доменов и только https. Реальный IP определяю сам, внутренние диапазоны отклоняю и подключаюсь именно к проверенному адресу. Перенаправления не выполняю или проверяю каждое.</li>
+      <li><b>Защищать слоями.</b> Ограничиваю исходящий трафик, включаю защищённый режим метаданных (в AWS — IMDSv2), даю роли минимум прав. Лимиты размера и времени, никакого сырого ответа пользователю.</li>
+      <li><b>Ловить в пайплайне.</b> SAST находит, где адрес от пользователя уходит прямо в HTTP-клиент. Скан IaC — машины без защищённого режима и слишком широкие права. Мониторинг замечает обращения приложения к служебным адресам.</li>
+    </ol>
+    <p class="ix-ssrf-ivx"><b>Ошибка новичка:</b> «Запретим внутренние адреса по тексту ссылки». Один адрес пишется десятком способов, а ещё бывают перенаправления и домены, которые указывают внутрь.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="ix-ssrf-cs" aria-labelledby="ix-ssrf-cst">
+  <h2 class="ix-ssrf-cst" id="ix-ssrf-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ix-ssrf-csl">
+    <li><span class="ix-ssrf-csn" aria-hidden="true">01</span><div><b>Что такое SSRF</b><p>Сервер по чужой указке делает запрос внутрь своей же сети. В OWASP 2025 это часть A01 Broken Access Control.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">02</span><div><b>Список разрешённых</b><p>Только нужные домены и только https. Список запрета обходят другим написанием того же адреса.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">03</span><div><b>Реальный адрес</b><p>Определи IP сам, отклони внутренние диапазоны и подключайся именно к проверенному адресу.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">04</span><div><b>Перенаправления</b><p>Не следуй им вслепую: каждый новый адрес проходит те же проверки.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">05</span><div><b>Сеть и права</b><p>Загрузчику картинок внутренняя сеть не нужна: закрой ему исходящий трафик, а роли выдай минимум прав.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">06</span><div><b>Облако</b><p>Включи защищённый режим служебного сервиса — в AWS это IMDSv2. Скан IaC найдёт машины, где он выключен.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">07</span><div><b>Ответ и лимиты</b><p>Не показывай пользователю сырой ответ внутреннего запроса и ограничь размер файла и время загрузки.</p></div></li>
+  </ol>
+  <p class="ix-ssrf-train"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (раздел SSRF), OWASP Juice Shop, picoCTF, TryHackMe. Чужие сайты, серверы и облака трогать нельзя.</p>
+</section>
+
+<template data-tpl="map">
+  <div class="ix-ssrf-map" data-map="">
+    <svg class="ix-ssrf-web" aria-hidden="true" focusable="false"></svg>
+    <div class="ix-ssrf-out">
+      <p class="ix-ssrf-zl">ИНТЕРНЕТ</p>
+      <div class="ix-ssrf-outg">
+        <div class="ix-ssrf-field" data-field="">
+          <span class="ix-ssrf-fl">Ссылка на картинку</span>
+          <span class="ix-ssrf-fv" data-fv="">фото кота с фотохостинга</span>
+        </div>
+        <div class="ix-ssrf-ext" data-node="ext"><span class="ix-ssrf-ic" data-ic="photo"></span><span class="ix-ssrf-nl">Фотохостинг</span></div>
+        <div class="ix-ssrf-spi" data-spider="" aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+      </div>
+    </div>
+    <p class="ix-ssrf-tstamp" aria-hidden="true">Паутина порвана</p>
+    <div class="ix-ssrf-mid">
+      <div class="ix-ssrf-srv" data-node="srv"><span class="ix-ssrf-ic" data-ic="server"></span><span class="ix-ssrf-nl">Твой сервер</span><span class="ix-ssrf-ava" data-ava="" aria-hidden="true"></span></div>
+    </div>
+    <div class="ix-ssrf-in">
+      <p class="ix-ssrf-zl">ВНУТРИ ПЕРИМЕТРА</p>
+      <div class="ix-ssrf-ing">
+        <div class="ix-ssrf-tg" data-node="admin"><span class="ix-ssrf-ic" data-ic="admin"></span><span class="ix-ssrf-nl">Админка</span><span class="ix-ssrf-st" data-st=""></span></div>
+        <div class="ix-ssrf-tg" data-node="db"><span class="ix-ssrf-ic" data-ic="db"></span><span class="ix-ssrf-nl">База данных</span><span class="ix-ssrf-st" data-st=""></span></div>
+        <div class="ix-ssrf-tg" data-node="key"><span class="ix-ssrf-ic" data-ic="key"></span><span class="ix-ssrf-nl">Ключи облака</span><span class="ix-ssrf-st" data-st=""></span></div>
+      </div>
+    </div>
+    <span class="ix-ssrf-sfx" data-sfx="" aria-hidden="true"></span>
+  </div>
+</template>
+
+</section>
+
+<style>
+.ix-ssrf{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--grn:#2ee59d;--sg:#08c447;--gdk:#087a4c;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-ssrf *,.ix-ssrf *::before,.ix-ssrf *::after{box-sizing:border-box}
+.ix-ssrf button{font:inherit;color:inherit}
+.ix-ssrf :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-ssrf [hidden]{display:none !important}
+.ix-ssrf p{margin:0}
+.ix-ssrf .ix-ssrf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-ssrf .ix-ssrf-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-on{display:flex;animation:ix-ssrf-drophud .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-ssrf .ix-ssrf-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--grn);white-space:nowrap}
+.ix-ssrf .ix-ssrf-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-ssrf .ix-ssrf-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--grn);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-ssrf .ix-ssrf-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-hit{animation:ix-ssrf-shake .4s}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-hit .ix-ssrf-bar{border-color:var(--red)}
+.ix-ssrf .ix-ssrf-pips{display:flex;gap:4px}
+.ix-ssrf .ix-ssrf-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-ssrf .ix-ssrf-pips span.ix-ssrf-done{background:var(--grn);border-color:var(--grn);color:var(--ink)}
+
+/* MISSION */
+.ix-ssrf .ix-ssrf-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--grn);display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden}
+.ix-ssrf .ix-ssrf-eye{position:relative;background:var(--sg);border-right:3px solid var(--ink);overflow:hidden;min-height:440px}
+.ix-ssrf .ix-ssrf-mweb{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.ix-ssrf .ix-ssrf-mweb path{stroke-dasharray:1200;stroke-dashoffset:0}
+.ix-ssrf .ix-ssrf-drop{position:absolute;left:50%;top:0;width:86%;max-width:380px;transform:translateX(-50%);transform-origin:61% 0}
+.ix-ssrf .ix-ssrf-drop img{display:block;width:100%;height:auto}
+.ix-ssrf .ix-ssrf-eye::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.45) 1.1px,transparent 1.8px);background-size:7px 7px;mix-blend-mode:multiply;opacity:.4;pointer-events:none}
+.ix-ssrf .ix-ssrf-tag{position:absolute;z-index:3;left:12px;bottom:12px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--grn);padding:5px 10px;border:2px solid var(--grn)}
+.ix-ssrf .ix-ssrf-mbody{padding:30px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(46,229,157,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-ssrf .ix-ssrf-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--grn)}
+.ix-ssrf .ix-ssrf-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-mt span{display:block}
+.ix-ssrf .ix-ssrf-msub{font-size:20px;line-height:1.4}
+.ix-ssrf .ix-ssrf-msub em{font-style:normal;color:var(--ink);background:var(--grn);padding:0 5px}
+.ix-ssrf .ix-ssrf-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ix-ssrf .ix-ssrf-moves li{border:2px solid #fff;padding:8px 10px;display:flex;align-items:center;gap:10px;position:relative;transition:background .3s,color .3s}
+.ix-ssrf .ix-ssrf-moves b{font-family:var(--f-mono);font-weight:400;font-size:20px;color:var(--ink);-webkit-text-stroke:1.5px var(--grn)}
+.ix-ssrf .ix-ssrf-moves span{font-family:var(--f-cap);font-size:15px;line-height:1.15}
+.ix-ssrf .ix-ssrf-moves li.ix-ssrf-x{background:var(--grn);color:var(--ink);border-color:var(--grn)}
+.ix-ssrf .ix-ssrf-moves li.ix-ssrf-x b{-webkit-text-stroke:1.5px var(--ink);color:var(--grn)}
+.ix-ssrf .ix-ssrf-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-mono);font-size:17px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--grn);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-ssrf .ix-ssrf-go:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-go:disabled{opacity:.55;cursor:default;transform:none}
+
+/* intro (only with motion) */
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission:not(.ix-ssrf-seen) .ix-ssrf-drop{transform:translate(-50%,-110%)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission:not(.ix-ssrf-seen) .ix-ssrf-mbody>*{opacity:0}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-drop{animation:ix-ssrf-fall 1.1s cubic-bezier(.3,1.25,.5,1) .15s both,ix-ssrf-sway 5s ease-in-out 1.4s infinite}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path{animation:ix-ssrf-draw 1.6s ease-out both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path:nth-child(2){animation-delay:.5s}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path:nth-child(3){animation-delay:.8s}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-kick{animation:ix-ssrf-up .4s ease-out .5s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mt{animation:ix-ssrf-slam .5s cubic-bezier(.2,1.6,.4,1) .8s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-msub{animation:ix-ssrf-up .5s ease-out 1.15s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-moves{animation:ix-ssrf-up .5s ease-out 1.4s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-go{animation:ix-ssrf-slam .5s cubic-bezier(.2,1.6,.4,1) 1.7s both}
+
+/* LEVEL SHELL */
+.ix-ssrf .ix-ssrf-act,.ix-ssrf .ix-ssrf-lvl{position:relative;margin-top:64px;border:3px solid var(--ink);background:#fffdf6;box-shadow:8px 8px 0 var(--ink);scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--grn)}
+.ix-ssrf .ix-ssrf-act .ix-ssrf-lh{background:var(--yel)}
+.ix-ssrf .ix-ssrf-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--grn);padding:4px 10px}
+.ix-ssrf .ix-ssrf-act .ix-ssrf-ln{color:var(--yel)}
+.ix-ssrf .ix-ssrf-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:#fff;border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-ssrf .ix-ssrf-clear .ix-ssrf-ok{display:inline-block;animation:ix-ssrf-pop .35s}
+.ix-ssrf .ix-ssrf-lb{padding:22px 20px 24px;display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-locked{pointer-events:none;user-select:none}
+.ix-ssrf .ix-ssrf-locked .ix-ssrf-lb{filter:grayscale(1) blur(3px);opacity:.3;max-height:260px;overflow:hidden}
+.ix-ssrf .ix-ssrf-lockcap{display:none}
+.ix-ssrf .ix-ssrf-locked .ix-ssrf-lockcap{display:grid;position:absolute;inset:60px 0 0;place-items:center;z-index:5}
+.ix-ssrf .ix-ssrf-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-ssrf .ix-ssrf-act.ix-ssrf-locked .ix-ssrf-lb{max-height:200px}
+
+/* talk */
+.ix-ssrf .ix-ssrf-say{display:flex;gap:10px;align-items:flex-start}
+.ix-ssrf .ix-ssrf-who{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:#fff;padding:4px 8px;margin-top:8px;min-width:52px;text-align:center}
+.ix-ssrf .ix-ssrf-who.ix-ssrf-k{background:var(--yel);color:var(--ink);border:2px solid var(--ink)}
+.ix-ssrf .ix-ssrf-who.ix-ssrf-v{background:var(--red);color:#fff}
+.ix-ssrf .ix-ssrf-bub{font-family:var(--f-hand);font-size:23px;line-height:1.22;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 15px;box-shadow:3px 3px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-bub b{font-weight:400;background:var(--grn);padding:0 4px}
+.ix-ssrf .ix-ssrf-big{font-family:var(--f-cap);font-size:28px;line-height:1.2}
+.ix-ssrf .ix-ssrf-big span{display:inline-block;margin-top:6px;font-family:var(--f-text);font-size:20px;line-height:1.4;color:var(--muted)}
+.ix-ssrf .ix-ssrf-hl{font-weight:400;background:var(--ink);color:var(--grn);padding:0 6px}
+
+/* buttons */
+.ix-ssrf .ix-ssrf-btn{align-self:flex-start;min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:17px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--grn);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,box-shadow .1s}
+.ix-ssrf .ix-ssrf-btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-btn.ix-ssrf-y{background:var(--yel);color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-btn.ix-ssrf-r{background:var(--red);color:#fff;box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-btn:disabled{opacity:.5;cursor:default;transform:none}
+.ix-ssrf .ix-ssrf-steps{display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-stp{display:flex;flex-direction:column;gap:18px}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-stp:not([data-stp="0"]){animation:ix-ssrf-up .45s ease-out both}
+
+/* MAP */
+.ix-ssrf .ix-ssrf-map{position:relative;background:var(--ink);color:#fff;border:3px solid var(--ink);overflow:hidden;padding:16px 16px 20px;display:flex;flex-direction:column;gap:26px;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.8px);background-size:12px 12px}
+.ix-ssrf .ix-ssrf-web{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.ix-ssrf .ix-ssrf-out,.ix-ssrf .ix-ssrf-mid,.ix-ssrf .ix-ssrf-in{position:relative;z-index:2}
+.ix-ssrf .ix-ssrf-zl{font-family:var(--f-cap);font-size:13px;letter-spacing:.12em;color:#a9a9a9;margin-bottom:10px}
+.ix-ssrf .ix-ssrf-out{min-height:200px}
+.ix-ssrf .ix-ssrf-outg{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:20px;align-items:center;min-height:140px}
+.ix-ssrf .ix-ssrf-field{display:flex;flex-direction:column;gap:4px;padding:10px 14px;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:14px;box-shadow:0 0 0 2px #fff;transition:background .3s}
+.ix-ssrf .ix-ssrf-fl{font-family:var(--f-cap);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-fv{font-family:var(--f-cap);font-size:18px;line-height:1.25}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-evil{background:var(--red);color:#fff;box-shadow:0 0 0 2px var(--red)}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-evil .ix-ssrf-fl{color:#ffe0e0}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-type .ix-ssrf-fv::after{content:"";display:inline-block;width:.5em;height:1em;background:currentColor;vertical-align:-2px;margin-left:3px;animation:ix-ssrf-blink 1s steps(2) infinite}
+.ix-ssrf .ix-ssrf-ext,.ix-ssrf .ix-ssrf-srv,.ix-ssrf .ix-ssrf-tg{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ix-ssrf .ix-ssrf-ext{grid-column:2;grid-row:1;transition:opacity .3s,transform .3s}
+.ix-ssrf .ix-ssrf-ic{width:76px;height:76px;display:grid;place-items:center;background:#fff;color:var(--ink);border:3px solid #fff;border-radius:50%;position:relative;transition:background .3s,box-shadow .3s,opacity .3s,filter .3s}
+.ix-ssrf .ix-ssrf-ic svg{width:40px;height:40px;display:block}
+.ix-ssrf .ix-ssrf-nl{font-family:var(--f-cap);font-size:16px;line-height:1.15}
+.ix-ssrf .ix-ssrf-mid{display:flex;justify-content:center}
+.ix-ssrf .ix-ssrf-srv .ix-ssrf-ic{width:92px;height:92px;border-radius:18px;background:var(--grn);border-color:var(--grn)}
+.ix-ssrf .ix-ssrf-srv .ix-ssrf-ic svg{width:50px;height:50px}
+.ix-ssrf .ix-ssrf-ava{position:absolute;margin:-6px 0 0 104px;width:58px;height:58px;border:3px solid #fff;border-radius:50%;background:#fff;overflow:hidden;opacity:0;transform:scale(.3);transition:transform .4s cubic-bezier(.2,1.6,.4,1),opacity .3s}
+.ix-ssrf .ix-ssrf-ava.ix-ssrf-on{opacity:1;transform:none}
+.ix-ssrf .ix-ssrf-ava svg{width:100%;height:100%;display:block}
+.ix-ssrf .ix-ssrf-srv{position:relative}
+.ix-ssrf .ix-ssrf-in{border-top:3px dashed rgba(255,255,255,.45);padding-top:14px}
+.ix-ssrf .ix-ssrf-ing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ix-ssrf .ix-ssrf-tg .ix-ssrf-ic{opacity:.25;filter:grayscale(1)}
+.ix-ssrf .ix-ssrf-tg .ix-ssrf-nl{opacity:.35;transition:opacity .3s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-lit .ix-ssrf-tg .ix-ssrf-ic{opacity:1;filter:none}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-lit .ix-ssrf-tg .ix-ssrf-nl{opacity:1}
+.ix-ssrf .ix-ssrf-st{min-height:28px;font-family:var(--f-cap);font-size:13px;line-height:1.1;padding:5px 8px;opacity:0;transform:scale(.4) rotate(-6deg);transition:transform .35s cubic-bezier(.2,1.6,.4,1),opacity .2s}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-on{opacity:1;transform:rotate(-4deg)}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-bad{background:var(--red);color:#fff}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-good{background:var(--grn);color:var(--ink)}
+.ix-ssrf .ix-ssrf-tg.ix-ssrf-hot .ix-ssrf-ic{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 0 6px rgba(255,59,59,.35)}
+.ix-ssrf .ix-ssrf-tg.ix-ssrf-safe .ix-ssrf-ic{background:var(--grn);border-color:var(--grn);box-shadow:0 0 0 6px rgba(46,229,157,.3)}
+/* spider in map */
+.ix-ssrf .ix-ssrf-spi{position:absolute;z-index:3;right:-16px;top:-16px;width:200px;opacity:0;transform:translateY(-110%);pointer-events:none;transform-origin:61% 0}
+.ix-ssrf .ix-ssrf-spi img{display:block;width:100%;height:auto;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);background:var(--sg);box-shadow:-6px 6px 0 var(--red)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-ext{opacity:0;transform:scale(.6)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-spi{opacity:1;transform:none;transition:transform .9s cubic-bezier(.3,1.35,.5,1),opacity .2s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-field{margin-top:150px}
+.ix-ssrf .ix-ssrf-field{transition:background .3s,margin .5s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-out{min-height:0}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode.ix-ssrf-gone .ix-ssrf-field{margin-top:0;background:#fff;color:var(--ink);box-shadow:0 0 0 2px var(--grn)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-field .ix-ssrf-fl{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-tstamp{display:none;position:relative;z-index:4;align-self:center;margin:4px 0 -6px;font-family:var(--f-mono);font-size:30px;line-height:1.05;text-align:center;color:var(--grn);border:5px solid var(--grn);padding:8px 16px;transform:rotate(-5deg);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-tstamp{display:block}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-tstamp{animation:ix-ssrf-stamp .5s cubic-bezier(.2,1.6,.4,1) .7s both}
+@keyframes ix-ssrf-stamp{from{opacity:0;transform:rotate(-5deg) scale(2.6)}to{opacity:1;transform:rotate(-5deg) scale(1)}}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-spi{opacity:0;transform:translateY(160%) rotate(28deg);transition:transform 1s cubic-bezier(.6,0,.9,.6),opacity .9s .3s}
+/* threads */
+.ix-ssrf .ix-ssrf-th{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 3px rgba(46,229,157,.9))}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-x{stroke-width:1.5;stroke:rgba(255,255,255,.85)}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-ok{stroke:var(--grn)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-th.ix-ssrf-grow{stroke-dasharray:1;stroke-dashoffset:1;animation:ix-ssrf-grow .9s cubic-bezier(.5,0,.3,1) forwards}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-torn{animation:ix-ssrf-tear 1.1s cubic-bezier(.5,0,.8,.5) forwards}
+.ix-ssrf .ix-ssrf-sfx{position:absolute;z-index:6;left:50%;top:44%;transform:translate(-50%,-50%);pointer-events:none;font-family:var(--f-mono);font-size:38px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);opacity:0;white-space:nowrap}
+.ix-ssrf .ix-ssrf-sfx.ix-ssrf-on{animation:ix-ssrf-sfx 1.3s cubic-bezier(.2,1.6,.4,1) forwards}
+
+/* LEVEL CONTENT */
+.ix-ssrf .ix-ssrf-q{font-family:var(--f-cap);font-size:19px;margin-top:4px}
+.ix-ssrf .ix-ssrf-ch{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ix-ssrf .ix-ssrf-choice{min-height:96px;padding:14px 16px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;transition:transform .1s,box-shadow .1s,background .2s}
+.ix-ssrf .ix-ssrf-choice:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-ssrf .ix-ssrf-choice span{font-size:17px;line-height:1.35;color:var(--muted)}
+.ix-ssrf .ix-ssrf-choice:disabled{cursor:default;transform:none;box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead{opacity:.6;background:#eee}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead b{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:3px}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead span::before{content:"Не сработало. ";color:#c81e1e;font-weight:700}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-pick{background:var(--grn)}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-pick span{color:var(--ink)}
+.ix-ssrf .ix-ssrf-atks{list-style:none;margin:0;padding:0;display:none;flex-direction:column;gap:0;border-top:2px solid rgba(20,20,20,.15)}
+.ix-ssrf .ix-ssrf-atks.ix-ssrf-on{display:flex}
+.ix-ssrf .ix-ssrf-atks li{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:2px solid rgba(20,20,20,.15);opacity:.25;transition:opacity .25s,background .25s}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-run{opacity:1}
+.ix-ssrf .ix-ssrf-ai{flex:0 0 48px;height:48px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.ix-ssrf .ix-ssrf-ai svg{width:26px;height:26px}
+.ix-ssrf .ix-ssrf-at{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ix-ssrf .ix-ssrf-at b{font-family:var(--f-cap);font-weight:400;font-size:18px;line-height:1.25}
+.ix-ssrf .ix-ssrf-at i{font-style:normal;font-size:17px;line-height:1.35;color:var(--muted);display:none}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done.ix-ssrf-W i[data-why-w],.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done.ix-ssrf-G i[data-why-g]{display:block}
+.ix-ssrf .ix-ssrf-res{flex:0 0 auto;font-family:var(--f-mono);font-size:13px;padding:4px 8px;border:3px solid currentColor;transform:rotate(-5deg);opacity:0}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done .ix-ssrf-res{opacity:1;animation:ix-ssrf-pop .3s}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-pass{color:#d0201f}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-block{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-okk{color:var(--muted)}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-lost{background:#ffe5e5}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-lost .ix-ssrf-ai{background:var(--red)}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-held .ix-ssrf-ai{background:var(--grn);color:var(--ink)}
+.ix-ssrf .ix-ssrf-after{display:none;flex-direction:column;gap:18px;padding-top:6px}
+.ix-ssrf .ix-ssrf-clear .ix-ssrf-after{display:flex;animation:ix-ssrf-up .45s ease-out}
+.ix-ssrf .ix-ssrf-case{background:var(--ink);color:#fff;padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:5px 5px 0 var(--red)}
+.ix-ssrf .ix-ssrf-casek{font-family:var(--f-cap);font-size:14px;letter-spacing:.08em;color:var(--red)}
+.ix-ssrf .ix-ssrf-case p{font-size:18px;line-height:1.5}
+.ix-ssrf .ix-ssrf-chain{display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center}
+.ix-ssrf .ix-ssrf-chain span{font-family:var(--f-cap);font-size:16px;color:var(--ink);background:var(--yel);padding:3px 9px}
+.ix-ssrf .ix-ssrf-chain i{font-style:normal;font-family:var(--f-cap);color:var(--yel);font-size:18px}
+.ix-ssrf .ix-ssrf-chain span:last-child{background:var(--red);color:#fff}
+
+/* FINAL */
+.ix-ssrf .ix-ssrf-final{margin-top:64px;display:flex;flex-direction:column;gap:20px;scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-kick{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-ft{margin:0;font-family:var(--f-mono);font-weight:400;font-size:38px;line-height:1.05;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-map{box-shadow:8px 8px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-go{box-shadow:6px 6px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-fafter{display:flex;flex-direction:column;gap:18px;animation:ix-ssrf-up .5s ease-out}
+.ix-ssrf .ix-ssrf-fstats{display:flex;flex-wrap:wrap;gap:10px}
+.ix-ssrf .ix-ssrf-fstats span{font-family:var(--f-cap);font-size:16px;border:3px solid var(--ink);padding:7px 12px;background:#fff}
+.ix-ssrf .ix-ssrf-fstats b{font-family:var(--f-mono);font-weight:400;margin-left:6px}
+.ix-ssrf .ix-ssrf-rule{font-family:var(--f-cap);font-size:24px;line-height:1.3;background:var(--grn);padding:16px 18px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+
+/* HACK */
+.ix-ssrf .ix-ssrf-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:var(--red);color:#fff;overflow:auto;background-image:radial-gradient(rgba(20,20,20,.35) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-ssrf .ix-ssrf-hkin{max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack:not([hidden]) .ix-ssrf-hkin{animation:ix-ssrf-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack.ix-ssrf-rew .ix-ssrf-hkin{animation:ix-ssrf-rewind .7s ease-in forwards}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack.ix-ssrf-rew{animation:ix-ssrf-fade .7s ease-in forwards}
+.ix-ssrf .ix-ssrf-hkface{width:170px;border:4px solid var(--ink);background:var(--sg);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg);overflow:hidden}
+.ix-ssrf .ix-ssrf-hkface img{display:block;width:100%;height:auto}
+.ix-ssrf .ix-ssrf-hkt{font-family:var(--f-mono);font-size:62px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-hkcard{display:flex;flex-direction:column;gap:4px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 20px;transform:rotate(1.5deg);font-family:var(--f-cap);font-size:19px;line-height:1.3}
+.ix-ssrf .ix-ssrf-hkcard small{font-family:var(--f-text);font-size:16px;color:var(--muted)}
+.ix-ssrf .ix-ssrf-hksay{font-family:var(--f-hand);font-size:24px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+
+/* BATTLE */
+.ix-ssrf .ix-ssrf-battle{margin-top:80px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--grn);scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-ssrf .ix-ssrf-bface{flex:0 0 84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--grn);background:var(--sg);position:relative}
+.ix-ssrf .ix-ssrf-bface img{position:absolute;left:50%;top:50%;width:250%;transform:translate(-46%,-42%)}
+.ix-ssrf .ix-ssrf-bface.ix-ssrf-ouch{animation:ix-ssrf-shake .4s}
+.ix-ssrf .ix-ssrf-bhx{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.ix-ssrf .ix-ssrf-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-hp{position:relative;height:28px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-ssrf .ix-ssrf-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.4,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-ssrf .ix-ssrf-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000}
+.ix-ssrf .ix-ssrf-bbody{padding:22px 20px 26px;display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-mvk{font-family:var(--f-cap);font-size:14px;letter-spacing:.08em;color:var(--grn)}
+.ix-ssrf .ix-ssrf-mvq{font-family:var(--f-hand);font-size:27px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--grn);border-radius:16px;padding:10px 18px}
+.ix-ssrf .ix-ssrf-bq{font-family:var(--f-cap);font-size:18px}
+.ix-ssrf .ix-ssrf-bopts{display:flex;flex-direction:column;gap:12px}
+.ix-ssrf .ix-ssrf-bopt{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;font-family:var(--f-cap);font-size:18px;line-height:1.25;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+.ix-ssrf .ix-ssrf-bopt:hover:not(:disabled){background:#fff;color:var(--ink)}
+.ix-ssrf .ix-ssrf-bopt:disabled{cursor:default;opacity:.45}
+.ix-ssrf .ix-ssrf-bopt.ix-ssrf-right{background:var(--grn);border-color:var(--grn);color:var(--ink);opacity:1}
+.ix-ssrf .ix-ssrf-bopt.ix-ssrf-wrong{background:var(--red);border-color:var(--red);opacity:1}
+.ix-ssrf .ix-ssrf-bres{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ix-ssrf .ix-ssrf-bsfx{font-family:var(--f-mono);font-size:34px;line-height:1;padding:8px 14px;transform:rotate(-4deg);color:var(--ink);background:var(--yel);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-bsfx.ix-ssrf-miss{background:#3a3a3a;color:#fff;font-size:24px;box-shadow:4px 4px 0 var(--red)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-bsfx{animation:ix-ssrf-slam .45s cubic-bezier(.2,1.6,.4,1)}
+.ix-ssrf .ix-ssrf-bwhy{flex:1 1 220px;font-size:19px;line-height:1.4}
+.ix-ssrf .ix-ssrf-bend{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:center}
+.ix-ssrf .ix-ssrf-bendf{position:relative;border:3px solid #fff;background:var(--sg);overflow:hidden;transform:rotate(-2deg)}
+.ix-ssrf .ix-ssrf-bendf img{display:block;width:100%;height:auto;filter:grayscale(.85) contrast(1.1)}
+.ix-ssrf .ix-ssrf-bendf b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-14deg);font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--red);background:rgba(255,255,255,.92);border:4px solid var(--red);padding:4px 10px;white-space:nowrap}
+.ix-ssrf .ix-ssrf-bendt{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ix-ssrf .ix-ssrf-bend .ix-ssrf-bwhy{flex:none}
+.ix-ssrf .ix-ssrf-battle .ix-ssrf-btn.ix-ssrf-y{box-shadow:5px 5px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-bwin{font-family:var(--f-mono);font-weight:400;font-size:32px;line-height:1.1;color:var(--grn);text-transform:uppercase;margin:0}
+.ix-ssrf .ix-ssrf-bscore{font-family:var(--f-cap);font-size:22px}
+.ix-ssrf .ix-ssrf-bscore b{font-family:var(--f-mono);font-weight:400;color:var(--yel)}
+
+/* INTERVIEW */
+.ix-ssrf .ix-ssrf-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);display:flex;flex-direction:column;gap:20px}
+.ix-ssrf .ix-ssrf-ivk{font-family:var(--f-cap);font-size:16px;letter-spacing:.06em;color:var(--gdk)}
+.ix-ssrf .ix-ssrf-ivq{margin:0;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-ssrf .ix-ssrf-think{display:flex;flex-direction:column;gap:4px;padding-left:16px;border-left:5px solid var(--grn)}
+.ix-ssrf .ix-ssrf-think b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+.ix-ssrf .ix-ssrf-think span{font-size:19px;line-height:1.45;color:#333}
+.ix-ssrf .ix-ssrf-iva{animation:ix-ssrf-up .4s ease-out}
+.ix-ssrf .ix-ssrf-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixssrf}
+.ix-ssrf .ix-ssrf-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixssrf}
+.ix-ssrf .ix-ssrf-iva li::before{content:counter(ixssrf);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--grn);font-family:var(--f-cap);font-size:17px}
+.ix-ssrf .ix-ssrf-iva li b{font-weight:700}
+.ix-ssrf .ix-ssrf-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-ssrf .ix-ssrf-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-ssrf .ix-ssrf-cs{margin-top:72px}
+.ix-ssrf .ix-ssrf-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-ssrf .ix-ssrf-csl{list-style:none;margin:0;padding:0}
+.ix-ssrf .ix-ssrf-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-ssrf .ix-ssrf-csl li:last-child{border-bottom:0}
+.ix-ssrf .ix-ssrf-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-ssrf .ix-ssrf-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-ssrf .ix-ssrf-csl p{font-size:18px;line-height:1.45}
+.ix-ssrf .ix-ssrf-train{margin-top:20px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+/* KEYFRAMES */
+@keyframes ix-ssrf-drophud{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-ssrf-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-ssrf-fall{0%{transform:translate(-50%,-110%)}70%{transform:translate(-50%,4%)}100%{transform:translate(-50%,0)}}
+@keyframes ix-ssrf-sway{0%,100%{transform:translate(-50%,0) rotate(0)}50%{transform:translate(-50%,1.5%) rotate(-1.6deg)}}
+@keyframes ix-ssrf-draw{from{stroke-dashoffset:1200}to{stroke-dashoffset:0}}
+@keyframes ix-ssrf-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-ssrf-slam{from{opacity:0;transform:scale(2) rotate(-4deg)}60%{opacity:1;transform:scale(.95) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes ix-ssrf-pop{from{transform:scale(.4) rotate(-5deg)}60%{transform:scale(1.2) rotate(-5deg)}to{transform:rotate(-5deg)}}
+@keyframes ix-ssrf-blink{to{visibility:hidden}}
+@keyframes ix-ssrf-grow{to{stroke-dashoffset:0}}
+@keyframes ix-ssrf-tear{0%{opacity:1;transform:none}25%{opacity:1}100%{opacity:0;transform:translateY(70px) rotate(var(--rot,12deg))}}
+@keyframes ix-ssrf-sfx{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(-14deg)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(-6deg)}75%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-6deg)}100%{opacity:0;transform:translate(-50%,-64%) scale(1) rotate(-6deg)}}
+@keyframes ix-ssrf-hackin{from{transform:scale(1.5) rotate(5deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-ssrf-rewind{0%{transform:none;filter:none}40%{transform:translateX(-30px) skewX(12deg);filter:hue-rotate(90deg) blur(1px)}100%{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-ssrf-fade{0%,60%{opacity:1}to{opacity:0}}
+
+/* MOBILE */
+@media (max-width:760px){
+  .ix-ssrf .ix-ssrf-mission{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--grn)}
+  .ix-ssrf .ix-ssrf-eye{min-height:0;height:330px;border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-ssrf .ix-ssrf-drop{width:72%;max-width:280px}
+  .ix-ssrf .ix-ssrf-mbody{padding:22px 18px 24px;gap:16px}
+  .ix-ssrf .ix-ssrf-mt{font-size:34px}
+  .ix-ssrf .ix-ssrf-msub{font-size:19px}
+  .ix-ssrf .ix-ssrf-moves span{font-size:14px}
+  .ix-ssrf .ix-ssrf-go{align-self:stretch}
+  .ix-ssrf .ix-ssrf-act,.ix-ssrf .ix-ssrf-lvl{margin-top:52px;box-shadow:6px 6px 0 var(--ink)}
+  .ix-ssrf .ix-ssrf-lh{padding:12px 14px}
+  .ix-ssrf .ix-ssrf-lt{font-size:20px}
+  .ix-ssrf .ix-ssrf-lb{padding:18px 14px 20px}
+  .ix-ssrf .ix-ssrf-bub{font-size:21px;padding:6px 12px}
+  .ix-ssrf .ix-ssrf-who{min-width:0;font-size:12px}
+  .ix-ssrf .ix-ssrf-big{font-size:23px}
+  .ix-ssrf .ix-ssrf-big span{font-size:18px}
+  .ix-ssrf .ix-ssrf-btn{align-self:stretch;justify-content:center;text-align:center}
+  .ix-ssrf .ix-ssrf-map{padding:14px 12px 16px;gap:20px;margin:0 -2px}
+  .ix-ssrf .ix-ssrf-out{min-height:0}
+  .ix-ssrf .ix-ssrf-outg{grid-template-columns:minmax(0,1fr) 96px;gap:10px;min-height:0}
+  .ix-ssrf .ix-ssrf-fv{font-size:17px}
+  .ix-ssrf .ix-ssrf-spi{width:150px;right:-12px;top:-14px}
+  .ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-field{margin-top:150px}
+  .ix-ssrf .ix-ssrf-ic{width:64px;height:64px}
+  .ix-ssrf .ix-ssrf-ic svg{width:34px;height:34px}
+  .ix-ssrf .ix-ssrf-srv .ix-ssrf-ic{width:80px;height:80px}
+  .ix-ssrf .ix-ssrf-nl{font-size:14px}
+  .ix-ssrf .ix-ssrf-ava{margin-left:92px;width:50px;height:50px}
+  .ix-ssrf .ix-ssrf-ing{gap:6px}
+  .ix-ssrf .ix-ssrf-st{font-size:12px;padding:4px 6px}
+  .ix-ssrf .ix-ssrf-ch{grid-template-columns:1fr}
+  .ix-ssrf .ix-ssrf-choice{min-height:80px}
+  .ix-ssrf .ix-ssrf-atks li{gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .ix-ssrf .ix-ssrf-ai{flex-basis:40px;height:40px}
+  .ix-ssrf .ix-ssrf-at{flex-basis:calc(100% - 50px)}
+  .ix-ssrf .ix-ssrf-res{margin-left:50px}
+  .ix-ssrf .ix-ssrf-ft{font-size:28px}
+  .ix-ssrf .ix-ssrf-rule{font-size:20px}
+  .ix-ssrf .ix-ssrf-hkt{font-size:48px}
+  .ix-ssrf .ix-ssrf-hkface{width:140px}
+  .ix-ssrf .ix-ssrf-battle{box-shadow:6px 6px 0 var(--grn)}
+  .ix-ssrf .ix-ssrf-bh{padding:16px 14px;gap:12px}
+  .ix-ssrf .ix-ssrf-bface{flex-basis:64px;height:64px}
+  .ix-ssrf .ix-ssrf-bt{font-size:20px}
+  .ix-ssrf .ix-ssrf-bbody{padding:18px 14px 22px}
+  .ix-ssrf .ix-ssrf-mvq{font-size:23px;padding:8px 14px}
+  .ix-ssrf .ix-ssrf-bopt{font-size:17px}
+  .ix-ssrf .ix-ssrf-bwin{font-size:24px}
+  .ix-ssrf .ix-ssrf-bend{grid-template-columns:1fr}
+  .ix-ssrf .ix-ssrf-bendf{width:180px;justify-self:center}
+  .ix-ssrf .ix-ssrf-tstamp{font-size:22px}
+  .ix-ssrf .ix-ssrf-iv{padding:22px 16px 24px}
+  .ix-ssrf .ix-ssrf-ivq{font-size:22px}
+  .ix-ssrf .ix-ssrf-iva li{padding-left:42px;font-size:18px}
+  .ix-ssrf .ix-ssrf-cst{font-size:25px}
+  .ix-ssrf .ix-ssrf-csl li{gap:14px}
+  .ix-ssrf .ix-ssrf-csn{flex-basis:54px;font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-ssrf *,.ix-ssrf *::before,.ix-ssrf *::after{animation:none !important;transition:none !important}
+  .ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-spi{opacity:0}
+  .ix-ssrf .ix-ssrf-th.ix-ssrf-torn{opacity:0}
+}
+</style>
+
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое SSRF?</h2><p class="lead"><b>SSRF</b> — Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему.</p><h2>О чём выпуск</h2><ul><li>Почему опасно скачивать файлы по ссылке от пользователя</li><li>Что сервер видит такого, чего не видит интернет</li><li>Почему запрет по списку адресов не работает</li><li>Как защищаться слоями</li></ul><h2>Словарик</h2><dl><dt>Периметр</dt><dd>Граница между внутренней сетью компании и интернетом.</dd><dt>SSRF</dt><dd>Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему.</dd><dt>Служебный сервис облака</dt><dd>Сервис метаданных: внутри облака он сообщает машине её настройки и временные ключи.</dd><dt>Исходящий трафик</dt><dd>Запросы, которые сервер сам отправляет наружу или в другие сети.</dd></dl><h2>Вопрос с собеседования</h2><h3>Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?</h3><p>Главный риск — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Также: разведка внутренней сети, обход межсетевого экрана, огромные файлы. Защита слоями: список разрешённых доменов и только https, проверка реального IP с отказом во внутренних диапазонах, запрет перенаправлений, ограничение исходящего трафика, защищённый режим метаданных и минимальные права роли, лимиты размера и времени, никакого сырого ответа пользователю. В пайплайне — SAST, скан IaC, мониторинг исходящих запросов.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/api/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №16</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Что такое API: клиент, сервер, REST</span></a>
+          
+            <a href="../../vypuski/ip/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №12</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">IP-адрес, маска подсети и NAT</span></a>
+          
+            <a href="../../vypuski/owasp-top-10-2025/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №9</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">OWASP Top 10:2025 на русском</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/csrf/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №5 Подделыватель</a>
+        <a href="../../vypuski/jwt/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №7 Токенщик →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fssrf%2F&amp;text=SSRF%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BA%D0%B0%D0%BA%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D0%B0%D1%82%D0%B0%D0%BA%D1%83%D0%B5%D1%82%20%D1%81%D0%B2%D0%BE%D1%8E%20%D0%B6%D0%B5%20%D1%81%D0%B5%D1%82%D1%8C" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fssrf%2F&amp;title=SSRF%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BA%D0%B0%D0%BA%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D0%B0%D1%82%D0%B0%D0%BA%D1%83%D0%B5%D1%82%20%D1%81%D0%B2%D0%BE%D1%8E%20%D0%B6%D0%B5%20%D1%81%D0%B5%D1%82%D1%8C" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="6">
+<section class="ix ix-ssrf" data-ix="ssrf" aria-label="Выпуск 6: Прокси-Паук плетёт сеть изнутри">
+
+<div class="ix-ssrf-hud" aria-hidden="true">
+  <span class="ix-ssrf-hud-l">ЗАЩИТА СЕРВЕРА</span>
+  <span class="ix-ssrf-bar"><i></i><b>0%</b></span>
+  <span class="ix-ssrf-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+</div>
+<div class="ix-ssrf-sr" aria-live="polite" data-live></div>
+
+<!-- ========== MISSION ========== -->
+<div class="ix-ssrf-mission" id="ix-ssrf-mission">
+  <div class="ix-ssrf-eye" aria-hidden="true">
+    <svg class="ix-ssrf-mweb" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round">
+      <path d="M200 200L200 0M200 200L400 40M200 200L400 260M200 200L300 400M200 200L80 400M200 200L0 250M200 200L0 30"/>
+      <path d="M200 120Q238 128 262 153Q282 186 274 220Q262 252 238 268Q203 278 168 274Q130 258 126 223Q122 188 136 158Q160 128 200 120"/>
+      <path d="M200 60Q273 74 316 117Q350 176 338 238Q320 298 274 330Q206 356 136 340Q74 312 62 238Q54 172 84 118Q130 72 200 60"/>
+    </g></svg>
+    <div class="ix-ssrf-drop"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+    <span class="ix-ssrf-tag">ЦЕЛЬ: ПРОКСИ-ПАУК</span>
+  </div>
+  <div class="ix-ssrf-mbody">
+    <p class="ix-ssrf-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ВЫПУСК 6</p>
+    <h2 aria-label="Порви паутину" class="ix-ssrf-mt" id="ix-ssrf-mt"><span>Порви</span> <span>паутину</span></h2>
+    <p class="ix-ssrf-msub">Паук не может войти в&nbsp;сеть компании. <em>Твой сервер</em> — может. Ты&nbsp;разработчик, и&nbsp;сегодня ты защищаешь его изнутри.</p>
+    <ol class="ix-ssrf-moves" aria-label="Уровни миссии">
+      <li data-mv="1"><b>01</b><span>Свои хосты</span></li>
+      <li data-mv="2"><b>02</b><span>Реальный адрес</span></li>
+      <li data-mv="3"><b>03</b><span>Без поворотов</span></li>
+      <li data-mv="4"><b>04</b><span>Слои сети</span></li>
+    </ol>
+    <button class="ix-ssrf-go" type="button" data-act="start">Принять миссию ▶</button>
+  </div>
+</div>
+
+<!-- ========== ACT 0: THE WEB ========== -->
+<section class="ix-ssrf-act ix-ssrf-locked" id="ix-ssrf-act" aria-labelledby="ix-ssrf-at">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">БРИФИНГ</span><h3 class="ix-ssrf-lt" id="ix-ssrf-at">Сеть изнутри</h3></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say" data-say="a"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Твой сервис аватарок: «Вставьте ссылку на картинку — мы её загрузим». Сервер сам сходит по ссылке и принесёт фото.</span></div>
+    <div class="ix-ssrf-mapslot" data-mapslot="act"></div>
+    <div class="ix-ssrf-steps">
+      <div class="ix-ssrf-stp" data-stp="0">
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s0">Загрузить фото по ссылке</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="1" hidden>
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">А что плохого? Сервер просто скачает картинку.</span></div>
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Сервер стоит <b>внутри периметра</b> — за границей, которая отделяет сеть компании от интернета. Ему видно то, чего снаружи не видит никто.</span></div>
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s1">Показать, что видит сервер</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="2" hidden>
+        <p class="ix-ssrf-big">Админка, база, служебный сервис облака с&nbsp;ключами.<br><span>Из интернета до них не&nbsp;дотянуться.</span></p>
+        <button class="ix-ssrf-btn ix-ssrf-r" type="button" data-act="s2">Вставить ссылку Паука</button>
+      </div>
+      <div class="ix-ssrf-stp" data-stp="3" hidden>
+        <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Мне не нужен доступ во внутреннюю сеть. У меня есть ваш сервер. И он вежливо приносит мне ответы.</span></div>
+        <p class="ix-ssrf-big">Это <b class="ix-ssrf-hl">SSRF</b> — подделка запроса на стороне сервера.<br><span>Атакующий заставляет сервер сходить туда, куда нужно атакующему.</span></p>
+        <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="s3">Чинить сервер ▼</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 1 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l1" data-lvl="1" aria-labelledby="ix-ssrf-t1">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 1 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t1">Свои хосты</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди брифинг</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">Давай просто запретим внутренние адреса в ссылке!</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Первый слой решает, куда загрузчику вообще можно ходить. Выбирай, как.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Запретить «плохие» адреса</b><span>Ищем внутренние адреса в тексте ссылки</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Разрешить только свои хосты</b><span>Только нужные фотохостинги и только https</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Ссылка на внутреннюю админку, записанная по-другому</b><i data-why-w>Один адрес пишется десятком способов. Список запрета его не узнал.</i><i data-why-g>Хоста нет в списке разрешённых — загрузчик не идёт.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="block" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Та же админка, обычное написание</b><i data-why-w>Это написание в списке запрета есть.</i><i data-why-g>Не из списка разрешённых — значит, нельзя.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Фото кота с разрешённого фотохостинга</b><i data-why-w>Обычная картинка, всё работает.</i><i data-why-g>Обычная картинка по https, всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Не «запрещено плохое»,<br><span>а «разрешено только нужное».</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l2">Уровень 2 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 2 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l2" data-lvl="2" aria-labelledby="ix-ssrf-t2">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 2 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t2">Реальный адрес</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 1</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Ваш список разрешает целый фотохостинг. А там любой может завести своё имя — и направить его внутрь.</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Имя в ссылке — это вывеска. Куда пойдёт запрос, решает IP-адрес, в который это имя превратится.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Ещё раз проверить текст ссылки</b><span>Имя же из разрешённого списка</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Узнать IP самому и отклонить внутренние</b><span>И подключиться именно к проверенному адресу</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Разрешённое имя указывает в базу данных</b><i data-why-w>Текст ссылки чистый, а адрес — внутренний.</i><i data-why-g>IP из внутреннего диапазона — отказ.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Имя сначала ведёт наружу, а через секунду — внутрь</b><i data-why-w>Проверили одно, подключились к другому.</i><i data-why-g>Подключаемся к тому адресу, который уже проверили.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Обычное фото с фотохостинга</b><i data-why-w>Адрес внешний — всё работает.</i><i data-why-g>Адрес внешний — всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Проверяй не текст ссылки,<br><span>а куда реально пойдёт запрос.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l3">Уровень 3 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 3 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l3" data-lvl="3" aria-labelledby="ix-ssrf-t3">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 3 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t3">Без поворотов</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 2</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Адрес проверен: он снаружи. Но внешний сайт может ответить «картинка переехала, иди туда» — это перенаправление.</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-v">ПАУК</span><span class="ix-ssrf-bub">Ваш сервер такой вежливый. Ему говорят «иди внутрь» — и он идёт.</span></div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Идти по перенаправлениям сам</b><span>Так удобнее, первый адрес ведь проверен</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Не идти вслепую</b><span>Не следовать или прогонять каждый новый адрес через уровни 1 и 2</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Внешний сайт отправляет к служебному сервису облака</b><i data-why-w>Проверили только первый адрес.</i><i data-why-g>Новый адрес внутренний — перенаправление не выполнено.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Три перенаправления подряд, последнее — внутрь</b><i data-why-w>Сервер шёл, пока не пришёл.</i><i data-why-g>Каждый шаг проверен, последний не прошёл.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="ok" data-g="ok"><span class="ix-ssrf-ai" data-ic="photo"></span><span class="ix-ssrf-at"><b>Фото, которое честно переехало на тот же хостинг</b><i data-why-w>Всё работает.</i><i data-why-g>Новый адрес прошёл проверки — всё работает.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Проверка один раз — не проверка.<br><span>Каждый поворот — заново.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-l4">Уровень 4 ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LEVEL 4 ========== -->
+<section class="ix-ssrf-lvl ix-ssrf-locked" id="ix-ssrf-l4" data-lvl="4" aria-labelledby="ix-ssrf-t4">
+  <div class="ix-ssrf-lh"><span class="ix-ssrf-ln">УРОВЕНЬ 4 / 4</span><h3 class="ix-ssrf-lt" id="ix-ssrf-t4">Слои сети</h3><span class="ix-ssrf-ok">ПОЧИНЕНО</span></div>
+  <div class="ix-ssrf-lockcap"><span>Сначала пройди уровень 3</span></div>
+  <div class="ix-ssrf-lb">
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who ix-ssrf-k">СОНЯ</span><span class="ix-ssrf-bub">Три проверки в коде уже есть. Зачем ещё?</span></div>
+    <div class="ix-ssrf-say"><span class="ix-ssrf-who">ДЯДЯ МИША</span><span class="ix-ssrf-bub">Код иногда ломается. Представь: в новой версии кто-то случайно сломал проверку адреса. Последний слой — сама сеть и облако.</span></div>
+    <div class="ix-ssrf-case">
+      <p class="ix-ssrf-casek">РЕАЛЬНЫЙ СЛУЧАЙ · 2019</p>
+      <p>Утечка в банке Capital One — данные около 100&nbsp;миллионов клиентов — началась с SSRF. Через сервер атакующий добрался до служебного сервиса облака, получил временные ключи, а у ключей оказалось слишком много прав.</p>
+      <p class="ix-ssrf-chain"><span>SSRF</span><i>→</i><span>служебный сервис</span><i>→</i><span>ключи</span><i>→</i><span>лишние права</span><i>→</i><span>данные</span></p>
+    </div>
+    <p class="ix-ssrf-q">Твоя защита:</p>
+    <div class="ix-ssrf-ch">
+      <button class="ix-ssrf-choice" type="button" data-v="weak"><b>Пропустить</b><span>Трёх проверок в коде хватит</span></button>
+      <button class="ix-ssrf-choice" type="button" data-v="good"><b>Закрыть сеть и урезать права</b><span>Сегментация, IMDSv2, минимум прав у роли</span></button>
+    </div>
+    <ul class="ix-ssrf-atks" aria-live="polite">
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="admin"></span><span class="ix-ssrf-at"><b>Загрузчик тянется во внутреннюю сеть</b><i data-why-w>Сети всё равно, куда ходит сервер.</i><i data-why-g>Исходящий трафик загрузчика во внутреннюю сеть закрыт.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="key"></span><span class="ix-ssrf-at"><b>Простой запрос к служебному сервису облака</b><i data-why-w>Сервис отдал временные ключи.</i><i data-why-g>Защищённый режим (IMDSv2) сначала требует сессионный токен особым запросом. Простой запрос по ссылке его не получит.</i></span><span class="ix-ssrf-res"></span></li>
+      <li data-w="pass" data-g="block"><span class="ix-ssrf-ai" data-ic="db"></span><span class="ix-ssrf-at"><b>Ключ всё-таки утёк</b><i data-why-w>У роли права на всё — данные клиентов скачаны.</i><i data-why-g>У роли минимум прав: только папка с аватарками.</i></span><span class="ix-ssrf-res"></span></li>
+    </ul>
+    <div class="ix-ssrf-after">
+      <p class="ix-ssrf-big">Один слой сломается.<br><span>Все сразу — нет.</span></p>
+      <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-final">К паутине ▼</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL: TEAR THE WEB ========== -->
+<section class="ix-ssrf-final" id="ix-ssrf-final" aria-labelledby="ix-ssrf-ft" hidden tabindex="-1">
+  <p class="ix-ssrf-kick">ФИНАЛ</p>
+  <h3 class="ix-ssrf-ft" id="ix-ssrf-ft">Четыре слоя готовы</h3>
+  <div class="ix-ssrf-mapslot" data-mapslot="final"></div>
+  <button class="ix-ssrf-go" type="button" data-act="tear">Порвать паутину</button>
+  <div class="ix-ssrf-fafter" hidden>
+    <div class="ix-ssrf-fstats"><span>Уровней с первой попытки <b data-first>0/4</b></span><span>Взломов по пути <b data-hacks>0</b></span></div>
+    <p class="ix-ssrf-rule">Сервер ходит по чужой ссылке? Разрешай нужное, проверяй реальный адрес, не иди по поворотам, закрой сеть.</p>
+    <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-goto="ix-ssrf-battle">К битве с Пауком ▼</button>
+  </div>
+</section>
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="ix-ssrf-hack" role="dialog" aria-modal="true" aria-labelledby="ix-ssrf-hk" hidden>
+  <div class="ix-ssrf-hkin">
+    <div class="ix-ssrf-hkface" aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+    <p class="ix-ssrf-hkt" id="ix-ssrf-hk">ВЗЛОМ!</p>
+    <div class="ix-ssrf-hkcard" data-hkcard></div>
+    <p class="ix-ssrf-hksay" data-hksay></p>
+    <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="ix-ssrf-battle" id="ix-ssrf-battle" aria-labelledby="ix-ssrf-bt" tabindex="-1">
+  <div class="ix-ssrf-bh">
+    <span class="ix-ssrf-bface" aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></span>
+    <div class="ix-ssrf-bhx">
+      <h2 class="ix-ssrf-bt" id="ix-ssrf-bt">Битва со злодеем</h2>
+      <div class="ix-ssrf-hp" role="img" aria-label="Здоровье Прокси-Паука: 3 из 3" data-hp-wrap><i data-hp></i><b data-hp-t>ПРОКСИ-ПАУК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-ssrf-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="ix-ssrf-iv" aria-labelledby="ix-ssrf-ivt">
+  <p class="ix-ssrf-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ix-ssrf-ivq" id="ix-ssrf-ivt">Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?</h2>
+  <div class="ix-ssrf-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: что видит сервер изнутри, чего не видит интернет? И сколько слоёв защиты ты успел поставить за эту миссию?</span>
+  </div>
+  <button class="ix-ssrf-btn ix-ssrf-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-ssrf-iva">Показать сильный ответ</button>
+  <div class="ix-ssrf-iva" id="ix-ssrf-iva" hidden>
+    <ol>
+      <li><b>Назвать риск.</b> Главный — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Ещё — разведка внутренней сети, обход межсетевого экрана, огромные файлы.</li>
+      <li><b>Проверять адрес.</b> Список разрешённых доменов и только https. Реальный IP определяю сам, внутренние диапазоны отклоняю и подключаюсь именно к проверенному адресу. Перенаправления не выполняю или проверяю каждое.</li>
+      <li><b>Защищать слоями.</b> Ограничиваю исходящий трафик, включаю защищённый режим метаданных (в AWS — IMDSv2), даю роли минимум прав. Лимиты размера и времени, никакого сырого ответа пользователю.</li>
+      <li><b>Ловить в пайплайне.</b> SAST находит, где адрес от пользователя уходит прямо в HTTP-клиент. Скан IaC — машины без защищённого режима и слишком широкие права. Мониторинг замечает обращения приложения к служебным адресам.</li>
+    </ol>
+    <p class="ix-ssrf-ivx"><b>Ошибка новичка:</b> «Запретим внутренние адреса по тексту ссылки». Один адрес пишется десятком способов, а ещё бывают перенаправления и домены, которые указывают внутрь.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="ix-ssrf-cs" aria-labelledby="ix-ssrf-cst">
+  <h2 class="ix-ssrf-cst" id="ix-ssrf-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ix-ssrf-csl">
+    <li><span class="ix-ssrf-csn" aria-hidden="true">01</span><div><b>Что такое SSRF</b><p>Сервер по чужой указке делает запрос внутрь своей же сети. В OWASP 2025 это часть A01 Broken Access Control.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">02</span><div><b>Список разрешённых</b><p>Только нужные домены и только https. Список запрета обходят другим написанием того же адреса.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">03</span><div><b>Реальный адрес</b><p>Определи IP сам, отклони внутренние диапазоны и подключайся именно к проверенному адресу.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">04</span><div><b>Перенаправления</b><p>Не следуй им вслепую: каждый новый адрес проходит те же проверки.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">05</span><div><b>Сеть и права</b><p>Загрузчику картинок внутренняя сеть не нужна: закрой ему исходящий трафик, а роли выдай минимум прав.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">06</span><div><b>Облако</b><p>Включи защищённый режим служебного сервиса — в AWS это IMDSv2. Скан IaC найдёт машины, где он выключен.</p></div></li>
+    <li><span class="ix-ssrf-csn" aria-hidden="true">07</span><div><b>Ответ и лимиты</b><p>Не показывай пользователю сырой ответ внутреннего запроса и ограничь размер файла и время загрузки.</p></div></li>
+  </ol>
+  <p class="ix-ssrf-train"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (раздел SSRF), OWASP Juice Shop, picoCTF, TryHackMe. Чужие сайты, серверы и облака трогать нельзя.</p>
+</section>
+
+<template data-tpl="map">
+  <div class="ix-ssrf-map" data-map>
+    <svg class="ix-ssrf-web" aria-hidden="true" focusable="false"></svg>
+    <div class="ix-ssrf-out">
+      <p class="ix-ssrf-zl">ИНТЕРНЕТ</p>
+      <div class="ix-ssrf-outg">
+        <div class="ix-ssrf-field" data-field>
+          <span class="ix-ssrf-fl">Ссылка на картинку</span>
+          <span class="ix-ssrf-fv" data-fv>фото кота с фотохостинга</span>
+        </div>
+        <div class="ix-ssrf-ext" data-node="ext"><span class="ix-ssrf-ic" data-ic="photo"></span><span class="ix-ssrf-nl">Фотохостинг</span></div>
+        <div class="ix-ssrf-spi" data-spider aria-hidden="true"><img loading="lazy" decoding="async" src="../../assets/img/villain-6.webp" alt=""></div>
+      </div>
+    </div>
+    <p class="ix-ssrf-tstamp" aria-hidden="true">Паутина порвана</p>
+    <div class="ix-ssrf-mid">
+      <div class="ix-ssrf-srv" data-node="srv"><span class="ix-ssrf-ic" data-ic="server"></span><span class="ix-ssrf-nl">Твой сервер</span><span class="ix-ssrf-ava" data-ava aria-hidden="true"></span></div>
+    </div>
+    <div class="ix-ssrf-in">
+      <p class="ix-ssrf-zl">ВНУТРИ ПЕРИМЕТРА</p>
+      <div class="ix-ssrf-ing">
+        <div class="ix-ssrf-tg" data-node="admin"><span class="ix-ssrf-ic" data-ic="admin"></span><span class="ix-ssrf-nl">Админка</span><span class="ix-ssrf-st" data-st></span></div>
+        <div class="ix-ssrf-tg" data-node="db"><span class="ix-ssrf-ic" data-ic="db"></span><span class="ix-ssrf-nl">База данных</span><span class="ix-ssrf-st" data-st></span></div>
+        <div class="ix-ssrf-tg" data-node="key"><span class="ix-ssrf-ic" data-ic="key"></span><span class="ix-ssrf-nl">Ключи облака</span><span class="ix-ssrf-st" data-st></span></div>
+      </div>
+    </div>
+    <span class="ix-ssrf-sfx" data-sfx aria-hidden="true"></span>
+  </div>
+</template>
+
+</section>
+
+<style>
+.ix-ssrf{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--grn:#2ee59d;--sg:#08c447;--gdk:#087a4c;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-ssrf *,.ix-ssrf *::before,.ix-ssrf *::after{box-sizing:border-box}
+.ix-ssrf button{font:inherit;color:inherit}
+.ix-ssrf :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-ssrf [hidden]{display:none !important}
+.ix-ssrf p{margin:0}
+.ix-ssrf .ix-ssrf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-ssrf .ix-ssrf-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-on{display:flex;animation:ix-ssrf-drophud .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-ssrf .ix-ssrf-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--grn);white-space:nowrap}
+.ix-ssrf .ix-ssrf-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-ssrf .ix-ssrf-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--grn);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-ssrf .ix-ssrf-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-hit{animation:ix-ssrf-shake .4s}
+.ix-ssrf .ix-ssrf-hud.ix-ssrf-hit .ix-ssrf-bar{border-color:var(--red)}
+.ix-ssrf .ix-ssrf-pips{display:flex;gap:4px}
+.ix-ssrf .ix-ssrf-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-ssrf .ix-ssrf-pips span.ix-ssrf-done{background:var(--grn);border-color:var(--grn);color:var(--ink)}
+
+/* MISSION */
+.ix-ssrf .ix-ssrf-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--grn);display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden}
+.ix-ssrf .ix-ssrf-eye{position:relative;background:var(--sg);border-right:3px solid var(--ink);overflow:hidden;min-height:440px}
+.ix-ssrf .ix-ssrf-mweb{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.ix-ssrf .ix-ssrf-mweb path{stroke-dasharray:1200;stroke-dashoffset:0}
+.ix-ssrf .ix-ssrf-drop{position:absolute;left:50%;top:0;width:86%;max-width:380px;transform:translateX(-50%);transform-origin:61% 0}
+.ix-ssrf .ix-ssrf-drop img{display:block;width:100%;height:auto}
+.ix-ssrf .ix-ssrf-eye::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.45) 1.1px,transparent 1.8px);background-size:7px 7px;mix-blend-mode:multiply;opacity:.4;pointer-events:none}
+.ix-ssrf .ix-ssrf-tag{position:absolute;z-index:3;left:12px;bottom:12px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--grn);padding:5px 10px;border:2px solid var(--grn)}
+.ix-ssrf .ix-ssrf-mbody{padding:30px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(46,229,157,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-ssrf .ix-ssrf-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--grn)}
+.ix-ssrf .ix-ssrf-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-mt span{display:block}
+.ix-ssrf .ix-ssrf-msub{font-size:20px;line-height:1.4}
+.ix-ssrf .ix-ssrf-msub em{font-style:normal;color:var(--ink);background:var(--grn);padding:0 5px}
+.ix-ssrf .ix-ssrf-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ix-ssrf .ix-ssrf-moves li{border:2px solid #fff;padding:8px 10px;display:flex;align-items:center;gap:10px;position:relative;transition:background .3s,color .3s}
+.ix-ssrf .ix-ssrf-moves b{font-family:var(--f-mono);font-weight:400;font-size:20px;color:var(--ink);-webkit-text-stroke:1.5px var(--grn)}
+.ix-ssrf .ix-ssrf-moves span{font-family:var(--f-cap);font-size:15px;line-height:1.15}
+.ix-ssrf .ix-ssrf-moves li.ix-ssrf-x{background:var(--grn);color:var(--ink);border-color:var(--grn)}
+.ix-ssrf .ix-ssrf-moves li.ix-ssrf-x b{-webkit-text-stroke:1.5px var(--ink);color:var(--grn)}
+.ix-ssrf .ix-ssrf-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-mono);font-size:17px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--grn);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-ssrf .ix-ssrf-go:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-go:disabled{opacity:.55;cursor:default;transform:none}
+
+/* intro (only with motion) */
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission:not(.ix-ssrf-seen) .ix-ssrf-drop{transform:translate(-50%,-110%)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission:not(.ix-ssrf-seen) .ix-ssrf-mbody>*{opacity:0}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-drop{animation:ix-ssrf-fall 1.1s cubic-bezier(.3,1.25,.5,1) .15s both,ix-ssrf-sway 5s ease-in-out 1.4s infinite}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path{animation:ix-ssrf-draw 1.6s ease-out both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path:nth-child(2){animation-delay:.5s}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mweb path:nth-child(3){animation-delay:.8s}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-kick{animation:ix-ssrf-up .4s ease-out .5s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-mt{animation:ix-ssrf-slam .5s cubic-bezier(.2,1.6,.4,1) .8s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-msub{animation:ix-ssrf-up .5s ease-out 1.15s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-moves{animation:ix-ssrf-up .5s ease-out 1.4s both}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-mission.ix-ssrf-seen .ix-ssrf-go{animation:ix-ssrf-slam .5s cubic-bezier(.2,1.6,.4,1) 1.7s both}
+
+/* LEVEL SHELL */
+.ix-ssrf .ix-ssrf-act,.ix-ssrf .ix-ssrf-lvl{position:relative;margin-top:64px;border:3px solid var(--ink);background:#fffdf6;box-shadow:8px 8px 0 var(--ink);scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--grn)}
+.ix-ssrf .ix-ssrf-act .ix-ssrf-lh{background:var(--yel)}
+.ix-ssrf .ix-ssrf-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--grn);padding:4px 10px}
+.ix-ssrf .ix-ssrf-act .ix-ssrf-ln{color:var(--yel)}
+.ix-ssrf .ix-ssrf-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:#fff;border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-ssrf .ix-ssrf-clear .ix-ssrf-ok{display:inline-block;animation:ix-ssrf-pop .35s}
+.ix-ssrf .ix-ssrf-lb{padding:22px 20px 24px;display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-locked{pointer-events:none;user-select:none}
+.ix-ssrf .ix-ssrf-locked .ix-ssrf-lb{filter:grayscale(1) blur(3px);opacity:.3;max-height:260px;overflow:hidden}
+.ix-ssrf .ix-ssrf-lockcap{display:none}
+.ix-ssrf .ix-ssrf-locked .ix-ssrf-lockcap{display:grid;position:absolute;inset:60px 0 0;place-items:center;z-index:5}
+.ix-ssrf .ix-ssrf-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-ssrf .ix-ssrf-act.ix-ssrf-locked .ix-ssrf-lb{max-height:200px}
+
+/* talk */
+.ix-ssrf .ix-ssrf-say{display:flex;gap:10px;align-items:flex-start}
+.ix-ssrf .ix-ssrf-who{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:#fff;padding:4px 8px;margin-top:8px;min-width:52px;text-align:center}
+.ix-ssrf .ix-ssrf-who.ix-ssrf-k{background:var(--yel);color:var(--ink);border:2px solid var(--ink)}
+.ix-ssrf .ix-ssrf-who.ix-ssrf-v{background:var(--red);color:#fff}
+.ix-ssrf .ix-ssrf-bub{font-family:var(--f-hand);font-size:23px;line-height:1.22;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 15px;box-shadow:3px 3px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-bub b{font-weight:400;background:var(--grn);padding:0 4px}
+.ix-ssrf .ix-ssrf-big{font-family:var(--f-cap);font-size:28px;line-height:1.2}
+.ix-ssrf .ix-ssrf-big span{display:inline-block;margin-top:6px;font-family:var(--f-text);font-size:20px;line-height:1.4;color:var(--muted)}
+.ix-ssrf .ix-ssrf-hl{font-weight:400;background:var(--ink);color:var(--grn);padding:0 6px}
+
+/* buttons */
+.ix-ssrf .ix-ssrf-btn{align-self:flex-start;min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:17px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--grn);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,box-shadow .1s}
+.ix-ssrf .ix-ssrf-btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-btn.ix-ssrf-y{background:var(--yel);color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-btn.ix-ssrf-r{background:var(--red);color:#fff;box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-btn:disabled{opacity:.5;cursor:default;transform:none}
+.ix-ssrf .ix-ssrf-steps{display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-stp{display:flex;flex-direction:column;gap:18px}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-stp:not([data-stp="0"]){animation:ix-ssrf-up .45s ease-out both}
+
+/* MAP */
+.ix-ssrf .ix-ssrf-map{position:relative;background:var(--ink);color:#fff;border:3px solid var(--ink);overflow:hidden;padding:16px 16px 20px;display:flex;flex-direction:column;gap:26px;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.8px);background-size:12px 12px}
+.ix-ssrf .ix-ssrf-web{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.ix-ssrf .ix-ssrf-out,.ix-ssrf .ix-ssrf-mid,.ix-ssrf .ix-ssrf-in{position:relative;z-index:2}
+.ix-ssrf .ix-ssrf-zl{font-family:var(--f-cap);font-size:13px;letter-spacing:.12em;color:#a9a9a9;margin-bottom:10px}
+.ix-ssrf .ix-ssrf-out{min-height:200px}
+.ix-ssrf .ix-ssrf-outg{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:20px;align-items:center;min-height:140px}
+.ix-ssrf .ix-ssrf-field{display:flex;flex-direction:column;gap:4px;padding:10px 14px;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:14px;box-shadow:0 0 0 2px #fff;transition:background .3s}
+.ix-ssrf .ix-ssrf-fl{font-family:var(--f-cap);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-fv{font-family:var(--f-cap);font-size:18px;line-height:1.25}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-evil{background:var(--red);color:#fff;box-shadow:0 0 0 2px var(--red)}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-evil .ix-ssrf-fl{color:#ffe0e0}
+.ix-ssrf .ix-ssrf-field.ix-ssrf-type .ix-ssrf-fv::after{content:"";display:inline-block;width:.5em;height:1em;background:currentColor;vertical-align:-2px;margin-left:3px;animation:ix-ssrf-blink 1s steps(2) infinite}
+.ix-ssrf .ix-ssrf-ext,.ix-ssrf .ix-ssrf-srv,.ix-ssrf .ix-ssrf-tg{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ix-ssrf .ix-ssrf-ext{grid-column:2;grid-row:1;transition:opacity .3s,transform .3s}
+.ix-ssrf .ix-ssrf-ic{width:76px;height:76px;display:grid;place-items:center;background:#fff;color:var(--ink);border:3px solid #fff;border-radius:50%;position:relative;transition:background .3s,box-shadow .3s,opacity .3s,filter .3s}
+.ix-ssrf .ix-ssrf-ic svg{width:40px;height:40px;display:block}
+.ix-ssrf .ix-ssrf-nl{font-family:var(--f-cap);font-size:16px;line-height:1.15}
+.ix-ssrf .ix-ssrf-mid{display:flex;justify-content:center}
+.ix-ssrf .ix-ssrf-srv .ix-ssrf-ic{width:92px;height:92px;border-radius:18px;background:var(--grn);border-color:var(--grn)}
+.ix-ssrf .ix-ssrf-srv .ix-ssrf-ic svg{width:50px;height:50px}
+.ix-ssrf .ix-ssrf-ava{position:absolute;margin:-6px 0 0 104px;width:58px;height:58px;border:3px solid #fff;border-radius:50%;background:#fff;overflow:hidden;opacity:0;transform:scale(.3);transition:transform .4s cubic-bezier(.2,1.6,.4,1),opacity .3s}
+.ix-ssrf .ix-ssrf-ava.ix-ssrf-on{opacity:1;transform:none}
+.ix-ssrf .ix-ssrf-ava svg{width:100%;height:100%;display:block}
+.ix-ssrf .ix-ssrf-srv{position:relative}
+.ix-ssrf .ix-ssrf-in{border-top:3px dashed rgba(255,255,255,.45);padding-top:14px}
+.ix-ssrf .ix-ssrf-ing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ix-ssrf .ix-ssrf-tg .ix-ssrf-ic{opacity:.25;filter:grayscale(1)}
+.ix-ssrf .ix-ssrf-tg .ix-ssrf-nl{opacity:.35;transition:opacity .3s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-lit .ix-ssrf-tg .ix-ssrf-ic{opacity:1;filter:none}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-lit .ix-ssrf-tg .ix-ssrf-nl{opacity:1}
+.ix-ssrf .ix-ssrf-st{min-height:28px;font-family:var(--f-cap);font-size:13px;line-height:1.1;padding:5px 8px;opacity:0;transform:scale(.4) rotate(-6deg);transition:transform .35s cubic-bezier(.2,1.6,.4,1),opacity .2s}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-on{opacity:1;transform:rotate(-4deg)}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-bad{background:var(--red);color:#fff}
+.ix-ssrf .ix-ssrf-st.ix-ssrf-good{background:var(--grn);color:var(--ink)}
+.ix-ssrf .ix-ssrf-tg.ix-ssrf-hot .ix-ssrf-ic{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 0 6px rgba(255,59,59,.35)}
+.ix-ssrf .ix-ssrf-tg.ix-ssrf-safe .ix-ssrf-ic{background:var(--grn);border-color:var(--grn);box-shadow:0 0 0 6px rgba(46,229,157,.3)}
+/* spider in map */
+.ix-ssrf .ix-ssrf-spi{position:absolute;z-index:3;right:-16px;top:-16px;width:200px;opacity:0;transform:translateY(-110%);pointer-events:none;transform-origin:61% 0}
+.ix-ssrf .ix-ssrf-spi img{display:block;width:100%;height:auto;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);background:var(--sg);box-shadow:-6px 6px 0 var(--red)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-ext{opacity:0;transform:scale(.6)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-spi{opacity:1;transform:none;transition:transform .9s cubic-bezier(.3,1.35,.5,1),opacity .2s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-field{margin-top:150px}
+.ix-ssrf .ix-ssrf-field{transition:background .3s,margin .5s}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-out{min-height:0}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode.ix-ssrf-gone .ix-ssrf-field{margin-top:0;background:#fff;color:var(--ink);box-shadow:0 0 0 2px var(--grn)}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-field .ix-ssrf-fl{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-tstamp{display:none;position:relative;z-index:4;align-self:center;margin:4px 0 -6px;font-family:var(--f-mono);font-size:30px;line-height:1.05;text-align:center;color:var(--grn);border:5px solid var(--grn);padding:8px 16px;transform:rotate(-5deg);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-tstamp{display:block}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-tstamp{animation:ix-ssrf-stamp .5s cubic-bezier(.2,1.6,.4,1) .7s both}
+@keyframes ix-ssrf-stamp{from{opacity:0;transform:rotate(-5deg) scale(2.6)}to{opacity:1;transform:rotate(-5deg) scale(1)}}
+.ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-spi{opacity:0;transform:translateY(160%) rotate(28deg);transition:transform 1s cubic-bezier(.6,0,.9,.6),opacity .9s .3s}
+/* threads */
+.ix-ssrf .ix-ssrf-th{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 3px rgba(46,229,157,.9))}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-x{stroke-width:1.5;stroke:rgba(255,255,255,.85)}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-ok{stroke:var(--grn)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-th.ix-ssrf-grow{stroke-dasharray:1;stroke-dashoffset:1;animation:ix-ssrf-grow .9s cubic-bezier(.5,0,.3,1) forwards}
+.ix-ssrf .ix-ssrf-th.ix-ssrf-torn{animation:ix-ssrf-tear 1.1s cubic-bezier(.5,0,.8,.5) forwards}
+.ix-ssrf .ix-ssrf-sfx{position:absolute;z-index:6;left:50%;top:44%;transform:translate(-50%,-50%);pointer-events:none;font-family:var(--f-mono);font-size:38px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);opacity:0;white-space:nowrap}
+.ix-ssrf .ix-ssrf-sfx.ix-ssrf-on{animation:ix-ssrf-sfx 1.3s cubic-bezier(.2,1.6,.4,1) forwards}
+
+/* LEVEL CONTENT */
+.ix-ssrf .ix-ssrf-q{font-family:var(--f-cap);font-size:19px;margin-top:4px}
+.ix-ssrf .ix-ssrf-ch{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ix-ssrf .ix-ssrf-choice{min-height:96px;padding:14px 16px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;transition:transform .1s,box-shadow .1s,background .2s}
+.ix-ssrf .ix-ssrf-choice:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-ssrf .ix-ssrf-choice span{font-size:17px;line-height:1.35;color:var(--muted)}
+.ix-ssrf .ix-ssrf-choice:disabled{cursor:default;transform:none;box-shadow:5px 5px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead{opacity:.6;background:#eee}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead b{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:3px}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-dead span::before{content:"Не сработало. ";color:#c81e1e;font-weight:700}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-pick{background:var(--grn)}
+.ix-ssrf .ix-ssrf-choice.ix-ssrf-pick span{color:var(--ink)}
+.ix-ssrf .ix-ssrf-atks{list-style:none;margin:0;padding:0;display:none;flex-direction:column;gap:0;border-top:2px solid rgba(20,20,20,.15)}
+.ix-ssrf .ix-ssrf-atks.ix-ssrf-on{display:flex}
+.ix-ssrf .ix-ssrf-atks li{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:2px solid rgba(20,20,20,.15);opacity:.25;transition:opacity .25s,background .25s}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-run{opacity:1}
+.ix-ssrf .ix-ssrf-ai{flex:0 0 48px;height:48px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.ix-ssrf .ix-ssrf-ai svg{width:26px;height:26px}
+.ix-ssrf .ix-ssrf-at{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ix-ssrf .ix-ssrf-at b{font-family:var(--f-cap);font-weight:400;font-size:18px;line-height:1.25}
+.ix-ssrf .ix-ssrf-at i{font-style:normal;font-size:17px;line-height:1.35;color:var(--muted);display:none}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done.ix-ssrf-W i[data-why-w],.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done.ix-ssrf-G i[data-why-g]{display:block}
+.ix-ssrf .ix-ssrf-res{flex:0 0 auto;font-family:var(--f-mono);font-size:13px;padding:4px 8px;border:3px solid currentColor;transform:rotate(-5deg);opacity:0}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-done .ix-ssrf-res{opacity:1;animation:ix-ssrf-pop .3s}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-pass{color:#d0201f}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-block{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-res.ix-ssrf-okk{color:var(--muted)}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-lost{background:#ffe5e5}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-lost .ix-ssrf-ai{background:var(--red)}
+.ix-ssrf .ix-ssrf-atks li.ix-ssrf-held .ix-ssrf-ai{background:var(--grn);color:var(--ink)}
+.ix-ssrf .ix-ssrf-after{display:none;flex-direction:column;gap:18px;padding-top:6px}
+.ix-ssrf .ix-ssrf-clear .ix-ssrf-after{display:flex;animation:ix-ssrf-up .45s ease-out}
+.ix-ssrf .ix-ssrf-case{background:var(--ink);color:#fff;padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:5px 5px 0 var(--red)}
+.ix-ssrf .ix-ssrf-casek{font-family:var(--f-cap);font-size:14px;letter-spacing:.08em;color:var(--red)}
+.ix-ssrf .ix-ssrf-case p{font-size:18px;line-height:1.5}
+.ix-ssrf .ix-ssrf-chain{display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center}
+.ix-ssrf .ix-ssrf-chain span{font-family:var(--f-cap);font-size:16px;color:var(--ink);background:var(--yel);padding:3px 9px}
+.ix-ssrf .ix-ssrf-chain i{font-style:normal;font-family:var(--f-cap);color:var(--yel);font-size:18px}
+.ix-ssrf .ix-ssrf-chain span:last-child{background:var(--red);color:#fff}
+
+/* FINAL */
+.ix-ssrf .ix-ssrf-final{margin-top:64px;display:flex;flex-direction:column;gap:20px;scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-kick{color:var(--gdk)}
+.ix-ssrf .ix-ssrf-ft{margin:0;font-family:var(--f-mono);font-weight:400;font-size:38px;line-height:1.05;text-transform:uppercase}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-map{box-shadow:8px 8px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-final .ix-ssrf-go{box-shadow:6px 6px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-fafter{display:flex;flex-direction:column;gap:18px;animation:ix-ssrf-up .5s ease-out}
+.ix-ssrf .ix-ssrf-fstats{display:flex;flex-wrap:wrap;gap:10px}
+.ix-ssrf .ix-ssrf-fstats span{font-family:var(--f-cap);font-size:16px;border:3px solid var(--ink);padding:7px 12px;background:#fff}
+.ix-ssrf .ix-ssrf-fstats b{font-family:var(--f-mono);font-weight:400;margin-left:6px}
+.ix-ssrf .ix-ssrf-rule{font-family:var(--f-cap);font-size:24px;line-height:1.3;background:var(--grn);padding:16px 18px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+
+/* HACK */
+.ix-ssrf .ix-ssrf-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:var(--red);color:#fff;overflow:auto;background-image:radial-gradient(rgba(20,20,20,.35) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-ssrf .ix-ssrf-hkin{max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack:not([hidden]) .ix-ssrf-hkin{animation:ix-ssrf-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack.ix-ssrf-rew .ix-ssrf-hkin{animation:ix-ssrf-rewind .7s ease-in forwards}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-hack.ix-ssrf-rew{animation:ix-ssrf-fade .7s ease-in forwards}
+.ix-ssrf .ix-ssrf-hkface{width:170px;border:4px solid var(--ink);background:var(--sg);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg);overflow:hidden}
+.ix-ssrf .ix-ssrf-hkface img{display:block;width:100%;height:auto}
+.ix-ssrf .ix-ssrf-hkt{font-family:var(--f-mono);font-size:62px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-ssrf .ix-ssrf-hkcard{display:flex;flex-direction:column;gap:4px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px 20px;transform:rotate(1.5deg);font-family:var(--f-cap);font-size:19px;line-height:1.3}
+.ix-ssrf .ix-ssrf-hkcard small{font-family:var(--f-text);font-size:16px;color:var(--muted)}
+.ix-ssrf .ix-ssrf-hksay{font-family:var(--f-hand);font-size:24px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+
+/* BATTLE */
+.ix-ssrf .ix-ssrf-battle{margin-top:80px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--grn);scroll-margin-top:56px}
+.ix-ssrf .ix-ssrf-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-ssrf .ix-ssrf-bface{flex:0 0 84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--grn);background:var(--sg);position:relative}
+.ix-ssrf .ix-ssrf-bface img{position:absolute;left:50%;top:50%;width:250%;transform:translate(-46%,-42%)}
+.ix-ssrf .ix-ssrf-bface.ix-ssrf-ouch{animation:ix-ssrf-shake .4s}
+.ix-ssrf .ix-ssrf-bhx{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.ix-ssrf .ix-ssrf-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel);text-transform:uppercase}
+.ix-ssrf .ix-ssrf-hp{position:relative;height:28px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-ssrf .ix-ssrf-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.4,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-ssrf .ix-ssrf-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000}
+.ix-ssrf .ix-ssrf-bbody{padding:22px 20px 26px;display:flex;flex-direction:column;gap:18px}
+.ix-ssrf .ix-ssrf-mvk{font-family:var(--f-cap);font-size:14px;letter-spacing:.08em;color:var(--grn)}
+.ix-ssrf .ix-ssrf-mvq{font-family:var(--f-hand);font-size:27px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--grn);border-radius:16px;padding:10px 18px}
+.ix-ssrf .ix-ssrf-bq{font-family:var(--f-cap);font-size:18px}
+.ix-ssrf .ix-ssrf-bopts{display:flex;flex-direction:column;gap:12px}
+.ix-ssrf .ix-ssrf-bopt{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;font-family:var(--f-cap);font-size:18px;line-height:1.25;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+.ix-ssrf .ix-ssrf-bopt:hover:not(:disabled){background:#fff;color:var(--ink)}
+.ix-ssrf .ix-ssrf-bopt:disabled{cursor:default;opacity:.45}
+.ix-ssrf .ix-ssrf-bopt.ix-ssrf-right{background:var(--grn);border-color:var(--grn);color:var(--ink);opacity:1}
+.ix-ssrf .ix-ssrf-bopt.ix-ssrf-wrong{background:var(--red);border-color:var(--red);opacity:1}
+.ix-ssrf .ix-ssrf-bres{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ix-ssrf .ix-ssrf-bsfx{font-family:var(--f-mono);font-size:34px;line-height:1;padding:8px 14px;transform:rotate(-4deg);color:var(--ink);background:var(--yel);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-bsfx.ix-ssrf-miss{background:#3a3a3a;color:#fff;font-size:24px;box-shadow:4px 4px 0 var(--red)}
+.ix-ssrf.ix-ssrf-anim .ix-ssrf-bsfx{animation:ix-ssrf-slam .45s cubic-bezier(.2,1.6,.4,1)}
+.ix-ssrf .ix-ssrf-bwhy{flex:1 1 220px;font-size:19px;line-height:1.4}
+.ix-ssrf .ix-ssrf-bend{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:center}
+.ix-ssrf .ix-ssrf-bendf{position:relative;border:3px solid #fff;background:var(--sg);overflow:hidden;transform:rotate(-2deg)}
+.ix-ssrf .ix-ssrf-bendf img{display:block;width:100%;height:auto;filter:grayscale(.85) contrast(1.1)}
+.ix-ssrf .ix-ssrf-bendf b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-14deg);font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--red);background:rgba(255,255,255,.92);border:4px solid var(--red);padding:4px 10px;white-space:nowrap}
+.ix-ssrf .ix-ssrf-bendt{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ix-ssrf .ix-ssrf-bend .ix-ssrf-bwhy{flex:none}
+.ix-ssrf .ix-ssrf-battle .ix-ssrf-btn.ix-ssrf-y{box-shadow:5px 5px 0 var(--grn)}
+.ix-ssrf .ix-ssrf-bwin{font-family:var(--f-mono);font-weight:400;font-size:32px;line-height:1.1;color:var(--grn);text-transform:uppercase;margin:0}
+.ix-ssrf .ix-ssrf-bscore{font-family:var(--f-cap);font-size:22px}
+.ix-ssrf .ix-ssrf-bscore b{font-family:var(--f-mono);font-weight:400;color:var(--yel)}
+
+/* INTERVIEW */
+.ix-ssrf .ix-ssrf-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);display:flex;flex-direction:column;gap:20px}
+.ix-ssrf .ix-ssrf-ivk{font-family:var(--f-cap);font-size:16px;letter-spacing:.06em;color:var(--gdk)}
+.ix-ssrf .ix-ssrf-ivq{margin:0;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-ssrf .ix-ssrf-think{display:flex;flex-direction:column;gap:4px;padding-left:16px;border-left:5px solid var(--grn)}
+.ix-ssrf .ix-ssrf-think b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+.ix-ssrf .ix-ssrf-think span{font-size:19px;line-height:1.45;color:#333}
+.ix-ssrf .ix-ssrf-iva{animation:ix-ssrf-up .4s ease-out}
+.ix-ssrf .ix-ssrf-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixssrf}
+.ix-ssrf .ix-ssrf-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixssrf}
+.ix-ssrf .ix-ssrf-iva li::before{content:counter(ixssrf);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--grn);font-family:var(--f-cap);font-size:17px}
+.ix-ssrf .ix-ssrf-iva li b{font-weight:700}
+.ix-ssrf .ix-ssrf-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-ssrf .ix-ssrf-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-ssrf .ix-ssrf-cs{margin-top:72px}
+.ix-ssrf .ix-ssrf-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-ssrf .ix-ssrf-csl{list-style:none;margin:0;padding:0}
+.ix-ssrf .ix-ssrf-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-ssrf .ix-ssrf-csl li:last-child{border-bottom:0}
+.ix-ssrf .ix-ssrf-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-ssrf .ix-ssrf-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-ssrf .ix-ssrf-csl p{font-size:18px;line-height:1.45}
+.ix-ssrf .ix-ssrf-train{margin-top:20px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+/* KEYFRAMES */
+@keyframes ix-ssrf-drophud{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-ssrf-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-ssrf-fall{0%{transform:translate(-50%,-110%)}70%{transform:translate(-50%,4%)}100%{transform:translate(-50%,0)}}
+@keyframes ix-ssrf-sway{0%,100%{transform:translate(-50%,0) rotate(0)}50%{transform:translate(-50%,1.5%) rotate(-1.6deg)}}
+@keyframes ix-ssrf-draw{from{stroke-dashoffset:1200}to{stroke-dashoffset:0}}
+@keyframes ix-ssrf-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-ssrf-slam{from{opacity:0;transform:scale(2) rotate(-4deg)}60%{opacity:1;transform:scale(.95) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes ix-ssrf-pop{from{transform:scale(.4) rotate(-5deg)}60%{transform:scale(1.2) rotate(-5deg)}to{transform:rotate(-5deg)}}
+@keyframes ix-ssrf-blink{to{visibility:hidden}}
+@keyframes ix-ssrf-grow{to{stroke-dashoffset:0}}
+@keyframes ix-ssrf-tear{0%{opacity:1;transform:none}25%{opacity:1}100%{opacity:0;transform:translateY(70px) rotate(var(--rot,12deg))}}
+@keyframes ix-ssrf-sfx{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(-14deg)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(-6deg)}75%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-6deg)}100%{opacity:0;transform:translate(-50%,-64%) scale(1) rotate(-6deg)}}
+@keyframes ix-ssrf-hackin{from{transform:scale(1.5) rotate(5deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-ssrf-rewind{0%{transform:none;filter:none}40%{transform:translateX(-30px) skewX(12deg);filter:hue-rotate(90deg) blur(1px)}100%{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-ssrf-fade{0%,60%{opacity:1}to{opacity:0}}
+
+/* MOBILE */
+@media (max-width:760px){
+  .ix-ssrf .ix-ssrf-mission{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--grn)}
+  .ix-ssrf .ix-ssrf-eye{min-height:0;height:330px;border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-ssrf .ix-ssrf-drop{width:72%;max-width:280px}
+  .ix-ssrf .ix-ssrf-mbody{padding:22px 18px 24px;gap:16px}
+  .ix-ssrf .ix-ssrf-mt{font-size:34px}
+  .ix-ssrf .ix-ssrf-msub{font-size:19px}
+  .ix-ssrf .ix-ssrf-moves span{font-size:14px}
+  .ix-ssrf .ix-ssrf-go{align-self:stretch}
+  .ix-ssrf .ix-ssrf-act,.ix-ssrf .ix-ssrf-lvl{margin-top:52px;box-shadow:6px 6px 0 var(--ink)}
+  .ix-ssrf .ix-ssrf-lh{padding:12px 14px}
+  .ix-ssrf .ix-ssrf-lt{font-size:20px}
+  .ix-ssrf .ix-ssrf-lb{padding:18px 14px 20px}
+  .ix-ssrf .ix-ssrf-bub{font-size:21px;padding:6px 12px}
+  .ix-ssrf .ix-ssrf-who{min-width:0;font-size:12px}
+  .ix-ssrf .ix-ssrf-big{font-size:23px}
+  .ix-ssrf .ix-ssrf-big span{font-size:18px}
+  .ix-ssrf .ix-ssrf-btn{align-self:stretch;justify-content:center;text-align:center}
+  .ix-ssrf .ix-ssrf-map{padding:14px 12px 16px;gap:20px;margin:0 -2px}
+  .ix-ssrf .ix-ssrf-out{min-height:0}
+  .ix-ssrf .ix-ssrf-outg{grid-template-columns:minmax(0,1fr) 96px;gap:10px;min-height:0}
+  .ix-ssrf .ix-ssrf-fv{font-size:17px}
+  .ix-ssrf .ix-ssrf-spi{width:150px;right:-12px;top:-14px}
+  .ix-ssrf .ix-ssrf-map.ix-ssrf-evilmode .ix-ssrf-field{margin-top:150px}
+  .ix-ssrf .ix-ssrf-ic{width:64px;height:64px}
+  .ix-ssrf .ix-ssrf-ic svg{width:34px;height:34px}
+  .ix-ssrf .ix-ssrf-srv .ix-ssrf-ic{width:80px;height:80px}
+  .ix-ssrf .ix-ssrf-nl{font-size:14px}
+  .ix-ssrf .ix-ssrf-ava{margin-left:92px;width:50px;height:50px}
+  .ix-ssrf .ix-ssrf-ing{gap:6px}
+  .ix-ssrf .ix-ssrf-st{font-size:12px;padding:4px 6px}
+  .ix-ssrf .ix-ssrf-ch{grid-template-columns:1fr}
+  .ix-ssrf .ix-ssrf-choice{min-height:80px}
+  .ix-ssrf .ix-ssrf-atks li{gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .ix-ssrf .ix-ssrf-ai{flex-basis:40px;height:40px}
+  .ix-ssrf .ix-ssrf-at{flex-basis:calc(100% - 50px)}
+  .ix-ssrf .ix-ssrf-res{margin-left:50px}
+  .ix-ssrf .ix-ssrf-ft{font-size:28px}
+  .ix-ssrf .ix-ssrf-rule{font-size:20px}
+  .ix-ssrf .ix-ssrf-hkt{font-size:48px}
+  .ix-ssrf .ix-ssrf-hkface{width:140px}
+  .ix-ssrf .ix-ssrf-battle{box-shadow:6px 6px 0 var(--grn)}
+  .ix-ssrf .ix-ssrf-bh{padding:16px 14px;gap:12px}
+  .ix-ssrf .ix-ssrf-bface{flex-basis:64px;height:64px}
+  .ix-ssrf .ix-ssrf-bt{font-size:20px}
+  .ix-ssrf .ix-ssrf-bbody{padding:18px 14px 22px}
+  .ix-ssrf .ix-ssrf-mvq{font-size:23px;padding:8px 14px}
+  .ix-ssrf .ix-ssrf-bopt{font-size:17px}
+  .ix-ssrf .ix-ssrf-bwin{font-size:24px}
+  .ix-ssrf .ix-ssrf-bend{grid-template-columns:1fr}
+  .ix-ssrf .ix-ssrf-bendf{width:180px;justify-self:center}
+  .ix-ssrf .ix-ssrf-tstamp{font-size:22px}
+  .ix-ssrf .ix-ssrf-iv{padding:22px 16px 24px}
+  .ix-ssrf .ix-ssrf-ivq{font-size:22px}
+  .ix-ssrf .ix-ssrf-iva li{padding-left:42px;font-size:18px}
+  .ix-ssrf .ix-ssrf-cst{font-size:25px}
+  .ix-ssrf .ix-ssrf-csl li{gap:14px}
+  .ix-ssrf .ix-ssrf-csn{flex-basis:54px;font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-ssrf *,.ix-ssrf *::before,.ix-ssrf *::after{animation:none !important;transition:none !important}
+  .ix-ssrf .ix-ssrf-map.ix-ssrf-gone .ix-ssrf-spi{opacity:0}
+  .ix-ssrf .ix-ssrf-th.ix-ssrf-torn{opacity:0}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-ssrf'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ix-ssrf-anim');
+  var NS='http://www.w3.org/2000/svg';
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,30):ms)})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusSoon(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:450)}
+
+  /* ICONS */
+  var IC={
+    photo:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/>',
+    server:'<rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="14" width="16" height="7" rx="1.5"/><path d="M8 6.5h.01M8 17.5h.01M12 6.5h5M12 17.5h5"/>',
+    admin:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 15h10"/><circle cx="10" cy="9" r="2" fill="currentColor"/><circle cx="14" cy="15" r="2" fill="currentColor"/>',
+    db:'<ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>',
+    key:'<circle cx="7.5" cy="12" r="4"/><path d="M11.5 12H21M18 12v3.5M21 12v2.5"/>'
+  };
+  function icon(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[n]||'')+'</svg>'}
+  function fillIcons(el){qa('[data-ic]',el).forEach(function(s){if(!s.firstChild) s.innerHTML=icon(s.getAttribute('data-ic'))})}
+  fillIcons(root);
+
+  /* HUD */
+  var hud=q('.ix-ssrf-hud'), fill=q('.ix-ssrf-bar i'), barT=q('.ix-ssrf-bar b'), pips=qa('.ix-ssrf-pips span');
+  var S={def:0,lv:[0,0,0,0],first:[1,1,1,1],hacks:0};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ix-ssrf-done',!!S.lv[i])})}
+  function hit(){hud.classList.remove('ix-ssrf-hit');void hud.offsetWidth;hud.classList.add('ix-ssrf-hit');setTimeout(function(){hud.classList.remove('ix-ssrf-hit')},700)}
+
+  /* MISSION intro */
+  var mission=q('.ix-ssrf-mission');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){mission.classList.add('ix-ssrf-seen');io.disconnect()}})},{threshold:.25});
+    io.observe(mission);
+  } else mission.classList.add('ix-ssrf-seen');
+  setTimeout(function(){mission.classList.add('ix-ssrf-seen')},4000);
+
+  /* MAP */
+  var tpl=q('template[data-tpl="map"]');
+  function makeMap(slot){
+    var frag=document.importNode(tpl.content,true); slot.appendChild(frag);
+    var el=q('[data-map]',slot); fillIcons(el);
+    var svg=q('.ix-ssrf-web',el);
+    var M={el:el,strands:[],geo:[]};
+    function node(n){var x=q('[data-node="'+n+'"] .ix-ssrf-ic',el)||q('[data-spider] img',el);return x}
+    function center(e,mr,top){var r=e.getBoundingClientRect();return {x:r.left-mr.left+r.width/2,y:top?(r.top-mr.top+r.height*.62):(r.top-mr.top+r.height/2)}}
+    function qp(a,c,b,t){var u=1-t;return {x:u*u*a.x+2*u*t*c.x+t*t*b.x,y:u*u*a.y+2*u*t*c.y+t*t*b.y}}
+    function d(a,c,b){return 'M'+a.x.toFixed(1)+' '+a.y.toFixed(1)+'Q'+c.x.toFixed(1)+' '+c.y.toFixed(1)+' '+b.x.toFixed(1)+' '+b.y.toFixed(1)}
+    function path(dd,cls,delay,anim){
+      var p=document.createElementNS(NS,'path'); p.setAttribute('d',dd); p.setAttribute('pathLength','1');
+      p.setAttribute('class','ix-ssrf-th'+(cls?' '+cls:'')+(anim?' ix-ssrf-grow':''));
+      if(anim) p.style.animationDelay=delay+'ms';
+      svg.appendChild(p); return p;
+    }
+    /* strands: names among ext, spider, admin, db, key */
+    M.draw=function(anim){
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+      M.geo=[];
+      if(!M.strands.length) return 0;
+      var mr=el.getBoundingClientRect(), W=mr.width, H=mr.height;
+      svg.setAttribute('viewBox','0 0 '+W+' '+H);
+      var s=center(node('srv'),mr);
+      var ends=[];
+      M.strands.forEach(function(n){
+        var e=n==='spider'?q('[data-spider] img',el):node(n);
+        ends.push({n:n,p:center(e,mr,n==='spider')});
+      });
+      if(M.web){ends.push({n:'edgeL',p:{x:-4,y:s.y-20}});ends.push({n:'edgeR',p:{x:W+4,y:s.y+24}})}
+      var delay=0, step=anim?260:0;
+      ends.forEach(function(E){
+        var a=s,b=E.p,mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y,len=Math.sqrt(dx*dx+dy*dy)||1;
+        var c={x:mx-dy/len*14,y:my+dx/len*14};
+        E.a=a;E.c=c;E.ang=Math.atan2(dy,dx);
+        var pp=path(d(a,c,b),M.ok?'ix-ssrf-ok':'',delay,anim);
+        M.geo.push({p:pp,a:a,c:c,b:b});
+        delay+=E.n.indexOf('edge')===0?0:step;
+      });
+      if(M.web && ends.length>2){
+        ends.sort(function(x,y){return x.ang-y.ang});
+        var ring=[.32,.58,.84];
+        for(var i=0;i<ends.length;i++){
+          var A=ends[i],B=ends[(i+1)%ends.length];
+          var gap=B.ang-A.ang; if(gap<0) gap+=Math.PI*2;
+          if(gap>Math.PI*.95) continue;
+          ring.forEach(function(t,k){
+            var p1=qp(A.a,A.c,A.p,t),p2=qp(B.a,B.c,B.p,t);
+            var m={x:(p1.x+p2.x)/2,y:(p1.y+p2.y)/2};
+            var c={x:m.x+(s.x-m.x)*.18,y:m.y+(s.y-m.y)*.18};
+            var pp=path(d(p1,c,p2),'ix-ssrf-x'+(M.ok?' ix-ssrf-ok':''),delay+k*140,anim);
+            M.geo.push({p:pp,a:p1,c:c,b:p2});
+          });
+        }
+        delay+=ring.length*140;
+      }
+      return (anim&&!RM)?delay+900:0;
+    };
+    M.set=function(strands,web,anim){M.strands=strands;M.web=!!web;return M.draw(anim)};
+    M.status=function(n,txt,cls){
+      var t=q('[data-node="'+n+'"]',el), st=q('[data-st]',t);
+      st.textContent=txt; st.className='ix-ssrf-st ix-ssrf-on ix-ssrf-'+cls;
+      t.classList.toggle('ix-ssrf-hot',cls==='bad'); t.classList.toggle('ix-ssrf-safe',cls==='good');
+    };
+    M.sfx=function(txt){var s=q('[data-sfx]',el);s.textContent=txt;s.classList.remove('ix-ssrf-on');void s.offsetWidth;s.classList.add('ix-ssrf-on')};
+    M.tear=function(){
+      var list=M.geo.slice(); M.geo=[];
+      list.forEach(function(g,i){
+        var a=g.a,c=g.c,b=g.b, ac={x:(a.x+c.x)/2,y:(a.y+c.y)/2}, cb={x:(c.x+b.x)/2,y:(c.y+b.y)/2}, m={x:(ac.x+cb.x)/2,y:(ac.y+cb.y)/2};
+        var cls=g.p.getAttribute('class').replace(' ix-ssrf-grow','');
+        g.p.parentNode.removeChild(g.p);
+        [[a,ac,m,a],[m,cb,b,b]].forEach(function(h,k){
+          var p=document.createElementNS(NS,'path');
+          p.setAttribute('d',d({x:h[0].x,y:h[0].y},h[1],h[2]));
+          p.setAttribute('class',cls+' ix-ssrf-torn');
+          p.style.transformBox='view-box'; p.style.transformOrigin=h[3].x.toFixed(1)+'px '+h[3].y.toFixed(1)+'px';
+          p.style.setProperty('--rot',((k?-1:1)*(10+((i*7)%14)))+'deg');
+          p.style.animationDelay=((i%6)*60)+'ms';
+          svg.appendChild(p);
+        });
+      });
+      M.strands=[];
+    };
+    var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(M.strands.length) M.draw(false)},120)});
+    return M;
+  }
+
+  /* START */
+  var act=q('#ix-ssrf-act'), map1=makeMap(q('[data-mapslot="act"]'));
+  q('[data-act="start"]').addEventListener('click',function(){
+    act.classList.remove('ix-ssrf-locked'); go(act); focusSoon(q('[data-act="s0"]'));
+  });
+  function showStep(n){var s=q('[data-stp="'+n+'"]',act);s.hidden=false;return s}
+  function typeIn(fld,txt){
+    var v=q('[data-fv]',fld); if(RM){v.textContent=txt;return wait(0)}
+    fld.classList.add('ix-ssrf-type'); v.textContent=''; var i=0;
+    return new Promise(function(r){var t=setInterval(function(){i+=2;v.textContent=txt.slice(0,i);if(i>=txt.length){clearInterval(t);fld.classList.remove('ix-ssrf-type');r()}},38)});
+  }
+  q('[data-act="s0"]').addEventListener('click',function(){
+    var b=this; b.disabled=true;
+    var t=map1.set(['ext'],false,true);
+    wait(t||300).then(function(){
+      var ava=q('[data-ava]',map1.el); ava.innerHTML='<svg viewBox="0 0 24 24" style="background:#ffd60a" fill="none" stroke="#141414" stroke-width="2" stroke-linejoin="round">'+IC.photo+'</svg>'; ava.classList.add('ix-ssrf-on');
+      say('Сервер сходил по ссылке и принёс фото.');
+      b.hidden=true; var s=showStep(1); focusSoon(q('button',s));
+    });
+  });
+  q('[data-act="s1"]').addEventListener('click',function(){
+    var b=this; b.disabled=true;
+    map1.set([],false,false);
+    map1.el.classList.add('ix-ssrf-lit');
+    say('Внутри периметра: админка, база данных и ключи облака.');
+    wait(500).then(function(){b.hidden=true;var s=showStep(2);focusSoon(q('button',s))});
+  });
+  q('[data-act="s2"]').addEventListener('click',function(){
+    var b=this; b.disabled=true;
+    var fld=q('[data-field]',map1.el); fld.classList.add('ix-ssrf-evil');
+    q('.ix-ssrf-fl',fld).textContent='Ссылка от Паука';
+    q('[data-ava]',map1.el).classList.remove('ix-ssrf-on');
+    typeIn(fld,'ведёт внутрь самой компании').then(function(){
+      map1.el.classList.add('ix-ssrf-evilmode');
+      return wait(900);
+    }).then(function(){
+      var t=map1.set(['spider','admin','db','key'],true,true);
+      map1.sfx('ВЖЖЖ!');
+      return wait(RM?0:500).then(function(){map1.status('admin','открыта','bad')}).then(function(){return wait(260)})
+        .then(function(){map1.status('db','ответила','bad');return wait(260)})
+        .then(function(){map1.status('key','выданы','bad');return wait(Math.max(0,(t||0)-1000))});
+    }).then(function(){
+      say('Паутина: сервер сходил в админку, базу и за ключами облака.');
+      b.hidden=true; var s=showStep(3); focusSoon(q('button',s));
+    });
+  });
+  q('[data-act="s3"]').addEventListener('click',function(){
+    this.disabled=true;
+    hud.classList.add('ix-ssrf-on'); paint();
+    var l1=q('#ix-ssrf-l1'); l1.classList.remove('ix-ssrf-locked'); go(l1); focusSoon(q('.ix-ssrf-choice',l1));
+  });
+
+  /* LEVELS */
+  var HACK={
+    1:['Админка: открыта','Сервер сходил по ссылке Паука и принёс ему страницу настроек.','Вы запретили одно написание. Я выбрал другое.'],
+    2:['База данных: ответила','Имя было из разрешённого списка. Адрес — внутренним.','Вывеска честная. А дом — ваш.'],
+    3:['Ключи облака: выданы','Сервер прошёл по перенаправлению прямо к служебному сервису.','Я не стучался. Меня проводили.'],
+    4:['Данные клиентов: скачаны','SSRF → служебный сервис → ключи → лишние права → данные','Как в 2019-м. Ничего нового.']
+  };
+  var hack=q('.ix-ssrf-hack'), hackLvl=0, lastFocus=null;
+  function openHack(n){
+    hackLvl=n; S.hacks++; S.first[n-1]=0; hit();
+    var h=HACK[n];
+    q('[data-hkcard]',hack).innerHTML='<span>'+h[0]+'</span><small>'+h[1]+'</small>';
+    q('[data-hksay]',hack).textContent=h[2];
+    hack.classList.remove('ix-ssrf-rew'); hack.hidden=false;
+    setTimeout(function(){q('[data-act="rewind"]',hack).focus()},RM?0:300);
+  }
+  function rewind(){
+    if(hack.hidden) return;
+    hack.classList.add('ix-ssrf-rew');
+    wait(700).then(function(){
+      hack.hidden=true; hack.classList.remove('ix-ssrf-rew');
+      var lv=q('#ix-ssrf-l'+hackLvl); resetRows(lv);
+      var w=q('[data-v="weak"]',lv), g=q('[data-v="good"]',lv);
+      w.classList.add('ix-ssrf-dead'); w.disabled=true; w.setAttribute('aria-label',q('b',w).textContent+' — не сработало');
+      g.disabled=false;
+      say('Время откатили. Этот способ не сработал — выбери другой.');
+      go(lv); focusSoon(g);
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',rewind);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();rewind()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]',hack).focus()}
+  });
+  function resetRows(lv){
+    var ul=q('.ix-ssrf-atks',lv); ul.classList.remove('ix-ssrf-on');
+    qa('li',ul).forEach(function(li){li.className='';q('.ix-ssrf-res',li).textContent='';q('.ix-ssrf-res',li).className='ix-ssrf-res'});
+  }
+  var RES={pass:'ПРОШЁЛ',block:'ОТБИТ',ok:'ФОТО ОК'};
+  function runRows(lv,mode){
+    var ul=q('.ix-ssrf-atks',lv); ul.classList.add('ix-ssrf-on');
+    var rows=qa('li',ul), lost=false, p=wait(RM?0:250);
+    rows.forEach(function(li){
+      p=p.then(function(){li.classList.add('ix-ssrf-run');return wait(520)}).then(function(){
+        var r=li.getAttribute(mode==='weak'?'data-w':'data-g'), res=q('.ix-ssrf-res',li);
+        res.textContent=RES[r]; res.className='ix-ssrf-res ix-ssrf-'+(r==='ok'?'okk':r);
+        li.classList.add('ix-ssrf-done',mode==='weak'?'ix-ssrf-W':'ix-ssrf-G');
+        if(r==='pass'){li.classList.add('ix-ssrf-lost');lost=true}
+        if(r==='block') li.classList.add('ix-ssrf-held');
+        return wait(360);
+      });
+    });
+    return p.then(function(){return lost});
+  }
+  qa('.ix-ssrf-lvl').forEach(function(lv){
+    var n=+lv.getAttribute('data-lvl');
+    qa('.ix-ssrf-choice',lv).forEach(function(b){
+      b.addEventListener('click',function(){
+        if(S.lv[n-1]||lv.classList.contains('ix-ssrf-busy')) return;
+        var mode=b.getAttribute('data-v');
+        lv.classList.add('ix-ssrf-busy');
+        qa('.ix-ssrf-choice',lv).forEach(function(x){x.disabled=true});
+        resetRows(lv);
+        say(mode==='weak'?'Паук атакует. Посмотрим, выдержит ли защита.':'Защита включена. Паук атакует.');
+        runRows(lv,mode).then(function(lost){
+          lv.classList.remove('ix-ssrf-busy');
+          if(lost){return wait(450).then(function(){openHack(n)})}
+          b.classList.add('ix-ssrf-pick');
+          S.lv[n-1]=1; S.def=n*25; paint();
+          var mv=q('[data-mv="'+n+'"]'); if(mv) mv.classList.add('ix-ssrf-x');
+          lv.classList.add('ix-ssrf-clear');
+          say('Уровень '+n+' починен. Защита сервера: '+S.def+'%.');
+          var nx=q('#ix-ssrf-l'+(n+1));
+          if(nx) nx.classList.remove('ix-ssrf-locked'); else openFinal();
+          focusSoon(q('.ix-ssrf-after button',lv));
+        });
+      });
+    });
+  });
+
+  /* FINAL */
+  var fin=q('#ix-ssrf-final'), map2=null;
+  function openFinal(){
+    if(map2) return;
+    fin.hidden=false;
+    map2=makeMap(q('[data-mapslot="final"]',fin));
+    var f=q('[data-field]',map2.el); f.classList.add('ix-ssrf-evil'); q('.ix-ssrf-fl',f).textContent='Ссылка от Паука'; q('[data-fv]',f).textContent='ведёт внутрь самой компании';
+    map2.el.classList.add('ix-ssrf-lit','ix-ssrf-evilmode');
+    requestAnimationFrame(function(){map2.set(['spider','admin','db','key'],true,false)});
+    ['admin','db','key'].forEach(function(n){map2.status(n,'под защитой','good')});
+  }
+  q('[data-act="tear"]').addEventListener('click',function(){
+    var b=this; if(!map2) return; b.disabled=true;
+    map2.sfx('ТРЕСК!');
+    map2.tear();
+    map2.el.classList.add('ix-ssrf-gone');
+    var f2=q('[data-field]',map2.el); q('.ix-ssrf-fl',f2).textContent='Ссылка от Паука · отклонена'; q('[data-fv]',f2).textContent='сервер внутрь не пошёл';
+    setTimeout(function(){map2.set([],false,false)},RM?0:1400);
+    ['admin','db','key'].forEach(function(n){map2.status(n,'закрыто','good')});
+    say('Паутина порвана. Паук сорвался.');
+    wait(1300).then(function(){
+      b.hidden=true;
+      var fa=q('.ix-ssrf-fafter',fin); fa.hidden=false;
+      q('[data-first]',fa).textContent=S.first.reduce(function(a,x){return a+x},0)+'/4';
+      q('[data-hacks]',fa).textContent=S.hacks;
+      focusSoon(q('button',fa));
+    });
+  });
+
+  /* GOTO */
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); if(!t||t.hidden) return; go(t);
+    var f=(t.id==='ix-ssrf-battle'||t.id==='ix-ssrf-final')?t:q('.ix-ssrf-choice:not(:disabled)',t);
+    focusSoon(f);
+  })});
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Вставлю ссылку прямо на вашу внутреннюю админку.',o:[
+      ['Разрешать только свои хосты и только https',1,'Админки нет в списке разрешённых — загрузчик туда не пойдёт.'],
+      ['Проверять, что ссылка заканчивается на .jpg',0,'Окончание ссылки ничего не говорит о том, куда пойдёт запрос.'],
+      ['Спрятать админку под длинный адрес',0,'Спрятанная дверь — всё ещё дверь. Сервер дойдёт до неё по ссылке.']]},
+    {v:'Имя в моей ссылке из вашего списка. Только указывает оно внутрь.',o:[
+      ['Ещё раз сравнить текст ссылки со списком',0,'Текст чистый. Опасен адрес, в который превращается имя.'],
+      ['Узнать IP самому и отклонить внутренние диапазоны',1,'Проверяем, куда реально пойдёт запрос, и подключаемся именно туда.'],
+      ['Скачивать картинку медленнее',0,'Скорость не меняет адрес. Лимит времени полезен, но от SSRF не спасает.']]},
+    {v:'Ладно. Мой сайт ответит: «картинка переехала» — прямо к ключам облака.',o:[
+      ['Показать пользователю ответ целиком',0,'Сырой ответ внутреннего запроса — подарок Пауку.'],
+      ['Не следовать перенаправлениям или проверять каждое',1,'Новый адрес внутренний — сервер никуда не идёт.'],
+      ['Увеличить время ожидания загрузки',0,'Дольше ждать — не значит проверить.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ix-ssrf-bface');
+  var B={i:0,hp:3,score:0,clean:0,miss:false};
+  function hp(){hpI.style.width=(B.hp/3*100)+'%';hpT.textContent='ПРОКСИ-ПАУК · HP '+B.hp+'/3';hpW.setAttribute('aria-label','Здоровье Прокси-Паука: '+B.hp+' из 3')}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function renderMove(focus){
+    var m=MOVES[B.i]; B.miss=false;
+    var h='<p class="ix-ssrf-mvk">ХОД '+(B.i+1)+' / 3 · ПАУК</p><p class="ix-ssrf-mvq">'+esc(m.v)+'</p><p class="ix-ssrf-bq">Чем ответишь?</p><div class="ix-ssrf-bopts">';
+    m.o.forEach(function(o,k){h+='<button class="ix-ssrf-bopt" type="button" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><div class="ix-ssrf-bres" data-bres></div>';
+    bb.innerHTML=h;
+    qa('.ix-ssrf-bopt',bb).forEach(function(btn){btn.addEventListener('click',function(){pick(+btn.getAttribute('data-k'),btn)})});
+    if(focus) q('.ix-ssrf-bopt',bb).focus({preventScroll:true});
+  }
+  function pick(k,btn){
+    var m=MOVES[B.i], o=m.o[k], res=q('[data-bres]',bb);
+    if(o[1]){
+      qa('.ix-ssrf-bopt',bb).forEach(function(x){x.disabled=true});
+      btn.classList.add('ix-ssrf-right');
+      B.hp--; B.score+=B.miss?50:100; if(!B.miss) B.clean++; hp();
+      face.classList.remove('ix-ssrf-ouch'); void face.offsetWidth; face.classList.add('ix-ssrf-ouch');
+      var last=B.i===MOVES.length-1;
+      res.innerHTML='<span class="ix-ssrf-bsfx">УДАР!</span><p class="ix-ssrf-bwhy">'+esc(o[2])+'</p>';
+      var nb=document.createElement('button'); nb.type='button'; nb.className='ix-ssrf-btn ix-ssrf-y'; nb.textContent=last?'Добить Паука ▶':'Следующий ход ▶';
+      nb.addEventListener('click',function(){if(last) win(); else {B.i++; renderMove(true)}});
+      bb.appendChild(nb); nb.focus({preventScroll:true});
+    } else {
+      B.miss=true; btn.disabled=true; btn.classList.add('ix-ssrf-wrong');
+      res.innerHTML='<span class="ix-ssrf-bsfx ix-ssrf-miss">промах</span><p class="ix-ssrf-bwhy">'+esc(o[2])+' Попробуй другую защиту.</p>';
+      var nx=q('.ix-ssrf-bopt:not(:disabled)',bb); if(nx) nx.focus({preventScroll:true});
+    }
+  }
+  function win(){
+    bb.innerHTML='<div class="ix-ssrf-bend"><div class="ix-ssrf-bendf" aria-hidden="true"><img src="'+face.querySelector('img').getAttribute('src')+'" alt=""><b>ПОВЕРЖЕН</b></div><div class="ix-ssrf-bendt"><p class="ix-ssrf-bwin">Прокси-Паук повержен</p><p class="ix-ssrf-bscore">Счёт: <b>'+B.score+'</b> из 300</p><p class="ix-ssrf-bwhy">Точных ударов с первой попытки: '+B.clean+' из 3. Паутина держится на одном: сервер слепо идёт туда, куда ему сказали.</p></div></div>';
+    var r=document.createElement('button'); r.type='button'; r.className='ix-ssrf-btn ix-ssrf-y'; r.textContent='Ещё раз';
+    q('.ix-ssrf-bendt',bb).appendChild(r);
+    r.addEventListener('click',function(){B={i:0,hp:3,score:0,clean:0,miss:false};hp();renderMove(true)});
+    r.focus({preventScroll:true});
+    say('Прокси-Паук повержен. Счёт '+B.score+' из 300.');
+  }
+  hp(); renderMove(false);
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-ssrf-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое SSRF?</h2><p class="lead"><b>SSRF</b> — Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему.</p><h2>О чём выпуск</h2><ul><li>Почему опасно скачивать файлы по ссылке от пользователя</li><li>Что сервер видит такого, чего не видит интернет</li><li>Почему запрет по списку адресов не работает</li><li>Как защищаться слоями</li></ul><h2>Словарик</h2><dl><dt>Периметр</dt><dd>Граница между внутренней сетью компании и интернетом.</dd><dt>SSRF</dt><dd>Server-Side Request Forgery — атакующий заставляет сервер сделать запрос туда, куда нужно атакующему.</dd><dt>Служебный сервис облака</dt><dd>Сервис метаданных: внутри облака он сообщает машине её настройки и временные ключи.</dd><dt>Исходящий трафик</dt><dd>Запросы, которые сервер сам отправляет наружу или в другие сети.</dd></dl><h2>Вопрос с собеседования</h2><h3>Backend принимает от пользователя ссылку и загружает по ней картинку. Какие риски и как защититься?</h3><p>Главный риск — SSRF: сервер можно заставить обратиться к внутренним сервисам или служебному сервису облака и получить, например, временные ключи. Также: разведка внутренней сети, обход межсетевого экрана, огромные файлы. Защита слоями: список разрешённых доменов и только https, проверка реального IP с отказом во внутренних диапазонах, запрет перенаправлений, ограничение исходящего трафика, защищённый режим метаданных и минимальные права роли, лимиты размера и времени, никакого сырого ответа пользователю. В пайплайне — SAST, скан IaC, мониторинг исходящих запросов.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/ssrf/","text":"SSRF простыми словами: как сервер атакует свою же сеть"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"6"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

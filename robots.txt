@@ -1,0 +1,10 @@
+# CyberComics: поисковики и ИИ-поиск — welcome.
+User-agent: *
+Allow: /
+
+# Яндекс: метки рекламы и соцсетей не создают новых страниц.
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&fbclid&from
+
+Sitemap: https://cybercomics.ru/sitemap.xml

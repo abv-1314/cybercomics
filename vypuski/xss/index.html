@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>XSS простыми словами: виды атаки и защита — CyberComics</title>
+<meta name="description" content="Что такое XSS: отражённый, хранимый и DOM-based. Почему textContent безопаснее innerHTML, что даёт CSP и чего не даёт. Выпуск-комикс на 11 минут.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/xss/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="XSS простыми словами: виды атаки и защита — CyberComics">
+<meta property="og:description" content="Что такое XSS: отражённый, хранимый и DOM-based. Почему textContent безопаснее innerHTML, что даёт CSP и чего не даёт. Выпуск-комикс на 11 минут.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/xss/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-xss.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Скрипт-Призрак вселяется в браузер">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XSS простыми словами: виды атаки и защита — CyberComics">
+<meta name="twitter:description" content="Что такое XSS: отражённый, хранимый и DOM-based. Почему textContent безопаснее innerHTML, что даёт CSP и чего не даёт. Выпуск-комикс на 11 минут.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-xss.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/xss/#article","url":"https://cybercomics.ru/vypuski/xss/","mainEntityOfPage":"https://cybercomics.ru/vypuski/xss/","issueNumber":"4","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"Скрипт-Призрак вселяется в браузер","name":"Скрипт-Призрак вселяется в браузер","alternativeHeadline":"XSS простыми словами: виды атаки и защита","description":"Что такое XSS: отражённый, хранимый и DOM-based. Почему textContent безопаснее innerHTML, что даёт CSP и чего не даёт. Выпуск-комикс на 11 минут.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-xss.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":4,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"средний","timeRequired":"PT11M","teaches":["Что такое XSS и почему он опасен","Три вида XSS","Почему textContent безопаснее innerHTML","Что даёт CSP и чего не даёт"],"about":{"@type":"Thing","name":"XSS"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/xss/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"Скрипт-Призрак вселяется в браузер","item":"https://cybercomics.ru/vypuski/xss/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/xss/#faq","mainEntity":[{"@type":"Question","name":"Что такое XSS?","acceptedAnswer":{"@type":"Answer","text":"XSS — Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя."}},{"@type":"Question","name":"Какие бывают виды XSS и как от них защищаться?","acceptedAnswer":{"@type":"Answer","text":"XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта. Отражённый: вредные данные в запросе сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript. Защита: контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов, очистка HTML через DOMPurify, когда HTML нужен. Дополнительно — CSP и HttpOnly cookie. В пайплайне: SAST, SCA для фронтенд-библиотек, DAST."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #7b4dff; --oy: 0%">
+  
+  
+  
+  
+  
+    <svg class="va-img" viewBox="0 0 300 375" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="background: #7b4dff">
+          <rect x="24" y="44" width="252" height="296" style="fill: #ffffff; stroke: #141414; stroke-width: 5"></rect>
+          <rect x="24" y="44" width="252" height="34" style="fill: #ffd60a; stroke: #141414; stroke-width: 5"></rect>
+          <circle cx="44" cy="61" r="6" style="fill: #ff3b3b; stroke: #141414; stroke-width: 3"></circle>
+          <circle cx="63" cy="61" r="6" style="fill: #ffffff; stroke: #141414; stroke-width: 3"></circle>
+          <rect x="80" y="51" width="182" height="20" style="fill: #ffffff; stroke: #141414; stroke-width: 3"></rect>
+          <text x="88" y="66" style="font-family: ui-monospace, Consolas, monospace; font-size: 13px; font-weight: 700; fill: #e3262d">?q=&lt;script&gt;</text>
+          <rect x="42" y="96" width="110" height="10" style="fill: #e3dcff"></rect>
+          <rect x="42" y="114" width="190" height="10" style="fill: #e3dcff"></rect>
+          <g class="va-ghost">
+            <g transform="translate(20 100) scale(1.3)">
+              <path d="M50 150 L56 78 C56 30 144 30 144 78 L150 150 Q140 138 130 150 Q120 140 110 150 Q100 138 90 150 Q80 140 70 150 Q60 138 50 150 Z" style="fill: #ffffff; stroke: #141414; stroke-width: 3; stroke-linejoin: round"></path>
+              <path d="M126 44 C140 56 144 78 146 110 L148 146 Q140 138 132 148 C134 110 134 70 126 44 Z" style="fill: #e3dcff"></path>
+              <path d="M72 68 L94 76 Q92 90 80 88 Q70 84 72 68 Z" style="fill: #141414"></path>
+              <path d="M128 68 L106 76 Q108 90 120 88 Q130 84 128 68 Z" style="fill: #141414"></path>
+              <circle cx="84" cy="80" r="3" style="fill: #c9ff3b"></circle><circle cx="116" cy="80" r="3" style="fill: #c9ff3b"></circle>
+              <path d="M80 102 Q100 122 120 102 Q100 110 80 102 Z" style="fill: #141414"></path>
+              <path d="M88 105 L92 111 L96 106 M104 106 L108 111 L112 105" style="fill: #ffffff"></path>
+            </g>
+          </g>
+          <rect x="26.5" y="268" width="247" height="69.5" style="fill: #ffffff"></rect>
+          <path d="M26 268 H274" style="stroke: #141414; stroke-width: 3; stroke-dasharray: 8 6"></path>
+          <rect x="42" y="284" width="150" height="10" style="fill: #e3dcff"></rect>
+          <rect x="42" y="302" width="200" height="10" style="fill: #e3dcff"></rect>
+        </svg>
+    <span class="va-sfx" style="--d: .3s">БУ!</span>
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#8a5cff">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №4</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Веб-квартал</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">11 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★★☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">Скрипт-Призрак вселяется в браузер</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Cross-Site Scripting: отражённый, хранимый и DOM-based</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Скрипт-Призрак:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Я живу в вашем комментарии и жду каждого читателя.</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Что такое XSS и почему он опасен</li><li>Три вида XSS</li><li>Почему textContent безопаснее innerHTML</li><li>Что даёт CSP и чего не даёт</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Скрипт-Призрак — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-xss" data-ix="xss" aria-label="Выпуск 4: Скрипт-Призрак">
+
+<!-- ============ ОБЛОЖКА-ПРИЗРАК ============ -->
+<div class="pg" aria-label="Пролог">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cold" data-go="">
+      <span class="tag">Скрипт-Призрак</span>
+      <div class="ghost" aria-hidden="true">
+        <span class="g-tag" data-t="&lt;script&gt;">&lt;script&gt;</span>
+        <span class="g-tail">
+          <i>alert('Я тут')</i>
+          <i>&lt;img src=x onerror=…&gt;</i>
+          <i>document · window · cookie</i>
+          <i>&lt;/script&gt;</i>
+        </span>
+      </div>
+      <div class="bl v"><b class="who g">Скрипт-Призрак</b>Я живу в вашем комментарии и жду каждого читателя.</div>
+    </div>
+    <span class="sfx bu" aria-hidden="true">БУ!</span>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 1 ============ -->
+<div class="chap"><span class="chap-n">Глава 1</span><h2 class="chap-t" data-scr="">Форум</h2></div>
+<div class="pg" aria-label="Глава 1: форум">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots">
+      <p class="cap">Обычный комментарий под статьёй. Но внутри не текст, а кусочек программы.</p>
+      <p class="big">Каждый, кто откроет страницу, запустит его <b>у себя</b>.</p>
+      <div class="bl k-b"><b class="who k">Соня</b>Как текст может запуститься?</div>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-yel">
+      <div class="bl"><b class="who p">Дядя Миша</b>Браузер читает страницу как HTML. Вставил сайт текст без обработки — браузер принял его за разметку. И за программу.</div>
+      <p class="big sm">Это и есть <b>XSS</b> — Cross-Site Scripting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 2: ВСЕЛЕНИЕ ============ -->
+<div class="chap"><span class="chap-n">Глава 2</span><h2 class="chap-t vi" data-scr="">Вселение</h2></div>
+<div class="pg" aria-label="Глава 2: вселение">
+  <div class="pn" style="--span:12">
+    <div class="fr f-speed stfr">
+      <p class="cap w">Твоя очередь. Оставь комментарий на форуме.</p>
+
+      <div class="stage" id="ix-xss-stage" data-step="0">
+        <div class="st-bar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.4" fill="none"></path></svg><span>forum.example/pc-za-30k</span></div>
+        <div class="st-art">
+          <h3 data-scr="">Как собрать ПК за 30 000 ₽</h3>
+          <p class="st-views"><span id="ix-xss-views">1 024</span> просмотра</p>
+          <p class="st-hit" id="ix-xss-hit" hidden="">Призрак сработал у <b id="ix-xss-hitn">0</b> читателей</p>
+        </div>
+        <div class="st-list" id="ix-xss-list">
+          <div class="cm"><b>Лиза</b><p>Спасибо, собрала по гайду!</p></div>
+        </div>
+        <div class="st-form" id="ix-xss-form">
+          <label for="ix-xss-in">Твой комментарий <small>(учебный пример уже вписан)</small></label>
+          <textarea id="ix-xss-in" rows="3" maxlength="160" spellcheck="false" autocomplete="off"></textarea>
+        </div>
+        <div class="st-sink">
+          <span>Сайт выводит комментарий так:</span>
+          <code id="ix-xss-sink" class="bad">comment.innerHTML = text</code>
+        </div>
+        <div class="st-csp" id="ix-xss-csp" hidden="">
+          <b>Content-Security-Policy:</b> script-src 'self'
+        </div>
+        <span class="sfx st-sfx" id="ix-xss-sfx" aria-hidden="true"></span>
+      </div>
+
+      <div class="dock">
+        <div class="bl dock-bl" id="ix-xss-say" aria-live="polite"><b class="who p">Дядя Миша</b><span>Этот сайт вставляет комментарии через innerHTML. Пример уже в поле. Отправь его.</span></div>
+        <button type="button" class="btn" id="ix-xss-act">Отправить комментарий</button>
+      </div>
+      <div class="bl why"><b class="who p">Дядя Миша</b>Почему картинка, а не &lt;script&gt;? Тег script, вставленный через innerHTML, браузер не запустит, а onerror — запустит. Так что это не защита: innerHTML всё равно опасен.</div>
+      <p class="fine">Всё здесь понарошку: страница ничего не запускает из поля. Она только показывает, что сделал бы уязвимый сайт.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 3: ТРИ ВИДА ============ -->
+<div class="chap"><span class="chap-n">Глава 3</span><h2 class="chap-t" data-scr="">Три вида Призрака</h2></div>
+<div class="pg" aria-label="Глава 3: три вида XSS">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-dots">
+      <span class="kn">01</span>
+      <h3 class="kt">Отражённый</h3>
+      <div class="url">site.example/search?q=<mark>&lt;script&gt;…</mark></div>
+      <p class="kp">Вредный текст приходит в ссылке. Сайт сразу «отражает» его на странице. Жертву заманивают по ссылке.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-vio">
+      <span class="kn">02</span>
+      <h3 class="kt">Хранимый</h3>
+      <span class="stamp">самый опасный</span>
+      <p class="kp">Вредный текст сохранён на сервере: в комментарии, в профиле. Срабатывает у каждого, кто откроет страницу.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots">
+      <span class="kn">03</span>
+      <h3 class="kt">DOM-based</h3>
+      <p class="kp">Ошибка целиком в скрипте страницы: он берёт данные из адреса и вставляет их в страницу. Ошибка не на сервере, а в JavaScript.</p>
+      <div class="codes">
+        <div class="code bad"><span class="code-h">Так нельзя</span><pre><code>const name = new URLSearchParams(
+  location.search).get("name");
+greeting.innerHTML = "Привет, " + name;
+<em>// innerHTML разбирает строку как HTML</em></code></pre></div>
+        <div class="code good"><span class="code-h">Так правильно</span><pre><code>greeting.textContent = "Привет, " + name;
+<em>// textContent вставляет ТЕКСТ, разметку не ищет</em></code></pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 4: ЧТО УМЕЕТ ============ -->
+<div class="chap"><span class="chap-n">Глава 4</span><h2 class="chap-t vi" data-scr="">От твоего имени</h2></div>
+<div class="pg" aria-label="Глава 4: чем опасен XSS">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-ink">
+      <div class="bl v"><b class="who g">Скрипт-Призрак</b>Я работаю от имени сайта. Вижу то, что видишь ты. Нажимаю то, что можешь нажать ты.</div>
+      <ul class="can">
+        <li>Меняю почту в твоём профиле.</li>
+        <li>Перевожу деньги.</li>
+        <li>Читаю личные данные на странице.</li>
+        <li>Рисую фальшивую форму пароля прямо на настоящем сайте.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-dots">
+      <p class="big sm">Cookie без флага <b>HttpOnly</b> и токены в хранилище браузера он тоже может унести.</p>
+      <div class="bl k-b"><b class="who k">Соня</b>Значит, надо просто всё фильтровать?</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Главное правило Дяди Миши</span>
+      <h2>Не фильтруй. <em>Правильно выводи.</em></h2>
+      <p>Один и тот же текст по-разному опасен внутри HTML, внутри атрибута и внутри скрипта. Шаблоны с автоэкранированием (React, Angular, Jinja2) делают это сами. Главное — не обходить их: <code>innerHTML</code>, <code>dangerouslySetInnerHTML</code>, <code>v-html</code>, фильтр <code>safe</code>.</p>
+      <p>Нужен HTML от пользователя? Очищай его библиотекой <b>DOMPurify</b>. Сверху — <b>CSP</b> как второй слой.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t vi" data-scr="">Битва с Призраком</h2></div>
+<div class="battle" id="ix-xss-battle">
+  <div class="bt-top">
+    <span class="bt-name"><span class="mini" aria-hidden="true">&lt;/&gt;</span> Скрипт-Призрак</span>
+    <span class="bt-turn" id="ix-xss-turn">Ход 1 из 3</span>
+  </div>
+  <div class="hp" role="progressbar" aria-label="Здоровье Скрипт-Призрака" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-xss-hp"><i id="ix-xss-hpbar"></i></div>
+  <div class="bt-body" id="ix-xss-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Вопрос с собеседования</h2></div>
+<div class="iv">
+  <p class="iv-q">Какие бывают виды XSS и как от них защищаться?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: вспомни три места, где живёт Призрак, и два слоя защиты, которыми мы его изгнали.</div>
+  <button type="button" class="btn" id="ix-xss-ivb" aria-expanded="false" aria-controls="ix-xss-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-xss-iva" hidden="">
+    <div class="iv-p"><b>Что это.</b> XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта.</div>
+    <div class="iv-p"><b>Три вида.</b> Отражённый: вредные данные из запроса сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript.</div>
+    <div class="iv-p"><b>Главная защита.</b> Контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов. Если HTML нужен — очистка через DOMPurify.</div>
+    <div class="iv-p"><b>Слои сверху.</b> CSP и HttpOnly cookie. В пайплайне: SAST ищет опасные функции вывода, SCA — старые фронтенд-библиотеки, DAST проверяет работающий сайт.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> «вырежем слово script, и всё» или «у нас CSP, дыру можно не чинить».</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Шпаргалка</span><h2 class="chap-t">Что важно знать</h2></div>
+<ol class="cheat">
+  <li><span class="cn">01</span><div><h3>Чужой код в твоём браузере</h3><p>XSS работает от имени сайта и видит то же, что ты.</p></div></li>
+  <li><span class="cn">02</span><div><h3>Три вида</h3><p>Отражённый — в ссылке, хранимый — на сервере, DOM-based — в скрипте страницы.</p></div></li>
+  <li><span class="cn">03</span><div><h3>Хранимый опаснее всех</h3><p>Он срабатывает у каждого, кто открыл страницу.</p></div></li>
+  <li><span class="cn">04</span><div><h3>textContent, а не innerHTML</h3><p>textContent вставляет текст, innerHTML разбирает строку как HTML.</p></div></li>
+  <li><span class="cn">05</span><div><h3>Не фильтруй — кодируй вывод</h3><p>Шаблон с автоэкранированием делает это сам, если его не обходить.</p></div></li>
+  <li><span class="cn">06</span><div><h3>CSP — второй слой</h3><p>Он мешает запуску чужих скриптов, но саму дыру всё равно чинят.</p></div></li>
+  <li><span class="cn">07</span><div><h3>HttpOnly прячет cookie</h3><p>Скрипт не прочитает cookie, но действовать от твоего имени всё ещё сможет.</p></div></li>
+</ol>
+
+<p class="legal">Тренируйся легально: <b>PortSwigger Web Security Academy</b> (раздел XSS), <b>OWASP Juice Shop</b>, <b>picoCTF</b>. Чужие сайты трогать нельзя.</p>
+<div class="end-row"><span class="end">Конец выпуска №4</span></div>
+
+<!-- одержимость: оверлей и фальшивое окно (вне панелей, чтобы clip-path не обрезал) -->
+<div class="haunt" id="ix-xss-haunt" aria-hidden="true"><i>&lt;script&gt;</i><i>&lt;script&gt;</i><i>&lt;script&gt;</i></div>
+<div class="toast" id="ix-xss-toast" role="alertdialog" aria-modal="true" aria-labelledby="ix-xss-tt" aria-describedby="ix-xss-tm" hidden="">
+  <div class="tbox">
+    <p class="t-from" id="ix-xss-tt">Сайт forum.example пишет</p>
+    <p class="t-msg" id="ix-xss-tm"></p>
+    <div class="t-row"><button type="button" class="t-ok" id="ix-xss-ok">ОК</button></div>
+  </div>
+  <p class="t-note">Это сработал код из комментария.<br><b>В браузере читателя.</b></p>
+</div>
+</section>
+
+<style>
+.ix-xss{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--v:#8a5cff;--vl:#c9b4ff;--c:#19c3ff;--g:#2ee59d;--r:#ff3b3b;--k:26px;--m:18px;--gap:12px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  position:relative;color:var(--ink);font:400 18px/1.5 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-xss *,.ix-xss *::before,.ix-xss *::after{box-sizing:border-box}
+.ix-xss p{margin:0}
+.ix-xss h2,.ix-xss h3{margin:0;font-weight:400}
+.ix-xss :focus-visible{outline:4px solid var(--v);outline-offset:3px}
+.ix-xss code{font-family:var(--mono)}
+
+/* главы */
+.ix-xss .chap{display:flex;align-items:center;gap:14px;margin:60px 0 0;flex-wrap:wrap}
+.ix-xss .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--y);padding:8px 12px;transform:rotate(-3deg)}
+.ix-xss .chap-t{font:400 clamp(27px,5vw,40px)/1.12 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-xss .chap-t.vi{color:var(--v)}
+
+/* страницы и панели */
+.ix-xss .pg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-xss .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-xss .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:26px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+  --lt:0px;--rt:0px;--rb:0px;--lb:0px;--tl:0px;--tr:0px;--br:0px;--bl:0px;
+  clip-path:polygon(var(--lt) var(--tl),calc(100% - var(--rt)) var(--tr),calc(100% - var(--rb)) calc(100% - var(--br)),var(--lb) calc(100% - var(--bl)))}
+.ix-xss .dR>.fr{--rb:var(--k);padding-right:calc(26px + var(--k))}
+.ix-xss .dL{margin-left:calc(-1 * var(--k))}
+.ix-xss .dL>.fr{--lt:var(--k);padding-left:calc(26px + var(--k))}
+.ix-xss .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.1) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-xss .f-vio{background-color:var(--v);color:#fff;background-image:radial-gradient(rgba(20,20,20,.22) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-xss .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(138,92,255,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .f-speed{background-color:#fff;background-image:repeating-linear-gradient(-6deg,transparent 0 22px,rgba(20,20,20,.06) 22px 24px)}
+
+/* SFX, плашки, пузыри */
+.ix-xss .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,60px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--y));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--v));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-xss .cap{display:inline-block;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.3 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:460px}
+.ix-xss .cap.w{background:#fff}
+.ix-xss .big{font:500 22px/1.35 Rubik,sans-serif;max-width:520px}
+.ix-xss .big.sm{font-size:20px}
+.ix-xss .big b{white-space:nowrap;background:var(--ink);color:var(--y);padding:0 6px;font-weight:600}
+.ix-xss .f-yel .big b{color:var(--y)}
+.ix-xss .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:440px;box-shadow:3px 3px 0 var(--ink)}
+.ix-xss .bl::after{content:"";position:absolute;left:var(--tx,34px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-xss .bl.v{background:#1f1830;color:#fff;border-color:var(--v);box-shadow:4px 4px 0 var(--v)}
+.ix-xss .bl.v::after{border-color:var(--v)}
+.ix-xss .bl.k-b{align-self:flex-end;--tx:auto}
+.ix-xss .bl.k-b::after{left:auto;right:34px}
+.ix-xss .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-xss .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-xss .who.p{--dot:var(--g)}.ix-xss .who.k{--dot:var(--y)}
+.ix-xss .bl.v .who,.ix-xss .who.g{color:var(--vl);--dot:var(--v)}
+.ix-xss .tag{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--v);color:#fff;padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+
+/* ===== призрак ===== */
+.ix-xss .cold{min-height:540px;justify-content:center;gap:26px;padding-top:36px;padding-bottom:60px}
+.ix-xss .ghost{position:relative;display:flex;flex-direction:column;align-items:flex-start;width:100%}
+.ix-xss .g-tag{position:relative;display:inline-block;font:800 clamp(52px,14.5vw,132px)/1 var(--mono);letter-spacing:-.04em;color:rgba(138,92,255,.72);text-shadow:0 0 28px rgba(138,92,255,.75),0 0 2px #fff}
+.ix-xss .g-tag::before,.ix-xss .g-tag::after{content:attr(data-t);position:absolute;inset:0;pointer-events:none}
+.ix-xss .g-tag::before{color:rgba(25,195,255,.6);transform:translate(-5px,2px);clip-path:inset(10% 0 55% 0);mix-blend-mode:screen}
+.ix-xss .g-tag::after{color:rgba(255,255,255,.55);transform:translate(5px,-2px);clip-path:inset(58% 0 8% 0);mix-blend-mode:screen}
+.ix-xss .g-tail{display:flex;flex-direction:column;gap:4px;margin:10px 0 0 .6em;font:600 clamp(15px,2.6vw,20px)/1.35 var(--mono);color:var(--vl)}
+.ix-xss .g-tail i{font-style:normal;white-space:nowrap}
+.ix-xss .g-tail i:nth-child(1){opacity:.8;margin-left:0}
+.ix-xss .g-tail i:nth-child(2){opacity:.55;margin-left:1.2em}
+.ix-xss .g-tail i:nth-child(3){opacity:.34;margin-left:.4em}
+.ix-xss .g-tail i:nth-child(4){opacity:.18;margin-left:1.8em}
+.ix-xss .sfx.bu{--fs:clamp(64px,13vw,120px);--rot:-12deg;--ss:var(--v);right:4%;bottom:14px}
+
+.ix-xss.anim .g-tag::before{animation:ix-xss-sliceA 2.6s steps(1) infinite}
+.ix-xss.anim .g-tag::after{animation:ix-xss-sliceB 2.6s steps(1) infinite}
+.ix-xss.anim .g-tag{animation:ix-xss-breath 4s ease-in-out infinite}
+.ix-xss.anim .g-tail{animation:ix-xss-float 5s ease-in-out infinite}
+.ix-xss.anim .sfx.bu{opacity:0}
+.ix-xss.anim .cold.go+.sfx.bu{animation:ix-xss-pop .5s cubic-bezier(.2,1.7,.4,1) .5s both}
+@keyframes ix-xss-sliceA{0%{clip-path:inset(10% 0 55% 0);transform:translate(-5px,2px)}22%{clip-path:inset(40% 0 30% 0);transform:translate(-11px,0)}24%{clip-path:inset(12% 0 70% 0);transform:translate(4px,1px)}60%{clip-path:inset(62% 0 10% 0);transform:translate(-7px,-2px)}62%{clip-path:inset(10% 0 55% 0);transform:translate(-5px,2px)}}
+@keyframes ix-xss-sliceB{0%{clip-path:inset(58% 0 8% 0);transform:translate(5px,-2px)}30%{clip-path:inset(20% 0 60% 0);transform:translate(10px,0)}32%{clip-path:inset(70% 0 4% 0);transform:translate(3px,2px)}75%{clip-path:inset(35% 0 45% 0);transform:translate(8px,-1px)}77%{clip-path:inset(58% 0 8% 0);transform:translate(5px,-2px)}}
+@keyframes ix-xss-breath{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.78;transform:translateY(-6px)}}
+@keyframes ix-xss-float{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+@keyframes ix-xss-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
+
+/* ===== сцена форума ===== */
+.ix-xss .stfr{gap:22px;align-items:stretch}
+.ix-xss .stfr>.cap{align-self:flex-start}
+.ix-xss .stage{position:relative;background:#fff;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);max-width:640px;width:100%;transition:box-shadow .3s}
+.ix-xss .st-bar{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:10px 14px;font:600 15px/1.2 var(--mono);overflow-wrap:anywhere}
+.ix-xss .st-bar svg{flex:0 0 16px;height:16px;color:var(--g)}
+.ix-xss .st-art{padding:16px 18px 12px;border-bottom:2px dashed rgba(20,20,20,.25)}
+.ix-xss .st-art h3{font:400 22px/1.2 'Russo One',sans-serif}
+.ix-xss .st-views{font-size:15px;color:#5b5446;margin-top:4px}
+.ix-xss .st-hit{display:inline-block;margin-top:8px;background:var(--v);color:#fff;font:400 16px/1.2 'Russo One';padding:6px 10px;transform:rotate(-1.5deg)}
+.ix-xss .st-hit b{font-weight:400;color:var(--y)}
+.ix-xss .st-hit[hidden]{display:none}
+.ix-xss .st-views span{font-weight:700;color:var(--ink)}
+.ix-xss .st-list{padding:8px 18px 0}
+.ix-xss .cm{padding:12px 0;border-bottom:1px solid rgba(20,20,20,.14)}
+.ix-xss .cm b{display:block;font:400 14px/1.2 'Russo One';margin-bottom:3px}
+.ix-xss .cm p{font-size:18px;overflow-wrap:anywhere}
+.ix-xss .cm.new{animation:ix-xss-in .35s ease-out both}
+.ix-xss .cm.new b::after{content:" · только что";font:400 13px Rubik;color:#6b6458}
+.ix-xss .cm .esc{background:var(--y);font-family:var(--mono);font-weight:700;padding:0 2px}
+.ix-xss .cm .enc{display:block;margin-top:8px;font:600 14px/1.4 var(--mono);color:#3d382f;background:#f3efe4;padding:6px 8px;overflow-wrap:anywhere}
+.ix-xss .cm .enc::before{content:"в коде страницы: ";font-family:Rubik;font-weight:500;color:#6b6458}
+@keyframes ix-xss-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ix-xss .st-form{padding:14px 18px 4px;display:flex;flex-direction:column;gap:6px}
+.ix-xss .st-form label{font:400 15px/1.2 'Russo One'}
+.ix-xss .st-form small{font:400 14px Rubik;color:#6b6458}
+.ix-xss .st-form textarea{width:100%;min-height:96px;resize:vertical;font:600 17px/1.45 var(--mono);color:var(--ink);background:#fbf8f0;border:3px solid var(--ink);border-radius:6px;padding:10px 12px}
+.ix-xss .st-form textarea:focus{outline:4px solid var(--v);outline-offset:2px}
+.ix-xss .st-form[hidden]{display:none}
+.ix-xss .st-sink{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:14px 18px 18px;font-size:15px;color:#3d382f}
+.ix-xss .st-sink code{font:700 15px/1.3 var(--mono);padding:5px 9px;border:2px solid var(--ink);overflow-wrap:anywhere}
+.ix-xss .st-sink code.bad{background:#ffe1e1}
+.ix-xss .st-sink code.good{background:#d9fbec}
+.ix-xss .st-csp{margin:0 18px 18px;background:var(--ink);color:#fff;font:600 15px/1.4 var(--mono);padding:10px 12px;border-left:8px solid var(--g);overflow-wrap:anywhere;transform:rotate(-1deg)}
+.ix-xss .st-csp b{color:var(--g)}
+.ix-xss .st-csp[hidden]{display:none}
+.ix-xss .st-sfx{--fs:54px;right:-6px;top:-30px;opacity:0}
+.ix-xss .st-sfx.on{opacity:1}
+.ix-xss.anim .st-sfx.on{animation:ix-xss-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+
+.ix-xss .dock{display:flex;flex-direction:column;align-items:flex-start;gap:20px;max-width:640px}
+.ix-xss .dock-bl{max-width:100%;min-height:3.4em;padding-top:16px}
+.ix-xss .dock-bl::after{bottom:auto;top:-13px;transform:rotate(225deg) skew(14deg,14deg)}
+.ix-xss .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 18px/1.2 'Russo One',sans-serif;cursor:pointer;border-radius:4px;text-align:center}
+.ix-xss .btn:hover{background:#ffe14d}
+.ix-xss .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-xss .btn[hidden]{display:none}
+.ix-xss .why{max-width:640px;align-self:flex-start}
+.ix-xss .fine{font-size:15px;color:#5b5446;max-width:640px}
+
+/* одержимость */
+.ix-xss .haunt{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s;
+  background:repeating-linear-gradient(0deg,rgba(138,92,255,.13) 0 2px,transparent 2px 5px),radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(60,20,140,.35));overflow:hidden}
+.ix-xss .haunt i{position:absolute;font:800 clamp(60px,20vw,220px)/1 var(--mono);font-style:normal;color:rgba(138,92,255,.16);white-space:nowrap;letter-spacing:-.04em}
+.ix-xss .haunt i:nth-child(1){left:-10%;top:12%}
+.ix-xss .haunt i:nth-child(2){right:-14%;top:46%;color:rgba(25,195,255,.10)}
+.ix-xss .haunt i:nth-child(3){left:6%;bottom:4%}
+.ix-xss.is-haunted .haunt{opacity:1;visibility:visible}
+.ix-xss.is-haunted .stage{box-shadow:7px 7px 0 var(--v),-4px -3px 0 rgba(25,195,255,.7)}
+.ix-xss.is-haunted .chap-t,.ix-xss.is-haunted .st-art h3,.ix-xss.is-haunted .kt,.ix-xss.is-haunted .cm.new p{text-shadow:-3px 0 rgba(25,195,255,.75),3px 0 rgba(138,92,255,.9)}
+.ix-xss.is-haunted .cm.new{background:linear-gradient(90deg,rgba(138,92,255,.14),transparent)}
+.ix-xss.is-haunted .chap-t{-webkit-text-stroke:2px var(--ink)}
+.ix-xss.anim.is-haunted .haunt i{animation:ix-xss-drift 6s linear infinite}
+.ix-xss.anim.is-haunted .haunt i:nth-child(2){animation-duration:8s;animation-direction:reverse}
+.ix-xss.anim.is-haunted .haunt{animation:ix-xss-flick 3s steps(1) infinite}
+.ix-xss.anim.is-haunted .pg,.ix-xss.anim.is-haunted .chap{animation:ix-xss-jit 2.2s steps(1) infinite}
+.ix-xss.anim.is-haunted .pg:nth-of-type(2n){animation-delay:-.9s}
+@keyframes ix-xss-drift{from{transform:translateX(0) skewX(-6deg)}50%{transform:translateX(60px) skewX(6deg)}to{transform:translateX(0) skewX(-6deg)}}
+@keyframes ix-xss-flick{0%{opacity:1}41%{opacity:.55}43%{opacity:1}77%{opacity:.75}79%{opacity:1}}
+@keyframes ix-xss-jit{0%{transform:none;filter:none}38%{transform:translate(-4px,1px) skewX(-2deg);filter:hue-rotate(40deg)}40%{transform:none;filter:none}71%{transform:translate(5px,-1px);filter:saturate(1.6)}73%{transform:none;filter:none}}
+
+/* фальшивое окно */
+.ix-xss .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:2147483001;width:min(400px,calc(100vw - 32px));display:flex;flex-direction:column;gap:12px}
+.ix-xss .toast[hidden]{display:none}
+.ix-xss.anim .toast:not([hidden]){animation:ix-xss-drop .38s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes ix-xss-drop{from{opacity:0;transform:translate(-50%,-40px) scale(.94)}to{opacity:1;transform:translate(-50%,0)}}
+.ix-xss .tbox{background:#fff;color:#1d1d1f;border-radius:14px;padding:20px 22px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.ix-xss .t-from{font-size:16px;font-weight:600}
+.ix-xss .t-msg{font-size:20px;margin-top:8px;overflow-wrap:anywhere}
+.ix-xss .t-row{display:flex;justify-content:flex-end;margin-top:16px}
+.ix-xss .t-ok{min-width:96px;min-height:46px;border:0;border-radius:24px;background:#0b57d0;color:#fff;font:600 17px/1 system-ui,sans-serif;cursor:pointer}
+.ix-xss .t-ok:focus-visible{outline:4px solid var(--y);outline-offset:3px}
+.ix-xss .t-note{align-self:center;background:var(--v);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:8px 14px;font:400 17px/1.3 'Russo One';transform:rotate(-2deg);text-align:center}
+.ix-xss .t-note b{font-weight:400;color:var(--y)}
+
+/* ===== три вида ===== */
+.ix-xss .kn{font:400 46px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-xss .kt{font:400 26px/1.1 'Russo One',sans-serif}
+.ix-xss .kp{font-size:18px;line-height:1.5;max-width:560px}
+.ix-xss .url{border:3px solid var(--ink);border-radius:30px;background:#fff;padding:9px 15px;font:600 16px/1.3 var(--mono);box-shadow:3px 3px 0 var(--ink);max-width:100%;overflow-wrap:anywhere}
+.ix-xss .url mark{background:var(--v);color:#fff;padding:0 3px}
+.ix-xss .stamp{display:inline-block;font:400 15px/1.1 'Russo One';text-transform:uppercase;border:3px solid var(--y);color:var(--y);padding:7px 10px;transform:rotate(-4deg)}
+.ix-xss .f-vio .kp{color:#fff}
+.ix-xss .codes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;width:100%}
+.ix-xss .code{border:3px solid var(--ink);background:#fff;min-width:0}
+.ix-xss .code-h{display:block;font:400 14px/1 'Russo One';text-transform:uppercase;padding:8px 12px;border-bottom:3px solid var(--ink)}
+.ix-xss .code.bad .code-h{background:var(--r);color:#fff}
+.ix-xss .code.good .code-h{background:var(--g)}
+.ix-xss .code pre{margin:0;padding:12px;font:600 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-xss .code em{font-style:normal;color:#6b6458}
+
+.ix-xss .can{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font:500 20px/1.35 Rubik}
+.ix-xss .can li{padding-left:30px;position:relative}
+.ix-xss .can li::before{content:"</>";position:absolute;left:0;top:3px;font:700 14px/1 var(--mono);color:var(--v)}
+
+.ix-xss .rule{padding:34px 30px !important}
+.ix-xss .rule .lab{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;color:var(--y);background:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-xss .rule h2{font:400 clamp(26px,4.6vw,46px)/1.15 'Rubik Mono One'}
+.ix-xss .rule h2 em{font-style:normal;color:var(--y);background:var(--ink);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ix-xss .rule p{font-size:18px;max-width:660px}
+.ix-xss .rule code{white-space:nowrap;font-size:16px;background:rgba(255,255,255,.7);padding:0 4px;overflow-wrap:anywhere}
+
+/* ===== битва ===== */
+.ix-xss .battle{margin-top:18px;background:var(--ink);color:#fff;padding:22px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--v);background-image:radial-gradient(rgba(138,92,255,.18) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .bt-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.ix-xss .bt-name{font:400 18px/1.2 'Russo One';display:flex;align-items:center;gap:10px}
+.ix-xss .mini{font:800 20px/1 var(--mono);color:var(--v);text-shadow:-2px 0 rgba(25,195,255,.8),2px 0 rgba(255,255,255,.4)}
+.ix-xss .bt-turn{font:400 14px/1 'Russo One';background:var(--y);color:var(--ink);padding:6px 10px}
+.ix-xss .hp{height:20px;border:3px solid #fff;margin:14px 0 22px;background:#2a2340}
+.ix-xss .hp i{display:block;height:100%;width:100%;background:var(--v);transition:width .5s ease-out}
+.ix-xss .bt-body{display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:relative}
+.ix-xss .bt-move{font:400 23px/1.25 Neucha,cursive}
+.ix-xss .bt-opts{display:flex;flex-direction:column;gap:12px;width:100%;max-width:640px}
+.ix-xss .opt{min-height:56px;width:100%;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid #fff;font:500 18px/1.35 Rubik;cursor:pointer;border-radius:4px}
+.ix-xss .opt:hover{background:#f0eaff}
+.ix-xss .opt[disabled]{opacity:.5;cursor:default;text-decoration:line-through}
+.ix-xss .opt.ok{background:var(--g);border-color:var(--g);opacity:1;text-decoration:none}
+.ix-xss .fb{font:500 18px/1.4 Rubik;border-left:6px solid var(--g);padding:4px 0 4px 14px;max-width:640px}
+.ix-xss .fb.miss{border-color:var(--r)}
+.ix-xss .fb b{font:400 22px/1 'Rubik Mono One';display:block;margin-bottom:6px;color:var(--g)}
+.ix-xss .fb.miss b{color:var(--r);font-size:18px}
+.ix-xss .win{font:400 clamp(26px,5vw,40px)/1.15 'Rubik Mono One';color:var(--y)}
+.ix-xss .win-s{font-size:20px}
+.ix-xss .battle .btn{box-shadow:5px 5px 0 var(--v)}
+
+/* ===== собеседование ===== */
+.ix-xss .iv{margin-top:18px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.ix-xss .iv-q{font:400 clamp(24px,4vw,32px)/1.25 'Russo One'}
+.ix-xss .iv-think{font-size:19px;border-left:6px solid var(--y);padding-left:14px}
+.ix-xss .iv-a{display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);padding-top:20px;width:100%}
+.ix-xss .iv-a[hidden]{display:none}
+.ix-xss .iv-p{font-size:19px;line-height:1.5}
+.ix-xss .iv-p b{font:400 20px/1.2 'Russo One';display:block;margin-bottom:2px}
+.ix-xss .iv-err{font-size:19px;background:var(--ink);color:#fff;padding:12px 16px}
+.ix-xss .iv-err b{color:var(--y);font-weight:600}
+
+/* ===== шпаргалка ===== */
+.ix-xss .cheat{list-style:none;margin:18px 0 0;padding:0}
+.ix-xss .cheat li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-top:2px solid rgba(20,20,20,.16)}
+.ix-xss .cheat li:first-child{border-top:0}
+.ix-xss .cn{flex:0 0 auto;width:2.5em;font:400 34px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-xss .cheat h3{font:400 21px/1.2 'Russo One'}
+.ix-xss .cheat p{font-size:18px;line-height:1.45;margin-top:4px}
+
+.ix-xss .legal{margin-top:40px;font-size:18px;border-left:6px solid var(--g);padding:4px 0 4px 14px}
+.ix-xss .end-row{margin-top:36px}
+.ix-xss .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--y);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== телефон ===== */
+@media (max-width:700px){
+  .ix-xss{--gap:10px}
+  .ix-xss .pg{grid-template-columns:minmax(0,1fr)}
+  .ix-xss .pn{grid-column:1/-1;margin-left:0 !important}
+  .ix-xss .pn>.fr{--lt:0px;--rt:0px;--rb:0px;--lb:0px;padding:30px 16px 34px !important}
+  .ix-xss .pn:nth-child(odd)>.fr{--tr:var(--m);--br:var(--m)}
+  .ix-xss .pn:nth-child(even)>.fr{--tl:var(--m);--bl:var(--m)}
+  .ix-xss .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-xss .cold{min-height:500px}
+  .ix-xss .bl{font-size:22px;max-width:100%}
+  .ix-xss .codes{grid-template-columns:minmax(0,1fr)}
+  .ix-xss .stage{box-shadow:5px 5px 0 var(--ink)}
+  .ix-xss .st-art,.ix-xss .st-list,.ix-xss .st-form,.ix-xss .st-sink{padding-left:14px;padding-right:14px}
+  .ix-xss .st-sfx{--fs:44px;top:-26px;right:-4px}
+  .ix-xss .btn{width:100%}
+  .ix-xss .battle,.ix-xss .iv{padding:20px 16px}
+  .ix-xss .cn{font-size:28px}
+  .ix-xss .sfx.bu{bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-xss *,.ix-xss *::before,.ix-xss *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое XSS?</h2><p class="lead"><b>XSS</b> — Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя.</p><h2>О чём выпуск</h2><ul><li>Что такое XSS и почему он опасен</li><li>Три вида XSS</li><li>Почему textContent безопаснее innerHTML</li><li>Что даёт CSP и чего не даёт</li></ul><h2>Словарик</h2><dl><dt>HTML</dt><dd>Язык разметки страниц. Браузер читает его и рисует страницу.</dd><dt>XSS</dt><dd>Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя.</dd><dt>Автоэкранирование</dt><dd>Шаблонизатор сам превращает опасные символы вроде &lt; в безопасный текст.</dd><dt>CSP</dt><dd>Content Security Policy — заголовок, который говорит браузеру, какие скрипты на странице разрешены.</dd></dl><h2>Вопрос с собеседования</h2><h3>Какие бывают виды XSS и как от них защищаться?</h3><p>XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта. Отражённый: вредные данные в запросе сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript. Защита: контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов, очистка HTML через DOMPurify, когда HTML нужен. Дополнительно — CSP и HttpOnly cookie. В пайплайне: SAST, SCA для фронтенд-библиотек, DAST.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/csrf/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №5</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">CSRF: SameSite и CSRF-токены</span></a>
+          
+            <a href="../../vypuski/http/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №1</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">HTTP: запрос, ответ, коды и cookie</span></a>
+          
+            <a href="../../vypuski/owasp-top-10-2025/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №9</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">OWASP Top 10:2025 на русском</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/sql-injection/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №3 Доктор Инъекция</a>
+        <a href="../../vypuski/csrf/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №5 Подделыватель →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fxss%2F&amp;text=XSS%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20reflected%2C%20stored%20%D0%B8%20DOM-based" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fxss%2F&amp;title=XSS%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20reflected%2C%20stored%20%D0%B8%20DOM-based" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="4">
+<section class="ix ix-xss" data-ix="xss" aria-label="Выпуск 4: Скрипт-Призрак">
+
+<!-- ============ ОБЛОЖКА-ПРИЗРАК ============ -->
+<div class="pg" aria-label="Пролог">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cold" data-go>
+      <span class="tag">Скрипт-Призрак</span>
+      <div class="ghost" aria-hidden="true">
+        <span class="g-tag" data-t="&lt;script&gt;">&lt;script&gt;</span>
+        <span class="g-tail">
+          <i>alert('Я тут')</i>
+          <i>&lt;img src=x onerror=…&gt;</i>
+          <i>document · window · cookie</i>
+          <i>&lt;/script&gt;</i>
+        </span>
+      </div>
+      <div class="bl v"><b class="who g">Скрипт-Призрак</b>Я живу в вашем комментарии и жду каждого читателя.</div>
+    </div>
+    <span class="sfx bu" aria-hidden="true">БУ!</span>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 1 ============ -->
+<div class="chap"><span class="chap-n">Глава 1</span><h2 class="chap-t" data-scr>Форум</h2></div>
+<div class="pg" aria-label="Глава 1: форум">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots">
+      <p class="cap">Обычный комментарий под статьёй. Но внутри не текст, а кусочек программы.</p>
+      <p class="big">Каждый, кто откроет страницу, запустит его <b>у себя</b>.</p>
+      <div class="bl k-b"><b class="who k">Соня</b>Как текст может запуститься?</div>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-yel">
+      <div class="bl"><b class="who p">Дядя Миша</b>Браузер читает страницу как HTML. Вставил сайт текст без обработки — браузер принял его за разметку. И за программу.</div>
+      <p class="big sm">Это и есть <b>XSS</b> — Cross-Site Scripting.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 2: ВСЕЛЕНИЕ ============ -->
+<div class="chap"><span class="chap-n">Глава 2</span><h2 class="chap-t vi" data-scr>Вселение</h2></div>
+<div class="pg" aria-label="Глава 2: вселение">
+  <div class="pn" style="--span:12">
+    <div class="fr f-speed stfr">
+      <p class="cap w">Твоя очередь. Оставь комментарий на форуме.</p>
+
+      <div class="stage" id="ix-xss-stage" data-step="0">
+        <div class="st-bar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.4" fill="none"/></svg><span>forum.example/pc-za-30k</span></div>
+        <div class="st-art">
+          <h3 data-scr>Как собрать ПК за 30 000 ₽</h3>
+          <p class="st-views"><span id="ix-xss-views">1 024</span> просмотра</p>
+          <p class="st-hit" id="ix-xss-hit" hidden>Призрак сработал у <b id="ix-xss-hitn">0</b> читателей</p>
+        </div>
+        <div class="st-list" id="ix-xss-list">
+          <div class="cm"><b>Лиза</b><p>Спасибо, собрала по гайду!</p></div>
+        </div>
+        <div class="st-form" id="ix-xss-form">
+          <label for="ix-xss-in">Твой комментарий <small>(учебный пример уже вписан)</small></label>
+          <textarea id="ix-xss-in" rows="3" maxlength="160" spellcheck="false" autocomplete="off"></textarea>
+        </div>
+        <div class="st-sink">
+          <span>Сайт выводит комментарий так:</span>
+          <code id="ix-xss-sink" class="bad">comment.innerHTML = text</code>
+        </div>
+        <div class="st-csp" id="ix-xss-csp" hidden>
+          <b>Content-Security-Policy:</b> script-src 'self'
+        </div>
+        <span class="sfx st-sfx" id="ix-xss-sfx" aria-hidden="true"></span>
+      </div>
+
+      <div class="dock">
+        <div class="bl dock-bl" id="ix-xss-say" aria-live="polite"><b class="who p">Дядя Миша</b><span>Этот сайт вставляет комментарии через innerHTML. Пример уже в поле. Отправь его.</span></div>
+        <button type="button" class="btn" id="ix-xss-act">Отправить комментарий</button>
+      </div>
+      <div class="bl why"><b class="who p">Дядя Миша</b>Почему картинка, а не &lt;script&gt;? Тег script, вставленный через innerHTML, браузер не запустит, а onerror — запустит. Так что это не защита: innerHTML всё равно опасен.</div>
+      <p class="fine">Всё здесь понарошку: страница ничего не запускает из поля. Она только показывает, что сделал бы уязвимый сайт.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 3: ТРИ ВИДА ============ -->
+<div class="chap"><span class="chap-n">Глава 3</span><h2 class="chap-t" data-scr>Три вида Призрака</h2></div>
+<div class="pg" aria-label="Глава 3: три вида XSS">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-dots">
+      <span class="kn">01</span>
+      <h3 class="kt">Отражённый</h3>
+      <div class="url">site.example/search?q=<mark>&lt;script&gt;…</mark></div>
+      <p class="kp">Вредный текст приходит в ссылке. Сайт сразу «отражает» его на странице. Жертву заманивают по ссылке.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-vio">
+      <span class="kn">02</span>
+      <h3 class="kt">Хранимый</h3>
+      <span class="stamp">самый опасный</span>
+      <p class="kp">Вредный текст сохранён на сервере: в комментарии, в профиле. Срабатывает у каждого, кто откроет страницу.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots">
+      <span class="kn">03</span>
+      <h3 class="kt">DOM-based</h3>
+      <p class="kp">Ошибка целиком в скрипте страницы: он берёт данные из адреса и вставляет их в страницу. Ошибка не на сервере, а в JavaScript.</p>
+      <div class="codes">
+        <div class="code bad"><span class="code-h">Так нельзя</span><pre><code>const name = new URLSearchParams(
+  location.search).get("name");
+greeting.innerHTML = "Привет, " + name;
+<em>// innerHTML разбирает строку как HTML</em></code></pre></div>
+        <div class="code good"><span class="code-h">Так правильно</span><pre><code>greeting.textContent = "Привет, " + name;
+<em>// textContent вставляет ТЕКСТ, разметку не ищет</em></code></pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ГЛАВА 4: ЧТО УМЕЕТ ============ -->
+<div class="chap"><span class="chap-n">Глава 4</span><h2 class="chap-t vi" data-scr>От твоего имени</h2></div>
+<div class="pg" aria-label="Глава 4: чем опасен XSS">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-ink">
+      <div class="bl v"><b class="who g">Скрипт-Призрак</b>Я работаю от имени сайта. Вижу то, что видишь ты. Нажимаю то, что можешь нажать ты.</div>
+      <ul class="can">
+        <li>Меняю почту в твоём профиле.</li>
+        <li>Перевожу деньги.</li>
+        <li>Читаю личные данные на странице.</li>
+        <li>Рисую фальшивую форму пароля прямо на настоящем сайте.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-dots">
+      <p class="big sm">Cookie без флага <b>HttpOnly</b> и токены в хранилище браузера он тоже может унести.</p>
+      <div class="bl k-b"><b class="who k">Соня</b>Значит, надо просто всё фильтровать?</div>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Главное правило Дяди Миши</span>
+      <h2>Не фильтруй. <em>Правильно выводи.</em></h2>
+      <p>Один и тот же текст по-разному опасен внутри HTML, внутри атрибута и внутри скрипта. Шаблоны с автоэкранированием (React, Angular, Jinja2) делают это сами. Главное — не обходить их: <code>innerHTML</code>, <code>dangerouslySetInnerHTML</code>, <code>v-html</code>, фильтр <code>safe</code>.</p>
+      <p>Нужен HTML от пользователя? Очищай его библиотекой <b>DOMPurify</b>. Сверху — <b>CSP</b> как второй слой.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t vi" data-scr>Битва с Призраком</h2></div>
+<div class="battle" id="ix-xss-battle">
+  <div class="bt-top">
+    <span class="bt-name"><span class="mini" aria-hidden="true">&lt;/&gt;</span> Скрипт-Призрак</span>
+    <span class="bt-turn" id="ix-xss-turn">Ход 1 из 3</span>
+  </div>
+  <div class="hp" role="progressbar" aria-label="Здоровье Скрипт-Призрака" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-xss-hp"><i id="ix-xss-hpbar"></i></div>
+  <div class="bt-body" id="ix-xss-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Вопрос с собеседования</h2></div>
+<div class="iv">
+  <p class="iv-q">Какие бывают виды XSS и как от них защищаться?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: вспомни три места, где живёт Призрак, и два слоя защиты, которыми мы его изгнали.</div>
+  <button type="button" class="btn" id="ix-xss-ivb" aria-expanded="false" aria-controls="ix-xss-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-xss-iva" hidden>
+    <div class="iv-p"><b>Что это.</b> XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта.</div>
+    <div class="iv-p"><b>Три вида.</b> Отражённый: вредные данные из запроса сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript.</div>
+    <div class="iv-p"><b>Главная защита.</b> Контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов. Если HTML нужен — очистка через DOMPurify.</div>
+    <div class="iv-p"><b>Слои сверху.</b> CSP и HttpOnly cookie. В пайплайне: SAST ищет опасные функции вывода, SCA — старые фронтенд-библиотеки, DAST проверяет работающий сайт.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> «вырежем слово script, и всё» или «у нас CSP, дыру можно не чинить».</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Шпаргалка</span><h2 class="chap-t">Что важно знать</h2></div>
+<ol class="cheat">
+  <li><span class="cn">01</span><div><h3>Чужой код в твоём браузере</h3><p>XSS работает от имени сайта и видит то же, что ты.</p></div></li>
+  <li><span class="cn">02</span><div><h3>Три вида</h3><p>Отражённый — в ссылке, хранимый — на сервере, DOM-based — в скрипте страницы.</p></div></li>
+  <li><span class="cn">03</span><div><h3>Хранимый опаснее всех</h3><p>Он срабатывает у каждого, кто открыл страницу.</p></div></li>
+  <li><span class="cn">04</span><div><h3>textContent, а не innerHTML</h3><p>textContent вставляет текст, innerHTML разбирает строку как HTML.</p></div></li>
+  <li><span class="cn">05</span><div><h3>Не фильтруй — кодируй вывод</h3><p>Шаблон с автоэкранированием делает это сам, если его не обходить.</p></div></li>
+  <li><span class="cn">06</span><div><h3>CSP — второй слой</h3><p>Он мешает запуску чужих скриптов, но саму дыру всё равно чинят.</p></div></li>
+  <li><span class="cn">07</span><div><h3>HttpOnly прячет cookie</h3><p>Скрипт не прочитает cookie, но действовать от твоего имени всё ещё сможет.</p></div></li>
+</ol>
+
+<p class="legal">Тренируйся легально: <b>PortSwigger Web Security Academy</b> (раздел XSS), <b>OWASP Juice Shop</b>, <b>picoCTF</b>. Чужие сайты трогать нельзя.</p>
+<div class="end-row"><span class="end">Конец выпуска №4</span></div>
+
+<!-- одержимость: оверлей и фальшивое окно (вне панелей, чтобы clip-path не обрезал) -->
+<div class="haunt" id="ix-xss-haunt" aria-hidden="true"><i>&lt;script&gt;</i><i>&lt;script&gt;</i><i>&lt;script&gt;</i></div>
+<div class="toast" id="ix-xss-toast" role="alertdialog" aria-modal="true" aria-labelledby="ix-xss-tt" aria-describedby="ix-xss-tm" hidden>
+  <div class="tbox">
+    <p class="t-from" id="ix-xss-tt">Сайт forum.example пишет</p>
+    <p class="t-msg" id="ix-xss-tm"></p>
+    <div class="t-row"><button type="button" class="t-ok" id="ix-xss-ok">ОК</button></div>
+  </div>
+  <p class="t-note">Это сработал код из комментария.<br><b>В браузере читателя.</b></p>
+</div>
+</section>
+
+<style>
+.ix-xss{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--v:#8a5cff;--vl:#c9b4ff;--c:#19c3ff;--g:#2ee59d;--r:#ff3b3b;--k:26px;--m:18px;--gap:12px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  position:relative;color:var(--ink);font:400 18px/1.5 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-xss *,.ix-xss *::before,.ix-xss *::after{box-sizing:border-box}
+.ix-xss p{margin:0}
+.ix-xss h2,.ix-xss h3{margin:0;font-weight:400}
+.ix-xss :focus-visible{outline:4px solid var(--v);outline-offset:3px}
+.ix-xss code{font-family:var(--mono)}
+
+/* главы */
+.ix-xss .chap{display:flex;align-items:center;gap:14px;margin:60px 0 0;flex-wrap:wrap}
+.ix-xss .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--y);padding:8px 12px;transform:rotate(-3deg)}
+.ix-xss .chap-t{font:400 clamp(27px,5vw,40px)/1.12 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-xss .chap-t.vi{color:var(--v)}
+
+/* страницы и панели */
+.ix-xss .pg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-xss .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-xss .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:26px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+  --lt:0px;--rt:0px;--rb:0px;--lb:0px;--tl:0px;--tr:0px;--br:0px;--bl:0px;
+  clip-path:polygon(var(--lt) var(--tl),calc(100% - var(--rt)) var(--tr),calc(100% - var(--rb)) calc(100% - var(--br)),var(--lb) calc(100% - var(--bl)))}
+.ix-xss .dR>.fr{--rb:var(--k);padding-right:calc(26px + var(--k))}
+.ix-xss .dL{margin-left:calc(-1 * var(--k))}
+.ix-xss .dL>.fr{--lt:var(--k);padding-left:calc(26px + var(--k))}
+.ix-xss .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.1) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-xss .f-vio{background-color:var(--v);color:#fff;background-image:radial-gradient(rgba(20,20,20,.22) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-xss .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(138,92,255,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .f-speed{background-color:#fff;background-image:repeating-linear-gradient(-6deg,transparent 0 22px,rgba(20,20,20,.06) 22px 24px)}
+
+/* SFX, плашки, пузыри */
+.ix-xss .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,60px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--y));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--v));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-xss .cap{display:inline-block;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.3 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:460px}
+.ix-xss .cap.w{background:#fff}
+.ix-xss .big{font:500 22px/1.35 Rubik,sans-serif;max-width:520px}
+.ix-xss .big.sm{font-size:20px}
+.ix-xss .big b{white-space:nowrap;background:var(--ink);color:var(--y);padding:0 6px;font-weight:600}
+.ix-xss .f-yel .big b{color:var(--y)}
+.ix-xss .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:440px;box-shadow:3px 3px 0 var(--ink)}
+.ix-xss .bl::after{content:"";position:absolute;left:var(--tx,34px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-xss .bl.v{background:#1f1830;color:#fff;border-color:var(--v);box-shadow:4px 4px 0 var(--v)}
+.ix-xss .bl.v::after{border-color:var(--v)}
+.ix-xss .bl.k-b{align-self:flex-end;--tx:auto}
+.ix-xss .bl.k-b::after{left:auto;right:34px}
+.ix-xss .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-xss .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-xss .who.p{--dot:var(--g)}.ix-xss .who.k{--dot:var(--y)}
+.ix-xss .bl.v .who,.ix-xss .who.g{color:var(--vl);--dot:var(--v)}
+.ix-xss .tag{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--v);color:#fff;padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+
+/* ===== призрак ===== */
+.ix-xss .cold{min-height:540px;justify-content:center;gap:26px;padding-top:36px;padding-bottom:60px}
+.ix-xss .ghost{position:relative;display:flex;flex-direction:column;align-items:flex-start;width:100%}
+.ix-xss .g-tag{position:relative;display:inline-block;font:800 clamp(52px,14.5vw,132px)/1 var(--mono);letter-spacing:-.04em;color:rgba(138,92,255,.72);text-shadow:0 0 28px rgba(138,92,255,.75),0 0 2px #fff}
+.ix-xss .g-tag::before,.ix-xss .g-tag::after{content:attr(data-t);position:absolute;inset:0;pointer-events:none}
+.ix-xss .g-tag::before{color:rgba(25,195,255,.6);transform:translate(-5px,2px);clip-path:inset(10% 0 55% 0);mix-blend-mode:screen}
+.ix-xss .g-tag::after{color:rgba(255,255,255,.55);transform:translate(5px,-2px);clip-path:inset(58% 0 8% 0);mix-blend-mode:screen}
+.ix-xss .g-tail{display:flex;flex-direction:column;gap:4px;margin:10px 0 0 .6em;font:600 clamp(15px,2.6vw,20px)/1.35 var(--mono);color:var(--vl)}
+.ix-xss .g-tail i{font-style:normal;white-space:nowrap}
+.ix-xss .g-tail i:nth-child(1){opacity:.8;margin-left:0}
+.ix-xss .g-tail i:nth-child(2){opacity:.55;margin-left:1.2em}
+.ix-xss .g-tail i:nth-child(3){opacity:.34;margin-left:.4em}
+.ix-xss .g-tail i:nth-child(4){opacity:.18;margin-left:1.8em}
+.ix-xss .sfx.bu{--fs:clamp(64px,13vw,120px);--rot:-12deg;--ss:var(--v);right:4%;bottom:14px}
+
+.ix-xss.anim .g-tag::before{animation:ix-xss-sliceA 2.6s steps(1) infinite}
+.ix-xss.anim .g-tag::after{animation:ix-xss-sliceB 2.6s steps(1) infinite}
+.ix-xss.anim .g-tag{animation:ix-xss-breath 4s ease-in-out infinite}
+.ix-xss.anim .g-tail{animation:ix-xss-float 5s ease-in-out infinite}
+.ix-xss.anim .sfx.bu{opacity:0}
+.ix-xss.anim .cold.go+.sfx.bu{animation:ix-xss-pop .5s cubic-bezier(.2,1.7,.4,1) .5s both}
+@keyframes ix-xss-sliceA{0%{clip-path:inset(10% 0 55% 0);transform:translate(-5px,2px)}22%{clip-path:inset(40% 0 30% 0);transform:translate(-11px,0)}24%{clip-path:inset(12% 0 70% 0);transform:translate(4px,1px)}60%{clip-path:inset(62% 0 10% 0);transform:translate(-7px,-2px)}62%{clip-path:inset(10% 0 55% 0);transform:translate(-5px,2px)}}
+@keyframes ix-xss-sliceB{0%{clip-path:inset(58% 0 8% 0);transform:translate(5px,-2px)}30%{clip-path:inset(20% 0 60% 0);transform:translate(10px,0)}32%{clip-path:inset(70% 0 4% 0);transform:translate(3px,2px)}75%{clip-path:inset(35% 0 45% 0);transform:translate(8px,-1px)}77%{clip-path:inset(58% 0 8% 0);transform:translate(5px,-2px)}}
+@keyframes ix-xss-breath{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.78;transform:translateY(-6px)}}
+@keyframes ix-xss-float{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+@keyframes ix-xss-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
+
+/* ===== сцена форума ===== */
+.ix-xss .stfr{gap:22px;align-items:stretch}
+.ix-xss .stfr>.cap{align-self:flex-start}
+.ix-xss .stage{position:relative;background:#fff;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);max-width:640px;width:100%;transition:box-shadow .3s}
+.ix-xss .st-bar{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:10px 14px;font:600 15px/1.2 var(--mono);overflow-wrap:anywhere}
+.ix-xss .st-bar svg{flex:0 0 16px;height:16px;color:var(--g)}
+.ix-xss .st-art{padding:16px 18px 12px;border-bottom:2px dashed rgba(20,20,20,.25)}
+.ix-xss .st-art h3{font:400 22px/1.2 'Russo One',sans-serif}
+.ix-xss .st-views{font-size:15px;color:#5b5446;margin-top:4px}
+.ix-xss .st-hit{display:inline-block;margin-top:8px;background:var(--v);color:#fff;font:400 16px/1.2 'Russo One';padding:6px 10px;transform:rotate(-1.5deg)}
+.ix-xss .st-hit b{font-weight:400;color:var(--y)}
+.ix-xss .st-hit[hidden]{display:none}
+.ix-xss .st-views span{font-weight:700;color:var(--ink)}
+.ix-xss .st-list{padding:8px 18px 0}
+.ix-xss .cm{padding:12px 0;border-bottom:1px solid rgba(20,20,20,.14)}
+.ix-xss .cm b{display:block;font:400 14px/1.2 'Russo One';margin-bottom:3px}
+.ix-xss .cm p{font-size:18px;overflow-wrap:anywhere}
+.ix-xss .cm.new{animation:ix-xss-in .35s ease-out both}
+.ix-xss .cm.new b::after{content:" · только что";font:400 13px Rubik;color:#6b6458}
+.ix-xss .cm .esc{background:var(--y);font-family:var(--mono);font-weight:700;padding:0 2px}
+.ix-xss .cm .enc{display:block;margin-top:8px;font:600 14px/1.4 var(--mono);color:#3d382f;background:#f3efe4;padding:6px 8px;overflow-wrap:anywhere}
+.ix-xss .cm .enc::before{content:"в коде страницы: ";font-family:Rubik;font-weight:500;color:#6b6458}
+@keyframes ix-xss-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ix-xss .st-form{padding:14px 18px 4px;display:flex;flex-direction:column;gap:6px}
+.ix-xss .st-form label{font:400 15px/1.2 'Russo One'}
+.ix-xss .st-form small{font:400 14px Rubik;color:#6b6458}
+.ix-xss .st-form textarea{width:100%;min-height:96px;resize:vertical;font:600 17px/1.45 var(--mono);color:var(--ink);background:#fbf8f0;border:3px solid var(--ink);border-radius:6px;padding:10px 12px}
+.ix-xss .st-form textarea:focus{outline:4px solid var(--v);outline-offset:2px}
+.ix-xss .st-form[hidden]{display:none}
+.ix-xss .st-sink{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:14px 18px 18px;font-size:15px;color:#3d382f}
+.ix-xss .st-sink code{font:700 15px/1.3 var(--mono);padding:5px 9px;border:2px solid var(--ink);overflow-wrap:anywhere}
+.ix-xss .st-sink code.bad{background:#ffe1e1}
+.ix-xss .st-sink code.good{background:#d9fbec}
+.ix-xss .st-csp{margin:0 18px 18px;background:var(--ink);color:#fff;font:600 15px/1.4 var(--mono);padding:10px 12px;border-left:8px solid var(--g);overflow-wrap:anywhere;transform:rotate(-1deg)}
+.ix-xss .st-csp b{color:var(--g)}
+.ix-xss .st-csp[hidden]{display:none}
+.ix-xss .st-sfx{--fs:54px;right:-6px;top:-30px;opacity:0}
+.ix-xss .st-sfx.on{opacity:1}
+.ix-xss.anim .st-sfx.on{animation:ix-xss-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+
+.ix-xss .dock{display:flex;flex-direction:column;align-items:flex-start;gap:20px;max-width:640px}
+.ix-xss .dock-bl{max-width:100%;min-height:3.4em;padding-top:16px}
+.ix-xss .dock-bl::after{bottom:auto;top:-13px;transform:rotate(225deg) skew(14deg,14deg)}
+.ix-xss .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 18px/1.2 'Russo One',sans-serif;cursor:pointer;border-radius:4px;text-align:center}
+.ix-xss .btn:hover{background:#ffe14d}
+.ix-xss .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-xss .btn[hidden]{display:none}
+.ix-xss .why{max-width:640px;align-self:flex-start}
+.ix-xss .fine{font-size:15px;color:#5b5446;max-width:640px}
+
+/* одержимость */
+.ix-xss .haunt{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s;
+  background:repeating-linear-gradient(0deg,rgba(138,92,255,.13) 0 2px,transparent 2px 5px),radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(60,20,140,.35));overflow:hidden}
+.ix-xss .haunt i{position:absolute;font:800 clamp(60px,20vw,220px)/1 var(--mono);font-style:normal;color:rgba(138,92,255,.16);white-space:nowrap;letter-spacing:-.04em}
+.ix-xss .haunt i:nth-child(1){left:-10%;top:12%}
+.ix-xss .haunt i:nth-child(2){right:-14%;top:46%;color:rgba(25,195,255,.10)}
+.ix-xss .haunt i:nth-child(3){left:6%;bottom:4%}
+.ix-xss.is-haunted .haunt{opacity:1;visibility:visible}
+.ix-xss.is-haunted .stage{box-shadow:7px 7px 0 var(--v),-4px -3px 0 rgba(25,195,255,.7)}
+.ix-xss.is-haunted .chap-t,.ix-xss.is-haunted .st-art h3,.ix-xss.is-haunted .kt,.ix-xss.is-haunted .cm.new p{text-shadow:-3px 0 rgba(25,195,255,.75),3px 0 rgba(138,92,255,.9)}
+.ix-xss.is-haunted .cm.new{background:linear-gradient(90deg,rgba(138,92,255,.14),transparent)}
+.ix-xss.is-haunted .chap-t{-webkit-text-stroke:2px var(--ink)}
+.ix-xss.anim.is-haunted .haunt i{animation:ix-xss-drift 6s linear infinite}
+.ix-xss.anim.is-haunted .haunt i:nth-child(2){animation-duration:8s;animation-direction:reverse}
+.ix-xss.anim.is-haunted .haunt{animation:ix-xss-flick 3s steps(1) infinite}
+.ix-xss.anim.is-haunted .pg,.ix-xss.anim.is-haunted .chap{animation:ix-xss-jit 2.2s steps(1) infinite}
+.ix-xss.anim.is-haunted .pg:nth-of-type(2n){animation-delay:-.9s}
+@keyframes ix-xss-drift{from{transform:translateX(0) skewX(-6deg)}50%{transform:translateX(60px) skewX(6deg)}to{transform:translateX(0) skewX(-6deg)}}
+@keyframes ix-xss-flick{0%{opacity:1}41%{opacity:.55}43%{opacity:1}77%{opacity:.75}79%{opacity:1}}
+@keyframes ix-xss-jit{0%{transform:none;filter:none}38%{transform:translate(-4px,1px) skewX(-2deg);filter:hue-rotate(40deg)}40%{transform:none;filter:none}71%{transform:translate(5px,-1px);filter:saturate(1.6)}73%{transform:none;filter:none}}
+
+/* фальшивое окно */
+.ix-xss .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:2147483001;width:min(400px,calc(100vw - 32px));display:flex;flex-direction:column;gap:12px}
+.ix-xss .toast[hidden]{display:none}
+.ix-xss.anim .toast:not([hidden]){animation:ix-xss-drop .38s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes ix-xss-drop{from{opacity:0;transform:translate(-50%,-40px) scale(.94)}to{opacity:1;transform:translate(-50%,0)}}
+.ix-xss .tbox{background:#fff;color:#1d1d1f;border-radius:14px;padding:20px 22px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.ix-xss .t-from{font-size:16px;font-weight:600}
+.ix-xss .t-msg{font-size:20px;margin-top:8px;overflow-wrap:anywhere}
+.ix-xss .t-row{display:flex;justify-content:flex-end;margin-top:16px}
+.ix-xss .t-ok{min-width:96px;min-height:46px;border:0;border-radius:24px;background:#0b57d0;color:#fff;font:600 17px/1 system-ui,sans-serif;cursor:pointer}
+.ix-xss .t-ok:focus-visible{outline:4px solid var(--y);outline-offset:3px}
+.ix-xss .t-note{align-self:center;background:var(--v);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:8px 14px;font:400 17px/1.3 'Russo One';transform:rotate(-2deg);text-align:center}
+.ix-xss .t-note b{font-weight:400;color:var(--y)}
+
+/* ===== три вида ===== */
+.ix-xss .kn{font:400 46px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-xss .kt{font:400 26px/1.1 'Russo One',sans-serif}
+.ix-xss .kp{font-size:18px;line-height:1.5;max-width:560px}
+.ix-xss .url{border:3px solid var(--ink);border-radius:30px;background:#fff;padding:9px 15px;font:600 16px/1.3 var(--mono);box-shadow:3px 3px 0 var(--ink);max-width:100%;overflow-wrap:anywhere}
+.ix-xss .url mark{background:var(--v);color:#fff;padding:0 3px}
+.ix-xss .stamp{display:inline-block;font:400 15px/1.1 'Russo One';text-transform:uppercase;border:3px solid var(--y);color:var(--y);padding:7px 10px;transform:rotate(-4deg)}
+.ix-xss .f-vio .kp{color:#fff}
+.ix-xss .codes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;width:100%}
+.ix-xss .code{border:3px solid var(--ink);background:#fff;min-width:0}
+.ix-xss .code-h{display:block;font:400 14px/1 'Russo One';text-transform:uppercase;padding:8px 12px;border-bottom:3px solid var(--ink)}
+.ix-xss .code.bad .code-h{background:var(--r);color:#fff}
+.ix-xss .code.good .code-h{background:var(--g)}
+.ix-xss .code pre{margin:0;padding:12px;font:600 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-xss .code em{font-style:normal;color:#6b6458}
+
+.ix-xss .can{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font:500 20px/1.35 Rubik}
+.ix-xss .can li{padding-left:30px;position:relative}
+.ix-xss .can li::before{content:"</>";position:absolute;left:0;top:3px;font:700 14px/1 var(--mono);color:var(--v)}
+
+.ix-xss .rule{padding:34px 30px !important}
+.ix-xss .rule .lab{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;color:var(--y);background:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-xss .rule h2{font:400 clamp(26px,4.6vw,46px)/1.15 'Rubik Mono One'}
+.ix-xss .rule h2 em{font-style:normal;color:var(--y);background:var(--ink);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ix-xss .rule p{font-size:18px;max-width:660px}
+.ix-xss .rule code{white-space:nowrap;font-size:16px;background:rgba(255,255,255,.7);padding:0 4px;overflow-wrap:anywhere}
+
+/* ===== битва ===== */
+.ix-xss .battle{margin-top:18px;background:var(--ink);color:#fff;padding:22px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--v);background-image:radial-gradient(rgba(138,92,255,.18) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-xss .bt-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.ix-xss .bt-name{font:400 18px/1.2 'Russo One';display:flex;align-items:center;gap:10px}
+.ix-xss .mini{font:800 20px/1 var(--mono);color:var(--v);text-shadow:-2px 0 rgba(25,195,255,.8),2px 0 rgba(255,255,255,.4)}
+.ix-xss .bt-turn{font:400 14px/1 'Russo One';background:var(--y);color:var(--ink);padding:6px 10px}
+.ix-xss .hp{height:20px;border:3px solid #fff;margin:14px 0 22px;background:#2a2340}
+.ix-xss .hp i{display:block;height:100%;width:100%;background:var(--v);transition:width .5s ease-out}
+.ix-xss .bt-body{display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:relative}
+.ix-xss .bt-move{font:400 23px/1.25 Neucha,cursive}
+.ix-xss .bt-opts{display:flex;flex-direction:column;gap:12px;width:100%;max-width:640px}
+.ix-xss .opt{min-height:56px;width:100%;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid #fff;font:500 18px/1.35 Rubik;cursor:pointer;border-radius:4px}
+.ix-xss .opt:hover{background:#f0eaff}
+.ix-xss .opt[disabled]{opacity:.5;cursor:default;text-decoration:line-through}
+.ix-xss .opt.ok{background:var(--g);border-color:var(--g);opacity:1;text-decoration:none}
+.ix-xss .fb{font:500 18px/1.4 Rubik;border-left:6px solid var(--g);padding:4px 0 4px 14px;max-width:640px}
+.ix-xss .fb.miss{border-color:var(--r)}
+.ix-xss .fb b{font:400 22px/1 'Rubik Mono One';display:block;margin-bottom:6px;color:var(--g)}
+.ix-xss .fb.miss b{color:var(--r);font-size:18px}
+.ix-xss .win{font:400 clamp(26px,5vw,40px)/1.15 'Rubik Mono One';color:var(--y)}
+.ix-xss .win-s{font-size:20px}
+.ix-xss .battle .btn{box-shadow:5px 5px 0 var(--v)}
+
+/* ===== собеседование ===== */
+.ix-xss .iv{margin-top:18px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.ix-xss .iv-q{font:400 clamp(24px,4vw,32px)/1.25 'Russo One'}
+.ix-xss .iv-think{font-size:19px;border-left:6px solid var(--y);padding-left:14px}
+.ix-xss .iv-a{display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);padding-top:20px;width:100%}
+.ix-xss .iv-a[hidden]{display:none}
+.ix-xss .iv-p{font-size:19px;line-height:1.5}
+.ix-xss .iv-p b{font:400 20px/1.2 'Russo One';display:block;margin-bottom:2px}
+.ix-xss .iv-err{font-size:19px;background:var(--ink);color:#fff;padding:12px 16px}
+.ix-xss .iv-err b{color:var(--y);font-weight:600}
+
+/* ===== шпаргалка ===== */
+.ix-xss .cheat{list-style:none;margin:18px 0 0;padding:0}
+.ix-xss .cheat li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-top:2px solid rgba(20,20,20,.16)}
+.ix-xss .cheat li:first-child{border-top:0}
+.ix-xss .cn{flex:0 0 auto;width:2.5em;font:400 34px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-xss .cheat h3{font:400 21px/1.2 'Russo One'}
+.ix-xss .cheat p{font-size:18px;line-height:1.45;margin-top:4px}
+
+.ix-xss .legal{margin-top:40px;font-size:18px;border-left:6px solid var(--g);padding:4px 0 4px 14px}
+.ix-xss .end-row{margin-top:36px}
+.ix-xss .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--y);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== телефон ===== */
+@media (max-width:700px){
+  .ix-xss{--gap:10px}
+  .ix-xss .pg{grid-template-columns:minmax(0,1fr)}
+  .ix-xss .pn{grid-column:1/-1;margin-left:0 !important}
+  .ix-xss .pn>.fr{--lt:0px;--rt:0px;--rb:0px;--lb:0px;padding:30px 16px 34px !important}
+  .ix-xss .pn:nth-child(odd)>.fr{--tr:var(--m);--br:var(--m)}
+  .ix-xss .pn:nth-child(even)>.fr{--tl:var(--m);--bl:var(--m)}
+  .ix-xss .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-xss .cold{min-height:500px}
+  .ix-xss .bl{font-size:22px;max-width:100%}
+  .ix-xss .codes{grid-template-columns:minmax(0,1fr)}
+  .ix-xss .stage{box-shadow:5px 5px 0 var(--ink)}
+  .ix-xss .st-art,.ix-xss .st-list,.ix-xss .st-form,.ix-xss .st-sink{padding-left:14px;padding-right:14px}
+  .ix-xss .st-sfx{--fs:44px;top:-26px;right:-4px}
+  .ix-xss .btn{width:100%}
+  .ix-xss .battle,.ix-xss .iv{padding:20px 16px}
+  .ix-xss .cn{font-size:28px}
+  .ix-xss .sfx.bu{bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-xss *,.ix-xss *::before,.ix-xss *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+var root=document.querySelector('.ix-xss'); if(!root) return;
+function q(s){return root.querySelector(s)}
+function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s))}
+var RM=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+if(!RM) root.classList.add('anim');
+
+/* появление обложки */
+var goEls=qa('[data-go]');
+if(RM||!('IntersectionObserver' in window)){goEls.forEach(function(e){e.classList.add('go')})}
+else{var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('go');io.unobserve(x.target)}})},{threshold:.35});goEls.forEach(function(e){io.observe(e)})}
+
+/* ===== сцена: комментарий вселяется ===== */
+var EX="Классная статья! <img src=x onerror=\"alert('Призрак тут')\">";
+var input=q('#ix-xss-in'), list=q('#ix-xss-list'), form=q('#ix-xss-form'), sink=q('#ix-xss-sink'),
+    csp=q('#ix-xss-csp'), say=q('#ix-xss-say'), act=q('#ix-xss-act'), views=q('#ix-xss-views'),
+    toast=q('#ix-xss-toast'), tmsg=q('#ix-xss-tm'), ok=q('#ix-xss-ok'), sfx=q('#ix-xss-sfx');
+var step='start', posted='', timers=[];
+input.value=EX;
+
+function speak(who,cls,text){ /* только наши собственные строки */
+  say.className='bl dock-bl'+(cls==='g'?' v':'');
+  say.textContent='';
+  var b=document.createElement('b'); b.className='who '+cls; b.textContent=who;
+  var s=document.createElement('span'); s.textContent=text;
+  say.appendChild(b); say.appendChild(s);
+}
+function bang(t){sfx.classList.remove('on'); sfx.textContent=t; void sfx.offsetWidth; if(t) sfx.classList.add('on')}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+function word(n){var a=n%10,b=n%100; if(a===1&&b!==11) return 'просмотр'; if(a>=2&&a<=4&&(b<10||b>=20)) return 'просмотра'; return 'просмотров'}
+var hit=q('#ix-xss-hit'), hitn=q('#ix-xss-hitn');
+function setViews(n){views.textContent=fmt(n); views.nextSibling.nodeValue=' '+word(n); hitn.textContent=fmt(Math.max(0,n-1024))}
+function isGhost(t){return /<\s*script|\son[a-z]+\s*=|javascript:/i.test(t)}
+/* что увидел бы читатель уязвимого сайта: теги «пропали», код ушёл в программу */
+function naive(t){return t.replace(/<\s*script[\s\S]*?(<\s*\/\s*script\s*>|$)/gi,'').replace(/<[^>]*>?/g,'').trim()}
+function alertMsg(t){var m=t.match(/alert\s*\(\s*(['"`])([^'"`]{0,60})\1\s*\)/i); if(m) return m[2]||' '; m=t.match(/alert\s*\(\s*(\d{1,8})\s*\)/i); if(m) return m[1]; return 'Скрипт из комментария выполнился'}
+function encode(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function addComment(mode){
+  var old=q('#ix-xss-mine'); if(old) old.remove();
+  var c=document.createElement('div'); c.className='cm new'; c.id='ix-xss-mine';
+  var b=document.createElement('b'); b.textContent='Ты'; c.appendChild(b);
+  var p=document.createElement('p');
+  if(mode==='naive'){ p.textContent=naive(posted)||' '; }
+  else{ /* безопасный вывод: показываем текст как есть, подсвечиваем скобки */
+    posted.split(/([<>])/).forEach(function(part){
+      if(part==='<'||part==='>'){var s=document.createElement('span'); s.className='esc'; s.textContent=part; p.appendChild(s)}
+      else if(part) p.appendChild(document.createTextNode(part));
+    });
+    var e=document.createElement('span'); e.className='enc'; e.textContent=encode(posted); p.appendChild(e);
+  }
+  c.appendChild(p); list.appendChild(c);
+  if(mode==='naive') try{c.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'})}catch(e){}
+}
+
+/* глитч-подмена букв */
+var scr=qa('[data-scr]').map(function(el){return {el:el,t:el.textContent}}), scrT=null;
+var GL='<>/▓░█#$%{}';
+function glitchOn(){ if(RM||scrT) return; scrT=setInterval(function(){
+  var o=scr[Math.floor(Math.random()*scr.length)], a=o.t.split('');
+  for(var i=0;i<Math.max(2,a.length/4);i++){var k=Math.floor(Math.random()*a.length); if(a[k]!==' ') a[k]=GL[Math.floor(Math.random()*GL.length)]}
+  o.el.textContent=a.join(''); setTimeout(function(){o.el.textContent=o.t},130);
+},170)}
+function glitchOff(){ if(scrT){clearInterval(scrT);scrT=null} scr.forEach(function(o){o.el.textContent=o.t}) }
+function haunt(on){root.classList.toggle('is-haunted',on); if(on) glitchOn(); else glitchOff()}
+
+function clearTimers(){timers.forEach(clearTimeout); timers=[]}
+function countUp(from,to,ms){
+  if(RM){setViews(to);return}
+  var t0=null; function f(ts){if(!t0)t0=ts; var k=Math.min(1,(ts-t0)/ms); setViews(Math.round(from+(to-from)*k)); if(k<1&&step==='spread') requestAnimationFrame(f)}
+  requestAnimationFrame(f);
+}
+
+function openToast(){toast.hidden=false; tmsg.textContent=alertMsg(posted); act.hidden=true; setTimeout(function(){ok.focus()},30)}
+function closeToast(){ if(toast.hidden) return; toast.hidden=true; go('spread') }
+ok.addEventListener('click',closeToast);
+toast.addEventListener('keydown',function(e){ if(e.key==='Escape'){e.preventDefault();closeToast()} if(e.key==='Tab'){e.preventDefault();ok.focus()} });
+
+function go(s){
+  step=s; clearTimers();
+  if(s==='start'){
+    haunt(false); toast.hidden=true; bang('');
+    var m=q('#ix-xss-mine'); if(m) m.remove();
+    form.hidden=false; input.value=EX; csp.hidden=true;
+    sink.className='bad'; sink.textContent='comment.innerHTML = text';
+    setViews(1024); hit.hidden=true; act.hidden=false; act.textContent='Отправить комментарий';
+    speak('Дядя Миша','p','Этот сайт вставляет комментарии через innerHTML. Пример уже в поле. Отправь его.');
+  }
+  else if(s==='posted'){
+    posted=input.value.slice(0,160); form.hidden=true;
+    if(!isGhost(posted)){
+      addComment('safe-plain'); act.textContent='Вернуть учебный пример';
+      speak('Дядя Миша','p','Обычный текст ничего не запускает. Верни учебный пример, чтобы увидеть Призрака.');
+      step='plain'; return;
+    }
+    addComment('naive'); haunt(true); bang('');
+    speak('Соня','k','Я вижу только начало. Куда делось остальное?!');
+    openToast();
+  }
+  else if(s==='spread'){
+    act.hidden=false; act.textContent='Изгнать: экранировать вывод';
+    speak('Скрипт-Призрак','g','Остальное — это я. Картинки по адресу x нет, и браузер запустил мой onerror как программу сайта. Теперь я срабатываю у каждого, кто откроет страницу.');
+    hit.hidden=false; countUp(1024,1272,1600);
+    act.focus();
+  }
+  else if(s==='encoded'){
+    haunt(false); setViews(1272); hit.hidden=true;
+    sink.className='good'; sink.textContent='comment.textContent = text';
+    addComment('safe'); bang('ЩЁЛК!');
+    speak('Дядя Миша','p','textContent вставляет текст. Знак < теперь просто символ. Призрак стал безобидной строчкой.');
+    act.textContent='Добавить второй слой: CSP';
+  }
+  else if(s==='csp'){
+    csp.hidden=false; bang('ПУФ!');
+    speak('Дядя Миша','p','CSP говорит браузеру, какие скрипты разрешены. Встроенный чужой скрипт он не запустит, даже если где-то забудут экранировать. Но это второй слой: дыру всё равно чинят.');
+    act.textContent='Ещё раз';
+  }
+}
+act.addEventListener('click',function(){
+  if(step==='start') go('posted');
+  else if(step==='plain') {go('start'); input.focus()}
+  else if(step==='spread') go('encoded');
+  else if(step==='encoded') go('csp');
+  else if(step==='csp') {go('start'); act.focus()}
+});
+go('start');
+
+/* ===== битва ===== */
+var MOVES=[
+  {v:'«Я спрячусь в комментарии. Сайт сам вставит меня в страницу!»',
+   o:[['Включить HTTPS',0,'HTTPS шифрует дорогу. Комментарий доедет целым — вместе с Призраком.'],
+      ['Выводить комментарий через textContent или шаблон с автоэкранированием',1,'Код стал текстом: браузер не ищет в нём разметку.'],
+      ['Спрятать поле комментария скриптом в браузере',0,'Проверки в браузере обходятся. Запрос можно отправить и без формы.']]},
+  {v:'«Я приду в ссылке ?q=… и сайт сразу меня отразит!»',
+   o:[['Кодировать параметр перед выводом на страницу',1,'Отражённый XSS лечится тем же: правильным выводом.'],
+      ['Поставить длинный пароль на админку',0,'Пароль тут ни при чём: скрипт работает в браузере того, кто открыл ссылку.']]},
+  {v:'«Разработчик забыл экранирование в одном месте. Я всё равно запущусь!»',
+   o:[['Флаг HttpOnly на cookie',0,'HttpOnly прячет cookie, но скрипт запустится и сможет действовать от твоего имени.'],
+      ['Вырезать из текста слово script',0,'Фильтр обходят десятком способов. Чинят вывод, а не слова.'],
+      ['CSP: разрешить только свои скрипты, без встроенных',1,'Второй слой: браузер не запустит чужой встроенный скрипт.']]}
+];
+var bt=q('#ix-xss-bt'), hpbar=q('#ix-xss-hpbar'), hp=q('#ix-xss-hp'), turn=q('#ix-xss-turn');
+var mi=0, score=0, first=true, HP=100;
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e}
+function setHP(v){HP=Math.max(0,v); hpbar.style.width=HP+'%'; hp.setAttribute('aria-valuenow',String(HP))}
+function renderMove(focus){
+  bt.textContent=''; first=true; turn.textContent='Ход '+(mi+1)+' из 3';
+  var m=MOVES[mi];
+  bt.appendChild(el('p','bt-move',m.v));
+  var wrap=el('div','bt-opts'); wrap.setAttribute('role','group'); wrap.setAttribute('aria-label','Выбери защиту');
+  var fb=el('p','fb'); fb.hidden=true; fb.setAttribute('aria-live','polite');
+  m.o.forEach(function(o){
+    var b=el('button','opt',o[0]); b.type='button';
+    b.addEventListener('click',function(){
+      fb.hidden=false; fb.textContent='';
+      if(o[1]){
+        if(first) score++;
+        qa('#ix-xss-bt .opt').forEach(function(x){x.disabled=true}); b.classList.add('ok');
+        fb.className='fb'; fb.appendChild(el('b',null,'УДАР!')); fb.appendChild(document.createTextNode(o[2]));
+        setHP(mi===2?0:HP-34);
+        var nx=el('button','btn',mi===2?'Добить Призрака':'Следующий ход'); nx.type='button';
+        nx.addEventListener('click',function(){mi++; if(mi<3) renderMove(true); else renderWin()});
+        bt.appendChild(nx); nx.focus();
+      }else{
+        first=false; b.disabled=true;
+        fb.className='fb miss'; fb.appendChild(el('b',null,'промах')); fb.appendChild(document.createTextNode(o[2]+' Попробуй другое.'));
+      }
+    });
+    wrap.appendChild(b);
+  });
+  bt.appendChild(wrap); bt.appendChild(fb);
+  if(focus) wrap.querySelector('button').focus();
+}
+function renderWin(){
+  bt.textContent=''; turn.textContent='Конец';
+  bt.appendChild(el('p','win','Скрипт-Призрак повержен'));
+  bt.appendChild(el('p','win-s','Счёт: '+score+' из 3 с первой попытки.'+(score===3?' Чистая победа.':'')));
+  var r=el('button','btn','Ещё раз'); r.type='button';
+  r.addEventListener('click',function(){mi=0;score=0;setHP(100);renderMove(true)});
+  bt.appendChild(r); r.focus();
+}
+renderMove(false);
+
+/* ===== собеседование ===== */
+var ivb=q('#ix-xss-ivb'), iva=q('#ix-xss-iva');
+ivb.addEventListener('click',function(){var o=iva.hidden; iva.hidden=!o; ivb.setAttribute('aria-expanded',String(o)); ivb.textContent=o?'Скрыть ответ':'Показать сильный ответ'});
+})();</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое XSS?</h2><p class="lead"><b>XSS</b> — Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя.</p><h2>О чём выпуск</h2><ul><li>Что такое XSS и почему он опасен</li><li>Три вида XSS</li><li>Почему textContent безопаснее innerHTML</li><li>Что даёт CSP и чего не даёт</li></ul><h2>Словарик</h2><dl><dt>HTML</dt><dd>Язык разметки страниц. Браузер читает его и рисует страницу.</dd><dt>XSS</dt><dd>Cross-Site Scripting — внедрение скрипта, который выполняется в браузере другого пользователя.</dd><dt>Автоэкранирование</dt><dd>Шаблонизатор сам превращает опасные символы вроде &lt; в безопасный текст.</dd><dt>CSP</dt><dd>Content Security Policy — заголовок, который говорит браузеру, какие скрипты на странице разрешены.</dd></dl><h2>Вопрос с собеседования</h2><h3>Какие бывают виды XSS и как от них защищаться?</h3><p>XSS — внедрение скрипта, который выполняется в браузере жертвы от имени уязвимого сайта. Отражённый: вредные данные в запросе сразу попадают на страницу. Хранимый: сохраняются на сервере и срабатывают у всех. DOM-based: ошибка в клиентском JavaScript. Защита: контекстное кодирование вывода, шаблоны с автоэкранированием, отказ от innerHTML и аналогов, очистка HTML через DOMPurify, когда HTML нужен. Дополнительно — CSP и HttpOnly cookie. В пайплайне: SAST, SCA для фронтенд-библиотек, DAST.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/xss/","text":"XSS простыми словами: reflected, stored и DOM-based"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"4"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

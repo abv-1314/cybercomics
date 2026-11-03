@@ -1,0 +1,2035 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Python для безопасника: первый скрипт и pip — CyberComics</title>
+<meta name="description" content="Первый скрипт на Python, который ловит подбор пароля в логах: переменные, цикл и словарь. Как устроены pip, PyPI и venv и как защититься от атак через пакеты.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/python/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Python для безопасника: первый скрипт и pip — CyberComics">
+<meta property="og:description" content="Первый скрипт на Python, который ловит подбор пароля в логах: переменные, цикл и словарь. Как устроены pip, PyPI и venv и как защититься от атак через пакеты.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/python/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-python.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python: первый скрипт и змей из pip">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python для безопасника: первый скрипт и pip — CyberComics">
+<meta name="twitter:description" content="Первый скрипт на Python, который ловит подбор пароля в логах: переменные, цикл и словарь. Как устроены pip, PyPI и venv и как защититься от атак через пакеты.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-python.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/python/#article","url":"https://cybercomics.ru/vypuski/python/","mainEntityOfPage":"https://cybercomics.ru/vypuski/python/","issueNumber":"20","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"Python: первый скрипт и змей из pip","name":"Python: первый скрипт и змей из pip","alternativeHeadline":"Python для безопасника: первый скрипт и pip","description":"Первый скрипт на Python, который ловит подбор пароля в логах: переменные, цикл и словарь. Как устроены pip, PyPI и venv и как защититься от атак через пакеты.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-python.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":20,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"начальный","timeRequired":"PT12M","teaches":["Почему безопасники автоматизируют рутину на Python","Переменные, цикл, условие и словарь на живом скрипте","Как устроены pip, PyPI и venv","Три атаки через пакеты и защита от них: проверка имени, хеши, pip-audit"],"about":{"@type":"Thing","name":"PyPI"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/python/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"Python: первый скрипт и змей из pip","item":"https://cybercomics.ru/vypuski/python/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/python/#faq","mainEntity":[{"@type":"Question","name":"Что такое PyPI?","acceptedAnswer":{"@type":"Answer","text":"PyPI — Python Package Index — общий открытый склад пакетов Python, откуда pip их скачивает."}},{"@type":"Question","name":"Как защитить Python-проект от атак через зависимости?","acceptedAnswer":{"@type":"Answer","text":"Проверять имя и источник пакета: страницу на pypi.org, репозиторий, историю релизов, а внутренние пакеты брать только из внутреннего индекса. Держать отдельный venv на проект, закреплять точные версии с хешами и ставить с --require-hashes. Помнить, что сборка из исходников запускает код с правами пользователя: предпочитать wheel-файлы и ставить зависимости там, где нет секретов. Запускать SCA вроде pip-audit в CI и регулярно обновлять закреплённые версии."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #a8f03c; --oy: 0%">
+  
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="font-size:15.45cqmin">pip</span></span>
+      <span class="va-pst-name" style="font-size:min(13.00cqw,13.00cqh)">Змей Пипыч</span>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#a8f03c">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №20</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Фундамент</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">12 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★☆☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">Python: первый скрипт и змей из pip</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Пишем скрипт, который ловит подбор пароля в логах, и учимся ставить библиотеки так, чтобы вместе с ними не пришёл чужой код</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Змей Пипыч:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Одна опечатка в pip install — и я у тебя в проекте.</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Почему безопасники автоматизируют рутину на Python</li><li>Переменные, цикл, условие и словарь на живом скрипте</li><li>Как устроены pip, PyPI и venv</li><li>Три атаки через пакеты и защита от них: проверка имени, хеши, pip-audit</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Змей Пипыч — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-python" data-ix="python" aria-label="Выпуск 20: Python и Змей Пипыч">
+
+<!-- ============ ОБЛОЖКА: ПОСТЕР ЗМЕЯ ============ -->
+<div class="pg" role="group" aria-label="Пролог: Змей Пипыч">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink poster" data-go="">
+      <span class="tag">Фундамент · №20</span>
+      <div class="p-name" aria-hidden="true"><span class="p-z">Змей</span><span class="p-p">Пипыч</span></div>
+      <h2 class="vh">Змей Пипыч</h2>
+      <svg class="snake" id="ix-python-snake" viewBox="0 0 600 560" role="img" aria-label="Эмблема: трёхголовый змей из букв. Шеи написаны словами reqeusts, setup.py и ==2.19.1">
+        <defs>
+          <linearGradient id="ix-python-fade" x1="0" y1="560" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#a8f03c" stop-opacity=".28"></stop>
+            <stop offset=".55" stop-color="#a8f03c" stop-opacity=".9"></stop>
+            <stop offset="1" stop-color="#a8f03c"></stop>
+          </linearGradient>
+          <path id="ix-python-coil" d="M70,470 A230,60 0 0,0 530,470"></path>
+          <path id="ix-python-coilb" d="M530,470 A230,60 0 0,0 70,470"></path>
+          <path id="ix-python-n1" d="M110,132 C118,200 128,262 160,326 C192,392 288,394 300,466"></path>
+          <path id="ix-python-n2" d="M300,466 C322,400 282,330 300,250 C314,190 300,142 300,100"></path>
+          <path id="ix-python-n3" d="M300,466 C312,394 408,392 440,326 C472,262 482,200 490,132"></path>
+        </defs>
+        <g class="s-body">
+          <use href="#ix-python-coilb" class="s-track"></use><use href="#ix-python-coil" class="s-track"></use>
+          <text class="s-coil"><textPath href="#ix-python-coil">pip install · pip install · pip install · pip install · pip install · <animate attributeName="startOffset" from="-196" to="0" dur="7s" repeatCount="indefinite"></animate></textPath></text>
+        </g>
+        <g class="s-neck" data-h="1">
+          <use href="#ix-python-n1" class="s-track"></use>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n1" startOffset="0">reqeusts reqeusts reqeusts reqeusts reqeusts <animate attributeName="startOffset" from="0" to="-140" dur="3.2s" repeatCount="indefinite"></animate></textPath></text>
+        </g>
+        <g class="s-neck" data-h="2">
+          <use href="#ix-python-n2" class="s-track"></use>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n2" startOffset="0">setup.py setup.py setup.py setup.py setup.py <animate attributeName="startOffset" from="-140" to="0" dur="3.6s" repeatCount="indefinite"></animate></textPath></text>
+        </g>
+        <g class="s-neck" data-h="3">
+          <use href="#ix-python-n3" class="s-track"></use>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n3" startOffset="0">==2.19.1 ==2.19.1 ==2.19.1 ==2.19.1 ==2.19.1 <animate attributeName="startOffset" from="-140" to="0" dur="4s" repeatCount="indefinite"></animate></textPath></text>
+        </g>
+        <g class="s-knot"><rect x="248" y="438" width="104" height="50" rx="25"></rect><text x="300" y="472">pip</text></g>
+        <g class="s-head" data-h="1" transform="translate(110 132) rotate(-14) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"></path><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"></path><text class="s-num" y="-11">1</text></g></g>
+        <g class="s-head" data-h="2" transform="translate(300 100) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"></path><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"></path><text class="s-num" y="-11">2</text></g></g>
+        <g class="s-head" data-h="3" transform="translate(490 132) rotate(14) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"></path><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"></path><text class="s-num" y="-11">3</text></g></g>
+      </svg>
+      <div class="bl v"><b class="who g">Змей Пипыч</b>Одна опечатка в pip install — и я у тебя в проекте.</div>
+    </div>
+    <span class="sfx ssh" aria-hidden="true">ШШШ!</span>
+  </div>
+</div>
+
+<!-- ============ СТР. 1 · ПОЧЕМУ PYTHON ============ -->
+<div class="chap"><span class="chap-n">Стр. 1</span><h2 class="chap-t">Почему Python</h2></div>
+<div class="pg" role="group" aria-label="Страница 1: почему Python">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots">
+      <p class="cap">Серверная НИИ. Три часа ночи по логам. Чай в подстаканнике уже остыл.</p>
+      <div class="bl k-b"><b class="who s">Соня</b>Дядя Миша, а почему все безопасники пишут на Python? Это же язык для начинающих.</div>
+      <div class="bl"><b class="who m">Дядя Миша</b>Потому и пишут. Ночью, на усталую голову, код должен читаться как записка, а не как шифровка.</div>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-lime why">
+      <ol class="why-l">
+        <li><b>Читается как текст.</b> Отступы вместо скобок, мало лишних знаков.</li>
+        <li><b>Батарейки в комплекте.</b> Файлы, сеть, JSON, хеши — уже в стандартной библиотеке.</li>
+        <li><b>Готовые инструменты.</b> sqlmap, Volatility, Impacket написаны на Python.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Для чего он безопаснику</span>
+      <h2>Скучное — <em>скрипту.</em></h2>
+      <p>Разобрать тысячу строк лога, сверить список адресов, проверить сто сайтов на свежий сертификат. Человек устаёт и пропускает. Скрипт — нет.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 2 · ПЕРВЫЙ СКРИПТ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 2</span><h2 class="chap-t">Первый скрипт</h2></div>
+<div class="pg" role="group" aria-label="Страница 2: первый скрипт Сони">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots runfr">
+      <div class="bl k-b"><b class="who s">Соня</b>Кто-то ночью ломится на сервер. Я написала скрипт: он считает неудачные входы по каждому адресу.</div>
+      <div class="run" id="ix-python-run">
+        <div class="ed">
+          <div class="ed-bar"><span class="ed-f">fails.py</span><span class="ed-l">14 строк</span></div>
+          <pre class="ed-code" id="ix-python-code"><code><span class="ln" data-l="1" data-k="var"><span class="vr">LIMIT</span> = <span class="n">3</span></span><span class="ln" data-l="2" data-k="dict"><span class="vr">counts</span> = {}</span><span class="ln" data-l="3"> </span><span class="ln" data-l="4" data-k="loop"><span class="kw">for</span> line <span class="kw">in</span> <span class="fn">open</span>(<span class="st">"auth.log"</span>):</span><span class="ln" data-l="5" data-k="if">    <span class="kw">if</span> <span class="st">"Failed password"</span> <span class="kw">in</span> line:</span><span class="ln c" data-l="6">        <span class="cm"># IP — 4-е слово с конца</span></span><span class="ln" data-l="7">        ip = line.split()[-<span class="n">4</span>]</span><span class="ln" data-l="8" data-k="if">        <span class="kw">if</span> ip <span class="kw">not in</span> counts:</span><span class="ln" data-l="9" data-k="dict">            counts[ip] = <span class="n">0</span></span><span class="ln" data-l="10" data-k="dict">        counts[ip] += <span class="n">1</span></span><span class="ln" data-l="11"> </span><span class="ln" data-l="12" data-k="loop"><span class="kw">for</span> ip, n <span class="kw">in</span> counts.items():</span><span class="ln" data-l="13" data-k="if">    <span class="kw">if</span> n &gt;= <span class="vr">LIMIT</span>:</span><span class="ln" data-l="14">        <span class="fn">print</span>(<span class="st">"ТРЕВОГА:"</span>, ip, n)</span></code></pre>
+        </div>
+        <div class="side">
+          <div class="logf">
+            <p class="side-h">auth.log <small>8 строк</small></p>
+            <ol class="log" id="ix-python-log"></ol>
+          </div>
+          <div class="dict">
+            <p class="side-h">counts <small>словарь в памяти</small></p>
+            <pre class="dict-v" id="ix-python-dict" aria-live="off">{}</pre>
+          </div>
+          <div class="out">
+            <p class="out-cmd">$ python3 fails.py</p>
+            <pre class="out-v" id="ix-python-out" aria-live="polite"></pre>
+          </div>
+        </div>
+        <span class="sfx run-sfx" id="ix-python-runsfx" aria-hidden="true"></span>
+      </div>
+      <div class="dock">
+        <p class="say" id="ix-python-runsay" aria-live="polite">Скрипт прочитает журнал входов и сосчитает неудачи. Запусти его.</p>
+        <button type="button" class="btn" id="ix-python-runbtn">Запустить скрипт</button>
+      </div>
+      <ul class="syn" id="ix-python-syn" aria-label="Что есть в этом скрипте">
+        <li data-k="var"><code>LIMIT = 3</code><span><b>Переменная.</b> Имя для значения. Поменяешь порог в одном месте — поменяется везде.</span></li>
+        <li data-k="loop"><code>for … in …:</code><span><b>Цикл.</b> Повтори блок для каждой строки файла. Блок — всё, что с отступом.</span></li>
+        <li data-k="if"><code>if …:</code><span><b>Условие.</b> Выполни блок, только если проверка верна.</span></li>
+        <li data-k="dict"><code>counts[ip] += 1</code><span><b>Словарь-счётчик.</b> Ключ — адрес, значение — сколько раз он ошибся.</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 3 · PIP И PYPI ============ -->
+<div class="chap"><span class="chap-n">Стр. 3</span><h2 class="chap-t">Нужна библиотека</h2></div>
+<div class="pg" role="group" aria-label="Страница 3: pip, PyPI и venv">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-dots">
+      <div class="bl k-b"><b class="who s">Соня</b>Хочу, чтобы тревога сама падала в чат команды. Писать отправку с нуля?</div>
+      <div class="bl"><b class="who m">Дядя Миша</b>Возьми библиотеку requests. Её ставят командой <code>pip install</code>.</div>
+      <p class="big sm"><b>pip</b> скачивает пакеты с <b>PyPI</b> — общего склада Python, где больше полумиллиона проектов.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-ink">
+      <p class="big sm on-ink">Но сначала — <b>venv</b>: своя коробка пакетов для этого проекта.</p>
+      <pre class="mini-t"><span class="mt-p">$</span> python3 -m venv .venv
+<span class="mt-p">$</span> source .venv/bin/activate
+<span class="mt-v">(.venv)</span> <span class="mt-p">$</span> <span class="caret-i" aria-hidden="true"></span></pre>
+      <p class="note-ink">В Windows: <code>.venv\Scripts\activate</code></p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Одна деталь, о которой молчат</span>
+      <h2>Склад <em>открытый.</em></h2>
+      <p>Опубликовать пакет на PyPI может любой, кто завёл аккаунт. Модераторы удаляют вредные пакеты, но уже после того, как их кто-то нашёл. Имя, которое ты набираешь, — это всё, что отделяет тебя от чужого кода.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 4 · УСТАНОВКА (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 4</span><h2 class="chap-t">pip install</h2></div>
+<div class="pg" role="group" aria-label="Страница 4: установка пакета">
+  <div class="pn" style="--span:12">
+    <div class="fr f-speed instfr">
+      <p class="cap w">Твоя очередь. Три часа ночи, глаза слипаются. Допиши имя пакета.</p>
+      <div class="term" id="ix-python-term">
+        <div class="t-bar"><i></i><i></i><i></i><span>терминал · проект fails</span></div>
+        <pre class="t-out" id="ix-python-tout"></pre>
+        <p class="t-line"><span class="t-v">(.venv)</span> <span class="t-p">$</span> <span id="ix-python-tcmd">pip install </span><span class="t-name" id="ix-python-tname"></span><span class="caret" aria-hidden="true"></span></p>
+      </div>
+      <div class="picks" id="ix-python-picks" role="group" aria-label="Какое имя набрать">
+        <button type="button" class="pick" data-n="reqeusts" aria-pressed="false">reqeusts</button>
+        <button type="button" class="pick" data-n="requets" aria-pressed="false">requets</button>
+        <button type="button" class="pick" data-n="requests" aria-pressed="false">requests</button>
+        <button type="button" class="pick" data-n="requestss" aria-pressed="false">requestss</button>
+      </div>
+      <div class="dock">
+        <div class="bl dock-bl" id="ix-python-isay" aria-live="polite"><b class="who m">Дядя Миша</b><span>Выбери, что набрать. Все четыре варианта выглядят знакомо — в этом и подвох.</span></div>
+        <button type="button" class="btn" id="ix-python-ibtn" disabled="">Нажать Enter</button>
+      </div>
+      <p class="fine">Всё понарошку: двойники выдуманы для комикса, страница ничего не скачивает и не запускает.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СПЛЭШ: УКУС ============ -->
+<div class="splash" id="ix-python-splash" hidden="">
+  <div class="sp">
+    <div class="sp-burst" aria-hidden="true"></div>
+    <div class="fang top" aria-hidden="true"></div>
+    <div class="fang bot" aria-hidden="true"></div>
+    <svg class="sp-head" viewBox="-40 -90 80 110" aria-hidden="true"><path class="s-tongue" d="M0,-50 V-68 M0,-68 L-9,-80 M0,-68 L9,-80"></path><path class="sph-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"></path><text class="sph-num" y="-18" dominant-baseline="central" transform="rotate(130 0 -18)">1</text></svg>
+    <div class="sp-txt">
+      <span class="sp-who">Голова №1 · опечатка</span>
+      <h2 aria-label="Ты сама меня позвала." class="sp-h" id="ix-python-sph" tabindex="-1"><span>Ты сама</span> <span>меня</span> <span>позвала.</span></h2>
+    </div>
+    <p class="sp-name" aria-label="Набрано: reqeusts. Нужно: requests"><span class="sp-bad" id="ix-python-spbad">re<mark>qe</mark>usts</span><span class="sp-vs">а нужно</span><span class="sp-ok">re<mark>qu</mark>ests</span></p>
+    <div class="sp-card">
+      <pre class="sp-log" id="ix-python-splog"></pre>
+      <p class="sp-k"><span class="hb">Голова №2</span> Пока ты ждала, скрипт установки работал с твоими правами:</p>
+      <ol class="sp-did">
+        <li>прочитал переменные окружения — там лежал токен чата;</li>
+        <li>заглянул в папку <code>~/.ssh</code> с ключами от серверов;</li>
+        <li>отправил всё на чужой сервер;</li>
+        <li>поставил настоящий requests — чтобы скрипт работал и ты ничего не заметила.</li>
+      </ol>
+    </div>
+    <span class="sfx sp-sfx" aria-hidden="true">ЦАП!</span>
+  </div>
+  <p class="sp-after">pip выполнил ровно то, что ты набрала. Опечатка — это тоже команда.</p>
+  <div class="ir">
+    <button type="button" class="btn" id="ix-python-irbtn" aria-expanded="false" aria-controls="ix-python-ir">Что теперь делать?</button>
+    <div class="ir-box" id="ix-python-ir" hidden="">
+      <div class="bl"><b class="who m">Дядя Миша</b>Удалить .venv мало: токен уже ушёл. Действуем по порядку.</div>
+      <ol class="ir-l">
+        <li><b>Отозвать токен</b> чата и выпустить новый. Старый больше не твой.</li>
+        <li><b>Сменить SSH-ключи</b>, которые лежали на этой машине.</li>
+        <li><b>Снести пакет и всю .venv</b>, собрать окружение заново.</li>
+        <li><b>Сказать старшему сразу.</b> Ошибиться не стыдно. Стыдно молчать.</li>
+      </ol>
+      <button type="button" class="btn" id="ix-python-again">Набрать имя заново</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 5 · ТРИ ГОЛОВЫ ============ -->
+<div class="chap"><span class="chap-n">Стр. 5</span><h2 class="chap-t vi">Три головы</h2></div>
+<div class="pg" role="group" aria-label="Страница 5: три головы Змея">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-ink head">
+      <span class="kn">01</span>
+      <h3 class="kt">Опечатка</h3>
+      <p class="hw"><span>reqeusts</span></p>
+      <p class="kp">Злодей регистрирует имя, похожее на популярное, и ждёт, когда палец дрогнет. Это называют <b>тайпсквоттингом</b>. В марте 2024 года PyPI даже временно закрывал регистрацию новых проектов, отбиваясь от волны таких двойников.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-dots head">
+      <span class="kn">02</span>
+      <h3 class="kt">Скрипт установки</h3>
+      <p class="hw lt"><span>setup.py</span></p>
+      <p class="kp">Если пакет приходит исходниками, при установке pip запускает его сборку — обычный Python-код с твоими правами. Вредный код не ждёт <code>import</code>: он срабатывает уже на <code>pip install</code>.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-lime head h3">
+      <div class="h3-l">
+        <span class="kn">03</span>
+        <h3 class="kt">Старьё с CVE</h3>
+        <p class="kp">Самая тихая голова. Ничего не надо красть — достаточно забыть обновиться. Дядя Миша открыл старый проект, а там:</p>
+      </div>
+      <div class="req">
+        <p class="req-h">requirements.txt · 2018 год</p>
+        <pre><code>requests==2.19.1</code></pre>
+        <p class="req-n">В этой версии давно нашли дыру <b>CVE-2018-18074</b>: при переадресации с https на http requests отправлял заголовок Authorization с токеном по открытому http — тому же сайту, но без шифрования. Исправлено в 2.20.0.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 6 · РУБИМ ГОЛОВЫ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 6</span><h2 class="chap-t">Рубим головы</h2></div>
+<div class="pg" role="group" aria-label="Страница 6: защита">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cutfr">
+      <div class="cut-grid">
+        <div class="arena" id="ix-python-arena">
+          <span class="fence-l" aria-hidden="true">.venv</span>
+          <div class="arena-svg" id="ix-python-arenasvg" aria-hidden="true"></div>
+          <p class="heads-left" id="ix-python-hl" aria-live="polite">Голов: 3</p>
+          <span class="sfx cut-sfx" id="ix-python-cutsfx" aria-hidden="true"></span>
+        </div>
+        <div class="cut-side">
+          <ol class="steps" id="ix-python-steps" aria-label="Защита по шагам">
+            <li data-s="0">venv</li><li data-s="1">Имя и источник</li><li data-s="2">Версии и хеши</li><li data-s="3">Аудит</li>
+          </ol>
+          <div class="cut-body" id="ix-python-cutbody" aria-live="polite"></div>
+          <button type="button" class="btn" id="ix-python-cutbtn">Сначала загон: создать venv</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 7 · УКУСЫ ОТ СЕБЯ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 7</span><h2 class="chap-t">Укусы от себя</h2></div>
+<div class="pg" role="group" aria-label="Страница 7: eval и секреты в коде">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots evfr">
+      <div class="bl k-b"><b class="who s">Соня</b>Хочу, чтобы порог LIMIT вводили с клавиатуры. Можно же <code>eval(input())</code>?</div>
+      <div class="ev" id="ix-python-ev">
+        <pre class="ev-code" id="ix-python-evcode"><code>LIMIT = <mark id="ix-python-evfn">eval</mark>(<span class="fn">input</span>(<span class="st">"Порог: "</span>))</code></pre>
+        <p class="ev-in"><span>Кто-то ввёл:</span> <code id="ix-python-evin">__import__("os").listdir(".ssh")</code></p>
+        <pre class="ev-out" id="ix-python-evout" aria-live="polite"></pre>
+        <span class="sfx ev-sfx" id="ix-python-evsfx" aria-hidden="true"></span>
+      </div>
+      <p class="say" id="ix-python-evsay" aria-live="polite">Вместо числа пришла строка с кодом. Посмотрим, что сделает eval.</p>
+      <button type="button" class="btn" id="ix-python-evbtn">Передать строку в eval</button>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-yel secfr">
+      <div class="bl"><b class="who m">Дядя Миша</b>И ещё. Токен чата в коде не пиши. Код уезжает в git, в скриншоты, в чат «глянь, что не так».</div>
+      <div class="codes">
+        <div class="code bad"><span class="code-h">Так нельзя</span><pre><code>TOKEN = "7312:AAHk9x…"</code></pre></div>
+        <div class="code good"><span class="code-h">Так правильно</span><pre><code>import os
+TOKEN = os.environ["CHAT_TOKEN"]</code></pre></div>
+      </div>
+      <p class="kp sm">Токен живёт в переменной окружения. Нет переменной — скрипт честно падает, а не работает с чужим ключом.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t vi">Битва со Змеем</h2></div>
+<div class="battle" id="ix-python-battle">
+  <div class="bt-top">
+    <span class="bt-name"><span class="mini" aria-hidden="true">pip</span> Змей Пипыч</span>
+    <span class="bt-turn" id="ix-python-turn">Ход 1 из 3</span>
+  </div>
+  <div class="hp" role="progressbar" aria-label="Здоровье Змея Пипыча" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-python-hp"><i id="ix-python-hpbar"></i></div>
+  <div class="bt-body" id="ix-python-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Вопрос с собеседования</h2></div>
+<div class="iv">
+  <p class="iv-q">Как защитить Python-проект от атак через зависимости?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: вспомни три головы Пипыча — откуда приходит пакет, что он делает при установке и сколько ему лет.</div>
+  <button type="button" class="btn" id="ix-python-ivb" aria-expanded="false" aria-controls="ix-python-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-python-iva" hidden="">
+    <div class="iv-p"><b>Откуда пакет.</b> Проверяю имя и источник: страницу на pypi.org, ссылку на репозиторий, историю релизов. Внутренние пакеты беру только из внутреннего индекса, иначе можно попасть на dependency confusion.</div>
+    <div class="iv-p"><b>Воспроизводимость.</b> Отдельный venv на проект, точные версии и хеши в requirements.txt, установка с <code>--require-hashes</code>. Файл с хешами генерирую инструментом, например pip-compile.</div>
+    <div class="iv-p"><b>Код при установке.</b> Сборка из исходников запускает код с правами пользователя. Предпочитаю готовые wheel-файлы и ставлю зависимости в CI или контейнере, где нет секретов.</div>
+    <div class="iv-p"><b>Известные уязвимости.</b> SCA в CI: pip-audit или Dependabot. Закреплённые версии регулярно обновляю, а не забываю на годы.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> «у меня venv, значит, безопасно» или «версия закреплена — значит, защищён навсегда».</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Шпаргалка</span><h2 class="chap-t">Что важно знать</h2></div>
+<ol class="cheat">
+  <li><span class="cn">01</span><div><h3>Python — язык автоматизации</h3><p>Читается как текст, а стандартная библиотека умеет почти всё нужное.</p></div></li>
+  <li><span class="cn">02</span><div><h3>Четыре кирпича</h3><p>Переменная, цикл, условие и словарь — этого хватит на первый полезный скрипт.</p></div></li>
+  <li><span class="cn">03</span><div><h3>pip берёт с PyPI</h3><p>Склад открытый: публиковать туда может любой.</p></div></li>
+  <li><span class="cn">04</span><div><h3>Опечатка — чужой код</h3><p>Проверяй имя, автора и ссылку на репозиторий до установки.</p></div></li>
+  <li><span class="cn">05</span><div><h3>venv — порядок, не песочница</h3><p>Он разделяет пакеты проектов, но вредный код внутри работает с твоими правами.</p></div></li>
+  <li><span class="cn">06</span><div><h3>Версии, хеши, аудит</h3><p>requirements.txt с хешами плюс pip-audit — и не забывай обновляться.</p></div></li>
+  <li><span class="cn">07</span><div><h3>Никакого eval() и секретов в коде</h3><p>Ввод превращай через int() или json.loads, токены держи в переменных окружения.</p></div></li>
+</ol>
+
+<p class="legal">Тренируйся легально: пиши скрипты на своих логах и задачах <b>picoCTF</b> (раздел General Skills), а веб-дыры ищи в <b>PortSwigger Web Security Academy</b> и <b>OWASP Juice Shop</b>. Чужие серверы и чужие пакеты трогать нельзя.</p>
+<div class="end-row"><span class="end">Конец выпуска №20</span></div>
+</section>
+
+<style>
+.ix-python{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--a:#a8f03c;--ad:#2f5200;--c:#19c3ff;--g:#2ee59d;--r:#ff3b3b;--k:26px;--m:18px;--gap:12px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  position:relative;color:var(--ink);font:400 18px/1.5 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-python *,.ix-python *::before,.ix-python *::after{box-sizing:border-box}
+.ix-python p{margin:0}
+.ix-python h2,.ix-python h3{margin:0;font-weight:400}
+.ix-python ol,.ix-python ul{margin:0}
+.ix-python :focus-visible{outline:4px solid var(--c);outline-offset:3px}
+.ix-python code,.ix-python pre{font-family:var(--mono)}
+.ix-python pre{margin:0}
+.ix-python .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* главы */
+.ix-python .chap{display:flex;align-items:center;gap:14px;margin:60px 0 0;flex-wrap:wrap}
+.ix-python .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--a);padding:8px 12px;transform:rotate(-3deg)}
+.ix-python .chap-t{font:400 clamp(27px,5vw,40px)/1.12 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-python .chap-t.vi{color:var(--a)}
+
+/* страницы и панели */
+.ix-python .pg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-python .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-python .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:26px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+  --lt:0px;--rt:0px;--rb:0px;--lb:0px;--tl:0px;--tr:0px;--br:0px;--bl:0px;
+  clip-path:polygon(var(--lt) var(--tl),calc(100% - var(--rt)) var(--tr),calc(100% - var(--rb)) calc(100% - var(--br)),var(--lb) calc(100% - var(--bl)))}
+.ix-python .dR>.fr{--rb:var(--k);padding-right:calc(26px + var(--k))}
+.ix-python .dL{margin-left:calc(-1 * var(--k))}
+.ix-python .dL>.fr{--lt:var(--k);padding-left:calc(26px + var(--k))}
+.ix-python .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.1) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-python .f-lime{background-color:var(--a);background-image:radial-gradient(rgba(20,20,20,.14) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-python .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(168,240,60,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .f-speed{background-color:#fff;background-image:repeating-linear-gradient(-6deg,transparent 0 22px,rgba(20,20,20,.06) 22px 24px)}
+
+/* SFX, плашки, пузыри */
+.ix-python .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,60px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--a));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--ink));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-python .cap{display:inline-block;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.3 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:460px}
+.ix-python .cap.w{background:#fff}
+.ix-python .big{font:500 22px/1.35 Rubik,sans-serif;max-width:520px}
+.ix-python .big.sm{font-size:20px}
+.ix-python .big b{white-space:nowrap;background:var(--ink);color:var(--a);padding:0 6px;font-weight:600}
+.ix-python .big.on-ink b{background:var(--a);color:var(--ink)}
+.ix-python .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:440px;box-shadow:3px 3px 0 var(--ink)}
+.ix-python .bl::after{content:"";position:absolute;left:var(--tx,34px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-python .bl code{font-size:.78em;background:#f1eee4;padding:0 4px;border-radius:3px;white-space:nowrap}
+.ix-python .bl.v{background:#1b2410;color:#fff;border-color:var(--a);box-shadow:4px 4px 0 var(--a)}
+.ix-python .bl.v::after{border-color:var(--a)}
+.ix-python .bl.k-b{align-self:flex-end;--tx:auto}
+.ix-python .bl.k-b::after{left:auto;right:34px}
+.ix-python .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-python .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-python .who.m{--dot:var(--y)}.ix-python .who.s{--dot:var(--a)}
+.ix-python .bl.v .who,.ix-python .who.g{color:var(--a);--dot:var(--a)}
+.ix-python .tag{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--a);color:var(--ink);padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+.ix-python .say{font:500 19px/1.4 Rubik;border-left:6px solid var(--a);padding:2px 0 2px 14px;max-width:640px;min-height:2.8em}
+.ix-python .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 18px/1.2 'Russo One',sans-serif;cursor:pointer;border-radius:4px;text-align:center}
+.ix-python .btn:hover{background:#ffe14d}
+.ix-python .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-python .btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.ix-python .btn[hidden]{display:none}
+.ix-python .f-ink .btn{box-shadow:5px 5px 0 var(--a);border-color:#fff}
+.ix-python .fine{font-size:15px;color:#5b5446;max-width:640px}
+.ix-python .dock{display:flex;flex-direction:column;align-items:flex-start;gap:20px;max-width:640px;width:100%}
+.ix-python .dock-bl{max-width:100%;min-height:3.4em;padding-top:16px}
+.ix-python .dock-bl::after{bottom:auto;top:-13px;transform:rotate(225deg) skew(14deg,14deg)}
+
+/* ===== постер змея ===== */
+.ix-python .poster{min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"tag snake" "name snake" "bl snake";align-items:start;align-content:center;gap:18px 20px;padding:40px 30px 64px}
+.ix-python .poster .tag{grid-area:tag;justify-self:start}
+.ix-python .p-name{grid-area:name;display:flex;flex-direction:column;line-height:.92}
+.ix-python .p-z{font:400 clamp(28px,4.4vw,40px)/1 'Russo One',sans-serif;color:#fff;letter-spacing:.04em;margin-left:.1em}
+.ix-python .p-p{font:400 clamp(50px,9vw,92px)/1 'Rubik Mono One',sans-serif;color:var(--a);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ad),-1px -1px 0 rgba(255,255,255,.15);letter-spacing:-.04em}
+.ix-python .poster .bl{grid-area:bl;justify-self:start;max-width:360px}
+.ix-python .snake{grid-area:snake;width:100%;max-width:560px;height:auto;justify-self:center;align-self:center;overflow:visible}
+.ix-python .s-track{fill:none;stroke:rgba(168,240,60,.1);stroke-width:40;stroke-linecap:round}
+.ix-python .s-body .s-track{stroke-width:30;stroke:rgba(168,240,60,.06)}
+.ix-python .s-txt{font:700 26px/1 var(--mono);letter-spacing:.02em}
+.ix-python .s-coil{font:600 19px/1 var(--mono);fill:rgba(168,240,60,.42)}
+.ix-python .s-skull{fill:var(--a);stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.ix-python .s-num{font:400 19px/1 'Rubik Mono One',sans-serif;fill:var(--ink);text-anchor:middle}
+.ix-python .s-knot rect{fill:var(--a);stroke:var(--ink);stroke-width:3}
+.ix-python .s-knot text{font:400 22px/1 'Rubik Mono One',sans-serif;fill:var(--ink);text-anchor:middle}
+.ix-python .s-tongue{fill:none;stroke:var(--r);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.ix-python .s-hd,.ix-python .s-neck{transform-box:fill-box;transform-origin:50% 100%;transition:transform .55s cubic-bezier(.5,-0.4,.7,1),opacity .5s}
+.ix-python .sfx.ssh{--fs:clamp(54px,11vw,100px);--rot:-9deg;--ss:var(--ad);right:4%;bottom:12px}
+.ix-python.anim .s-hd{animation:ix-python-bob 2.6s ease-in-out infinite}
+.ix-python.anim .s-head[data-h="2"] .s-hd{animation-delay:-.9s}
+.ix-python.anim .s-head[data-h="3"] .s-hd{animation-delay:-1.7s}
+.ix-python.anim .s-tongue{animation:ix-python-flick 1.8s steps(1) infinite}
+.ix-python.anim .sfx.ssh{opacity:0}
+.ix-python.anim .poster.go+.sfx.ssh{animation:ix-python-pop .5s cubic-bezier(.2,1.7,.4,1) .6s both}
+.ix-python.anim .poster.go .p-p{animation:ix-python-slam .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes ix-python-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes ix-python-flick{0%{opacity:1}45%{opacity:0}60%{opacity:1}}
+@keyframes ix-python-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(var(--rot,-10deg)) scale(1)}}
+@keyframes ix-python-slam{from{opacity:0;transform:scale(1.8) translateY(-10px)}to{opacity:1;transform:none}}
+
+/* срубленные головы */
+.ix-python .s-head.cut .s-hd{transform:translate(0,70px) rotate(75deg);opacity:0}
+.ix-python .s-neck.cut{opacity:.16}
+
+/* ===== стр. 1 ===== */
+.ix-python .why{justify-content:center}
+.ix-python .why-l{list-style:none;padding:0;display:flex;flex-direction:column;gap:16px;counter-reset:w}
+.ix-python .why-l li{position:relative;padding-left:48px;font-size:18px;line-height:1.4;counter-increment:w}
+.ix-python .why-l li::before{content:counter(w);position:absolute;left:0;top:-2px;width:34px;height:34px;display:grid;place-items:center;background:var(--ink);color:var(--a);font:400 18px/1 'Rubik Mono One'}
+.ix-python .why-l b{display:block;font:400 20px/1.2 'Russo One'}
+.ix-python .rule{padding:34px 30px !important}
+.ix-python .rule .lab{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;color:var(--a);background:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-python .rule h2{font:400 clamp(26px,4.6vw,46px)/1.15 'Rubik Mono One'}
+.ix-python .rule h2 em{font-style:normal;color:var(--a);background:var(--ink);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ix-python .rule p{font-size:18px;max-width:680px}
+
+/* ===== стр. 2: запуск скрипта ===== */
+.ix-python .runfr{gap:22px;align-items:stretch}
+.ix-python .runfr>.bl{align-self:flex-end}
+.ix-python .run{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:16px;align-items:start}
+.ix-python .ed{position:sticky;top:16px;background:var(--ink);color:#f4f1e8;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--a);min-width:0}
+.ix-python .ed-bar{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;border-bottom:2px solid #333;font:400 14px/1.2 'Russo One'}
+.ix-python .ed-f{color:var(--a)}
+.ix-python .ed-l{color:#9a9585}
+.ix-python .ed-code{padding:12px 0;font:600 15px/1.6 var(--mono);overflow-x:auto;white-space:pre}
+.ix-python .ed-code code{display:block;min-width:max-content}
+.ix-python .ln{display:block;padding:0 14px;min-height:1.6em;border-left:4px solid transparent}
+.ix-python .ln.on{background:rgba(168,240,60,.2);border-left-color:var(--a)}
+.ix-python .ln.hl{background:rgba(255,214,10,.16);border-left-color:var(--y)}
+.ix-python .kw{color:var(--a)}
+.ix-python .st{color:var(--y)}
+.ix-python .cm{color:#8f8b7d;font-weight:400}
+.ix-python .vr{color:#fff;font-weight:800}
+.ix-python .n,.ix-python .fn{color:#fff}
+.ix-python .side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ix-python .side-h{font:400 15px/1.2 'Russo One';display:flex;align-items:baseline;gap:8px}
+.ix-python .side-h small{font:400 14px Rubik;color:#6b6458}
+.ix-python .log{list-style:none;padding:0;margin-top:6px;border:3px solid var(--ink);background:#fbf8f0}
+.ix-python .log li{font:500 13px/1.45 var(--mono);padding:6px 10px;border-top:1px solid rgba(20,20,20,.12);overflow-wrap:anywhere;transition:background .12s}
+.ix-python .log li:first-child{border-top:0}
+.ix-python .log .pre{color:#857e6f}
+.ix-python .log li.on{background:#efffd6;box-shadow:inset 5px 0 0 var(--ink)}
+.ix-python .log li.skip{color:#9b9484}
+.ix-python .log li.fail .msg{font-weight:700}
+.ix-python .log mark{background:transparent;color:inherit;padding:0 2px}
+.ix-python .log li.got mark{background:var(--a);color:var(--ink)}
+.ix-python .dict-v{margin-top:6px;border:3px solid var(--ink);background:#fff;padding:10px 12px;font:700 16px/1.5 var(--mono);min-height:3.2em;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .dict-v .k{color:#5a7f00}
+.ix-python .dict-v .flash{background:var(--a);color:var(--ink)}
+.ix-python .out{background:var(--ink);color:#fff;border:3px solid var(--ink);padding:10px 12px;min-height:84px}
+.ix-python .out-cmd{font:600 14px/1.4 var(--mono);color:#9a9585}
+.ix-python .out-v{font:700 16px/1.45 var(--mono);color:var(--a);white-space:pre-wrap;overflow-wrap:anywhere;min-height:1.45em}
+.ix-python .out-v .alarm{color:var(--ink);background:var(--a);padding:1px 6px}
+.ix-python .run-sfx{--fs:50px;right:-8px;bottom:-26px;opacity:0}
+.ix-python .run-sfx.on{opacity:1}
+.ix-python.anim .run-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .syn{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 26px;width:100%}
+.ix-python .syn li{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:2px solid rgba(20,20,20,.16);font-size:18px;line-height:1.4;outline-offset:4px}
+.ix-python .syn code{align-self:flex-start;font:700 16px/1.3 var(--mono);background:var(--ink);color:var(--a);padding:4px 8px}
+.ix-python .syn b{font:400 19px/1.2 'Russo One'}
+
+/* ===== стр. 3 ===== */
+.ix-python .mini-t{width:100%;background:#000;border:2px solid var(--a);padding:14px;font:600 16px/1.7 var(--mono);color:#fff;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .mt-p{color:#9a9585}
+.ix-python .mt-v{color:var(--a)}
+.ix-python .caret-i{display:inline-block;width:.6em;height:1.1em;vertical-align:-.15em;background:var(--a)}
+.ix-python .note-ink{font-size:16px;color:#cfcabb}
+.ix-python .note-ink code{color:#fff}
+
+/* ===== стр. 4: терминал ===== */
+.ix-python .instfr{gap:22px;align-items:stretch}
+.ix-python .instfr>.cap{align-self:flex-start}
+.ix-python .term{background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--a);max-width:680px;width:100%}
+.ix-python .t-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:2px solid #333;font:400 14px/1.2 'Russo One';color:#9a9585}
+.ix-python .t-bar i{width:11px;height:11px;border-radius:50%;background:#444}
+.ix-python .t-bar i:first-child{background:var(--r)}
+.ix-python .t-bar span{margin-left:6px}
+.ix-python .t-out{padding:12px 14px 0;font:600 15px/1.55 var(--mono);color:#cfcabb;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .t-out:empty{display:none}
+.ix-python .t-out .ok{color:var(--a)}
+.ix-python .t-out .warn{color:var(--y)}
+.ix-python .t-out .bad{color:#ff8f8f}
+.ix-python .t-line{padding:12px 14px 14px;font:700 19px/1.4 var(--mono);overflow-wrap:anywhere}
+.ix-python .t-v{color:var(--a)}
+.ix-python .t-p{color:#9a9585}
+.ix-python .t-name{color:var(--y)}
+.ix-python .caret{display:inline-block;width:.55em;height:1.05em;margin-left:2px;vertical-align:-.15em;background:#fff}
+.ix-python.anim .caret{animation:ix-python-blink 1s steps(1) infinite}
+@keyframes ix-python-blink{50%{opacity:0}}
+.ix-python .picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:680px;width:100%}
+.ix-python .pick{min-height:56px;padding:8px 6px;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--ink);font:700 18px/1.2 var(--mono);cursor:pointer;overflow-wrap:anywhere}
+.ix-python .pick:hover{background:#f2ffe0}
+.ix-python .pick[aria-pressed="true"]{background:var(--a);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-python .pick[disabled]{cursor:default}
+.ix-python .pick[disabled]:not([aria-pressed="true"]){opacity:.5}
+
+/* ===== сплэш: укус ===== */
+.ix-python .splash{position:relative;background:var(--ink);padding:var(--gap);margin-top:44px}
+.ix-python .splash[hidden]{display:none}
+.ix-python .sp{position:relative;overflow:hidden;min-height:560px;padding:124px 30px 124px;display:flex;flex-direction:column;align-items:flex-start;gap:22px;background:var(--a)}
+.ix-python .sp-burst{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(20,20,20,.0) 0 5deg,rgba(20,20,20,.1) 5deg 10deg)}
+.ix-python .sp::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.16) 1.5px,transparent 2px);background-size:9px 9px;pointer-events:none}
+.ix-python .fang{position:absolute;left:0;right:0;height:110px;z-index:4;filter:drop-shadow(0 5px 0 var(--ink));pointer-events:none;background:linear-gradient(var(--ink) 0 18px,transparent 18px)}
+.ix-python .fang::before{content:"";position:absolute;inset:16px 0 0;background:#fff;clip-path:polygon(0 0,100% 0,100% 12%,95% 12%,88% 100%,81% 12%,62% 12%,58% 55%,54% 12%,46% 12%,42% 55%,38% 12%,19% 12%,12% 100%,5% 12%,0 12%)}
+.ix-python .fang.top{top:0}
+.ix-python .fang.bot{bottom:0;transform:scaleY(-1);filter:drop-shadow(0 4px 0 var(--ink))}
+.ix-python .fang.bot::before{transform:scaleX(-1)}
+.ix-python .sp-txt,.ix-python .sp-name,.ix-python .sp-card{position:relative;z-index:3}
+.ix-python .sp-who{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--a);padding:8px 10px;transform:rotate(-2deg)}
+.ix-python .sp-h{display:flex;flex-direction:column;margin-top:14px;font:400 clamp(36px,7.4vw,70px)/1.02 'Rubik Mono One';color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);outline:none}
+.ix-python .sp-h span:nth-child(2){color:var(--ink);-webkit-text-stroke:0;text-shadow:4px 4px 0 #fff}
+.ix-python .sp-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font:800 clamp(30px,6vw,48px)/1.1 var(--mono)}
+.ix-python .sp-name mark{padding:0 3px}
+.ix-python .sp-bad{background:#fff;border:3px solid var(--ink);padding:4px 10px;box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+.ix-python .sp-bad mark{background:var(--r);color:#fff}
+.ix-python .sp-vs{font:400 17px/1 'Russo One';color:var(--ink)}
+.ix-python .sp-ok{font-size:.62em;color:var(--ink)}
+.ix-python .sp-ok mark{background:var(--ink);color:var(--a)}
+.ix-python .sp-card{background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:18px;max-width:640px;width:100%;display:flex;flex-direction:column;gap:14px;transform:rotate(-.8deg)}
+.ix-python .sp-log{background:var(--ink);color:#cfcabb;font:600 14px/1.55 var(--mono);padding:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .sp-log .bad{color:#ff8f8f}
+.ix-python .sp-log .mk{color:var(--ink);background:var(--a);padding:0 4px}
+.ix-python .sp-k{font:500 18px/1.4 Rubik}
+.ix-python .hb{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;background:var(--ink);color:var(--a);padding:5px 8px;margin-right:6px;vertical-align:2px}
+.ix-python .sp-did{padding-left:24px;display:flex;flex-direction:column;gap:8px;font-size:18px;line-height:1.4}
+.ix-python .sp-did li::marker{font-family:'Russo One';color:var(--r)}
+.ix-python .sp-did code{background:#f1eee4;padding:0 4px}
+.ix-python .sp-sfx{--fs:clamp(66px,11vw,116px);--rot:-11deg;--sc:#fff;--ss:var(--r);right:4%;top:20%;z-index:5}
+.ix-python .sp-head{position:absolute;z-index:2;right:7%;top:38%;width:clamp(90px,24vw,280px);height:auto;transform:rotate(-130deg);overflow:visible}
+.ix-python .sph-skull{fill:var(--ink);stroke:#fff;stroke-width:2.5;stroke-linejoin:round}
+.ix-python .sph-num{font:400 19px/1 'Rubik Mono One',sans-serif;fill:var(--a);text-anchor:middle}
+.ix-python.anim .splash.go .sp-head{animation:ix-python-lunge .5s cubic-bezier(.3,1.5,.5,1) .2s both}
+@keyframes ix-python-lunge{from{opacity:0;transform:translate(50%,-40%) rotate(-100deg) scale(.5)}to{opacity:1;transform:rotate(-130deg)}}
+.ix-python .sp-after{background:#fff;padding:16px 18px;font:500 19px/1.4 Rubik;margin-top:var(--gap)}
+.ix-python .ir{background:var(--paper);padding:20px 18px;margin-top:var(--gap);display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.ix-python .ir-box{display:flex;flex-direction:column;gap:18px;align-items:flex-start;width:100%}
+.ix-python .ir-box[hidden]{display:none}
+.ix-python .ir-l{list-style:none;padding:0;counter-reset:r;display:flex;flex-direction:column;gap:0;width:100%;max-width:680px}
+.ix-python .ir-l li{counter-increment:r;position:relative;padding:12px 0 12px 52px;border-top:2px solid rgba(20,20,20,.14);font-size:18px;line-height:1.4}
+.ix-python .ir-l li:first-child{border-top:0}
+.ix-python .ir-l li::before{content:counter(r);position:absolute;left:0;top:10px;width:36px;height:36px;display:grid;place-items:center;background:var(--a);border:3px solid var(--ink);font:400 17px/1 'Rubik Mono One'}
+.ix-python .ir-l b{font-family:'Russo One';font-weight:400}
+.ix-python.anim .splash.go .fang.top{animation:ix-python-fangT .42s cubic-bezier(.6,0,.2,1.6) .15s both}
+.ix-python.anim .splash.go .fang.bot{animation:ix-python-fangB .42s cubic-bezier(.6,0,.2,1.6) .15s both}
+.ix-python.anim .splash.go .sp{animation:ix-python-shake .34s linear .55s}
+.ix-python.anim .splash.go .sp-h span{animation:ix-python-slam .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-python.anim .splash.go .sp-h span:nth-child(1){animation-delay:.5s}
+.ix-python.anim .splash.go .sp-h span:nth-child(2){animation-delay:.62s}
+.ix-python.anim .splash.go .sp-h span:nth-child(3){animation-delay:.74s}
+.ix-python.anim .splash.go .sp-sfx{animation:ix-python-pop .5s cubic-bezier(.2,1.6,.4,1) .45s both}
+.ix-python.anim .splash.go .sp-name{animation:ix-python-up .4s ease-out .95s both}
+.ix-python.anim .splash.go .sp-card{animation:ix-python-up .45s ease-out 1.15s both}
+@keyframes ix-python-fangT{0%{transform:translateY(-110%)}60%{transform:translateY(60px)}100%{transform:none}}
+@keyframes ix-python-fangB{0%{transform:scaleY(-1) translateY(-110%)}60%{transform:scaleY(-1) translateY(60px)}100%{transform:scaleY(-1)}}
+@keyframes ix-python-shake{0%,100%{transform:none}20%{transform:translate(-8px,3px) rotate(-.6deg)}40%{transform:translate(7px,-3px) rotate(.5deg)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-1px)}}
+@keyframes ix-python-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ===== стр. 5: три головы ===== */
+.ix-python .head{gap:14px}
+.ix-python .kn{font:400 46px/1 'Rubik Mono One';color:var(--a);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-python .f-ink .kn{-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--ad)}
+.ix-python .f-lime .kn{color:#fff}
+.ix-python .kt{font:400 26px/1.1 'Russo One',sans-serif}
+.ix-python .kp{font-size:18px;line-height:1.5;max-width:560px}
+.ix-python .kp.sm{font-size:17px}
+.ix-python .kp code{font-size:.9em;background:rgba(20,20,20,.08);padding:0 4px}
+.ix-python .f-ink .kp code{background:rgba(255,255,255,.14)}
+.ix-python .hw{font:800 clamp(30px,5vw,44px)/1 var(--mono);color:var(--a);letter-spacing:-.02em}
+.ix-python .hw.lt{color:var(--ink)}
+.ix-python .hw span{border-bottom:5px solid currentColor}
+.ix-python .h3{flex-direction:row;flex-wrap:wrap;gap:22px 30px;align-items:center}
+.ix-python .h3-l{flex:1 1 300px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ix-python .req{flex:1 1 300px;min-width:0;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transform:rotate(1.2deg)}
+.ix-python .req-h{font:400 14px/1 'Russo One';text-transform:uppercase;background:var(--ink);color:#fff;padding:9px 12px}
+.ix-python .req pre{padding:16px 14px 6px;font:800 24px/1.3 var(--mono);overflow-wrap:anywhere;white-space:pre-wrap}
+.ix-python .req-n{padding:6px 14px 16px;font-size:17px;line-height:1.45}
+
+/* ===== стр. 6: рубим головы ===== */
+.ix-python .cutfr{padding:28px}
+.ix-python .cut-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:26px;width:100%;align-items:start}
+.ix-python .arena{position:relative;border:3px dashed transparent;border-radius:24px;padding:22px 14px 14px;transition:border-color .4s,background .4s}
+.ix-python .arena.fenced{border-color:var(--a);background:rgba(168,240,60,.05)}
+.ix-python .fence-l{position:absolute;top:-15px;left:18px;font:700 16px/1 var(--mono);background:var(--a);color:var(--ink);padding:5px 9px;opacity:0;transition:opacity .4s}
+.ix-python .arena.fenced .fence-l{opacity:1}
+.ix-python .arena-svg svg{display:block;width:100%;height:auto;overflow:visible}
+.ix-python .heads-left{text-align:center;font:400 22px/1.2 'Rubik Mono One';color:var(--a);margin-top:4px}
+.ix-python .heads-left.dead{color:#fff}
+.ix-python .cut-sfx{--fs:48px;--sc:#fff;--ss:var(--ad);left:6%;top:24%;opacity:0}
+.ix-python .cut-sfx.on{opacity:1}
+.ix-python.anim .cut-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .cut-side{display:flex;flex-direction:column;gap:18px;align-items:flex-start;min-width:0}
+.ix-python .steps{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.ix-python .steps li{font:400 14px/1 'Russo One';padding:8px 10px;border:2px solid #555;color:#aaa49a}
+.ix-python .steps li.cur{border-color:var(--a);color:var(--a)}
+.ix-python .steps li.done{background:var(--a);border-color:var(--a);color:var(--ink)}
+.ix-python .steps li.done::before{content:"✓ "}
+.ix-python .cut-body{display:flex;flex-direction:column;gap:14px;width:100%;min-height:200px}
+.ix-python .cut-body h3{font:400 24px/1.15 'Russo One';color:var(--a)}
+.ix-python .cut-body p{font-size:18px;line-height:1.45;color:#f4f1e8}
+.ix-python .cut-body p b{color:#fff}
+.ix-python .cut-body code{font-size:.9em;background:rgba(255,255,255,.14);padding:0 4px;overflow-wrap:anywhere}
+.ix-python .cut-body .warn{border-left:6px solid var(--y);padding-left:12px}
+.ix-python .cut-body .warn b{color:var(--y)}
+.ix-python .ct{background:#000;border:2px solid #3a3a3a;padding:12px;font:600 15px/1.55 var(--mono);color:#e8e4d8;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .ct .p{color:#8f8b7d}.ix-python .ct .ok{color:var(--a)}.ix-python .ct .bad{color:#ff8f8f}.ix-python .ct .y{color:var(--y)}
+.ix-python .vs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ix-python .vs>div{padding:12px;border:2px solid var(--a);font-size:16px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.ix-python .vs>div.no{border-color:#ff8f8f}
+.ix-python .vs b{display:block;font:700 18px/1.3 var(--mono);margin-bottom:6px}
+.ix-python .vs .no b{color:#ff8f8f}.ix-python .vs .yes b{color:var(--a)}
+.ix-python .vs ul{padding-left:18px;color:#e8e4d8}
+.ix-python .cut-body .fin{font:400 clamp(24px,4vw,34px)/1.15 'Rubik Mono One';color:var(--a)}
+.ix-python.anim .cut-body>*{animation:ix-python-up .35s ease-out both}
+.ix-python.anim .cut-body>*:nth-child(2){animation-delay:.08s}
+.ix-python.anim .cut-body>*:nth-child(3){animation-delay:.16s}
+.ix-python.anim .cut-body>*:nth-child(4){animation-delay:.24s}
+
+/* ===== стр. 7: eval и секреты ===== */
+.ix-python .evfr,.ix-python .secfr{gap:18px}
+.ix-python .evfr>.bl{align-self:flex-end}
+.ix-python .ev{position:relative;width:100%;max-width:560px;display:flex;flex-direction:column;gap:10px}
+.ix-python .ev-code{background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--a);padding:12px 14px;font:700 17px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .ev-code mark{background:var(--r);color:#fff;padding:0 3px}
+.ix-python .ev-code mark.safe{background:var(--a);color:var(--ink)}
+.ix-python .ev-in{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.ix-python .ev-in span{font-family:'Russo One'}
+.ix-python .ev-in code{font:700 15px/1.4 var(--mono);background:#fff;border:2px solid var(--ink);padding:3px 7px;overflow-wrap:anywhere}
+.ix-python .ev-out{font:600 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;background:#fbf8f0;border:3px solid var(--ink);padding:10px 12px;min-height:3.2em}
+.ix-python .ev-out:empty{display:none}
+.ix-python .ev-out .bad{color:#c4001a;font-weight:800}
+.ix-python .ev-out .ok{color:#2f6b00;font-weight:800}
+.ix-python .ev-sfx{--fs:44px;--sc:#fff;--ss:var(--r);right:-4px;top:-22px;opacity:0}
+.ix-python .ev-sfx.on{opacity:1}
+.ix-python.anim .ev-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .codes{display:flex;flex-direction:column;gap:14px;width:100%}
+.ix-python .code{border:3px solid var(--ink);background:#fff;min-width:0}
+.ix-python .code-h{display:block;font:400 14px/1 'Russo One';text-transform:uppercase;padding:8px 12px;border-bottom:3px solid var(--ink)}
+.ix-python .code.bad .code-h{background:var(--r);color:#fff}
+.ix-python .code.good .code-h{background:var(--a)}
+.ix-python .code pre{padding:12px;font:700 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* ===== битва ===== */
+.ix-python .battle{margin-top:18px;background:var(--ink);color:#fff;padding:22px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--a);background-image:radial-gradient(rgba(168,240,60,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .bt-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.ix-python .bt-name{font:400 18px/1.2 'Russo One';display:flex;align-items:center;gap:10px}
+.ix-python .mini{font:800 16px/1 var(--mono);color:var(--ink);background:var(--a);padding:4px 7px;border-radius:12px 12px 12px 2px}
+.ix-python .bt-turn{font:400 14px/1 'Russo One';background:var(--y);color:var(--ink);padding:6px 10px}
+.ix-python .hp{height:20px;border:3px solid #fff;margin:14px 0 22px;background:#26301a}
+.ix-python .hp i{display:block;height:100%;width:100%;background:var(--a);transition:width .5s ease-out}
+.ix-python .bt-body{display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:relative}
+.ix-python .bt-head{font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em;color:var(--a)}
+.ix-python .bt-move{font:400 23px/1.25 Neucha,cursive}
+.ix-python .bt-opts{display:flex;flex-direction:column;gap:12px;width:100%;max-width:640px}
+.ix-python .opt{min-height:56px;width:100%;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid #fff;font:500 18px/1.35 Rubik;cursor:pointer;border-radius:4px}
+.ix-python .opt:hover{background:#f2ffe0}
+.ix-python .opt[disabled]{opacity:.5;cursor:default;text-decoration:line-through}
+.ix-python .opt.ok{background:var(--a);border-color:var(--a);opacity:1;text-decoration:none}
+.ix-python .fb{font:500 18px/1.4 Rubik;border-left:6px solid var(--a);padding:4px 0 4px 14px;max-width:640px}
+.ix-python .fb[hidden]{display:none}
+.ix-python .fb.miss{border-color:var(--r)}
+.ix-python .fb b{font:400 22px/1 'Rubik Mono One';display:block;margin-bottom:6px;color:var(--a)}
+.ix-python .fb.miss b{color:#ff6b6b;font-size:18px}
+.ix-python .win{font:400 clamp(26px,5vw,40px)/1.15 'Rubik Mono One';color:var(--a)}
+.ix-python .win-s{font-size:20px}
+.ix-python .battle .btn{box-shadow:5px 5px 0 var(--a)}
+
+/* ===== собеседование ===== */
+.ix-python .iv{margin-top:18px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.ix-python .iv-q{font:400 clamp(24px,4vw,32px)/1.25 'Russo One'}
+.ix-python .iv-think{font-size:19px;border-left:6px solid var(--a);padding-left:14px}
+.ix-python .iv-a{display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);padding-top:20px;width:100%}
+.ix-python .iv-a[hidden]{display:none}
+.ix-python .iv-p{font-size:19px;line-height:1.5}
+.ix-python .iv-p b{font:400 20px/1.2 'Russo One';display:block;margin-bottom:2px}
+.ix-python .iv-p code{font-size:.85em;background:#f1eee4;padding:0 4px;white-space:nowrap}
+.ix-python .iv-err{font-size:19px;background:var(--ink);color:#fff;padding:12px 16px}
+.ix-python .iv-err b{color:var(--a);font-weight:600}
+
+/* ===== шпаргалка ===== */
+.ix-python .cheat{list-style:none;margin:18px 0 0;padding:0}
+.ix-python .cheat li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-top:2px solid rgba(20,20,20,.16)}
+.ix-python .cheat li:first-child{border-top:0}
+.ix-python .cn{flex:0 0 auto;width:2.5em;font:400 34px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-python .cheat h3{font:400 21px/1.2 'Russo One'}
+.ix-python .cheat p{font-size:18px;line-height:1.45;margin-top:4px}
+.ix-python .legal{margin-top:40px;font-size:18px;border-left:6px solid var(--a);padding:4px 0 4px 14px}
+.ix-python .end-row{margin-top:36px}
+.ix-python .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--a);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== планшет ===== */
+@media (max-width:900px){
+  .ix-python .run,.ix-python .cut-grid{grid-template-columns:minmax(0,1fr)}
+  .ix-python .arena{max-width:420px;justify-self:center;width:100%}
+}
+/* ===== телефон ===== */
+@media (max-width:700px){
+  .ix-python{--gap:10px}
+  .ix-python .pg{grid-template-columns:minmax(0,1fr)}
+  .ix-python .pn{grid-column:1/-1;margin-left:0 !important}
+  .ix-python .pn>.fr{--lt:0px;--rt:0px;--rb:0px;--lb:0px;padding:30px 16px 34px !important}
+  .ix-python .pn:nth-child(odd)>.fr{--tr:var(--m);--br:var(--m)}
+  .ix-python .pn:nth-child(even)>.fr{--tl:var(--m);--bl:var(--m)}
+  .ix-python .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-python .poster{grid-template-columns:minmax(0,1fr);grid-template-areas:"tag" "name" "snake" "bl";min-height:0;padding-bottom:70px !important;gap:14px}
+  .ix-python .snake{max-width:400px;margin:-6px 0}
+  .ix-python .bl{font-size:22px;max-width:100%}
+  .ix-python .ed-code{font-size:13.5px}
+  .ix-python .ln{padding:0 10px}
+  .ix-python .syn{grid-template-columns:minmax(0,1fr)}
+  .ix-python .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ix-python .t-line{font-size:17px}
+  .ix-python .term,.ix-python .ed{box-shadow:5px 5px 0 var(--a)}
+  .ix-python .run-sfx{--fs:40px;top:-24px;right:-4px}
+  .ix-python .btn{width:100%}
+  .ix-python .sp{padding:92px 16px 120px;min-height:0}
+  .ix-python .fang{height:76px;background:linear-gradient(var(--ink) 0 12px,transparent 12px)}
+  .ix-python .fang::before{inset:10px 0 0}
+  .ix-python .sp-sfx{top:auto;bottom:22px;right:4%;--fs:58px}
+  .ix-python .sp-head{top:96px;right:-8px;width:84px}
+  .ix-python .log .pre{display:none}
+  .ix-python .dict{order:1}.ix-python .out{order:2}.ix-python .logf{order:3}
+  .ix-python .ed{position:relative;top:0}
+  .ix-python .ev-code{font-size:15px}
+  .ix-python .cut-body{min-height:0}
+  .ix-python .ev-in code{font-size:14px}
+  .ix-python .code pre{font-size:14px}
+  .ix-python .sp-card{padding:14px}
+  .ix-python .vs{grid-template-columns:minmax(0,1fr)}
+  .ix-python .battle,.ix-python .iv{padding:20px 16px}
+  .ix-python .cn{font-size:28px}
+  .ix-python .req{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-python *,.ix-python *::before,.ix-python *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое PyPI?</h2><p class="lead"><b>PyPI</b> — Python Package Index — общий открытый склад пакетов Python, откуда pip их скачивает.</p><h2>О чём выпуск</h2><ul><li>Почему безопасники автоматизируют рутину на Python</li><li>Переменные, цикл, условие и словарь на живом скрипте</li><li>Как устроены pip, PyPI и venv</li><li>Три атаки через пакеты и защита от них: проверка имени, хеши, pip-audit</li></ul><h2>Словарик</h2><dl><dt>PyPI</dt><dd>Python Package Index — общий открытый склад пакетов Python, откуда pip их скачивает.</dd><dt>pip</dt><dd>Стандартная программа для установки пакетов Python.</dd><dt>venv</dt><dd>Отдельная папка с пакетами для одного проекта. Разделяет проекты, но не защищает от вредного кода.</dd><dt>Тайпсквоттинг</dt><dd>Пакет с именем, похожим на популярное, рассчитанный на опечатку.</dd><dt>CVE</dt><dd>Общий номер для публично известной уязвимости, например CVE-2018-18074.</dd><dt>SCA</dt><dd>Software Composition Analysis: проверка зависимостей по базе известных уязвимостей. Пример — pip-audit.</dd></dl><h2>Вопрос с собеседования</h2><h3>Как защитить Python-проект от атак через зависимости?</h3><p>Проверять имя и источник пакета: страницу на pypi.org, репозиторий, историю релизов, а внутренние пакеты брать только из внутреннего индекса. Держать отдельный venv на проект, закреплять точные версии с хешами и ставить с --require-hashes. Помнить, что сборка из исходников запускает код с правами пользователя: предпочитать wheel-файлы и ставить зависимости там, где нет секретов. Запускать SCA вроде pip-audit в CI и регулярно обновлять закреплённые версии.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/bash/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №19</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Bash: конвейеры, потоки и скрипты</span></a>
+          
+            <a href="../../vypuski/api/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №16</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Что такое API: клиент, сервер, REST</span></a>
+          
+            <a href="../../vypuski/sql-bazy/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №21</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">SQL для начинающих: SELECT и JOIN</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/bash/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №19 Однострочник</a>
+        <a href="../../vypuski/sql-bazy/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №21 Дроп Таблыч →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fpython%2F&amp;text=Python%20%D0%B4%D0%BB%D1%8F%20%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BF%D0%B5%D1%80%D0%B2%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%2C%20pip%2C%20venv%20%D0%B8%20%D0%B0%D1%82%D0%B0%D0%BA%D0%B8%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D1%8B" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fpython%2F&amp;title=Python%20%D0%B4%D0%BB%D1%8F%20%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BF%D0%B5%D1%80%D0%B2%D1%8B%D0%B9%20%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D1%82%2C%20pip%2C%20venv%20%D0%B8%20%D0%B0%D1%82%D0%B0%D0%BA%D0%B8%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D1%8B" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="20">
+<section class="ix ix-python" data-ix="python" aria-label="Выпуск 20: Python и Змей Пипыч">
+
+<!-- ============ ОБЛОЖКА: ПОСТЕР ЗМЕЯ ============ -->
+<div class="pg" role="group" aria-label="Пролог: Змей Пипыч">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink poster" data-go>
+      <span class="tag">Фундамент · №20</span>
+      <div class="p-name" aria-hidden="true"><span class="p-z">Змей</span><span class="p-p">Пипыч</span></div>
+      <h2 class="vh">Змей Пипыч</h2>
+      <svg class="snake" id="ix-python-snake" viewBox="0 0 600 560" role="img" aria-label="Эмблема: трёхголовый змей из букв. Шеи написаны словами reqeusts, setup.py и ==2.19.1">
+        <defs>
+          <linearGradient id="ix-python-fade" x1="0" y1="560" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#a8f03c" stop-opacity=".28"/>
+            <stop offset=".55" stop-color="#a8f03c" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#a8f03c"/>
+          </linearGradient>
+          <path id="ix-python-coil" d="M70,470 A230,60 0 0,0 530,470"/>
+          <path id="ix-python-coilb" d="M530,470 A230,60 0 0,0 70,470"/>
+          <path id="ix-python-n1" d="M110,132 C118,200 128,262 160,326 C192,392 288,394 300,466"/>
+          <path id="ix-python-n2" d="M300,466 C322,400 282,330 300,250 C314,190 300,142 300,100"/>
+          <path id="ix-python-n3" d="M300,466 C312,394 408,392 440,326 C472,262 482,200 490,132"/>
+        </defs>
+        <g class="s-body">
+          <use href="#ix-python-coilb" class="s-track"/><use href="#ix-python-coil" class="s-track"/>
+          <text class="s-coil"><textPath href="#ix-python-coil">pip install · pip install · pip install · pip install · pip install · <animate attributeName="startOffset" from="-196" to="0" dur="7s" repeatCount="indefinite"/></textPath></text>
+        </g>
+        <g class="s-neck" data-h="1">
+          <use href="#ix-python-n1" class="s-track"/>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n1" startOffset="0">reqeusts reqeusts reqeusts reqeusts reqeusts <animate attributeName="startOffset" from="0" to="-140" dur="3.2s" repeatCount="indefinite"/></textPath></text>
+        </g>
+        <g class="s-neck" data-h="2">
+          <use href="#ix-python-n2" class="s-track"/>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n2" startOffset="0">setup.py setup.py setup.py setup.py setup.py <animate attributeName="startOffset" from="-140" to="0" dur="3.6s" repeatCount="indefinite"/></textPath></text>
+        </g>
+        <g class="s-neck" data-h="3">
+          <use href="#ix-python-n3" class="s-track"/>
+          <text class="s-txt" fill="url(#ix-python-fade)"><textPath href="#ix-python-n3" startOffset="0">==2.19.1 ==2.19.1 ==2.19.1 ==2.19.1 ==2.19.1 <animate attributeName="startOffset" from="-140" to="0" dur="4s" repeatCount="indefinite"/></textPath></text>
+        </g>
+        <g class="s-knot"><rect x="248" y="438" width="104" height="50" rx="25"/><text x="300" y="472">pip</text></g>
+        <g class="s-head" data-h="1" transform="translate(110 132) rotate(-14) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"/><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"/><text class="s-num" y="-11">1</text></g></g>
+        <g class="s-head" data-h="2" transform="translate(300 100) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"/><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"/><text class="s-num" y="-11">2</text></g></g>
+        <g class="s-head" data-h="3" transform="translate(490 132) rotate(14) scale(1.25)"><g class="s-hd"><path class="s-tongue" d="M0,-50 V-66 M0,-66 L-8,-76 M0,-66 L8,-76"/><path class="s-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"/><text class="s-num" y="-11">3</text></g></g>
+      </svg>
+      <div class="bl v"><b class="who g">Змей Пипыч</b>Одна опечатка в pip install — и я у тебя в проекте.</div>
+    </div>
+    <span class="sfx ssh" aria-hidden="true">ШШШ!</span>
+  </div>
+</div>
+
+<!-- ============ СТР. 1 · ПОЧЕМУ PYTHON ============ -->
+<div class="chap"><span class="chap-n">Стр. 1</span><h2 class="chap-t">Почему Python</h2></div>
+<div class="pg" role="group" aria-label="Страница 1: почему Python">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots">
+      <p class="cap">Серверная НИИ. Три часа ночи по логам. Чай в подстаканнике уже остыл.</p>
+      <div class="bl k-b"><b class="who s">Соня</b>Дядя Миша, а почему все безопасники пишут на Python? Это же язык для начинающих.</div>
+      <div class="bl"><b class="who m">Дядя Миша</b>Потому и пишут. Ночью, на усталую голову, код должен читаться как записка, а не как шифровка.</div>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-lime why">
+      <ol class="why-l">
+        <li><b>Читается как текст.</b> Отступы вместо скобок, мало лишних знаков.</li>
+        <li><b>Батарейки в комплекте.</b> Файлы, сеть, JSON, хеши — уже в стандартной библиотеке.</li>
+        <li><b>Готовые инструменты.</b> sqlmap, Volatility, Impacket написаны на Python.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Для чего он безопаснику</span>
+      <h2>Скучное — <em>скрипту.</em></h2>
+      <p>Разобрать тысячу строк лога, сверить список адресов, проверить сто сайтов на свежий сертификат. Человек устаёт и пропускает. Скрипт — нет.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 2 · ПЕРВЫЙ СКРИПТ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 2</span><h2 class="chap-t">Первый скрипт</h2></div>
+<div class="pg" role="group" aria-label="Страница 2: первый скрипт Сони">
+  <div class="pn" style="--span:12">
+    <div class="fr f-dots runfr">
+      <div class="bl k-b"><b class="who s">Соня</b>Кто-то ночью ломится на сервер. Я написала скрипт: он считает неудачные входы по каждому адресу.</div>
+      <div class="run" id="ix-python-run">
+        <div class="ed">
+          <div class="ed-bar"><span class="ed-f">fails.py</span><span class="ed-l">14 строк</span></div>
+          <pre class="ed-code" id="ix-python-code"><code><span class="ln" data-l="1" data-k="var"><span class="vr">LIMIT</span> = <span class="n">3</span></span><span class="ln" data-l="2" data-k="dict"><span class="vr">counts</span> = {}</span><span class="ln" data-l="3"> </span><span class="ln" data-l="4" data-k="loop"><span class="kw">for</span> line <span class="kw">in</span> <span class="fn">open</span>(<span class="st">"auth.log"</span>):</span><span class="ln" data-l="5" data-k="if">    <span class="kw">if</span> <span class="st">"Failed password"</span> <span class="kw">in</span> line:</span><span class="ln c" data-l="6">        <span class="cm"># IP — 4-е слово с конца</span></span><span class="ln" data-l="7">        ip = line.split()[-<span class="n">4</span>]</span><span class="ln" data-l="8" data-k="if">        <span class="kw">if</span> ip <span class="kw">not in</span> counts:</span><span class="ln" data-l="9" data-k="dict">            counts[ip] = <span class="n">0</span></span><span class="ln" data-l="10" data-k="dict">        counts[ip] += <span class="n">1</span></span><span class="ln" data-l="11"> </span><span class="ln" data-l="12" data-k="loop"><span class="kw">for</span> ip, n <span class="kw">in</span> counts.items():</span><span class="ln" data-l="13" data-k="if">    <span class="kw">if</span> n &gt;= <span class="vr">LIMIT</span>:</span><span class="ln" data-l="14">        <span class="fn">print</span>(<span class="st">"ТРЕВОГА:"</span>, ip, n)</span></code></pre>
+        </div>
+        <div class="side">
+          <div class="logf">
+            <p class="side-h">auth.log <small>8 строк</small></p>
+            <ol class="log" id="ix-python-log"></ol>
+          </div>
+          <div class="dict">
+            <p class="side-h">counts <small>словарь в памяти</small></p>
+            <pre class="dict-v" id="ix-python-dict" aria-live="off">{}</pre>
+          </div>
+          <div class="out">
+            <p class="out-cmd">$ python3 fails.py</p>
+            <pre class="out-v" id="ix-python-out" aria-live="polite"></pre>
+          </div>
+        </div>
+        <span class="sfx run-sfx" id="ix-python-runsfx" aria-hidden="true"></span>
+      </div>
+      <div class="dock">
+        <p class="say" id="ix-python-runsay" aria-live="polite">Скрипт прочитает журнал входов и сосчитает неудачи. Запусти его.</p>
+        <button type="button" class="btn" id="ix-python-runbtn">Запустить скрипт</button>
+      </div>
+      <ul class="syn" id="ix-python-syn" aria-label="Что есть в этом скрипте">
+        <li data-k="var"><code>LIMIT = 3</code><span><b>Переменная.</b> Имя для значения. Поменяешь порог в одном месте — поменяется везде.</span></li>
+        <li data-k="loop"><code>for … in …:</code><span><b>Цикл.</b> Повтори блок для каждой строки файла. Блок — всё, что с отступом.</span></li>
+        <li data-k="if"><code>if …:</code><span><b>Условие.</b> Выполни блок, только если проверка верна.</span></li>
+        <li data-k="dict"><code>counts[ip] += 1</code><span><b>Словарь-счётчик.</b> Ключ — адрес, значение — сколько раз он ошибся.</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 3 · PIP И PYPI ============ -->
+<div class="chap"><span class="chap-n">Стр. 3</span><h2 class="chap-t">Нужна библиотека</h2></div>
+<div class="pg" role="group" aria-label="Страница 3: pip, PyPI и venv">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-dots">
+      <div class="bl k-b"><b class="who s">Соня</b>Хочу, чтобы тревога сама падала в чат команды. Писать отправку с нуля?</div>
+      <div class="bl"><b class="who m">Дядя Миша</b>Возьми библиотеку requests. Её ставят командой <code>pip install</code>.</div>
+      <p class="big sm"><b>pip</b> скачивает пакеты с <b>PyPI</b> — общего склада Python, где больше полумиллиона проектов.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-ink">
+      <p class="big sm on-ink">Но сначала — <b>venv</b>: своя коробка пакетов для этого проекта.</p>
+      <pre class="mini-t"><span class="mt-p">$</span> python3 -m venv .venv
+<span class="mt-p">$</span> source .venv/bin/activate
+<span class="mt-v">(.venv)</span> <span class="mt-p">$</span> <span class="caret-i" aria-hidden="true"></span></pre>
+      <p class="note-ink">В Windows: <code>.venv\Scripts\activate</code></p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-yel rule">
+      <span class="lab">Одна деталь, о которой молчат</span>
+      <h2>Склад <em>открытый.</em></h2>
+      <p>Опубликовать пакет на PyPI может любой, кто завёл аккаунт. Модераторы удаляют вредные пакеты, но уже после того, как их кто-то нашёл. Имя, которое ты набираешь, — это всё, что отделяет тебя от чужого кода.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 4 · УСТАНОВКА (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 4</span><h2 class="chap-t">pip install</h2></div>
+<div class="pg" role="group" aria-label="Страница 4: установка пакета">
+  <div class="pn" style="--span:12">
+    <div class="fr f-speed instfr">
+      <p class="cap w">Твоя очередь. Три часа ночи, глаза слипаются. Допиши имя пакета.</p>
+      <div class="term" id="ix-python-term">
+        <div class="t-bar"><i></i><i></i><i></i><span>терминал · проект fails</span></div>
+        <pre class="t-out" id="ix-python-tout"></pre>
+        <p class="t-line"><span class="t-v">(.venv)</span> <span class="t-p">$</span> <span id="ix-python-tcmd">pip install </span><span class="t-name" id="ix-python-tname"></span><span class="caret" aria-hidden="true"></span></p>
+      </div>
+      <div class="picks" id="ix-python-picks" role="group" aria-label="Какое имя набрать">
+        <button type="button" class="pick" data-n="reqeusts" aria-pressed="false">reqeusts</button>
+        <button type="button" class="pick" data-n="requets" aria-pressed="false">requets</button>
+        <button type="button" class="pick" data-n="requests" aria-pressed="false">requests</button>
+        <button type="button" class="pick" data-n="requestss" aria-pressed="false">requestss</button>
+      </div>
+      <div class="dock">
+        <div class="bl dock-bl" id="ix-python-isay" aria-live="polite"><b class="who m">Дядя Миша</b><span>Выбери, что набрать. Все четыре варианта выглядят знакомо — в этом и подвох.</span></div>
+        <button type="button" class="btn" id="ix-python-ibtn" disabled>Нажать Enter</button>
+      </div>
+      <p class="fine">Всё понарошку: двойники выдуманы для комикса, страница ничего не скачивает и не запускает.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СПЛЭШ: УКУС ============ -->
+<div class="splash" id="ix-python-splash" hidden>
+  <div class="sp">
+    <div class="sp-burst" aria-hidden="true"></div>
+    <div class="fang top" aria-hidden="true"></div>
+    <div class="fang bot" aria-hidden="true"></div>
+    <svg class="sp-head" viewBox="-40 -90 80 110" aria-hidden="true"><path class="s-tongue" d="M0,-50 V-68 M0,-68 L-9,-80 M0,-68 L9,-80"/><path class="sph-skull" d="M-22,8 L-27,-18 L-15,-42 L0,-52 L15,-42 L27,-18 L22,8 Z"/><text class="sph-num" y="-18" dominant-baseline="central" transform="rotate(130 0 -18)">1</text></svg>
+    <div class="sp-txt">
+      <span class="sp-who">Голова №1 · опечатка</span>
+      <h2 aria-label="Ты сама меня позвала." class="sp-h" id="ix-python-sph" tabindex="-1"><span>Ты сама</span> <span>меня</span> <span>позвала.</span></h2>
+    </div>
+    <p class="sp-name" aria-label="Набрано: reqeusts. Нужно: requests"><span class="sp-bad" id="ix-python-spbad">re<mark>qe</mark>usts</span><span class="sp-vs">а нужно</span><span class="sp-ok">re<mark>qu</mark>ests</span></p>
+    <div class="sp-card">
+      <pre class="sp-log" id="ix-python-splog"></pre>
+      <p class="sp-k"><span class="hb">Голова №2</span> Пока ты ждала, скрипт установки работал с твоими правами:</p>
+      <ol class="sp-did">
+        <li>прочитал переменные окружения — там лежал токен чата;</li>
+        <li>заглянул в папку <code>~/.ssh</code> с ключами от серверов;</li>
+        <li>отправил всё на чужой сервер;</li>
+        <li>поставил настоящий requests — чтобы скрипт работал и ты ничего не заметила.</li>
+      </ol>
+    </div>
+    <span class="sfx sp-sfx" aria-hidden="true">ЦАП!</span>
+  </div>
+  <p class="sp-after">pip выполнил ровно то, что ты набрала. Опечатка — это тоже команда.</p>
+  <div class="ir">
+    <button type="button" class="btn" id="ix-python-irbtn" aria-expanded="false" aria-controls="ix-python-ir">Что теперь делать?</button>
+    <div class="ir-box" id="ix-python-ir" hidden>
+      <div class="bl"><b class="who m">Дядя Миша</b>Удалить .venv мало: токен уже ушёл. Действуем по порядку.</div>
+      <ol class="ir-l">
+        <li><b>Отозвать токен</b> чата и выпустить новый. Старый больше не твой.</li>
+        <li><b>Сменить SSH-ключи</b>, которые лежали на этой машине.</li>
+        <li><b>Снести пакет и всю .venv</b>, собрать окружение заново.</li>
+        <li><b>Сказать старшему сразу.</b> Ошибиться не стыдно. Стыдно молчать.</li>
+      </ol>
+      <button type="button" class="btn" id="ix-python-again">Набрать имя заново</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 5 · ТРИ ГОЛОВЫ ============ -->
+<div class="chap"><span class="chap-n">Стр. 5</span><h2 class="chap-t vi">Три головы</h2></div>
+<div class="pg" role="group" aria-label="Страница 5: три головы Змея">
+  <div class="pn dR" style="--span:6">
+    <div class="fr f-ink head">
+      <span class="kn">01</span>
+      <h3 class="kt">Опечатка</h3>
+      <p class="hw"><span>reqeusts</span></p>
+      <p class="kp">Злодей регистрирует имя, похожее на популярное, и ждёт, когда палец дрогнет. Это называют <b>тайпсквоттингом</b>. В марте 2024 года PyPI даже временно закрывал регистрацию новых проектов, отбиваясь от волны таких двойников.</p>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:6">
+    <div class="fr f-dots head">
+      <span class="kn">02</span>
+      <h3 class="kt">Скрипт установки</h3>
+      <p class="hw lt"><span>setup.py</span></p>
+      <p class="kp">Если пакет приходит исходниками, при установке pip запускает его сборку — обычный Python-код с твоими правами. Вредный код не ждёт <code>import</code>: он срабатывает уже на <code>pip install</code>.</p>
+    </div>
+  </div>
+  <div class="pn" style="--span:12">
+    <div class="fr f-lime head h3">
+      <div class="h3-l">
+        <span class="kn">03</span>
+        <h3 class="kt">Старьё с CVE</h3>
+        <p class="kp">Самая тихая голова. Ничего не надо красть — достаточно забыть обновиться. Дядя Миша открыл старый проект, а там:</p>
+      </div>
+      <div class="req">
+        <p class="req-h">requirements.txt · 2018 год</p>
+        <pre><code>requests==2.19.1</code></pre>
+        <p class="req-n">В этой версии давно нашли дыру <b>CVE-2018-18074</b>: при переадресации с https на http requests отправлял заголовок Authorization с токеном по открытому http — тому же сайту, но без шифрования. Исправлено в 2.20.0.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 6 · РУБИМ ГОЛОВЫ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 6</span><h2 class="chap-t">Рубим головы</h2></div>
+<div class="pg" role="group" aria-label="Страница 6: защита">
+  <div class="pn" style="--span:12">
+    <div class="fr f-ink cutfr">
+      <div class="cut-grid">
+        <div class="arena" id="ix-python-arena">
+          <span class="fence-l" aria-hidden="true">.venv</span>
+          <div class="arena-svg" id="ix-python-arenasvg" aria-hidden="true"></div>
+          <p class="heads-left" id="ix-python-hl" aria-live="polite">Голов: 3</p>
+          <span class="sfx cut-sfx" id="ix-python-cutsfx" aria-hidden="true"></span>
+        </div>
+        <div class="cut-side">
+          <ol class="steps" id="ix-python-steps" aria-label="Защита по шагам">
+            <li data-s="0">venv</li><li data-s="1">Имя и источник</li><li data-s="2">Версии и хеши</li><li data-s="3">Аудит</li>
+          </ol>
+          <div class="cut-body" id="ix-python-cutbody" aria-live="polite"></div>
+          <button type="button" class="btn" id="ix-python-cutbtn">Сначала загон: создать venv</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ СТР. 7 · УКУСЫ ОТ СЕБЯ (интерактив) ============ -->
+<div class="chap"><span class="chap-n">Стр. 7</span><h2 class="chap-t">Укусы от себя</h2></div>
+<div class="pg" role="group" aria-label="Страница 7: eval и секреты в коде">
+  <div class="pn dR" style="--span:7">
+    <div class="fr f-dots evfr">
+      <div class="bl k-b"><b class="who s">Соня</b>Хочу, чтобы порог LIMIT вводили с клавиатуры. Можно же <code>eval(input())</code>?</div>
+      <div class="ev" id="ix-python-ev">
+        <pre class="ev-code" id="ix-python-evcode"><code>LIMIT = <mark id="ix-python-evfn">eval</mark>(<span class="fn">input</span>(<span class="st">"Порог: "</span>))</code></pre>
+        <p class="ev-in"><span>Кто-то ввёл:</span> <code id="ix-python-evin">__import__("os").listdir(".ssh")</code></p>
+        <pre class="ev-out" id="ix-python-evout" aria-live="polite"></pre>
+        <span class="sfx ev-sfx" id="ix-python-evsfx" aria-hidden="true"></span>
+      </div>
+      <p class="say" id="ix-python-evsay" aria-live="polite">Вместо числа пришла строка с кодом. Посмотрим, что сделает eval.</p>
+      <button type="button" class="btn" id="ix-python-evbtn">Передать строку в eval</button>
+    </div>
+  </div>
+  <div class="pn dL" style="--span:5">
+    <div class="fr f-yel secfr">
+      <div class="bl"><b class="who m">Дядя Миша</b>И ещё. Токен чата в коде не пиши. Код уезжает в git, в скриншоты, в чат «глянь, что не так».</div>
+      <div class="codes">
+        <div class="code bad"><span class="code-h">Так нельзя</span><pre><code>TOKEN = "7312:AAHk9x…"</code></pre></div>
+        <div class="code good"><span class="code-h">Так правильно</span><pre><code>import os
+TOKEN = os.environ["CHAT_TOKEN"]</code></pre></div>
+      </div>
+      <p class="kp sm">Токен живёт в переменной окружения. Нет переменной — скрипт честно падает, а не работает с чужим ключом.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div class="chap"><span class="chap-n">Финал</span><h2 class="chap-t vi">Битва со Змеем</h2></div>
+<div class="battle" id="ix-python-battle">
+  <div class="bt-top">
+    <span class="bt-name"><span class="mini" aria-hidden="true">pip</span> Змей Пипыч</span>
+    <span class="bt-turn" id="ix-python-turn">Ход 1 из 3</span>
+  </div>
+  <div class="hp" role="progressbar" aria-label="Здоровье Змея Пипыча" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="ix-python-hp"><i id="ix-python-hpbar"></i></div>
+  <div class="bt-body" id="ix-python-bt"></div>
+</div>
+
+<!-- ============ СОБЕСЕДОВАНИЕ ============ -->
+<div class="chap"><span class="chap-n">Junior AppSec</span><h2 class="chap-t">Вопрос с собеседования</h2></div>
+<div class="iv">
+  <p class="iv-q">Как защитить Python-проект от атак через зависимости?</p>
+  <div class="iv-think"><b>Подумай сам.</b> Подсказка: вспомни три головы Пипыча — откуда приходит пакет, что он делает при установке и сколько ему лет.</div>
+  <button type="button" class="btn" id="ix-python-ivb" aria-expanded="false" aria-controls="ix-python-iva">Показать сильный ответ</button>
+  <div class="iv-a" id="ix-python-iva" hidden>
+    <div class="iv-p"><b>Откуда пакет.</b> Проверяю имя и источник: страницу на pypi.org, ссылку на репозиторий, историю релизов. Внутренние пакеты беру только из внутреннего индекса, иначе можно попасть на dependency confusion.</div>
+    <div class="iv-p"><b>Воспроизводимость.</b> Отдельный venv на проект, точные версии и хеши в requirements.txt, установка с <code>--require-hashes</code>. Файл с хешами генерирую инструментом, например pip-compile.</div>
+    <div class="iv-p"><b>Код при установке.</b> Сборка из исходников запускает код с правами пользователя. Предпочитаю готовые wheel-файлы и ставлю зависимости в CI или контейнере, где нет секретов.</div>
+    <div class="iv-p"><b>Известные уязвимости.</b> SCA в CI: pip-audit или Dependabot. Закреплённые версии регулярно обновляю, а не забываю на годы.</div>
+    <p class="iv-err"><b>Ошибка новичка:</b> «у меня venv, значит, безопасно» или «версия закреплена — значит, защищён навсегда».</p>
+  </div>
+</div>
+
+<!-- ============ ШПАРГАЛКА ============ -->
+<div class="chap"><span class="chap-n">Шпаргалка</span><h2 class="chap-t">Что важно знать</h2></div>
+<ol class="cheat">
+  <li><span class="cn">01</span><div><h3>Python — язык автоматизации</h3><p>Читается как текст, а стандартная библиотека умеет почти всё нужное.</p></div></li>
+  <li><span class="cn">02</span><div><h3>Четыре кирпича</h3><p>Переменная, цикл, условие и словарь — этого хватит на первый полезный скрипт.</p></div></li>
+  <li><span class="cn">03</span><div><h3>pip берёт с PyPI</h3><p>Склад открытый: публиковать туда может любой.</p></div></li>
+  <li><span class="cn">04</span><div><h3>Опечатка — чужой код</h3><p>Проверяй имя, автора и ссылку на репозиторий до установки.</p></div></li>
+  <li><span class="cn">05</span><div><h3>venv — порядок, не песочница</h3><p>Он разделяет пакеты проектов, но вредный код внутри работает с твоими правами.</p></div></li>
+  <li><span class="cn">06</span><div><h3>Версии, хеши, аудит</h3><p>requirements.txt с хешами плюс pip-audit — и не забывай обновляться.</p></div></li>
+  <li><span class="cn">07</span><div><h3>Никакого eval() и секретов в коде</h3><p>Ввод превращай через int() или json.loads, токены держи в переменных окружения.</p></div></li>
+</ol>
+
+<p class="legal">Тренируйся легально: пиши скрипты на своих логах и задачах <b>picoCTF</b> (раздел General Skills), а веб-дыры ищи в <b>PortSwigger Web Security Academy</b> и <b>OWASP Juice Shop</b>. Чужие серверы и чужие пакеты трогать нельзя.</p>
+<div class="end-row"><span class="end">Конец выпуска №20</span></div>
+</section>
+
+<style>
+.ix-python{--ink:#141414;--paper:#fff7e3;--y:#ffd60a;--a:#a8f03c;--ad:#2f5200;--c:#19c3ff;--g:#2ee59d;--r:#ff3b3b;--k:26px;--m:18px;--gap:12px;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  position:relative;color:var(--ink);font:400 18px/1.5 Rubik,system-ui,sans-serif;overflow-x:clip}
+.ix-python *,.ix-python *::before,.ix-python *::after{box-sizing:border-box}
+.ix-python p{margin:0}
+.ix-python h2,.ix-python h3{margin:0;font-weight:400}
+.ix-python ol,.ix-python ul{margin:0}
+.ix-python :focus-visible{outline:4px solid var(--c);outline-offset:3px}
+.ix-python code,.ix-python pre{font-family:var(--mono)}
+.ix-python pre{margin:0}
+.ix-python .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* главы */
+.ix-python .chap{display:flex;align-items:center;gap:14px;margin:60px 0 0;flex-wrap:wrap}
+.ix-python .chap-n{font:400 15px/1 'Russo One',sans-serif;background:var(--ink);color:var(--a);padding:8px 12px;transform:rotate(-3deg)}
+.ix-python .chap-t{font:400 clamp(27px,5vw,40px)/1.12 'Rubik Mono One',sans-serif;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-python .chap-t.vi{color:var(--a)}
+
+/* страницы и панели */
+.ix-python .pg{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);background:var(--ink);padding:var(--gap);margin-top:18px;box-shadow:10px 10px 0 rgba(20,20,20,.18)}
+.ix-python .pn{position:relative;grid-column:span var(--span,12);min-width:0;display:flex}
+.ix-python .fr{position:relative;flex:1;min-width:0;background:#fff;overflow:hidden;padding:26px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+  --lt:0px;--rt:0px;--rb:0px;--lb:0px;--tl:0px;--tr:0px;--br:0px;--bl:0px;
+  clip-path:polygon(var(--lt) var(--tl),calc(100% - var(--rt)) var(--tr),calc(100% - var(--rb)) calc(100% - var(--br)),var(--lb) calc(100% - var(--bl)))}
+.ix-python .dR>.fr{--rb:var(--k);padding-right:calc(26px + var(--k))}
+.ix-python .dL{margin-left:calc(-1 * var(--k))}
+.ix-python .dL>.fr{--lt:var(--k);padding-left:calc(26px + var(--k))}
+.ix-python .f-dots{background-color:#fff;background-image:radial-gradient(rgba(20,20,20,.1) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .f-yel{background-color:var(--y);background-image:radial-gradient(rgba(20,20,20,.13) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-python .f-lime{background-color:var(--a);background-image:radial-gradient(rgba(20,20,20,.14) 1.6px,transparent 2.1px);background-size:10px 10px}
+.ix-python .f-ink{background-color:var(--ink);color:#fff;background-image:radial-gradient(rgba(168,240,60,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .f-speed{background-color:#fff;background-image:repeating-linear-gradient(-6deg,transparent 0 22px,rgba(20,20,20,.06) 22px 24px)}
+
+/* SFX, плашки, пузыри */
+.ix-python .sfx{position:absolute;z-index:6;pointer-events:none;font:400 var(--fs,60px)/1 'Rubik Mono One',sans-serif;color:var(--sc,var(--a));-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ss,var(--ink));transform:rotate(var(--rot,-10deg));white-space:nowrap;letter-spacing:-.03em}
+.ix-python .cap{display:inline-block;background:var(--y);border:3px solid var(--ink);padding:8px 12px 9px;font:400 17px/1.3 'Russo One',sans-serif;box-shadow:3px 3px 0 var(--ink);max-width:460px}
+.ix-python .cap.w{background:#fff}
+.ix-python .big{font:500 22px/1.35 Rubik,sans-serif;max-width:520px}
+.ix-python .big.sm{font-size:20px}
+.ix-python .big b{white-space:nowrap;background:var(--ink);color:var(--a);padding:0 6px;font-weight:600}
+.ix-python .big.on-ink b{background:var(--a);color:var(--ink)}
+.ix-python .bl{position:relative;z-index:3;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:9px 18px 12px;font:400 23px/1.22 Neucha,cursive;max-width:440px;box-shadow:3px 3px 0 var(--ink)}
+.ix-python .bl::after{content:"";position:absolute;left:var(--tx,34px);bottom:-13px;width:20px;height:20px;background:inherit;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(14deg,14deg)}
+.ix-python .bl code{font-size:.78em;background:#f1eee4;padding:0 4px;border-radius:3px;white-space:nowrap}
+.ix-python .bl.v{background:#1b2410;color:#fff;border-color:var(--a);box-shadow:4px 4px 0 var(--a)}
+.ix-python .bl.v::after{border-color:var(--a)}
+.ix-python .bl.k-b{align-self:flex-end;--tx:auto}
+.ix-python .bl.k-b::after{left:auto;right:34px}
+.ix-python .who{display:block;font:400 12px/1.3 'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.07em;color:#4a4438;margin-bottom:2px}
+.ix-python .who::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;background:var(--dot,#ccc);border:2px solid currentColor}
+.ix-python .who.m{--dot:var(--y)}.ix-python .who.s{--dot:var(--a)}
+.ix-python .bl.v .who,.ix-python .who.g{color:var(--a);--dot:var(--a)}
+.ix-python .tag{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;background:var(--a);color:var(--ink);padding:8px 12px;transform:rotate(-2deg);border:2px solid #fff}
+.ix-python .say{font:500 19px/1.4 Rubik;border-left:6px solid var(--a);padding:2px 0 2px 14px;max-width:640px;min-height:2.8em}
+.ix-python .btn{min-height:56px;padding:0 24px;background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:400 18px/1.2 'Russo One',sans-serif;cursor:pointer;border-radius:4px;text-align:center}
+.ix-python .btn:hover{background:#ffe14d}
+.ix-python .btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.ix-python .btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.ix-python .btn[hidden]{display:none}
+.ix-python .f-ink .btn{box-shadow:5px 5px 0 var(--a);border-color:#fff}
+.ix-python .fine{font-size:15px;color:#5b5446;max-width:640px}
+.ix-python .dock{display:flex;flex-direction:column;align-items:flex-start;gap:20px;max-width:640px;width:100%}
+.ix-python .dock-bl{max-width:100%;min-height:3.4em;padding-top:16px}
+.ix-python .dock-bl::after{bottom:auto;top:-13px;transform:rotate(225deg) skew(14deg,14deg)}
+
+/* ===== постер змея ===== */
+.ix-python .poster{min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"tag snake" "name snake" "bl snake";align-items:start;align-content:center;gap:18px 20px;padding:40px 30px 64px}
+.ix-python .poster .tag{grid-area:tag;justify-self:start}
+.ix-python .p-name{grid-area:name;display:flex;flex-direction:column;line-height:.92}
+.ix-python .p-z{font:400 clamp(28px,4.4vw,40px)/1 'Russo One',sans-serif;color:#fff;letter-spacing:.04em;margin-left:.1em}
+.ix-python .p-p{font:400 clamp(50px,9vw,92px)/1 'Rubik Mono One',sans-serif;color:var(--a);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ad),-1px -1px 0 rgba(255,255,255,.15);letter-spacing:-.04em}
+.ix-python .poster .bl{grid-area:bl;justify-self:start;max-width:360px}
+.ix-python .snake{grid-area:snake;width:100%;max-width:560px;height:auto;justify-self:center;align-self:center;overflow:visible}
+.ix-python .s-track{fill:none;stroke:rgba(168,240,60,.1);stroke-width:40;stroke-linecap:round}
+.ix-python .s-body .s-track{stroke-width:30;stroke:rgba(168,240,60,.06)}
+.ix-python .s-txt{font:700 26px/1 var(--mono);letter-spacing:.02em}
+.ix-python .s-coil{font:600 19px/1 var(--mono);fill:rgba(168,240,60,.42)}
+.ix-python .s-skull{fill:var(--a);stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.ix-python .s-num{font:400 19px/1 'Rubik Mono One',sans-serif;fill:var(--ink);text-anchor:middle}
+.ix-python .s-knot rect{fill:var(--a);stroke:var(--ink);stroke-width:3}
+.ix-python .s-knot text{font:400 22px/1 'Rubik Mono One',sans-serif;fill:var(--ink);text-anchor:middle}
+.ix-python .s-tongue{fill:none;stroke:var(--r);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.ix-python .s-hd,.ix-python .s-neck{transform-box:fill-box;transform-origin:50% 100%;transition:transform .55s cubic-bezier(.5,-0.4,.7,1),opacity .5s}
+.ix-python .sfx.ssh{--fs:clamp(54px,11vw,100px);--rot:-9deg;--ss:var(--ad);right:4%;bottom:12px}
+.ix-python.anim .s-hd{animation:ix-python-bob 2.6s ease-in-out infinite}
+.ix-python.anim .s-head[data-h="2"] .s-hd{animation-delay:-.9s}
+.ix-python.anim .s-head[data-h="3"] .s-hd{animation-delay:-1.7s}
+.ix-python.anim .s-tongue{animation:ix-python-flick 1.8s steps(1) infinite}
+.ix-python.anim .sfx.ssh{opacity:0}
+.ix-python.anim .poster.go+.sfx.ssh{animation:ix-python-pop .5s cubic-bezier(.2,1.7,.4,1) .6s both}
+.ix-python.anim .poster.go .p-p{animation:ix-python-slam .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes ix-python-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes ix-python-flick{0%{opacity:1}45%{opacity:0}60%{opacity:1}}
+@keyframes ix-python-pop{from{opacity:0;transform:rotate(-30deg) scale(2.6)}to{opacity:1;transform:rotate(var(--rot,-10deg)) scale(1)}}
+@keyframes ix-python-slam{from{opacity:0;transform:scale(1.8) translateY(-10px)}to{opacity:1;transform:none}}
+
+/* срубленные головы */
+.ix-python .s-head.cut .s-hd{transform:translate(0,70px) rotate(75deg);opacity:0}
+.ix-python .s-neck.cut{opacity:.16}
+
+/* ===== стр. 1 ===== */
+.ix-python .why{justify-content:center}
+.ix-python .why-l{list-style:none;padding:0;display:flex;flex-direction:column;gap:16px;counter-reset:w}
+.ix-python .why-l li{position:relative;padding-left:48px;font-size:18px;line-height:1.4;counter-increment:w}
+.ix-python .why-l li::before{content:counter(w);position:absolute;left:0;top:-2px;width:34px;height:34px;display:grid;place-items:center;background:var(--ink);color:var(--a);font:400 18px/1 'Rubik Mono One'}
+.ix-python .why-l b{display:block;font:400 20px/1.2 'Russo One'}
+.ix-python .rule{padding:34px 30px !important}
+.ix-python .rule .lab{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.1em;color:var(--a);background:var(--ink);padding:7px 10px;transform:rotate(-2deg)}
+.ix-python .rule h2{font:400 clamp(26px,4.6vw,46px)/1.15 'Rubik Mono One'}
+.ix-python .rule h2 em{font-style:normal;color:var(--a);background:var(--ink);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ix-python .rule p{font-size:18px;max-width:680px}
+
+/* ===== стр. 2: запуск скрипта ===== */
+.ix-python .runfr{gap:22px;align-items:stretch}
+.ix-python .runfr>.bl{align-self:flex-end}
+.ix-python .run{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:16px;align-items:start}
+.ix-python .ed{position:sticky;top:16px;background:var(--ink);color:#f4f1e8;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--a);min-width:0}
+.ix-python .ed-bar{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;border-bottom:2px solid #333;font:400 14px/1.2 'Russo One'}
+.ix-python .ed-f{color:var(--a)}
+.ix-python .ed-l{color:#9a9585}
+.ix-python .ed-code{padding:12px 0;font:600 15px/1.6 var(--mono);overflow-x:auto;white-space:pre}
+.ix-python .ed-code code{display:block;min-width:max-content}
+.ix-python .ln{display:block;padding:0 14px;min-height:1.6em;border-left:4px solid transparent}
+.ix-python .ln.on{background:rgba(168,240,60,.2);border-left-color:var(--a)}
+.ix-python .ln.hl{background:rgba(255,214,10,.16);border-left-color:var(--y)}
+.ix-python .kw{color:var(--a)}
+.ix-python .st{color:var(--y)}
+.ix-python .cm{color:#8f8b7d;font-weight:400}
+.ix-python .vr{color:#fff;font-weight:800}
+.ix-python .n,.ix-python .fn{color:#fff}
+.ix-python .side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ix-python .side-h{font:400 15px/1.2 'Russo One';display:flex;align-items:baseline;gap:8px}
+.ix-python .side-h small{font:400 14px Rubik;color:#6b6458}
+.ix-python .log{list-style:none;padding:0;margin-top:6px;border:3px solid var(--ink);background:#fbf8f0}
+.ix-python .log li{font:500 13px/1.45 var(--mono);padding:6px 10px;border-top:1px solid rgba(20,20,20,.12);overflow-wrap:anywhere;transition:background .12s}
+.ix-python .log li:first-child{border-top:0}
+.ix-python .log .pre{color:#857e6f}
+.ix-python .log li.on{background:#efffd6;box-shadow:inset 5px 0 0 var(--ink)}
+.ix-python .log li.skip{color:#9b9484}
+.ix-python .log li.fail .msg{font-weight:700}
+.ix-python .log mark{background:transparent;color:inherit;padding:0 2px}
+.ix-python .log li.got mark{background:var(--a);color:var(--ink)}
+.ix-python .dict-v{margin-top:6px;border:3px solid var(--ink);background:#fff;padding:10px 12px;font:700 16px/1.5 var(--mono);min-height:3.2em;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .dict-v .k{color:#5a7f00}
+.ix-python .dict-v .flash{background:var(--a);color:var(--ink)}
+.ix-python .out{background:var(--ink);color:#fff;border:3px solid var(--ink);padding:10px 12px;min-height:84px}
+.ix-python .out-cmd{font:600 14px/1.4 var(--mono);color:#9a9585}
+.ix-python .out-v{font:700 16px/1.45 var(--mono);color:var(--a);white-space:pre-wrap;overflow-wrap:anywhere;min-height:1.45em}
+.ix-python .out-v .alarm{color:var(--ink);background:var(--a);padding:1px 6px}
+.ix-python .run-sfx{--fs:50px;right:-8px;bottom:-26px;opacity:0}
+.ix-python .run-sfx.on{opacity:1}
+.ix-python.anim .run-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .syn{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 26px;width:100%}
+.ix-python .syn li{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:2px solid rgba(20,20,20,.16);font-size:18px;line-height:1.4;outline-offset:4px}
+.ix-python .syn code{align-self:flex-start;font:700 16px/1.3 var(--mono);background:var(--ink);color:var(--a);padding:4px 8px}
+.ix-python .syn b{font:400 19px/1.2 'Russo One'}
+
+/* ===== стр. 3 ===== */
+.ix-python .mini-t{width:100%;background:#000;border:2px solid var(--a);padding:14px;font:600 16px/1.7 var(--mono);color:#fff;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .mt-p{color:#9a9585}
+.ix-python .mt-v{color:var(--a)}
+.ix-python .caret-i{display:inline-block;width:.6em;height:1.1em;vertical-align:-.15em;background:var(--a)}
+.ix-python .note-ink{font-size:16px;color:#cfcabb}
+.ix-python .note-ink code{color:#fff}
+
+/* ===== стр. 4: терминал ===== */
+.ix-python .instfr{gap:22px;align-items:stretch}
+.ix-python .instfr>.cap{align-self:flex-start}
+.ix-python .term{background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--a);max-width:680px;width:100%}
+.ix-python .t-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:2px solid #333;font:400 14px/1.2 'Russo One';color:#9a9585}
+.ix-python .t-bar i{width:11px;height:11px;border-radius:50%;background:#444}
+.ix-python .t-bar i:first-child{background:var(--r)}
+.ix-python .t-bar span{margin-left:6px}
+.ix-python .t-out{padding:12px 14px 0;font:600 15px/1.55 var(--mono);color:#cfcabb;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .t-out:empty{display:none}
+.ix-python .t-out .ok{color:var(--a)}
+.ix-python .t-out .warn{color:var(--y)}
+.ix-python .t-out .bad{color:#ff8f8f}
+.ix-python .t-line{padding:12px 14px 14px;font:700 19px/1.4 var(--mono);overflow-wrap:anywhere}
+.ix-python .t-v{color:var(--a)}
+.ix-python .t-p{color:#9a9585}
+.ix-python .t-name{color:var(--y)}
+.ix-python .caret{display:inline-block;width:.55em;height:1.05em;margin-left:2px;vertical-align:-.15em;background:#fff}
+.ix-python.anim .caret{animation:ix-python-blink 1s steps(1) infinite}
+@keyframes ix-python-blink{50%{opacity:0}}
+.ix-python .picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:680px;width:100%}
+.ix-python .pick{min-height:56px;padding:8px 6px;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:4px;box-shadow:3px 3px 0 var(--ink);font:700 18px/1.2 var(--mono);cursor:pointer;overflow-wrap:anywhere}
+.ix-python .pick:hover{background:#f2ffe0}
+.ix-python .pick[aria-pressed="true"]{background:var(--a);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-python .pick[disabled]{cursor:default}
+.ix-python .pick[disabled]:not([aria-pressed="true"]){opacity:.5}
+
+/* ===== сплэш: укус ===== */
+.ix-python .splash{position:relative;background:var(--ink);padding:var(--gap);margin-top:44px}
+.ix-python .splash[hidden]{display:none}
+.ix-python .sp{position:relative;overflow:hidden;min-height:560px;padding:124px 30px 124px;display:flex;flex-direction:column;align-items:flex-start;gap:22px;background:var(--a)}
+.ix-python .sp-burst{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(20,20,20,.0) 0 5deg,rgba(20,20,20,.1) 5deg 10deg)}
+.ix-python .sp::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.16) 1.5px,transparent 2px);background-size:9px 9px;pointer-events:none}
+.ix-python .fang{position:absolute;left:0;right:0;height:110px;z-index:4;filter:drop-shadow(0 5px 0 var(--ink));pointer-events:none;background:linear-gradient(var(--ink) 0 18px,transparent 18px)}
+.ix-python .fang::before{content:"";position:absolute;inset:16px 0 0;background:#fff;clip-path:polygon(0 0,100% 0,100% 12%,95% 12%,88% 100%,81% 12%,62% 12%,58% 55%,54% 12%,46% 12%,42% 55%,38% 12%,19% 12%,12% 100%,5% 12%,0 12%)}
+.ix-python .fang.top{top:0}
+.ix-python .fang.bot{bottom:0;transform:scaleY(-1);filter:drop-shadow(0 4px 0 var(--ink))}
+.ix-python .fang.bot::before{transform:scaleX(-1)}
+.ix-python .sp-txt,.ix-python .sp-name,.ix-python .sp-card{position:relative;z-index:3}
+.ix-python .sp-who{display:inline-block;font:400 14px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--a);padding:8px 10px;transform:rotate(-2deg)}
+.ix-python .sp-h{display:flex;flex-direction:column;margin-top:14px;font:400 clamp(36px,7.4vw,70px)/1.02 'Rubik Mono One';color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink);outline:none}
+.ix-python .sp-h span:nth-child(2){color:var(--ink);-webkit-text-stroke:0;text-shadow:4px 4px 0 #fff}
+.ix-python .sp-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;font:800 clamp(30px,6vw,48px)/1.1 var(--mono)}
+.ix-python .sp-name mark{padding:0 3px}
+.ix-python .sp-bad{background:#fff;border:3px solid var(--ink);padding:4px 10px;box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+.ix-python .sp-bad mark{background:var(--r);color:#fff}
+.ix-python .sp-vs{font:400 17px/1 'Russo One';color:var(--ink)}
+.ix-python .sp-ok{font-size:.62em;color:var(--ink)}
+.ix-python .sp-ok mark{background:var(--ink);color:var(--a)}
+.ix-python .sp-card{background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:18px;max-width:640px;width:100%;display:flex;flex-direction:column;gap:14px;transform:rotate(-.8deg)}
+.ix-python .sp-log{background:var(--ink);color:#cfcabb;font:600 14px/1.55 var(--mono);padding:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .sp-log .bad{color:#ff8f8f}
+.ix-python .sp-log .mk{color:var(--ink);background:var(--a);padding:0 4px}
+.ix-python .sp-k{font:500 18px/1.4 Rubik}
+.ix-python .hb{display:inline-block;font:400 13px/1 'Russo One';text-transform:uppercase;background:var(--ink);color:var(--a);padding:5px 8px;margin-right:6px;vertical-align:2px}
+.ix-python .sp-did{padding-left:24px;display:flex;flex-direction:column;gap:8px;font-size:18px;line-height:1.4}
+.ix-python .sp-did li::marker{font-family:'Russo One';color:var(--r)}
+.ix-python .sp-did code{background:#f1eee4;padding:0 4px}
+.ix-python .sp-sfx{--fs:clamp(66px,11vw,116px);--rot:-11deg;--sc:#fff;--ss:var(--r);right:4%;top:20%;z-index:5}
+.ix-python .sp-head{position:absolute;z-index:2;right:7%;top:38%;width:clamp(90px,24vw,280px);height:auto;transform:rotate(-130deg);overflow:visible}
+.ix-python .sph-skull{fill:var(--ink);stroke:#fff;stroke-width:2.5;stroke-linejoin:round}
+.ix-python .sph-num{font:400 19px/1 'Rubik Mono One',sans-serif;fill:var(--a);text-anchor:middle}
+.ix-python.anim .splash.go .sp-head{animation:ix-python-lunge .5s cubic-bezier(.3,1.5,.5,1) .2s both}
+@keyframes ix-python-lunge{from{opacity:0;transform:translate(50%,-40%) rotate(-100deg) scale(.5)}to{opacity:1;transform:rotate(-130deg)}}
+.ix-python .sp-after{background:#fff;padding:16px 18px;font:500 19px/1.4 Rubik;margin-top:var(--gap)}
+.ix-python .ir{background:var(--paper);padding:20px 18px;margin-top:var(--gap);display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.ix-python .ir-box{display:flex;flex-direction:column;gap:18px;align-items:flex-start;width:100%}
+.ix-python .ir-box[hidden]{display:none}
+.ix-python .ir-l{list-style:none;padding:0;counter-reset:r;display:flex;flex-direction:column;gap:0;width:100%;max-width:680px}
+.ix-python .ir-l li{counter-increment:r;position:relative;padding:12px 0 12px 52px;border-top:2px solid rgba(20,20,20,.14);font-size:18px;line-height:1.4}
+.ix-python .ir-l li:first-child{border-top:0}
+.ix-python .ir-l li::before{content:counter(r);position:absolute;left:0;top:10px;width:36px;height:36px;display:grid;place-items:center;background:var(--a);border:3px solid var(--ink);font:400 17px/1 'Rubik Mono One'}
+.ix-python .ir-l b{font-family:'Russo One';font-weight:400}
+.ix-python.anim .splash.go .fang.top{animation:ix-python-fangT .42s cubic-bezier(.6,0,.2,1.6) .15s both}
+.ix-python.anim .splash.go .fang.bot{animation:ix-python-fangB .42s cubic-bezier(.6,0,.2,1.6) .15s both}
+.ix-python.anim .splash.go .sp{animation:ix-python-shake .34s linear .55s}
+.ix-python.anim .splash.go .sp-h span{animation:ix-python-slam .45s cubic-bezier(.2,1.4,.4,1) both}
+.ix-python.anim .splash.go .sp-h span:nth-child(1){animation-delay:.5s}
+.ix-python.anim .splash.go .sp-h span:nth-child(2){animation-delay:.62s}
+.ix-python.anim .splash.go .sp-h span:nth-child(3){animation-delay:.74s}
+.ix-python.anim .splash.go .sp-sfx{animation:ix-python-pop .5s cubic-bezier(.2,1.6,.4,1) .45s both}
+.ix-python.anim .splash.go .sp-name{animation:ix-python-up .4s ease-out .95s both}
+.ix-python.anim .splash.go .sp-card{animation:ix-python-up .45s ease-out 1.15s both}
+@keyframes ix-python-fangT{0%{transform:translateY(-110%)}60%{transform:translateY(60px)}100%{transform:none}}
+@keyframes ix-python-fangB{0%{transform:scaleY(-1) translateY(-110%)}60%{transform:scaleY(-1) translateY(60px)}100%{transform:scaleY(-1)}}
+@keyframes ix-python-shake{0%,100%{transform:none}20%{transform:translate(-8px,3px) rotate(-.6deg)}40%{transform:translate(7px,-3px) rotate(.5deg)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-1px)}}
+@keyframes ix-python-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ===== стр. 5: три головы ===== */
+.ix-python .head{gap:14px}
+.ix-python .kn{font:400 46px/1 'Rubik Mono One';color:var(--a);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-python .f-ink .kn{-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--ad)}
+.ix-python .f-lime .kn{color:#fff}
+.ix-python .kt{font:400 26px/1.1 'Russo One',sans-serif}
+.ix-python .kp{font-size:18px;line-height:1.5;max-width:560px}
+.ix-python .kp.sm{font-size:17px}
+.ix-python .kp code{font-size:.9em;background:rgba(20,20,20,.08);padding:0 4px}
+.ix-python .f-ink .kp code{background:rgba(255,255,255,.14)}
+.ix-python .hw{font:800 clamp(30px,5vw,44px)/1 var(--mono);color:var(--a);letter-spacing:-.02em}
+.ix-python .hw.lt{color:var(--ink)}
+.ix-python .hw span{border-bottom:5px solid currentColor}
+.ix-python .h3{flex-direction:row;flex-wrap:wrap;gap:22px 30px;align-items:center}
+.ix-python .h3-l{flex:1 1 300px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ix-python .req{flex:1 1 300px;min-width:0;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transform:rotate(1.2deg)}
+.ix-python .req-h{font:400 14px/1 'Russo One';text-transform:uppercase;background:var(--ink);color:#fff;padding:9px 12px}
+.ix-python .req pre{padding:16px 14px 6px;font:800 24px/1.3 var(--mono);overflow-wrap:anywhere;white-space:pre-wrap}
+.ix-python .req-n{padding:6px 14px 16px;font-size:17px;line-height:1.45}
+
+/* ===== стр. 6: рубим головы ===== */
+.ix-python .cutfr{padding:28px}
+.ix-python .cut-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:26px;width:100%;align-items:start}
+.ix-python .arena{position:relative;border:3px dashed transparent;border-radius:24px;padding:22px 14px 14px;transition:border-color .4s,background .4s}
+.ix-python .arena.fenced{border-color:var(--a);background:rgba(168,240,60,.05)}
+.ix-python .fence-l{position:absolute;top:-15px;left:18px;font:700 16px/1 var(--mono);background:var(--a);color:var(--ink);padding:5px 9px;opacity:0;transition:opacity .4s}
+.ix-python .arena.fenced .fence-l{opacity:1}
+.ix-python .arena-svg svg{display:block;width:100%;height:auto;overflow:visible}
+.ix-python .heads-left{text-align:center;font:400 22px/1.2 'Rubik Mono One';color:var(--a);margin-top:4px}
+.ix-python .heads-left.dead{color:#fff}
+.ix-python .cut-sfx{--fs:48px;--sc:#fff;--ss:var(--ad);left:6%;top:24%;opacity:0}
+.ix-python .cut-sfx.on{opacity:1}
+.ix-python.anim .cut-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .cut-side{display:flex;flex-direction:column;gap:18px;align-items:flex-start;min-width:0}
+.ix-python .steps{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.ix-python .steps li{font:400 14px/1 'Russo One';padding:8px 10px;border:2px solid #555;color:#aaa49a}
+.ix-python .steps li.cur{border-color:var(--a);color:var(--a)}
+.ix-python .steps li.done{background:var(--a);border-color:var(--a);color:var(--ink)}
+.ix-python .steps li.done::before{content:"✓ "}
+.ix-python .cut-body{display:flex;flex-direction:column;gap:14px;width:100%;min-height:200px}
+.ix-python .cut-body h3{font:400 24px/1.15 'Russo One';color:var(--a)}
+.ix-python .cut-body p{font-size:18px;line-height:1.45;color:#f4f1e8}
+.ix-python .cut-body p b{color:#fff}
+.ix-python .cut-body code{font-size:.9em;background:rgba(255,255,255,.14);padding:0 4px;overflow-wrap:anywhere}
+.ix-python .cut-body .warn{border-left:6px solid var(--y);padding-left:12px}
+.ix-python .cut-body .warn b{color:var(--y)}
+.ix-python .ct{background:#000;border:2px solid #3a3a3a;padding:12px;font:600 15px/1.55 var(--mono);color:#e8e4d8;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .ct .p{color:#8f8b7d}.ix-python .ct .ok{color:var(--a)}.ix-python .ct .bad{color:#ff8f8f}.ix-python .ct .y{color:var(--y)}
+.ix-python .vs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ix-python .vs>div{padding:12px;border:2px solid var(--a);font-size:16px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.ix-python .vs>div.no{border-color:#ff8f8f}
+.ix-python .vs b{display:block;font:700 18px/1.3 var(--mono);margin-bottom:6px}
+.ix-python .vs .no b{color:#ff8f8f}.ix-python .vs .yes b{color:var(--a)}
+.ix-python .vs ul{padding-left:18px;color:#e8e4d8}
+.ix-python .cut-body .fin{font:400 clamp(24px,4vw,34px)/1.15 'Rubik Mono One';color:var(--a)}
+.ix-python.anim .cut-body>*{animation:ix-python-up .35s ease-out both}
+.ix-python.anim .cut-body>*:nth-child(2){animation-delay:.08s}
+.ix-python.anim .cut-body>*:nth-child(3){animation-delay:.16s}
+.ix-python.anim .cut-body>*:nth-child(4){animation-delay:.24s}
+
+/* ===== стр. 7: eval и секреты ===== */
+.ix-python .evfr,.ix-python .secfr{gap:18px}
+.ix-python .evfr>.bl{align-self:flex-end}
+.ix-python .ev{position:relative;width:100%;max-width:560px;display:flex;flex-direction:column;gap:10px}
+.ix-python .ev-code{background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--a);padding:12px 14px;font:700 17px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-python .ev-code mark{background:var(--r);color:#fff;padding:0 3px}
+.ix-python .ev-code mark.safe{background:var(--a);color:var(--ink)}
+.ix-python .ev-in{font-size:16px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.ix-python .ev-in span{font-family:'Russo One'}
+.ix-python .ev-in code{font:700 15px/1.4 var(--mono);background:#fff;border:2px solid var(--ink);padding:3px 7px;overflow-wrap:anywhere}
+.ix-python .ev-out{font:600 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;background:#fbf8f0;border:3px solid var(--ink);padding:10px 12px;min-height:3.2em}
+.ix-python .ev-out:empty{display:none}
+.ix-python .ev-out .bad{color:#c4001a;font-weight:800}
+.ix-python .ev-out .ok{color:#2f6b00;font-weight:800}
+.ix-python .ev-sfx{--fs:44px;--sc:#fff;--ss:var(--r);right:-4px;top:-22px;opacity:0}
+.ix-python .ev-sfx.on{opacity:1}
+.ix-python.anim .ev-sfx.on{animation:ix-python-pop .45s cubic-bezier(.2,1.7,.4,1) both}
+.ix-python .codes{display:flex;flex-direction:column;gap:14px;width:100%}
+.ix-python .code{border:3px solid var(--ink);background:#fff;min-width:0}
+.ix-python .code-h{display:block;font:400 14px/1 'Russo One';text-transform:uppercase;padding:8px 12px;border-bottom:3px solid var(--ink)}
+.ix-python .code.bad .code-h{background:var(--r);color:#fff}
+.ix-python .code.good .code-h{background:var(--a)}
+.ix-python .code pre{padding:12px;font:700 15px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* ===== битва ===== */
+.ix-python .battle{margin-top:18px;background:var(--ink);color:#fff;padding:22px;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--a);background-image:radial-gradient(rgba(168,240,60,.16) 1.4px,transparent 1.9px);background-size:9px 9px}
+.ix-python .bt-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.ix-python .bt-name{font:400 18px/1.2 'Russo One';display:flex;align-items:center;gap:10px}
+.ix-python .mini{font:800 16px/1 var(--mono);color:var(--ink);background:var(--a);padding:4px 7px;border-radius:12px 12px 12px 2px}
+.ix-python .bt-turn{font:400 14px/1 'Russo One';background:var(--y);color:var(--ink);padding:6px 10px}
+.ix-python .hp{height:20px;border:3px solid #fff;margin:14px 0 22px;background:#26301a}
+.ix-python .hp i{display:block;height:100%;width:100%;background:var(--a);transition:width .5s ease-out}
+.ix-python .bt-body{display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:relative}
+.ix-python .bt-head{font:400 13px/1 'Russo One';text-transform:uppercase;letter-spacing:.08em;color:var(--a)}
+.ix-python .bt-move{font:400 23px/1.25 Neucha,cursive}
+.ix-python .bt-opts{display:flex;flex-direction:column;gap:12px;width:100%;max-width:640px}
+.ix-python .opt{min-height:56px;width:100%;text-align:left;padding:12px 16px;background:#fff;color:var(--ink);border:3px solid #fff;font:500 18px/1.35 Rubik;cursor:pointer;border-radius:4px}
+.ix-python .opt:hover{background:#f2ffe0}
+.ix-python .opt[disabled]{opacity:.5;cursor:default;text-decoration:line-through}
+.ix-python .opt.ok{background:var(--a);border-color:var(--a);opacity:1;text-decoration:none}
+.ix-python .fb{font:500 18px/1.4 Rubik;border-left:6px solid var(--a);padding:4px 0 4px 14px;max-width:640px}
+.ix-python .fb[hidden]{display:none}
+.ix-python .fb.miss{border-color:var(--r)}
+.ix-python .fb b{font:400 22px/1 'Rubik Mono One';display:block;margin-bottom:6px;color:var(--a)}
+.ix-python .fb.miss b{color:#ff6b6b;font-size:18px}
+.ix-python .win{font:400 clamp(26px,5vw,40px)/1.15 'Rubik Mono One';color:var(--a)}
+.ix-python .win-s{font-size:20px}
+.ix-python .battle .btn{box-shadow:5px 5px 0 var(--a)}
+
+/* ===== собеседование ===== */
+.ix-python .iv{margin-top:18px;background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.ix-python .iv-q{font:400 clamp(24px,4vw,32px)/1.25 'Russo One'}
+.ix-python .iv-think{font-size:19px;border-left:6px solid var(--a);padding-left:14px}
+.ix-python .iv-a{display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);padding-top:20px;width:100%}
+.ix-python .iv-a[hidden]{display:none}
+.ix-python .iv-p{font-size:19px;line-height:1.5}
+.ix-python .iv-p b{font:400 20px/1.2 'Russo One';display:block;margin-bottom:2px}
+.ix-python .iv-p code{font-size:.85em;background:#f1eee4;padding:0 4px;white-space:nowrap}
+.ix-python .iv-err{font-size:19px;background:var(--ink);color:#fff;padding:12px 16px}
+.ix-python .iv-err b{color:var(--a);font-weight:600}
+
+/* ===== шпаргалка ===== */
+.ix-python .cheat{list-style:none;margin:18px 0 0;padding:0}
+.ix-python .cheat li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-top:2px solid rgba(20,20,20,.16)}
+.ix-python .cheat li:first-child{border-top:0}
+.ix-python .cn{flex:0 0 auto;width:2.5em;font:400 34px/1 'Rubik Mono One';color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-python .cheat h3{font:400 21px/1.2 'Russo One'}
+.ix-python .cheat p{font-size:18px;line-height:1.45;margin-top:4px}
+.ix-python .legal{margin-top:40px;font-size:18px;border-left:6px solid var(--a);padding:4px 0 4px 14px}
+.ix-python .end-row{margin-top:36px}
+.ix-python .end{display:inline-block;font:400 20px/1 'Rubik Mono One';background:var(--ink);color:var(--a);padding:12px 16px;transform:rotate(-3deg)}
+
+/* ===== планшет ===== */
+@media (max-width:900px){
+  .ix-python .run,.ix-python .cut-grid{grid-template-columns:minmax(0,1fr)}
+  .ix-python .arena{max-width:420px;justify-self:center;width:100%}
+}
+/* ===== телефон ===== */
+@media (max-width:700px){
+  .ix-python{--gap:10px}
+  .ix-python .pg{grid-template-columns:minmax(0,1fr)}
+  .ix-python .pn{grid-column:1/-1;margin-left:0 !important}
+  .ix-python .pn>.fr{--lt:0px;--rt:0px;--rb:0px;--lb:0px;padding:30px 16px 34px !important}
+  .ix-python .pn:nth-child(odd)>.fr{--tr:var(--m);--br:var(--m)}
+  .ix-python .pn:nth-child(even)>.fr{--tl:var(--m);--bl:var(--m)}
+  .ix-python .pn+.pn{margin-top:calc(-1 * var(--m))}
+  .ix-python .poster{grid-template-columns:minmax(0,1fr);grid-template-areas:"tag" "name" "snake" "bl";min-height:0;padding-bottom:70px !important;gap:14px}
+  .ix-python .snake{max-width:400px;margin:-6px 0}
+  .ix-python .bl{font-size:22px;max-width:100%}
+  .ix-python .ed-code{font-size:13.5px}
+  .ix-python .ln{padding:0 10px}
+  .ix-python .syn{grid-template-columns:minmax(0,1fr)}
+  .ix-python .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ix-python .t-line{font-size:17px}
+  .ix-python .term,.ix-python .ed{box-shadow:5px 5px 0 var(--a)}
+  .ix-python .run-sfx{--fs:40px;top:-24px;right:-4px}
+  .ix-python .btn{width:100%}
+  .ix-python .sp{padding:92px 16px 120px;min-height:0}
+  .ix-python .fang{height:76px;background:linear-gradient(var(--ink) 0 12px,transparent 12px)}
+  .ix-python .fang::before{inset:10px 0 0}
+  .ix-python .sp-sfx{top:auto;bottom:22px;right:4%;--fs:58px}
+  .ix-python .sp-head{top:96px;right:-8px;width:84px}
+  .ix-python .log .pre{display:none}
+  .ix-python .dict{order:1}.ix-python .out{order:2}.ix-python .logf{order:3}
+  .ix-python .ed{position:relative;top:0}
+  .ix-python .ev-code{font-size:15px}
+  .ix-python .cut-body{min-height:0}
+  .ix-python .ev-in code{font-size:14px}
+  .ix-python .code pre{font-size:14px}
+  .ix-python .sp-card{padding:14px}
+  .ix-python .vs{grid-template-columns:minmax(0,1fr)}
+  .ix-python .battle,.ix-python .iv{padding:20px 16px}
+  .ix-python .cn{font-size:28px}
+  .ix-python .req{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-python *,.ix-python *::before,.ix-python *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>(function(){
+var root=document.querySelector('.ix-python'); if(!root) return;
+function q(s){return root.querySelector(s)}
+function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s))}
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e}
+var RM=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+if(!RM) root.classList.add('anim');
+function later(fn,ms){return setTimeout(fn,RM?0:ms)}
+function bang(node,t){node.classList.remove('on'); node.textContent=t||''; void node.offsetWidth; if(t) node.classList.add('on')}
+
+/* появление постера */
+var goEls=qa('[data-go]');
+if(RM||!('IntersectionObserver' in window)){goEls.forEach(function(e){e.classList.add('go')})}
+else{var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('go');io.unobserve(x.target)}})},{threshold:.3});goEls.forEach(function(e){io.observe(e)})}
+
+/* змей: копия для арены, пауза анимаций при reduced motion */
+var snake=q('#ix-python-snake'), arenaSvg=q('#ix-python-arenasvg');
+arenaSvg.innerHTML=snake.outerHTML.replace(/ix-python-(snake|fade|coilb|coil|n1|n2|n3)/g,'ix-python-b$1');
+var bsnake=arenaSvg.querySelector('svg'); bsnake.removeAttribute('role'); bsnake.removeAttribute('aria-label');
+function pauseSvg(s){try{s.pauseAnimations()}catch(e){}}
+if(RM){pauseSvg(snake);pauseSvg(bsnake)}
+
+/* ===== стр. 2: скрипт считает неудачи ===== */
+var LOG=[
+  ['Oct 13 03:12:01 srv sshd[812]:','Failed password for root from 203.0.113.7 port 52211 ssh2'],
+  ['Oct 13 03:12:04 srv sshd[812]:','Failed password for root from 203.0.113.7 port 52214 ssh2'],
+  ['Oct 13 03:12:09 srv sshd[815]:','Accepted password for sonya from 192.0.2.10 port 50122 ssh2'],
+  ['Oct 13 03:12:11 srv sshd[817]:','Failed password for invalid user admin from 198.51.100.23 port 40122 ssh2'],
+  ['Oct 13 03:12:12 srv sshd[812]:','Failed password for root from 203.0.113.7 port 52219 ssh2'],
+  ['Oct 13 03:12:15 srv sshd[820]:','Failed password for invalid user test from 203.0.113.7 port 52230 ssh2'],
+  ['Oct 13 03:12:20 srv sshd[822]:','Accepted publickey for misha from 192.0.2.11 port 50200 ssh2'],
+  ['Oct 13 03:12:22 srv sshd[817]:','Failed password for invalid user admin from 198.51.100.23 port 40130 ssh2']
+];
+var LIMIT=3;
+var logEl=q('#ix-python-log'), dictEl=q('#ix-python-dict'), outEl=q('#ix-python-out'), runBtn=q('#ix-python-runbtn'),
+    runSay=q('#ix-python-runsay'), runSfx=q('#ix-python-runsfx');
+var lines={}; qa('#ix-python-code .ln').forEach(function(l){lines[l.getAttribute('data-l')]=l});
+var logLis=LOG.map(function(r){
+  var li=el('li'); li.appendChild(el('span','pre',r[0])); li.appendChild(document.createTextNode(' '));
+  var msg=el('span','msg'), w=r[1].split(' '), ipi=w.length-4;
+  w.forEach(function(word,i){ if(i) msg.appendChild(document.createTextNode(' ')); if(i===ipi) msg.appendChild(el('mark',null,word)); else msg.appendChild(document.createTextNode(word)) });
+  li.appendChild(msg); logEl.appendChild(li); return li;
+});
+var counts={}, runT=null, running=false, ran=false;
+function hlLine(n){for(var k in lines) lines[k].classList.toggle('on',String(n)===k)}
+function renderDict(flashKey){
+  dictEl.textContent='';
+  var keys=Object.keys(counts);
+  if(!keys.length){dictEl.textContent='{}';return}
+  dictEl.appendChild(document.createTextNode('{\n'));
+  keys.forEach(function(k,i){
+    var row=el('span',k===flashKey?'flash':null);
+    row.appendChild(document.createTextNode('  ')); row.appendChild(el('span','k',"'"+k+"'"));
+    row.appendChild(document.createTextNode(': '+counts[k]+(i<keys.length-1?',':'')));
+    dictEl.appendChild(row); dictEl.appendChild(document.createTextNode('\n'));
+  });
+  dictEl.appendChild(document.createTextNode('}'));
+}
+function resetRun(){
+  clearTimeout(runT); counts={}; renderDict(); outEl.textContent=''; hlLine(0); bang(runSfx,'');
+  logLis.forEach(function(li){li.className=''});
+}
+function buildSteps(){
+  var st=[], seen={};
+  st.push({l:1}); st.push({l:2,f:function(){renderDict()}});
+  LOG.forEach(function(r,i){
+    var w=r[1].split(' '), ip=w[w.length-4], fail=r[1].indexOf('Failed password')>=0;
+    st.push({l:4,f:function(){logLis.forEach(function(li,j){li.classList.toggle('on',j===i)})}});
+    st.push({l:5});
+    if(fail){
+      st.push({l:7,f:function(){logLis[i].classList.add('fail','got')}});
+      st.push({l:8});
+      if(!seen[ip]){seen[ip]=1; st.push({l:9,f:function(){counts[ip]=0;renderDict(ip)}})}
+      st.push({l:10,f:function(){counts[ip]+=1;renderDict(ip)},d:1.6});
+    } else st.push({l:5,f:function(){logLis[i].classList.add('skip')},d:1.4});
+  });
+  st.push({l:12,f:function(){logLis.forEach(function(li){li.classList.remove('on')});renderDict()}});
+  var sim={}; LOG.forEach(function(r){var w=r[1].split(' '); if(r[1].indexOf('Failed password')>=0) sim[w[w.length-4]]=(sim[w[w.length-4]]||0)+1});
+  Object.keys(sim).forEach(function(ip){
+    st.push({l:12}); st.push({l:13,d:1.5});
+    if(sim[ip]>=LIMIT) st.push({l:14,d:2,f:function(){
+      var s=el('span','alarm','ТРЕВОГА: '+ip+' '+sim[ip]); outEl.appendChild(s); outEl.appendChild(document.createTextNode('\n')); bang(runSfx,'ДЗЫНЬ!');
+    }});
+  });
+  return st;
+}
+function finishRun(){
+  running=false; ran=true; hlLine(0);
+  runSay.textContent='203.0.113.7 ошибся 4 раза за 14 секунд — это подбор пароля, а не забывчивый админ. 198.51.100.23 ошибся дважды: ниже порога, но на заметку.';
+  runBtn.disabled=false; runBtn.textContent='Запустить ещё раз';
+  runBtn.focus({preventScroll:true});
+}
+runBtn.addEventListener('click',function(){
+  if(running) return;
+  resetRun(); running=true; runBtn.disabled=true; runBtn.textContent='Скрипт работает…';
+  runSay.textContent='Цикл идёт по строкам журнала. Смотри, как растёт словарь.';
+  var st=buildSteps(), i=0, D=120;
+  if(RM){ st.forEach(function(s){ if(s.f) s.f() }); finishRun(); return }
+  (function tick(){
+    if(i>=st.length){finishRun();return}
+    var s=st[i++]; hlLine(s.l); if(s.f) s.f();
+    runT=setTimeout(tick,D*(s.d||1));
+  })();
+});
+/* подсветка конструкций при наведении на пояснение */
+qa('#ix-python-syn li').forEach(function(li){
+  li.tabIndex=0;
+  var k=li.getAttribute('data-k');
+  function on(v){qa('#ix-python-code .ln[data-k="'+k+'"]').forEach(function(l){l.classList.toggle('hl',v)})}
+  li.addEventListener('mouseenter',function(){on(true)}); li.addEventListener('mouseleave',function(){on(false)});
+  li.addEventListener('focus',function(){on(true)}); li.addEventListener('blur',function(){on(false)});
+});
+
+/* ===== стр. 4: pip install ===== */
+var picks=qa('#ix-python-picks .pick'), tname=q('#ix-python-tname'), tout=q('#ix-python-tout'), ibtn=q('#ix-python-ibtn'),
+    isay=q('#ix-python-isay'), splash=q('#ix-python-splash'), sph=q('#ix-python-sph'), splog=q('#ix-python-splog'),
+    spbad=q('#ix-python-spbad'), irbtn=q('#ix-python-irbtn'), ir=q('#ix-python-ir'), again=q('#ix-python-again'), term=q('#ix-python-term'), tcmd=q('#ix-python-tcmd');
+var chosen='', istep='pick', itimers=[], bitten=false;
+var DIFF={reqeusts:['re','qe','usts'],requets:['reque','t','s'],requestss:['requests','s','']};
+function speak(who,cls,text){
+  isay.className='bl dock-bl'+(cls==='g'?' v':''); isay.textContent='';
+  isay.appendChild(el('b','who '+cls,who)); isay.appendChild(el('span',null,text));
+}
+function clearIT(){itimers.forEach(clearTimeout); itimers=[]}
+function tline(text,cls){var s=el('span',cls||null,text); tout.appendChild(s); tout.appendChild(document.createTextNode('\n'))}
+function typeLines(arr,step,done){
+  var t=0; arr.forEach(function(a){ t+=a[2]||step; itimers.push(later(function(){tline(a[0],a[1])},t)) });
+  itimers.push(later(done,t+(step)));
+}
+function lockPicks(v){picks.forEach(function(p){p.disabled=v})}
+function resetInstall(){
+  clearIT(); chosen=''; istep='pick'; tout.textContent=''; tname.textContent=''; tcmd.hidden=false;
+  picks.forEach(function(p){p.setAttribute('aria-pressed','false')}); lockPicks(false);
+  ibtn.hidden=false; ibtn.disabled=true; ibtn.textContent='Нажать Enter';
+  speak('Дядя Миша','m','Выбери, что набрать. Все четыре варианта выглядят знакомо — в этом и подвох.');
+}
+picks.forEach(function(p){
+  p.addEventListener('click',function(){
+    if(istep!=='pick') return;
+    chosen=p.getAttribute('data-n');
+    picks.forEach(function(x){x.setAttribute('aria-pressed',String(x===p))});
+    tname.textContent=chosen; ibtn.disabled=false;
+    speak('Соня','s','Набрала «'+chosen+'». Вроде правильно…');
+  });
+});
+function bite(name){
+  var d=DIFF[name]||DIFF.reqeusts;
+  spbad.textContent=''; spbad.appendChild(document.createTextNode(d[0])); spbad.appendChild(el('mark',null,d[1])); if(d[2]) spbad.appendChild(document.createTextNode(d[2]));
+  q('.sp-name').setAttribute('aria-label','Набрано: '+name+'. Нужно: requests');
+  splog.textContent='';
+  [['Collecting '+name],['  Downloading '+name+'-2.34.2.tar.gz (4.1 kB)'],['  Preparing metadata (setup.py) ... done','mk'],
+   ['  ↑ тут уже работает чужой код','bad'],['Collecting requests (from '+name+')'],['Successfully installed '+name+'-2.34.2 requests-2.34.2 …']]
+   .forEach(function(a){splog.appendChild(el('span',a[1]||null,a[0])); splog.appendChild(document.createTextNode('\n'))});
+  ir.hidden=true; irbtn.setAttribute('aria-expanded','false');
+  splash.hidden=false; splash.classList.remove('go'); void splash.offsetWidth; splash.classList.add('go');
+  bitten=true;
+  try{splash.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}catch(e){}
+  setTimeout(function(){sph.focus({preventScroll:true})},RM?0:600);
+}
+ibtn.addEventListener('click',function(){
+  if(istep==='pick'&&chosen){
+    istep='busy'; lockPicks(true); ibtn.disabled=true; tout.textContent='';
+    tline('(.venv) $ pip install '+chosen,'warn'); tname.textContent=''; tcmd.hidden=true;
+    if(chosen==='requests'){
+      typeLines([['Collecting requests'],['  Downloading requests-2.34.2-py3-none-any.whl (73 kB)'],['Collecting charset_normalizer<4,>=2 (from requests)',null,120],['Collecting idna<4,>=2.5 (from requests)',null,120],['Collecting urllib3<3,>=1.26 (from requests)',null,120],['Collecting certifi>=2023.5.7 (from requests)',null,120],
+        ['Installing collected packages: urllib3, idna, charset-normalizer, certifi, requests'],
+        ['Successfully installed certifi-2026.7.22 charset-normalizer-3.5.2 idna-3.20 requests-2.34.2 urllib3-2.8.0','ok']],260,function(){
+        if(bitten){
+          speak('Змей Пипыч','g','Ладно, эту голову ты обошла. Но у меня их ещё две.');
+          istep='done'; ibtn.disabled=false; ibtn.textContent='Ещё раз';
+        } else {
+          speak('Змей Пипыч','g','Угадала. А если бы в три часа ночи палец дрогнул?');
+          istep='whatif'; ibtn.disabled=false; ibtn.textContent='Посмотреть, что было бы';
+        }
+        ibtn.focus({preventScroll:true});
+      });
+    } else {
+      typeLines([['Collecting '+chosen],['  Downloading '+chosen+'-2.34.2.tar.gz (4.1 kB)'],['  Preparing metadata (setup.py) ... done','bad']],320,function(){
+        speak('Змей Пипыч','g','Ссс… спасибо за приглашение.');
+        ibtn.hidden=true; istep='bitten'; bite(chosen);
+      });
+    }
+  }
+  else if(istep==='whatif'){ ibtn.hidden=true; istep='bitten'; bite('reqeusts') }
+  else if(istep==='done'){ resetInstall(); picks[0].focus() }
+});
+irbtn.addEventListener('click',function(){
+  var o=ir.hidden; ir.hidden=!o; irbtn.setAttribute('aria-expanded',String(o));
+  irbtn.textContent=o?'Скрыть план':'Что теперь делать?';
+});
+again.addEventListener('click',function(){
+  resetInstall();
+  try{term.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'})}catch(e){}
+  picks[0].focus({preventScroll:true});
+});
+resetInstall();
+
+/* ===== стр. 6: рубим головы ===== */
+var arena=q('#ix-python-arena'), cutBody=q('#ix-python-cutbody'), cutBtn=q('#ix-python-cutbtn'), hl=q('#ix-python-hl'),
+    cutSfx=q('#ix-python-cutsfx'), stepLis=qa('#ix-python-steps li');
+var CUT=[
+  {b:'Сначала загон: создать venv', h:'<h3>Три головы — четыре приёма</h3><p>Первый приём ничего не рубит. Он строит загон, чтобы было видно, что внутри.</p>'},
+  {b:'Проверить имя и источник', h:'<h3>venv — загон</h3><pre class="ct"><span class="p">$</span> python3 -m venv .venv\n<span class="p">$</span> source .venv/bin/activate\n<span class="ok">(.venv)</span> <span class="p">$</span> which python\n/home/sonya/fails/.venv/bin/python</pre><p>У проекта своя папка пакетов. Системный Python цел, <code>sudo pip</code> не нужен, всё сносится и собирается заново за минуту.</p><p class="warn"><b>Но это не клетка.</b> Код внутри venv работает с твоими правами и видит твои файлы. Поэтому головы пока на месте.</p>'},
+  {b:'Закрепить версии и хеши', cut:1, h:'<h3>Имя и источник</h3><div class="vs"><div class="yes"><b>requests</b><ul><li>страница pypi.org/project/requests</li><li>код: github.com/psf/requests</li><li>релизы с 2011 года</li></ul></div><div class="no"><b>reqeusts</b><ul><li>появился на днях</li><li>один релиз</li><li>ссылки на код нет</li></ul></div></div><p>Имя копируй из официальной документации, а не набирай по памяти.</p>'},
+  {b:'Проверить старьё: pip-audit', cut:2, h:'<h3>Версии и хеши</h3><pre class="ct"><span class="p"># requirements.txt</span>\nrequests==2.34.2 \\\n  --hash=sha256:2a0d60c1…e278e0\n<span class="p"># …и так для каждой зависимости</span>\n\n<span class="p">$</span> pip install --require-hashes \\\n    -r requirements.txt</pre><p>pip сверит отпечаток каждого файла. Подменённая или новая версия с сюрпризом не совпадёт — установка остановится.</p><p>Такой файл не пишут руками: его делает <code>pip-compile --generate-hashes</code>. Ещё строже — <code>--only-binary :all:</code>: только готовые wheel-файлы, они не запускают код при установке.</p>'},
+  {b:'Ещё раз', cut:3, h:'<h3>Аудит зависимостей (SCA)</h3><pre class="ct"><span class="p">$</span> pip-audit -r old/requirements.txt\n<span class="bad">Found 5 known vulnerabilities in 1 package</span>\nrequests 2.19.1\n  CVE-2018-18074  <span class="y">fix: 2.20.0</span>\n  CVE-2023-32681  <span class="y">fix: 2.31.0</span>\n  <span class="p">…и ещё 3 (вывод сокращён)</span></pre><p>Сканер сверяет версии с базой известных уязвимостей. Лечится обновлением до свежей версии, а pip-audit в CI не даёт старью копиться.</p><p class="fin">Змей Пипыч без голов</p>'}
+];
+var cs=0;
+function setHeads(n){
+  [1,2,3].forEach(function(h){
+    var cut=h<=3-n;
+    var hd=bsnake.querySelector('.s-head[data-h="'+h+'"]'), nk=bsnake.querySelector('.s-neck[data-h="'+h+'"]');
+    hd.classList.toggle('cut',cut); nk.classList.toggle('cut',cut);
+  });
+  hl.textContent=n?'Голов: '+n:'Голов: 0'; hl.classList.toggle('dead',!n);
+}
+function renderCut(s,fromClick){
+  cs=s; var c=CUT[s];
+  cutBody.innerHTML=c.h; cutBtn.textContent=c.b;
+  arena.classList.toggle('fenced',s>=1);
+  stepLis.forEach(function(li,i){li.classList.toggle('done',i<s);li.classList.toggle('cur',i===s)});
+  var heads=3-(c.cut||0); setHeads(heads);
+  if(fromClick&&c.cut) bang(cutSfx,'ВЖУХ!'); else bang(cutSfx,'');
+}
+cutBtn.addEventListener('click',function(){ renderCut(cs<4?cs+1:0,true) });
+renderCut(0,false);
+
+/* ===== стр. 7: eval ===== */
+var evBtn=q('#ix-python-evbtn'), evOut=q('#ix-python-evout'), evSay=q('#ix-python-evsay'), evFn=q('#ix-python-evfn'), evSfx=q('#ix-python-evsfx'), es=0;
+function evRender(s){
+  es=s; evOut.textContent='';
+  if(s===0){
+    evFn.textContent='eval'; evFn.className=''; bang(evSfx,'');
+    evSay.textContent='Вместо числа пришла строка с кодом. Посмотрим, что сделает eval.';
+    evBtn.textContent='Передать строку в eval';
+  } else if(s===1){
+    evOut.appendChild(el('span',null,'>>> LIMIT\n')); evOut.appendChild(el('span','bad',"['id_ed25519', 'id_ed25519.pub', 'known_hosts']"));
+    bang(evSfx,'ОЙ!');
+    evSay.textContent='eval выполнил строку как код Python и показал твои SSH-ключи. На месте списка мог быть любой код: удалить файлы или отправить их наружу.';
+    evBtn.textContent='Заменить eval на int()';
+  } else {
+    evFn.textContent='int'; evFn.className='safe'; bang(evSfx,'');
+    evOut.appendChild(el('span','ok','ValueError: ')); evOut.appendChild(document.createTextNode('invalid literal for int() with base 10: \'__import__("os").listdir(".ssh")\''));
+    evSay.textContent='int() понимает только число. Пришёл код — честная ошибка, ничего не выполнено. Нужен список или словарь из текста — json.loads или ast.literal_eval.';
+    evBtn.textContent='Ещё раз';
+  }
+}
+evBtn.addEventListener('click',function(){evRender((es+1)%3)});
+evRender(0);
+
+/* ===== битва ===== */
+var MOVES=[
+  {h:'Голова №1 · опечатка', v:'«Я пакет reqeusts. Всего две буквы поменялись местами — ты и не заметишь!»',
+   o:[['Поставить пакет в venv — там безопасно',0,'venv — загон, а не клетка: скрипт установки отработает с твоими правами.'],
+      ['Скопировать имя из документации и проверить страницу на pypi.org',1,'Автор, ссылка на код, история релизов — и двойник видно сразу.'],
+      ['Поставить через sudo, чтобы точно установилось',0,'Так вредный код получит права администратора. Ещё хуже.']]},
+  {h:'Голова №2 · скрипт установки', v:'«В новой версии я спрячусь в скрипт установки. Ты же ставишь самое свежее?»',
+   o:[['requirements.txt с точными версиями и хешами, установка с --require-hashes',1,'Новая или подменённая версия не совпадёт по хешу — pip её не поставит.'],
+      ['Писать в requirements.txt только имя: requests',0,'Без версии pip возьмёт самую новую — какой бы она ни была.']]},
+  {h:'Голова №3 · старьё с CVE', v:'«А я requests 2.19.1 из проекта 2018 года. Про меня давно написаны CVE.»',
+   o:[['Версия закреплена — значит, всё безопасно',0,'Закреплённая старая версия так и остаётся дырявой.'],
+      ['Удалить requirements.txt, чтобы сканер не нашёл',0,'Уязвимость никуда не денется, просто станет невидимой.'],
+      ['pip-audit в CI и обновление до исправленной версии',1,'SCA находит известные дыры, обновление их закрывает.']]}
+];
+var bt=q('#ix-python-bt'), hpbar=q('#ix-python-hpbar'), hp=q('#ix-python-hp'), turn=q('#ix-python-turn');
+var mi=0, score=0, first=true, HP=100;
+function setHP(v){HP=Math.max(0,v); hpbar.style.width=HP+'%'; hp.setAttribute('aria-valuenow',String(HP))}
+function renderMove(focus){
+  bt.textContent=''; first=true; turn.textContent='Ход '+(mi+1)+' из 3';
+  var m=MOVES[mi];
+  bt.appendChild(el('p','bt-head',m.h));
+  bt.appendChild(el('p','bt-move',m.v));
+  var wrap=el('div','bt-opts'); wrap.setAttribute('role','group'); wrap.setAttribute('aria-label','Выбери защиту');
+  var fb=el('p','fb'); fb.hidden=true; fb.setAttribute('aria-live','polite');
+  m.o.forEach(function(o){
+    var b=el('button','opt',o[0]); b.type='button';
+    b.addEventListener('click',function(){
+      fb.hidden=false; fb.textContent='';
+      if(o[1]){
+        if(first) score++;
+        qa('#ix-python-bt .opt').forEach(function(x){x.disabled=true}); b.classList.add('ok');
+        fb.className='fb'; fb.appendChild(el('b',null,'УДАР!')); fb.appendChild(document.createTextNode(o[2]));
+        setHP(mi===2?0:HP-34);
+        var nx=el('button','btn',mi===2?'Отрубить последнюю голову':'Следующая голова'); nx.type='button';
+        nx.addEventListener('click',function(){mi++; if(mi<3) renderMove(true); else renderWin()});
+        bt.appendChild(nx); nx.focus();
+      }else{
+        first=false; b.disabled=true;
+        fb.className='fb miss'; fb.appendChild(el('b',null,'промах')); fb.appendChild(document.createTextNode(o[2]+' Попробуй другое.'));
+      }
+    });
+    wrap.appendChild(b);
+  });
+  bt.appendChild(wrap); bt.appendChild(fb);
+  if(focus) wrap.querySelector('button').focus();
+}
+function renderWin(){
+  bt.textContent=''; turn.textContent='Конец';
+  bt.appendChild(el('p','win','Змей Пипыч повержен'));
+  bt.appendChild(el('p','win-s','Счёт: '+score+' из 3 с первой попытки.'+(score===3?' Ни одного укуса.':'')));
+  var r=el('button','btn','Ещё раз'); r.type='button';
+  r.addEventListener('click',function(){mi=0;score=0;setHP(100);renderMove(true)});
+  bt.appendChild(r); r.focus();
+}
+renderMove(false);
+
+/* ===== собеседование ===== */
+var ivb=q('#ix-python-ivb'), iva=q('#ix-python-iva');
+ivb.addEventListener('click',function(){var o=iva.hidden; iva.hidden=!o; ivb.setAttribute('aria-expanded',String(o)); ivb.textContent=o?'Скрыть ответ':'Показать сильный ответ'});
+})();</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое PyPI?</h2><p class="lead"><b>PyPI</b> — Python Package Index — общий открытый склад пакетов Python, откуда pip их скачивает.</p><h2>О чём выпуск</h2><ul><li>Почему безопасники автоматизируют рутину на Python</li><li>Переменные, цикл, условие и словарь на живом скрипте</li><li>Как устроены pip, PyPI и venv</li><li>Три атаки через пакеты и защита от них: проверка имени, хеши, pip-audit</li></ul><h2>Словарик</h2><dl><dt>PyPI</dt><dd>Python Package Index — общий открытый склад пакетов Python, откуда pip их скачивает.</dd><dt>pip</dt><dd>Стандартная программа для установки пакетов Python.</dd><dt>venv</dt><dd>Отдельная папка с пакетами для одного проекта. Разделяет проекты, но не защищает от вредного кода.</dd><dt>Тайпсквоттинг</dt><dd>Пакет с именем, похожим на популярное, рассчитанный на опечатку.</dd><dt>CVE</dt><dd>Общий номер для публично известной уязвимости, например CVE-2018-18074.</dd><dt>SCA</dt><dd>Software Composition Analysis: проверка зависимостей по базе известных уязвимостей. Пример — pip-audit.</dd></dl><h2>Вопрос с собеседования</h2><h3>Как защитить Python-проект от атак через зависимости?</h3><p>Проверять имя и источник пакета: страницу на pypi.org, репозиторий, историю релизов, а внутренние пакеты брать только из внутреннего индекса. Держать отдельный venv на проект, закреплять точные версии с хешами и ставить с --require-hashes. Помнить, что сборка из исходников запускает код с правами пользователя: предпочитать wheel-файлы и ставить зависимости там, где нет секретов. Запускать SCA вроде pip-audit в CI и регулярно обновлять закреплённые версии.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/python/","text":"Python для безопасника простыми словами: первый скрипт, pip, venv и атаки через пакеты"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"20"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

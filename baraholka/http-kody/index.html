@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Коды ответа HTTP шпаргалка: 2xx, 3xx, 4xx, 5xx — CyberComics</title>
+<meta name="description" content="Шпаргалка по кодам ответа HTTP: 2xx, 3xx, 4xx и 5xx, чем 401 отличается от 403 и что коды ответа говорят о безопасности сайта.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/baraholka/http-kody/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Коды ответа HTTP шпаргалка: 2xx, 3xx, 4xx, 5xx — CyberComics">
+<meta property="og:description" content="Шпаргалка по кодам ответа HTTP: 2xx, 3xx, 4xx и 5xx, чем 401 отличается от 403 и что коды ответа говорят о безопасности сайта.">
+<meta property="og:url" content="https://cybercomics.ru/baraholka/http-kody/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/baraholka-http-kody.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Коды ответа HTTP шпаргалка: 2xx, 3xx, 4xx, 5xx — CyberComics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Коды ответа HTTP шпаргалка: 2xx, 3xx, 4xx, 5xx — CyberComics">
+<meta name="twitter:description" content="Шпаргалка по кодам ответа HTTP: 2xx, 3xx, 4xx и 5xx, чем 401 отличается от 403 и что коды ответа говорят о безопасности сайта.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/baraholka-http-kody.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"LearningResource","@id":"https://cybercomics.ru/baraholka/http-kody/#resource","url":"https://cybercomics.ru/baraholka/http-kody/","mainEntityOfPage":"https://cybercomics.ru/baraholka/http-kody/","name":"HTTP-коды: шпаргалка","description":"Шпаргалка по кодам ответа HTTP: 2xx, 3xx, 4xx и 5xx, чем 401 отличается от 403 и что коды ответа говорят о безопасности сайта.","inLanguage":"ru","dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"learningResourceType":"шпаргалка","about":{"@type":"Thing","name":"Коды состояния HTTP"},"educationalLevel":"начальный","audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"},"image":["https://cybercomics.ru/assets/og/baraholka-http-kody.jpg"]},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/baraholka/http-kody/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Барахолка","item":"https://cybercomics.ru/baraholka/"},{"@type":"ListItem","position":3,"name":"HTTP-коды: шпаргалка","item":"https://cybercomics.ru/baraholka/http-kody/"}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div class="bh">
+
+  <header class="bh-hd mn-chrome">
+    <a class="bh-logo" href="../../">Cyber<span>Comics</span></a>
+    <nav class="bh-nav" aria-label="Основная навигация">
+      <a href="../../#vypuski">Выпуски</a>
+      <a href="../../">Город</a>
+      <a href="../../povtorenie/">Прокачаться</a>
+      <a href="../../arkada/">Разминка</a>
+      <a href="../../baraholka/" aria-current="page">Барахолка</a>
+    </nav>
+    <div class="bh-me">
+      
+      <span class="bh-chip">0 бит</span>
+    </div>
+  </header>
+
+  <div class="mn-wrap">
+    <a class="mn-crumb mn-chrome" href="../../baraholka/#shpargalki">← на Барахолку</a>
+
+    <div class="mn-top mn-chrome">
+      <div>
+        <span class="mn-kind">Шпаргалка · HTTP</span>
+        <h1 class="mn-title">HTTP-коды на одном листе</h1>
+        <p class="mn-sub">Все коды ответов, которые встретишь в жизни, и что каждый говорит о безопасности.</p>
+      </div>
+      
+      
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+          <p>Ниже — начало листа. Купи, и откроется всё. Распечатать тоже можно.</p>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-top">Не хватает 120 бит</button>
+          <div id="mn-short-top" style="width: 100%">
+            
+          </div>
+        </div>
+      
+    </div>
+
+    <nav class="mn-toc mn-chrome" aria-label="Оглавление" id="mn-toc">
+      <h2>Что внутри</h2>
+      <ol>
+        
+          <li><a href="#hc-1">Как читать код · 1xx, 2xx и 3xx</a></li>
+        
+          <li><span class="lk">4xx, 5xx и что коды говорят о безопасности</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+      </ol>
+    </nav>
+
+    <div id="mn-host" class="mn-book is-preview" data-keep="">
+<!-- Шпаргалка Барахолки: HTTP-коды ответов. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="hc-1" data-title="Как читать код · 1xx, 2xx и 3xx" data-preview="">
+  <span class="mn-tag">Шпаргалка · HTTP</span>
+  <h2 class="mn-h1">HTTP-коды на одном листе</h2>
+  <p class="pen">Сервер на каждый запрос отвечает трёхзначным числом. Первая цифра — это уже половина ответа.</p>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Первая цифра</th><th>Смысл</th></tr></thead>
+    <tbody>
+      <tr><td><b>1xx</b></td><td>Информация: «принял, продолжай».</td></tr>
+      <tr><td><b>2xx</b></td><td><span class="mk g">Успех.</span></td></tr>
+      <tr><td><b>3xx</b></td><td>Перенаправление: «тебе туда».</td></tr>
+      <tr><td><b>4xx</b></td><td><span class="mk">Ошибка клиента:</span> что-то не так с запросом.</td></tr>
+      <tr><td><b>5xx</b></td><td><span class="mk p">Ошибка сервера:</span> сломалось у него.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">1xx и 2xx</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code class="nw">101</code></td><td>Switching Protocols — переходим на другой протокол, например на WebSocket.</td></tr>
+      <tr><td><code class="nw">200</code></td><td>OK — всё хорошо, вот ответ.</td></tr>
+      <tr><td><code class="nw">201</code></td><td>Created — создал новую запись (после POST).</td></tr>
+      <tr><td><code class="nw">204</code></td><td>No Content — сделал, но показать нечего (часто после DELETE).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">3xx — перенаправления</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code class="nw">301</code></td><td>Moved Permanently — переехал навсегда. Поисковики запомнят новый адрес.</td></tr>
+      <tr><td><code class="nw">302</code></td><td>Found — временно смотри в другом месте. Классика после входа на сайт.</td></tr>
+      <tr><td><code class="nw">304</code></td><td>Not Modified — не изменилось, бери из своего кэша.</td></tr>
+      <tr><td><code class="nw">307</code> / <code class="nw">308</code></td><td>Временный / постоянный переезд, но метод и тело запроса не меняются.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>Если сайт перенаправляет на адрес из параметра <code class="nw">?next=</code> без проверки, это «открытый редирект»: им заманивают на поддельные страницы. Перенаправлять — только на свои адреса.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+
+</div>
+
+    
+      <section class="mn-locked mn-chrome" aria-labelledby="mn-lock-h">
+        <h2 id="mn-lock-h">Дальше ещё 1 страница</h2>
+        <p>Здесь кончается открытый разворот. Целый лист стоит 120 бит: это примерно 2–3 выпусков с квизами.</p>
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>120 бит</b><small>ещё 120</small></span>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-bottom">Не хватает 120 бит</button>
+          <div id="mn-short-bottom" style="width: 100%; text-align: left">
+            
+          </div>
+        </div>
+      </section>
+    
+
+    
+  </div>
+
+  <footer class="bh-ft mn-chrome">
+    CyberComics · Сетеград, ночной рынок · Покупки за биты хранятся в этом браузере.<br>
+    Тренируйся только легально: <a href="https://picoctf.org" rel="noopener">picoCTF</a>, <a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Academy</a>, <a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a>, <a href="https://tryhackme.com" rel="noopener">TryHackMe</a>.
+  <div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+
+  
+</div></div>
+<template id="mn-src" data-id="http">
+<!-- Шпаргалка Барахолки: HTTP-коды ответов. Лист с двух сторон: лицевая сторона — превью. -->
+
+<section class="mn-page" id="hc-1" data-title="Как читать код · 1xx, 2xx и 3xx" data-preview>
+  <span class="mn-tag">Шпаргалка · HTTP</span>
+  <h2 class="mn-h1">HTTP-коды на одном листе</h2>
+  <p class="pen">Сервер на каждый запрос отвечает трёхзначным числом. Первая цифра — это уже половина ответа.</p>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Первая цифра</th><th>Смысл</th></tr></thead>
+    <tbody>
+      <tr><td><b>1xx</b></td><td>Информация: «принял, продолжай».</td></tr>
+      <tr><td><b>2xx</b></td><td><span class="mk g">Успех.</span></td></tr>
+      <tr><td><b>3xx</b></td><td>Перенаправление: «тебе туда».</td></tr>
+      <tr><td><b>4xx</b></td><td><span class="mk">Ошибка клиента:</span> что-то не так с запросом.</td></tr>
+      <tr><td><b>5xx</b></td><td><span class="mk p">Ошибка сервера:</span> сломалось у него.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">1xx и 2xx</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>101</code></td><td>Switching Protocols — переходим на другой протокол, например на WebSocket.</td></tr>
+      <tr><td><code>200</code></td><td>OK — всё хорошо, вот ответ.</td></tr>
+      <tr><td><code>201</code></td><td>Created — создал новую запись (после POST).</td></tr>
+      <tr><td><code>204</code></td><td>No Content — сделал, но показать нечего (часто после DELETE).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">3xx — перенаправления</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>301</code></td><td>Moved Permanently — переехал навсегда. Поисковики запомнят новый адрес.</td></tr>
+      <tr><td><code>302</code></td><td>Found — временно смотри в другом месте. Классика после входа на сайт.</td></tr>
+      <tr><td><code>304</code></td><td>Not Modified — не изменилось, бери из своего кэша.</td></tr>
+      <tr><td><code>307</code> / <code>308</code></td><td>Временный / постоянный переезд, но метод и тело запроса не меняются.</td></tr>
+    </tbody>
+  </table>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Если сайт перенаправляет на адрес из параметра <code>?next=</code> без проверки, это «открытый редирект»: им заманивают на поддельные страницы. Перенаправлять — только на свои адреса.</p>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="hc-2" data-title="4xx, 5xx и что коды говорят о безопасности">
+  <h3 class="mn-h3">4xx — ошибся клиент</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>400</code></td><td>Bad Request — запрос кривой, сервер его не понял.</td></tr>
+      <tr><td><code>401</code></td><td>Unauthorized — на деле «<b>кто ты?</b>»: не вошёл или токен не годится.</td></tr>
+      <tr><td><code>403</code></td><td>Forbidden — «<b>тебе нельзя</b>»: личность известна, прав нет.</td></tr>
+      <tr><td><code>404</code></td><td>Not Found — такого нет (или тебе не говорят, что есть).</td></tr>
+      <tr><td><code>405</code></td><td>Method Not Allowed — адрес есть, но не с этим методом (скажем, DELETE).</td></tr>
+      <tr><td><code>409</code></td><td>Conflict — конфликт с текущим состоянием, например имя уже занято.</td></tr>
+      <tr><td><code>418</code></td><td>I'm a teapot — шутка из первоапрельского RFC 2324 (1998). Настоящий чайник кофе не варит.</td></tr>
+      <tr><td><code>422</code></td><td>Unprocessable Content — формат верный, а данные не прошли проверку.</td></tr>
+      <tr><td><code>429</code></td><td>Too Many Requests — слишком часто, подожди. Так работает ограничение попыток.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mn-h3">5xx — сломался сервер</h3>
+  <table class="mn-tab wrap">
+    <tbody>
+      <tr><td><code>500</code></td><td>Internal Server Error — внутри что-то упало.</td></tr>
+      <tr><td><code>502</code></td><td>Bad Gateway — посредник (прокси) получил плохой ответ от сервера за ним.</td></tr>
+      <tr><td><code>503</code></td><td>Service Unavailable — перегружен или на обслуживании.</td></tr>
+      <tr><td><code>504</code></td><td>Gateway Timeout — посредник не дождался ответа.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-stick">
+    <h4>Коды и безопасность</h4>
+    <ul>
+      <li><b>401 и 403</b> — это A07 и A01 из OWASP: «кто ты?» и «что тебе можно?».</li>
+      <li>На чужой объект часто отвечают <b>404</b>, а не 403, чтобы не подтверждать, что он вообще существует.</li>
+      <li><b>429</b> — признак защиты от перебора паролей. Нет его на форме входа — повод задуматься.</li>
+      <li><b>500</b> с подробной ошибкой и путями к файлам на экране — подарок атакующему (A02, A10). Пользователю — короткое сообщение, подробности — в журнал.</li>
+    </ul>
+  </div>
+  <p class="pen">Посмотреть код ответа: в браузере F12 → вкладка «Сеть» (Network). Подробно про запросы и ответы — <a href="../../vypuski/http/">выпуск №1 про HTTP</a>.</p>
+  <span class="mn-pg">2</span>
+</section>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-manual.js?v=3ee64698"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/"};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("Manual", document.getElementById("app"), {"id":"http"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

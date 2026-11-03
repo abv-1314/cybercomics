@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://cybercomics.ru/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://cybercomics.ru/arkada/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/git/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/http-kody/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/linux/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/owasp/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/baraholka/porty/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/povtorenie/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/api/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/bash/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/csrf/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/dns/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/git/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/http/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/https-tls/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/idor/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/internet/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/ip/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/jwt/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/kriptografiya/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/linux/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/osi/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/owasp-top-10-2025/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/python/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/sekrety-v-git/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/sql-bazy/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/sql-injection/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/ssrf/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/tcp-udp-porty/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://cybercomics.ru/vypuski/xss/</loc><lastmod>2026-11-01</lastmod></url>
+</urlset>

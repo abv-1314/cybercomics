@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>Команды Git: шпаргалка-тетрадь для начинающих — CyberComics</title>
+<meta name="description" content="Шпаргалка команд Git для начинающих: init, add, commit, branch, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/baraholka/git/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Команды Git: шпаргалка-тетрадь для начинающих — CyberComics">
+<meta property="og:description" content="Шпаргалка команд Git для начинающих: init, add, commit, branch, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить.">
+<meta property="og:url" content="https://cybercomics.ru/baraholka/git/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/baraholka-git.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Команды Git: шпаргалка-тетрадь для начинающих — CyberComics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Команды Git: шпаргалка-тетрадь для начинающих — CyberComics">
+<meta name="twitter:description" content="Шпаргалка команд Git для начинающих: init, add, commit, branch, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/baraholka-git.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"LearningResource","@id":"https://cybercomics.ru/baraholka/git/#resource","url":"https://cybercomics.ru/baraholka/git/","mainEntityOfPage":"https://cybercomics.ru/baraholka/git/","name":"Git: тетрадь выживания","description":"Шпаргалка команд Git для начинающих: init, add, commit, branch, merge, push и pull, .gitignore, как откатить ошибку и почему секреты нельзя коммитить.","inLanguage":"ru","dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"learningResourceType":"методичка","about":{"@type":"Thing","name":"Git"},"educationalLevel":"начальный","audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"},"image":["https://cybercomics.ru/assets/og/baraholka-git.jpg"]},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/baraholka/git/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Барахолка","item":"https://cybercomics.ru/baraholka/"},{"@type":"ListItem","position":3,"name":"Git: тетрадь выживания","item":"https://cybercomics.ru/baraholka/git/"}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div class="bh">
+
+  <header class="bh-hd mn-chrome">
+    <a class="bh-logo" href="../../">Cyber<span>Comics</span></a>
+    <nav class="bh-nav" aria-label="Основная навигация">
+      <a href="../../#vypuski">Выпуски</a>
+      <a href="../../">Город</a>
+      <a href="../../povtorenie/">Прокачаться</a>
+      <a href="../../arkada/">Разминка</a>
+      <a href="../../baraholka/" aria-current="page">Барахолка</a>
+    </nav>
+    <div class="bh-me">
+      
+      <span class="bh-chip">0 бит</span>
+    </div>
+  </header>
+
+  <div class="mn-wrap">
+    <a class="mn-crumb mn-chrome" href="../../baraholka/#tetradi">← на Барахолку</a>
+
+    <div class="mn-top mn-chrome">
+      <div>
+        <span class="mn-kind">Тетрадь №1 · Git</span>
+        <h1 class="mn-title">Git: тетрадь выживания</h1>
+        <p class="mn-sub">Конспект друга-отличника: репозиторий, коммиты, ветки, merge, push и pull, как откатить ошибку и почему паролям не место в Git.</p>
+      </div>
+      
+      
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>350 бит</b><small>ещё 350</small></span>
+          <p>Ниже — первый разворот, его можно читать сразу. Купи, и откроется всё. Распечатать тоже можно.</p>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-top">Не хватает 350 бит</button>
+          <div id="mn-short-top" style="width: 100%">
+            
+          </div>
+        </div>
+      
+    </div>
+
+    <nav class="mn-toc mn-chrome" aria-label="Оглавление" id="mn-toc">
+      <h2>Что внутри</h2>
+      <ol>
+        
+          <li><a href="#git-1">Зачем Git и три зоны</a></li>
+        
+          <li><a href="#git-2">Коммит и первые команды</a></li>
+        
+          <li><span class="lk">Ветки и HEAD</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Merge и конфликт</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Remote, push и pull</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">.gitignore</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Аптечка: как откатить ошибку</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Почему секреты нельзя коммитить</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Шпаргалка команд: основа</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+          <li><span class="lk">Шпаргалка команд: сервер и откаты</span><i class="lk" style="font-style: normal; margin-left: auto; font-size: 16px; color: #bdb6da">закрыто</i></li>
+        
+      </ol>
+    </nav>
+
+    <div id="mn-host" class="mn-book is-preview" data-keep="">
+<!-- Методичка Барахолки: «Git: тетрадь выживания». Формат: листы .mn-page (стили — src/pages/Manual.dc.html).
+     data-title — пункт оглавления, data-preview — лист виден до покупки (первый разворот).
+     Ссылки на выпуски — IssueN.dc.html (build.js превращает их в адреса сайта). Скриптов нет. -->
+
+<section class="mn-page" id="git-1" data-title="Зачем Git и три зоны" data-preview="">
+  <span class="mn-tag">Тетрадь №1 · Git</span>
+  <h2 class="mn-h1">Git: тетрадь выживания</h2>
+  <p class="pen">Конспект для тех, у кого в папке лежит <span class="ul w">sapyor_final_v7_TOCHNO.zip</span>. Больше так не надо.</p>
+
+  <h3 class="mn-h3">Git в одну строчку</h3>
+  <p><b>Git</b> — программа, которая ведёт <span class="mk">журнал всех версий проекта</span>: кто, что, когда и зачем поменял. К любой версии можно вернуться, а вдвоём (и вдесятером) можно работать над одним кодом и не затирать друг друга.</p>
+
+  <h3 class="mn-h3">Словарик первой страницы</h3>
+  <ul>
+    <li><b>Репозиторий</b> (repo) — папка проекта плюс скрытая папка <code class="nw">.git</code>, где живёт вся история. Удалишь <code class="nw">.git</code> — удалишь историю.</li>
+    <li><b>Рабочая папка</b> — файлы, которые ты видишь и правишь прямо сейчас.</li>
+    <li><b>Индекс</b> (staging area) — «корзина на кассе»: сюда ты складываешь изменения, которые пойдут в следующий коммит.</li>
+    <li><b>Коммит</b> — сохранённый снимок проекта с подписью. Про него — следующая страница.</li>
+  </ul>
+
+  <figure class="mn-fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="Три зоны Git: рабочая папка, индекс и история. git add переносит изменения в индекс, git commit — из индекса в историю.">
+      <g fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round">
+        <path d="M14 70 q2 -6 8 -6 h150 q6 0 6 6 v110 q0 6 -6 6 h-150 q-8 0 -8 -6 z" fill="#fff"></path>
+        <path d="M236 68 q1 -5 7 -5 h150 q7 1 7 7 v110 q-1 6 -7 6 h-150 q-7 0 -7 -6 z" fill="#fff27a"></path>
+        <path d="M458 70 q1 -6 7 -6 h152 q6 0 6 6 v110 q0 6 -6 6 h-152 q-7 0 -7 -6 z" fill="#d5f8e6"></path>
+      </g>
+      <g font-size="36" fill="#1a1a1a" text-anchor="middle">
+        <text x="96" y="112">рабочая</text><text x="96" y="146">папка</text>
+        <text x="318" y="112">индекс</text><text x="318" y="146">(staging)</text>
+        <text x="541" y="112">история</text><text x="541" y="146">коммитов</text>
+      </g>
+      <g fill="none" stroke="#e8262b" stroke-width="3" stroke-linecap="round">
+        <path d="M150 58 C 190 34, 240 34, 270 58"></path><path d="M256 50 l14 8 l0 -16"></path>
+        <path d="M372 58 C 412 34, 462 34, 492 58"></path><path d="M478 50 l14 8 l0 -16"></path>
+      </g>
+      <g font-size="32" fill="#c4161c" text-anchor="middle">
+        <text x="210" y="24">git add</text><text x="432" y="24">git commit</text>
+      </g>
+      <g font-size="30" fill="#1f48b8" text-anchor="middle">
+        <text x="96" y="226">правишь тут</text><text x="318" y="226">готовишь</text><text x="541" y="226">навсегда</text>
+      </g>
+    </svg>
+    <figcaption>Изменение едет слева направо: правка → add → commit.</figcaption>
+  </figure>
+
+  <div class="mn-stick">
+    <h4>Зачем индекс, если можно сразу?</h4>
+    <p>Чтобы собирать <b>аккуратные коммиты</b>. Поправил кнопку и опечатку в README? Сделай два коммита: <code class="nw">git add</code> только нужный файл — и коммить его отдельно.</p>
+  </div>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="git-2" data-title="Коммит и первые команды" data-preview="">
+  <h2 class="mn-h2"><span class="mn-n">1</span>Коммит — это вагон</h2>
+  <p>Каждый коммит — <span class="mk">снимок всего проекта</span> плюс подпись: автор, время, сообщение и ссылка на предыдущий коммит. Коммиты сцепляются в цепочку, как вагоны в поезд (помнишь <a href="../../vypuski/git/">выпуск №18 про Git</a>?).</p>
+  <p>У каждого коммита есть <b>хеш</b> — отпечаток из 40 символов вроде <code class="nw">9e4b021c…</code>. Обычно хватает первых 7. Хеш считается из содержимого и из хеша предыдущего коммита, поэтому <span class="ul">тихо подменить старый коммит нельзя</span>: поменяешь хоть букву — у него и у всех следующих будут новые номера.</p>
+
+  <h3 class="mn-h3">Первый раз на компьютере</h3>
+  <pre class="mn-code"><span class="k">git config</span> --global \
+  user.name "Соня"
+<span class="k">git config</span> --global \
+  user.email "sonya@example.com"</pre>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path></svg>Это просто текст, который попадёт в коммиты. Проверки, что ты правда Соня, тут нет. Для этого есть подпись коммитов ключом.</p>
+
+  <h3 class="mn-h3">Цикл, который ты будешь делать сто раз в день</h3>
+  <pre class="mn-code"><span class="c"># сделать из папки репозиторий (один раз)</span>
+<span class="k">git init</span>
+<span class="c"># что поменялось? что в индексе?</span>
+<span class="k">git status</span>
+<span class="c"># положить файл в индекс</span>
+<span class="k">git add</span> game.js
+<span class="c"># сохранить снимок с подписью</span>
+<span class="k">git commit</span> -m "Мины: 12 вместо 10"
+<span class="c"># история, по строчке на коммит</span>
+<span class="k">git log</span> --oneline</pre>
+
+  <div class="mn-two">
+    <div class="mn-box">
+      <p><span class="mn-lbl">плохо:</span> <code class="nw">fix</code>, <code class="nw">asdf</code>, <code class="nw">правки</code></p>
+      <p class="pen r">Через месяц ты сам не поймёшь, что тут было.</p>
+    </div>
+    <div class="mn-box">
+      <p><span class="mn-lbl" style="color:#0b7a4b">хорошо:</span> <code>Счётчик мин не уходит в минус</code></p>
+      <p class="pen">Что изменилось и зачем. Коротко, как заголовок.</p>
+    </div>
+  </div>
+
+  <div class="mn-stick b">
+    <h4>Правило отличника</h4>
+    <p>Перед каждым коммитом — <code class="nw">git status</code> и <code class="nw">git diff --staged</code>. Две секунды, а ловят и случайный файл, и пароль, который чуть не уехал в историю.</p>
+  </div>
+  <span class="mn-pg">2</span>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+    
+      <section class="mn-locked mn-chrome" aria-labelledby="mn-lock-h">
+        <h2 id="mn-lock-h">Дальше ещё 8 страниц</h2>
+        <p>Здесь кончается открытый разворот. Вся тетрадь стоит 350 бит: это примерно 5–7 выпусков с квизами.</p>
+        <div class="mn-buy">
+          <span class="bh-tag" aria-hidden="true"><b>350 бит</b><small>ещё 350</small></span>
+          <button type="button" class="bh-btn poor" aria-expanded="false" aria-controls="mn-short-bottom">Не хватает 350 бит</button>
+          <div id="mn-short-bottom" style="width: 100%; text-align: left">
+            
+          </div>
+        </div>
+      </section>
+    
+
+    
+  </div>
+
+  <footer class="bh-ft mn-chrome">
+    CyberComics · Сетеград, ночной рынок · Покупки за биты хранятся в этом браузере.<br>
+    Тренируйся только легально: <a href="https://picoctf.org" rel="noopener">picoCTF</a>, <a href="https://portswigger.net/web-security" rel="noopener">PortSwigger Academy</a>, <a href="https://owasp.org/www-project-juice-shop/" rel="noopener">OWASP Juice Shop</a>, <a href="https://tryhackme.com" rel="noopener">TryHackMe</a>.
+  <div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+
+  
+</div></div>
+<template id="mn-src" data-id="git">
+<!-- Методичка Барахолки: «Git: тетрадь выживания». Формат: листы .mn-page (стили — src/pages/Manual.dc.html).
+     data-title — пункт оглавления, data-preview — лист виден до покупки (первый разворот).
+     Ссылки на выпуски — IssueN.dc.html (build.js превращает их в адреса сайта). Скриптов нет. -->
+
+<section class="mn-page" id="git-1" data-title="Зачем Git и три зоны" data-preview>
+  <span class="mn-tag">Тетрадь №1 · Git</span>
+  <h2 class="mn-h1">Git: тетрадь выживания</h2>
+  <p class="pen">Конспект для тех, у кого в папке лежит <span class="ul w">sapyor_final_v7_TOCHNO.zip</span>. Больше так не надо.</p>
+
+  <h3 class="mn-h3">Git в одну строчку</h3>
+  <p><b>Git</b> — программа, которая ведёт <span class="mk">журнал всех версий проекта</span>: кто, что, когда и зачем поменял. К любой версии можно вернуться, а вдвоём (и вдесятером) можно работать над одним кодом и не затирать друг друга.</p>
+
+  <h3 class="mn-h3">Словарик первой страницы</h3>
+  <ul>
+    <li><b>Репозиторий</b> (repo) — папка проекта плюс скрытая папка <code>.git</code>, где живёт вся история. Удалишь <code>.git</code> — удалишь историю.</li>
+    <li><b>Рабочая папка</b> — файлы, которые ты видишь и правишь прямо сейчас.</li>
+    <li><b>Индекс</b> (staging area) — «корзина на кассе»: сюда ты складываешь изменения, которые пойдут в следующий коммит.</li>
+    <li><b>Коммит</b> — сохранённый снимок проекта с подписью. Про него — следующая страница.</li>
+  </ul>
+
+  <figure class="mn-fig">
+    <svg viewBox="0 0 640 250" role="img" aria-label="Три зоны Git: рабочая папка, индекс и история. git add переносит изменения в индекс, git commit — из индекса в историю.">
+      <g fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round">
+        <path d="M14 70 q2 -6 8 -6 h150 q6 0 6 6 v110 q0 6 -6 6 h-150 q-8 0 -8 -6 z" fill="#fff"/>
+        <path d="M236 68 q1 -5 7 -5 h150 q7 1 7 7 v110 q-1 6 -7 6 h-150 q-7 0 -7 -6 z" fill="#fff27a"/>
+        <path d="M458 70 q1 -6 7 -6 h152 q6 0 6 6 v110 q0 6 -6 6 h-152 q-7 0 -7 -6 z" fill="#d5f8e6"/>
+      </g>
+      <g font-size="36" fill="#1a1a1a" text-anchor="middle">
+        <text x="96" y="112">рабочая</text><text x="96" y="146">папка</text>
+        <text x="318" y="112">индекс</text><text x="318" y="146">(staging)</text>
+        <text x="541" y="112">история</text><text x="541" y="146">коммитов</text>
+      </g>
+      <g fill="none" stroke="#e8262b" stroke-width="3" stroke-linecap="round">
+        <path d="M150 58 C 190 34, 240 34, 270 58"/><path d="M256 50 l14 8 l0 -16"/>
+        <path d="M372 58 C 412 34, 462 34, 492 58"/><path d="M478 50 l14 8 l0 -16"/>
+      </g>
+      <g font-size="32" fill="#c4161c" text-anchor="middle">
+        <text x="210" y="24">git add</text><text x="432" y="24">git commit</text>
+      </g>
+      <g font-size="30" fill="#1f48b8" text-anchor="middle">
+        <text x="96" y="226">правишь тут</text><text x="318" y="226">готовишь</text><text x="541" y="226">навсегда</text>
+      </g>
+    </svg>
+    <figcaption>Изменение едет слева направо: правка → add → commit.</figcaption>
+  </figure>
+
+  <div class="mn-stick">
+    <h4>Зачем индекс, если можно сразу?</h4>
+    <p>Чтобы собирать <b>аккуратные коммиты</b>. Поправил кнопку и опечатку в README? Сделай два коммита: <code>git add</code> только нужный файл — и коммить его отдельно.</p>
+  </div>
+  <span class="mn-pg">1</span>
+</section>
+
+<section class="mn-page" id="git-2" data-title="Коммит и первые команды" data-preview>
+  <h2 class="mn-h2"><span class="mn-n">1</span>Коммит — это вагон</h2>
+  <p>Каждый коммит — <span class="mk">снимок всего проекта</span> плюс подпись: автор, время, сообщение и ссылка на предыдущий коммит. Коммиты сцепляются в цепочку, как вагоны в поезд (помнишь <a href="../../vypuski/git/">выпуск №18 про Git</a>?).</p>
+  <p>У каждого коммита есть <b>хеш</b> — отпечаток из 40 символов вроде <code>9e4b021c…</code>. Обычно хватает первых 7. Хеш считается из содержимого и из хеша предыдущего коммита, поэтому <span class="ul">тихо подменить старый коммит нельзя</span>: поменяешь хоть букву — у него и у всех следующих будут новые номера.</p>
+
+  <h3 class="mn-h3">Первый раз на компьютере</h3>
+  <pre class="mn-code"><span class="k">git config</span> --global \
+  user.name "Соня"
+<span class="k">git config</span> --global \
+  user.email "sonya@example.com"</pre>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Это просто текст, который попадёт в коммиты. Проверки, что ты правда Соня, тут нет. Для этого есть подпись коммитов ключом.</p>
+
+  <h3 class="mn-h3">Цикл, который ты будешь делать сто раз в день</h3>
+  <pre class="mn-code"><span class="c"># сделать из папки репозиторий (один раз)</span>
+<span class="k">git init</span>
+<span class="c"># что поменялось? что в индексе?</span>
+<span class="k">git status</span>
+<span class="c"># положить файл в индекс</span>
+<span class="k">git add</span> game.js
+<span class="c"># сохранить снимок с подписью</span>
+<span class="k">git commit</span> -m "Мины: 12 вместо 10"
+<span class="c"># история, по строчке на коммит</span>
+<span class="k">git log</span> --oneline</pre>
+
+  <div class="mn-two">
+    <div class="mn-box">
+      <p><span class="mn-lbl">плохо:</span> <code>fix</code>, <code>asdf</code>, <code>правки</code></p>
+      <p class="pen r">Через месяц ты сам не поймёшь, что тут было.</p>
+    </div>
+    <div class="mn-box">
+      <p><span class="mn-lbl" style="color:#0b7a4b">хорошо:</span> <code>Счётчик мин не уходит в минус</code></p>
+      <p class="pen">Что изменилось и зачем. Коротко, как заголовок.</p>
+    </div>
+  </div>
+
+  <div class="mn-stick b">
+    <h4>Правило отличника</h4>
+    <p>Перед каждым коммитом — <code>git status</code> и <code>git diff --staged</code>. Две секунды, а ловят и случайный файл, и пароль, который чуть не уехал в историю.</p>
+  </div>
+  <span class="mn-pg">2</span>
+</section>
+
+<section class="mn-page" id="git-3" data-title="Ветки и HEAD">
+  <h2 class="mn-h2"><span class="mn-n">2</span>Ветка — это закладка</h2>
+  <p><b>Ветка</b> — не копия проекта, а <span class="mk">подвижная табличка</span> на последнем коммите линии. Сделал новый коммит — табличка сама переехала на него. Поэтому ветки в Git дешёвые: создавай сколько хочешь.</p>
+  <p><b>HEAD</b> — «ты здесь» на карте: на какой ветке ты сейчас стоишь. Главная ветка обычно называется <code>main</code> (в старых проектах — <code>master</code>).</p>
+
+  <figure class="mn-fig">
+    <svg viewBox="0 0 640 230" role="img" aria-label="Схема: ветка main с тремя коммитами, от второго ответвляется ветка zvuk с двумя коммитами. HEAD указывает на zvuk.">
+      <g fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round">
+        <path d="M60 150 H 420"/>
+        <path d="M200 150 C 240 150, 250 70, 300 70 H 470"/>
+      </g>
+      <g stroke="#1a1a1a" stroke-width="3">
+        <circle cx="60" cy="150" r="17" fill="#fff"/><circle cx="200" cy="150" r="17" fill="#fff"/><circle cx="420" cy="150" r="17" fill="#fff"/>
+        <circle cx="330" cy="70" r="17" fill="#ffc4df"/><circle cx="470" cy="70" r="17" fill="#ffc4df"/>
+      </g>
+      <g font-size="30" fill="#1a1a1a">
+        <text x="400" y="210">main</text>
+        <text x="510" y="78">zvuk</text>
+      </g>
+      <g fill="none" stroke="#e8262b" stroke-width="3" stroke-linecap="round">
+        <path d="M420 192 V 172"/><path d="M412 180 l8 -10 l8 10"/>
+        <path d="M600 30 C 590 50, 560 60, 535 64"/><path d="M548 54 l-14 10 l16 6"/>
+      </g>
+      <text x="566" y="26" font-size="32" fill="#c4161c">HEAD</text>
+      <text x="30" y="40" font-size="30" fill="#1f48b8">коммиты — кружки,</text>
+      <text x="30" y="72" font-size="30" fill="#1f48b8">ветки — таблички</text>
+    </svg>
+    <figcaption>Соня делает звук в своей ветке, main при этом не трогается.</figcaption>
+  </figure>
+
+  <pre class="mn-code"><span class="c"># создать ветку zvuk и перейти в неё</span>
+<span class="k">git switch</span> -c zvuk
+<span class="c"># вернуться в main</span>
+<span class="k">git switch</span> main
+<span class="c"># список веток, текущая со звёздочкой</span>
+<span class="k">git branch</span></pre>
+  <p class="pen">В старых шпаргалках вместо <code>switch</code> пишут <code>git checkout</code>. Работает тоже, но <code>switch</code> понятнее: он только переключает ветки.</p>
+
+  <div class="mn-stick g">
+    <h4>Зачем ветки</h4>
+    <p>Эксперимент сломался — просто бросаешь ветку. А <code>main</code> всё это время оставался рабочим. В командах в <code>main</code> вообще не пишут напрямую: только через ветку и pull request с ревью.</p>
+  </div>
+  <span class="mn-pg">3</span>
+</section>
+
+<section class="mn-page" id="git-4" data-title="Merge и конфликт">
+  <h2 class="mn-h2"><span class="mn-n">3</span>Merge: сливаем ветки</h2>
+  <p><b>Merge</b> (слияние) забирает коммиты другой ветки в текущую. Встаёшь туда, <span class="ul">куда</span> вливаешь, и называешь, <span class="ul">что</span> вливаешь:</p>
+  <pre class="mn-code"><span class="k">git switch</span> main
+<span class="k">git merge</span> zvuk</pre>
+  <ul>
+    <li><b>Fast-forward</b> — в main ничего нового не было, табличка main просто переехала вперёд.</li>
+    <li><b>Коммит слияния</b> — обе ветки ушли вперёд, Git склеил их новым коммитом с двумя «родителями».</li>
+  </ul>
+
+  <h3 class="mn-h3">Конфликт — это не авария</h3>
+  <p>Если двое поменяли <span class="mk p">одну и ту же строку</span> по-разному, Git не будет угадывать. Он остановится и покажет обе версии прямо в файле:</p>
+  <pre class="mn-code"><span class="x">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+const MINES = 15; <span class="c">// Петя</span>
+<span class="x">=======</span>
+const MINES = 12; <span class="c">// Соня</span>
+<span class="x">&gt;&gt;&gt;&gt;&gt;&gt;&gt; zvuk</span></pre>
+  <ol>
+    <li>Открой файл, реши, что правильно (можно взять одно, другое или сделать третье).</li>
+    <li><b>Удали</b> строки-маркеры <code>&lt;&lt;&lt;</code>, <code>===</code>, <code>&gt;&gt;&gt;</code>.</li>
+    <li><code>git add game.js</code>, потом <code>git commit</code> — слияние закончено.</li>
+  </ol>
+  <p class="mn-note r"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 28 C 16 6, 34 4, 52 14 M40 6 l12 8 l-10 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Испугался? <code>git merge --abort</code> вернёт всё, как было до merge.</p>
+
+  <div class="mn-stick">
+    <h4>Конфликтов меньше, если</h4>
+    <p>ветки короткие (день-два, а не месяц), ты часто забираешь свежий main и договариваешься в команде, кто какой файл трогает.</p>
+  </div>
+  <span class="mn-pg">4</span>
+</section>
+
+<section class="mn-page" id="git-5" data-title="Remote, push и pull">
+  <h2 class="mn-h2"><span class="mn-n">4</span>Remote: копия на сервере</h2>
+  <p><b>Remote</b> — удалённый репозиторий на GitHub, GitLab или своём сервере. Главный обычно зовётся <code>origin</code>. Пролил чай на ноутбук — код цел. И у каждого в команде <span class="mk">полная копия со всей историей</span>.</p>
+
+  <figure class="mn-fig">
+    <svg viewBox="0 0 640 220" role="img" aria-label="Схема: слева твой компьютер, справа сервер origin. push отправляет коммиты на сервер, pull и fetch забирают с сервера, clone скачивает всё один раз.">
+      <g fill="none" stroke="#1a1a1a" stroke-width="3">
+        <path d="M20 60 h170 q8 0 8 8 v100 q0 8 -8 8 h-170 q-8 0 -8 -8 v-100 q0 -8 8 -8 z" fill="#fff"/>
+        <path d="M450 60 h170 q8 0 8 8 v100 q0 8 -8 8 h-170 q-8 0 -8 -8 v-100 q0 -8 8 -8 z" fill="#d4efff"/>
+      </g>
+      <g font-size="36" text-anchor="middle" fill="#1a1a1a"><text x="105" y="112">твой</text><text x="105" y="146">компьютер</text><text x="535" y="112">origin</text><text x="535" y="146">(сервер)</text></g>
+      <g fill="none" stroke="#e8262b" stroke-width="3" stroke-linecap="round">
+        <path d="M215 84 H 425"/><path d="M412 74 l14 10 l-14 10"/>
+        <path d="M425 150 H 215"/><path d="M228 140 l-14 10 l14 10"/>
+      </g>
+      <g font-size="32" text-anchor="middle"><text x="320" y="70" fill="#c4161c">git push →</text><text x="320" y="196" fill="#1f48b8">← git pull / fetch</text></g>
+      <text x="320" y="30" font-size="28" text-anchor="middle" fill="#5b5548">clone — скачать всё один раз</text>
+    </svg>
+  </figure>
+
+  <table class="mn-tab">
+    <thead><tr><th>Команда</th><th>Что делает</th></tr></thead>
+    <tbody>
+      <tr><td><code>git clone URL</code></td><td>Скачать репозиторий целиком, с историей. Remote <code>origin</code> настроится сам.</td></tr>
+      <tr><td><code>git fetch</code></td><td>Узнать, что нового на сервере. Твои файлы не трогает.</td></tr>
+      <tr><td><code>git pull</code></td><td>fetch + слияние с твоей веткой. Забрал и применил.</td></tr>
+      <tr><td><code>git push</code></td><td>Отправить твои коммиты на сервер.</td></tr>
+      <tr><td><code>git push -u origin zvuk</code></td><td>Первый push новой ветки. <code>-u</code> запоминает пару «моя ветка ↔ ветка на сервере», дальше хватит <code>git push</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-warn">
+    <h4>push отказал? Это защита, а не вредность</h4>
+    <p>Значит, на сервере есть коммиты, которых нет у тебя. Сделай <code>git pull</code>, разберись с конфликтами, потом <code>git push</code>. <b>Не</b> лечи это через <code>--force</code>: так стираются чужие коммиты. Злодей выпуска №18 так и делал.</p>
+  </div>
+  <span class="mn-pg">5</span>
+</section>
+
+<section class="mn-page" id="git-6" data-title=".gitignore">
+  <h2 class="mn-h2"><span class="mn-n">5</span>.gitignore: не бери это в вагон</h2>
+  <p>Файл <code>.gitignore</code> в корне проекта — список того, что Git <span class="mk">не должен замечать</span>: секреты, библиотеки, сборки, журналы, мусор редактора.</p>
+  <pre class="mn-code"><span class="c"># секреты и локальные настройки</span>
+.env
+*.pem
+<span class="c"># то, что можно скачать или собрать заново</span>
+node_modules/
+build/
+<span class="c"># журналы, но один пример оставим</span>
+*.log
+!example.log
+<span class="c"># только папка tmp в корне, не во вложенных</span>
+/tmp/</pre>
+
+  <table class="mn-tab wrap">
+    <thead><tr><th>Запись</th><th>Значит</th></tr></thead>
+    <tbody>
+      <tr><td><code>#</code></td><td>Комментарий.</td></tr>
+      <tr><td><code>*.log</code></td><td>Все файлы, которые кончаются на <code>.log</code>, в любой папке.</td></tr>
+      <tr><td><code>build/</code></td><td>Слэш в конце: только папки с таким именем.</td></tr>
+      <tr><td><code>/tmp/</code></td><td>Слэш в начале: только в корне проекта.</td></tr>
+      <tr><td><code>!example.log</code></td><td>Восклицательный знак: «а вот этот всё-таки бери».</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-warn">
+    <h4>Главная ловушка</h4>
+    <p><code>.gitignore</code> работает только для файлов, которые Git <b>ещё не отслеживает</b>. Если <code>.env</code> уже был в коммите, запись в <code>.gitignore</code> его из истории не уберёт. Перестать отслеживать файл (сам файл останется у тебя на диске):</p>
+    <pre class="mn-code"><span class="k">git rm</span> --cached .env
+<span class="k">git commit</span> -m "Не отслеживать .env"</pre>
+    <p>А если в том файле был пароль или ключ, его надо считать украденным. Это страница 8.</p>
+  </div>
+
+  <p class="pen">Лайфхак: заведи <code>.env.example</code> с именами переменных без значений. Его коммитить можно и нужно, чтобы команда знала, что заполнить.</p>
+  <span class="mn-pg">6</span>
+</section>
+
+<section class="mn-page" id="git-7" data-title="Аптечка: как откатить ошибку">
+  <h2 class="mn-h2"><span class="mn-n">6</span>Аптечка: «я всё сломал»</h2>
+  <p class="pen">Сначала вдохни. В Git почти всё, что было закоммичено, можно вернуть. Найди свою беду в таблице.</p>
+  <table class="mn-tab wrap">
+    <thead><tr><th>Беда</th><th>Лекарство</th></tr></thead>
+    <tbody>
+      <tr><td>Испортил файл, ещё не делал add</td><td><code>git restore game.js</code> — вернёт версию из последнего коммита. <b>Твои правки в нём пропадут.</b></td></tr>
+      <tr><td>Сделал add не тому файлу</td><td><code>git restore --staged game.js</code> — вынет из индекса, правки останутся.</td></tr>
+      <tr><td>Опечатка в сообщении последнего коммита или забыл файл</td><td><code>git add забытый.js</code>, потом <code>git commit --amend</code>. Только если ещё <b>не</b> делал push.</td></tr>
+      <tr><td>Последний коммит был лишним, push ещё не делал</td><td><code>git reset --soft HEAD~1</code> — коммит исчезнет, правки останутся в индексе.</td></tr>
+      <tr><td>Плохой коммит уже на сервере</td><td><code>git revert a1b2c3d</code> — новый коммит, который отменяет тот. История не переписывается, команде ничего не ломаешь.</td></tr>
+      <tr><td>Сделал reset и потерял коммит</td><td><code>git reflog</code> — журнал всех мест, где был HEAD. Найди хеш и сделай <code>git switch -c spasenie хеш</code>.</td></tr>
+      <tr><td>Надо срочно переключиться, а работа не закончена</td><td><code>git stash</code> — спрятать правки, <code>git stash pop</code> — достать обратно.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="mn-two">
+    <div class="mn-stick g">
+      <h4>revert = безопасно</h4>
+      <p>Добавляет коммит-«антидот». Подходит для всего, что уже ушло на сервер.</p>
+    </div>
+    <div class="mn-stick p">
+      <h4>reset --hard = опасно</h4>
+      <p>Стирает незакоммиченные правки без корзины. Их не вернёт даже reflog. Прежде чем нажать Enter, сделай <code>git status</code>.</p>
+    </div>
+  </div>
+  <p class="mn-note"><svg viewBox="0 0 58 34" aria-hidden="true"><path d="M4 6 C 18 30, 36 30, 52 18 M42 14 l10 4 l-6 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><code>HEAD~1</code> — «коммит перед текущим», <code>HEAD~2</code> — на два назад.</p>
+  <span class="mn-pg">7</span>
+</section>
+
+<section class="mn-page" id="git-8" data-title="Почему секреты нельзя коммитить">
+  <h2 class="mn-h2"><span class="mn-n">7</span>Секреты в Git: вечный багаж</h2>
+  <p><b>Секрет</b> — всё, что открывает доступ: пароль от базы, ключ от облака или API, токен бота, приватный ключ. Его место — не в коде.</p>
+
+  <h3 class="mn-h3">Почему «удалю файл — и всё» не работает</h3>
+  <ol>
+    <li>Коммит без файла — это <span class="mk p">новый вагон</span>. Старый, с ключом, так и едет в истории.</li>
+    <li>Историю уже скачали все, кто делал <code>clone</code> или <code>pull</code>, а ещё форки и копии.</li>
+    <li>Публичные репозитории постоянно читают боты, которые ищут ключи. Найти свежий ключ им хватает минут.</li>
+  </ol>
+
+  <div class="mn-warn">
+    <h4>Ключ утёк? Порядок действий</h4>
+    <ol>
+      <li><b>Отозвать и заменить ключ.</b> Сразу, это шаг номер один.</li>
+      <li>Проверить журналы: пользовался ли кто-то ключом и что успел сделать.</li>
+      <li>Убрать последствия: чужие ресурсы, лишние доступы.</li>
+      <li>Почистить историю (например, <code>git filter-repo</code>). Это уборка, а не защита: копии уже есть.</li>
+      <li>Поставить контроль, чтобы не повторилось.</li>
+    </ol>
+  </div>
+
+  <h3 class="mn-h3">Как не допустить</h3>
+  <ul>
+    <li>Секреты — в переменных окружения или в хранилище секретов. В коде только <span class="ul">имя</span>: <code>process.env.DB_PASSWORD</code>.</li>
+    <li><code>.env</code> — в <code>.gitignore</code> с первого дня проекта.</li>
+    <li>Проверка перед коммитом (pre-commit hook, например <b>gitleaks</b>) и поиск секретов в CI. Хук живёт только на твоём компьютере и обходится флагом <code>--no-verify</code>, поэтому вторая линия в CI обязательна.</li>
+    <li>На GitHub можно включить secret scanning и push protection: сервер сам остановит push с похожим на ключ текстом.</li>
+  </ul>
+  <div class="mn-stick b">
+    <h4>Это целый выпуск</h4>
+    <p>Как Соня слила ключ от облака в пятницу вечером и как двенадцать постов конвейера его ловят — в <a href="../../vypuski/sekrety-v-git/">выпуске №8 «Секреты в Git»</a>.</p>
+  </div>
+  <span class="mn-pg">8</span>
+</section>
+
+<section class="mn-page" id="git-9" data-title="Шпаргалка команд: основа">
+  <h2 class="mn-h2"><span class="mn-n">8</span>Шпаргалка: каждый день</h2>
+  <p class="pen">Каждая команда с расшифровкой флагов. Слова в <code>&lt;скобках&gt;</code> замени на своё.</p>
+
+  <div class="mn-cmd"><code>git status -s</code>
+    <p>Что изменилось и что лежит в индексе.</p>
+    <ul><li><code>-s</code> (short) — коротко, по строчке на файл: <code>M</code> изменён, <code>A</code> добавлен, <code>??</code> Git о нём не знает.</li></ul></div>
+
+  <div class="mn-cmd"><code>git add &lt;файл&gt;</code> · <code>git add -p</code>
+    <p>Положить изменения в индекс.</p>
+    <ul><li><code>-p</code> (patch) — показывает правки по кусочкам и спрашивает про каждый: <code>y</code> взять, <code>n</code> пропустить. Лучший способ собирать аккуратные коммиты.</li>
+    <li><code>git add .</code> — всё в текущей папке. Удобно, но сначала посмотри <code>status</code>.</li></ul></div>
+
+  <div class="mn-cmd"><code>git commit -m "&lt;сообщение&gt;"</code>
+    <ul><li><code>-m</code> (message) — сообщение прямо в команде. Без него откроется редактор.</li>
+    <li><code>--amend</code> — переделать последний коммит (только до push).</li></ul></div>
+
+  <div class="mn-cmd"><code>git diff</code> · <code>git diff --staged</code>
+    <ul><li>Без флагов — что поменялось, но ещё не в индексе.</li>
+    <li><code>--staged</code> — что уже в индексе и уйдёт в коммит.</li></ul></div>
+
+  <div class="mn-cmd"><code>git log --oneline --graph --all</code>
+    <ul><li><code>--oneline</code> — по строчке на коммит: короткий хеш и сообщение.</li>
+    <li><code>--graph</code> — рисует ветки и слияния палочками.</li>
+    <li><code>--all</code> — показать все ветки, а не только текущую.</li></ul></div>
+
+  <div class="mn-cmd"><code>git switch -c &lt;ветка&gt;</code>
+    <ul><li><code>-c</code> (create) — создать ветку и сразу перейти. Без <code>-c</code> — просто перейти.</li></ul></div>
+
+  <div class="mn-cmd"><code>git branch -d &lt;ветка&gt;</code>
+    <ul><li><code>-d</code> — удалить ветку, если она уже влита. Git не даст потерять работу.</li>
+    <li><code>-D</code> — удалить в любом случае. Большая буква — большая ответственность.</li></ul></div>
+  <span class="mn-pg">9</span>
+</section>
+
+<section class="mn-page" id="git-10" data-title="Шпаргалка команд: сервер и откаты">
+  <h2 class="mn-h2"><span class="mn-n">9</span>Шпаргалка: сервер и откаты</h2>
+
+  <div class="mn-cmd"><code>git clone &lt;адрес&gt; &lt;папка&gt;</code>
+    <ul><li>Папку можно не писать: возьмётся имя репозитория.</li></ul></div>
+
+  <div class="mn-cmd"><code>git pull</code> · <code>git pull --rebase</code>
+    <ul><li>Обычный pull сливает изменения с сервера с твоими (может появиться коммит слияния).</li>
+    <li><code>--rebase</code> — переставляет твои ещё не отправленные коммиты поверх свежих с сервера. История получается ровной линией.</li></ul></div>
+
+  <div class="mn-cmd"><code>git push -u origin &lt;ветка&gt;</code>
+    <ul><li><code>origin</code> — куда отправить, <code>&lt;ветка&gt;</code> — что отправить.</li>
+    <li><code>-u</code> (set upstream) — запомнить связь, дальше хватит <code>git push</code>.</li></ul></div>
+
+  <div class="mn-cmd"><code>git push --force-with-lease</code>
+    <ul><li>Иногда переписать ветку на сервере нужно, например свою личную ветку после rebase. Этот флаг откажет, если там появились чужие коммиты, которых ты не видел. Голый <code>--force</code> сотрёт их молча.</li>
+    <li>В <code>main</code> — никогда. Пусть защита ветки на сервере это запрещает.</li></ul></div>
+
+  <div class="mn-cmd"><code>git restore &lt;файл&gt;</code> · <code>git restore --staged &lt;файл&gt;</code>
+    <ul><li>Без флага — вернуть файл к последнему коммиту (правки пропадут).</li>
+    <li><code>--staged</code> — только вынуть из индекса.</li></ul></div>
+
+  <div class="mn-cmd"><code>git reset --soft | --mixed | --hard HEAD~1</code>
+    <ul><li><code>--soft</code> — убрать коммит, правки остаются в индексе.</li>
+    <li><code>--mixed</code> (так по умолчанию) — убрать коммит, правки остаются в файлах, но не в индексе.</li>
+    <li><code>--hard</code> — убрать коммит <b>и</b> правки. Осторожно!</li></ul></div>
+
+  <div class="mn-cmd"><code>git revert &lt;хеш&gt;</code> · <code>git reflog</code> · <code>git stash</code>
+    <ul><li>revert — отменить коммит новым коммитом. reflog — где был HEAD. stash — спрятать правки на время.</li></ul></div>
+
+  <div class="mn-stick">
+    <h4>Тренируйся без риска</h4>
+    <p>Заведи пустую папку <code>git-pesochnica</code> и ломай там что хочешь. Ветки и слияния наглядно показывает <a href="https://learngitbranching.js.org/?locale=ru_RU" rel="noopener">Learn Git Branching</a>, а книга <a href="https://git-scm.com/book/ru/v2" rel="noopener">Pro Git</a> бесплатна и есть на русском.</p>
+  </div>
+  <p class="pen">Конец тетради. Теперь ты не боишься Git. Ну, почти.</p>
+  <span class="mn-pg">10</span>
+</section>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-manual.js?v=3ee64698"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/"};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("Manual", document.getElementById("app"), {"id":"git"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* CyberComics — история выпуска с интерактивами.
+ * Принцип: бумага и чернила. Рамка с тенью только у игрушек, текст лежит прямо на бумаге.
+ * Цвета: жёлтый — маркер «запомни», синий — Перехватчик, зелёный и красный — только итог. */
+.toy-host{display:block}
+.st{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--blue:#19c3ff;--green:#2ee59d;--red:#ff3b3b;--muted:#6b6455;
+  max-width:660px;margin:0 auto;color:var(--ink);font-family:Rubik,system-ui,sans-serif}
+.st *{box-sizing:border-box}
+:where(.st) p{margin:0}
+
+.st-intro{font-size:20px;line-height:1.55;margin:8px 0 0}
+.st-ch{margin-top:76px}
+.st-ch:first-of-type{margin-top:40px}
+.st-chh{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.st-n{flex:none;font-family:'Rubik Mono One',sans-serif;font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.st-chh h2{margin:0;font-family:'Russo One',sans-serif;font-weight:400;font-size:30px;line-height:1.1}
+.st-txt{font-size:19px;line-height:1.6;margin:0 0 20px}
+.st-txt b{font-weight:700}
+.st-txt code,.st-flag code{font-family:ui-monospace,Consolas,monospace;font-size:.86em;background:#fff1c2;padding:1px 5px;border-radius:3px}
+
+/* реплики */
+.st-say{display:flex;gap:12px;align-items:flex-end;margin:0 0 16px}
+.st-say.r{flex-direction:row-reverse}
+.st-who{flex:none;width:72px;text-align:center;font-family:'Russo One',sans-serif;font-size:11px;line-height:1.15}
+.st-who img,.st-who i{display:block;width:52px;height:52px;margin:0 auto 4px;border-radius:50%;border:2.5px solid var(--ink);object-fit:cover;object-position:50% 12%;background:#fff}
+.st-who i{display:grid;place-items:center;font-style:normal;font-family:'Rubik Mono One',sans-serif;font-size:14px}
+.st-who i.kai{background:var(--blue)} .st-who i.hero{background:#9e1b32;color:#fff}
+.st-b{position:relative;max-width:470px;font-family:Neucha,cursive;font-size:23px;line-height:1.3;background:#fff;border:2.5px solid var(--ink);border-radius:20px;padding:10px 16px}
+.st-say.v .st-b{background:#e6f6ff}
+
+/* запомни */
+.st-mem{margin:34px 0 0;font-family:Neucha,cursive;font-size:27px;line-height:1.3}
+.st-mem span{background:linear-gradient(transparent 58%,var(--yel) 58%,var(--yel) 92%,transparent 92%);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 2px}
+
+/* игрушка */
+.st-toy{background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px;margin:6px 0 0}
+.st-ask{font-family:'Russo One',sans-serif;font-size:17px;line-height:1.3;margin:0 0 14px}
+.st-pills{display:flex;flex-wrap:wrap;gap:8px}
+.st-pill{font:500 16px/1.25 Rubik,system-ui,sans-serif;color:var(--ink);min-height:46px;padding:10px 16px;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;cursor:pointer}
+.st-pill:hover{background:#fff1c2}
+.st-pill[aria-pressed="true"]{background:var(--ink);color:#fff}
+.st-pill:focus-visible,.st-go:focus-visible,.st-in:focus-visible{outline:3px solid #7b4dff;outline-offset:3px}
+.st-res{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px;align-items:stretch}
+@media (min-width:600px){.st-res{grid-template-columns:1.15fr 1fr}}
+.st-mail{margin:0;background:#1b1b1f;color:#e9e9ee;font:14px/1.65 ui-monospace,Consolas,monospace;padding:12px 14px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:6px}
+.st-mail mark{background:var(--yel);color:var(--ink);padding:0 3px}
+.st-mail .dim{color:#73737d}
+.st-ans{display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px 4px}
+.st-code{font-family:'Russo One',sans-serif;font-size:48px;line-height:1}
+.st-code small{font-family:ui-monospace,Consolas,monospace;font-size:13px;font-weight:700;margin-left:6px;vertical-align:middle}
+.st-code.ok{color:#0f8a57} .st-code.no{color:#e3262d}
+.st-ans p{font-family:Neucha,cursive;font-size:22px;line-height:1.25}
+
+/* переключатель */
+.st-sw{display:inline-flex;border:2.5px solid var(--ink);border-radius:999px;overflow:hidden;margin-bottom:14px}
+.st-sw button{font:600 16px Rubik,system-ui,sans-serif;color:var(--ink);min-height:46px;padding:0 18px;border:0;background:var(--paper);cursor:pointer}
+.st-sw button+button{border-left:2.5px solid var(--ink)}
+.st-sw button[aria-pressed="true"].http{background:var(--red);color:#fff}
+.st-sw button[aria-pressed="true"].https{background:var(--green)}
+.st-sw button:focus-visible{outline:3px solid #7b4dff;outline-offset:-5px}
+.st-verdict{margin-top:12px;font-family:Neucha,cursive;font-size:22px;line-height:1.3;display:flex;gap:10px;align-items:center}
+.st-verdict img{flex:none;width:44px;height:44px;border-radius:50%;border:2.5px solid var(--ink);object-fit:cover;object-position:50% 12%}
+
+/* флаги */
+.st-flags{display:grid;grid-template-columns:1fr;gap:14px;margin:4px 0 0}
+.st-flag{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline}
+.st-flag code{font-size:16px;font-weight:700;background:var(--yel);border:2px solid var(--ink);border-radius:4px;padding:2px 8px;grid-row:span 2}
+.st-flag b{font-size:18px}
+.st-flag span{font-size:16px;line-height:1.5;color:#3d382e;grid-column:2}
+
+/* перехват */
+.st-buy{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.st-buy b{font-family:'Russo One',sans-serif;font-weight:400;font-size:19px}
+.st-lock{font-size:13px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--green);border:2px solid var(--ink)}
+.st-in{font:700 15px ui-monospace,Consolas,monospace;width:6.5em;min-height:34px;padding:2px 8px;color:var(--ink);background:var(--yel);border:0;border-radius:4px;vertical-align:baseline}
+.st-go{margin-top:14px;font-family:'Russo One',sans-serif;font-size:17px;color:var(--ink);min-height:50px;padding:0 24px;background:var(--yel);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.st-go:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.st-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.st-rec{border:2.5px solid var(--ink);border-radius:8px;padding:12px;min-width:0;background:var(--paper)}
+.st-rec h4{margin:0 0 6px;font-family:'Russo One',sans-serif;font-weight:400;font-size:14px;line-height:1.2}
+.st-rec p{font-size:15px;line-height:1.4}
+.st-rec strong{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:clamp(20px,6vw,28px);margin:2px 0}
+.st-stamp{display:inline-block;margin-top:8px;font-family:'Rubik Mono One',sans-serif;font-size:16px;padding:3px 10px;border:3px solid currentColor;border-radius:4px;transform:rotate(-6deg);animation:st-pop .3s cubic-bezier(.2,1.6,.4,1)}
+.st-stamp.r{color:#e3262d} .st-stamp.g{color:#0f8a57}
+@keyframes st-pop{from{transform:rotate(-6deg) scale(2);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+.st-hint{margin-top:10px;font-size:15px;color:var(--muted)}
+
+/* правило выпуска */
+.st-rule{margin:72px 0 0;font-family:'Russo One',sans-serif;font-size:clamp(26px,7vw,40px);line-height:1.2}
+.st-rule span{background:linear-gradient(transparent 55%,var(--yel) 55%,var(--yel) 92%,transparent 92%);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.st-rule-sub{margin-top:14px;font-size:19px;line-height:1.55}
+.st-foot{margin-top:56px;padding-top:18px;border-top:2.5px dashed #cfc6b1;font-size:16px;line-height:1.6;color:#3d382e}
+.st-foot b{color:var(--ink)}
+
+@media (prefers-reduced-motion: reduce){.st-stamp{animation:none}.st-go:active{transform:none}}
+
+/* Тело выпуска из фрагмента: колонка около 900px, метка конца для «прочитано». */
+article:has(> .toy-host[data-toy="ix"]){max-width:900px !important}
+.ix-end{height:1px}
+/* Фрагменты растягивают кадры на 100vw: при видимой полосе прокрутки (Windows) это даёт
+   пару пикселей горизонтального скролла. clip, а не hidden, чтобы не ломать position:sticky. */
+html.ix-page,html.ix-page body{overflow-x:clip}
+
+/* Отклик на касание: без ожидания двойного тапа (зум) на кнопках, ссылках и полях. Прокрутка и щипок работают. */
+a,button,input,select,textarea,label,summary,[role="button"]{touch-action:manipulation}
+/* Бесконечные анимации вне экрана — на паузе (ставит src/static/js/toys.js, motion). */
+[data-rt-off],[data-rt-off] *,[data-rt-off] *::before,[data-rt-off] *::after{animation-play-state:paused !important}

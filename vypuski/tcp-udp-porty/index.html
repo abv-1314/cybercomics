@@ -1,0 +1,1986 @@
+<!doctype html>
+<html lang="ru" class="ix-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- seo -->
+<title>TCP и UDP простыми словами: отличия и порты — CyberComics</title>
+<meta name="description" content="Чем TCP отличается от UDP, как проходит рукопожатие SYN, SYN-ACK, ACK, что живёт за портами 22, 53, 80 и 443 и что значат open, closed и filtered.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://cybercomics.ru/vypuski/tcp-udp-porty/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CyberComics">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="TCP и UDP простыми словами: отличия и порты — CyberComics">
+<meta property="og:description" content="Чем TCP отличается от UDP, как проходит рукопожатие SYN, SYN-ACK, ACK, что живёт за портами 22, 53, 80 и 443 и что значат open, closed и filtered.">
+<meta property="og:url" content="https://cybercomics.ru/vypuski/tcp-udp-porty/">
+<meta property="og:image" content="https://cybercomics.ru/assets/og/vypuski-tcp-udp-porty.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TCP, UDP и порты: 65 535 дверей сервера">
+<meta property="article:modified_time" content="2026-11-01">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TCP и UDP простыми словами: отличия и порты — CyberComics">
+<meta name="twitter:description" content="Чем TCP отличается от UDP, как проходит рукопожатие SYN, SYN-ACK, ACK, что живёт за портами 22, 53, 80 и 443 и что значат open, closed и filtered.">
+<meta name="twitter:image" content="https://cybercomics.ru/assets/og/vypuski-tcp-udp-porty.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://cybercomics.ru/#org","name":"CyberComics","url":"https://cybercomics.ru/","logo":{"@type":"ImageObject","url":"https://cybercomics.ru/assets/icon-512.png","width":512,"height":512},"email":"cybercomics@yandex.ru"},{"@type":"WebSite","@id":"https://cybercomics.ru/#website","name":"CyberComics","url":"https://cybercomics.ru/","inLanguage":"ru","description":"Интерактивные комиксы про кибербезопасность на русском для начинающих: как работают сети и веб, как устроены атаки из OWASP Top 10 и как от них защищаться.","publisher":{"@id":"https://cybercomics.ru/#org"}},{"@type":"ComicSeries","@id":"https://cybercomics.ru/#series","name":"CyberComics: злодеи Сетеграда","url":"https://cybercomics.ru/","inLanguage":"ru","genre":["образование","кибербезопасность"],"publisher":{"@id":"https://cybercomics.ru/#org"},"isAccessibleForFree":true},{"@type":["Article","LearningResource","ComicIssue"],"@id":"https://cybercomics.ru/vypuski/tcp-udp-porty/#article","url":"https://cybercomics.ru/vypuski/tcp-udp-porty/","mainEntityOfPage":"https://cybercomics.ru/vypuski/tcp-udp-porty/","issueNumber":"13","partOfSeries":{"@id":"https://cybercomics.ru/#series"},"datePublished":"2026-11-01","headline":"TCP, UDP и порты: 65 535 дверей сервера","name":"TCP, UDP и порты: 65 535 дверей сервера","alternativeHeadline":"TCP и UDP простыми словами: отличия и порты","description":"Чем TCP отличается от UDP, как проходит рукопожатие SYN, SYN-ACK, ACK, что живёт за портами 22, 53, 80 и 443 и что значат open, closed и filtered.","inLanguage":"ru","image":["https://cybercomics.ru/assets/og/vypuski-tcp-udp-porty.jpg"],"dateModified":"2026-11-01","author":{"@id":"https://cybercomics.ru/#org"},"publisher":{"@id":"https://cybercomics.ru/#org"},"isPartOf":{"@id":"https://cybercomics.ru/#website"},"position":13,"isAccessibleForFree":true,"learningResourceType":"интерактивный комикс","educationalLevel":"начальный","timeRequired":"PT11M","teaches":["Чем TCP отличается от UDP и когда нужен каждый","Как проходит рукопожатие SYN, SYN-ACK, ACK","Что живёт за портами 22, 53, 80, 443, 3306 и 3389","Что значат open, closed и filtered и как файрвол прячет лишнее"],"about":{"@type":"Thing","name":"Порт"},"audience":{"@type":"EducationalAudience","educationalRole":"student","audienceType":"студенты и начинающие в IT"}},{"@type":"BreadcrumbList","@id":"https://cybercomics.ru/vypuski/tcp-udp-porty/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"CyberComics","item":"https://cybercomics.ru/"},{"@type":"ListItem","position":2,"name":"Выпуски","item":"https://cybercomics.ru/vypuski/"},{"@type":"ListItem","name":"TCP, UDP и порты: 65 535 дверей сервера","item":"https://cybercomics.ru/vypuski/tcp-udp-porty/","position":3}]},{"@type":"FAQPage","@id":"https://cybercomics.ru/vypuski/tcp-udp-porty/#faq","mainEntity":[{"@type":"Question","name":"Что такое порт?","acceptedAnswer":{"@type":"Answer","text":"Порт — номер «двери» от 1 до 65 535, по которому пакет находит нужную программу на сервере."}},{"@type":"Question","name":"Чем отличаются состояния порта open, closed и filtered и как проверить, что на сервере не торчит лишнего?","acceptedAnswer":{"@type":"Answer","text":"Open — на SYN пришёл SYN-ACK, порт слушает служба, это поверхность атаки. Closed — пришёл RST: хост доступен, но за портом никого. Filtered — ответа нет или пришёл ICMP-запрет: по пути файрвол; у UDP молчание неоднозначно, поэтому сканер пишет open|filtered. Проверяю только свои серверы или с письменного разрешения: сканирую все 65 535 TCP-портов и важные UDP-порты снаружи и изнутри, сверяю результат со списком разрешённого, держу файрвол с запретом по умолчанию, базы и панели управления не выставляю в интернет и повторяю проверку после каждого изменения. Перенос SSH на нестандартный порт — не защита: полный обход портов его находит."}}]}]}</script>
+<!-- /seo -->
+<script>(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}function top(){if(location.hash.length>1)return;try{window.scrollTo(0,0);document.documentElement.scrollIntoView({block:'start'})}catch(e){}}function sync(){top();try{window.dispatchEvent(new Event('resize'))}catch(e){}}top();document.addEventListener('DOMContentLoaded',top);window.addEventListener('load',function(){sync();setTimeout(top,0)});window.addEventListener('pageshow',function(e){if(e.persisted)sync();else top()});})();</script>
+<script>(function(){var q=window.__ccTapQ=[];document.addEventListener('click',function(e){if(window.__ccLive)return;var b=e.target&&e.target.closest&&e.target.closest('button,[role=\'button\']'),app=document.getElementById('app');if(!b||!app||!app.contains(b))return;var p=[];for(var n=b;n!==app;n=n.parentElement)p.unshift(Array.prototype.indexOf.call(n.parentElement.children,n));q.push({p:p,t:(b.textContent||'').replace(/\s+/g,' ').trim().slice(0,40)});e.preventDefault();e.stopPropagation()},true)})();</script>
+<meta name="theme-color" content="#ffd60a">
+<meta name="site-root" content="../../">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="48x48">
+<link rel="icon" href="../../assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="manifest" href="../../assets/site.webmanifest">
+<link rel="preload" href="../../assets/fonts/russo-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/rubik-mono-one-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts.css?v=44415eb0">
+<link rel="stylesheet" href="../../assets/site.css?v=fcd1b88f">
+<link rel="stylesheet" href="../../assets/toys.css?v=836a4d26">
+</head>
+<body>
+<div id="app"><div style="min-height: 100vh; font-family: Rubik, system-ui, sans-serif; color: #141414; background-color: #fff7e3; background-image: radial-gradient(rgba(20,20,20,.13) 1.2px, transparent 1.4px); background-size: 14px 14px">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: #ffd60a; border-bottom: 3px solid #141414; box-shadow: 0 4px 0 #141414">
+    <a href="../../" style="font-family: 'Rubik Mono One', sans-serif; font-size: 20px; text-decoration: none; color: #141414; text-shadow: 2px 2px 0 #ffffff">Cyber<span style="color: #e3262d">Comics</span></a>
+    <nav aria-label="Основная навигация" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto">
+      <a href="../../#vypuski" aria-current="page" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #141414; color: #ffd60a">Выпуски</a>
+      <a href="../../#gorod" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Город</a>
+      <a href="../../povtorenie/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Прокачаться</a>
+      <a href="../../arkada/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Разминка</a>
+      <a href="../../baraholka/" style="display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 6px 12px; border: 3px solid #141414; background: #ffffff; color: #141414; box-shadow: 3px 3px 0 #141414">Барахолка</a>
+    </nav>
+    <span style="font-family: 'Russo One', sans-serif; font-size: 16px; padding: 6px 12px; background: #ffffff; border: 3px solid #141414">0 бит</span>
+    
+  </header>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 36px">
+    <a href="../../#vypuski" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box; min-height: 48px; font-family: 'Russo One', sans-serif; font-size: 17px; text-decoration: none; color: #141414; padding: 8px 16px; background: #ffffff; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414">← Ко всем выпускам</a>
+
+    <section aria-label="Обложка выпуска" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+      <div class="ir-portrait">
+        <dc-import name="VillainArt" style="display: contents;"><div class="va" style="--bg: #ffd60a; --oy: 0%">
+  
+    <div class="va-pst" aria-hidden="true">
+      <span class="va-pst-rays"></span>
+      <span class="va-pst-dots"></span>
+      <span class="va-pst-tag">ЗЛОДЕЙ ВЫПУСКА</span>
+      <span class="va-pst-em"><span style="font-size:15.45cqmin">ТУК</span></span>
+      <span class="va-pst-name" style="font-size:min(12.93cqw,13.00cqh)">Дверной Стукач</span>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div></dc-import>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px;padding:26px;border:3px solid #141414;box-shadow:8px 8px 0 #141414;background-image:radial-gradient(rgba(0,0,0,.14) 1.5px, transparent 2px);background-size:11px 11px;background-color:#ffd60a">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-family: 'Rubik Mono One', sans-serif; font-size: 14px; background: #ffffff; border: 3px solid #141414; padding: 3px 10px; transform: rotate(-2deg)">Выпуск №13</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #141414; color: #ffd60a; padding: 4px 10px">Фундамент</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">11 мин</span>
+          <span style="font-family: 'Russo One', sans-serif; font-size: 13px; background: #ffffff; border: 2px solid #141414; padding: 3px 10px">★☆☆</span>
+        </div>
+        <h1 class="ir-h1" style="margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1.12; color: #ffffff; -webkit-text-stroke: 2px #141414; paint-order: stroke fill; text-shadow: 5px 5px 0 #141414">TCP, UDP и порты: 65 535 дверей сервера</h1>
+        <span style="align-self: flex-start; font-size: 18px; font-weight: 500; background: #ffffff; border: 3px solid #141414; padding: 6px 12px">Как программы договариваются о связи и почему каждая лишняя открытая дверь — подарок злоумышленнику</span>
+        <div style="position: relative; align-self: flex-start; max-width: 520px; background: #ffffff; border: 3px solid #141414; border-radius: 20px; box-shadow: 4px 4px 0 #141414; padding: 10px 16px; margin-left: 18px">
+          <span style="display: block; font-family: 'Russo One', sans-serif; font-size: 12px; color: #5b5446">Дверной Стукач:</span>
+          <span style="display: block; font-family: Neucha, cursive; font-size: 22px; line-height: 1.2">Тук-тук. Где-нибудь да откроют.</span>
+          <span style="position: absolute; left: -22px; top: 22px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 22px solid #141414"></span>
+          <span style="position: absolute; left: -14px; top: 25px; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 15px solid #ffffff"></span>
+        </div>
+        <div style="margin-top: auto; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-family: 'Russo One', sans-serif; font-size: 16px">Что ты узнаешь</span>
+          <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55">
+            <li>Чем TCP отличается от UDP и когда нужен каждый</li><li>Как проходит рукопожатие SYN, SYN-ACK, ACK</li><li>Что живёт за портами 22, 53, 80, 443, 3306 и 3389</li><li>Что значат open, closed и filtered и как файрвол прячет лишнее</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article style="width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; align-items: center">
+        <span style="font-family: 'Russo One', sans-serif">Действующие лица:</span>
+        <span style="padding: 3px 10px; background: #9e1b32; color: #ffffff; border: 2px solid #141414">Дядя Миша — наставник, сисадмин из НИИ</span>
+        <span style="padding: 3px 10px; background: #19c3ff; border: 2px solid #141414">Стажёрка Соня — задаёт вопросы</span>
+        <span style="padding: 3px 10px; background: #ff3b3b; color: #ffffff; border: 2px solid #141414">Дверной Стукач — злодей</span>
+      </div>
+
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            <div data-keep="1" data-toy="ix" class="toy-host">
+<section class="ix ix-tcp-udp-porty" data-ix="tcp-udp-porty" aria-label="Выпуск 13: TCP, UDP и порты">
+
+<div class="tu-story">
+
+  <div class="tu-hud" aria-hidden="true">
+    <span class="tu-hud-l">ЗАЩИТА СЕРВЕРА</span>
+    <span class="tu-bar"><i></i><b>0%</b></span>
+    <span class="tu-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+  </div>
+  <div class="tu-sr" aria-live="polite" data-live=""></div>
+
+  <!-- ================= МИССИЯ: ПОСТЕР ЗЛОДЕЯ ================= -->
+  <div class="tu-mission" id="ix-tcp-udp-porty-mission">
+    <div class="tu-poster" aria-hidden="true">
+      <span class="tu-ptag">ЦЕЛЬ: ДВЕРНОЙ СТУКАЧ</span>
+      <p class="tu-pname"><span>Дверной</span><span>Стукач</span></p>
+      <div class="tu-hall">
+        <div class="tu-hall-run"></div>
+        <div class="tu-dr tu-dr-hero" data-st="idle">
+          <span class="tu-dr-in"></span>
+          <span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span>
+          <b class="tu-dr-num" data-count="">1</b>
+        </div>
+        <span class="tu-tuk tu-tuk-a">ТУК</span>
+        <span class="tu-tuk tu-tuk-b">ТУК</span>
+        <span class="tu-pstamp">ОТКРЫТО!</span>
+      </div>
+      <p class="tu-pcount"><span>обошёл дверей:</span> <b data-count2="">0</b></p>
+    </div>
+    <div class="tu-mbody">
+      <p class="tu-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ФУНДАМЕНТ</p>
+      <h2 aria-label="65 535 дверей" class="tu-mt" id="ix-tcp-udp-porty-mt"><span>65 535</span> <span>дверей</span></h2>
+      <p class="tu-msub">Твой сервер — дом с&nbsp;65&nbsp;535 дверями. Дверной Стукач обходит <em>все до одной</em> и&nbsp;ищет незапертую. Узнай, как устроены двери, — и&nbsp;запри лишние.</p>
+      <p class="tu-mquote">«Тук-тук. Где-нибудь да&nbsp;откроют».</p>
+      <ol class="tu-moves" aria-label="Шаги миссии">
+        <li data-mv="1"><b>01</b><span>Двери</span></li>
+        <li data-mv="2"><b>02</b><span>Три стука</span></li>
+        <li data-mv="3"><b>03</b><span>Обход</span></li>
+        <li data-mv="4"><b>04</b><span>Охрана</span></li>
+      </ol>
+      <button class="tu-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ================= ШАГ 1: ДОМ С ДВЕРЯМИ ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l1" aria-labelledby="ix-tcp-udp-porty-t1">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 1 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t1">Дом с дверями</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Сервер — это дом. IP-адрес — адрес дома. А&nbsp;порт — номер двери.</span></div>
+      <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">Зачем одному дому столько дверей?</span></div>
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">За каждой дверью живёт своя программа. Сайт — за одной, вход для админа — за другой. Пакет приходит по адресу и стучит в нужную дверь.</span></div>
+
+      <p class="tu-stat"><b>65&nbsp;535</b><span>дверей у TCP — и ещё столько же почтовых щелей у UDP. Номера от 1 до 65&nbsp;535.</span></p>
+
+      <p class="tu-q">Шесть дверей, которые надо знать в лицо:</p>
+      <div class="tu-signs" data-signs="">
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">22</b></div><p><b>SSH</b><span>вход админа по сети</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">53</b></div><p><b>DNS</b><span>справочная: имя → IP</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">80</b></div><p><b>HTTP</b><span>сайт без шифрования</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">443</b></div><p><b>HTTPS</b><span>сайт с замочком</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3306</b></div><p><b>MySQL</b><span>база данных</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3389</b></div><p><b>RDP</b><span>удалённый рабочий стол Windows</span></p></div>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="signs">Прочитать таблички</button></div>
+
+      <div class="tu-after">
+        <p class="tu-def">Номера от 0 до 1023 называют <b>известными</b>: о&nbsp;них договорились заранее, поэтому браузер сразу стучит в&nbsp;443. Сама дверь ничего не умеет. Открывает её <b>служба</b> — программа, которая слушает этот порт.</p>
+        <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">А мой телефон, когда открывает сайт, тоже выходит из какой-то двери?</span></div>
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Из временной, с большим случайным номером. Ответ сервера придёт именно туда.</span></div>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l2">Как стучат в двери ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 2: ТРИ СТУКА ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l2" aria-labelledby="ix-tcp-udp-porty-t2">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 2 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t2">Три стука</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала прочитай таблички</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Гости бывают двух сортов. TCP — вежливый: сначала договорится, потом говорит. Постучи в&nbsp;443.</span></div>
+
+      <div class="tu-lane" data-lane="tcp">
+        <div class="tu-lane-row">
+          <span class="tu-me">ТЫ<small>браузер</small></span>
+          <div class="tu-track"><span class="tu-chip" data-chip=""></span></div>
+          <div class="tu-dr tu-dr-sm" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">443</b></div>
+        </div>
+        <ol class="tu-log" data-log="" aria-live="polite"></ol>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="tcp">Постучать: SYN</button></div>
+
+      <div class="tu-part" data-part="udp" hidden="">
+        <p class="tu-hs"><span>SYN</span><i aria-hidden="true">→</i><span>SYN-ACK</span><i aria-hidden="true">→</i><span>ACK</span></p>
+        <p class="tu-big"><span>Это рукопожатие TCP.</span></p>
+        <p class="tu-def">Дальше TCP нумерует каждый кусочек данных, ждёт подтверждений и&nbsp;переспрашивает потерянное. Всё дойдёт, и&nbsp;по&nbsp;порядку.</p>
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">А UDP — почтальон-торопыга. Ни стука, ни «кто там». Бросил письмо в&nbsp;щель — и&nbsp;дальше.</span></div>
+        <div class="tu-lane" data-lane="udp">
+          <div class="tu-lane-row">
+            <span class="tu-me">ТЫ<small>игра</small></span>
+            <div class="tu-track"><span class="tu-chip" data-chip=""></span></div>
+            <div class="tu-dr tu-dr-sm tu-dr-slot" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">UDP</b></div>
+          </div>
+          <ol class="tu-log" data-log="" aria-live="polite"></ol>
+        </div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="udp">Бросить 3 письма</button></div>
+      </div>
+
+      <div class="tu-part" data-part="sort" hidden="">
+        <p class="tu-def">Письмо №2 пропало, и&nbsp;никто не заметил. Зато никаких ожиданий — для голоса и&nbsp;игры свежесть важнее полноты.</p>
+        <p class="tu-q">Кого позвать: TCP или UDP?</p>
+        <div class="tu-sort" data-sort="">
+          <div class="tu-srow" data-a="tcp"><p>Скачать домашку файлом</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why=""></em></div>
+          <div class="tu-srow" data-a="udp"><p>Голосовой чат в&nbsp;игре</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why=""></em></div>
+          <div class="tu-srow" data-a="tcp"><p>Админ заходит по&nbsp;SSH</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why=""></em></div>
+          <div class="tu-srow" data-a="udp"><p>Короткий DNS-вопрос «где lab.example?»</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why=""></em></div>
+        </div>
+      </div>
+
+      <div class="tu-after">
+        <p class="tu-note">Тонкость: DNS обычно ходит по&nbsp;UDP&nbsp;53, а&nbsp;длинные ответы — по&nbsp;TCP&nbsp;53. Новый HTTP/3 едет на&nbsp;QUIC поверх UDP: надёжность там сделали сами, внутри.</p>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l3">Выпустить Стукача ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 3: ОБХОД ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l3" aria-labelledby="ix-tcp-udp-porty-t3">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 3 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t3">Обход</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала разберись со стуками</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">А как Стукач узнаёт, где открыто?</span></div>
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Стучит в каждую дверь — SYN — и слушает, что ответят. Это называется сканированием портов. Ответов всего три.</span></div>
+
+      <ul class="tu-states">
+        <li><span class="tu-stb tu-st-open">ОТКРЫТ</span><p><b>«Кто там?»</b>Дверь ответила SYN-ACK: за ней служба.</p></li>
+        <li><span class="tu-stb tu-st-closed">ЗАКРЫТ</span><p><b>«Никого нет!»</b>Ответ RST: дверь есть, за ней пусто.</p></li>
+        <li><span class="tu-stb tu-st-filt">ФИЛЬТР</span><p><b>Тишина.</b>Стук не дошёл: охранник молча его развернул. Есть там кто-то или нет — не ясно.</p></li>
+      </ul>
+
+      <div class="tu-hallway" data-hall="1">
+        <p class="tu-hcap"><b>lab.example</b> · учебный сервер · <span>охраны нет</span></p>
+        <div class="tu-corr" data-corr=""></div>
+        <p class="tu-hlog" data-hlog="" aria-live="polite">Стукач у входа. Коридор ждёт.</p>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="scan1">Пустить Стукача по коридору</button></div>
+      <p class="tu-legal">Это учебный сервер. Стучать в двери чужих серверов нельзя.</p>
+
+      <div class="tu-part" data-part="peek" hidden="">
+        <div class="tu-say"><span class="tu-who tu-v">СТУКАЧ</span><span class="tu-bub">Шесть открытых дверей. А&nbsp;3306 — это же база данных… Загляну.</span></div>
+        <div class="tu-act"><button class="tu-btn tu-red" type="button" data-act="peek">Заглянуть за дверь 3306</button></div>
+      </div>
+
+      <div class="tu-after">
+        <p class="tu-big">Открытая база в&nbsp;интернете —<br><span>не дыра. Это катастрофа.</span></p>
+        <div class="tu-why">
+          <p><span class="tu-mk" aria-hidden="true">1</span><span><b>Её найдут за часы.</b> Боты стучат во все адреса интернета круглые сутки, а поисковики вроде Shodan складывают открытые двери в каталог. «Нас никто не знает» не работает.</span></p>
+          <p><span class="tu-mk" aria-hidden="true">2</span><span><b>Пароль — одна стена.</b> Слабый подберут перебором. А дыру в самой базе пароль не закрывает вообще.</span></p>
+          <p><span class="tu-mk" aria-hidden="true">3</span><span><b>Там лежит всё сразу.</b> Не одна страница, а все записи. Были волны атак, когда боты стирали десятки тысяч открытых баз и оставляли записку: «Заплати — верну».</span></p>
+        </div>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l4">Запереть двери ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 4: ОХРАНА ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l4" aria-labelledby="ix-tcp-udp-porty-t4">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 4 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t4">Охрана</h3><span class="tu-ok">ЗАПЕРТО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала посмотри обход</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Теперь ты админ. Из интернета сайту нужны только 80 и 443. Реши судьбу остальных дверей.</span></div>
+
+      <p class="tu-keep"><span class="tu-stb tu-st-open">80</span><span class="tu-stb tu-st-open">443</span> это и есть сайт — остаются открытыми.</p>
+
+      <div class="tu-dec" data-dec="">
+        <div class="tu-drow" data-port="22">
+          <div class="tu-dhead"><b class="tu-dnum">22</b><p><b>SSH</b><span>Вход админа. Нужен только тебе.</span></p><span class="tu-dst" data-dst="">ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="0">Открыть всем</button><button type="button" class="tu-dch" data-ok="1">Только своим</button></div>
+          <p class="tu-fb" data-fb="" aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="53">
+          <div class="tu-dhead"><b class="tu-dnum">53</b><p><b>DNS</b><span>Этот сервер — не справочная.</span></p><span class="tu-dst" data-dst="">ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="1">Выключить</button><button type="button" class="tu-dch" data-ok="0">Открыть всем</button></div>
+          <p class="tu-fb" data-fb="" aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="3306">
+          <div class="tu-dhead"><b class="tu-dnum">3306</b><p><b>MySQL</b><span>База сайта, живёт на этом же сервере.</span></p><span class="tu-dst" data-dst="">ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="0">Открыть всем</button><button type="button" class="tu-dch" data-ok="1">Только внутри</button></div>
+          <p class="tu-fb" data-fb="" aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="3389">
+          <div class="tu-dhead"><b class="tu-dnum">3389</b><p><b>RDP</b><span>Остался со времён тестов.</span></p><span class="tu-dst" data-dst="">ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="1">Выключить</button><button type="button" class="tu-dch" data-ok="0">Открыть всем</button></div>
+          <p class="tu-fb" data-fb="" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="tu-part" data-part="guard" hidden="">
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Хорошо. А теперь поставим у входа охранника — файрвол. Он пускает только по&nbsp;списку.</span></div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="guard">Поставить охранника</button></div>
+      </div>
+
+      <div class="tu-part" data-part="rescan" hidden="">
+        <div class="tu-fw" aria-label="Правила файрвола">
+          <p class="tu-fwh">ОХРАНА · ФАЙРВОЛ</p>
+          <p><b class="tu-ok-c">пускать</b><span>80, 443 — всех</span></p>
+          <p><b class="tu-ok-c">пускать</b><span>22 — только с адреса админа</span></p>
+          <p><b class="tu-no-c">остальных</b><span>молча не пускать</span></p>
+        </div>
+        <div class="tu-hallway tu-guarded" data-hall="2">
+          <p class="tu-hcap"><b>lab.example</b> · учебный сервер · <span>охрана на месте</span></p>
+          <div class="tu-corr" data-corr=""></div>
+          <p class="tu-hlog" data-hlog="" aria-live="polite">Стукач вернулся. Охранник ждёт.</p>
+        </div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="scan2">Пустить Стукача снова</button></div>
+      </div>
+
+      <div class="tu-after">
+        <div class="tu-say"><span class="tu-who tu-v">СТУКАЧ</span><span class="tu-bub">Тук… тишина. Тук… тишина. Открыто только то, что и&nbsp;так видят все.</span></div>
+        <p class="tu-final"><b>65&nbsp;535</b> дверей. Открыты: <em>2</em></p>
+        <p class="tu-def">Выключенная дверь без охраны ответила бы «никого нет» — ЗАКРЫТ. С&nbsp;охранником — тишина: Стукач даже не знает, есть ли там кто-то. А&nbsp;админ со своего адреса видит 22 открытым.</p>
+        <p class="tu-q">Так этот обход показал бы Nmap:</p>
+<pre class="tu-term" aria-label="Вывод сканера Nmap"><span class="tu-cm"># только свой сервер!</span>
+$ nmap -p- lab.example
+Nmap scan report for lab.example (203.0.113.7)
+Not shown: 65533 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+80/tcp  <b>open</b>  http
+443/tcp <b>open</b>  https</pre>
+        <p class="tu-legal">Nmap — настоящий сканер портов. Запускай его только на своих машинах и&nbsp;учебных стендах: чужой сервер без разрешения владельца сканировать нельзя.</p>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-goto="ix-tcp-udp-porty-battle">К битве со Стукачом ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ================= ВЗЛОМ ================= -->
+<div class="tu-hack" role="dialog" aria-modal="true" aria-labelledby="ix-tcp-udp-porty-hk" hidden="">
+  <div class="tu-hkin">
+    <div class="tu-hkdoor" aria-hidden="true">
+      <div class="tu-dr" data-st="open"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3306</b></div>
+    </div>
+    <p class="tu-hkt" id="ix-tcp-udp-porty-hk">ВЗЛОМ!</p>
+    <div class="tu-hkcard" data-hkcard=""></div>
+    <p class="tu-hksay" data-hksay=""></p>
+    <button class="tu-btn tu-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ================= БИТВА ================= -->
+<section class="tu-battle" id="ix-tcp-udp-porty-battle" aria-labelledby="ix-tcp-udp-porty-bt" tabindex="-1">
+  <div class="tu-bh">
+    <span class="tu-bface" aria-hidden="true"><span class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">ТУК</b></span></span>
+    <div class="tu-bhx">
+      <h2 class="tu-bt" id="ix-tcp-udp-porty-bt">Битва со злодеем</h2>
+      <div class="tu-hp" role="img" aria-label="Здоровье Дверного Стукача" data-hp-wrap=""><i data-hp=""></i><b data-hp-t="">ДВЕРНОЙ СТУКАЧ · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="tu-bbody" data-battle="" aria-live="polite"></div>
+</section>
+
+<!-- ================= СОБЕСЕДОВАНИЕ ================= -->
+<section class="tu-iv" aria-labelledby="ix-tcp-udp-porty-ivt">
+  <p class="tu-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="tu-ivq" id="ix-tcp-udp-porty-ivt">Чем отличаются состояния порта open, closed и filtered? И как проверить, что на твоём сервере не торчит лишнего?</h2>
+  <div class="tu-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: что отвечает дверь, за которой есть служба? За которой пусто? И что значит, когда не отвечает никто?</span>
+  </div>
+  <button class="tu-btn tu-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-tcp-udp-porty-iva">Показать сильный ответ</button>
+  <div class="tu-iva" id="ix-tcp-udp-porty-iva" hidden="">
+    <ol>
+      <li><b>Open.</b> На SYN пришёл SYN-ACK: порт слушает служба. Это поверхность атаки, её надо знать поимённо.</li>
+      <li><b>Closed.</b> Пришёл RST: хост доступен, но за этим портом никого. Безопасно, но видно, что сервер жив.</li>
+      <li><b>Filtered.</b> Ответа нет или пришёл ICMP-запрет: по пути файрвол. У UDP молчание неоднозначно — сканер пишет open|filtered.</li>
+      <li><b>Проверка.</b> Только свои серверы или с письменного разрешения. Сканирую все 65 535 TCP и важные UDP-порты снаружи и изнутри, сверяю со списком разрешённого. Файрвол — запрет по умолчанию. Повторяю после каждого изменения.</li>
+    </ol>
+    <p class="tu-ivx"><b>Ошибка новичка:</b> «Перенесу SSH с 22 на 2222 — и никто не найдёт». Обход всех портов находит службу за минуты. Защищают файрвол, ключи и обновления, а не номер двери.</p>
+  </div>
+</section>
+
+<!-- ================= ШПАРГАЛКА ================= -->
+<section class="tu-cs" aria-labelledby="ix-tcp-udp-porty-cst">
+  <h2 class="tu-cst" id="ix-tcp-udp-porty-cst">Шпаргалка: что важно знать</h2>
+  <ol class="tu-csl">
+    <li><span class="tu-csn" aria-hidden="true">01</span><div><b>Порт — номер двери</b><p>IP — адрес дома, порт — дверь от 1 до 65 535. У TCP и UDP свои наборы дверей.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">02</span><div><b>TCP — с договором</b><p>Три стука SYN → SYN-ACK → ACK, потом доставка по порядку и переспросы. Сайты, SSH, почта, файлы.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">03</span><div><b>UDP — письмо в щель</b><p>Без соединения и подтверждений, зато быстро. DNS, звонки, игры, QUIC в HTTP/3.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">04</span><div><b>Шесть дверей наизусть</b><p>22 SSH · 53 DNS · 80 HTTP · 443 HTTPS · 3306 MySQL · 3389 RDP.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">05</span><div><b>Три ответа на стук</b><p>Открыт — «кто там?», закрыт — RST «никого», фильтруется — тишина, потому что стоит файрвол.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">06</span><div><b>Запрет по умолчанию</b><p>Файрвол пускает только нужное. Лишнюю службу не прячут, а выключают.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">07</span><div><b>Базе не место в интернете</b><p>Она слушает только 127.0.0.1 или внутреннюю сеть, а админ ходит через VPN или SSH.</p></div></li>
+  </ol>
+  <p class="tu-train"><b>Тренируйся легально:</b> TryHackMe (комнаты про Nmap), HackTheBox Academy, picoCTF. Nmap — только на своих машинах и учебных стендах, чужие серверы трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-tcp-udp-porty{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--dred:#c81e1e;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;--door:#f3ead2;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-tcp-udp-porty *,.ix-tcp-udp-porty *::before,.ix-tcp-udp-porty *::after{box-sizing:border-box}
+.ix-tcp-udp-porty button{font:inherit;color:inherit}
+.ix-tcp-udp-porty :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-tcp-udp-porty [hidden]{display:none !important}
+.ix-tcp-udp-porty p{margin:0}
+.ix-tcp-udp-porty .tu-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- DOOR (общий компонент) ---------- */
+.ix-tcp-udp-porty .tu-dr{--dw:72px;position:relative;display:block;width:var(--dw);aspect-ratio:5/8;border:3px solid var(--ink);border-bottom-width:6px;background:#0d0d0d;perspective:420px;flex:0 0 auto}
+.ix-tcp-udp-porty .tu-dr-in{position:absolute;inset:0;background:radial-gradient(circle at 30% 55%,#fff6b8 0,var(--yel) 38%,#b88f00 100%);opacity:0;transition:opacity .35s}
+.ix-tcp-udp-porty .tu-dr-leaf{position:absolute;inset:0;background:var(--door);border-right:2px solid var(--ink);transform-origin:0 50%;transition:transform .55s cubic-bezier(.3,1.3,.5,1),background .3s;backface-visibility:visible}
+.ix-tcp-udp-porty .tu-dr-pan{position:absolute;left:17%;right:17%;top:27%;height:25%;border:2px solid rgba(20,20,20,.55)}
+.ix-tcp-udp-porty .tu-dr-pan::after{content:"";position:absolute;left:-2px;right:-2px;top:calc(100% + 22%);height:118%;border:2px solid rgba(20,20,20,.55)}
+.ix-tcp-udp-porty .tu-dr-knob{position:absolute;right:11%;top:56%;width:13%;aspect-ratio:1;border-radius:50%;background:var(--ink)}
+.ix-tcp-udp-porty .tu-dr-num{position:absolute;z-index:3;left:50%;top:6%;transform:translateX(-50%);padding:1px 6px;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-weight:400;font-size:calc(var(--dw)*.2);line-height:1.2;white-space:nowrap;border:2px solid var(--yel)}
+.ix-tcp-udp-porty .tu-dr-bar{position:absolute;z-index:4;left:-12%;right:-12%;top:44%;height:16%;border:2px solid var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 7px,var(--ink) 7px 14px);transform:scaleX(0) rotate(-8deg);transition:transform .35s cubic-bezier(.2,1.5,.4,1)}
+.ix-tcp-udp-porty .tu-dr[data-st="open"] .tu-dr-leaf{transform:rotateY(-74deg)}
+.ix-tcp-udp-porty .tu-dr[data-st="open"] .tu-dr-in{opacity:1}
+.ix-tcp-udp-porty .tu-dr[data-st="closed"] .tu-dr-leaf{background:#d9cfb6}
+.ix-tcp-udp-porty .tu-dr[data-st="filt"] .tu-dr-leaf{background:#a79f8c}
+.ix-tcp-udp-porty .tu-dr[data-st="filt"] .tu-dr-bar{transform:scaleX(1) rotate(-8deg)}
+.ix-tcp-udp-porty .tu-dr.tu-knock .tu-dr-leaf{animation:ix-tcp-udp-porty-knock .32s}
+.ix-tcp-udp-porty .tu-dr-slot .tu-dr-pan{display:none}
+.ix-tcp-udp-porty .tu-dr-slot .tu-dr-leaf::after{content:"";position:absolute;left:18%;right:18%;top:50%;height:8%;background:var(--ink);border-radius:2px}
+
+/* ---------- HUD ---------- */
+.ix-tcp-udp-porty .tu-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-tcp-udp-porty .tu-hud.tu-on{display:flex;animation:ix-tcp-udp-porty-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-tcp-udp-porty .tu-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-tcp-udp-porty .tu-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-tcp-udp-porty .tu-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-tcp-udp-porty .tu-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-tcp-udp-porty .tu-hud.tu-hit{animation:ix-tcp-udp-porty-shake .4s}
+.ix-tcp-udp-porty .tu-hud.tu-hit .tu-bar{border-color:var(--red)}
+.ix-tcp-udp-porty .tu-pips{display:flex;gap:4px}
+.ix-tcp-udp-porty .tu-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-tcp-udp-porty .tu-pips span.tu-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* ---------- MISSION / POSTER ---------- */
+.ix-tcp-udp-porty .tu-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-tcp-udp-porty .tu-poster{position:relative;display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;background:var(--yel);color:var(--ink);border-right:3px solid var(--ink);overflow:hidden;min-height:440px}
+.ix-tcp-udp-porty .tu-poster::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.28) 1.3px,transparent 2px);background-size:8px 8px;pointer-events:none}
+.ix-tcp-udp-porty .tu-poster::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 66%,transparent 0 30%,rgba(20,20,20,.18) 70%);pointer-events:none}
+.ix-tcp-udp-porty .tu-ptag{position:relative;z-index:2;align-self:flex-start;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px}
+.ix-tcp-udp-porty .tu-pname{position:relative;z-index:2;display:flex;flex-direction:column;font-family:var(--f-mono);font-size:40px;line-height:.95;text-transform:uppercase;color:var(--ink);margin-top:6px}
+.ix-tcp-udp-porty .tu-pname span:last-child{color:var(--paper);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);font-size:1.12em}
+.ix-tcp-udp-porty .tu-hall{position:relative;z-index:1;flex:1;display:grid;place-items:center;min-height:250px;margin:4px -18px 0}
+.ix-tcp-udp-porty .tu-hall-run{position:absolute;left:0;right:0;top:14%;bottom:8%;background:repeating-linear-gradient(90deg,transparent 0 14px,rgba(20,20,20,.82) 14px 17px,#e8c400 17px 62px,rgba(20,20,20,.82) 62px 65px,transparent 65px 80px);border-bottom:6px solid var(--ink);opacity:.55}
+.ix-tcp-udp-porty .tu-hall-run::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--yel) 0,transparent 30%,transparent 70%,var(--yel) 100%)}
+.ix-tcp-udp-porty .tu-poster.tu-running .tu-hall-run{animation:ix-tcp-udp-porty-run .28s linear infinite;filter:blur(1.5px)}
+.ix-tcp-udp-porty .tu-dr-hero{--dw:132px;z-index:2;box-shadow:8px 8px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-dr-hero .tu-dr-leaf{background:var(--paper)}
+.ix-tcp-udp-porty .tu-dr-hero .tu-dr-num{font-size:24px;min-width:3.6ch;text-align:center;font-variant-numeric:tabular-nums}
+.ix-tcp-udp-porty .tu-dr-hero[data-st="open"] .tu-dr-in{background:radial-gradient(circle at 35% 55%,#fff 0,#fff6b8 25%,var(--red) 100%)}
+.ix-tcp-udp-porty .tu-tuk{position:absolute;z-index:3;font-family:var(--f-mono);font-size:30px;line-height:1;color:var(--paper);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);opacity:0;pointer-events:none}
+.ix-tcp-udp-porty .tu-tuk-a{left:10%;top:26%;transform:rotate(-14deg)}
+.ix-tcp-udp-porty .tu-tuk-b{right:8%;top:52%;transform:rotate(10deg)}
+.ix-tcp-udp-porty .tu-tuk.tu-pop{animation:ix-tcp-udp-porty-pop .3s ease-out}
+.ix-tcp-udp-porty .tu-pstamp{position:absolute;z-index:4;left:50%;bottom:6%;transform:translateX(-50%) rotate(-8deg);font-family:var(--f-mono);font-size:26px;color:var(--red);background:#fff;border:4px solid var(--red);padding:4px 12px;white-space:nowrap;opacity:0}
+.ix-tcp-udp-porty .tu-poster.tu-found .tu-pstamp{opacity:1}
+.ix-tcp-udp-porty.tu-anim .tu-poster.tu-found .tu-pstamp{animation:ix-tcp-udp-porty-stamp .45s cubic-bezier(.2,1.6,.4,1)}
+.ix-tcp-udp-porty .tu-pcount{position:relative;z-index:2;font-family:var(--f-cap);font-size:15px}
+.ix-tcp-udp-porty .tu-pcount b{font-family:var(--f-mono);font-weight:400;font-size:20px;background:var(--ink);color:var(--yel);padding:0 8px;font-variant-numeric:tabular-nums}
+.ix-tcp-udp-porty .tu-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,214,10,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-tcp-udp-porty .tu-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--yel)}
+.ix-tcp-udp-porty .tu-mt{margin:0;display:flex;flex-direction:column;font-family:var(--f-mono);font-weight:400;font-size:50px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-tcp-udp-porty .tu-mt span:first-child{word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-mt span:last-child{font-size:.78em;color:#fff}
+.ix-tcp-udp-porty .tu-msub{font-size:20px;line-height:1.4}
+.ix-tcp-udp-porty .tu-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-tcp-udp-porty .tu-mquote{font-family:var(--f-hand);font-size:25px;line-height:1.2;border-left:5px solid var(--red);padding-left:14px;color:#f3efe4}
+.ix-tcp-udp-porty .tu-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-tcp-udp-porty .tu-moves li{border:2px solid #fff;padding:8px 8px 10px}
+.ix-tcp-udp-porty .tu-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-tcp-udp-porty .tu-moves span{display:block;font-family:var(--f-cap);font-size:14px;line-height:1.2;margin-top:4px}
+.ix-tcp-udp-porty .tu-moves li.tu-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-tcp-udp-porty .tu-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-tcp-udp-porty .tu-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--red)}
+.ix-tcp-udp-porty .tu-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--red)}
+.ix-tcp-udp-porty.tu-anim .tu-go{animation:ix-tcp-udp-porty-pulse 1.8s ease-in-out infinite}
+
+/* ---------- LEVELS ---------- */
+.ix-tcp-udp-porty .tu-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-tcp-udp-porty .tu-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-tcp-udp-porty .tu-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-tcp-udp-porty .tu-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15;word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-tcp-udp-porty .tu-clear .tu-ok{display:inline-block}
+.ix-tcp-udp-porty .tu-lb{padding:22px 20px 24px}
+.ix-tcp-udp-porty .tu-locked{pointer-events:none;user-select:none}
+.ix-tcp-udp-porty .tu-locked .tu-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-tcp-udp-porty .tu-lockcap{display:none}
+.ix-tcp-udp-porty .tu-locked .tu-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-tcp-udp-porty .tu-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-tcp-udp-porty .tu-after{display:none;margin-top:28px}
+.ix-tcp-udp-porty .tu-lvl.tu-clear .tu-after{display:block;animation:ix-tcp-udp-porty-up .4s ease-out}
+.ix-tcp-udp-porty .tu-part{margin-top:28px;animation:ix-tcp-udp-porty-up .4s ease-out}
+
+.ix-tcp-udp-porty .tu-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-tcp-udp-porty .tu-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-tcp-udp-porty .tu-who.tu-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-who.tu-v{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+
+.ix-tcp-udp-porty .tu-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-tcp-udp-porty .tu-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--red);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-tcp-udp-porty .tu-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--red)}
+.ix-tcp-udp-porty .tu-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--red)}
+.ix-tcp-udp-porty .tu-btn.tu-y{background:var(--yel);color:var(--ink)}
+.ix-tcp-udp-porty .tu-btn.tu-red{background:var(--red);color:#fff;box-shadow:4px 4px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--red)}
+.ix-tcp-udp-porty .tu-legal{margin-top:12px;font-size:16px;color:var(--muted)}
+.ix-tcp-udp-porty .tu-note{font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-tcp-udp-porty .tu-def{margin-top:20px;font-size:18px;line-height:1.5}
+.ix-tcp-udp-porty .tu-def:first-child{margin-top:0}
+.ix-tcp-udp-porty .tu-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-tcp-udp-porty .tu-big{font-family:var(--f-mono);font-size:28px;line-height:1.15;word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-hs{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:10px}
+.ix-tcp-udp-porty .tu-hs span{font-family:var(--f-cap);font-size:24px;line-height:1.1;padding:6px 12px;background:var(--yel);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-hs span:nth-of-type(2){background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-hs i{font-style:normal;font-size:24px;font-weight:700}
+.ix-tcp-udp-porty .tu-big span{color:var(--dred)}
+
+/* stat */
+.ix-tcp-udp-porty .tu-stat{margin:26px 0 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ix-tcp-udp-porty .tu-stat b{font-family:var(--f-mono);font-weight:400;font-size:52px;line-height:1;color:var(--yel);-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);white-space:nowrap;word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-stat span{flex:1 1 220px;font-size:19px;line-height:1.4}
+
+/* signs (6 doors) */
+.ix-tcp-udp-porty .tu-signs{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.ix-tcp-udp-porty .tu-sign{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ix-tcp-udp-porty .tu-sign .tu-dr{--dw:84px}
+.ix-tcp-udp-porty .tu-sign p{display:grid;gap:0;opacity:0;transform:translateY(-6px);transition:opacity .3s,transform .3s}
+.ix-tcp-udp-porty .tu-sign p b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-tcp-udp-porty .tu-sign p span{font-size:15px;line-height:1.25;color:#3b372e}
+.ix-tcp-udp-porty .tu-sign.tu-read p{opacity:1;transform:none}
+.ix-tcp-udp-porty .tu-sign.tu-read .tu-dr-leaf{background:#fff}
+
+/* lane (TCP/UDP) */
+.ix-tcp-udp-porty .tu-lane{margin-top:20px;padding:16px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-lane-row{display:flex;align-items:center;gap:10px}
+.ix-tcp-udp-porty .tu-me{flex:0 0 auto;display:grid;place-items:center;width:66px;height:66px;background:var(--ink);color:var(--yel);font-family:var(--f-mono);font-size:18px;line-height:1;text-align:center}
+.ix-tcp-udp-porty .tu-me small{display:block;font-family:var(--f-cap);font-size:12px;color:#fff;margin-top:-14px}
+.ix-tcp-udp-porty .tu-track{position:relative;flex:1;height:56px;min-width:0}
+.ix-tcp-udp-porty .tu-track::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed rgba(20,20,20,.35)}
+.ix-tcp-udp-porty .tu-chip{position:absolute;left:0;top:50%;padding:4px 9px;font-family:var(--f-cap);font-size:15px;line-height:1.2;white-space:nowrap;background:var(--yel);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:translate(0,-50%);opacity:0}
+.ix-tcp-udp-porty .tu-chip.tu-back{background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-chip.tu-lost{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-dr-sm{--dw:58px}
+.ix-tcp-udp-porty .tu-log{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.ix-tcp-udp-porty .tu-log:empty{display:none}
+.ix-tcp-udp-porty .tu-log li{display:flex;gap:12px;align-items:baseline;padding-top:8px;border-top:2px solid rgba(20,20,20,.1);animation:ix-tcp-udp-porty-up .3s ease-out}
+.ix-tcp-udp-porty .tu-log b{flex:0 0 auto;min-width:118px;font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-tcp-udp-porty .tu-log span{font-size:18px;line-height:1.35}
+.ix-tcp-udp-porty .tu-log li.tu-bad b{color:var(--dred)}
+.ix-tcp-udp-porty .tu-log li.tu-good b{color:var(--gdk)}
+
+/* sort */
+.ix-tcp-udp-porty .tu-sort{display:grid}
+.ix-tcp-udp-porty .tu-srow{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;padding:14px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-srow:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-srow p{font-size:19px;line-height:1.3;font-weight:500}
+.ix-tcp-udp-porty .tu-srow>span{display:flex;gap:8px}
+.ix-tcp-udp-porty .tu-pick{min-width:72px;min-height:48px;padding:0 12px;font-family:var(--f-cap);font-size:17px;border:3px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.ix-tcp-udp-porty .tu-pick:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-pick.tu-wrong{background:#ffe1e1;border-color:var(--dred);color:var(--dred);text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-pick.tu-right{background:var(--green)}
+.ix-tcp-udp-porty .tu-pick:disabled{cursor:default}
+.ix-tcp-udp-porty .tu-srow em{grid-column:1/-1;font-style:normal;font-size:17px;line-height:1.35;color:#3b372e}
+.ix-tcp-udp-porty .tu-srow em:empty{display:none}
+
+/* states legend */
+.ix-tcp-udp-porty .tu-states{list-style:none;margin:22px 0 0;padding:0;display:grid}
+.ix-tcp-udp-porty .tu-states li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-states li:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-states p{font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-states p b{display:block;font-family:var(--f-cap);font-weight:400;font-size:22px;line-height:1.2}
+.ix-tcp-udp-porty .tu-stb{flex:0 0 auto;display:inline-block;min-width:96px;text-align:center;font-family:var(--f-cap);font-size:15px;line-height:1.2;padding:5px 8px;border:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-st-open{background:var(--yel);color:var(--ink)}
+.ix-tcp-udp-porty .tu-st-closed{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-st-filt{background:var(--ink);color:#fff;box-shadow:inset 0 -5px 0 var(--yel)}
+
+/* hallway */
+.ix-tcp-udp-porty .tu-hallway{position:relative;margin-top:24px;padding:16px 14px 14px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red)}
+.ix-tcp-udp-porty .tu-hcap{font-family:var(--f-cap);font-size:15px;line-height:1.3;margin-bottom:14px}
+.ix-tcp-udp-porty .tu-hcap b{font-weight:400;color:var(--yel)}
+.ix-tcp-udp-porty .tu-hcap span{color:#ff8a8a}
+.ix-tcp-udp-porty .tu-guarded .tu-hcap span{color:var(--green)}
+.ix-tcp-udp-porty .tu-corr{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:10px;padding:12px 6px 4px;background:linear-gradient(#262626,#1b1b1b);border-bottom:6px solid #3a3a3a}
+.ix-tcp-udp-porty .tu-guarded .tu-corr{padding-top:30px}
+.ix-tcp-udp-porty .tu-guarded .tu-corr::before{content:"ОХРАНА · ФАЙРВОЛ";position:absolute;left:0;right:0;top:0;height:22px;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px;letter-spacing:.06em;color:var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 12px,#e6be00 12px 24px);border-bottom:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-cell{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.ix-tcp-udp-porty .tu-cell .tu-dr{--dw:100%;max-width:84px;border-color:#000}
+.ix-tcp-udp-porty .tu-cell .tu-dr-num{font-size:14px;padding:0 4px}
+.ix-tcp-udp-porty .tu-cell small{font-size:13px;line-height:1.1;color:#cfc8b4;text-align:center;white-space:nowrap}
+.ix-tcp-udp-porty .tu-cell .tu-stb{min-width:0;width:100%;max-width:84px;font-size:11px;padding:3px 2px;visibility:hidden;border-color:#000}
+.ix-tcp-udp-porty .tu-cell.tu-done .tu-stb{visibility:visible;animation:ix-tcp-udp-porty-stampsm .3s cubic-bezier(.2,1.6,.4,1)}
+.ix-tcp-udp-porty .tu-cell.tu-now::after{content:"ТУК!";position:absolute;z-index:6;left:50%;top:-6px;transform:translateX(-50%) rotate(-8deg);font-family:var(--f-mono);font-size:15px;color:var(--ink);background:var(--yel);border:2px solid var(--ink);padding:2px 6px;white-space:nowrap;animation:ix-tcp-udp-porty-popin .25s ease-out}
+.ix-tcp-udp-porty .tu-cell.tu-hot .tu-dr{box-shadow:0 0 0 4px var(--red),0 0 24px 6px rgba(255,59,59,.6)}
+.ix-tcp-udp-porty .tu-hlog{margin-top:14px;min-height:56px;font-size:19px;line-height:1.4}
+.ix-tcp-udp-porty .tu-hlog b{font-family:var(--f-cap);font-weight:400;color:var(--yel)}
+
+/* why */
+.ix-tcp-udp-porty .tu-why{margin:22px 0 0;display:grid;gap:16px}
+.ix-tcp-udp-porty .tu-why p{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-why b{display:block;font-family:var(--f-cap);font-weight:400;font-size:22px;line-height:1.2;margin-bottom:2px}
+.ix-tcp-udp-porty .tu-mk{flex:0 0 44px;height:44px;display:grid;place-items:center;border:3px solid var(--ink);background:var(--red);color:#fff;font-family:var(--f-mono);font-size:20px;line-height:1}
+
+/* decisions */
+.ix-tcp-udp-porty .tu-keep{margin:18px 0 6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:18px}
+.ix-tcp-udp-porty .tu-keep .tu-stb{min-width:56px}
+.ix-tcp-udp-porty .tu-dec{display:grid;margin-top:8px}
+.ix-tcp-udp-porty .tu-drow{padding:18px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-drow:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-dhead{display:flex;gap:14px;align-items:center}
+.ix-tcp-udp-porty .tu-dnum{flex:0 0 84px;font-family:var(--f-mono);font-weight:400;font-size:22px;line-height:1;text-align:center;padding:10px 4px;background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-dhead p{flex:1;min-width:0;display:grid}
+.ix-tcp-udp-porty .tu-dhead p b{font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2}
+.ix-tcp-udp-porty .tu-dhead p span{font-size:17px;line-height:1.3;color:#3b372e}
+.ix-tcp-udp-porty .tu-dst{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;padding:3px 8px;border:2px solid var(--ink);background:var(--yel)}
+.ix-tcp-udp-porty .tu-dst.tu-dst-closed{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-dst.tu-dst-own{background:var(--green)}
+.ix-tcp-udp-porty .tu-dbtns{display:flex;gap:10px;margin-top:12px}
+.ix-tcp-udp-porty .tu-dch{flex:1 1 0;min-height:50px;padding:6px 10px;font-family:var(--f-cap);font-size:17px;border:3px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.ix-tcp-udp-porty .tu-dch:hover{background:#fffbe6}
+.ix-tcp-udp-porty .tu-dch:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-dch.tu-wrong{background:#ffe1e1;border-color:var(--dred);color:var(--dred);text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-dch.tu-right{background:var(--green)}
+.ix-tcp-udp-porty .tu-dch:disabled{cursor:default;transform:none}
+.ix-tcp-udp-porty .tu-fb{margin-top:12px;font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-fb:empty{display:none}
+.ix-tcp-udp-porty .tu-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-tcp-udp-porty .tu-fb.tu-bad b{color:var(--dred)}
+.ix-tcp-udp-porty .tu-fb.tu-good b{color:var(--gdk)}
+.ix-tcp-udp-porty .tu-drow.tu-shk{animation:ix-tcp-udp-porty-shake .4s}
+
+/* firewall */
+.ix-tcp-udp-porty .tu-fw{display:grid;gap:8px;padding:0 0 14px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-tcp-udp-porty .tu-fwh{padding:6px 14px;font-family:var(--f-cap);font-size:15px;color:var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 14px,#e6be00 14px 28px);border-bottom:3px solid var(--ink);margin-bottom:4px}
+.ix-tcp-udp-porty .tu-fw p{display:flex;gap:12px;align-items:baseline;padding:0 14px;font-size:18px;line-height:1.35}
+.ix-tcp-udp-porty .tu-fw p b{flex:0 0 104px;font-family:var(--f-cap);font-weight:400;font-size:17px}
+.ix-tcp-udp-porty .tu-ok-c{color:var(--green)}
+.ix-tcp-udp-porty .tu-no-c{color:#ff8a8a}
+.ix-tcp-udp-porty.tu-anim .tu-fw p{animation:ix-tcp-udp-porty-up .35s ease-out both}
+.ix-tcp-udp-porty.tu-anim .tu-fw p:nth-child(3){animation-delay:.15s}
+.ix-tcp-udp-porty.tu-anim .tu-fw p:nth-child(4){animation-delay:.3s}
+
+/* final + terminal */
+.ix-tcp-udp-porty .tu-final{margin-top:10px;font-family:var(--f-mono);font-size:34px;line-height:1.15;word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-final b{display:block;font-size:1.45em;font-weight:400;word-spacing:-.4em;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-final em{font-style:normal;background:var(--green);border:3px solid var(--ink);padding:0 10px}
+.ix-tcp-udp-porty .tu-term{margin:0;padding:14px 16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);font-family:var(--code);font-size:15px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-tcp-udp-porty .tu-term b{color:var(--yel)}
+.ix-tcp-udp-porty .tu-cm{color:#9d9785}
+
+/* HACK overlay */
+.ix-tcp-udp-porty .tu-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--red);color:#fff;
+  background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-tcp-udp-porty .tu-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-tcp-udp-porty .tu-hkdoor{padding:18px 28px 14px;background:var(--yel);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg);background-image:radial-gradient(rgba(20,20,20,.25) 1.3px,transparent 2px);background-size:8px 8px}
+.ix-tcp-udp-porty .tu-hkdoor .tu-dr{--dw:118px}
+.ix-tcp-udp-porty .tu-hkdoor .tu-dr-in{background:radial-gradient(circle at 35% 55%,#fff 0,#fff6b8 25%,var(--red) 100%)}
+.ix-tcp-udp-porty .tu-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-hkcard{display:grid;gap:2px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 18px;font-family:var(--code);font-size:16px;line-height:1.45;text-align:left;transform:rotate(1.5deg)}
+.ix-tcp-udp-porty .tu-hkcard b{font-weight:800}
+.ix-tcp-udp-porty .tu-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-tcp-udp-porty.tu-anim .tu-hack:not([hidden]) .tu-hkin{animation:ix-tcp-udp-porty-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-tcp-udp-porty.tu-anim .tu-hack.tu-rw{animation:ix-tcp-udp-porty-fade .6s ease-in forwards}
+.ix-tcp-udp-porty.tu-anim .tu-hack.tu-rw .tu-hkin{animation:ix-tcp-udp-porty-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-tcp-udp-porty .tu-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);scroll-margin-top:16px;outline:none}
+.ix-tcp-udp-porty .tu-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-tcp-udp-porty .tu-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--yel);background:var(--yel);display:grid;place-items:center;background-image:radial-gradient(rgba(20,20,20,.3) 1.2px,transparent 1.9px);background-size:6px 6px}
+.ix-tcp-udp-porty .tu-bface .tu-dr{--dw:40px;border-width:2px;border-bottom-width:4px;margin-top:10px}
+.ix-tcp-udp-porty .tu-bface .tu-dr-num{font-size:9px;padding:0 2px;border-width:1px;top:4%}
+.ix-tcp-udp-porty .tu-bface.tu-ow{animation:ix-tcp-udp-porty-shake .4s}
+.ix-tcp-udp-porty .tu-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-tcp-udp-porty .tu-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel);word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-tcp-udp-porty .tu-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-tcp-udp-porty .tu-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000;white-space:nowrap}
+.ix-tcp-udp-porty .tu-bbody{position:relative;padding:22px 20px 26px}
+.ix-tcp-udp-porty .tu-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-tcp-udp-porty .tu-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red);margin-bottom:22px}
+.ix-tcp-udp-porty .tu-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-tcp-udp-porty .tu-bopts{display:grid;gap:10px}
+.ix-tcp-udp-porty .tu-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-tcp-udp-porty .tu-bo:hover{background:#262626}
+.ix-tcp-udp-porty .tu-bo.tu-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-bo.tu-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-tcp-udp-porty .tu-bo:disabled{cursor:default}
+.ix-tcp-udp-porty .tu-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-bfb:empty{display:none}
+.ix-tcp-udp-porty .tu-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-tcp-udp-porty .tu-bfb.tu-good b{color:var(--green)}
+.ix-tcp-udp-porty .tu-bfb.tu-bad b{color:#ff8a8a}
+.ix-tcp-udp-porty .tu-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-tcp-udp-porty-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-tcp-udp-porty .tu-win{display:grid;gap:16px;justify-items:start}
+.ix-tcp-udp-porty .tu-wpost{position:relative;width:100%;max-width:420px;display:grid;place-items:center;padding:26px 0 22px;background:var(--yel);border:3px solid #fff;background-image:radial-gradient(rgba(20,20,20,.28) 1.3px,transparent 2px);background-size:8px 8px}
+.ix-tcp-udp-porty .tu-wpost .tu-dr{--dw:104px;box-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-wpost>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-tcp-udp-porty.tu-anim .tu-wpost>span{animation:ix-tcp-udp-porty-stampw .5s cubic-bezier(.2,1.6,.4,1) .35s both}
+.ix-tcp-udp-porty .tu-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--green)}
+.ix-tcp-udp-porty .tu-wins{font-size:20px}
+.ix-tcp-udp-porty .tu-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-tcp-udp-porty .tu-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-tcp-udp-porty .tu-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--dred);margin-bottom:10px}
+.ix-tcp-udp-porty .tu-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-tcp-udp-porty .tu-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-tcp-udp-porty .tu-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-tcp-udp-porty .tu-think span{font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-iva{margin-top:24px;animation:ix-tcp-udp-porty-up .4s ease-out}
+.ix-tcp-udp-porty .tu-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:tuiv}
+.ix-tcp-udp-porty .tu-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:tuiv}
+.ix-tcp-udp-porty .tu-iva li::before{content:counter(tuiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-tcp-udp-porty .tu-iva li b{font-weight:700}
+.ix-tcp-udp-porty .tu-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-tcp-udp-porty .tu-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-tcp-udp-porty .tu-cs{margin-top:72px}
+.ix-tcp-udp-porty .tu-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-tcp-udp-porty .tu-csl{list-style:none;margin:0;padding:0}
+.ix-tcp-udp-porty .tu-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-tcp-udp-porty .tu-csl li:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-tcp-udp-porty .tu-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-tcp-udp-porty .tu-csl p{font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-tcp-udp-porty-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-tcp-udp-porty-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-tcp-udp-porty-knock{0%,100%{transform:none}25%{transform:translateX(-3px) rotate(-1deg)}55%{transform:translateX(3px) rotate(1deg)}}
+@keyframes ix-tcp-udp-porty-popin{from{opacity:0;scale:.4}to{opacity:1;scale:1}}
+@keyframes ix-tcp-udp-porty-run{from{background-position:0 0}to{background-position:-80px 0}}
+@keyframes ix-tcp-udp-porty-pop{0%{opacity:0;scale:.4}35%{opacity:1;scale:1.15}100%{opacity:0;scale:1}}
+@keyframes ix-tcp-udp-porty-stamp{from{opacity:0;transform:translateX(-50%) rotate(-8deg) scale(2.6)}to{opacity:1;transform:translateX(-50%) rotate(-8deg) scale(1)}}
+@keyframes ix-tcp-udp-porty-stampsm{from{opacity:0;transform:scale(1.8)}to{opacity:1;transform:none}}
+@keyframes ix-tcp-udp-porty-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+@keyframes ix-tcp-udp-porty-pulse{0%,100%{box-shadow:5px 5px 0 var(--red)}50%{box-shadow:5px 5px 0 var(--red),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-tcp-udp-porty-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-tcp-udp-porty-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-tcp-udp-porty-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-tcp-udp-porty-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-tcp-udp-porty-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+
+@media (max-width:760px){
+  .ix-tcp-udp-porty .tu-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--red)}
+  .ix-tcp-udp-porty .tu-poster{border-right:0;border-bottom:3px solid var(--ink);min-height:0}
+  .ix-tcp-udp-porty .tu-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-tcp-udp-porty .tu-mt{font-size:42px}
+  .ix-tcp-udp-porty .tu-moves{grid-template-columns:1fr 1fr}
+  .ix-tcp-udp-porty .tu-go{align-self:stretch}
+  .ix-tcp-udp-porty .tu-signs{grid-template-columns:repeat(3,1fr);gap:18px 10px}
+  .ix-tcp-udp-porty .tu-corr{grid-template-columns:repeat(4,1fr);gap:16px 8px}
+}
+@media (max-width:520px){
+  .ix-tcp-udp-porty .tu-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-tcp-udp-porty .tu-lh{padding:12px 14px}
+  .ix-tcp-udp-porty .tu-lt{font-size:20px}
+  .ix-tcp-udp-porty .tu-lb{padding:18px 14px 20px}
+  .ix-tcp-udp-porty .tu-bub{font-size:21px}
+  .ix-tcp-udp-porty .tu-pname{font-size:34px}
+  .ix-tcp-udp-porty .tu-hall{min-height:230px}
+  .ix-tcp-udp-porty .tu-dr-hero{--dw:118px}
+  .ix-tcp-udp-porty .tu-stat b{font-size:44px}
+  .ix-tcp-udp-porty .tu-sign .tu-dr{--dw:76px}
+  .ix-tcp-udp-porty .tu-lane{padding:12px}
+  .ix-tcp-udp-porty .tu-me{width:56px;height:56px;font-size:15px}
+  .ix-tcp-udp-porty .tu-dr-sm{--dw:50px}
+  .ix-tcp-udp-porty .tu-chip{font-size:13px;padding:3px 6px}
+  .ix-tcp-udp-porty .tu-log b{min-width:96px;font-size:17px}
+  .ix-tcp-udp-porty .tu-log li{flex-direction:column;gap:0}
+  .ix-tcp-udp-porty .tu-srow{grid-template-columns:1fr}
+  .ix-tcp-udp-porty .tu-srow>span .tu-pick{flex:1}
+  .ix-tcp-udp-porty .tu-states li{flex-direction:column;gap:8px}
+  .ix-tcp-udp-porty .tu-hallway{padding:14px 10px 12px;margin-left:-4px;margin-right:-4px}
+  .ix-tcp-udp-porty .tu-corr{padding:12px 4px 4px}
+  .ix-tcp-udp-porty .tu-q{font-size:20px}
+  .ix-tcp-udp-porty .tu-big{font-size:23px}
+  .ix-tcp-udp-porty .tu-hs{gap:8px}
+  .ix-tcp-udp-porty .tu-hs span{font-size:18px;padding:5px 9px}
+  .ix-tcp-udp-porty .tu-hs i{font-size:18px}
+  .ix-tcp-udp-porty .tu-dnum{flex-basis:72px;font-size:19px}
+  .ix-tcp-udp-porty .tu-dhead{gap:12px;flex-wrap:wrap}
+  .ix-tcp-udp-porty .tu-dhead p{flex-basis:150px}
+  .ix-tcp-udp-porty .tu-fw p{flex-direction:column;gap:0}
+  .ix-tcp-udp-porty .tu-fw p b{flex-basis:auto}
+  .ix-tcp-udp-porty .tu-final{font-size:28px}
+  .ix-tcp-udp-porty .tu-term{font-size:13px;padding:12px}
+  .ix-tcp-udp-porty .tu-hkt{font-size:46px}
+  .ix-tcp-udp-porty .tu-hkcard{font-size:14px;padding:10px 14px}
+  .ix-tcp-udp-porty .tu-bh{padding:16px 14px;gap:12px}
+  .ix-tcp-udp-porty .tu-bface{width:68px;height:68px}
+  .ix-tcp-udp-porty .tu-bface .tu-dr{--dw:34px}
+  .ix-tcp-udp-porty .tu-bt{font-size:20px}
+  .ix-tcp-udp-porty .tu-hp b{font-size:12px}
+  .ix-tcp-udp-porty .tu-bbody{padding:18px 14px 22px}
+  .ix-tcp-udp-porty .tu-vsay{font-size:22px}
+  .ix-tcp-udp-porty .tu-iv{padding:22px 16px 24px}
+  .ix-tcp-udp-porty .tu-ivq{font-size:22px}
+  .ix-tcp-udp-porty .tu-iva li{padding-left:42px;font-size:18px}
+  .ix-tcp-udp-porty .tu-cst{font-size:25px}
+  .ix-tcp-udp-porty .tu-csl li{gap:14px}
+  .ix-tcp-udp-porty .tu-csn{flex-basis:54px;font-size:30px}
+  .ix-tcp-udp-porty .tu-hud{padding:7px 10px;gap:8px}
+  .ix-tcp-udp-porty .tu-hud-l{font-size:10px}
+  .ix-tcp-udp-porty .tu-pips span{width:22px;height:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-tcp-udp-porty *,.ix-tcp-udp-porty *::before,.ix-tcp-udp-porty *::after{animation:none !important;transition:none !important}
+  .ix-tcp-udp-porty .tu-boom{display:none}
+}
+</style>
+
+
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое порт?</h2><p class="lead"><b>Порт</b> — номер «двери» от 1 до 65 535, по которому пакет находит нужную программу на сервере.</p><h2>О чём выпуск</h2><ul><li>Чем TCP отличается от UDP и когда нужен каждый</li><li>Как проходит рукопожатие SYN, SYN-ACK, ACK</li><li>Что живёт за портами 22, 53, 80, 443, 3306 и 3389</li><li>Что значат open, closed и filtered и как файрвол прячет лишнее</li></ul><h2>Словарик</h2><dl><dt>Порт</dt><dd>Номер «двери» от 1 до 65 535, по которому пакет находит нужную программу на сервере.</dd><dt>TCP</dt><dd>Протокол с установкой соединения: доставляет данные целиком, по порядку и переспрашивает потерянное.</dd><dt>UDP</dt><dd>Протокол без соединения и подтверждений: быстрый, но потерю никто не заметит.</dd><dt>Рукопожатие TCP</dt><dd>Три сообщения SYN, SYN-ACK и ACK, после которых соединение считается открытым.</dd><dt>Сканирование портов</dt><dd>Проверка, какие порты отвечают: open, closed или filtered. Делается только на своих системах или с разрешения.</dd><dt>Файрвол</dt><dd>Фильтр на входе: пропускает соединения только по списку разрешённого, остальные отбрасывает.</dd></dl><h2>Вопрос с собеседования</h2><h3>Чем отличаются состояния порта open, closed и filtered и как проверить, что на сервере не торчит лишнего?</h3><p>Open — на SYN пришёл SYN-ACK, порт слушает служба, это поверхность атаки. Closed — пришёл RST: хост доступен, но за портом никого. Filtered — ответа нет или пришёл ICMP-запрет: по пути файрвол; у UDP молчание неоднозначно, поэтому сканер пишет open|filtered. Проверяю только свои серверы или с письменного разрешения: сканирую все 65 535 TCP-портов и важные UDP-порты снаружи и изнутри, сверяю результат со списком разрешённого, держу файрвол с запретом по умолчанию, базы и панели управления не выставляю в интернет и повторяю проверку после каждого изменения. Перенос SSH на нестандартный порт — не защита: полный обход портов его находит.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</div>
+          
+          
+        
+
+      
+
+      
+      <section aria-label="Читай также" class="ir-rel" style="margin-top: 8px; background: #ffffff; border: 3px solid #141414; box-shadow: 6px 6px 0 #141414; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 22px">Читай также</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px">
+          
+            <a href="../../vypuski/osi/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №11</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Модель OSI и TCP/IP</span></a>
+          
+            <a href="../../vypuski/ip/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №12</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">IP-адрес, маска подсети и NAT</span></a>
+          
+            <a href="../../vypuski/dns/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#141414;color:#ffd60a">Выпуск №14</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Как работает DNS</span></a>
+          
+            <a href="../../baraholka/porty/" style="display: flex; flex-direction: column; gap: 8px; min-height: 44px; padding: 12px 14px; background: #fff7e3; border: 3px solid #141414; box-shadow: 3px 3px 0 #141414; color: #141414; text-decoration: none"><span style="align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;background:#ff2e93;color:#ffffff">Шпаргалка Барахолки</span> <span style="font-family: 'Russo One', sans-serif; font-size: 17px; line-height: 1.3">Список портов TCP и UDP: шпаргалка</span></a>
+          
+        </div>
+        <a href="../../vypuski/" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; color: #141414; text-underline-offset: 3px">Все выпуски по порядку →</a>
+      </section>
+      
+
+      <nav aria-label="Другие выпуски" style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <a href="../../vypuski/ip/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffffff; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">← №12 Самозванец</a>
+        <a href="../../vypuski/dns/" style="font-family: 'Russo One', sans-serif; font-size: 16px; text-decoration: none; padding: 12px 18px; background: #ffd60a; border: 3px solid #141414; box-shadow: 4px 4px 0 #141414">Дальше: №14 Лжесправочник →</a>
+      </nav>
+    </article>
+  </main>
+  <section class="ccl-share" aria-label="Поделиться" data-ccs="1"><h2>Понравилось? Поделись с другом</h2><div class="ccl-share-row"><a href="https://t.me/share/url?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Ftcp-udp-porty%2F&amp;text=TCP%2C%20UDP%20%D0%B8%20%D0%BF%D0%BE%D1%80%D1%82%D1%8B%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D1%80%D1%83%D0%BA%D0%BE%D0%BF%D0%BE%D0%B6%D0%B0%D1%82%D0%B8%D0%B5%2C%20%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%BE%D1%80%D1%82%D0%BE%D0%B2%2C%20Nmap%20%D0%B8%20%D1%84%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB" target="_blank" rel="noopener" class="ccl-main">Telegram</a><a href="https://vk.com/share.php?url=https%3A%2F%2Fcybercomics.ru%2Fvypuski%2Ftcp-udp-porty%2F&amp;title=TCP%2C%20UDP%20%D0%B8%20%D0%BF%D0%BE%D1%80%D1%82%D1%8B%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8%3A%20%D1%80%D1%83%D0%BA%D0%BE%D0%BF%D0%BE%D0%B6%D0%B0%D1%82%D0%B8%D0%B5%2C%20%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%BE%D1%80%D1%82%D0%BE%D0%B2%2C%20Nmap%20%D0%B8%20%D1%84%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB" target="_blank" rel="noopener">ВКонтакте</a><button type="button">Скопировать ссылку</button></div><p class="ccl-msg" aria-live="polite" style="margin:10px 0 0"></p></section><footer style="border-top: 3px solid #141414; background: #ffd60a; padding: 14px 16px; font-size: 16px; line-height: 1.4; text-align: center; font-family: Rubik, system-ui, sans-serif; color: #141414">CyberComics · кибербезопасность в комиксах · все атаки — только в лабораториях и на своих системах.<div class="ccl-foot" data-ccl="1"><span>Связь: <a href="mailto:cybercomics@yandex.ru">cybercomics@yandex.ru</a></span><a href="../../privacy/">Политика данных</a><button type="button">Перенести прогресс</button><button type="button">Настройки cookie</button><span style="flex-basis:100%;font-size:14px;opacity:.8">Названия чужих продуктов и сервисов принадлежат их владельцам. Проект с ними не связан.</span></div></footer>
+</div></div>
+<template id="ix-fragment" data-issue="13">
+<section class="ix ix-tcp-udp-porty" data-ix="tcp-udp-porty" aria-label="Выпуск 13: TCP, UDP и порты">
+
+<div class="tu-story">
+
+  <div class="tu-hud" aria-hidden="true">
+    <span class="tu-hud-l">ЗАЩИТА СЕРВЕРА</span>
+    <span class="tu-bar"><i></i><b>0%</b></span>
+    <span class="tu-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+  </div>
+  <div class="tu-sr" aria-live="polite" data-live></div>
+
+  <!-- ================= МИССИЯ: ПОСТЕР ЗЛОДЕЯ ================= -->
+  <div class="tu-mission" id="ix-tcp-udp-porty-mission">
+    <div class="tu-poster" aria-hidden="true">
+      <span class="tu-ptag">ЦЕЛЬ: ДВЕРНОЙ СТУКАЧ</span>
+      <p class="tu-pname"><span>Дверной</span><span>Стукач</span></p>
+      <div class="tu-hall">
+        <div class="tu-hall-run"></div>
+        <div class="tu-dr tu-dr-hero" data-st="idle">
+          <span class="tu-dr-in"></span>
+          <span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span>
+          <b class="tu-dr-num" data-count>1</b>
+        </div>
+        <span class="tu-tuk tu-tuk-a">ТУК</span>
+        <span class="tu-tuk tu-tuk-b">ТУК</span>
+        <span class="tu-pstamp">ОТКРЫТО!</span>
+      </div>
+      <p class="tu-pcount"><span>обошёл дверей:</span> <b data-count2>0</b></p>
+    </div>
+    <div class="tu-mbody">
+      <p class="tu-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ФУНДАМЕНТ</p>
+      <h2 aria-label="65 535 дверей" class="tu-mt" id="ix-tcp-udp-porty-mt"><span>65 535</span> <span>дверей</span></h2>
+      <p class="tu-msub">Твой сервер — дом с&nbsp;65&nbsp;535 дверями. Дверной Стукач обходит <em>все до одной</em> и&nbsp;ищет незапертую. Узнай, как устроены двери, — и&nbsp;запри лишние.</p>
+      <p class="tu-mquote">«Тук-тук. Где-нибудь да&nbsp;откроют».</p>
+      <ol class="tu-moves" aria-label="Шаги миссии">
+        <li data-mv="1"><b>01</b><span>Двери</span></li>
+        <li data-mv="2"><b>02</b><span>Три стука</span></li>
+        <li data-mv="3"><b>03</b><span>Обход</span></li>
+        <li data-mv="4"><b>04</b><span>Охрана</span></li>
+      </ol>
+      <button class="tu-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ================= ШАГ 1: ДОМ С ДВЕРЯМИ ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l1" aria-labelledby="ix-tcp-udp-porty-t1">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 1 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t1">Дом с дверями</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Сервер — это дом. IP-адрес — адрес дома. А&nbsp;порт — номер двери.</span></div>
+      <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">Зачем одному дому столько дверей?</span></div>
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">За каждой дверью живёт своя программа. Сайт — за одной, вход для админа — за другой. Пакет приходит по адресу и стучит в нужную дверь.</span></div>
+
+      <p class="tu-stat"><b>65&nbsp;535</b><span>дверей у TCP — и ещё столько же почтовых щелей у UDP. Номера от 1 до 65&nbsp;535.</span></p>
+
+      <p class="tu-q">Шесть дверей, которые надо знать в лицо:</p>
+      <div class="tu-signs" data-signs>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">22</b></div><p><b>SSH</b><span>вход админа по сети</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">53</b></div><p><b>DNS</b><span>справочная: имя → IP</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">80</b></div><p><b>HTTP</b><span>сайт без шифрования</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">443</b></div><p><b>HTTPS</b><span>сайт с замочком</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3306</b></div><p><b>MySQL</b><span>база данных</span></p></div>
+        <div class="tu-sign"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3389</b></div><p><b>RDP</b><span>удалённый рабочий стол Windows</span></p></div>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="signs">Прочитать таблички</button></div>
+
+      <div class="tu-after">
+        <p class="tu-def">Номера от 0 до 1023 называют <b>известными</b>: о&nbsp;них договорились заранее, поэтому браузер сразу стучит в&nbsp;443. Сама дверь ничего не умеет. Открывает её <b>служба</b> — программа, которая слушает этот порт.</p>
+        <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">А мой телефон, когда открывает сайт, тоже выходит из какой-то двери?</span></div>
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Из временной, с большим случайным номером. Ответ сервера придёт именно туда.</span></div>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l2">Как стучат в двери ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 2: ТРИ СТУКА ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l2" aria-labelledby="ix-tcp-udp-porty-t2">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 2 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t2">Три стука</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала прочитай таблички</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Гости бывают двух сортов. TCP — вежливый: сначала договорится, потом говорит. Постучи в&nbsp;443.</span></div>
+
+      <div class="tu-lane" data-lane="tcp">
+        <div class="tu-lane-row">
+          <span class="tu-me">ТЫ<small>браузер</small></span>
+          <div class="tu-track"><span class="tu-chip" data-chip></span></div>
+          <div class="tu-dr tu-dr-sm" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">443</b></div>
+        </div>
+        <ol class="tu-log" data-log aria-live="polite"></ol>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="tcp">Постучать: SYN</button></div>
+
+      <div class="tu-part" data-part="udp" hidden>
+        <p class="tu-hs"><span>SYN</span><i aria-hidden="true">→</i><span>SYN-ACK</span><i aria-hidden="true">→</i><span>ACK</span></p>
+        <p class="tu-big"><span>Это рукопожатие TCP.</span></p>
+        <p class="tu-def">Дальше TCP нумерует каждый кусочек данных, ждёт подтверждений и&nbsp;переспрашивает потерянное. Всё дойдёт, и&nbsp;по&nbsp;порядку.</p>
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">А UDP — почтальон-торопыга. Ни стука, ни «кто там». Бросил письмо в&nbsp;щель — и&nbsp;дальше.</span></div>
+        <div class="tu-lane" data-lane="udp">
+          <div class="tu-lane-row">
+            <span class="tu-me">ТЫ<small>игра</small></span>
+            <div class="tu-track"><span class="tu-chip" data-chip></span></div>
+            <div class="tu-dr tu-dr-sm tu-dr-slot" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">UDP</b></div>
+          </div>
+          <ol class="tu-log" data-log aria-live="polite"></ol>
+        </div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="udp">Бросить 3 письма</button></div>
+      </div>
+
+      <div class="tu-part" data-part="sort" hidden>
+        <p class="tu-def">Письмо №2 пропало, и&nbsp;никто не заметил. Зато никаких ожиданий — для голоса и&nbsp;игры свежесть важнее полноты.</p>
+        <p class="tu-q">Кого позвать: TCP или UDP?</p>
+        <div class="tu-sort" data-sort>
+          <div class="tu-srow" data-a="tcp"><p>Скачать домашку файлом</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why></em></div>
+          <div class="tu-srow" data-a="udp"><p>Голосовой чат в&nbsp;игре</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why></em></div>
+          <div class="tu-srow" data-a="tcp"><p>Админ заходит по&nbsp;SSH</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why></em></div>
+          <div class="tu-srow" data-a="udp"><p>Короткий DNS-вопрос «где lab.example?»</p><span><button type="button" class="tu-pick" data-v="tcp">TCP</button><button type="button" class="tu-pick" data-v="udp">UDP</button></span><em data-why></em></div>
+        </div>
+      </div>
+
+      <div class="tu-after">
+        <p class="tu-note">Тонкость: DNS обычно ходит по&nbsp;UDP&nbsp;53, а&nbsp;длинные ответы — по&nbsp;TCP&nbsp;53. Новый HTTP/3 едет на&nbsp;QUIC поверх UDP: надёжность там сделали сами, внутри.</p>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l3">Выпустить Стукача ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 3: ОБХОД ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l3" aria-labelledby="ix-tcp-udp-porty-t3">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 3 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t3">Обход</h3><span class="tu-ok">ПОНЯТНО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала разберись со стуками</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who tu-sonya">СОНЯ</span><span class="tu-bub">А как Стукач узнаёт, где открыто?</span></div>
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Стучит в каждую дверь — SYN — и слушает, что ответят. Это называется сканированием портов. Ответов всего три.</span></div>
+
+      <ul class="tu-states">
+        <li><span class="tu-stb tu-st-open">ОТКРЫТ</span><p><b>«Кто там?»</b>Дверь ответила SYN-ACK: за ней служба.</p></li>
+        <li><span class="tu-stb tu-st-closed">ЗАКРЫТ</span><p><b>«Никого нет!»</b>Ответ RST: дверь есть, за ней пусто.</p></li>
+        <li><span class="tu-stb tu-st-filt">ФИЛЬТР</span><p><b>Тишина.</b>Стук не дошёл: охранник молча его развернул. Есть там кто-то или нет — не ясно.</p></li>
+      </ul>
+
+      <div class="tu-hallway" data-hall="1">
+        <p class="tu-hcap"><b>lab.example</b> · учебный сервер · <span>охраны нет</span></p>
+        <div class="tu-corr" data-corr></div>
+        <p class="tu-hlog" data-hlog aria-live="polite">Стукач у входа. Коридор ждёт.</p>
+      </div>
+      <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="scan1">Пустить Стукача по коридору</button></div>
+      <p class="tu-legal">Это учебный сервер. Стучать в двери чужих серверов нельзя.</p>
+
+      <div class="tu-part" data-part="peek" hidden>
+        <div class="tu-say"><span class="tu-who tu-v">СТУКАЧ</span><span class="tu-bub">Шесть открытых дверей. А&nbsp;3306 — это же база данных… Загляну.</span></div>
+        <div class="tu-act"><button class="tu-btn tu-red" type="button" data-act="peek">Заглянуть за дверь 3306</button></div>
+      </div>
+
+      <div class="tu-after">
+        <p class="tu-big">Открытая база в&nbsp;интернете —<br><span>не дыра. Это катастрофа.</span></p>
+        <div class="tu-why">
+          <p><span class="tu-mk" aria-hidden="true">1</span><span><b>Её найдут за часы.</b> Боты стучат во все адреса интернета круглые сутки, а поисковики вроде Shodan складывают открытые двери в каталог. «Нас никто не знает» не работает.</span></p>
+          <p><span class="tu-mk" aria-hidden="true">2</span><span><b>Пароль — одна стена.</b> Слабый подберут перебором. А дыру в самой базе пароль не закрывает вообще.</span></p>
+          <p><span class="tu-mk" aria-hidden="true">3</span><span><b>Там лежит всё сразу.</b> Не одна страница, а все записи. Были волны атак, когда боты стирали десятки тысяч открытых баз и оставляли записку: «Заплати — верну».</span></p>
+        </div>
+        <div class="tu-act"><button class="tu-btn" type="button" data-goto="ix-tcp-udp-porty-l4">Запереть двери ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ШАГ 4: ОХРАНА ================= -->
+  <section class="tu-lvl tu-locked" id="ix-tcp-udp-porty-l4" aria-labelledby="ix-tcp-udp-porty-t4">
+    <div class="tu-lh"><span class="tu-ln">ШАГ 4 / 4</span><h3 class="tu-lt" id="ix-tcp-udp-porty-t4">Охрана</h3><span class="tu-ok">ЗАПЕРТО</span></div>
+    <div class="tu-lockcap"><span>🔒 Сначала посмотри обход</span></div>
+    <div class="tu-lb">
+      <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Теперь ты админ. Из интернета сайту нужны только 80 и 443. Реши судьбу остальных дверей.</span></div>
+
+      <p class="tu-keep"><span class="tu-stb tu-st-open">80</span><span class="tu-stb tu-st-open">443</span> это и есть сайт — остаются открытыми.</p>
+
+      <div class="tu-dec" data-dec>
+        <div class="tu-drow" data-port="22">
+          <div class="tu-dhead"><b class="tu-dnum">22</b><p><b>SSH</b><span>Вход админа. Нужен только тебе.</span></p><span class="tu-dst" data-dst>ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="0">Открыть всем</button><button type="button" class="tu-dch" data-ok="1">Только своим</button></div>
+          <p class="tu-fb" data-fb aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="53">
+          <div class="tu-dhead"><b class="tu-dnum">53</b><p><b>DNS</b><span>Этот сервер — не справочная.</span></p><span class="tu-dst" data-dst>ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="1">Выключить</button><button type="button" class="tu-dch" data-ok="0">Открыть всем</button></div>
+          <p class="tu-fb" data-fb aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="3306">
+          <div class="tu-dhead"><b class="tu-dnum">3306</b><p><b>MySQL</b><span>База сайта, живёт на этом же сервере.</span></p><span class="tu-dst" data-dst>ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="0">Открыть всем</button><button type="button" class="tu-dch" data-ok="1">Только внутри</button></div>
+          <p class="tu-fb" data-fb aria-live="polite"></p>
+        </div>
+        <div class="tu-drow" data-port="3389">
+          <div class="tu-dhead"><b class="tu-dnum">3389</b><p><b>RDP</b><span>Остался со времён тестов.</span></p><span class="tu-dst" data-dst>ОТКРЫТ</span></div>
+          <div class="tu-dbtns"><button type="button" class="tu-dch" data-ok="1">Выключить</button><button type="button" class="tu-dch" data-ok="0">Открыть всем</button></div>
+          <p class="tu-fb" data-fb aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="tu-part" data-part="guard" hidden>
+        <div class="tu-say"><span class="tu-who">ДЯДЯ МИША</span><span class="tu-bub">Хорошо. А теперь поставим у входа охранника — файрвол. Он пускает только по&nbsp;списку.</span></div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="guard">Поставить охранника</button></div>
+      </div>
+
+      <div class="tu-part" data-part="rescan" hidden>
+        <div class="tu-fw" aria-label="Правила файрвола">
+          <p class="tu-fwh">ОХРАНА · ФАЙРВОЛ</p>
+          <p><b class="tu-ok-c">пускать</b><span>80, 443 — всех</span></p>
+          <p><b class="tu-ok-c">пускать</b><span>22 — только с адреса админа</span></p>
+          <p><b class="tu-no-c">остальных</b><span>молча не пускать</span></p>
+        </div>
+        <div class="tu-hallway tu-guarded" data-hall="2">
+          <p class="tu-hcap"><b>lab.example</b> · учебный сервер · <span>охрана на месте</span></p>
+          <div class="tu-corr" data-corr></div>
+          <p class="tu-hlog" data-hlog aria-live="polite">Стукач вернулся. Охранник ждёт.</p>
+        </div>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-act="scan2">Пустить Стукача снова</button></div>
+      </div>
+
+      <div class="tu-after">
+        <div class="tu-say"><span class="tu-who tu-v">СТУКАЧ</span><span class="tu-bub">Тук… тишина. Тук… тишина. Открыто только то, что и&nbsp;так видят все.</span></div>
+        <p class="tu-final"><b>65&nbsp;535</b> дверей. Открыты: <em>2</em></p>
+        <p class="tu-def">Выключенная дверь без охраны ответила бы «никого нет» — ЗАКРЫТ. С&nbsp;охранником — тишина: Стукач даже не знает, есть ли там кто-то. А&nbsp;админ со своего адреса видит 22 открытым.</p>
+        <p class="tu-q">Так этот обход показал бы Nmap:</p>
+<pre class="tu-term" aria-label="Вывод сканера Nmap"><span class="tu-cm"># только свой сервер!</span>
+$ nmap -p- lab.example
+Nmap scan report for lab.example (203.0.113.7)
+Not shown: 65533 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+80/tcp  <b>open</b>  http
+443/tcp <b>open</b>  https</pre>
+        <p class="tu-legal">Nmap — настоящий сканер портов. Запускай его только на своих машинах и&nbsp;учебных стендах: чужой сервер без разрешения владельца сканировать нельзя.</p>
+        <div class="tu-act"><button class="tu-btn tu-y" type="button" data-goto="ix-tcp-udp-porty-battle">К битве со Стукачом ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ================= ВЗЛОМ ================= -->
+<div class="tu-hack" role="dialog" aria-modal="true" aria-labelledby="ix-tcp-udp-porty-hk" hidden>
+  <div class="tu-hkin">
+    <div class="tu-hkdoor" aria-hidden="true">
+      <div class="tu-dr" data-st="open"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">3306</b></div>
+    </div>
+    <p class="tu-hkt" id="ix-tcp-udp-porty-hk">ВЗЛОМ!</p>
+    <div class="tu-hkcard" data-hkcard></div>
+    <p class="tu-hksay" data-hksay></p>
+    <button class="tu-btn tu-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ================= БИТВА ================= -->
+<section class="tu-battle" id="ix-tcp-udp-porty-battle" aria-labelledby="ix-tcp-udp-porty-bt" tabindex="-1">
+  <div class="tu-bh">
+    <span class="tu-bface" aria-hidden="true"><span class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">ТУК</b></span></span>
+    <div class="tu-bhx">
+      <h2 class="tu-bt" id="ix-tcp-udp-porty-bt">Битва со злодеем</h2>
+      <div class="tu-hp" role="img" aria-label="Здоровье Дверного Стукача" data-hp-wrap><i data-hp></i><b data-hp-t>ДВЕРНОЙ СТУКАЧ · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="tu-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ================= СОБЕСЕДОВАНИЕ ================= -->
+<section class="tu-iv" aria-labelledby="ix-tcp-udp-porty-ivt">
+  <p class="tu-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="tu-ivq" id="ix-tcp-udp-porty-ivt">Чем отличаются состояния порта open, closed и filtered? И как проверить, что на твоём сервере не торчит лишнего?</h2>
+  <div class="tu-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: что отвечает дверь, за которой есть служба? За которой пусто? И что значит, когда не отвечает никто?</span>
+  </div>
+  <button class="tu-btn tu-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-tcp-udp-porty-iva">Показать сильный ответ</button>
+  <div class="tu-iva" id="ix-tcp-udp-porty-iva" hidden>
+    <ol>
+      <li><b>Open.</b> На SYN пришёл SYN-ACK: порт слушает служба. Это поверхность атаки, её надо знать поимённо.</li>
+      <li><b>Closed.</b> Пришёл RST: хост доступен, но за этим портом никого. Безопасно, но видно, что сервер жив.</li>
+      <li><b>Filtered.</b> Ответа нет или пришёл ICMP-запрет: по пути файрвол. У UDP молчание неоднозначно — сканер пишет open|filtered.</li>
+      <li><b>Проверка.</b> Только свои серверы или с письменного разрешения. Сканирую все 65 535 TCP и важные UDP-порты снаружи и изнутри, сверяю со списком разрешённого. Файрвол — запрет по умолчанию. Повторяю после каждого изменения.</li>
+    </ol>
+    <p class="tu-ivx"><b>Ошибка новичка:</b> «Перенесу SSH с 22 на 2222 — и никто не найдёт». Обход всех портов находит службу за минуты. Защищают файрвол, ключи и обновления, а не номер двери.</p>
+  </div>
+</section>
+
+<!-- ================= ШПАРГАЛКА ================= -->
+<section class="tu-cs" aria-labelledby="ix-tcp-udp-porty-cst">
+  <h2 class="tu-cst" id="ix-tcp-udp-porty-cst">Шпаргалка: что важно знать</h2>
+  <ol class="tu-csl">
+    <li><span class="tu-csn" aria-hidden="true">01</span><div><b>Порт — номер двери</b><p>IP — адрес дома, порт — дверь от 1 до 65 535. У TCP и UDP свои наборы дверей.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">02</span><div><b>TCP — с договором</b><p>Три стука SYN → SYN-ACK → ACK, потом доставка по порядку и переспросы. Сайты, SSH, почта, файлы.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">03</span><div><b>UDP — письмо в щель</b><p>Без соединения и подтверждений, зато быстро. DNS, звонки, игры, QUIC в HTTP/3.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">04</span><div><b>Шесть дверей наизусть</b><p>22 SSH · 53 DNS · 80 HTTP · 443 HTTPS · 3306 MySQL · 3389 RDP.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">05</span><div><b>Три ответа на стук</b><p>Открыт — «кто там?», закрыт — RST «никого», фильтруется — тишина, потому что стоит файрвол.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">06</span><div><b>Запрет по умолчанию</b><p>Файрвол пускает только нужное. Лишнюю службу не прячут, а выключают.</p></div></li>
+    <li><span class="tu-csn" aria-hidden="true">07</span><div><b>Базе не место в интернете</b><p>Она слушает только 127.0.0.1 или внутреннюю сеть, а админ ходит через VPN или SSH.</p></div></li>
+  </ol>
+  <p class="tu-train"><b>Тренируйся легально:</b> TryHackMe (комнаты про Nmap), HackTheBox Academy, picoCTF. Nmap — только на своих машинах и учебных стендах, чужие серверы трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-tcp-udp-porty{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--dred:#c81e1e;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;--door:#f3ead2;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-tcp-udp-porty *,.ix-tcp-udp-porty *::before,.ix-tcp-udp-porty *::after{box-sizing:border-box}
+.ix-tcp-udp-porty button{font:inherit;color:inherit}
+.ix-tcp-udp-porty :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-tcp-udp-porty [hidden]{display:none !important}
+.ix-tcp-udp-porty p{margin:0}
+.ix-tcp-udp-porty .tu-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- DOOR (общий компонент) ---------- */
+.ix-tcp-udp-porty .tu-dr{--dw:72px;position:relative;display:block;width:var(--dw);aspect-ratio:5/8;border:3px solid var(--ink);border-bottom-width:6px;background:#0d0d0d;perspective:420px;flex:0 0 auto}
+.ix-tcp-udp-porty .tu-dr-in{position:absolute;inset:0;background:radial-gradient(circle at 30% 55%,#fff6b8 0,var(--yel) 38%,#b88f00 100%);opacity:0;transition:opacity .35s}
+.ix-tcp-udp-porty .tu-dr-leaf{position:absolute;inset:0;background:var(--door);border-right:2px solid var(--ink);transform-origin:0 50%;transition:transform .55s cubic-bezier(.3,1.3,.5,1),background .3s;backface-visibility:visible}
+.ix-tcp-udp-porty .tu-dr-pan{position:absolute;left:17%;right:17%;top:27%;height:25%;border:2px solid rgba(20,20,20,.55)}
+.ix-tcp-udp-porty .tu-dr-pan::after{content:"";position:absolute;left:-2px;right:-2px;top:calc(100% + 22%);height:118%;border:2px solid rgba(20,20,20,.55)}
+.ix-tcp-udp-porty .tu-dr-knob{position:absolute;right:11%;top:56%;width:13%;aspect-ratio:1;border-radius:50%;background:var(--ink)}
+.ix-tcp-udp-porty .tu-dr-num{position:absolute;z-index:3;left:50%;top:6%;transform:translateX(-50%);padding:1px 6px;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-weight:400;font-size:calc(var(--dw)*.2);line-height:1.2;white-space:nowrap;border:2px solid var(--yel)}
+.ix-tcp-udp-porty .tu-dr-bar{position:absolute;z-index:4;left:-12%;right:-12%;top:44%;height:16%;border:2px solid var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 7px,var(--ink) 7px 14px);transform:scaleX(0) rotate(-8deg);transition:transform .35s cubic-bezier(.2,1.5,.4,1)}
+.ix-tcp-udp-porty .tu-dr[data-st="open"] .tu-dr-leaf{transform:rotateY(-74deg)}
+.ix-tcp-udp-porty .tu-dr[data-st="open"] .tu-dr-in{opacity:1}
+.ix-tcp-udp-porty .tu-dr[data-st="closed"] .tu-dr-leaf{background:#d9cfb6}
+.ix-tcp-udp-porty .tu-dr[data-st="filt"] .tu-dr-leaf{background:#a79f8c}
+.ix-tcp-udp-porty .tu-dr[data-st="filt"] .tu-dr-bar{transform:scaleX(1) rotate(-8deg)}
+.ix-tcp-udp-porty .tu-dr.tu-knock .tu-dr-leaf{animation:ix-tcp-udp-porty-knock .32s}
+.ix-tcp-udp-porty .tu-dr-slot .tu-dr-pan{display:none}
+.ix-tcp-udp-porty .tu-dr-slot .tu-dr-leaf::after{content:"";position:absolute;left:18%;right:18%;top:50%;height:8%;background:var(--ink);border-radius:2px}
+
+/* ---------- HUD ---------- */
+.ix-tcp-udp-porty .tu-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-tcp-udp-porty .tu-hud.tu-on{display:flex;animation:ix-tcp-udp-porty-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-tcp-udp-porty .tu-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-tcp-udp-porty .tu-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-tcp-udp-porty .tu-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-tcp-udp-porty .tu-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-tcp-udp-porty .tu-hud.tu-hit{animation:ix-tcp-udp-porty-shake .4s}
+.ix-tcp-udp-porty .tu-hud.tu-hit .tu-bar{border-color:var(--red)}
+.ix-tcp-udp-porty .tu-pips{display:flex;gap:4px}
+.ix-tcp-udp-porty .tu-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-tcp-udp-porty .tu-pips span.tu-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* ---------- MISSION / POSTER ---------- */
+.ix-tcp-udp-porty .tu-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-tcp-udp-porty .tu-poster{position:relative;display:flex;flex-direction:column;gap:6px;padding:18px 18px 16px;background:var(--yel);color:var(--ink);border-right:3px solid var(--ink);overflow:hidden;min-height:440px}
+.ix-tcp-udp-porty .tu-poster::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.28) 1.3px,transparent 2px);background-size:8px 8px;pointer-events:none}
+.ix-tcp-udp-porty .tu-poster::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 66%,transparent 0 30%,rgba(20,20,20,.18) 70%);pointer-events:none}
+.ix-tcp-udp-porty .tu-ptag{position:relative;z-index:2;align-self:flex-start;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px}
+.ix-tcp-udp-porty .tu-pname{position:relative;z-index:2;display:flex;flex-direction:column;font-family:var(--f-mono);font-size:40px;line-height:.95;text-transform:uppercase;color:var(--ink);margin-top:6px}
+.ix-tcp-udp-porty .tu-pname span:last-child{color:var(--paper);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);font-size:1.12em}
+.ix-tcp-udp-porty .tu-hall{position:relative;z-index:1;flex:1;display:grid;place-items:center;min-height:250px;margin:4px -18px 0}
+.ix-tcp-udp-porty .tu-hall-run{position:absolute;left:0;right:0;top:14%;bottom:8%;background:repeating-linear-gradient(90deg,transparent 0 14px,rgba(20,20,20,.82) 14px 17px,#e8c400 17px 62px,rgba(20,20,20,.82) 62px 65px,transparent 65px 80px);border-bottom:6px solid var(--ink);opacity:.55}
+.ix-tcp-udp-porty .tu-hall-run::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--yel) 0,transparent 30%,transparent 70%,var(--yel) 100%)}
+.ix-tcp-udp-porty .tu-poster.tu-running .tu-hall-run{animation:ix-tcp-udp-porty-run .28s linear infinite;filter:blur(1.5px)}
+.ix-tcp-udp-porty .tu-dr-hero{--dw:132px;z-index:2;box-shadow:8px 8px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-dr-hero .tu-dr-leaf{background:var(--paper)}
+.ix-tcp-udp-porty .tu-dr-hero .tu-dr-num{font-size:24px;min-width:3.6ch;text-align:center;font-variant-numeric:tabular-nums}
+.ix-tcp-udp-porty .tu-dr-hero[data-st="open"] .tu-dr-in{background:radial-gradient(circle at 35% 55%,#fff 0,#fff6b8 25%,var(--red) 100%)}
+.ix-tcp-udp-porty .tu-tuk{position:absolute;z-index:3;font-family:var(--f-mono);font-size:30px;line-height:1;color:var(--paper);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink);opacity:0;pointer-events:none}
+.ix-tcp-udp-porty .tu-tuk-a{left:10%;top:26%;transform:rotate(-14deg)}
+.ix-tcp-udp-porty .tu-tuk-b{right:8%;top:52%;transform:rotate(10deg)}
+.ix-tcp-udp-porty .tu-tuk.tu-pop{animation:ix-tcp-udp-porty-pop .3s ease-out}
+.ix-tcp-udp-porty .tu-pstamp{position:absolute;z-index:4;left:50%;bottom:6%;transform:translateX(-50%) rotate(-8deg);font-family:var(--f-mono);font-size:26px;color:var(--red);background:#fff;border:4px solid var(--red);padding:4px 12px;white-space:nowrap;opacity:0}
+.ix-tcp-udp-porty .tu-poster.tu-found .tu-pstamp{opacity:1}
+.ix-tcp-udp-porty.tu-anim .tu-poster.tu-found .tu-pstamp{animation:ix-tcp-udp-porty-stamp .45s cubic-bezier(.2,1.6,.4,1)}
+.ix-tcp-udp-porty .tu-pcount{position:relative;z-index:2;font-family:var(--f-cap);font-size:15px}
+.ix-tcp-udp-porty .tu-pcount b{font-family:var(--f-mono);font-weight:400;font-size:20px;background:var(--ink);color:var(--yel);padding:0 8px;font-variant-numeric:tabular-nums}
+.ix-tcp-udp-porty .tu-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,214,10,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-tcp-udp-porty .tu-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--yel)}
+.ix-tcp-udp-porty .tu-mt{margin:0;display:flex;flex-direction:column;font-family:var(--f-mono);font-weight:400;font-size:50px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-tcp-udp-porty .tu-mt span:first-child{word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-mt span:last-child{font-size:.78em;color:#fff}
+.ix-tcp-udp-porty .tu-msub{font-size:20px;line-height:1.4}
+.ix-tcp-udp-porty .tu-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-tcp-udp-porty .tu-mquote{font-family:var(--f-hand);font-size:25px;line-height:1.2;border-left:5px solid var(--red);padding-left:14px;color:#f3efe4}
+.ix-tcp-udp-porty .tu-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-tcp-udp-porty .tu-moves li{border:2px solid #fff;padding:8px 8px 10px}
+.ix-tcp-udp-porty .tu-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-tcp-udp-porty .tu-moves span{display:block;font-family:var(--f-cap);font-size:14px;line-height:1.2;margin-top:4px}
+.ix-tcp-udp-porty .tu-moves li.tu-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-tcp-udp-porty .tu-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-tcp-udp-porty .tu-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--red)}
+.ix-tcp-udp-porty .tu-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--red)}
+.ix-tcp-udp-porty.tu-anim .tu-go{animation:ix-tcp-udp-porty-pulse 1.8s ease-in-out infinite}
+
+/* ---------- LEVELS ---------- */
+.ix-tcp-udp-porty .tu-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-tcp-udp-porty .tu-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-tcp-udp-porty .tu-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-tcp-udp-porty .tu-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15;word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-tcp-udp-porty .tu-clear .tu-ok{display:inline-block}
+.ix-tcp-udp-porty .tu-lb{padding:22px 20px 24px}
+.ix-tcp-udp-porty .tu-locked{pointer-events:none;user-select:none}
+.ix-tcp-udp-porty .tu-locked .tu-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-tcp-udp-porty .tu-lockcap{display:none}
+.ix-tcp-udp-porty .tu-locked .tu-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-tcp-udp-porty .tu-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-tcp-udp-porty .tu-after{display:none;margin-top:28px}
+.ix-tcp-udp-porty .tu-lvl.tu-clear .tu-after{display:block;animation:ix-tcp-udp-porty-up .4s ease-out}
+.ix-tcp-udp-porty .tu-part{margin-top:28px;animation:ix-tcp-udp-porty-up .4s ease-out}
+
+.ix-tcp-udp-porty .tu-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-tcp-udp-porty .tu-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-tcp-udp-porty .tu-who.tu-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-who.tu-v{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+
+.ix-tcp-udp-porty .tu-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-tcp-udp-porty .tu-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--red);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-tcp-udp-porty .tu-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--red)}
+.ix-tcp-udp-porty .tu-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--red)}
+.ix-tcp-udp-porty .tu-btn.tu-y{background:var(--yel);color:var(--ink)}
+.ix-tcp-udp-porty .tu-btn.tu-red{background:var(--red);color:#fff;box-shadow:4px 4px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--red)}
+.ix-tcp-udp-porty .tu-legal{margin-top:12px;font-size:16px;color:var(--muted)}
+.ix-tcp-udp-porty .tu-note{font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-tcp-udp-porty .tu-def{margin-top:20px;font-size:18px;line-height:1.5}
+.ix-tcp-udp-porty .tu-def:first-child{margin-top:0}
+.ix-tcp-udp-porty .tu-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-tcp-udp-porty .tu-big{font-family:var(--f-mono);font-size:28px;line-height:1.15;word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-hs{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:10px}
+.ix-tcp-udp-porty .tu-hs span{font-family:var(--f-cap);font-size:24px;line-height:1.1;padding:6px 12px;background:var(--yel);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-hs span:nth-of-type(2){background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-hs i{font-style:normal;font-size:24px;font-weight:700}
+.ix-tcp-udp-porty .tu-big span{color:var(--dred)}
+
+/* stat */
+.ix-tcp-udp-porty .tu-stat{margin:26px 0 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ix-tcp-udp-porty .tu-stat b{font-family:var(--f-mono);font-weight:400;font-size:52px;line-height:1;color:var(--yel);-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink);white-space:nowrap;word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-stat span{flex:1 1 220px;font-size:19px;line-height:1.4}
+
+/* signs (6 doors) */
+.ix-tcp-udp-porty .tu-signs{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.ix-tcp-udp-porty .tu-sign{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.ix-tcp-udp-porty .tu-sign .tu-dr{--dw:84px}
+.ix-tcp-udp-porty .tu-sign p{display:grid;gap:0;opacity:0;transform:translateY(-6px);transition:opacity .3s,transform .3s}
+.ix-tcp-udp-porty .tu-sign p b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-tcp-udp-porty .tu-sign p span{font-size:15px;line-height:1.25;color:#3b372e}
+.ix-tcp-udp-porty .tu-sign.tu-read p{opacity:1;transform:none}
+.ix-tcp-udp-porty .tu-sign.tu-read .tu-dr-leaf{background:#fff}
+
+/* lane (TCP/UDP) */
+.ix-tcp-udp-porty .tu-lane{margin-top:20px;padding:16px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-lane-row{display:flex;align-items:center;gap:10px}
+.ix-tcp-udp-porty .tu-me{flex:0 0 auto;display:grid;place-items:center;width:66px;height:66px;background:var(--ink);color:var(--yel);font-family:var(--f-mono);font-size:18px;line-height:1;text-align:center}
+.ix-tcp-udp-porty .tu-me small{display:block;font-family:var(--f-cap);font-size:12px;color:#fff;margin-top:-14px}
+.ix-tcp-udp-porty .tu-track{position:relative;flex:1;height:56px;min-width:0}
+.ix-tcp-udp-porty .tu-track::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed rgba(20,20,20,.35)}
+.ix-tcp-udp-porty .tu-chip{position:absolute;left:0;top:50%;padding:4px 9px;font-family:var(--f-cap);font-size:15px;line-height:1.2;white-space:nowrap;background:var(--yel);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:translate(0,-50%);opacity:0}
+.ix-tcp-udp-porty .tu-chip.tu-back{background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-chip.tu-lost{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-dr-sm{--dw:58px}
+.ix-tcp-udp-porty .tu-log{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.ix-tcp-udp-porty .tu-log:empty{display:none}
+.ix-tcp-udp-porty .tu-log li{display:flex;gap:12px;align-items:baseline;padding-top:8px;border-top:2px solid rgba(20,20,20,.1);animation:ix-tcp-udp-porty-up .3s ease-out}
+.ix-tcp-udp-porty .tu-log b{flex:0 0 auto;min-width:118px;font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-tcp-udp-porty .tu-log span{font-size:18px;line-height:1.35}
+.ix-tcp-udp-porty .tu-log li.tu-bad b{color:var(--dred)}
+.ix-tcp-udp-porty .tu-log li.tu-good b{color:var(--gdk)}
+
+/* sort */
+.ix-tcp-udp-porty .tu-sort{display:grid}
+.ix-tcp-udp-porty .tu-srow{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;padding:14px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-srow:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-srow p{font-size:19px;line-height:1.3;font-weight:500}
+.ix-tcp-udp-porty .tu-srow>span{display:flex;gap:8px}
+.ix-tcp-udp-porty .tu-pick{min-width:72px;min-height:48px;padding:0 12px;font-family:var(--f-cap);font-size:17px;border:3px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.ix-tcp-udp-porty .tu-pick:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-pick.tu-wrong{background:#ffe1e1;border-color:var(--dred);color:var(--dred);text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-pick.tu-right{background:var(--green)}
+.ix-tcp-udp-porty .tu-pick:disabled{cursor:default}
+.ix-tcp-udp-porty .tu-srow em{grid-column:1/-1;font-style:normal;font-size:17px;line-height:1.35;color:#3b372e}
+.ix-tcp-udp-porty .tu-srow em:empty{display:none}
+
+/* states legend */
+.ix-tcp-udp-porty .tu-states{list-style:none;margin:22px 0 0;padding:0;display:grid}
+.ix-tcp-udp-porty .tu-states li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-states li:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-states p{font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-states p b{display:block;font-family:var(--f-cap);font-weight:400;font-size:22px;line-height:1.2}
+.ix-tcp-udp-porty .tu-stb{flex:0 0 auto;display:inline-block;min-width:96px;text-align:center;font-family:var(--f-cap);font-size:15px;line-height:1.2;padding:5px 8px;border:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-st-open{background:var(--yel);color:var(--ink)}
+.ix-tcp-udp-porty .tu-st-closed{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-st-filt{background:var(--ink);color:#fff;box-shadow:inset 0 -5px 0 var(--yel)}
+
+/* hallway */
+.ix-tcp-udp-porty .tu-hallway{position:relative;margin-top:24px;padding:16px 14px 14px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red)}
+.ix-tcp-udp-porty .tu-hcap{font-family:var(--f-cap);font-size:15px;line-height:1.3;margin-bottom:14px}
+.ix-tcp-udp-porty .tu-hcap b{font-weight:400;color:var(--yel)}
+.ix-tcp-udp-porty .tu-hcap span{color:#ff8a8a}
+.ix-tcp-udp-porty .tu-guarded .tu-hcap span{color:var(--green)}
+.ix-tcp-udp-porty .tu-corr{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:10px;padding:12px 6px 4px;background:linear-gradient(#262626,#1b1b1b);border-bottom:6px solid #3a3a3a}
+.ix-tcp-udp-porty .tu-guarded .tu-corr{padding-top:30px}
+.ix-tcp-udp-porty .tu-guarded .tu-corr::before{content:"ОХРАНА · ФАЙРВОЛ";position:absolute;left:0;right:0;top:0;height:22px;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px;letter-spacing:.06em;color:var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 12px,#e6be00 12px 24px);border-bottom:2px solid var(--ink)}
+.ix-tcp-udp-porty .tu-cell{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.ix-tcp-udp-porty .tu-cell .tu-dr{--dw:100%;max-width:84px;border-color:#000}
+.ix-tcp-udp-porty .tu-cell .tu-dr-num{font-size:14px;padding:0 4px}
+.ix-tcp-udp-porty .tu-cell small{font-size:13px;line-height:1.1;color:#cfc8b4;text-align:center;white-space:nowrap}
+.ix-tcp-udp-porty .tu-cell .tu-stb{min-width:0;width:100%;max-width:84px;font-size:11px;padding:3px 2px;visibility:hidden;border-color:#000}
+.ix-tcp-udp-porty .tu-cell.tu-done .tu-stb{visibility:visible;animation:ix-tcp-udp-porty-stampsm .3s cubic-bezier(.2,1.6,.4,1)}
+.ix-tcp-udp-porty .tu-cell.tu-now::after{content:"ТУК!";position:absolute;z-index:6;left:50%;top:-6px;transform:translateX(-50%) rotate(-8deg);font-family:var(--f-mono);font-size:15px;color:var(--ink);background:var(--yel);border:2px solid var(--ink);padding:2px 6px;white-space:nowrap;animation:ix-tcp-udp-porty-popin .25s ease-out}
+.ix-tcp-udp-porty .tu-cell.tu-hot .tu-dr{box-shadow:0 0 0 4px var(--red),0 0 24px 6px rgba(255,59,59,.6)}
+.ix-tcp-udp-porty .tu-hlog{margin-top:14px;min-height:56px;font-size:19px;line-height:1.4}
+.ix-tcp-udp-porty .tu-hlog b{font-family:var(--f-cap);font-weight:400;color:var(--yel)}
+
+/* why */
+.ix-tcp-udp-porty .tu-why{margin:22px 0 0;display:grid;gap:16px}
+.ix-tcp-udp-porty .tu-why p{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-why b{display:block;font-family:var(--f-cap);font-weight:400;font-size:22px;line-height:1.2;margin-bottom:2px}
+.ix-tcp-udp-porty .tu-mk{flex:0 0 44px;height:44px;display:grid;place-items:center;border:3px solid var(--ink);background:var(--red);color:#fff;font-family:var(--f-mono);font-size:20px;line-height:1}
+
+/* decisions */
+.ix-tcp-udp-porty .tu-keep{margin:18px 0 6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:18px}
+.ix-tcp-udp-porty .tu-keep .tu-stb{min-width:56px}
+.ix-tcp-udp-porty .tu-dec{display:grid;margin-top:8px}
+.ix-tcp-udp-porty .tu-drow{padding:18px 0;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-tcp-udp-porty .tu-drow:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-dhead{display:flex;gap:14px;align-items:center}
+.ix-tcp-udp-porty .tu-dnum{flex:0 0 84px;font-family:var(--f-mono);font-weight:400;font-size:22px;line-height:1;text-align:center;padding:10px 4px;background:var(--ink);color:var(--yel)}
+.ix-tcp-udp-porty .tu-dhead p{flex:1;min-width:0;display:grid}
+.ix-tcp-udp-porty .tu-dhead p b{font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2}
+.ix-tcp-udp-porty .tu-dhead p span{font-size:17px;line-height:1.3;color:#3b372e}
+.ix-tcp-udp-porty .tu-dst{flex:0 0 auto;font-family:var(--f-cap);font-size:13px;padding:3px 8px;border:2px solid var(--ink);background:var(--yel)}
+.ix-tcp-udp-porty .tu-dst.tu-dst-closed{background:var(--red);color:#fff}
+.ix-tcp-udp-porty .tu-dst.tu-dst-own{background:var(--green)}
+.ix-tcp-udp-porty .tu-dbtns{display:flex;gap:10px;margin-top:12px}
+.ix-tcp-udp-porty .tu-dch{flex:1 1 0;min-height:50px;padding:6px 10px;font-family:var(--f-cap);font-size:17px;border:3px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.ix-tcp-udp-porty .tu-dch:hover{background:#fffbe6}
+.ix-tcp-udp-porty .tu-dch:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-dch.tu-wrong{background:#ffe1e1;border-color:var(--dred);color:var(--dred);text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-dch.tu-right{background:var(--green)}
+.ix-tcp-udp-porty .tu-dch:disabled{cursor:default;transform:none}
+.ix-tcp-udp-porty .tu-fb{margin-top:12px;font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-fb:empty{display:none}
+.ix-tcp-udp-porty .tu-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-tcp-udp-porty .tu-fb.tu-bad b{color:var(--dred)}
+.ix-tcp-udp-porty .tu-fb.tu-good b{color:var(--gdk)}
+.ix-tcp-udp-porty .tu-drow.tu-shk{animation:ix-tcp-udp-porty-shake .4s}
+
+/* firewall */
+.ix-tcp-udp-porty .tu-fw{display:grid;gap:8px;padding:0 0 14px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);overflow:hidden}
+.ix-tcp-udp-porty .tu-fwh{padding:6px 14px;font-family:var(--f-cap);font-size:15px;color:var(--ink);background:repeating-linear-gradient(-45deg,var(--yel) 0 14px,#e6be00 14px 28px);border-bottom:3px solid var(--ink);margin-bottom:4px}
+.ix-tcp-udp-porty .tu-fw p{display:flex;gap:12px;align-items:baseline;padding:0 14px;font-size:18px;line-height:1.35}
+.ix-tcp-udp-porty .tu-fw p b{flex:0 0 104px;font-family:var(--f-cap);font-weight:400;font-size:17px}
+.ix-tcp-udp-porty .tu-ok-c{color:var(--green)}
+.ix-tcp-udp-porty .tu-no-c{color:#ff8a8a}
+.ix-tcp-udp-porty.tu-anim .tu-fw p{animation:ix-tcp-udp-porty-up .35s ease-out both}
+.ix-tcp-udp-porty.tu-anim .tu-fw p:nth-child(3){animation-delay:.15s}
+.ix-tcp-udp-porty.tu-anim .tu-fw p:nth-child(4){animation-delay:.3s}
+
+/* final + terminal */
+.ix-tcp-udp-porty .tu-final{margin-top:10px;font-family:var(--f-mono);font-size:34px;line-height:1.15;word-spacing:-.4em}
+.ix-tcp-udp-porty .tu-final b{display:block;font-size:1.45em;font-weight:400;word-spacing:-.4em;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-final em{font-style:normal;background:var(--green);border:3px solid var(--ink);padding:0 10px}
+.ix-tcp-udp-porty .tu-term{margin:0;padding:14px 16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--yel);font-family:var(--code);font-size:15px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-tcp-udp-porty .tu-term b{color:var(--yel)}
+.ix-tcp-udp-porty .tu-cm{color:#9d9785}
+
+/* HACK overlay */
+.ix-tcp-udp-porty .tu-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--red);color:#fff;
+  background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-tcp-udp-porty .tu-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-tcp-udp-porty .tu-hkdoor{padding:18px 28px 14px;background:var(--yel);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg);background-image:radial-gradient(rgba(20,20,20,.25) 1.3px,transparent 2px);background-size:8px 8px}
+.ix-tcp-udp-porty .tu-hkdoor .tu-dr{--dw:118px}
+.ix-tcp-udp-porty .tu-hkdoor .tu-dr-in{background:radial-gradient(circle at 35% 55%,#fff 0,#fff6b8 25%,var(--red) 100%)}
+.ix-tcp-udp-porty .tu-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-hkcard{display:grid;gap:2px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 18px;font-family:var(--code);font-size:16px;line-height:1.45;text-align:left;transform:rotate(1.5deg)}
+.ix-tcp-udp-porty .tu-hkcard b{font-weight:800}
+.ix-tcp-udp-porty .tu-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-tcp-udp-porty.tu-anim .tu-hack:not([hidden]) .tu-hkin{animation:ix-tcp-udp-porty-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-tcp-udp-porty.tu-anim .tu-hack.tu-rw{animation:ix-tcp-udp-porty-fade .6s ease-in forwards}
+.ix-tcp-udp-porty.tu-anim .tu-hack.tu-rw .tu-hkin{animation:ix-tcp-udp-porty-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-tcp-udp-porty .tu-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--red);scroll-margin-top:16px;outline:none}
+.ix-tcp-udp-porty .tu-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-tcp-udp-porty .tu-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--yel);background:var(--yel);display:grid;place-items:center;background-image:radial-gradient(rgba(20,20,20,.3) 1.2px,transparent 1.9px);background-size:6px 6px}
+.ix-tcp-udp-porty .tu-bface .tu-dr{--dw:40px;border-width:2px;border-bottom-width:4px;margin-top:10px}
+.ix-tcp-udp-porty .tu-bface .tu-dr-num{font-size:9px;padding:0 2px;border-width:1px;top:4%}
+.ix-tcp-udp-porty .tu-bface.tu-ow{animation:ix-tcp-udp-porty-shake .4s}
+.ix-tcp-udp-porty .tu-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-tcp-udp-porty .tu-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel);word-spacing:-.42em}
+.ix-tcp-udp-porty .tu-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-tcp-udp-porty .tu-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-tcp-udp-porty .tu-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000;white-space:nowrap}
+.ix-tcp-udp-porty .tu-bbody{position:relative;padding:22px 20px 26px}
+.ix-tcp-udp-porty .tu-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-tcp-udp-porty .tu-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red);margin-bottom:22px}
+.ix-tcp-udp-porty .tu-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-tcp-udp-porty .tu-bopts{display:grid;gap:10px}
+.ix-tcp-udp-porty .tu-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-tcp-udp-porty .tu-bo:hover{background:#262626}
+.ix-tcp-udp-porty .tu-bo.tu-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-tcp-udp-porty .tu-bo.tu-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-tcp-udp-porty .tu-bo:disabled{cursor:default}
+.ix-tcp-udp-porty .tu-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-tcp-udp-porty .tu-bfb:empty{display:none}
+.ix-tcp-udp-porty .tu-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-tcp-udp-porty .tu-bfb.tu-good b{color:var(--green)}
+.ix-tcp-udp-porty .tu-bfb.tu-bad b{color:#ff8a8a}
+.ix-tcp-udp-porty .tu-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-tcp-udp-porty-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-tcp-udp-porty .tu-win{display:grid;gap:16px;justify-items:start}
+.ix-tcp-udp-porty .tu-wpost{position:relative;width:100%;max-width:420px;display:grid;place-items:center;padding:26px 0 22px;background:var(--yel);border:3px solid #fff;background-image:radial-gradient(rgba(20,20,20,.28) 1.3px,transparent 2px);background-size:8px 8px}
+.ix-tcp-udp-porty .tu-wpost .tu-dr{--dw:104px;box-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-wpost>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-tcp-udp-porty.tu-anim .tu-wpost>span{animation:ix-tcp-udp-porty-stampw .5s cubic-bezier(.2,1.6,.4,1) .35s both}
+.ix-tcp-udp-porty .tu-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--green)}
+.ix-tcp-udp-porty .tu-wins{font-size:20px}
+.ix-tcp-udp-porty .tu-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-tcp-udp-porty .tu-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-tcp-udp-porty .tu-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-tcp-udp-porty .tu-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--dred);margin-bottom:10px}
+.ix-tcp-udp-porty .tu-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-tcp-udp-porty .tu-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-tcp-udp-porty .tu-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-tcp-udp-porty .tu-think span{font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-iva{margin-top:24px;animation:ix-tcp-udp-porty-up .4s ease-out}
+.ix-tcp-udp-porty .tu-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:tuiv}
+.ix-tcp-udp-porty .tu-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:tuiv}
+.ix-tcp-udp-porty .tu-iva li::before{content:counter(tuiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-tcp-udp-porty .tu-iva li b{font-weight:700}
+.ix-tcp-udp-porty .tu-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-tcp-udp-porty .tu-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-tcp-udp-porty .tu-cs{margin-top:72px}
+.ix-tcp-udp-porty .tu-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-tcp-udp-porty .tu-csl{list-style:none;margin:0;padding:0}
+.ix-tcp-udp-porty .tu-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-tcp-udp-porty .tu-csl li:last-child{border-bottom:0}
+.ix-tcp-udp-porty .tu-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-tcp-udp-porty .tu-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-tcp-udp-porty .tu-csl p{font-size:18px;line-height:1.45}
+.ix-tcp-udp-porty .tu-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-tcp-udp-porty-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-tcp-udp-porty-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-tcp-udp-porty-knock{0%,100%{transform:none}25%{transform:translateX(-3px) rotate(-1deg)}55%{transform:translateX(3px) rotate(1deg)}}
+@keyframes ix-tcp-udp-porty-popin{from{opacity:0;scale:.4}to{opacity:1;scale:1}}
+@keyframes ix-tcp-udp-porty-run{from{background-position:0 0}to{background-position:-80px 0}}
+@keyframes ix-tcp-udp-porty-pop{0%{opacity:0;scale:.4}35%{opacity:1;scale:1.15}100%{opacity:0;scale:1}}
+@keyframes ix-tcp-udp-porty-stamp{from{opacity:0;transform:translateX(-50%) rotate(-8deg) scale(2.6)}to{opacity:1;transform:translateX(-50%) rotate(-8deg) scale(1)}}
+@keyframes ix-tcp-udp-porty-stampsm{from{opacity:0;transform:scale(1.8)}to{opacity:1;transform:none}}
+@keyframes ix-tcp-udp-porty-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+@keyframes ix-tcp-udp-porty-pulse{0%,100%{box-shadow:5px 5px 0 var(--red)}50%{box-shadow:5px 5px 0 var(--red),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-tcp-udp-porty-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-tcp-udp-porty-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-tcp-udp-porty-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-tcp-udp-porty-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-tcp-udp-porty-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+
+@media (max-width:760px){
+  .ix-tcp-udp-porty .tu-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--red)}
+  .ix-tcp-udp-porty .tu-poster{border-right:0;border-bottom:3px solid var(--ink);min-height:0}
+  .ix-tcp-udp-porty .tu-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-tcp-udp-porty .tu-mt{font-size:42px}
+  .ix-tcp-udp-porty .tu-moves{grid-template-columns:1fr 1fr}
+  .ix-tcp-udp-porty .tu-go{align-self:stretch}
+  .ix-tcp-udp-porty .tu-signs{grid-template-columns:repeat(3,1fr);gap:18px 10px}
+  .ix-tcp-udp-porty .tu-corr{grid-template-columns:repeat(4,1fr);gap:16px 8px}
+}
+@media (max-width:520px){
+  .ix-tcp-udp-porty .tu-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-tcp-udp-porty .tu-lh{padding:12px 14px}
+  .ix-tcp-udp-porty .tu-lt{font-size:20px}
+  .ix-tcp-udp-porty .tu-lb{padding:18px 14px 20px}
+  .ix-tcp-udp-porty .tu-bub{font-size:21px}
+  .ix-tcp-udp-porty .tu-pname{font-size:34px}
+  .ix-tcp-udp-porty .tu-hall{min-height:230px}
+  .ix-tcp-udp-porty .tu-dr-hero{--dw:118px}
+  .ix-tcp-udp-porty .tu-stat b{font-size:44px}
+  .ix-tcp-udp-porty .tu-sign .tu-dr{--dw:76px}
+  .ix-tcp-udp-porty .tu-lane{padding:12px}
+  .ix-tcp-udp-porty .tu-me{width:56px;height:56px;font-size:15px}
+  .ix-tcp-udp-porty .tu-dr-sm{--dw:50px}
+  .ix-tcp-udp-porty .tu-chip{font-size:13px;padding:3px 6px}
+  .ix-tcp-udp-porty .tu-log b{min-width:96px;font-size:17px}
+  .ix-tcp-udp-porty .tu-log li{flex-direction:column;gap:0}
+  .ix-tcp-udp-porty .tu-srow{grid-template-columns:1fr}
+  .ix-tcp-udp-porty .tu-srow>span .tu-pick{flex:1}
+  .ix-tcp-udp-porty .tu-states li{flex-direction:column;gap:8px}
+  .ix-tcp-udp-porty .tu-hallway{padding:14px 10px 12px;margin-left:-4px;margin-right:-4px}
+  .ix-tcp-udp-porty .tu-corr{padding:12px 4px 4px}
+  .ix-tcp-udp-porty .tu-q{font-size:20px}
+  .ix-tcp-udp-porty .tu-big{font-size:23px}
+  .ix-tcp-udp-porty .tu-hs{gap:8px}
+  .ix-tcp-udp-porty .tu-hs span{font-size:18px;padding:5px 9px}
+  .ix-tcp-udp-porty .tu-hs i{font-size:18px}
+  .ix-tcp-udp-porty .tu-dnum{flex-basis:72px;font-size:19px}
+  .ix-tcp-udp-porty .tu-dhead{gap:12px;flex-wrap:wrap}
+  .ix-tcp-udp-porty .tu-dhead p{flex-basis:150px}
+  .ix-tcp-udp-porty .tu-fw p{flex-direction:column;gap:0}
+  .ix-tcp-udp-porty .tu-fw p b{flex-basis:auto}
+  .ix-tcp-udp-porty .tu-final{font-size:28px}
+  .ix-tcp-udp-porty .tu-term{font-size:13px;padding:12px}
+  .ix-tcp-udp-porty .tu-hkt{font-size:46px}
+  .ix-tcp-udp-porty .tu-hkcard{font-size:14px;padding:10px 14px}
+  .ix-tcp-udp-porty .tu-bh{padding:16px 14px;gap:12px}
+  .ix-tcp-udp-porty .tu-bface{width:68px;height:68px}
+  .ix-tcp-udp-porty .tu-bface .tu-dr{--dw:34px}
+  .ix-tcp-udp-porty .tu-bt{font-size:20px}
+  .ix-tcp-udp-porty .tu-hp b{font-size:12px}
+  .ix-tcp-udp-porty .tu-bbody{padding:18px 14px 22px}
+  .ix-tcp-udp-porty .tu-vsay{font-size:22px}
+  .ix-tcp-udp-porty .tu-iv{padding:22px 16px 24px}
+  .ix-tcp-udp-porty .tu-ivq{font-size:22px}
+  .ix-tcp-udp-porty .tu-iva li{padding-left:42px;font-size:18px}
+  .ix-tcp-udp-porty .tu-cst{font-size:25px}
+  .ix-tcp-udp-porty .tu-csl li{gap:14px}
+  .ix-tcp-udp-porty .tu-csn{flex-basis:54px;font-size:30px}
+  .ix-tcp-udp-porty .tu-hud{padding:7px 10px;gap:8px}
+  .ix-tcp-udp-porty .tu-hud-l{font-size:10px}
+  .ix-tcp-udp-porty .tu-pips span{width:22px;height:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-tcp-udp-porty *,.ix-tcp-udp-porty *::before,.ix-tcp-udp-porty *::after{animation:none !important;transition:none !important}
+  .ix-tcp-udp-porty .tu-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-tcp-udp-porty'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('tu-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusLater(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:500)}
+  function knock(dr){dr.classList.remove('tu-knock');void dr.offsetWidth;dr.classList.add('tu-knock')}
+
+  /* ---------- HUD ---------- */
+  var hud=q('.tu-hud'), fill=q('.tu-bar i'), barT=q('.tu-bar b'), pips=qa('.tu-pips span');
+  var S={def:0,steps:[0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('tu-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('tu-hit');void hud.offsetWidth;hud.classList.add('tu-hit');setTimeout(function(){hud.classList.remove('tu-hit')},700)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('tu-x');
+    q('#ix-tcp-udp-porty-l'+(i+1)).classList.add('tu-clear');
+    var nx=q('#ix-tcp-udp-porty-l'+(i+2)); if(nx) nx.classList.remove('tu-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    focusLater(t.classList.contains('tu-battle')?t:t.querySelector('.tu-lb .tu-btn'));
+  })});
+
+  /* ---------- ПОСТЕР: Стукач обходит коридор ---------- */
+  var poster=q('.tu-poster'), hero=q('.tu-dr-hero'), cnt=q('[data-count]'), cnt2=q('[data-count2]'), tuks=qa('.tu-tuk'), played=false;
+  var TARGET=3306;
+  function posterEnd(){
+    poster.classList.remove('tu-running');
+    cnt.textContent=TARGET; cnt2.textContent=TARGET;
+    hero.setAttribute('data-st','open'); poster.classList.add('tu-found');
+  }
+  function posterRun(){
+    if(played) return; played=true;
+    if(RM){posterEnd();return}
+    poster.classList.add('tu-running');
+    var T=3400, t0=null, last=0, k=0;
+    function f(ts){
+      if(t0===null) t0=ts;
+      var p=Math.min(1,(ts-t0)/T), e=1-Math.pow(1-p,3), n=Math.max(1,Math.round(e*TARGET));
+      cnt.textContent=n; cnt2.textContent=n;
+      if(ts-last>110+420*p && p<.97){last=ts;knock(hero);var tk=tuks[k++%2];tk.classList.remove('tu-pop');void tk.offsetWidth;tk.classList.add('tu-pop')}
+      if(p<1) requestAnimationFrame(f); else setTimeout(posterEnd,180);
+    }
+    requestAnimationFrame(f);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){posterRun();io.disconnect()}})},{threshold:.45});
+    io.observe(poster);
+  } else posterRun();
+
+  /* ---------- START ---------- */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-tcp-udp-porty-l1');
+    if(!hud.classList.contains('tu-on')){
+      hud.classList.add('tu-on'); paint(); l1.classList.remove('tu-locked');
+      startBtn.textContent='Миссия начата ▼'; say('Миссия принята. Шаг первый открыт.');
+    }
+    go(l1); focusLater(q('[data-act="signs"]'));
+  });
+
+  /* ---------- ШАГ 1: таблички ---------- */
+  var signsBtn=q('[data-act="signs"]');
+  signsBtn.addEventListener('click',function(){
+    if(signsBtn.disabled) return; signsBtn.disabled=true;
+    var signs=qa('.tu-sign'), p=Promise.resolve();
+    signs.forEach(function(s){p=p.then(function(){knock(q('.tu-dr',s));s.classList.add('tu-read');return wait(170)})});
+    p.then(function(){
+      signsBtn.textContent='Таблички прочитаны ✓'; step(0,10);
+      say('Таблички прочитаны: 22 SSH, 53 DNS, 80 HTTP, 443 HTTPS, 3306 MySQL, 3389 RDP.');
+      var b=q('#ix-tcp-udp-porty-l1 .tu-after .tu-btn'); focusLater(b);
+    });
+  });
+
+  /* ---------- ШАГ 2: дорожка TCP / UDP ---------- */
+  function Lane(el){
+    var L={el:el,track:q('.tu-track',el),chip:q('[data-chip]',el),dr:q('.tu-dr',el),log:q('[data-log]',el)};
+    function place(x,y,rot,tr){
+      L.chip.style.transition=tr?'transform .62s cubic-bezier(.5,0,.4,1), opacity .25s':'none';
+      L.chip.style.transform='translate('+x+'px,calc(-50% + '+(y||0)+'px)) rotate('+(rot||0)+'deg)';
+    }
+    L.fly=function(text,dir,cls,lost){
+      var c=L.chip; c.textContent=text; c.className='tu-chip'+(cls?' '+cls:'');
+      var W=L.track.clientWidth-c.offsetWidth, a=dir==='r'?0:W, b=dir==='r'?W:0;
+      c.style.opacity='1'; place(a,0,0,false); void c.offsetWidth;
+      if(lost){
+        place(W/2,0,0,true);
+        return wait(520).then(function(){c.classList.add('tu-lost');place(W/2,46,40,true);c.style.opacity='0';return wait(560)});
+      }
+      place(b,0,0,true);
+      return wait(660).then(function(){if(dir==='r') knock(L.dr);c.style.opacity='0';return wait(120)});
+    };
+    L.add=function(b,t,cls){var li=document.createElement('li');if(cls) li.className=cls;li.innerHTML='<b>'+b+'</b><span>'+t+'</span>';L.log.appendChild(li)};
+    return L;
+  }
+  var tcp=Lane(q('[data-lane="tcp"]')), udp=Lane(q('[data-lane="udp"]'));
+  var tcpBtn=q('[data-act="tcp"]'), udpBtn=q('[data-act="udp"]'), tcpPhase=0;
+  tcpBtn.addEventListener('click',function(){
+    if(tcpBtn.disabled) return; tcpBtn.disabled=true;
+    if(tcpPhase===0){
+      tcp.fly('SYN','r').then(function(){
+        tcp.add('→ SYN','«Тук. Можно войти?»');
+        return tcp.fly('SYN-ACK','l','tu-back');
+      }).then(function(){
+        tcp.add('← SYN-ACK','«Тук-тук. Слышу тебя. Входи?»');
+        tcpPhase=1; tcpBtn.textContent='Ответить: ACK'; tcpBtn.disabled=false; tcpBtn.focus({preventScroll:true});
+        say('Сервер ответил SYN-ACK. Твой ход: ACK.');
+      });
+    } else if(tcpPhase===1){
+      tcp.fly('ACK','r').then(function(){
+        tcp.dr.setAttribute('data-st','open');
+        tcp.add('→ ACK','«Тук. Вхожу». Связь есть — можно говорить.','tu-good');
+        tcpPhase=2; tcpBtn.textContent='Отправить данные'; tcpBtn.disabled=false; tcpBtn.focus({preventScroll:true});
+        say('Соединение установлено. Отправь данные.');
+      });
+    } else {
+      tcp.fly('№1','r').then(function(){
+        return tcp.fly('№2','r','',true);
+      }).then(function(){
+        tcp.add('→ №1, №2','Первый дошёл. Второй потерялся в пути.','tu-bad');
+        return tcp.fly('ЖДУ №2','l','tu-back');
+      }).then(function(){
+        return tcp.fly('№2','r');
+      }).then(function(){
+        tcp.add('↻ №2 ещё раз','Сервер переспросил, TCP дослал. Без дыр и по порядку.','tu-good');
+        tcpBtn.textContent='TCP доставил всё ✓';
+        var u=q('[data-part="udp"]'); u.hidden=false;
+        say('TCP доставил всё, даже потерянный кусок. Теперь UDP.');
+        setTimeout(function(){go(u)},RM?0:350); focusLater(udpBtn);
+      });
+    }
+  });
+  udpBtn.addEventListener('click',function(){
+    if(udpBtn.disabled) return; udpBtn.disabled=true;
+    udp.fly('✉ 1','r').then(function(){
+      udp.add('→ письмо №1','В щель. Ответа нет.');
+      return udp.fly('✉ 2','r','',true);
+    }).then(function(){
+      udp.add('✗ письмо №2','Пропало. И никто не узнает.','tu-bad');
+      return udp.fly('✉ 3','r');
+    }).then(function(){
+      udp.add('→ письмо №3','В щель. Ответа нет.');
+      udpBtn.textContent='Письма брошены ✓';
+      var s=q('[data-part="sort"]'); s.hidden=false;
+      say('UDP бросил три письма, одно пропало. Теперь выбери TCP или UDP для четырёх задач.');
+      setTimeout(function(){go(s)},RM?0:350); focusLater(q('.tu-pick',s));
+    });
+  });
+
+  /* сортировка */
+  var WHY=[
+    {ok:'Файл нужен целиком: без одного куска он битый.',no:'Потерялся кусок — файл не откроется. Здесь нужен TCP.'},
+    {ok:'Опоздавший звук уже не нужен. Лучше дальше, чем ждать.',no:'TCP ждал бы каждый потерянный кусок — и голос начал бы заикаться.'},
+    {ok:'Каждая буква команды должна дойти, и по порядку.',no:'Потерял букву — получил другую команду. Нужен TCP.'},
+    {ok:'Вопрос и ответ влезают в одно письмо. Не дошло — спросим ещё раз.',no:'Три стука ради одного короткого вопроса — долго. Обычно DNS идёт по UDP.'}
+  ];
+  var sorted=0;
+  qa('.tu-srow').forEach(function(row,i){
+    var why=q('[data-why]',row);
+    qa('.tu-pick',row).forEach(function(b){b.addEventListener('click',function(){
+      if(b.disabled) return;
+      if(b.getAttribute('data-v')!==row.getAttribute('data-a')){
+        b.classList.add('tu-wrong'); b.disabled=true; hit(); why.textContent=WHY[i].no; return;
+      }
+      qa('.tu-pick',row).forEach(function(x){x.disabled=true}); b.classList.add('tu-right'); why.textContent=WHY[i].ok;
+      sorted++;
+      var nextRow=qa('.tu-srow')[i+1]; if(nextRow) setTimeout(function(){var p=q('.tu-pick:not(:disabled)',nextRow); p&&p.focus({preventScroll:true})},30);
+      if(sorted===4){
+        step(1,30); say('Шаг второй пройден. Защита 30 процентов.');
+        focusLater(q('#ix-tcp-udp-porty-l2 .tu-after .tu-btn'));
+      }
+    })});
+  });
+
+  /* ---------- коридоры ---------- */
+  var PORTS=[[21,'FTP'],[22,'SSH'],[23,'Telnet'],[53,'DNS'],[80,'HTTP'],[443,'HTTPS'],[3306,'MySQL'],[3389,'RDP']];
+  var STL={open:['ОТКРЫТ','tu-st-open'],closed:['ЗАКРЫТ','tu-st-closed'],filt:['ФИЛЬТР','tu-st-filt']};
+  var REPLY={open:'«Кто там?» — <b>ОТКРЫТ</b>',closed:'RST: «Никого нет!» — <b>ЗАКРЫТ</b>',filt:'…тишина… — <b>ФИЛЬТР</b>'};
+  function buildCorr(hall){
+    var c=q('[data-corr]',hall), h='';
+    PORTS.forEach(function(p){
+      h+='<div class="tu-cell" data-p="'+p[0]+'"><div class="tu-dr" data-st="idle"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">'+p[0]+'</b><span class="tu-dr-bar"></span></div><small>'+p[1]+'</small><span class="tu-stb"></span></div>';
+    });
+    c.innerHTML=h; return qa('.tu-cell',c);
+  }
+  function scan(hall,cells,states){
+    var log=q('[data-hlog]',hall), p=Promise.resolve();
+    cells.forEach(function(cell,i){
+      p=p.then(function(){
+        var st=states[i], dr=q('.tu-dr',cell), b=q('.tu-stb',cell);
+        cell.classList.add('tu-now'); knock(dr);
+        log.innerHTML='<b>Тук-тук в '+PORTS[i][0]+'…</b>';
+        return wait(420).then(function(){
+          dr.setAttribute('data-st',st); b.textContent=STL[st][0]; b.className='tu-stb '+STL[st][1]; cell.classList.add('tu-done');
+          log.innerHTML='<b>'+PORTS[i][0]+' · '+PORTS[i][1]+'</b> '+REPLY[st];
+          return wait(380);
+        }).then(function(){cell.classList.remove('tu-now')});
+      });
+    });
+    return p;
+  }
+
+  /* ---------- ШАГ 3: обход ---------- */
+  var hall1=q('[data-hall="1"]'), cells1=buildCorr(hall1), scan1=q('[data-act="scan1"]');
+  scan1.addEventListener('click',function(){
+    if(scan1.disabled) return; scan1.disabled=true;
+    scan(hall1,cells1,['closed','open','closed','open','open','open','open','open']).then(function(){
+      cells1[6].classList.add('tu-hot');
+      q('[data-hlog]',hall1).innerHTML='<b>Итог:</b> 6 открыто, 2 закрыто. Охраны нет — поэтому ни одной «тишины».';
+      scan1.textContent='Обход закончен';
+      var pk=q('[data-part="peek"]'); pk.hidden=false;
+      say('Обход закончен: шесть дверей открыты, две закрыты. Дверь 3306, база данных, открыта.');
+      focusLater(q('[data-act="peek"]'));
+    });
+  });
+
+  /* ---------- ВЗЛОМ ---------- */
+  var hack=q('.tu-hack'), rw=q('[data-act="rewind"]'), afterHack=null;
+  function openHack(card,line,cb){
+    q('[data-hkcard]').innerHTML=card; q('[data-hksay]').textContent=line; afterHack=cb;
+    hack.hidden=false; hack.classList.remove('tu-rw'); hit();
+    setTimeout(function(){rw.focus()},30);
+  }
+  function closeHack(){
+    if(hack.hidden) return;
+    hack.classList.add('tu-rw');
+    wait(600).then(function(){hack.hidden=true;hack.classList.remove('tu-rw');var f=afterHack;afterHack=null;f&&f()});
+  }
+  rw.addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();rw.focus()}
+  });
+  var peek=q('[data-act="peek"]');
+  peek.addEventListener('click',function(){
+    if(peek.disabled) return; peek.disabled=true;
+    openHack('<span><b>school_db</b> · таблица students</span><span>1 214 записей</span><span>Иванова А. · 8 «Б» · +7 9•• •••-12-40</span><span>оценки · адреса · пароли (хеши)</span>',
+      'Я ничего не ломал. Дверь была открыта всему интернету.',
+      function(){
+        peek.textContent='Время откачено'; cells1[6].classList.remove('tu-hot');
+        step(2,45); say('Время откачено. Шаг третий пройден. Защита 45 процентов.');
+        go(q('#ix-tcp-udp-porty-l3 .tu-after')); focusLater(q('#ix-tcp-udp-porty-l3 .tu-after .tu-btn'));
+      });
+  });
+
+  /* ---------- ШАГ 4: решения ---------- */
+  var DEC={
+    22:{no:'Боты круглые сутки подбирают пароли к открытому SSH. Пускай только своих.',ok:'Только с адреса админа или через VPN. И вход по ключу, а не по паролю.',st:['СВОИ','tu-dst-own']},
+    53:{no:'Лишняя служба — лишняя дверь, а в ней свои дыры. Этот сервер не справочная.',ok:'Служба выключена, за дверью пусто. Стукач услышит RST: «никого».',st:['ЗАКРЫТ','tu-dst-closed']},
+    3306:{no:'Это та самая дверь из взлома. База снова смотрит в интернет.',ok:'База слушает только 127.0.0.1: сайт достучится изнутри, а из интернета двери нет.',st:['ВНУТРИ','tu-dst-own']},
+    3389:{no:'RDP из интернета — любимый вход вымогателей: подбор паролей и старые дыры.',ok:'Выключено. Понадобится — только через VPN, не напрямую.',st:['ЗАКРЫТ','tu-dst-closed']}
+  };
+  var decided=0, rows=qa('.tu-drow');
+  rows.forEach(function(row,i){
+    var port=row.getAttribute('data-port'), d=DEC[port], fb=q('[data-fb]',row), dst=q('[data-dst]',row);
+    qa('.tu-dch',row).forEach(function(b){b.addEventListener('click',function(){
+      if(b.disabled) return;
+      if(b.getAttribute('data-ok')!=='1'){
+        b.classList.add('tu-wrong'); b.disabled=true; hit();
+        row.classList.remove('tu-shk'); void row.offsetWidth; row.classList.add('tu-shk');
+        fb.className='tu-fb tu-bad'; fb.innerHTML='<b>ВЗЛОМ!</b>'+esc(d.no);
+        var other=q('.tu-dch:not(:disabled)',row); other&&other.focus({preventScroll:true});
+        return;
+      }
+      qa('.tu-dch',row).forEach(function(x){x.disabled=true}); b.classList.add('tu-right');
+      fb.className='tu-fb tu-good'; fb.innerHTML='<b>Заперто.</b>'+esc(d.ok);
+      dst.textContent=d.st[0]; dst.className='tu-dst '+d.st[1];
+      decided++; S.def=45+decided*5; paint();
+      var nx=rows[i+1]; if(nx) setTimeout(function(){var f=q('.tu-dch:not(:disabled)',nx); f&&f.focus({preventScroll:true})},30);
+      if(decided===4){
+        var g=q('[data-part="guard"]'); g.hidden=false;
+        say('Все четыре двери решены. Защита '+S.def+' процентов. Осталось поставить охранника.');
+        setTimeout(function(){go(g)},RM?0:350); focusLater(q('[data-act="guard"]'));
+      }
+    })});
+  });
+
+  var hall2=q('[data-hall="2"]'), cells2=buildCorr(hall2), guardBtn=q('[data-act="guard"]'), scan2=q('[data-act="scan2"]');
+  guardBtn.addEventListener('click',function(){
+    if(guardBtn.disabled) return; guardBtn.disabled=true;
+    guardBtn.textContent='Охранник на посту ✓';
+    var r=q('[data-part="rescan"]'); r.hidden=false;
+    say('Файрвол включён: пускать 80 и 443 всех, 22 только админа, остальных молча не пускать.');
+    setTimeout(function(){go(r)},RM?0:200); focusLater(scan2);
+  });
+  scan2.addEventListener('click',function(){
+    if(scan2.disabled) return; scan2.disabled=true;
+    scan(hall2,cells2,['filt','filt','filt','filt','open','open','filt','filt']).then(function(){
+      q('[data-hlog]',hall2).innerHTML='<b>Итог:</b> 2 открыто — это сайт. Остальное — тишина.';
+      scan2.textContent='Обход закончен ✓';
+      step(3,100); say('Шаг четвёртый пройден. Открыты только 80 и 443. Защита 100 процентов.');
+      go(q('#ix-tcp-udp-porty-l4 .tu-after')); focusLater(q('#ix-tcp-udp-porty-l4 .tu-after .tu-btn'));
+    });
+  });
+
+  /* ---------- БИТВА ---------- */
+  var MOVES=[
+    {v:'Обойду все 65 535 дверей. Где-нибудь да откроют!',q:'Чем ответишь?',
+     o:[['Перенести SSH с 22 на 2222 — не найдёт',0,'Он стучит во все двери подряд. 2222 найдётся так же, как 22.'],
+        ['Файрвол: запрет по умолчанию, открыты только 80 и 443',1,'Стучи сколько хочешь: в ответ тишина. Кроме самого сайта.'],
+        ['Запретить серверу отвечать на ping',0,'Ping — не стук в дверь. В порты Стукач постучит и без него.']]},
+    {v:'Разработчик открыл 3306 «на пару дней», чтобы ходить в базу из дома. Пароль же сложный!',q:'Что сделать?',
+     o:[['Пароль сложный — пусть будет открыт',0,'Пароль — одна стена. Дыру в самой базе он не закроет, а боты найдут дверь за часы.'],
+        ['Перенести базу на порт 13306',0,'Обход всех портов найдёт и 13306.'],
+        ['База слушает только своих, разработчик ходит через VPN или SSH-туннель',1,'Из интернета двери нет. Свой заходит через охраняемый вход.']]},
+    {v:'Сегодня у вас заперто. А через месяц кто-нибудь поставит новую службу и забудет.',q:'Как узнать раньше Стукача?',
+     o:[['Один раз настроили файрвол — и хватит',0,'Серверы меняются каждую неделю. Проверять нужно так же часто.'],
+        ['Регулярно сканировать свои серверы и сверять со списком разрешённого',1,'Новая открытая дверь — тревога у тебя, а не находка у него.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.tu-bface'), BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='ДВЕРНОЙ СТУКАЧ · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Дверного Стукача: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="tu-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="tu-vsay">'+esc(m.v)+'</p><p class="tu-bq">'+esc(m.q)+'</p><div class="tu-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="tu-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="tu-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.tu-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var o=MOVES[BS.i].o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('tu-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='tu-bfb tu-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]); return;
+    }
+    qa('.tu-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('tu-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('tu-ow'); void face.offsetWidth; face.classList.add('tu-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='tu-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='tu-bfb tu-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='tu-act';
+    nb.innerHTML='<button type="button" class="tu-btn tu-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.tu-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="tu-win"><div class="tu-wpost" aria-hidden="true"><div class="tu-dr" data-st="filt"><span class="tu-dr-in"></span><span class="tu-dr-leaf"><i class="tu-dr-pan"></i><i class="tu-dr-knob"></i></span><b class="tu-dr-num">ТУК?</b><span class="tu-dr-bar"></span></div><span>ПОВЕРЖЕН</span></div><p class="tu-wint">Дверной Стукач повержен</p><p class="tu-wins">С первого раза: <b>'+BS.first+'/3</b></p><p class="tu-rule">Открыто только нужное — и каждую открытую дверь ты знаешь по имени.</p><button type="button" class="tu-btn tu-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Дверной Стукач повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* ---------- СОБЕСЕДОВАНИЕ ---------- */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-tcp-udp-porty-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
+<aside class="cc-konspekt" aria-label="Конспект выпуска" data-seo="konspekt"><style>.cc-konspekt{max-width:860px;margin:56px auto 24px;padding:0 16px;box-sizing:border-box;font-family:Rubik,system-ui,sans-serif;color:#141414}.cc-konspekt details{background:#fff;border:3px solid #141414;box-shadow:6px 6px 0 #141414}.cc-konspekt summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 18px;box-sizing:border-box;font-family:'Russo One',sans-serif;font-size:20px;line-height:1.25;background:#ffd60a;border-bottom:3px solid transparent}.cc-konspekt summary::-webkit-details-marker{display:none}.cc-konspekt summary::after{content:'+';margin-left:auto;font-size:28px;line-height:1}.cc-konspekt details[open] summary{border-bottom-color:#141414}.cc-konspekt details[open] summary::after{content:'−'}.cc-konspekt summary:focus-visible{outline:3px solid #ff2e93;outline-offset:3px}.cc-konspekt .kb{padding:8px 20px 24px;font-size:18px;line-height:1.6}.cc-konspekt h2{margin:28px 0 10px;font-family:'Russo One',sans-serif;font-size:22px;line-height:1.25}.cc-konspekt h3{margin:0 0 8px;font-family:Rubik,system-ui,sans-serif;font-weight:700;font-size:19px;line-height:1.4}.cc-konspekt p,.cc-konspekt dd,.cc-konspekt li{margin:0 0 12px}.cc-konspekt dl{margin:0}.cc-konspekt dt{font-weight:700;margin-top:14px}.cc-konspekt dd{margin-left:0}.cc-konspekt ul{padding-left:22px;margin:0}.cc-konspekt .lead{font-size:20px}.cc-konspekt .note{font-size:18px;color:#2a2a2a;border-top:2px solid #141414;padding-top:14px;margin-top:24px}</style><details><summary>Конспект выпуска: главное текстом</summary><div class="kb"><h2>Что такое порт?</h2><p class="lead"><b>Порт</b> — номер «двери» от 1 до 65 535, по которому пакет находит нужную программу на сервере.</p><h2>О чём выпуск</h2><ul><li>Чем TCP отличается от UDP и когда нужен каждый</li><li>Как проходит рукопожатие SYN, SYN-ACK, ACK</li><li>Что живёт за портами 22, 53, 80, 443, 3306 и 3389</li><li>Что значат open, closed и filtered и как файрвол прячет лишнее</li></ul><h2>Словарик</h2><dl><dt>Порт</dt><dd>Номер «двери» от 1 до 65 535, по которому пакет находит нужную программу на сервере.</dd><dt>TCP</dt><dd>Протокол с установкой соединения: доставляет данные целиком, по порядку и переспрашивает потерянное.</dd><dt>UDP</dt><dd>Протокол без соединения и подтверждений: быстрый, но потерю никто не заметит.</dd><dt>Рукопожатие TCP</dt><dd>Три сообщения SYN, SYN-ACK и ACK, после которых соединение считается открытым.</dd><dt>Сканирование портов</dt><dd>Проверка, какие порты отвечают: open, closed или filtered. Делается только на своих системах или с разрешения.</dd><dt>Файрвол</dt><dd>Фильтр на входе: пропускает соединения только по списку разрешённого, остальные отбрасывает.</dd></dl><h2>Вопрос с собеседования</h2><h3>Чем отличаются состояния порта open, closed и filtered и как проверить, что на сервере не торчит лишнего?</h3><p>Open — на SYN пришёл SYN-ACK, порт слушает служба, это поверхность атаки. Closed — пришёл RST: хост доступен, но за портом никого. Filtered — ответа нет или пришёл ICMP-запрет: по пути файрвол; у UDP молчание неоднозначно, поэтому сканер пишет open|filtered. Проверяю только свои серверы или с письменного разрешения: сканирую все 65 535 TCP-портов и важные UDP-порты снаружи и изнутри, сверяю результат со списком разрешённого, держу файрвол с запретом по умолчанию, базы и панели управления не выставляю в интернет и повторяю проверку после каждого изменения. Перенос SSH на нестандартный порт — не защита: полный обход портов его находит.</p><p class="note">Практиковаться можно только там, где это разрешено: picoCTF, PortSwigger Web Security Academy, OWASP Juice Shop. Чужие сайты без разрешения трогать нельзя.</p></div></details></aside>
+</template>
+<script>window.CC_LINKS={"Main":"","Review":"povtorenie/","Shop":"baraholka/","Arcade":"arkada/","MGit":"baraholka/git/","MOwasp":"baraholka/owasp/","MHttp":"baraholka/http-kody/","MPorts":"baraholka/porty/","MLinux":"baraholka/linux/","Issue1":"vypuski/http/","Issue2":"vypuski/idor/","Issue3":"vypuski/sql-injection/","Issue4":"vypuski/xss/","Issue5":"vypuski/csrf/","Issue6":"vypuski/ssrf/","Issue7":"vypuski/jwt/","Issue8":"vypuski/sekrety-v-git/","Issue9":"vypuski/owasp-top-10-2025/","Issue10":"vypuski/internet/","Issue11":"vypuski/osi/","Issue12":"vypuski/ip/","Issue13":"vypuski/tcp-udp-porty/","Issue14":"vypuski/dns/","Issue15":"vypuski/https-tls/","Issue16":"vypuski/api/","Issue17":"vypuski/linux/","Issue18":"vypuski/git/","Issue19":"vypuski/bash/","Issue20":"vypuski/python/","Issue21":"vypuski/sql-bazy/","Issue22":"vypuski/kriptografiya/","Vypuski":"vypuski/"};window.CC_BLOBS={"40522caf67506d1d8a1711a08454e769":"assets/img/villain-1.webp","514e6e80025fe9d5923d48bbb8ffecaf":"assets/img/villain-2.webp","f6d4ece1d46d17878f4a78cd6cd908a5":"assets/img/villain-3.webp","2871ddc0547fea9d62c83365e76e7ab1":"assets/img/villain-5.webp","b22c2c3c1d7460c06a98b2235425b27a":"assets/img/villain-6.webp","61d2fd71e56001a5bf9abae0dba0bfa3":"assets/img/villain-7.webp","de2ab356956cf23de58721cd3bb69056":"assets/img/villain-8.webp","21cf2a6d96e6d7f14f40bc7226037139":"assets/img/villain-9.webp","40522caf67506d1d8a1711a08454e769-360":"assets/img/villain-1-360.webp","40522caf67506d1d8a1711a08454e769-540":"assets/img/villain-1-540.webp","514e6e80025fe9d5923d48bbb8ffecaf-360":"assets/img/villain-2-360.webp","514e6e80025fe9d5923d48bbb8ffecaf-540":"assets/img/villain-2-540.webp","f6d4ece1d46d17878f4a78cd6cd908a5-360":"assets/img/villain-3-360.webp","f6d4ece1d46d17878f4a78cd6cd908a5-540":"assets/img/villain-3-540.webp","2871ddc0547fea9d62c83365e76e7ab1-360":"assets/img/villain-5-360.webp","2871ddc0547fea9d62c83365e76e7ab1-540":"assets/img/villain-5-540.webp","b22c2c3c1d7460c06a98b2235425b27a-360":"assets/img/villain-6-360.webp","b22c2c3c1d7460c06a98b2235425b27a-540":"assets/img/villain-6-540.webp","61d2fd71e56001a5bf9abae0dba0bfa3-360":"assets/img/villain-7-360.webp","61d2fd71e56001a5bf9abae0dba0bfa3-540":"assets/img/villain-7-540.webp","de2ab356956cf23de58721cd3bb69056-360":"assets/img/villain-8-360.webp","de2ab356956cf23de58721cd3bb69056-540":"assets/img/villain-8-540.webp","21cf2a6d96e6d7f14f40bc7226037139-360":"assets/img/villain-9-360.webp","21cf2a6d96e6d7f14f40bc7226037139-540":"assets/img/villain-9-540.webp"};window.CC_ANSWERS={"1":{"0":1,"1":1,"2":2},"2":{"0":1,"1":1,"2":2},"3":{"0":1,"1":2,"2":1},"4":{"0":1,"1":1,"2":1},"5":{"0":0,"1":1,"2":1},"6":{"0":1,"1":1,"2":1},"7":{"0":1,"1":1,"2":1},"8":{"0":1,"1":2,"2":1},"9":{"0":2,"1":1,"2":0},"10":{"0":1,"1":1,"2":1},"11":{"0":1,"1":1,"2":1},"12":{"0":1,"1":1,"2":1},"13":{"0":1,"1":2,"2":1},"14":{"0":1,"1":1,"2":1},"15":{"0":1,"1":1,"2":0},"16":{"0":1,"1":0,"2":2},"17":{"0":2,"1":1,"2":1},"18":{"0":1,"1":1,"2":1},"19":{"0":1,"1":1,"2":1},"20":{"0":1,"1":0,"2":1},"21":{"0":2,"1":0,"2":2},"22":{"0":1,"1":0,"2":2}};</script>
+<script src="../../assets/js/dc.js?v=f583bdab"></script>
+<script src="../../assets/js/cc.js?v=5d45b314"></script>
+<script src="../../assets/js/components-issuereader.js?v=334b3181"></script>
+<script src="../../assets/js/toys.js?v=ea543b91"></script>
+<script>window.CC_LEGAL={"email":"cybercomics@yandex.ru","metrika":"113983030","metrikaFrom":"2026-11-03","privacy":"../../privacy/","soglasie":"../../soglasie/","share":{"url":"https://cybercomics.ru/vypuski/tcp-udp-porty/","text":"TCP, UDP и порты простыми словами: рукопожатие, состояния портов, Nmap и файрвол"}};</script>
+<script src="../../assets/js/legal.js"></script>
+<script>DC.mount("IssueReader", document.getElementById("app"), {"issue":"13"});CCToys.mountAll();CCLegal.start();CCToys.replayTaps();</script>
+</body>
+</html>
