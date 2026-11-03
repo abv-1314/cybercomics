@@ -181,6 +181,10 @@ a{color:#141414}a:hover{color:#c81e1e}
 @media (max-width: 600px){.cc-hide-sm{display:none !important}}
 /* Карта на телефоне: город лентой (листай вбок), небо урезано, фундамент — списком шагов ниже. */
 .cc-map-swipe{display:none}
+.cc-hk-pad{display:none;gap:10px;justify-content:center;margin:10px 16px 14px}
+.cc-hk-b{min-width:64px;min-height:48px;padding:6px 14px;font-family:'Russo One',sans-serif;font-size:20px;color:#141414;background:#ffd60a;border:3px solid #141414;box-shadow:4px 4px 0 #000;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer}
+.cc-hk-j{font-size:16px;background:#ffffff}
+.cc-hk-b.on{transform:translate(3px,3px);box-shadow:1px 1px 0 #000}
 /* Карта вне экрана не рисуется и не считается (у неё заданы ширина и высота, поэтому размер страницы не меняется). */
 .cc-map{content-visibility:auto}
 .cc-sign-r{left:auto !important;right:18px;transform:none !important}
@@ -189,7 +193,18 @@ a{color:#141414}a:hover{color:#c81e1e}
 .cc-map{zoom:.55;height:614px !important;border:none !important}
 .cc-map .cc-bld{bottom:14px !important}
 .cc-map .cc-road{bottom:0 !important}
-.cc-map .cc-base,.cc-map .cc-hacker{display:none !important}
+.cc-map .cc-base{display:none !important}
+/* Телефон: хакер не идёт по маршруту из CSS (он рассчитан на десктопную карту), а бегает по дороге.
+   Двигает его JS (armHacker) через transform; держи ◀ ▶, «прыжок» — прыгает, нажатие на него — говорит. */
+.cc-map .cc-hacker{left:0 !important;bottom:14px !important;animation:none !important;will-change:transform}
+.cc-map .cc-hacker .cc-face,.cc-map .cc-hacker .cc-sit,.cc-map .cc-hacker .cc-walk,.cc-map .cc-hacker .cc-sitlegs,.cc-map .cc-hacker .cc-whoosh{animation:none !important}
+.cc-map .cc-hacker .cc-sitlegs,.cc-map .cc-hacker .cc-whoosh{opacity:0 !important}
+.cc-map .cc-hacker .cc-a1,.cc-map .cc-hacker .cc-a2,.cc-map .cc-hacker .cc-a3,.cc-map .cc-hacker .cc-a4,.cc-map .cc-hacker .cc-a5,.cc-map .cc-hacker .cc-a6{display:none !important}
+.cc-map .cc-hacker.cc-hk-idle .cc-leg,.cc-map .cc-hacker.cc-hk-idle .cc-cape{animation-play-state:paused}
+.cc-hk-pad{display:flex !important}
+.cc-map .cc-hacker.cc-hk-r .cc-say{left:auto;right:-20px;animation:none}
+.cc-map .cc-hacker.cc-hk-r .cc-say .cc-tail-o{left:auto;right:30px}
+.cc-map .cc-hacker.cc-hk-r .cc-say .cc-tail-i{left:auto;right:35px}
 .cc-map .cc-clouds{top:22px !important}
 .cc-map .cc-sign-r{right:16px}
 .cc-map .cc-sign{font-size:26px !important;padding:6px 14px !important;border-width:4px !important}
@@ -254,8 +269,6 @@ a.cc-step.is-next:hover{color:#ffd60a}
       <span class="cc-poster-say" aria-hidden="true">Зачем взламывать, если можно просто поменять цифру?</span>
       <div class="cc-poster-h1" role="heading" aria-level="1"><span class="k">Кибербезопасность в комиксах</span> <span>Останови злодеев Сетеграда</span></div>
       <p class="cc-poster-lead">Как устроен интернет, как его ломают и как защищают.</p>
-      <a class="cc-poster-cta" href="{{start.href}}">{{start.cta}}</a>
-      <p class="cc-poster-cap">{{start.cap}}</p>
     </div>
   </section>
 
@@ -301,7 +314,7 @@ a.cc-step.is-next:hover{color:#ffd60a}
         <h2 style="align-self: flex-start; margin: 0; font-family: 'Rubik Mono One', sans-serif; font-size: 28px; background: #ffd60a; color: #141414; padding: 4px 14px; transform: skew(-6deg); border: 3px solid #141414">Карта Сетеграда</h2>
         <p style="margin: 0; font-size: 17px; line-height: 1.5; color: #e6e7f5">Сетеград стоит на фундаменте — основах интернета. Над ним районы: каждый — своя профессия в безопасности. Нажми на любой.</p>
         <p class="cc-map-hint" style="margin: 0; font-size: 16px; color: #ffd60a">По Сетеграду бегает хакер в красном худи. Наведи — замрёт. Нажми — заговорит.</p>
-        <p class="cc-map-swipe" style="margin: 0; font-size: 16px; line-height: 1.45; color: #ffd60a">Город листается вбок →<br>Путь новичка — сразу под картой.</p>
+        <p class="cc-map-swipe" style="margin: 0; font-size: 16px; line-height: 1.45; color: #ffd60a">Город листается вбок →<br>Хакер в красном худи: держи ◀ ▶, чтобы бежать, нажми на него — заговорит.</p>
       </div>
     </div>
 
@@ -457,6 +470,11 @@ a.cc-step.is-next:hover{color:#ffd60a}
         </div>
       </div>
     </div>
+    <div class="cc-hk-pad" role="group" aria-label="Управление хакером на карте">
+      <button type="button" class="cc-hk-b" data-hk="-1" aria-label="Хакер, беги влево">◀</button>
+      <button type="button" class="cc-hk-b cc-hk-j" data-hk="j" aria-label="Хакер, прыгай">прыжок</button>
+      <button type="button" class="cc-hk-b" data-hk="1" aria-label="Хакер, беги вправо">▶</button>
+    </div>
 
     <div style="background: #fff7e3; color: #141414; border-top: 3px solid #141414">
       <div aria-live="polite" style="max-width: 1360px; margin: 0 auto; padding: 22px 16px 26px; display: flex; flex-wrap: wrap; gap: 20px 40px">
@@ -573,7 +591,77 @@ a.cc-step.is-next:hover{color:#ffd60a}
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":4620}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { sel: 'base', cat: 'Все', q: '', talk: null, slide: null, flips: 0, dir: 'n', qi: 0 }; }
-  componentWillUnmount() { if (this._t) clearTimeout(this._t); }
+  componentWillUnmount() { if (this._t) clearTimeout(this._t); if (this._hkStop) this._hkStop(); }
+  // Хакер на телефоне (≤560px): бегает по дороге карты сам; кнопки ◀ ▶ (держать) и «прыжок» дают управление.
+  // Только transform, цикл requestAnimationFrame крутится, лишь пока карта на экране.
+  armHacker() {
+    if (this._hk || !window.matchMedia || !window.requestAnimationFrame) return;
+    const mq = window.matchMedia('(max-width: 560px)');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._hk = true;
+    const MAPW = 1128, HW = 58, MINX = 12, MAXX = MAPW - HW - 12, AUTO = 70, RUN = 260;
+    const S = { x: 160, dir: 1, hold: 0, jump: -1, auto: !reduce, pause: 0, last: 0, vis: false, raf: 0, idleUntil: 0 };
+    const el = () => document.querySelector('.cc-map .cc-hacker');
+    const sc = () => document.querySelector('.cc-map-scroll');
+    const apply = (h) => {
+      if (!h) return;
+      let y = 0;
+      if (S.jump >= 0) { const t = S.jump; y = -Math.round(4 * 140 * t * (1 - t)); }
+      const tr = 'translate3d(' + S.x.toFixed(1) + 'px,' + y + 'px,0) scale(1.4)';
+      if (h.style.transform !== tr) h.style.transform = tr;
+      const f = h.querySelector('.cc-face'), ft = S.dir < 0 ? 'scaleX(-1)' : 'scaleX(1)';
+      if (f && f.style.transform !== ft) f.style.transform = ft;
+      const moving = S.hold !== 0 || (S.auto && S.pause <= 0 && S.idleUntil < performance.now());
+      h.classList.toggle('cc-hk-idle', !moving && S.jump < 0);
+      h.classList.toggle('cc-hk-r', S.x > MAPW - 330);
+    };
+    const follow = () => {
+      const s = sc(); if (!s) return;
+      const z = s.clientWidth / Math.max(1, s.scrollWidth) * MAPW < MAPW ? s.scrollWidth / MAPW : 1;
+      const px = (S.x + HW / 2) * z, left = s.scrollLeft, w = s.clientWidth, m = w * 0.28;
+      if (px < left + m) s.scrollLeft = Math.max(0, px - m);
+      else if (px > left + w - m) s.scrollLeft = px - w + m;
+    };
+    const tick = (now) => {
+      S.raf = 0;
+      if (!mq.matches || !S.vis) return;
+      const dt = Math.min(0.05, S.last ? (now - S.last) / 1000 : 0); S.last = now;
+      if (S.hold) { S.dir = S.hold; S.x += S.hold * RUN * dt; }
+      else if (S.auto && now > S.idleUntil) {
+        if (S.pause > 0) S.pause -= dt;
+        else { S.x += S.dir * AUTO * dt; if (Math.random() < dt * 0.12) S.pause = 1 + Math.random() * 2; }
+      }
+      if (S.x <= MINX) { S.x = MINX; if (!S.hold) S.dir = 1; }
+      if (S.x >= MAXX) { S.x = MAXX; if (!S.hold) S.dir = -1; }
+      if (S.jump >= 0) { S.jump += dt / 0.6; if (S.jump >= 1) S.jump = -1; }
+      apply(el());
+      if (S.hold) follow();
+      S.raf = requestAnimationFrame(tick);
+    };
+    const run = () => { if (!S.raf && S.vis && mq.matches) { S.last = 0; S.raf = requestAnimationFrame(tick); } };
+    const press = (b, on) => {
+      const k = b.getAttribute('data-hk');
+      b.classList.toggle('on', on);
+      if (k === 'j') { if (on && S.jump < 0) S.jump = 0; }
+      else S.hold = on ? +k : (S.hold === +k ? 0 : S.hold);
+      if (!on) S.idleUntil = performance.now() + 4000;
+      run();
+    };
+    const down = (e) => { const b = e.target.closest && e.target.closest('.cc-hk-b'); if (!b) return; e.preventDefault(); if (b.setPointerCapture && e.pointerId !== undefined) { try { b.setPointerCapture(e.pointerId); } catch (x) { /* ок */ } } b._hkp = true; press(b, true); };
+    const up = (e) => { const b = e.target.closest && e.target.closest('.cc-hk-b'); if (!b || !b._hkp) return; b._hkp = false; press(b, false); };
+    const key = (e) => { const b = e.target.closest && e.target.closest('.cc-hk-b'); if (!b || (e.key !== 'Enter' && e.key !== ' ')) return; e.preventDefault(); if (e.type === 'keydown' && !b._hkp) { b._hkp = true; press(b, true); } else if (e.type === 'keyup') { b._hkp = false; press(b, false); } };
+    document.addEventListener('pointerdown', down);
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((t) => document.addEventListener(t, up));
+    document.addEventListener('keydown', key); document.addEventListener('keyup', key);
+    document.addEventListener('contextmenu', (e) => { if (e.target.closest && e.target.closest('.cc-hk-b')) e.preventDefault(); });
+    let io = null;
+    const watch = () => { const m = document.querySelector('.cc-map'); if (!m || typeof IntersectionObserver === 'undefined') { S.vis = true; run(); return; } io = new IntersectionObserver((es) => { S.vis = es.some((x) => x.isIntersecting); run(); }); io.observe(m); };
+    watch();
+    const onMq = () => { const h = el(); if (!mq.matches && h) { h.style.transform = ''; const f = h.querySelector('.cc-face'); if (f) f.style.transform = ''; h.classList.remove('cc-hk-idle'); } else run(); };
+    if (mq.addEventListener) mq.addEventListener('change', onMq);
+    if (mq.matches) apply(el());
+    this._hkStop = () => { if (io) io.disconnect(); if (S.raf) cancelAnimationFrame(S.raf); document.removeEventListener('pointerdown', down); };
+  }
   // Вход по имени: только здесь, на главной. Имя и прогресс хранит window.CC (src/runtime/cc.js).
   authToggle() {
     const open = !this.state.authOpen;
@@ -843,7 +931,7 @@ class Component extends DCLogic {
     }));
 
     const user = window.CC ? CC.getUser() : null;
-    if (typeof document !== 'undefined') setTimeout(() => this.armStamps(), 0);
+    if (typeof document !== 'undefined') setTimeout(() => { this.armStamps(); this.armHacker(); }, 0);
     return {
       start, ch, soonLine, plusIssues: PLURAL(A.length, 'выпуск', 'выпуска', 'выпусков'),
       authLabel: user ? 'Привет, ' + user : 'Войти', authOpen: !!st.authOpen, authExpanded: st.authOpen ? 'true' : 'false',

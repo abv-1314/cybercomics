@@ -60,6 +60,8 @@ server.listen(0, async () => {
       try {
         await shot.goto("http://127.0.0.1:" + port + "/" + p.route, { waitUntil: "networkidle" });
         await shot.evaluate(() => document.fonts && document.fonts.ready);
+        // Баннер согласия на статистику не должен попадать в картинку для соцсетей.
+        await shot.addStyleTag({ content: ".ccl-banner{display:none !important}" });
         const name = (p.route.replace(/\/$/, "").replace(/\//g, "-") || "home") + ".jpg";
         fs.mkdirSync(path.join(DIST, "assets", "og"), { recursive: true });
         // У выпуска кадр начинается с обложки (без меню сверху): от h1 вверх до блока во всю ширину.

@@ -13,6 +13,13 @@ RewriteRule ^ https://cybercomics.ru%{REQUEST_URI} [R=301,L]
 # www -> без www
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://cybercomics.ru%{REQUEST_URI} [R=301,L]
+# Сначала адресные переадресации (одним прыжком, до правила про слеш).
+# старая Лавка -> Барахолка
+RewriteRule ^lavka/?$ https://cybercomics.ru/baraholka/ [R=301,L]
+# убранная страница «Родителям» -> главная
+RewriteRule ^roditelyam/?$ https://cybercomics.ru/ [R=301,L]
+# каталога /vypuski/ пока нет (без него Apache отдал бы 403) -> список выпусков на главной
+RewriteRule ^vypuski/?$ https://cybercomics.ru/#vypuski [R=302,NE,L]
 # /index.html и /папка/index.html -> адрес со слешем (без дублей)
 RewriteCond %{THE_REQUEST} \s/+((?:[^\s?]*/)?)index\.html[\s?] [NC]
 RewriteRule ^ https://cybercomics.ru/%1 [R=301,L]
@@ -20,19 +27,18 @@ RewriteRule ^ https://cybercomics.ru/%1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
 RewriteRule ^ https://cybercomics.ru%{REQUEST_URI}/ [R=301,L]
-# старая Лавка -> Барахолка
-RewriteRule ^lavka/?$ https://cybercomics.ru/baraholka/ [R=301,L]
-# убранная страница «Родителям» -> главная
-RewriteRule ^roditelyam/?$ https://cybercomics.ru/ [R=301,L]
 
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/plain application/json image/svg+xml application/manifest+json
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/plain application/json application/xml text/xml image/svg+xml application/manifest+json
 </IfModule>
 <IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
   <FilesMatch "\.(html)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  <FilesMatch "\.(css|js|woff2|webp|png|svg|ico)$">
+  <FilesMatch "\.(css|js|woff2|webp|png|jpg|jpeg|svg|ico)$">
     Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
 </IfModule>
