@@ -1,0 +1,821 @@
+<section class="ix ix-fishing" data-ix="fishing" aria-label="Выпуск 25: Фишинг простыми словами. Наживка">
+
+<div class="ix-fishing-story">
+
+  <div class="ix-fishing-hud" aria-hidden="true">
+    <span class="ix-fishing-hud-l">НЕ КЛЮНУЛ</span>
+    <span class="ix-fishing-bar"><i></i><b>0%</b></span>
+    <span class="ix-fishing-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+  </div>
+  <div class="ix-fishing-sr" aria-live="polite" data-live></div>
+
+  <!-- ================= MISSION ================= -->
+  <div class="ix-fishing-mission" id="ix-fishing-mission">
+    <div class="ix-fishing-poster" aria-hidden="true">
+      <div class="ix-fishing-rig">
+        <svg class="ix-fishing-hook" viewBox="0 0 120 260" fill="none">
+          <path d="M70 0V150" stroke="#e8f6ff" stroke-width="2"/>
+          <circle cx="70" cy="158" r="8" stroke="#ffd60a" stroke-width="5"/>
+          <path d="M70 166V214a26 26 0 0 1-52 0V196" stroke="#ffd60a" stroke-width="9" stroke-linecap="round"/>
+          <path d="M18 196l14 13" stroke="#ffd60a" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+        <div class="ix-fishing-bait">
+          <span class="ix-fishing-bait-k">⚠ СРОЧНО</span>
+          <span class="ix-fishing-bait-t">Ваш аккаунт заблокирован</span>
+          <span class="ix-fishing-bait-b">Разблокировать</span>
+        </div>
+      </div>
+      <div class="ix-fishing-sea"></div>
+      <span class="ix-fishing-pname">НАЖИВКА</span>
+    </div>
+    <div class="ix-fishing-mbody">
+      <p class="ix-fishing-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ВЫПУСК 25</p>
+      <h2 class="ix-fishing-mt" id="ix-fishing-mt"><span class="ix-fishing-mt-s">Фишинг простыми словами</span>Не клюй</h2>
+      <p class="ix-fishing-msub">Фишинг — это когда тебя уговаривают <em>самого отдать</em> пароль, код или деньги. Наживка не взламывает серверы. Он закидывает крючок и ждёт, пока ты клюнешь.</p>
+      <ol class="ix-fishing-moves" aria-label="Шаги миссии">
+        <li data-mv="1"><b>01</b><span>Разбери письмо</span></li>
+        <li data-mv="2"><b>02</b><span>Проверь сайт</span></li>
+        <li data-mv="3"><b>03</b><span>Звонок «Дяди Миши»</span></li>
+        <li data-mv="4"><b>04</b><span>Если клюнул</span></li>
+      </ol>
+      <button class="ix-fishing-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ================= L1: EMAIL ================= -->
+  <section class="ix-fishing-lvl ix-fishing-locked" id="ix-fishing-l1" aria-labelledby="ix-fishing-t1">
+    <div class="ix-fishing-lh"><span class="ix-fishing-ln">ШАГ 1 / 4</span><h3 class="ix-fishing-lt" id="ix-fishing-t1">Разбери письмо</h3><span class="ix-fishing-ok">ПОЙМАНО</span></div>
+    <div class="ix-fishing-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="ix-fishing-lb">
+      <div class="ix-fishing-say"><span class="ix-fishing-who ix-fishing-sonya">СОНЯ</span><span class="ix-fishing-bub">Дядя Миша, банк пишет, что заблокирует мне аккаунт! Тут кнопка. Нажать?</span></div>
+      <div class="ix-fishing-say"><span class="ix-fishing-who">ДЯДЯ МИША</span><span class="ix-fishing-bub">Руки от кнопки. В этом письме пять крючков. Тапай по всему, что кажется странным.</span></div>
+
+      <div class="ix-fishing-mail" data-mail>
+        <div class="ix-fishing-mhead">
+          <button type="button" class="ix-fishing-spot ix-fishing-from" data-spot="from">
+            <span class="ix-fishing-av" aria-hidden="true">К</span>
+            <span class="ix-fishing-fromt"><b>Копилка Банк</b><span>security@bank-kopilka-help.test</span></span>
+          </button>
+          <button type="button" class="ix-fishing-spot ix-fishing-subj" data-spot="subj">⚠ Ваш аккаунт будет заблокирован через 2 часа</button>
+        </div>
+        <div class="ix-fishing-mbody2">
+          <button type="button" class="ix-fishing-spot ix-fishing-logo" data-spot="logo">КОПИЛКА<small>банк</small></button>
+          <button type="button" class="ix-fishing-spot ix-fishing-txt" data-spot="hello">Уважаемый клиент!</button>
+          <p class="ix-fishing-plain">Мы заметили подозрительный вход в ваш аккаунт. Чтобы сохранить деньги, подтвердите личность.</p>
+          <button type="button" class="ix-fishing-spot ix-fishing-txt" data-spot="code">На странице укажите пароль и код из SMS.</button>
+          <button type="button" class="ix-fishing-spot ix-fishing-cta" data-spot="link">Разблокировать аккаунт</button>
+          <span class="ix-fishing-url" data-url hidden>Ссылка ведёт на: <code>bank-kopilka.example.<mark>login-check.test</mark>/vhod</code></span>
+          <button type="button" class="ix-fishing-spot ix-fishing-file" data-spot="file"><span aria-hidden="true">📎</span> Инструкция.pdf.exe</button>
+          <button type="button" class="ix-fishing-spot ix-fishing-foot" data-spot="foot">© Копилка Банк. Служба безопасности.</button>
+        </div>
+      </div>
+      <p class="ix-fishing-legal">Все адреса учебные (.example и .test). Настоящие письма проверяй так же, но ссылки не открывай.</p>
+
+      <p class="ix-fishing-cnt" aria-live="polite"><span data-cnt>Крючков найдено: 0 из 5</span></p>
+      <p class="ix-fishing-fb" data-fb aria-live="polite"></p>
+      <div class="ix-fishing-act ix-fishing-giveup"><button class="ix-fishing-link" type="button" data-act="showall">Сдаюсь, покажи все крючки</button></div>
+
+      <div class="ix-fishing-after">
+        <div class="ix-fishing-say"><span class="ix-fishing-who ix-fishing-sonya">СОНЯ</span><span class="ix-fishing-bub">А почему спам-фильтр его пропустил?</span></div>
+        <div class="ix-fishing-say"><span class="ix-fishing-who">ДЯДЯ МИША</span><span class="ix-fishing-bub">Наживка шлёт со своего домена и всё настроил честно. Проверки почты <b>SPF, DKIM и DMARC</b> подтверждают только одно: письмо правда пришло с bank-kopilka-help.test. Что это не банк, они не скажут.</span></div>
+        <p class="ix-fishing-big">Фишинг взламывает не&nbsp;сервер,<br><span>а&nbsp;человека.</span></p>
+        <p class="ix-fishing-def"><b>Фишинг</b> (от англ. fishing — рыбалка) — атака, где злодей притворяется банком, начальником или другом, чтобы ты сам отдал пароль, код, деньги или запустил вирус. Это вид <b>социальной инженерии</b>: взлом через доверие, страх и спешку, а не через код.</p>
+        <div class="ix-fishing-act"><button class="ix-fishing-btn" type="button" data-goto="ix-fishing-l2">Что будет, если нажать? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L2: FAKE SITE ================= -->
+  <section class="ix-fishing-lvl ix-fishing-locked" id="ix-fishing-l2" aria-labelledby="ix-fishing-t2">
+    <div class="ix-fishing-lh"><span class="ix-fishing-ln">ШАГ 2 / 4</span><h3 class="ix-fishing-lt" id="ix-fishing-t2">Проверь сайт</h3><span class="ix-fishing-ok">РАСКУСИЛ</span></div>
+    <div class="ix-fishing-lockcap"><span>🔒 Сначала разбери письмо</span></div>
+    <div class="ix-fishing-lb">
+      <div class="ix-fishing-say"><span class="ix-fishing-who">ДЯДЯ МИША</span><span class="ix-fishing-bub">Представим, что Соня всё-таки нажала. Вот куда её привело.</span></div>
+
+      <div class="ix-fishing-br" data-site>
+        <div class="ix-fishing-addr"><span class="ix-fishing-padlock" aria-hidden="true">🔒</span><span class="ix-fishing-host">bank-kopilka.example.<span class="ix-fishing-real">login-check.test</span>/vhod</span></div>
+        <div class="ix-fishing-page">
+          <p class="ix-fishing-plogo">КОПИЛКА<small>банк</small></p>
+          <p class="ix-fishing-ptitle">Вход в интернет-банк</p>
+          <div class="ix-fishing-field"><span>Логин</span><b>sonya.k</b></div>
+          <div class="ix-fishing-field"><span>Пароль</span><b data-pw></b></div>
+          <div class="ix-fishing-field"><span>Код из SMS</span><b data-code></b></div>
+        </div>
+      </div>
+
+      <p class="ix-fishing-q">Замочек на месте, сайт как настоящий. Это банк?</p>
+      <div class="ix-fishing-choices ix-fishing-two-ch" data-ch="lock">
+        <button class="ix-fishing-ch" type="button" data-v="no"><b>Да</b><span>Замочек значит, что сайт проверен</span></button>
+        <button class="ix-fishing-ch" type="button" data-v="ok"><b>Нет</b><span>Хозяин адреса — login-check.test</span></button>
+      </div>
+      <p class="ix-fishing-fb" data-fb="lock" aria-live="polite"></p>
+
+      <div class="ix-fishing-mid" data-mid hidden>
+        <p class="ix-fishing-def"><b>Читай домен справа налево.</b> Сначала зона <code>.test</code>, потом имя <code>login-check</code>. Это и есть хозяин. Всё, что левее, он дописывает как хочет: хоть <code>bank-kopilka.example</code>.</p>
+        <div class="ix-fishing-say"><span class="ix-fishing-who ix-fishing-sonya">СОНЯ</span><span class="ix-fishing-bub">Ну а если бы я не заметила? Там же ещё код из SMS нужен. Без него никак!</span></div>
+        <div class="ix-fishing-say"><span class="ix-fishing-who">ДЯДЯ МИША</span><span class="ix-fishing-bub">Проверим. Сыграй за Соню.</span></div>
+        <div class="ix-fishing-act"><button class="ix-fishing-btn ix-fishing-y" type="button" data-act="type">Ввести пароль и код</button></div>
+      </div>
+
+      <div class="ix-fishing-after">
+        <p class="ix-fishing-q">Что спасёт, даже если подделка идеальная?</p>
+        <div class="ix-fishing-choices" data-ch="save">
+          <button class="ix-fishing-ch" type="button" data-v="sms"><b>Код из SMS</b><span>Второй фактор же</span></button>
+          <button class="ix-fishing-ch" type="button" data-v="long"><b>Сложный пароль</b><span>20 символов, никто не подберёт</span></button>
+          <button class="ix-fishing-ch" type="button" data-v="ok"><b>Менеджер паролей и passkey</b><span>Они знают, на каком ты сайте</span></button>
+        </div>
+        <p class="ix-fishing-fb" data-fb="save" aria-live="polite"></p>
+        <div class="ix-fishing-after2">
+          <p class="ix-fishing-def"><b>Passkey</b> (ключ доступа) — вход без пароля. Телефон или ноутбук подтверждает вход ключом, привязанным к адресу сайта. Отдать его подделке нельзя: для чужого адреса ключа просто нет.</p>
+          <p class="ix-fishing-big">Не переходи из письма.<br><span>Открой приложение или закладку сам.</span></p>
+          <div class="ix-fishing-act"><button class="ix-fishing-btn" type="button" data-goto="ix-fishing-l3">Кто-то звонит… ▼</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L3: CALL ================= -->
+  <section class="ix-fishing-lvl ix-fishing-locked" id="ix-fishing-l3" aria-labelledby="ix-fishing-t3">
+    <div class="ix-fishing-lh"><span class="ix-fishing-ln">ШАГ 3 / 4</span><h3 class="ix-fishing-lt" id="ix-fishing-t3">Звонок «Дяди Миши»</h3><span class="ix-fishing-ok">ПЕРЕЗВОНИЛА</span></div>
+    <div class="ix-fishing-lockcap"><span>🔒 Сначала проверь сайт</span></div>
+    <div class="ix-fishing-lb">
+      <p class="ix-fishing-lead">Вечер. Дядя Миша ушёл домой. У Сони звонит телефон.</p>
+
+      <div class="ix-fishing-phone" data-phone>
+        <div class="ix-fishing-ring" data-ring>
+          <span class="ix-fishing-callk">ВХОДЯЩИЙ ВЫЗОВ</span>
+          <span class="ix-fishing-cav" aria-hidden="true">ДМ</span>
+          <span class="ix-fishing-cname">Дядя Миша</span>
+          <span class="ix-fishing-cnum">мобильный · +7 9•• •••-12-34</span>
+          <button class="ix-fishing-answer" type="button" data-act="answer"><span aria-hidden="true">📞</span> Ответить</button>
+        </div>
+        <div class="ix-fishing-talk" data-talk aria-live="polite"></div>
+      </div>
+
+      <div class="ix-fishing-callq" data-callq hidden>
+        <p class="ix-fishing-q">Голос точно его. Что сделает Соня?</p>
+        <div class="ix-fishing-choices" data-ch="call">
+          <button class="ix-fishing-ch" type="button" data-v="tell"><b>Продиктовать код</b><span>Это же Дядя Миша, он торопится</span></button>
+          <button class="ix-fishing-ch" type="button" data-v="ask"><b>Спросить про свитер</b><span>«Какие олени на твоём свитере?»</span></button>
+          <button class="ix-fishing-ch" type="button" data-v="ok"><b>Сбросить и перезвонить</b><span>На номер из своих контактов</span></button>
+        </div>
+        <p class="ix-fishing-fb" data-fb="call" aria-live="polite"></p>
+      </div>
+
+      <div class="ix-fishing-after">
+        <p class="ix-fishing-def"><b>Вишинг</b> — голосовой фишинг, по телефону. <b>Дипфейк</b> — подделка голоса или лица нейросетью: ей хватает пары минут записи из видео. А номер на экране подделывается отдельно, это называют <b>спуфингом</b>.</p>
+        <p class="ix-fishing-big">Срочно + секретно + в обход правил<br><span>= положи трубку и перезвони сам.</span></p>
+        <div class="ix-fishing-act"><button class="ix-fishing-btn" type="button" data-goto="ix-fishing-l4">А если уже клюнул? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L4: IF HOOKED ================= -->
+  <section class="ix-fishing-lvl ix-fishing-locked" id="ix-fishing-l4" aria-labelledby="ix-fishing-t4">
+    <div class="ix-fishing-lh"><span class="ix-fishing-ln">ШАГ 4 / 4</span><h3 class="ix-fishing-lt" id="ix-fishing-t4">Если клюнул</h3><span class="ix-fishing-ok">СОРВАЛСЯ</span></div>
+    <div class="ix-fishing-lockcap"><span>🔒 Сначала ответь на звонок</span></div>
+    <div class="ix-fishing-lb">
+      <div class="ix-fishing-say"><span class="ix-fishing-who ix-fishing-sonya">СОНЯ</span><span class="ix-fishing-bub">А если бы я правда ввела пароль? Стыдно же…</span></div>
+      <div class="ix-fishing-say"><span class="ix-fishing-who">ДЯДЯ МИША</span><span class="ix-fishing-bub">Стыдно молчать. Клюют все, даже безопасники. Важна скорость. Отметь всё, что нужно сделать.</span></div>
+
+      <div class="ix-fishing-todo" data-todo>
+        <button class="ix-fishing-td" type="button" data-ok="1"><b>Зайти в банк сам и сменить пароль</b><span class="ix-fishing-tdw">И везде, где стоял такой же: Наживка проверит его на всех сайтах.</span></button>
+        <button class="ix-fishing-td" type="button" data-ok="0"><b>Удалить письмо и никому не говорить</b><span class="ix-fishing-tdw">Молчание дарит Наживке время. А в компании такое же письмо получили ещё десятки людей.</span></button>
+        <button class="ix-fishing-td" type="button" data-ok="1"><b>Выйти на всех устройствах</b><span class="ix-fishing-tdw">Если Наживка уже вошёл, его выкинет.</span></button>
+        <button class="ix-fishing-td" type="button" data-ok="1"><b>Позвонить в банк по номеру с карты</b><span class="ix-fishing-tdw">Банк остановит операции. На работе — сразу сообщить в службу безопасности.</span></button>
+        <button class="ix-fishing-td" type="button" data-ok="0"><b>Ответить Наживке: «Я тебя раскусил!»</b><span class="ix-fishing-tdw">Ответ подтвердит, что адрес живой. Жди новых писем.</span></button>
+        <button class="ix-fishing-td" type="button" data-ok="1"><b>Включить второй фактор или passkey</b><span class="ix-fishing-tdw">Приложение-аутентификатор или passkey надёжнее SMS.</span></button>
+      </div>
+      <p class="ix-fishing-cnt" aria-live="polite"><span data-tdcnt>Отмечено верно: 0 из 4</span></p>
+
+      <div class="ix-fishing-after">
+        <p class="ix-fishing-big">Сообщил о фишинге —<br><span>молодец, а не виноватый.</span></p>
+        <div class="ix-fishing-act"><button class="ix-fishing-btn ix-fishing-y" type="button" data-goto="ix-fishing-battle">К битве с Наживкой ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ================= HACK OVERLAY ================= -->
+<div class="ix-fishing-hack" role="dialog" aria-modal="true" aria-labelledby="ix-fishing-hk" hidden>
+  <div class="ix-fishing-hkin">
+    <p class="ix-fishing-hkt" id="ix-fishing-hk">ВЗЛОМ!</p>
+    <div class="ix-fishing-hkcard">
+      <span>Пароль <b>••••••••</b> → Наживке</span>
+      <span>Код <b>4821</b> → Наживке</span>
+      <span>Через 15 секунд: вход в настоящий банк</span>
+    </div>
+    <p class="ix-fishing-hksay"><b>НАЖИВКА:</b> Мой сайт сразу пересылает пароль и код в настоящий банк. Код живёт пару минут. Мне хватит.</p>
+    <button class="ix-fishing-btn ix-fishing-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ================= BATTLE ================= -->
+<section class="ix-fishing-battle" id="ix-fishing-battle" aria-labelledby="ix-fishing-bt" tabindex="-1">
+  <div class="ix-fishing-bh">
+    <span class="ix-fishing-bface" aria-hidden="true"><svg viewBox="0 0 120 260" fill="none"><path d="M70 0V150" stroke="#e8f6ff" stroke-width="3"/><circle cx="70" cy="158" r="8" stroke="#ffd60a" stroke-width="7"/><path d="M70 166V214a26 26 0 0 1-52 0V196" stroke="#ffd60a" stroke-width="12" stroke-linecap="round"/><path d="M18 196l14 13" stroke="#ffd60a" stroke-width="9" stroke-linecap="round"/></svg></span>
+    <div class="ix-fishing-bhx">
+      <h2 class="ix-fishing-bt" id="ix-fishing-bt">Битва с Наживкой</h2>
+      <div class="ix-fishing-hp" role="img" aria-label="Здоровье Наживки: 3 из 3" data-hp-wrap><i data-hp></i><b data-hp-t>НАЖИВКА · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-fishing-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ================= INTERVIEW ================= -->
+<section class="ix-fishing-iv" aria-labelledby="ix-fishing-ivt">
+  <p class="ix-fishing-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC / SOC</p>
+  <h2 class="ix-fishing-ivq" id="ix-fishing-ivt">Сотрудник сообщил, что ввёл пароль на фишинговой странице. Что ты делаешь в первые полчаса?</h2>
+  <div class="ix-fishing-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: сначала закрой дверь. Потом выясни, кто уже вошёл и кому ещё пришло это письмо.</span>
+  </div>
+  <button class="ix-fishing-btn ix-fishing-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-fishing-iva">Показать сильный ответ</button>
+  <div class="ix-fishing-iva" id="ix-fishing-iva" hidden>
+    <ol>
+      <li><b>Сдержать.</b> Сбрасываю пароль, завершаю все сессии, отзываю токены. Проверяю, не добавил ли злоумышленник свой второй фактор или правило пересылки почты.</li>
+      <li><b>Расследовать.</b> Смотрю журнал входов: IP, страна, время, устройство. Были ли входы после клика и что сделано от имени сотрудника.</li>
+      <li><b>Найти всех.</b> По отправителю, теме и ссылке ищу это письмо в других ящиках, удаляю его и проверяю, кто ещё кликнул. Блокирую домен на почтовом шлюзе, прокси и DNS.</li>
+      <li><b>Закрыть причину.</b> Passkey или ключи FIDO2 для важных систем, DMARC с политикой reject для своего домена, кнопка «Сообщить о фишинге». Сотрудника благодарю: он сообщил быстро.</li>
+    </ol>
+    <p class="ix-fishing-ivx"><b>Ошибка новичка:</b> «Скажу ему быть внимательнее». Пароль уже у злоумышленника, нужны действия. А нотации и наказания учат людей молчать.</p>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="ix-fishing-cs" aria-labelledby="ix-fishing-cst">
+  <h2 class="ix-fishing-cst" id="ix-fishing-cst">Шпаргалка: как распознать фишинг</h2>
+  <ol class="ix-fishing-csl">
+    <li><span class="ix-fishing-csn" aria-hidden="true">01</span><div><b>Давят — притормози</b><p>Срочность, страх, выгода: «через 2 часа», «блокировка», «выигрыш». Это и есть крючок.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">02</span><div><b>Адрес, а не имя</b><p>Имя «Копилка Банк» пишет кто угодно. Смотри, с какого домена пришло письмо.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">03</span><div><b>Домен справа налево</b><p>Хозяин адреса — то, что стоит перед зоной. Всё левее — декорация.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">04</span><div><b>Замочек — не честность</b><p>HTTPS шифрует связь, но не проверяет, что сайт принадлежит банку.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">05</span><div><b>Коды — никому</b><p>Код из SMS подтверждает операцию. Банк и «служба безопасности» его не спрашивают.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">06</span><div><b>Перезвони сам</b><p>Голос и номер подделываются. Звони по номеру из контактов или с карты.</p></div></li>
+    <li><span class="ix-fishing-csn" aria-hidden="true">07</span><div><b>Защита слоями</b><p>DMARC на почте, менеджер паролей, passkey и кнопка «Сообщить о фишинге».</p></div></li>
+  </ol>
+  <p class="ix-fishing-train"><b>Тренируйся легально:</b> TryHackMe (комнаты Phishing Analysis), picoCTF, PortSwigger Web Security Academy. Слать «учебный» фишинг реальным людям без договора нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-fishing{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--sea:#19c3ff;--deep:#0a1830;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-fishing *,.ix-fishing *::before,.ix-fishing *::after{box-sizing:border-box}
+.ix-fishing button{font:inherit;color:inherit}
+.ix-fishing :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-fishing [hidden]{display:none !important}
+.ix-fishing p{margin:0}
+.ix-fishing code{font-family:var(--code);font-size:.92em;overflow-wrap:anywhere}
+.ix-fishing .ix-fishing-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-fishing .ix-fishing-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-fishing .ix-fishing-hud.ix-fishing-on{display:flex}
+.ix-fishing .ix-fishing-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-fishing .ix-fishing-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-fishing .ix-fishing-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--sea);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-fishing .ix-fishing-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-fishing .ix-fishing-hud.ix-fishing-hit{animation:ix-fishing-shake .4s}
+.ix-fishing .ix-fishing-hud.ix-fishing-hit .ix-fishing-bar{border-color:var(--red)}
+.ix-fishing .ix-fishing-pips{display:flex;gap:4px}
+.ix-fishing .ix-fishing-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-fishing .ix-fishing-pips span.ix-fishing-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION */
+.ix-fishing .ix-fishing-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--sea);display:grid;grid-template-columns:1fr 1.1fr;overflow:hidden}
+.ix-fishing .ix-fishing-poster{position:relative;min-height:440px;overflow:hidden;border-right:3px solid var(--ink);
+  background:radial-gradient(120% 70% at 50% 0%,#17406e 0%,var(--deep) 60%,#050b17 100%)}
+.ix-fishing .ix-fishing-poster::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(25,195,255,.28) 1.1px,transparent 1.8px);background-size:8px 8px;pointer-events:none}
+.ix-fishing .ix-fishing-rig{position:absolute;left:50%;top:-6px;width:170px;margin-left:-85px;transform-origin:50% 0;z-index:2}
+.ix-fishing .ix-fishing-hook{display:block;width:100px;height:auto;margin:0 0 0 18px;filter:drop-shadow(0 0 10px rgba(255,214,10,.45))}
+.ix-fishing .ix-fishing-bait{position:absolute;left:-6px;top:226px;width:182px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);padding:10px 12px 12px;transform:rotate(-7deg);display:flex;flex-direction:column;gap:4px}
+.ix-fishing .ix-fishing-bait::before{content:"";position:absolute;left:24px;top:-12px;width:14px;height:14px;border-radius:50%;background:var(--deep);border:3px solid var(--ink)}
+.ix-fishing .ix-fishing-bait-k{font-family:var(--f-cap);font-size:12px;color:var(--red)}
+.ix-fishing .ix-fishing-bait-t{font-family:var(--f-cap);font-size:17px;line-height:1.15}
+.ix-fishing .ix-fishing-bait-b{align-self:flex-start;margin-top:4px;background:var(--red);color:#fff;font-family:var(--f-cap);font-size:13px;padding:5px 10px}
+.ix-fishing .ix-fishing-sea{position:absolute;left:0;right:0;bottom:0;height:120px;z-index:1;
+  background:linear-gradient(180deg,rgba(25,195,255,0) 0,rgba(25,195,255,.12) 30%,rgba(5,11,23,.9) 100%)}
+.ix-fishing .ix-fishing-sea::before{content:"";position:absolute;left:-10%;right:-10%;top:0;height:16px;
+  background:radial-gradient(14px 8px at 14px 0,transparent 98%,rgba(25,195,255,.65) 100%) 0 0/28px 16px repeat-x}
+.ix-fishing .ix-fishing-pname{position:absolute;left:0;right:0;bottom:14px;z-index:3;text-align:center;font-family:var(--f-mono);font-size:44px;line-height:1;color:var(--sea);text-shadow:4px 4px 0 var(--ink);letter-spacing:.02em}
+.ix-fishing .ix-fishing-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(25,195,255,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-fishing .ix-fishing-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--sea)}
+.ix-fishing .ix-fishing-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:52px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-fishing .ix-fishing-mt-s{display:block;font-family:var(--f-cap);font-size:20px;line-height:1.2;text-transform:none;color:#fff;margin-bottom:10px}
+.ix-fishing .ix-fishing-msub{font-size:20px;line-height:1.45}
+.ix-fishing .ix-fishing-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-fishing .ix-fishing-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ix-fishing .ix-fishing-moves li{border:2px solid #fff;padding:8px 10px 10px}
+.ix-fishing .ix-fishing-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-fishing .ix-fishing-moves span{display:block;font-family:var(--f-cap);font-size:15px;line-height:1.2;margin-top:4px}
+.ix-fishing .ix-fishing-moves li.ix-fishing-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-fishing .ix-fishing-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--sea);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-fishing .ix-fishing-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--sea)}
+.ix-fishing .ix-fishing-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--sea)}
+
+/* Animation (only without reduced motion) */
+.ix-fishing.ix-fishing-anim .ix-fishing-rig{animation:ix-fishing-swing 3.6s ease-in-out infinite}
+.ix-fishing.ix-fishing-anim .ix-fishing-sea::before{animation:ix-fishing-wave 4s linear infinite}
+@keyframes ix-fishing-swing{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes ix-fishing-wave{to{transform:translateX(28px)}}
+@keyframes ix-fishing-shake{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes ix-fishing-pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:none}}
+@keyframes ix-fishing-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* LEVELS */
+.ix-fishing .ix-fishing-lvl{position:relative;margin:56px 0 0;scroll-margin-top:56px}
+.ix-fishing .ix-fishing-lh{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;border-bottom:3px solid var(--ink);padding-bottom:10px}
+.ix-fishing .ix-fishing-ln{font-family:var(--f-cap);font-size:14px;color:var(--ink);background:var(--yel);padding:3px 8px;border:2px solid var(--ink)}
+.ix-fishing .ix-fishing-lt{margin:0;font-family:var(--f-cap);font-weight:400;font-size:32px;line-height:1.1}
+.ix-fishing .ix-fishing-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:14px;color:#fff;background:var(--gdk);padding:4px 10px;transform:rotate(-3deg)}
+.ix-fishing .ix-fishing-clear .ix-fishing-ok{display:inline-block}
+.ix-fishing .ix-fishing-lockcap{display:none}
+.ix-fishing .ix-fishing-locked .ix-fishing-lockcap{display:flex;padding:28px 0;color:var(--muted);font-family:var(--f-cap);font-size:18px}
+.ix-fishing .ix-fishing-locked .ix-fishing-lb{display:none}
+.ix-fishing .ix-fishing-lb{padding-top:22px;display:flex;flex-direction:column;gap:18px}
+.ix-fishing .ix-fishing-after,.ix-fishing .ix-fishing-after2{display:none;flex-direction:column;gap:18px}
+.ix-fishing .ix-fishing-after.ix-fishing-show,.ix-fishing .ix-fishing-after2.ix-fishing-show{display:flex}
+.ix-fishing.ix-fishing-anim .ix-fishing-show{animation:ix-fishing-in .45s ease-out}
+
+.ix-fishing .ix-fishing-say{display:flex;gap:12px;align-items:flex-start}
+.ix-fishing .ix-fishing-who{flex:0 0 auto;min-width:104px;font-family:var(--f-cap);font-size:13px;line-height:1;padding:7px 8px;background:var(--ink);color:var(--yel);text-align:center;margin-top:3px}
+.ix-fishing .ix-fishing-who.ix-fishing-sonya{background:var(--sea);color:var(--ink)}
+.ix-fishing .ix-fishing-bub{font-size:19px;line-height:1.45}
+.ix-fishing .ix-fishing-lead{font-family:var(--f-cap);font-size:22px;line-height:1.3}
+.ix-fishing .ix-fishing-def{font-size:18px;line-height:1.55;border-left:6px solid var(--sea);padding:4px 0 4px 16px}
+.ix-fishing .ix-fishing-def code{background:rgba(20,20,20,.08);padding:1px 4px}
+.ix-fishing .ix-fishing-big{font-family:var(--f-cap);font-size:34px;line-height:1.15;margin:8px 0}
+.ix-fishing .ix-fishing-big span{background:var(--yel);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 6px}
+.ix-fishing .ix-fishing-legal{font-size:15px;color:var(--muted)}
+.ix-fishing .ix-fishing-q{font-family:var(--f-cap);font-size:22px;line-height:1.25}
+
+/* buttons */
+.ix-fishing .ix-fishing-act{display:flex;flex-wrap:wrap;gap:12px}
+.ix-fishing .ix-fishing-btn{min-height:52px;padding:10px 22px;font-family:var(--f-cap);font-size:18px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:left}
+.ix-fishing .ix-fishing-btn.ix-fishing-y{background:var(--yel)}
+.ix-fishing .ix-fishing-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-fishing .ix-fishing-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-fishing .ix-fishing-btn:disabled{opacity:.55;cursor:default;transform:none;box-shadow:4px 4px 0 var(--ink)}
+.ix-fishing .ix-fishing-link{min-height:44px;background:none;border:0;padding:0;font-size:16px;text-decoration:underline;text-underline-offset:3px;color:var(--muted);cursor:pointer}
+.ix-fishing .ix-fishing-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-fishing .ix-fishing-two-ch{grid-template-columns:repeat(2,1fr)}
+.ix-fishing .ix-fishing-ch{display:flex;flex-direction:column;gap:4px;min-height:64px;padding:12px 14px;text-align:left;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-fishing .ix-fishing-ch:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-fishing .ix-fishing-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px;line-height:1.2}
+.ix-fishing .ix-fishing-ch span{font-size:16px;line-height:1.35;color:var(--muted)}
+.ix-fishing .ix-fishing-ch:disabled{cursor:default}
+.ix-fishing .ix-fishing-ch.ix-fishing-wrong{background:#ffe1e1;border-color:var(--red);box-shadow:4px 4px 0 var(--red);opacity:.8}
+.ix-fishing .ix-fishing-ch.ix-fishing-right{background:#d9fbe9;border-color:var(--gdk);box-shadow:4px 4px 0 var(--gdk)}
+.ix-fishing .ix-fishing-fb{font-size:18px;line-height:1.5;min-height:0}
+.ix-fishing .ix-fishing-fb:empty{display:none}
+.ix-fishing .ix-fishing-fb b{display:inline-block;margin-right:8px;font-family:var(--f-cap);font-weight:400;padding:1px 8px;color:#fff}
+.ix-fishing .ix-fishing-fb.ix-fishing-bad b{background:var(--red)}
+.ix-fishing .ix-fishing-fb.ix-fishing-good b{background:var(--gdk)}
+.ix-fishing .ix-fishing-fb.ix-fishing-meh b{background:var(--muted)}
+.ix-fishing .ix-fishing-cnt{font-family:var(--f-cap);font-size:18px}
+
+/* EMAIL */
+.ix-fishing .ix-fishing-mail{background:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);max-width:640px;width:100%;margin:6px auto 0;overflow:hidden}
+.ix-fishing .ix-fishing-mhead{background:#f2f4f7;border-bottom:2px solid #d6dbe3;padding:12px;display:flex;flex-direction:column;gap:6px}
+.ix-fishing .ix-fishing-mbody2{padding:16px 18px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.ix-fishing .ix-fishing-spot{position:relative;display:block;text-align:left;background:transparent;border:2px dashed transparent;border-radius:4px;padding:6px 8px;margin:0 -8px;cursor:pointer;min-height:44px;transition:background .15s,border-color .15s}
+.ix-fishing .ix-fishing-spot:hover{background:rgba(25,195,255,.1);border-color:rgba(25,195,255,.6)}
+.ix-fishing .ix-fishing-spot.ix-fishing-hooked{background:#ffe9e9;border:2px solid var(--red)}
+.ix-fishing .ix-fishing-spot.ix-fishing-clean{background:#eef1f5;border:2px solid #b8c0cc}
+.ix-fishing .ix-fishing-spot.ix-fishing-hooked::after{content:attr(data-n);position:absolute;right:-6px;top:-10px;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--f-cap);font-size:14px;line-height:26px;text-align:center;border:2px solid var(--ink)}
+.ix-fishing.ix-fishing-anim .ix-fishing-hooked::after{animation:ix-fishing-pop .35s ease-out}
+.ix-fishing .ix-fishing-from{display:flex;gap:10px;align-items:center;margin:0;width:100%}
+.ix-fishing .ix-fishing-av{flex:0 0 40px;height:40px;border-radius:50%;background:#2d7a4a;color:#fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:18px}
+.ix-fishing .ix-fishing-fromt{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.ix-fishing .ix-fishing-fromt b{font-size:17px}
+.ix-fishing .ix-fishing-fromt span{font-size:15px;color:#5a6270;overflow-wrap:anywhere}
+.ix-fishing .ix-fishing-subj{font-weight:700;font-size:18px;line-height:1.3;margin:0;width:100%}
+.ix-fishing .ix-fishing-logo{font-family:var(--f-cap);font-size:24px;color:#2d7a4a;letter-spacing:.04em}
+.ix-fishing .ix-fishing-logo small,.ix-fishing .ix-fishing-plogo small{font-family:var(--f-text);font-size:13px;margin-left:6px;color:#5a6270;letter-spacing:0}
+.ix-fishing .ix-fishing-txt{font-size:17px;line-height:1.45}
+.ix-fishing .ix-fishing-plain{font-size:17px;line-height:1.45}
+.ix-fishing .ix-fishing-cta{margin:6px 0 0;background:#2d7a4a;color:#fff;font-weight:700;font-size:17px;padding:12px 20px;border:2px solid #2d7a4a}
+.ix-fishing .ix-fishing-cta:hover{background:#246a3f;border-color:#246a3f}
+.ix-fishing .ix-fishing-cta.ix-fishing-hooked{background:#2d7a4a;outline:3px solid var(--red);outline-offset:2px}
+.ix-fishing .ix-fishing-url{display:block;font-size:15px;background:var(--ink);color:#fff;padding:8px 10px;max-width:100%}
+.ix-fishing .ix-fishing-url code{color:#cfe9ff}
+.ix-fishing .ix-fishing-url mark,.ix-fishing .ix-fishing-real.ix-fishing-lit{background:var(--red);color:#fff;padding:0 3px}
+.ix-fishing .ix-fishing-file{font-size:16px;background:#f2f4f7;border:2px solid #d6dbe3;margin:4px 0 0}
+.ix-fishing .ix-fishing-foot{font-size:14px;color:#5a6270}
+.ix-fishing .ix-fishing-giveup{justify-content:flex-start}
+.ix-fishing .ix-fishing-l1done .ix-fishing-giveup{display:none}
+
+/* FAKE SITE */
+.ix-fishing .ix-fishing-br{border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);background:#fff;max-width:640px;width:100%;margin:6px auto 0}
+.ix-fishing .ix-fishing-addr{display:flex;align-items:center;gap:8px;background:#e9ecf1;border-bottom:3px solid var(--ink);padding:10px 12px;font-family:var(--code);font-size:15px}
+.ix-fishing .ix-fishing-host{overflow-wrap:anywhere;line-height:1.35}
+.ix-fishing .ix-fishing-page{padding:20px 22px 24px;display:flex;flex-direction:column;gap:12px}
+.ix-fishing .ix-fishing-plogo{font-family:var(--f-cap);font-size:24px;color:#2d7a4a}
+.ix-fishing .ix-fishing-ptitle{font-weight:700;font-size:20px}
+.ix-fishing .ix-fishing-field{display:flex;flex-direction:column;gap:4px}
+.ix-fishing .ix-fishing-field span{font-size:14px;color:#5a6270}
+.ix-fishing .ix-fishing-field b{display:block;min-height:44px;border:2px solid #c3cad5;padding:9px 12px;font-family:var(--code);font-weight:400;font-size:17px}
+.ix-fishing .ix-fishing-mid{display:flex;flex-direction:column;gap:18px}
+
+/* PHONE */
+.ix-fishing .ix-fishing-phone{position:relative;width:100%;max-width:340px;margin:0 auto;background:#0d1117;color:#fff;border:4px solid var(--ink);border-radius:34px;box-shadow:8px 8px 0 var(--sea);padding:30px 18px 24px;min-height:440px;display:flex;flex-direction:column}
+.ix-fishing .ix-fishing-ring{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding-top:10px}
+.ix-fishing .ix-fishing-callk{font-family:var(--f-cap);font-size:13px;letter-spacing:.12em;color:#9fb3c8}
+.ix-fishing .ix-fishing-cav{width:96px;height:96px;border-radius:50%;background:#2a3a52;display:grid;place-items:center;font-family:var(--f-cap);font-size:34px;margin:10px 0 4px;box-shadow:0 0 0 0 rgba(46,229,157,.6)}
+.ix-fishing.ix-fishing-anim .ix-fishing-ringing .ix-fishing-cav{animation:ix-fishing-ringp 1.3s ease-out infinite}
+@keyframes ix-fishing-ringp{0%{box-shadow:0 0 0 0 rgba(46,229,157,.55)}100%{box-shadow:0 0 0 26px rgba(46,229,157,0)}}
+.ix-fishing .ix-fishing-cname{font-family:var(--f-cap);font-size:26px}
+.ix-fishing .ix-fishing-cnum{font-size:15px;color:#9fb3c8}
+.ix-fishing .ix-fishing-answer{margin-top:22px;min-height:56px;padding:0 28px;border-radius:28px;border:0;background:#22b968;color:#fff;font-family:var(--f-cap);font-size:18px;cursor:pointer}
+.ix-fishing .ix-fishing-answer:focus-visible{outline-color:var(--yel)}
+.ix-fishing .ix-fishing-talk{display:flex;flex-direction:column;gap:10px}
+.ix-fishing .ix-fishing-talk:empty{display:none}
+.ix-fishing .ix-fishing-tk{align-self:flex-start;max-width:92%;background:#1f2a3a;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:17px;line-height:1.4}
+.ix-fishing .ix-fishing-tk small{display:block;font-family:var(--f-cap);font-size:11px;color:#9fb3c8;margin-bottom:2px;letter-spacing:.06em}
+.ix-fishing .ix-fishing-tk.ix-fishing-me{align-self:flex-end;background:#1b5e3c;border-radius:16px 16px 4px 16px}
+.ix-fishing .ix-fishing-sms{background:#f2f4f7;color:var(--ink);border-radius:14px;padding:10px 14px;font-size:16px;line-height:1.35;border-left:6px solid var(--yel)}
+.ix-fishing .ix-fishing-sms small{display:block;font-size:12px;color:#5a6270}
+.ix-fishing .ix-fishing-callbar{font-family:var(--f-cap);font-size:13px;color:#9fb3c8;text-align:center;letter-spacing:.08em;margin:6px 0 2px}
+.ix-fishing.ix-fishing-anim .ix-fishing-talk>*{animation:ix-fishing-in .35s ease-out}
+.ix-fishing .ix-fishing-callq{display:flex;flex-direction:column;gap:14px}
+
+/* TODO */
+.ix-fishing .ix-fishing-todo{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ix-fishing .ix-fishing-td{display:flex;flex-direction:column;gap:6px;text-align:left;min-height:64px;padding:12px 14px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.ix-fishing .ix-fishing-td b{font-family:var(--f-cap);font-weight:400;font-size:18px;line-height:1.25}
+.ix-fishing .ix-fishing-tdw{display:none;font-size:16px;line-height:1.4}
+.ix-fishing .ix-fishing-td.ix-fishing-right{background:#d9fbe9;border-color:var(--gdk);box-shadow:4px 4px 0 var(--gdk)}
+.ix-fishing .ix-fishing-td.ix-fishing-wrong{background:#ffe1e1;border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
+.ix-fishing .ix-fishing-td.ix-fishing-right .ix-fishing-tdw,.ix-fishing .ix-fishing-td.ix-fishing-wrong .ix-fishing-tdw{display:block}
+.ix-fishing .ix-fishing-td.ix-fishing-right b::before{content:"✓ ";color:var(--gdk)}
+.ix-fishing .ix-fishing-td.ix-fishing-wrong b::before{content:"✗ ";color:var(--red)}
+.ix-fishing .ix-fishing-td:disabled{cursor:default}
+
+/* HACK */
+.ix-fishing .ix-fishing-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:rgba(10,24,48,.92);backdrop-filter:blur(2px)}
+.ix-fishing .ix-fishing-hkin{width:100%;max-width:520px;background:var(--ink);color:#fff;border:4px solid var(--red);box-shadow:10px 10px 0 var(--red);padding:26px 22px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.ix-fishing.ix-fishing-anim .ix-fishing-hkin{animation:ix-fishing-pop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-fishing .ix-fishing-hack.ix-fishing-rw .ix-fishing-hkin{filter:invert(1) hue-rotate(180deg);transition:filter .5s}
+.ix-fishing .ix-fishing-hkt{font-family:var(--f-mono);font-size:56px;line-height:1;color:var(--red);text-shadow:4px 4px 0 #fff;transform:rotate(-4deg)}
+.ix-fishing .ix-fishing-hkcard{display:flex;flex-direction:column;gap:6px;width:100%;background:#fff;color:var(--ink);padding:12px 14px;font-size:17px;border:3px solid var(--ink)}
+.ix-fishing .ix-fishing-hkcard b{font-family:var(--code);background:var(--yel);padding:0 4px}
+.ix-fishing .ix-fishing-hksay{font-size:18px;line-height:1.45}
+.ix-fishing .ix-fishing-hksay b{font-family:var(--f-cap);font-weight:400;color:var(--sea)}
+
+/* BATTLE */
+.ix-fishing .ix-fishing-battle{margin:72px 0 0;background:var(--deep);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--sea);scroll-margin-top:16px}
+.ix-fishing .ix-fishing-battle:focus{outline:none}
+.ix-fishing .ix-fishing-bh{display:flex;gap:16px;align-items:center;padding:18px 20px;border-bottom:3px solid var(--sea);background-image:radial-gradient(rgba(25,195,255,.2) 1.1px,transparent 1.8px);background-size:8px 8px}
+.ix-fishing .ix-fishing-bface{flex:0 0 72px;height:96px;display:flex;justify-content:center;overflow:hidden}
+.ix-fishing .ix-fishing-bface svg{width:52px;height:auto}
+.ix-fishing.ix-fishing-anim .ix-fishing-bface.ix-fishing-ow{animation:ix-fishing-shake .45s}
+.ix-fishing .ix-fishing-bhx{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.ix-fishing .ix-fishing-bt{margin:0;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.1;color:var(--yel)}
+.ix-fishing .ix-fishing-hp{position:relative;height:28px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-fishing .ix-fishing-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .5s}
+.ix-fishing .ix-fishing-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000}
+.ix-fishing .ix-fishing-bbody{position:relative;padding:22px 20px 26px;display:flex;flex-direction:column;gap:16px}
+.ix-fishing .ix-fishing-mvn{font-family:var(--f-cap);font-size:14px;color:var(--sea);letter-spacing:.1em}
+.ix-fishing .ix-fishing-vsay{font-family:var(--f-cap);font-size:23px;line-height:1.3;border-left:6px solid var(--sea);padding-left:14px}
+.ix-fishing .ix-fishing-bq{font-size:19px;color:#cfe9ff}
+.ix-fishing .ix-fishing-bopts{display:flex;flex-direction:column;gap:10px}
+.ix-fishing .ix-fishing-bo{min-height:56px;padding:12px 16px;text-align:left;font-size:18px;line-height:1.35;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--sea);cursor:pointer}
+.ix-fishing .ix-fishing-bo:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sea)}
+.ix-fishing .ix-fishing-bo:disabled{cursor:default}
+.ix-fishing .ix-fishing-bo.ix-fishing-wrong{background:#ffe1e1;box-shadow:4px 4px 0 var(--red);opacity:.85}
+.ix-fishing .ix-fishing-bo.ix-fishing-right{background:#d9fbe9;box-shadow:4px 4px 0 var(--green)}
+.ix-fishing .ix-fishing-bfb{font-size:18px;line-height:1.5}
+.ix-fishing .ix-fishing-bfb:empty{display:none}
+.ix-fishing .ix-fishing-bfb b{display:inline-block;margin-right:8px;font-family:var(--f-cap);font-weight:400;padding:1px 8px}
+.ix-fishing .ix-fishing-bfb.ix-fishing-bad b{background:var(--red);color:#fff}
+.ix-fishing .ix-fishing-bfb.ix-fishing-good b{background:var(--yel);color:var(--ink)}
+.ix-fishing .ix-fishing-boom{position:absolute;right:20px;top:14px;font-family:var(--f-mono);font-size:44px;color:var(--yel);text-shadow:4px 4px 0 var(--red);transform:rotate(-8deg);pointer-events:none;animation:ix-fishing-pop .4s ease-out}
+.ix-fishing .ix-fishing-win{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.ix-fishing .ix-fishing-wint{font-family:var(--f-mono);font-size:34px;line-height:1.1;color:var(--yel)}
+.ix-fishing .ix-fishing-wins{font-size:19px}
+.ix-fishing .ix-fishing-wpost{font-family:var(--f-cap);font-size:20px;line-height:1.35;color:#cfe9ff}
+
+/* INTERVIEW */
+.ix-fishing .ix-fishing-iv{margin:72px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--yel);padding:28px 24px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.ix-fishing .ix-fishing-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--yel)}
+.ix-fishing .ix-fishing-ivq{margin:0;font-family:var(--f-cap);font-weight:400;font-size:28px;line-height:1.25}
+.ix-fishing .ix-fishing-think{display:flex;flex-direction:column;gap:4px;border-left:6px solid var(--sea);padding-left:14px}
+.ix-fishing .ix-fishing-think b{font-family:var(--f-cap);font-weight:400;font-size:19px;color:var(--sea)}
+.ix-fishing .ix-fishing-think span{font-size:18px}
+.ix-fishing .ix-fishing-iva{width:100%}
+.ix-fishing .ix-fishing-iva ol{margin:0;padding:0;list-style:none;counter-reset:ivc;display:flex;flex-direction:column;gap:16px}
+.ix-fishing .ix-fishing-iva li{counter-increment:ivc;position:relative;padding-left:44px;font-size:19px;line-height:1.5}
+.ix-fishing .ix-fishing-iva li::before{content:counter(ivc);position:absolute;left:0;top:0;width:30px;height:30px;background:var(--yel);color:var(--ink);font-family:var(--f-cap);display:grid;place-items:center;font-size:16px}
+.ix-fishing .ix-fishing-iva li b{color:var(--yel);font-family:var(--f-cap);font-weight:400}
+.ix-fishing .ix-fishing-ivx{margin-top:20px;font-size:19px;line-height:1.5;background:#2a1414;border-left:6px solid var(--red);padding:12px 14px}
+.ix-fishing .ix-fishing-ivx b{color:var(--red);font-family:var(--f-cap);font-weight:400}
+
+/* CHEAT SHEET */
+.ix-fishing .ix-fishing-cs{margin:72px 0 0}
+.ix-fishing .ix-fishing-cst{margin:0 0 18px;font-family:var(--f-cap);font-weight:400;font-size:32px;line-height:1.15}
+.ix-fishing .ix-fishing-csl{list-style:none;margin:0;padding:0}
+.ix-fishing .ix-fishing-csl li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-top:1px solid rgba(20,20,20,.18)}
+.ix-fishing .ix-fishing-csl li:last-child{border-bottom:1px solid rgba(20,20,20,.18)}
+.ix-fishing .ix-fishing-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:34px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-fishing .ix-fishing-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-fishing .ix-fishing-csl p{font-size:18px;line-height:1.5}
+.ix-fishing .ix-fishing-train{margin-top:22px;font-size:18px;line-height:1.5}
+
+/* MOBILE */
+@media (max-width:760px){
+  .ix-fishing .ix-fishing-mission{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--sea)}
+  .ix-fishing .ix-fishing-poster{min-height:380px;border-right:0;border-bottom:3px solid var(--ink)}
+  .ix-fishing .ix-fishing-pname{font-size:40px}
+  .ix-fishing .ix-fishing-mbody{padding:22px 18px 24px}
+  .ix-fishing .ix-fishing-mt{font-size:44px}
+  .ix-fishing .ix-fishing-msub{font-size:19px}
+  .ix-fishing .ix-fishing-go{align-self:stretch}
+  .ix-fishing .ix-fishing-choices,.ix-fishing .ix-fishing-two-ch,.ix-fishing .ix-fishing-todo{grid-template-columns:1fr}
+  .ix-fishing .ix-fishing-say{flex-direction:column;gap:6px}
+  .ix-fishing .ix-fishing-who{min-width:0;margin:0}
+  .ix-fishing .ix-fishing-lt{font-size:28px}
+  .ix-fishing .ix-fishing-big{font-size:28px}
+  .ix-fishing .ix-fishing-mail,.ix-fishing .ix-fishing-br{box-shadow:5px 5px 0 var(--ink)}
+  .ix-fishing .ix-fishing-mbody2{padding:14px 14px 18px}
+  .ix-fishing .ix-fishing-btn{width:100%;text-align:center}
+  .ix-fishing .ix-fishing-iv{padding:22px 16px}
+  .ix-fishing .ix-fishing-ivq{font-size:24px}
+  .ix-fishing .ix-fishing-bt{font-size:25px}
+  .ix-fishing .ix-fishing-vsay{font-size:20px}
+  .ix-fishing .ix-fishing-bh{padding:14px 14px}
+  .ix-fishing .ix-fishing-bbody{padding:18px 14px 22px}
+  .ix-fishing .ix-fishing-boom{font-size:34px}
+  .ix-fishing .ix-fishing-hkt{font-size:46px}
+  .ix-fishing .ix-fishing-csn{flex-basis:52px;font-size:28px}
+  .ix-fishing .ix-fishing-wint{font-size:28px}
+  .ix-fishing .ix-fishing-phone{box-shadow:5px 5px 0 var(--sea)}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-fishing *,.ix-fishing *::before,.ix-fishing *::after{animation:none !important;transition:none !important}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-fishing'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ix-fishing-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusLater(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:450)}
+  function show(el){el.classList.add('ix-fishing-show')}
+
+  /* HUD */
+  var hud=q('.ix-fishing-hud'), fill=q('.ix-fishing-bar i'), barT=q('.ix-fishing-bar b'), pips=qa('.ix-fishing-pips span');
+  var S={def:0,steps:[0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ix-fishing-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('ix-fishing-hit');void hud.offsetWidth;hud.classList.add('ix-fishing-hit');setTimeout(function(){hud.classList.remove('ix-fishing-hit')},700)}
+  function step(i){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=(i+1)*25; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('ix-fishing-x');
+    q('#ix-fishing-l'+(i+1)).classList.add('ix-fishing-clear');
+    var nx=q('#ix-fishing-l'+(i+2)); if(nx) nx.classList.remove('ix-fishing-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    focusLater(t.classList.contains('ix-fishing-battle')?q('.ix-fishing-bo',t):t.querySelector('.ix-fishing-lb button'));
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-fishing-l1');
+    if(!hud.classList.contains('ix-fishing-on')){
+      hud.classList.add('ix-fishing-on'); paint();
+      l1.classList.remove('ix-fishing-locked');
+      startBtn.textContent='Миссия начата ▼';
+      say('Миссия принята. Шаг первый: разбери письмо.');
+    }
+    go(l1); focusLater(q('[data-spot="from"]'));
+  });
+
+  /* L1: EMAIL */
+  var SPOTS={
+    from:[1,'Имя «Копилка Банк» пишет кто угодно. Смотри адрес: bank-kopilka-help.test. Домен банка — bank-kopilka.example.'],
+    subj:[1,'Срочность и страх: «через 2 часа». Наживке нужно, чтобы ты действовал раньше, чем подумал.'],
+    link:[1,'Читай адрес справа налево: хозяин — login-check.test. На компьютере адрес видно при наведении, на телефоне — долгим нажатием.'],
+    code:[1,'Пароль и код из SMS не спрашивает ни один банк. Код — это твоя подпись под операцией.'],
+    file:[1,'В конце .exe — это программа, а не документ. Windows прячет известные расширения и покажет «Инструкция.pdf».'],
+    logo:[0,'Не крючок, но и не доказательство: логотип копируется за секунду.'],
+    hello:[0,'Слабый признак. Банк обычно знает твоё имя, но по одному обращению не суди.'],
+    foot:[0,'Подпись и «©» копируются так же легко. Это не проверка.']
+  };
+  var l1=q('#ix-fishing-l1'), fb1=q('[data-fb]',l1), cnt=q('[data-cnt]'), found=0;
+  function l1Done(){
+    l1.classList.add('ix-fishing-l1done'); step(0);
+    show(q('.ix-fishing-after',l1));
+    say('Все пять крючков найдены. Шаг первый пройден.');
+  }
+  function mark(b,quiet){
+    var k=b.getAttribute('data-spot'), s=SPOTS[k];
+    if(b.classList.contains('ix-fishing-hooked')||b.classList.contains('ix-fishing-clean')){ if(!quiet){fb1.className='ix-fishing-fb '+(s[0]?'ix-fishing-bad':'ix-fishing-meh'); fb1.innerHTML='<b>'+(s[0]?'КРЮЧОК':'НЕ КРЮЧОК')+'</b>'+esc(s[1])} return; }
+    if(s[0]){
+      found++; b.classList.add('ix-fishing-hooked'); b.setAttribute('data-n',found);
+      if(k==='link') q('[data-url]').hidden=false;
+    } else b.classList.add('ix-fishing-clean');
+    if(!quiet){
+      fb1.className='ix-fishing-fb '+(s[0]?'ix-fishing-bad':'ix-fishing-meh');
+      fb1.innerHTML='<b>'+(s[0]?'КРЮЧОК '+found:'НЕ КРЮЧОК')+'</b>'+esc(s[1]);
+    }
+    cnt.textContent='Крючков найдено: '+found+' из 5';
+    if(found===5 && !S.steps[0]) l1Done();
+  }
+  qa('[data-spot]',l1).forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();mark(b,false)})});
+  q('[data-act="showall"]').addEventListener('click',function(){
+    qa('[data-spot]',l1).forEach(function(b){if(SPOTS[b.getAttribute('data-spot')][0]) mark(b,true)});
+    fb1.className='ix-fishing-fb ix-fishing-bad';
+    fb1.innerHTML='<b>ВСЕ 5</b>Чужой адрес, срочность, ссылка на чужой домен, просьба о коде и программа под видом PDF.';
+    focusLater(q('#ix-fishing-l1 [data-goto]'));
+  });
+
+  /* Choice helper */
+  function choices(name,map,onRight){
+    var wrap=q('[data-ch="'+name+'"]'), fb=q('[data-fb="'+name+'"]');
+    qa('.ix-fishing-ch',wrap).forEach(function(b){b.addEventListener('click',function(){
+      if(b.disabled) return;
+      var v=b.getAttribute('data-v'), m=map[v];
+      if(v!=='ok'){
+        b.classList.add('ix-fishing-wrong'); b.disabled=true; if(m[2]!=='meh') hit();
+        fb.className='ix-fishing-fb '+(m[2]==='meh'?'ix-fishing-meh':'ix-fishing-bad'); fb.innerHTML='<b>'+m[0]+'</b>'+esc(m[1]);
+        return;
+      }
+      qa('.ix-fishing-ch',wrap).forEach(function(x){x.disabled=true});
+      b.classList.add('ix-fishing-right');
+      fb.className='ix-fishing-fb ix-fishing-good'; fb.innerHTML='<b>'+m[0]+'</b>'+esc(m[1]);
+      onRight();
+    })});
+  }
+
+  /* L2: SITE */
+  var l2=q('#ix-fishing-l2');
+  choices('lock',{
+    no:['Клюнул','Замочек значит одно: связь зашифрована. Сертификат Наживка бесплатно получил на свой домен за пару минут. Шифрованный канал к мошеннику — всё равно к мошеннику.'],
+    ok:['Точно.','Хозяин адреса — login-check.test. Замочек честно шифрует связь… с Наживкой.']
+  },function(){
+    q('.ix-fishing-real',l2).classList.add('ix-fishing-lit');
+    var mid=q('[data-mid]',l2); mid.hidden=false;
+    say('Верно. Хозяин адреса — login-check.test.');
+    focusLater(q('[data-act="type"]'));
+  });
+  var typeBtn=q('[data-act="type"]'), pw=q('[data-pw]',l2), code=q('[data-code]',l2), hack=q('.ix-fishing-hack');
+  function typeIn(el,txt,ms){
+    var i=0; return new Promise(function(r){
+      if(RM){el.textContent=txt;return r()}
+      (function t(){el.textContent=txt.slice(0,++i); if(i<txt.length) setTimeout(t,ms); else r()})();
+    });
+  }
+  typeBtn.addEventListener('click',function(){
+    if(typeBtn.disabled) return; typeBtn.disabled=true;
+    typeIn(pw,'••••••••',70).then(function(){return wait(250)}).then(function(){return typeIn(code,'4821',120)}).then(function(){
+      hit(); return wait(500);
+    }).then(openHack);
+  });
+  function openHack(){ hack.hidden=false; hack.classList.remove('ix-fishing-rw'); setTimeout(function(){q('[data-act="rewind"]').focus()},30); say('Взлом! Пароль и код ушли Наживке.'); }
+  function closeHack(){
+    if(hack.hidden) return;
+    hack.classList.add('ix-fishing-rw');
+    wait(550).then(function(){
+      hack.hidden=true; hack.classList.remove('ix-fishing-rw');
+      pw.textContent=''; code.textContent='';
+      typeBtn.textContent='Код из SMS не спас';
+      var a=q('.ix-fishing-after',l2); show(a); go(a);
+      focusLater(q('.ix-fishing-ch',a));
+      say('Время откачено. Что спасёт, даже если подделка идеальная?');
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]').focus()}
+  });
+  choices('save',{
+    sms:['Промах','Код вводишь ты сам — значит, введёшь и на подделке. Только что видели.'],
+    long:['Промах','Сложный пароль отдаётся так же легко, как простой. Наживка его не подбирает, ты сам его вводишь.'],
+    ok:['Точно.','Они привязаны к адресу. Менеджер не подставит пароль на login-check.test, а passkey для чужого сайта просто не сработает.']
+  },function(){
+    show(q('.ix-fishing-after2',l2)); step(1);
+    say('Шаг второй пройден.');
+  });
+
+  /* L3: CALL */
+  var l3=q('#ix-fishing-l3'), ring=q('[data-ring]',l3), talk=q('[data-talk]',l3), ansBtn=q('[data-act="answer"]',l3);
+  ring.classList.add('ix-fishing-ringing');
+  function bubble(html,cls){var d=document.createElement('div'); d.className=cls; d.innerHTML=html; talk.appendChild(d); return d}
+  var LINES=['Соня, привет, это я. Срочно нужна помощь.','Я на конференции, меня выкинуло из админки сервера.','Тебе сейчас придёт код. Продиктуй, пожалуйста. Только быстро, все ждут!'];
+  ansBtn.addEventListener('click',function(){
+    if(ansBtn.disabled) return; ansBtn.disabled=true;
+    ring.hidden=true;
+    bubble('ИДЁТ РАЗГОВОР · 00:07','ix-fishing-callbar');
+    var p=Promise.resolve();
+    LINES.forEach(function(t){p=p.then(function(){bubble('<small>ГОЛОС ДЯДИ МИШИ</small>'+esc(t),'ix-fishing-tk');return wait(900)})});
+    p.then(function(){
+      bubble('<small>SMS · сейчас</small>Код для входа: <b>7395</b>. Никому не сообщайте.','ix-fishing-sms');
+      var cq=q('[data-callq]',l3); cq.hidden=false;
+      say('Пришёл код. Что сделает Соня?');
+      focusLater(q('.ix-fishing-ch',cq));
+    });
+  });
+  choices('call',{
+    tell:['Клюнул','Голос подделывают по паре минут записи из видео, а номер на экране подменяют. Код ушёл Наживке.'],
+    ask:['Почти','Свитер с оленями видно на любом его фото. Ответ, который есть в интернете, — не проверка.','meh'],
+    ok:['Точно.','Своему номеру из контактов Наживка не ответит.']
+  },function(){
+    talk.innerHTML='';
+    bubble('ИСХОДЯЩИЙ · ДЯДЯ МИША (ИЗ КОНТАКТОВ)','ix-fishing-callbar');
+    wait(500).then(function(){
+      bubble('<small>НАСТОЯЩИЙ ДЯДЯ МИША</small>Алло? Какая конференция? Я в серверной, чай пью. Никаких кодов никому!','ix-fishing-tk');
+      bubble('<small>СОНЯ</small>Так и думала. Наживка!','ix-fishing-tk ix-fishing-me');
+      show(q('.ix-fishing-after',l3)); step(2);
+      say('Шаг третий пройден. Звонил Наживка.');
+    });
+  });
+
+  /* L4: TODO */
+  var l4=q('#ix-fishing-l4'), tdc=q('[data-tdcnt]'), good=0;
+  qa('.ix-fishing-td',l4).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; b.disabled=true;
+    if(b.getAttribute('data-ok')==='1'){ b.classList.add('ix-fishing-right'); good++; tdc.textContent='Отмечено верно: '+good+' из 4'; say(b.textContent); }
+    else { b.classList.add('ix-fishing-wrong'); hit(); say('Неверно. '+b.textContent); }
+    if(good===4 && !S.steps[3]){
+      qa('.ix-fishing-td',l4).forEach(function(x){x.disabled=true});
+      show(q('.ix-fishing-after',l4)); step(3);
+      say('Шаг четвёртый пройден. Защита 100 процентов.');
+    }
+  })});
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'SMS: «Ваша посылка задержана. Оплатите доставку 49 ₽ по ссылке».',q:'Чем ответишь?',
+     o:[['Оплатить: сумма маленькая',0,'Мне нужны не 49 ₽, а данные твоей карты. Сумма — наживка.'],
+        ['Открыть приложение доставки самому и проверить трек',1,'Посылки нет — и ссылка не нужна.']]},
+    {v:'На паркомате наклейка: «Оплата парковки по QR-коду».',q:'Как платить?',
+     o:[['Сканировать и платить: QR — это не ссылка',0,'QR — та же ссылка, только её не видно. Наклейку поверх настоящей клеит кто угодно.'],
+        ['Платить в официальном приложении, а адрес из QR сначала прочитать',1,'Так QR-фишинг (квишинг) не сработает.'],
+        ['Сканировать, если наклейка ровная и красивая',0,'Ровную наклейку печатают за 5 рублей.']]},
+    {v:'Звонок: «Служба безопасности банка. На вас оформляют кредит. Назовите код из SMS, чтобы отменить».',q:'Что делаешь?',
+     o:[['Назвать код, раз нужно отменить',0,'Код из SMS подтверждает операцию, а не отменяет. Банк его никогда не спрашивает.'],
+        ['Попросить звонящего назвать мои паспортные данные',0,'Данные могли утечь. Знание паспорта ничего не доказывает.'],
+        ['Положить трубку и позвонить по номеру на карте',1,'Настоящий банк ответит по своему номеру.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ix-fishing-bface');
+  var BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='НАЖИВКА · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Наживки: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="ix-fishing-mvn">ХОД '+(BS.i+1)+' / 3 · НАЖИВКА ЗАКИДЫВАЕТ</p><p class="ix-fishing-vsay">'+esc(m.v)+'</p><p class="ix-fishing-bq">'+esc(m.q)+'</p><div class="ix-fishing-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="ix-fishing-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="ix-fishing-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.ix-fishing-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var m=MOVES[BS.i], o=m.o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('ix-fishing-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='ix-fishing-bfb ix-fishing-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]);
+      return;
+    }
+    qa('.ix-fishing-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-fishing-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('ix-fishing-ow'); void face.offsetWidth; face.classList.add('ix-fishing-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='ix-fishing-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='ix-fishing-bfb ix-fishing-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='ix-fishing-act';
+    nb.innerHTML='<button type="button" class="ix-fishing-btn ix-fishing-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){ BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin(); });
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.ix-fishing-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="ix-fishing-win"><p class="ix-fishing-wint">Наживка повержен</p><p class="ix-fishing-wins">С первого раза: <b>'+BS.first+' из 3</b></p><p class="ix-fishing-wpost">Удочка сломана. Ни одного клёва.</p><div class="ix-fishing-act"><button type="button" class="ix-fishing-btn ix-fishing-y" data-again>Ещё раз ↻</button></div></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Наживка повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-fishing-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
