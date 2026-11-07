@@ -1,0 +1,1027 @@
+<section class="ix ix-paroli" data-ix="paroli" aria-label="Выпуск 23: Брутфорс и пароли">
+
+<div class="ix-paroli-story">
+
+  <div class="ix-paroli-hud" aria-hidden="true">
+    <span class="ix-paroli-hud-l">ЗАЩИТА ВХОДА</span>
+    <span class="ix-paroli-bar"><i></i><b>0%</b></span>
+    <span class="ix-paroli-pips"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span>
+  </div>
+  <div class="ix-paroli-sr" aria-live="polite" data-live></div>
+
+  <!-- ================= MISSION ================= -->
+  <div class="ix-paroli-mission" id="ix-paroli-mission">
+    <div class="ix-paroli-poster" aria-hidden="true">
+      <div class="ix-paroli-rain">
+        <div class="ix-paroli-col"><span>123456</span><span>qwerty</span><span>password</span><span>111111</span><span>iloveyou</span><span>123123</span><span>dragon</span><span>000000</span><span>123456</span><span>qwerty</span><span>password</span><span>111111</span><span>iloveyou</span><span>123123</span><span>dragon</span><span>000000</span></div>
+        <div class="ix-paroli-col ix-paroli-col-b"><span>qwerty123</span><span>1q2w3e</span><span>monkey</span><span>sunshine</span><span>654321</span><span>zaq12wsx</span><span>killer</span><span>12345678</span><span>qwerty123</span><span>1q2w3e</span><span>monkey</span><span>sunshine</span><span>654321</span><span>zaq12wsx</span><span>killer</span><span>12345678</span></div>
+        <div class="ix-paroli-col ix-paroli-col-c"><span>P@ssw0rd!</span><span>Sonya2009</span><span>football</span><span>marina</span><span>admin</span><span>1234qwer</span><span>princess</span><span>888888</span><span>P@ssw0rd!</span><span>Sonya2009</span><span>football</span><span>marina</span><span>admin</span><span>1234qwer</span><span>princess</span><span>888888</span></div>
+      </div>
+      <div class="ix-paroli-ring">
+        <span class="ix-paroli-hoop"></span>
+        <span class="ix-paroli-tag ix-paroli-t1">123456</span>
+        <span class="ix-paroli-tag ix-paroli-t2">qwerty</span>
+        <span class="ix-paroli-tag ix-paroli-t3">P@ssw0rd!</span>
+        <span class="ix-paroli-tag ix-paroli-t4">Sonya2009</span>
+        <span class="ix-paroli-tag ix-paroli-t5">111111</span>
+      </div>
+      <span class="ix-paroli-pname">СВЯЗОЧНИК</span>
+      <span class="ix-paroli-count">ПОПЫТОК: <b data-count>0</b></span>
+    </div>
+    <div class="ix-paroli-mbody">
+      <p class="ix-paroli-kick">ВХОДЯЩЕЕ ЗАДАНИЕ · ВЫПУСК 23</p>
+      <h2 class="ix-paroli-mt">Брутфорс<span>Кто первым подберёт пароль Сони?</span></h2>
+      <p class="ix-paroli-msub">У&nbsp;Связочника связка из&nbsp;миллиона ключей: пароли из&nbsp;прошлых утечек. Сегодня он&nbsp;пробует их&nbsp;на&nbsp;<em>электронном дневнике</em> школы Сони. Защити вход: от&nbsp;пароля до&nbsp;базы, где он&nbsp;хранится.</p>
+      <ol class="ix-paroli-moves" aria-label="Уровни миссии">
+        <li data-mv="1"><b>01</b><span>Как подбирают</span></li>
+        <li data-mv="2"><b>02</b><span>Дверь входа</span></li>
+        <li data-mv="3"><b>03</b><span>Чужие ключи</span></li>
+        <li data-mv="4"><b>04</b><span>Второй ключ</span></li>
+        <li data-mv="5" class="ix-paroli-mv-boss"><b>05</b><span>Утечка базы</span></li>
+      </ol>
+      <button class="ix-paroli-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ================= L1: GUESSING ================= -->
+  <section class="ix-paroli-lvl ix-paroli-locked" id="ix-paroli-l1" aria-labelledby="ix-paroli-t1">
+    <div class="ix-paroli-lh"><span class="ix-paroli-ln">УРОВЕНЬ 1 / 5</span><h3 class="ix-paroli-lt" id="ix-paroli-t1">Как подбирают пароли</h3><span class="ix-paroli-ok">ПОНЯТО</span></div>
+    <div class="ix-paroli-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="ix-paroli-lb">
+      <div class="ix-paroli-say"><span class="ix-paroli-who ix-paroli-sonya">СОНЯ</span><span class="ix-paroli-bub">Дядя Миша, у&nbsp;меня пароль со&nbsp;спецсимволом, «P@ssw0rd!». Его&nbsp;же никто не&nbsp;угадает?</span></div>
+      <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">Его угадают первым. Связочник не&nbsp;гадает, он&nbsp;<b>перебирает</b>. Выбери пароль и&nbsp;посмотри, сколько он&nbsp;продержится.</span></div>
+
+      <p class="ix-paroli-def"><b>Брутфорс</b>&nbsp;— подбор пароля перебором: варианты пробуют один за&nbsp;другим, пока какой-то не&nbsp;подойдёт. Умный брутфорс начинает со&nbsp;<b>словаря</b>: миллионов паролей из&nbsp;прошлых утечек и&nbsp;их&nbsp;вариаций.</p>
+
+      <p class="ix-paroli-q">Выбери пароль Сони:</p>
+      <div class="ix-paroli-cards" role="group" aria-label="Пароли для проверки">
+        <button class="ix-paroli-card" type="button" data-pw="a"><code>123456</code><span>Самый частый в&nbsp;утечках</span></button>
+        <button class="ix-paroli-card" type="button" data-pw="b"><code>P@ssw0rd!</code><span>Со&nbsp;спецсимволами</span></button>
+        <button class="ix-paroli-card" type="button" data-pw="c"><code>Sonya2009</code><span>Имя и&nbsp;год</span></button>
+        <button class="ix-paroli-card" type="button" data-pw="d"><code>x7#Kq9!m</code><span>8 случайных символов</span></button>
+        <button class="ix-paroli-card" type="button" data-pw="e"><code>кот лампа зонт сирень мост</code><span>5 случайных слов</span></button>
+      </div>
+
+      <div class="ix-paroli-meter" data-meter hidden>
+        <p class="ix-paroli-mtitle" data-mt></p>
+        <ul class="ix-paroli-rows">
+          <li><span>Онлайн, форма входа с&nbsp;лимитом 5&nbsp;попыток в&nbsp;минуту</span><b data-r="on"></b></li>
+          <li><span>Офлайн, база утекла, сайт хранил пароли в&nbsp;MD5</span><b data-r="md5"></b></li>
+          <li><span>Офлайн, база утекла, сайт хранил пароли в&nbsp;bcrypt</span><b data-r="bc"></b></li>
+        </ul>
+        <p class="ix-paroli-verdict" data-verdict></p>
+      </div>
+
+      <div class="ix-paroli-ph" data-ph="l1-own" hidden>
+        <p class="ix-paroli-big">Длина и&nbsp;случайность бьют спецсимволы.<br><span>«P@ssw0rd!» есть в&nbsp;каждом словаре, а&nbsp;пять случайных слов перебирать годами.</span></p>
+        <div class="ix-paroli-own">
+          <label class="ix-paroli-ownl" for="ix-paroli-own">Проверь свой вариант. <span>Не&nbsp;вводи настоящий пароль: придумай похожий. Всё считается прямо на&nbsp;странице и&nbsp;никуда не&nbsp;уходит.</span></label>
+          <input class="ix-paroli-input" id="ix-paroli-own" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="64" placeholder="например, мост сирень 42">
+          <p class="ix-paroli-ownres" data-ownres aria-live="polite"></p>
+          <p class="ix-paroli-note">Оценка грубая: она считает, что злодей перебирает все варианты. На&nbsp;деле он&nbsp;знает шаблоны вроде «имя и&nbsp;год», поэтому такие пароли падают быстрее.</p>
+        </div>
+        <p class="ix-paroli-q">Где спрятана главная скорость злодея?</p>
+        <div class="ix-paroli-choices" data-quiz="speed">
+          <button class="ix-paroli-ch" type="button" data-v="pc"><b>В&nbsp;мощном компьютере</b><span>Купил видеокарту и&nbsp;перебирает</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="off" data-ok><b>В&nbsp;утёкшей базе</b><span>Офлайн никто не&nbsp;ограничивает попытки</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="luck"><b>В&nbsp;удаче</b><span>Иногда угадывает с&nbsp;первого раза</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-after">
+        <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-goto="ix-paroli-l2">Дальше: защитить дверь ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L2: LOGIN DOOR ================= -->
+  <section class="ix-paroli-lvl ix-paroli-locked" id="ix-paroli-l2" aria-labelledby="ix-paroli-t2">
+    <div class="ix-paroli-lh"><span class="ix-paroli-ln">УРОВЕНЬ 2 / 5</span><h3 class="ix-paroli-lt" id="ix-paroli-t2">Дверь входа</h3><span class="ix-paroli-ok">ЗАКРЫТО</span></div>
+    <div class="ix-paroli-lockcap"><span>🔒 Сначала пройди уровень 1</span></div>
+    <div class="ix-paroli-lb">
+      <div class="ix-paroli-say"><span class="ix-paroli-who ix-paroli-sonya">СОНЯ</span><span class="ix-paroli-bub">Онлайн он&nbsp;же медленный. Пусть стучится!</span></div>
+      <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">Медленный, только если сервер его тормозит. Сейчас наш дневник не&nbsp;тормозит никого. Смотри.</span></div>
+
+      <div class="ix-paroli-door">
+        <div class="ix-paroli-form" aria-hidden="true">
+          <p class="ix-paroli-fhead">Электронный дневник · школа №7</p>
+          <span class="ix-paroli-field">sonya.k</span>
+          <span class="ix-paroli-field ix-paroli-field-pw" data-try>••••••</span>
+          <span class="ix-paroli-fbtn">Войти</span>
+        </div>
+        <div class="ix-paroli-stat">
+          <p><small>ПОПЫТОК</small><b data-door-n>0</b></p>
+          <p><small>В&nbsp;МИНУТУ</small><b data-door-r>0</b></p>
+        </div>
+        <ol class="ix-paroli-log" data-door-log aria-label="Журнал попыток входа"></ol>
+      </div>
+      <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-act="door">Пустить перебор ▶</button></div>
+
+      <div class="ix-paroli-ph" data-ph="l2-fix" hidden>
+        <p class="ix-paroli-lead">Без ограничений сервер отвечает на&nbsp;каждую попытку, как на&nbsp;первую. 600 паролей в&nbsp;минуту&nbsp;— и&nbsp;весь словарь из&nbsp;10&nbsp;000 популярных паролей пройден за&nbsp;17&nbsp;минут.</p>
+        <p class="ix-paroli-q">Как притормозить Связочника?</p>
+        <div class="ix-paroli-choices" data-quiz="limit">
+          <button class="ix-paroli-ch" type="button" data-v="hide"><b>Спрятать страницу входа</b><span>Без ссылки её не&nbsp;найдут</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="rate" data-ok><b>Лимит попыток и&nbsp;растущая пауза</b><span>5 ошибок — ждать минуту, потом дольше</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="ban"><b>Навсегда блокировать аккаунт</b><span>После 5 ошибок — только через директора</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-ph" data-ph="l2-msg" hidden>
+        <p class="ix-paroli-big">Каждый провал теперь стоит злодею времени.<br><span>При лимите 5 попыток в&nbsp;минуту те&nbsp;же 10&nbsp;000 паролей займут больше суток на&nbsp;один аккаунт, а&nbsp;с&nbsp;растущей паузой&nbsp;— месяцы.</span></p>
+        <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">И&nbsp;ещё одна дыра. Что пишет дверь, когда ошибся? Это тоже подсказка злодею.</span></div>
+        <p class="ix-paroli-q">Какое сообщение об&nbsp;ошибке правильное?</p>
+        <div class="ix-paroli-choices" data-quiz="msg">
+          <button class="ix-paroli-ch" type="button" data-v="nouser"><b>«Такого пользователя нет»</b><span>Честно и&nbsp;понятно</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="badpw"><b>«Пароль неверный»</b><span>Логин-то правильный</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="same" data-ok><b>«Неверный логин или пароль»</b><span>Одно и&nbsp;то&nbsp;же в&nbsp;любом случае</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-after">
+        <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-goto="ix-paroli-l3">Дальше: он&nbsp;не&nbsp;гадает? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L3: STOLEN KEYS ================= -->
+  <section class="ix-paroli-lvl ix-paroli-locked" id="ix-paroli-l3" aria-labelledby="ix-paroli-t3">
+    <div class="ix-paroli-lh"><span class="ix-paroli-ln">УРОВЕНЬ 3 / 5</span><h3 class="ix-paroli-lt" id="ix-paroli-t3">Чужие ключи</h3><span class="ix-paroli-ok">ПОЙМАНО</span></div>
+    <div class="ix-paroli-lockcap"><span>🔒 Сначала закрой дверь</span></div>
+    <div class="ix-paroli-lb">
+      <div class="ix-paroli-say"><span class="ix-paroli-who ix-paroli-sonya">СОНЯ</span><span class="ix-paroli-bub">Ха, лимит! Теперь ему годы перебирать.</span></div>
+      <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">А&nbsp;он&nbsp;и&nbsp;не&nbsp;будет. Помнишь форум про танки, который взломали пару лет назад? Твой пароль оттуда у&nbsp;него уже есть.</span></div>
+
+      <div class="ix-paroli-leak">
+        <p class="ix-paroli-zone">УТЕЧКА · ФОРУМ «ТАНКОВЫЙ ЧАТ» · 2,1&nbsp;МЛН ЗАПИСЕЙ</p>
+        <ul class="ix-paroli-pairs" data-pairs>
+          <li data-pr="0"><code>misha.t@post.ru</code><code>tank1987</code><em></em></li>
+          <li data-pr="1"><code>katya_v@post.ru</code><code>katya!!</code><em></em></li>
+          <li data-pr="2"><code>sonya.k@post.ru</code><code>Sonya2009</code><em></em></li>
+          <li data-pr="3"><code>pro100vanya@post.ru</code><code>vanya777</code><em></em></li>
+        </ul>
+      </div>
+      <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-act="stuff">Подставить пары в&nbsp;дневник ▶</button></div>
+
+      <div class="ix-paroli-ph" data-ph="l3-spray" hidden>
+        <p class="ix-paroli-def">Это <b>credential stuffing</b>: пары «логин и&nbsp;пароль» из&nbsp;одной утечки пробуют на&nbsp;других сайтах. Лимит не&nbsp;сработал: на&nbsp;каждый аккаунт ушла одна попытка. Сработало другое&nbsp;— Соня повторила пароль.</p>
+        <div class="ix-paroli-vline"><small>СВЯЗОЧНИК</small>А&nbsp;теперь возьму «Qwerty123» и&nbsp;попробую на&nbsp;всех 50&nbsp;000 учениках города. По&nbsp;одному разу.</div>
+        <p class="ix-paroli-def">А&nbsp;это <b>password spraying</b>, распыление: один популярный пароль на&nbsp;тысячах аккаунтов. Лимит на&nbsp;аккаунт снова молчит.</p>
+        <p class="ix-paroli-q">Что поймает распыление?</p>
+        <div class="ix-paroli-choices" data-quiz="spray">
+          <button class="ix-paroli-ch" type="button" data-v="acc"><b>Лимит построже: 3 ошибки</b><span>На&nbsp;каждый аккаунт</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="cap"><b>CAPTCHA после 10 ошибок</b><span>Тоже на&nbsp;аккаунт</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="all" data-ok><b>Тревога на&nbsp;весь сервис и&nbsp;запрет паролей из&nbsp;утечек</b><span>Смотреть на&nbsp;картину целиком</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-after">
+        <p class="ix-paroli-big">Один сайт&nbsp;— один пароль.<br><span>Запоминать их&nbsp;не&nbsp;нужно: для этого есть менеджер паролей. А&nbsp;сервер при регистрации сверяет пароль со&nbsp;списком утёкших и&nbsp;не&nbsp;пускает «Qwerty123».</span></p>
+        <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-goto="ix-paroli-l4">Дальше: если пароль уже у&nbsp;него ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L4: SECOND FACTOR ================= -->
+  <section class="ix-paroli-lvl ix-paroli-locked" id="ix-paroli-l4" aria-labelledby="ix-paroli-t4">
+    <div class="ix-paroli-lh"><span class="ix-paroli-ln">УРОВЕНЬ 4 / 5</span><h3 class="ix-paroli-lt" id="ix-paroli-t4">Второй ключ</h3><span class="ix-paroli-ok">ЗАПЕРТО</span></div>
+    <div class="ix-paroli-lockcap"><span>🔒 Сначала поймай распыление</span></div>
+    <div class="ix-paroli-lb">
+      <div class="ix-paroli-say"><span class="ix-paroli-who ix-paroli-sonya">СОНЯ</span><span class="ix-paroli-bub">Я&nbsp;сменила пароль. Но&nbsp;если он&nbsp;и&nbsp;новый узнает?</span></div>
+      <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">Тогда нужен второй ключ другого сорта. Пароль&nbsp;— это то, что ты&nbsp;<b>знаешь</b>. Второй фактор&nbsp;— то, что ты&nbsp;<b>имеешь</b> или кем ты&nbsp;<b>являешься</b>.</span></div>
+
+      <p class="ix-paroli-q">Поставь второй фактор и&nbsp;посмотри, чем ответит Связочник:</p>
+      <div class="ix-paroli-factors" role="group" aria-label="Варианты второго фактора">
+        <button class="ix-paroli-fac" type="button" data-f="sms"><b>Код в&nbsp;SMS</b><span>Пришёл на&nbsp;телефон</span></button>
+        <button class="ix-paroli-fac" type="button" data-f="totp"><b>Код из&nbsp;приложения</b><span>Меняется каждые 30&nbsp;секунд</span></button>
+        <button class="ix-paroli-fac" type="button" data-f="push"><b>Пуш «Это вы?»</b><span>Нажми «Да» в&nbsp;приложении</span></button>
+        <button class="ix-paroli-fac" type="button" data-f="key"><b>Passkey</b><span>Ключ доступа на&nbsp;телефоне</span></button>
+      </div>
+      <div class="ix-paroli-fres" data-fres aria-live="polite" hidden></div>
+
+      <div class="ix-paroli-ph" data-ph="l4-q" hidden>
+        <p class="ix-paroli-q">Связочник прислал Соне ссылку на&nbsp;копию дневника. Какой фактор его остановит?</p>
+        <div class="ix-paroli-choices" data-quiz="mfa">
+          <button class="ix-paroli-ch" type="button" data-v="sms"><b>Код в&nbsp;SMS</b><span>Он&nbsp;ведь приходит только Соне</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="totp"><b>Код из&nbsp;приложения</b><span>Живёт всего 30&nbsp;секунд</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="key" data-ok><b>Passkey</b><span>Привязан к&nbsp;адресу сайта</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-after">
+        <p class="ix-paroli-big">Любой второй фактор лучше, чем ни&nbsp;одного.<br><span>Но&nbsp;код можно выманить, а&nbsp;passkey&nbsp;— нет: он&nbsp;проверяет адрес сайта сам, без участия человека.</span></p>
+        <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-goto="ix-paroli-l5">К&nbsp;финалу: что в&nbsp;базе? ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L5: BOSS — DATABASE LEAK ================= -->
+  <section class="ix-paroli-lvl ix-paroli-lvl-boss ix-paroli-locked" id="ix-paroli-l5" aria-labelledby="ix-paroli-t5">
+    <div class="ix-paroli-lh"><span class="ix-paroli-ln">УРОВЕНЬ 5 / 5 · БОСС</span><h3 class="ix-paroli-lt" id="ix-paroli-t5">Утечка базы</h3><span class="ix-paroli-ok">СПАСЕНО</span></div>
+    <div class="ix-paroli-lockcap"><span>🔒 Сначала поставь второй ключ</span></div>
+    <div class="ix-paroli-lb">
+      <div class="ix-paroli-say"><span class="ix-paroli-who">ДЯДЯ МИША</span><span class="ix-paroli-bub">Последняя дверь&nbsp;— не&nbsp;форма входа, а&nbsp;сама база. Если её&nbsp;украдут, лимиты и&nbsp;пауза уже не&nbsp;помогут. Всё решит, как дневник хранит пароли.</span></div>
+
+      <div class="ix-paroli-db" data-db>
+        <p class="ix-paroli-zone">ТАБЛИЦА users · 50&nbsp;000 СТРОК</p>
+        <table class="ix-paroli-tab">
+          <thead><tr><th>логин</th><th>пароль</th></tr></thead>
+          <tbody>
+            <tr><td>sonya.k</td><td data-cell="0">Lampa-Most-42</td></tr>
+            <tr><td>katya_v</td><td data-cell="1">katya!!</td></tr>
+            <tr><td>vanya777</td><td data-cell="2">vanya777</td></tr>
+          </tbody>
+        </table>
+        <p class="ix-paroli-dbcap" data-dbcap>Хранится как есть, открытым текстом.</p>
+      </div>
+      <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-act="steal">Связочник крадёт базу ▶</button></div>
+
+      <div class="ix-paroli-ph" data-ph="l5-fix" hidden>
+        <p class="ix-paroli-q">Время откачено. Как дневнику хранить пароли?</p>
+        <div class="ix-paroli-choices" data-quiz="store">
+          <button class="ix-paroli-ch" type="button" data-v="aes"><b>Зашифровать AES</b><span>Сильный шифр, ключ на&nbsp;сервере</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="md5"><b>Хешировать MD5</b><span>Назад хеш не&nbsp;разворачивается</span></button>
+          <button class="ix-paroli-ch" type="button" data-v="argon" data-ok><b>Argon2id или bcrypt с&nbsp;солью</b><span>Медленный хеш, у&nbsp;каждого своя соль</span></button>
+        </div>
+        <p class="ix-paroli-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="ix-paroli-after">
+        <p class="ix-paroli-big">Сайт хранит не&nbsp;пароль, а&nbsp;медленный хеш с&nbsp;солью.<br><span>Даже с&nbsp;базой в&nbsp;руках злодей вскроет только самые слабые пароли из&nbsp;словаря. Подробно про хеши и&nbsp;соль&nbsp;— в&nbsp;выпуске 22 «Криптография».</span></p>
+        <div class="ix-paroli-act"><button class="ix-paroli-btn ix-paroli-y" type="button" data-goto="ix-paroli-battle">К&nbsp;битве со&nbsp;Связочником ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ================= HACK OVERLAY ================= -->
+<div class="ix-paroli-hack" role="dialog" aria-modal="true" aria-labelledby="ix-paroli-hk" hidden>
+  <div class="ix-paroli-hkin">
+    <p class="ix-paroli-hkt" id="ix-paroli-hk">ВЗЛОМ!</p>
+    <div class="ix-paroli-hkcard">
+      <span class="ix-paroli-hkn"><b data-hkn>0</b> / 50&nbsp;000</span>
+      <span>паролей прочитано без единой попытки подбора. Через час с&nbsp;ними войдут в&nbsp;почту, соцсети и&nbsp;игры: люди повторяют пароли.</span>
+    </div>
+    <p class="ix-paroli-hksay">Зачем ломать замок, если ключи висят на&nbsp;гвоздике?</p>
+    <button class="ix-paroli-btn ix-paroli-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ================= BATTLE ================= -->
+<section class="ix-paroli-battle" id="ix-paroli-battle" aria-labelledby="ix-paroli-bt" tabindex="-1">
+  <div class="ix-paroli-bh">
+    <span class="ix-paroli-bface" aria-hidden="true"><b>ключей</b><i>10⁶</i></span>
+    <div class="ix-paroli-bhx">
+      <h2 class="ix-paroli-bt" id="ix-paroli-bt">Битва со&nbsp;злодеем</h2>
+      <div class="ix-paroli-hp" role="img" aria-label="Здоровье Связочника: 3 из 3" data-hp-wrap><i data-hp></i><b data-hp-t>СВЯЗОЧНИК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ix-paroli-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ================= INTERVIEW ================= -->
+<section class="ix-paroli-iv" aria-labelledby="ix-paroli-ivt">
+  <p class="ix-paroli-ivk">ВОПРОС С&nbsp;СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ix-paroli-ivq" id="ix-paroli-ivt">На&nbsp;входе в&nbsp;сервис всплеск неудачных попыток: тысячи IP, по&nbsp;одной-две попытки на&nbsp;аккаунт. Что происходит и&nbsp;что будешь делать?</h2>
+  <div class="ix-paroli-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: это не&nbsp;перебор одного аккаунта. Какие лимиты такая атака обходит и&nbsp;откуда у&nbsp;злодея пароли?</span>
+  </div>
+  <button class="ix-paroli-btn ix-paroli-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-paroli-iva">Показать сильный ответ</button>
+  <div class="ix-paroli-iva" id="ix-paroli-iva" hidden>
+    <ol>
+      <li><b>Назвать атаку.</b> Это credential stuffing по&nbsp;чужим утечкам или password spraying. Попытки размазаны по&nbsp;аккаунтам и&nbsp;адресам, поэтому лимит на&nbsp;один аккаунт или один IP их&nbsp;не&nbsp;видит.</li>
+      <li><b>Лимиты по&nbsp;нескольким признакам.</b> Аккаунт, IP и&nbsp;подсеть, устройство, весь сервис. При подозрении&nbsp;— CAPTCHA или дополнительная проверка, а&nbsp;не&nbsp;вечная блокировка.</li>
+      <li><b>Закрыть причину.</b> Сверять пароли со&nbsp;списками утечек при регистрации и&nbsp;входе, скомпрометированным сбросить пароль и&nbsp;предупредить, включить MFA, лучше passkey.</li>
+      <li><b>Видеть и&nbsp;не&nbsp;подсказывать.</b> Одна ошибка «неверный логин или пароль» для всех случаев. Неудачные и&nbsp;подозрительно успешные входы&nbsp;— в&nbsp;лог, на&nbsp;всплеск&nbsp;— тревога.</li>
+    </ol>
+    <p class="ix-paroli-ivx"><b>Ошибка новичка:</b> «Заблокирую аккаунт после пяти ошибок». Распыление этот лимит не&nbsp;задевает, а&nbsp;злодей тем&nbsp;же лимитом запрёт настоящих пользователей.</p>
+  </div>
+</section>
+
+<!-- ================= CHEAT SHEET ================= -->
+<section class="ix-paroli-cs" aria-labelledby="ix-paroli-cst">
+  <h2 class="ix-paroli-cst" id="ix-paroli-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ix-paroli-csl">
+    <li><span class="ix-paroli-csn" aria-hidden="true">01</span><div><b>Брутфорс и&nbsp;словарь</b><p>Подбор начинают с&nbsp;паролей из&nbsp;утечек и&nbsp;их&nbsp;вариаций, поэтому «P@ssw0rd!» и&nbsp;«Sonya2009» падают первыми.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">02</span><div><b>Длина важнее сложности</b><p>Фраза из&nbsp;нескольких случайных слов сильнее короткого пароля со&nbsp;спецсимволами. Каждый символ длины умножает число вариантов.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">03</span><div><b>Онлайн и&nbsp;офлайн</b><p>Онлайн злодея тормозит сервер. Офлайн, с&nbsp;утёкшей базой, его тормозит только медленный хеш.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">04</span><div><b>Лимиты на&nbsp;входе</b><p>Ограничение попыток и&nbsp;растущая пауза по&nbsp;аккаунту, IP и&nbsp;сервису в&nbsp;целом. Вечная блокировка&nbsp;— подарок злодею.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">05</span><div><b>Stuffing и&nbsp;spraying</b><p>Чужие утечки подставляют на&nbsp;другие сайты, а&nbsp;популярный пароль распыляют по&nbsp;тысячам аккаунтов. Против них: уникальные пароли и&nbsp;проверка по&nbsp;утечкам.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">06</span><div><b>Второй фактор</b><p>Знаю, имею, являюсь. Коды из&nbsp;SMS и&nbsp;приложения можно выманить на&nbsp;фишинговом сайте, passkey&nbsp;— нет.</p></div></li>
+    <li><span class="ix-paroli-csn" aria-hidden="true">07</span><div><b>Хранение паролей</b><p>Argon2id или bcrypt с&nbsp;уникальной солью. Не&nbsp;открытый текст, не&nbsp;AES и&nbsp;не&nbsp;MD5.</p></div></li>
+  </ol>
+  <p class="ix-paroli-train"><b>Тренируйся легально:</b> лаборатории Authentication в&nbsp;PortSwigger Web Security Academy, OWASP Juice Shop, picoCTF. Инструменты подбора запускай только на&nbsp;своих стендах. Чужие формы входа трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-paroli{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--vred:#e3262b;--acc:#ff9f1c;--accdk:#a85a00;--night:#17110a;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-paroli *,.ix-paroli *::before,.ix-paroli *::after{box-sizing:border-box}
+.ix-paroli button,.ix-paroli input{font:inherit;color:inherit}
+.ix-paroli :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-paroli [hidden]{display:none !important}
+.ix-paroli p{margin:0}
+.ix-paroli code{font-family:var(--code)}
+.ix-paroli .ix-paroli-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-paroli .ix-paroli-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-paroli .ix-paroli-hud.ix-paroli-on{display:flex}
+.ix-paroli.ix-paroli-anim .ix-paroli-hud.ix-paroli-on{animation:ix-paroli-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-paroli .ix-paroli-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--acc);white-space:nowrap}
+.ix-paroli .ix-paroli-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-paroli .ix-paroli-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--acc);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-paroli .ix-paroli-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-paroli .ix-paroli-hud.ix-paroli-hit{animation:ix-paroli-shake .4s}
+.ix-paroli .ix-paroli-hud.ix-paroli-hit .ix-paroli-bar{border-color:var(--red)}
+.ix-paroli .ix-paroli-pips{display:flex;gap:4px}
+.ix-paroli .ix-paroli-pips span{width:22px;height:22px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:11px}
+.ix-paroli .ix-paroli-pips span.ix-paroli-done{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+
+/* MISSION + POSTER */
+.ix-paroli .ix-paroli-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--acc);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-paroli .ix-paroli-poster{position:relative;min-height:440px;background:var(--night);border-right:3px solid var(--ink);overflow:hidden;
+  background-image:radial-gradient(rgba(255,159,28,.24) 1.3px,transparent 2px);background-size:9px 9px}
+.ix-paroli .ix-paroli-poster::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,159,28,.22),transparent 60%),linear-gradient(var(--night),transparent 22%,transparent 78%,var(--night));pointer-events:none}
+.ix-paroli .ix-paroli-rain{position:absolute;inset:0;display:flex;justify-content:space-around;opacity:.5}
+.ix-paroli .ix-paroli-col{display:flex;flex-direction:column;gap:14px;font-family:var(--code);font-weight:700;font-size:15px;color:var(--acc);white-space:nowrap}
+.ix-paroli .ix-paroli-col-b{color:#ffd9a3;margin-top:-120px}
+.ix-paroli .ix-paroli-col-c{margin-top:-60px}
+.ix-paroli.ix-paroli-anim .ix-paroli-col{animation:ix-paroli-rain 9s linear infinite}
+.ix-paroli.ix-paroli-anim .ix-paroli-col-b{animation-duration:12s}
+.ix-paroli.ix-paroli-anim .ix-paroli-col-c{animation-duration:7.5s}
+.ix-paroli .ix-paroli-ring{position:absolute;z-index:2;left:50%;top:50%;width:260px;height:300px;margin:-150px 0 0 -130px}
+.ix-paroli .ix-paroli-ring::before{content:"";position:absolute;left:50%;top:92px;width:4px;height:150px;margin-left:-2px;background:repeating-linear-gradient(var(--acc) 0 8px,transparent 8px 12px)}
+.ix-paroli .ix-paroli-hoop{position:absolute;left:50%;top:0;width:96px;height:96px;margin-left:-48px;border-radius:50%;border:9px solid var(--acc);box-shadow:0 0 0 3px var(--ink),inset 0 0 0 3px var(--ink),0 0 30px rgba(255,159,28,.5)}
+.ix-paroli .ix-paroli-tag{position:absolute;left:50%;top:0;padding:10px 12px 9px 26px;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:4px 14px 14px 4px;font-family:var(--code);font-weight:800;font-size:17px;line-height:1;white-space:nowrap;box-shadow:4px 4px 0 #000}
+.ix-paroli .ix-paroli-tag::before{content:"";position:absolute;left:8px;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:var(--night);border:2px solid var(--ink)}
+.ix-paroli .ix-paroli-t1{top:104px;transform:translateX(-78%) rotate(-9deg)}
+.ix-paroli .ix-paroli-t2{top:142px;transform:translateX(-18%) rotate(7deg)}
+.ix-paroli .ix-paroli-t3{top:184px;transform:translateX(-56%) rotate(-4deg);background:var(--red);color:#fff;z-index:2;font-size:20px}
+.ix-paroli .ix-paroli-t4{top:228px;transform:translateX(-30%) rotate(6deg)}
+.ix-paroli .ix-paroli-t5{top:264px;transform:translateX(-70%) rotate(-7deg)}
+.ix-paroli.ix-paroli-anim .ix-paroli-ring{animation:ix-paroli-swing 4s ease-in-out infinite;transform-origin:50% 0}
+.ix-paroli .ix-paroli-pname{position:absolute;z-index:3;left:14px;top:14px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--acc);text-shadow:3px 3px 0 var(--vred)}
+.ix-paroli .ix-paroli-count{position:absolute;z-index:3;left:14px;right:14px;bottom:14px;font-family:var(--f-cap);font-size:15px;letter-spacing:.06em;color:#fff;background:rgba(0,0,0,.6);border:2px solid var(--acc);padding:6px 10px}
+.ix-paroli .ix-paroli-count b{font-family:var(--code);font-weight:800;color:var(--yel);font-size:18px;font-variant-numeric:tabular-nums}
+.ix-paroli .ix-paroli-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,159,28,.09) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-paroli .ix-paroli-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--acc)}
+.ix-paroli .ix-paroli-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:52px;line-height:1.04;color:var(--yel);text-transform:uppercase}
+.ix-paroli .ix-paroli-mt span{display:block;margin-top:10px;font-family:var(--f-cap);font-size:24px;line-height:1.2;text-transform:none;color:#fff}
+.ix-paroli .ix-paroli-msub{font-size:20px;line-height:1.4}
+.ix-paroli .ix-paroli-msub em{font-style:normal;color:var(--ink);background:var(--acc);padding:0 5px}
+.ix-paroli .ix-paroli-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ix-paroli .ix-paroli-moves li{border:2px solid #fff;padding:8px 10px 9px;display:flex;align-items:center;gap:10px}
+.ix-paroli .ix-paroli-moves b{font-family:var(--f-mono);font-weight:400;font-size:20px;color:var(--ink);-webkit-text-stroke:1.5px var(--acc);flex:0 0 auto}
+.ix-paroli .ix-paroli-moves span{font-family:var(--f-cap);font-size:14px;line-height:1.2}
+.ix-paroli .ix-paroli-moves li.ix-paroli-mv-boss{grid-column:1/-1;border-color:var(--red)}
+.ix-paroli .ix-paroli-moves li.ix-paroli-mv-boss b{-webkit-text-stroke-color:var(--red)}
+.ix-paroli .ix-paroli-moves li.ix-paroli-x{border-color:var(--acc);background:rgba(255,159,28,.18)}
+.ix-paroli .ix-paroli-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--acc);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-paroli .ix-paroli-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--acc)}
+.ix-paroli .ix-paroli-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--acc)}
+.ix-paroli.ix-paroli-anim .ix-paroli-go.ix-paroli-pulse{animation:ix-paroli-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-paroli .ix-paroli-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:52px}
+.ix-paroli .ix-paroli-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--acc)}
+.ix-paroli .ix-paroli-lvl-boss .ix-paroli-lh{background:var(--red);color:#fff}
+.ix-paroli .ix-paroli-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--acc);padding:4px 10px}
+.ix-paroli .ix-paroli-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-paroli .ix-paroli-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--yel);color:var(--ink);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-paroli .ix-paroli-clear .ix-paroli-ok{display:inline-block}
+.ix-paroli .ix-paroli-lb{padding:22px 20px 26px}
+.ix-paroli .ix-paroli-locked{pointer-events:none;user-select:none}
+.ix-paroli .ix-paroli-locked .ix-paroli-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:240px;overflow:hidden}
+.ix-paroli .ix-paroli-lockcap{display:none}
+.ix-paroli .ix-paroli-locked .ix-paroli-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-paroli .ix-paroli-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-paroli .ix-paroli-after{display:none;margin-top:28px}
+.ix-paroli .ix-paroli-lvl.ix-paroli-clear .ix-paroli-after{display:block}
+.ix-paroli.ix-paroli-anim .ix-paroli-lvl.ix-paroli-clear .ix-paroli-after,.ix-paroli.ix-paroli-anim .ix-paroli-ph{animation:ix-paroli-up .4s ease-out}
+.ix-paroli .ix-paroli-ph{margin-top:28px}
+.ix-paroli .ix-paroli-ph,.ix-paroli .ix-paroli-after,.ix-paroli .ix-paroli-meter,.ix-paroli .ix-paroli-fres,.ix-paroli .ix-paroli-door,.ix-paroli .ix-paroli-db{scroll-margin-top:60px}
+
+.ix-paroli .ix-paroli-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-paroli .ix-paroli-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px;white-space:nowrap}
+.ix-paroli .ix-paroli-who.ix-paroli-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-paroli .ix-paroli-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+.ix-paroli .ix-paroli-bub b{font-family:var(--f-text);font-weight:700;font-size:.82em}
+.ix-paroli .ix-paroli-vline{margin:22px 0;font-family:var(--f-hand);font-size:24px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red)}
+.ix-paroli .ix-paroli-vline small{display:block;font-family:var(--f-cap);font-size:12px;color:var(--vred);letter-spacing:.06em}
+
+.ix-paroli .ix-paroli-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-paroli .ix-paroli-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--acc);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center;line-height:1.2}
+.ix-paroli .ix-paroli-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--acc)}
+.ix-paroli .ix-paroli-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--acc)}
+.ix-paroli .ix-paroli-btn.ix-paroli-y{background:var(--yel);color:var(--ink)}
+.ix-paroli .ix-paroli-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--acc)}
+.ix-paroli .ix-paroli-btn.ix-paroli-spent,.ix-paroli .ix-paroli-btn.ix-paroli-spent:disabled{opacity:1;background:transparent;color:var(--muted);border-style:dashed;border-color:#9a9483;box-shadow:none}
+
+.ix-paroli .ix-paroli-lead,.ix-paroli .ix-paroli-def{font-size:19px;line-height:1.5;margin:6px 0 18px}
+.ix-paroli .ix-paroli-def b,.ix-paroli .ix-paroli-lead b{background:var(--acc);padding:0 4px}
+.ix-paroli .ix-paroli-big{font-family:var(--f-cap);font-size:28px;line-height:1.2;margin:22px 0 4px}
+.ix-paroli .ix-paroli-big span{display:inline-block;margin-top:6px;font-family:var(--f-text);font-weight:500;font-size:20px;line-height:1.4;color:var(--muted)}
+.ix-paroli .ix-paroli-q{font-family:var(--f-cap);font-size:21px;line-height:1.25;margin:24px 0 12px}
+.ix-paroli .ix-paroli-zone{font-family:var(--f-cap);font-size:13px;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
+.ix-paroli .ix-paroli-note{font-size:16px;line-height:1.45;color:var(--muted);margin-top:10px}
+
+/* choices */
+.ix-paroli .ix-paroli-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ix-paroli .ix-paroli-ch{min-height:84px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;transition:transform .1s,box-shadow .1s}
+.ix-paroli .ix-paroli-ch:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.ix-paroli .ix-paroli-ch b{font-family:var(--f-cap);font-weight:400;font-size:18px;line-height:1.2}
+.ix-paroli .ix-paroli-ch span{font-size:16px;line-height:1.3;color:var(--muted)}
+.ix-paroli .ix-paroli-ch.ix-paroli-wrong{background:#ffe1de;border-color:var(--vred);box-shadow:none;cursor:default}
+.ix-paroli .ix-paroli-ch.ix-paroli-wrong b{text-decoration:line-through}
+.ix-paroli .ix-paroli-ch.ix-paroli-right{background:var(--acc);box-shadow:none}
+.ix-paroli .ix-paroli-ch.ix-paroli-right span{color:var(--ink)}
+.ix-paroli .ix-paroli-ch:disabled{cursor:default}
+.ix-paroli .ix-paroli-fb{margin-top:14px;font-size:19px;line-height:1.45}
+.ix-paroli .ix-paroli-fb:empty{display:none}
+.ix-paroli .ix-paroli-fb b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px}
+.ix-paroli .ix-paroli-fb.ix-paroli-good b{color:var(--accdk)}
+.ix-paroli .ix-paroli-fb.ix-paroli-bad b{color:var(--vred)}
+
+/* L1 cards + meter */
+.ix-paroli .ix-paroli-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.ix-paroli .ix-paroli-card{min-height:76px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;transition:transform .1s,box-shadow .1s}
+.ix-paroli .ix-paroli-card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.ix-paroli .ix-paroli-card code{font-weight:800;font-size:19px;line-height:1.2;word-break:break-word}
+.ix-paroli .ix-paroli-card span{font-size:15px;color:var(--muted)}
+.ix-paroli .ix-paroli-card[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--acc)}
+.ix-paroli .ix-paroli-card[aria-pressed="true"] span{color:#ffd9a3}
+.ix-paroli .ix-paroli-card.ix-paroli-seen:not([aria-pressed="true"]){border-style:dashed}
+.ix-paroli .ix-paroli-meter{margin-top:22px;padding:18px 18px 20px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-paroli .ix-paroli-mtitle{font-family:var(--code);font-weight:800;font-size:22px;color:var(--yel);word-break:break-word}
+.ix-paroli .ix-paroli-rows{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.ix-paroli .ix-paroli-rows li{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 12px;border:2px solid #444}
+.ix-paroli .ix-paroli-rows li span{font-size:16px;line-height:1.3;color:#e6dccb}
+.ix-paroli .ix-paroli-rows li b{flex:0 0 auto;font-family:var(--f-cap);font-weight:400;font-size:20px;text-align:right;max-width:52%}
+.ix-paroli .ix-paroli-rows li b.ix-paroli-fast{color:var(--red)}
+.ix-paroli .ix-paroli-rows li b.ix-paroli-mid{color:var(--yel)}
+.ix-paroli .ix-paroli-rows li b.ix-paroli-slow{color:#7dffb3}
+.ix-paroli.ix-paroli-anim .ix-paroli-rows li b{animation:ix-paroli-pop .35s cubic-bezier(.2,1.6,.4,1) both}
+.ix-paroli.ix-paroli-anim .ix-paroli-rows li:nth-child(2) b{animation-delay:.12s}
+.ix-paroli.ix-paroli-anim .ix-paroli-rows li:nth-child(3) b{animation-delay:.24s}
+.ix-paroli .ix-paroli-verdict{margin-top:14px;font-size:18px;line-height:1.45}
+.ix-paroli .ix-paroli-verdict b{color:var(--acc);font-weight:700}
+.ix-paroli .ix-paroli-own{margin-top:22px;padding:18px;border:3px dashed var(--ink);background:#fff}
+.ix-paroli .ix-paroli-ownl{display:block;font-family:var(--f-cap);font-size:19px;line-height:1.3;margin-bottom:10px}
+.ix-paroli .ix-paroli-ownl span{display:block;font-family:var(--f-text);font-size:16px;color:var(--muted);margin-top:4px}
+.ix-paroli .ix-paroli-input{width:100%;min-height:52px;padding:10px 14px;font-family:var(--code);font-size:20px;font-weight:700;border:3px solid var(--ink);background:var(--paper)}
+.ix-paroli .ix-paroli-ownres{margin-top:10px;font-size:18px;line-height:1.45}
+.ix-paroli .ix-paroli-ownres:empty{display:none}
+.ix-paroli .ix-paroli-ownres b{font-family:var(--f-cap);font-weight:400}
+
+/* L2 door */
+.ix-paroli .ix-paroli-door{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:8px}
+.ix-paroli .ix-paroli-form{display:grid;gap:8px;padding:16px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-paroli .ix-paroli-fhead{font-family:var(--f-cap);font-size:15px}
+.ix-paroli .ix-paroli-field{display:block;padding:8px 10px;border:2px solid #b9b2a2;font-family:var(--code);font-weight:700;font-size:16px;min-height:40px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ix-paroli .ix-paroli-field-pw.ix-paroli-err{border-color:var(--vred);background:#ffe1de}
+.ix-paroli .ix-paroli-field-pw.ix-paroli-win{border-color:var(--accdk);background:#ffe9c7}
+.ix-paroli .ix-paroli-fbtn{display:block;text-align:center;padding:9px;background:var(--ink);color:#fff;font-family:var(--f-cap);font-size:15px}
+.ix-paroli .ix-paroli-stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ix-paroli .ix-paroli-stat p{display:grid;padding:10px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-paroli .ix-paroli-stat small{font-family:var(--f-cap);font-size:12px;color:var(--acc);letter-spacing:.06em}
+.ix-paroli .ix-paroli-stat b{font-family:var(--f-mono);font-weight:400;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.ix-paroli .ix-paroli-log{grid-column:1/-1;list-style:none;margin:0;padding:10px 12px;min-height:44px;max-height:190px;overflow:hidden;background:var(--night);color:#e6dccb;border:3px solid var(--ink);font-family:var(--code);font-size:15px;line-height:1.5;display:flex;flex-direction:column;justify-content:flex-end}
+.ix-paroli .ix-paroli-log li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ix-paroli .ix-paroli-log li em{font-style:normal;color:var(--red)}
+.ix-paroli .ix-paroli-log li i{font-style:normal;color:var(--yel)}
+.ix-paroli .ix-paroli-log li.ix-paroli-lok em{color:#7dffb3}
+
+/* L3 leak */
+.ix-paroli .ix-paroli-leak{padding:16px;background:var(--night);color:#fff;border:3px solid var(--ink)}
+.ix-paroli .ix-paroli-leak .ix-paroli-zone{color:var(--acc)}
+.ix-paroli .ix-paroli-pairs{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ix-paroli .ix-paroli-pairs li{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:2px solid #3a3226}
+.ix-paroli .ix-paroli-pairs code{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ix-paroli .ix-paroli-pairs code+code{color:var(--acc)}
+.ix-paroli .ix-paroli-pairs em{font-style:normal;font-family:var(--f-cap);font-size:13px;min-width:74px;text-align:right}
+.ix-paroli .ix-paroli-pairs li.ix-paroli-try{border-color:var(--yel)}
+.ix-paroli .ix-paroli-pairs li.ix-paroli-no em{color:#9a9483}
+.ix-paroli .ix-paroli-pairs li.ix-paroli-yes{border-color:var(--red);background:rgba(255,59,59,.18)}
+.ix-paroli .ix-paroli-pairs li.ix-paroli-yes em{color:var(--red)}
+
+/* L4 factors */
+.ix-paroli .ix-paroli-factors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ix-paroli .ix-paroli-fac{min-height:84px;padding:12px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.ix-paroli .ix-paroli-fac b{font-family:var(--f-cap);font-weight:400;font-size:18px;line-height:1.2}
+.ix-paroli .ix-paroli-fac span{font-size:15px;color:var(--muted);line-height:1.3}
+.ix-paroli .ix-paroli-fac[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--acc)}
+.ix-paroli .ix-paroli-fac[aria-pressed="true"] span{color:#ffd9a3}
+.ix-paroli .ix-paroli-fac.ix-paroli-seen:not([aria-pressed="true"]){border-style:dashed}
+.ix-paroli .ix-paroli-fres{margin-top:18px;display:grid;gap:12px}
+.ix-paroli .ix-paroli-fhow{font-size:19px;line-height:1.45}
+.ix-paroli .ix-paroli-fhow b{font-family:var(--f-cap);font-weight:400}
+.ix-paroli .ix-paroli-fres .ix-paroli-vline{margin:0}
+.ix-paroli .ix-paroli-fverd{font-family:var(--f-cap);font-size:20px;line-height:1.3;padding:10px 14px;border:3px solid var(--ink)}
+.ix-paroli .ix-paroli-fverd.ix-paroli-weak{background:#ffe1de}
+.ix-paroli .ix-paroli-fverd.ix-paroli-okish{background:#fff2c2}
+.ix-paroli .ix-paroli-fverd.ix-paroli-strong{background:var(--acc)}
+
+/* L5 db */
+.ix-paroli .ix-paroli-db{padding:16px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.ix-paroli .ix-paroli-tab{width:100%;border-collapse:collapse;table-layout:fixed;font-family:var(--code);font-size:16px}
+.ix-paroli .ix-paroli-tab th{text-align:left;font-family:var(--f-cap);font-weight:400;font-size:13px;color:var(--muted);padding:6px 8px;border-bottom:3px solid var(--ink)}
+.ix-paroli .ix-paroli-tab th:first-child{width:34%}
+.ix-paroli .ix-paroli-tab td{padding:8px;border-bottom:2px solid #e8e1d0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ix-paroli .ix-paroli-tab td.ix-paroli-plain{color:var(--vred)}
+.ix-paroli .ix-paroli-tab td.ix-paroli-hash{color:var(--accdk);font-size:13px}
+.ix-paroli .ix-paroli-dbcap{margin-top:10px;font-size:17px;color:var(--muted)}
+.ix-paroli .ix-paroli-dbcap b{color:var(--ink)}
+
+/* HACK */
+.ix-paroli .ix-paroli-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px 16px;background:var(--red);color:#fff;overflow:auto;
+  background-image:radial-gradient(rgba(20,20,20,.3) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-paroli .ix-paroli-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-paroli .ix-paroli-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-paroli .ix-paroli-hkcard{display:grid;gap:6px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:14px 16px;font-size:18px;line-height:1.4;transform:rotate(1.5deg)}
+.ix-paroli .ix-paroli-hkn{font-family:var(--f-cap);font-size:22px}
+.ix-paroli .ix-paroli-hkn b{font-family:var(--f-mono);font-weight:400;color:var(--vred);font-variant-numeric:tabular-nums}
+.ix-paroli .ix-paroli-hksay{font-family:var(--f-hand);font-size:25px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+.ix-paroli .ix-paroli-hack .ix-paroli-btn{box-shadow:4px 4px 0 var(--ink)}
+.ix-paroli.ix-paroli-anim .ix-paroli-hack:not([hidden]) .ix-paroli-hkin{animation:ix-paroli-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-paroli.ix-paroli-anim .ix-paroli-hack.ix-paroli-rw{animation:ix-paroli-fade .6s ease-in forwards}
+.ix-paroli.ix-paroli-anim .ix-paroli-hack.ix-paroli-rw .ix-paroli-hkin{animation:ix-paroli-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-paroli .ix-paroli-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--acc);scroll-margin-top:16px;outline:none}
+.ix-paroli .ix-paroli-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-paroli .ix-paroli-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;border:7px solid var(--acc);box-shadow:0 0 0 3px #fff;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;transform:rotate(-8deg)}
+.ix-paroli .ix-paroli-bface b{font-family:var(--f-cap);font-weight:400;font-size:11px;color:#ffd9a3}
+.ix-paroli .ix-paroli-bface i{font-style:normal;font-family:var(--f-mono);font-size:24px;color:var(--yel)}
+.ix-paroli .ix-paroli-bface.ix-paroli-ow{animation:ix-paroli-shake .4s}
+.ix-paroli .ix-paroli-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-paroli .ix-paroli-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--acc)}
+.ix-paroli .ix-paroli-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-paroli .ix-paroli-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-paroli .ix-paroli-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-paroli .ix-paroli-bbody{position:relative;padding:22px 20px 26px}
+.ix-paroli .ix-paroli-mvn{font-family:var(--f-cap);font-size:14px;color:var(--acc);margin-bottom:10px}
+.ix-paroli .ix-paroli-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--red);margin-bottom:22px}
+.ix-paroli .ix-paroli-vsay small{display:block;font-family:var(--f-cap);font-size:12px;color:var(--vred);letter-spacing:.06em}
+.ix-paroli .ix-paroli-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-paroli .ix-paroli-bopts{display:grid;gap:10px}
+.ix-paroli .ix-paroli-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-paroli .ix-paroli-bo:hover{background:#262626}
+.ix-paroli .ix-paroli-bo.ix-paroli-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-paroli .ix-paroli-bo.ix-paroli-right{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.ix-paroli .ix-paroli-bo:disabled{cursor:default}
+.ix-paroli .ix-paroli-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-paroli .ix-paroli-bfb:empty{display:none}
+.ix-paroli .ix-paroli-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-paroli .ix-paroli-bfb.ix-paroli-good b{color:var(--acc)}
+.ix-paroli .ix-paroli-bfb.ix-paroli-bad b{color:#ff8a8a}
+.ix-paroli .ix-paroli-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ix-paroli-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-paroli .ix-paroli-win{display:grid;gap:16px;justify-items:start}
+.ix-paroli .ix-paroli-wpost{position:relative;width:100%;max-width:420px;min-height:230px;display:grid;place-items:center;border:3px solid #fff;background:var(--night);overflow:hidden;
+  background-image:radial-gradient(rgba(255,159,28,.22) 1.3px,transparent 2px);background-size:9px 9px}
+.ix-paroli .ix-paroli-wpost{min-height:300px}
+.ix-paroli .ix-paroli-wpost .ix-paroli-ring{filter:grayscale(1) contrast(1.1);animation:none}
+.ix-paroli .ix-paroli-wpost>span{position:absolute;z-index:3;left:50%;top:70%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.94);border:5px solid var(--red);padding:6px 14px;white-space:nowrap}
+.ix-paroli.ix-paroli-anim .ix-paroli-wpost>span{animation:ix-paroli-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-paroli .ix-paroli-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--acc)}
+.ix-paroli .ix-paroli-wins{font-size:20px}
+.ix-paroli .ix-paroli-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-paroli .ix-paroli-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-paroli .ix-paroli-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-paroli .ix-paroli-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:var(--accdk);margin-bottom:10px}
+.ix-paroli .ix-paroli-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-paroli .ix-paroli-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--acc)}
+.ix-paroli .ix-paroli-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-paroli .ix-paroli-think span{font-size:18px;line-height:1.45}
+.ix-paroli .ix-paroli-iva{margin-top:24px}
+.ix-paroli.ix-paroli-anim .ix-paroli-iva{animation:ix-paroli-up .4s ease-out}
+.ix-paroli .ix-paroli-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixparoli}
+.ix-paroli .ix-paroli-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixparoli}
+.ix-paroli .ix-paroli-iva li::before{content:counter(ixparoli);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--acc);font-family:var(--f-cap);font-size:17px}
+.ix-paroli .ix-paroli-iva li b{font-weight:700}
+.ix-paroli .ix-paroli-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-paroli .ix-paroli-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-paroli .ix-paroli-cs{margin-top:72px}
+.ix-paroli .ix-paroli-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-paroli .ix-paroli-csl{list-style:none;margin:0;padding:0}
+.ix-paroli .ix-paroli-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-paroli .ix-paroli-csl li:last-child{border-bottom:0}
+.ix-paroli .ix-paroli-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-paroli .ix-paroli-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-paroli .ix-paroli-csl p{font-size:18px;line-height:1.45}
+.ix-paroli .ix-paroli-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ix-paroli-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ix-paroli-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ix-paroli-rain{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+@keyframes ix-paroli-swing{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes ix-paroli-pulse{0%,100%{box-shadow:5px 5px 0 var(--acc)}50%{box-shadow:5px 5px 0 var(--acc),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ix-paroli-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ix-paroli-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes ix-paroli-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ix-paroli-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes ix-paroli-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes ix-paroli-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+@keyframes ix-paroli-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+
+@media (max-width:760px){
+  .ix-paroli .ix-paroli-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--acc)}
+  .ix-paroli .ix-paroli-poster{border-right:0;border-bottom:3px solid var(--ink);min-height:430px}
+  .ix-paroli .ix-paroli-pname{font-size:24px}
+  .ix-paroli .ix-paroli-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-paroli .ix-paroli-mt{font-size:44px}
+  .ix-paroli .ix-paroli-go{align-self:stretch}
+  .ix-paroli .ix-paroli-choices{grid-template-columns:1fr}
+  .ix-paroli .ix-paroli-ch{min-height:68px}
+  .ix-paroli .ix-paroli-factors{grid-template-columns:1fr 1fr}
+  .ix-paroli .ix-paroli-door{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .ix-paroli .ix-paroli-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-paroli .ix-paroli-lh{padding:12px 14px}
+  .ix-paroli .ix-paroli-lt{font-size:20px}
+  .ix-paroli .ix-paroli-lb{padding:18px 14px 22px}
+  .ix-paroli .ix-paroli-bub{font-size:21px}
+  .ix-paroli .ix-paroli-who{font-size:11px;padding:3px 6px}
+  .ix-paroli .ix-paroli-big{font-size:23px}
+  .ix-paroli .ix-paroli-big span{font-size:18px}
+  .ix-paroli .ix-paroli-q{font-size:19px}
+  .ix-paroli .ix-paroli-mt{font-size:38px}
+  .ix-paroli .ix-paroli-mt span{font-size:21px}
+  .ix-paroli .ix-paroli-cards{grid-template-columns:1fr}
+  .ix-paroli .ix-paroli-rows li{flex-direction:column;align-items:flex-start;gap:4px}
+  .ix-paroli .ix-paroli-rows li b{max-width:none;text-align:left}
+  .ix-paroli .ix-paroli-meter{padding:14px 12px 16px}
+  .ix-paroli .ix-paroli-pairs li{grid-template-columns:minmax(0,1fr) auto;row-gap:2px}
+  .ix-paroli .ix-paroli-pairs code+code{grid-column:1;grid-row:2}
+  .ix-paroli .ix-paroli-pairs em{grid-column:2;grid-row:1/3}
+  .ix-paroli .ix-paroli-factors{grid-template-columns:1fr}
+  .ix-paroli .ix-paroli-fac{min-height:68px}
+  .ix-paroli .ix-paroli-tab{font-size:14px}
+  .ix-paroli .ix-paroli-log{max-height:none;font-size:14px}
+  .ix-paroli .ix-paroli-log li{white-space:normal}
+  .ix-paroli .ix-paroli-hkt{font-size:46px}
+  .ix-paroli .ix-paroli-bh{padding:16px 14px;gap:12px}
+  .ix-paroli .ix-paroli-bface{width:68px;height:68px;border-width:6px}
+  .ix-paroli .ix-paroli-bface i{font-size:19px}
+  .ix-paroli .ix-paroli-bt{font-size:20px}
+  .ix-paroli .ix-paroli-bbody{padding:18px 14px 22px}
+  .ix-paroli .ix-paroli-vsay,.ix-paroli .ix-paroli-vline{font-size:22px}
+  .ix-paroli .ix-paroli-wint{font-size:23px}
+  .ix-paroli .ix-paroli-iv{padding:22px 16px 24px}
+  .ix-paroli .ix-paroli-ivq{font-size:22px}
+  .ix-paroli .ix-paroli-iva li{padding-left:42px;font-size:18px}
+  .ix-paroli .ix-paroli-cst{font-size:25px}
+  .ix-paroli .ix-paroli-csl li{gap:14px}
+  .ix-paroli .ix-paroli-csn{flex-basis:54px;font-size:30px}
+  .ix-paroli .ix-paroli-hud{padding:7px 8px;gap:6px}
+  .ix-paroli .ix-paroli-hud-l{font-size:10px}
+  .ix-paroli .ix-paroli-pips{gap:3px}
+  .ix-paroli .ix-paroli-pips span{width:20px;height:20px;font-size:10px}
+  .ix-paroli .ix-paroli-ring{margin-top:-150px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-paroli *,.ix-paroli *::before,.ix-paroli *::after{animation:none !important;transition:none !important}
+  .ix-paroli .ix-paroli-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-paroli'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ix-paroli-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){if(el) el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusLater(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:500)}
+  function show(name){var p=q('[data-ph="'+name+'"]'); if(p) p.hidden=false; return p}
+  function num(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+
+  /* POSTER: attempts counter (only while visible) */
+  var cnt=q('[data-count]'), cN=0, cT=null;
+  function tick(){cN+=Math.floor(3000+Math.random()*9000); cnt.textContent=num(cN)}
+  if(RM){cnt.textContent=num(1842007)}
+  else if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting&&!cT) cT=setInterval(tick,70); else if(!e.isIntersecting&&cT){clearInterval(cT);cT=null}
+    })}).observe(q('.ix-paroli-poster'));
+  } else cT=setInterval(tick,70);
+
+  /* HUD + levels */
+  var hud=q('.ix-paroli-hud'), fill=q('.ix-paroli-bar i'), barT=q('.ix-paroli-bar b'), pips=qa('.ix-paroli-pips span');
+  var DEF=[15,35,55,80,100], S={def:0,steps:[0,0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ix-paroli-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('ix-paroli-hit');void hud.offsetWidth;hud.classList.add('ix-paroli-hit');setTimeout(function(){hud.classList.remove('ix-paroli-hit')},700)}
+  function step(i){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=DEF[i]; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('ix-paroli-x');
+    q('#ix-paroli-l'+(i+1)).classList.add('ix-paroli-clear');
+    var nx=q('#ix-paroli-l'+(i+2)); if(nx) nx.classList.remove('ix-paroli-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    focusLater(t.classList.contains('ix-paroli-battle')?t:t.querySelector('.ix-paroli-lb button:not(:disabled)'));
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.classList.add('ix-paroli-pulse');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-paroli-l1');
+    if(!hud.classList.contains('ix-paroli-on')){
+      hud.classList.add('ix-paroli-on'); paint(); l1.classList.remove('ix-paroli-locked');
+      startBtn.classList.remove('ix-paroli-pulse'); startBtn.textContent='Миссия начата ▼';
+      say('Миссия принята. Уровень первый открыт.');
+    }
+    go(l1); focusLater(q('.ix-paroli-card'));
+  });
+
+  /* time formatting */
+  var YEAR=31557600;
+  function big(n){
+    if(n<1e3) return Math.round(n)+'';
+    var u=[[1e12,'трлн'],[1e9,'млрд'],[1e6,'млн'],[1e3,'тыс.']];
+    for(var i=0;i<u.length;i++) if(n>=u[i][0]){var v=n/u[i][0]; return (v<10?v.toFixed(1).replace('.',','):Math.round(v))+' '+u[i][1]}
+  }
+  function plural(n,a,b,c){n=Math.abs(Math.round(n))%100;var n1=n%10;if(n>10&&n<20)return c;if(n1>1&&n1<5)return b;if(n1===1)return a;return c}
+  function dur(s){
+    if(s<1) return 'мгновенно';
+    if(s<60) return Math.round(s)+' '+plural(s,'секунда','секунды','секунд');
+    if(s<3600) return Math.round(s/60)+' '+plural(s/60,'минута','минуты','минут');
+    if(s<86400) return Math.round(s/3600)+' '+plural(s/3600,'час','часа','часов');
+    if(s<YEAR) return Math.round(s/86400)+' '+plural(s/86400,'день','дня','дней');
+    var y=s/YEAR;
+    if(y>1.4e10) return 'дольше возраста Вселенной';
+    if(y<1e3) return Math.round(y)+' '+plural(y,'год','года','лет');
+    return big(y)+' лет';
+  }
+  function cls(s){return s<86400?'ix-paroli-fast':(s<YEAR*100?'ix-paroli-mid':'ix-paroli-slow')}
+  /* speeds, guesses per second (rough, one modern GPU) */
+  var V={on:1/12, md5:1e11, bc:5e3};
+
+  /* L1: cards */
+  var PW={
+    a:{t:'123456',g:1,v:'<b>Номер один в&nbsp;списках утечек.</b> Его пробуют первым при любой скорости и&nbsp;любом хранении.'},
+    b:{t:'P@ssw0rd!',g:2e3,v:'<b>Замена букв на&nbsp;символы&nbsp;— известный трюк.</b> Правила взломщиков делают такие варианты из&nbsp;словаря сами.'},
+    c:{t:'Sonya2009',g:1e6,v:'<b>Имя и&nbsp;год рождения&nbsp;— шаблон.</b> Злодей перебирает тысячи имён на&nbsp;сотню лет, а&nbsp;не&nbsp;все символы подряд.'},
+    d:{t:'x7#Kq9!m',g:3e15,v:'<b>Случайный, но&nbsp;короткий.</b> При MD5 одна видеокарта переберёт его за&nbsp;ночь. Выручает только медленное хранение.'},
+    e:{t:'кот лампа зонт сирень мост',g:1.4e19,v:'<b>Длина побеждает.</b> Пять случайных слов из&nbsp;словаря на&nbsp;7776 слов&nbsp;— это 28 квинтиллионов вариантов, и&nbsp;фразу легко запомнить.'}
+  };
+  var meter=q('[data-meter]'), seen={};
+  function fill3(g,title,verd){
+    q('[data-mt]').textContent=title;
+    ['on','md5','bc'].forEach(function(k){var s=g/V[k], b=q('[data-r="'+k+'"]'); b.textContent=dur(s); b.className=cls(s);
+      b.style.animation='none'; void b.offsetWidth; b.style.animation='';});
+    q('[data-verdict]').innerHTML=verd;
+  }
+  qa('.ix-paroli-card').forEach(function(c){c.addEventListener('click',function(){
+    var k=c.getAttribute('data-pw'), p=PW[k];
+    qa('.ix-paroli-card').forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
+    c.classList.add('ix-paroli-seen'); seen[k]=1;
+    meter.hidden=false; fill3(p.g,p.t,p.v);
+    say('Пароль '+p.t+'. Онлайн: '+q('[data-r="on"]').textContent+'. MD5: '+q('[data-r="md5"]').textContent+'. bcrypt: '+q('[data-r="bc"]').textContent+'.');
+    if(Object.keys(seen).length>=2){var ph=q('[data-ph="l1-own"]'); if(ph.hidden){ph.hidden=false}}
+  })});
+  qa('.ix-paroli-card').forEach(function(c){c.setAttribute('aria-pressed','false')});
+
+  /* L1: own estimate (local only) */
+  var TOP=['123456','password','123456789','12345678','12345','qwerty','qwerty123','1q2w3e','111111','1234567','123123','000000','iloveyou','1234567890','dragon','monkey','sunshine','princess','football','654321','zaq12wsx','admin','qwertyuiop','abc123','password1','p@ssw0rd','p@ssw0rd!','12345qwert','1qaz2wsx','666666','777777','888888','killer','marina','natasha','йцукен','пароль','любовь'];
+  var own=q('#ix-paroli-own'), ownR=q('[data-ownres]'), oT=null;
+  own.addEventListener('input',function(){clearTimeout(oT); oT=setTimeout(rate,180)});
+  function rate(){
+    var v=own.value; if(!v){ownR.innerHTML='';return}
+    var low=v.toLowerCase(), g, why;
+    var r=TOP.indexOf(low);
+    if(r>-1){g=r+1; why='Он&nbsp;в&nbsp;списке самых популярных паролей.'}
+    else{
+      var cs=0;
+      if(/[a-z]/.test(v)) cs+=26; if(/[A-Z]/.test(v)) cs+=26; if(/[0-9]/.test(v)) cs+=10;
+      if(/[а-яё]/.test(v)) cs+=33; if(/[А-ЯЁ]/.test(v)) cs+=33; if(/[^a-zA-Z0-9а-яёА-ЯЁ]/.test(v)) cs+=33;
+      var L=Array.from(v).length; g=Math.pow(cs,L)/2;
+      why='Длина '+L+', алфавит примерно '+cs+' '+plural(cs,'символ','символа','символов')+'.';
+      if(/^(.)\1+$/.test(v)){g=L*10; why='Один символ много раз&nbsp;— это первое, что пробуют.'}
+      else if(/^\d+$/.test(v)&&L<=8){why+=' Только цифры&nbsp;— самый маленький алфавит.'}
+    }
+    var sm=g/V.md5, sb=g/V.bc;
+    ownR.innerHTML='<b>MD5:</b> '+esc(dur(sm))+' · <b>bcrypt:</b> '+esc(dur(sb))+'<br>'+why;
+  }
+
+  /* generic quiz */
+  var FB={
+    speed:{pc:'<b>Не главное.</b>Видеокарта ускоряет, но онлайн её всё равно упирают в лимит сервера.',
+           off:'<b>Именно.</b>С украденной базой злодей перебирает у себя дома, и никто не говорит «подождите минуту». Поэтому так важно, как сайт хранит пароли.',
+           luck:'<b>Нет.</b>Удача тут ни при чём: популярные пароли угадываются не случайно, а первыми по списку.'},
+    limit:{hide:'<b>Не спасёт.</b>Адрес формы входа виден в коде страницы и в любом запросе. Прятать — не защищать.',
+           rate:'<b>Верно.</b>Ограничение частоты (rate limit) и растущая пауза делают каждую ошибку дорогой для злодея, а настоящий человек почти не заметит.',
+           ban:'<b>Ловушка!</b>Тогда злодей нарочно ошибётся 5 раз на каждом аккаунте и запрёт весь класс. Блокировка должна быть временной.'},
+    msg:{nouser:'<b>Подсказка злодею.</b>Так он узнаёт, какие логины существуют, и перестаёт тратить попытки на остальные.',
+         badpw:'<b>Тоже подсказка.</b>«Пароль неверный» значит «логин верный». Это перебор пользователей (user enumeration).',
+         same:'<b>Верно.</b>Одинаковый ответ и одинаковое время ответа: злодей не узнаёт, есть ли такой ученик.'},
+    spray:{acc:'<b>Мимо.</b>На каждом аккаунте у злодея всего одна попытка. Лимит строже — а он так и не сработает.',
+           cap:'<b>Мимо.</b>До десяти ошибок на аккаунт злодей не дойдёт: он пробует по одному разу.',
+           all:'<b>Поймали!</b>Сервер видит тысячи ошибок с одним паролем по всей школе и поднимает тревогу. А «Qwerty123» из утечек просто нельзя поставить.'},
+    mfa:{sms:'<b>Не остановит.</b>Соня сама введёт код на подделке, а злодей тут же перешлёт его на настоящий дневник. SMS ещё и перехватывают через подмену SIM-карты.',
+         totp:'<b>Не остановит.</b>30 секунд хватит: подделка пересылает код на настоящий сайт сразу же.',
+         key:'<b>Верно.</b>Телефон видит, что адрес не тот, и ключ просто не срабатывает. Обмануть человека можно, браузер — нет.'},
+    store:{aes:'<b>Опасно.</b>Шифр обратим: у кого ключ, у того все пароли. А ключ обычно лежит на том же сервере, что и база.',
+           md5:'<b>Слишком быстро.</b>MD5 создан быстрым: одна видеокарта считает десятки миллиардов хешей в секунду, а для популярных паролей есть готовые таблицы.',
+           argon:'<b>Верно.</b>Медленный хеш съедает время злодея на каждой попытке, а соль делает хеш у каждого своим: одинаковые пароли выглядят по-разному.'}
+  };
+  var ONOK={};
+  qa('[data-quiz]').forEach(function(wrap){
+    var id=wrap.getAttribute('data-quiz'), fb=wrap.parentNode.querySelector('[data-fb]');
+    qa('.ix-paroli-ch',wrap).forEach(function(b){b.addEventListener('click',function(){
+      if(b.disabled) return;
+      var v=b.getAttribute('data-v'), ok=b.hasAttribute('data-ok'), parts=FB[id][v].split('</b>');
+      fb.className='ix-paroli-fb '+(ok?'ix-paroli-good':'ix-paroli-bad'); fb.innerHTML=parts[0]+'</b>'+esc(parts[1]);
+      if(!ok){b.classList.add('ix-paroli-wrong'); b.disabled=true; hit(); say(fb.textContent); return}
+      qa('.ix-paroli-ch',wrap).forEach(function(x){x.disabled=true}); b.classList.add('ix-paroli-right'); say(fb.textContent);
+      if(ONOK[id]) ONOK[id]();
+    })});
+  });
+  ONOK.speed=function(){step(0)};
+
+  /* L2: the door */
+  var doorBtn=q('[data-act="door"]'), dlog=q('[data-door-log]'), dN=q('[data-door-n]'), dR=q('[data-door-r]'), dTry=q('[data-try]');
+  var DICT=['123456','qwerty','password','111111','sonya','sonya123','qwerty123','1q2w3e','iloveyou','123123','000000','dragon','monkey','sunshine','school7','sonya2009','12345678','football','princess','zaq12wsx'];
+  function dline(user,pw,res,ok){
+    var li=document.createElement('li'); if(ok) li.className='ix-paroli-lok';
+    li.innerHTML=esc(user)+' / <i>'+esc(pw)+'</i> — <em>'+esc(res)+'</em>'; dlog.appendChild(li);
+    while(dlog.children.length>7) dlog.removeChild(dlog.firstChild);
+  }
+  doorBtn.addEventListener('click',function(){
+    if(doorBtn.disabled) return; doorBtn.disabled=true; dlog.innerHTML='';
+    var i=0, n=0, speed=RM?0:90;
+    dR.textContent='600';
+    (function next(){
+      if(i>=DICT.length){
+        doorBtn.textContent='Сервер не тормозит ✗'; doorBtn.classList.add('ix-paroli-spent');
+        var ph=show('l2-fix'); go(ph); focusLater(q('.ix-paroli-ch',ph)); return;
+      }
+      var pw=DICT[i++]; n+=Math.floor(28+Math.random()*12); dN.textContent=num(n);
+      dTry.textContent=pw; dTry.className='ix-paroli-field ix-paroli-field-pw ix-paroli-err';
+      dline('sonya.k',pw,'неверно',false);
+      setTimeout(next,speed);
+    })();
+    say('Перебор пошёл: шестьсот попыток в минуту, сервер отвечает на все.');
+  });
+  ONOK.limit=function(){
+    var rows=[['1–5','неверно'],['6','подождите 1 мин'],['7','подождите 2 мин'],['8','подождите 4 мин'],['9','подождите 8 мин']];
+    dlog.innerHTML=''; dR.textContent='5';
+    rows.forEach(function(r,k){setTimeout(function(){dline('sonya.k','попытка '+r[0],r[1],k>0)},RM?0:k*260)});
+    dTry.className='ix-paroli-field ix-paroli-field-pw ix-paroli-win'; dTry.textContent='пауза…';
+    wait(1500).then(function(){var ph=show('l2-msg'); go(ph); focusLater(q('.ix-paroli-ch',ph))});
+  };
+  ONOK.msg=function(){step(1)};
+
+  /* L3: credential stuffing */
+  var stuffBtn=q('[data-act="stuff"]'), pairs=qa('[data-pairs] li');
+  stuffBtn.addEventListener('click',function(){
+    if(stuffBtn.disabled) return; stuffBtn.disabled=true;
+    var k=0;
+    (function next(){
+      if(k>0){var prev=pairs[k-1]; prev.classList.remove('ix-paroli-try'); var hitp=(k-1)===2; prev.classList.add(hitp?'ix-paroli-yes':'ix-paroli-no'); q('em',prev).textContent=hitp?'ВОШЁЛ!':'мимо'; if(hitp){hit(); say('Пара Сони подошла. Она повторила пароль с форума.')}}
+      if(k>=pairs.length){
+        stuffBtn.textContent='Одна пара подошла ✗'; stuffBtn.classList.add('ix-paroli-spent');
+        wait(600).then(function(){var ph=show('l3-spray'); go(ph); focusLater(q('.ix-paroli-ch',ph))}); return;
+      }
+      pairs[k].classList.add('ix-paroli-try'); q('em',pairs[k]).textContent='пробую…'; k++;
+      setTimeout(next,RM?0:650);
+    })();
+  });
+  ONOK.spray=function(){step(2)};
+
+  /* L4: factors */
+  var FAC={
+    sms:{h:'<b>Что это:</b> код приходит в&nbsp;SMS на&nbsp;номер Сони. Второй фактор «имею»: телефон.',v:'Позвоню оператору от&nbsp;имени Сони и&nbsp;перевыпущу SIM-карту. Или просто попрошу продиктовать код.',r:'Лучше, чем ничего. Но&nbsp;SMS перехватывают и&nbsp;выманивают.',c:'ix-paroli-weak'},
+    totp:{h:'<b>Что это:</b> приложение-аутентификатор считает код из&nbsp;общего секрета и&nbsp;времени. Без SIM-карты и&nbsp;оператора.',v:'Сделаю копию дневника. Соня введёт пароль и&nbsp;код, а&nbsp;я&nbsp;за&nbsp;эти 30 секунд перешлю их&nbsp;на&nbsp;настоящий сайт.',r:'Надёжнее SMS. Но&nbsp;код можно выманить на&nbsp;фишинговой странице.',c:'ix-paroli-okish'},
+    push:{h:'<b>Что это:</b> приложение спрашивает «Это вы&nbsp;входите?», и&nbsp;Соня жмёт «Да».',v:'Буду входить снова и&nbsp;снова, пока ночью сонная Соня не&nbsp;нажмёт «Да», чтобы телефон замолчал.',r:'Удобно, но&nbsp;уязвимо для «усталости от&nbsp;пушей». Помогает показ кода на&nbsp;экране и&nbsp;лимит запросов.',c:'ix-paroli-okish'},
+    key:{h:'<b>Что это:</b> passkey&nbsp;— пара ключей. Закрытый живёт в&nbsp;телефоне и&nbsp;не&nbsp;уходит с&nbsp;него, а&nbsp;сайт хранит только открытый. Соня подтверждает вход отпечатком или ПИН-кодом.',v:'Пришлю ссылку на&nbsp;копию дневни… Стоп. Ключ не&nbsp;сработал?!',r:'Ключ привязан к&nbsp;адресу сайта. На&nbsp;подделке ему нечего подписывать, а&nbsp;пароля, который можно выманить, нет вовсе.',c:'ix-paroli-strong'}
+  };
+  var fres=q('[data-fres]'), fseen={};
+  qa('.ix-paroli-fac').forEach(function(b){b.setAttribute('aria-pressed','false'); b.addEventListener('click',function(){
+    var k=b.getAttribute('data-f'), f=FAC[k];
+    qa('.ix-paroli-fac').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')}); b.classList.add('ix-paroli-seen'); fseen[k]=1;
+    fres.hidden=false;
+    fres.innerHTML='<p class="ix-paroli-fhow">'+f.h+'</p><div class="ix-paroli-vline"><small>СВЯЗОЧНИК</small>'+f.v+'</div><p class="ix-paroli-fverd '+f.c+'">'+f.r+'</p>';
+    say(fres.textContent);
+    if(Object.keys(fseen).length>=2){var ph=q('[data-ph="l4-q"]'); if(ph.hidden) ph.hidden=false}
+  })});
+  ONOK.mfa=function(){step(3)};
+
+  /* L5: database leak */
+  var stealBtn=q('[data-act="steal"]'), hack=q('.ix-paroli-hack'), rew=q('[data-act="rewind"]'), hkn=q('[data-hkn]');
+  stealBtn.addEventListener('click',function(){
+    if(stealBtn.disabled) return; stealBtn.disabled=true;
+    qa('[data-cell]').forEach(function(td){td.classList.add('ix-paroli-plain')});
+    hit(); openHack();
+  });
+  function openHack(){
+    hack.hidden=false; hack.classList.remove('ix-paroli-rw'); setTimeout(function(){rew.focus()},30);
+    if(RM){hkn.textContent=num(50000);return}
+    var n=0, t=setInterval(function(){n=Math.min(50000,n+1700); hkn.textContent=num(n); if(n>=50000) clearInterval(t)},30);
+  }
+  function closeHack(){
+    if(hack.hidden||hack.classList.contains('ix-paroli-rw')) return;
+    hack.classList.add('ix-paroli-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('ix-paroli-rw');
+      stealBtn.textContent='База утекла ✗'; stealBtn.classList.add('ix-paroli-spent');
+      var ph=show('l5-fix'); go(ph); focusLater(q('.ix-paroli-ch',ph));
+      say('Время откачено. Выбери, как хранить пароли.');
+    });
+  }
+  rew.addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();rew.focus()}
+  });
+  ONOK.store=function(){
+    var H=['$argon2id$v=19$m=19456,t=2,p=1$Xq3nLw8vR2c$9fKq…','$argon2id$v=19$m=19456,t=2,p=1$b7TzQ1mE0aw$Hc2L…','$argon2id$v=19$m=19456,t=2,p=1$p0Vd4Kx9sNg$Q8wa…'];
+    qa('[data-cell]').forEach(function(td,i){td.classList.remove('ix-paroli-plain'); td.classList.add('ix-paroli-hash'); td.textContent=H[i]; td.title=H[i]});
+    q('[data-dbcap]').innerHTML='Теперь в&nbsp;базе <b>хеш Argon2id</b>: параметры, соль и&nbsp;результат. Пароля там нет.';
+    step(4); say('Пароли хранятся как медленный хеш с солью. Защита входа сто процентов.');
+  };
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Открою форму входа и переберу 10 000 паролей на аккаунте Сони. За четверть часа управлюсь.',q:'Чем ответишь?',
+     o:[['Убрать кнопку «Войти» из меню',0,'Запрос на вход он шлёт напрямую, кнопка ему не нужна.'],
+        ['Лимит попыток и растущая пауза',1,'Каждая ошибка стоит ему всё больше времени. Словарь растягивается на месяцы.'],
+        ['Требовать в пароле хотя бы один «!»',0,'«P@ssw0rd!» как раз из таких. Правила состава не мешают словарю.']]},
+    {v:'Тогда «Qwerty123» на всех 50 000 аккаунтах. По одной попытке, лимит меня не заметит.',q:'Как поймать распыление?',
+     o:[['Блокировать аккаунт после 3 ошибок',0,'У него на каждом аккаунте одна ошибка. А блокировки он сам использует против учеников.'],
+        ['Следить за ошибками по всему сервису и не пускать пароли из утечек',1,'Всплеск виден целиком, а популярного пароля ни у кого нет.']]},
+    {v:'Ладно. У меня есть новый пароль Сони, а на её телефон я пришлю ссылку на копию дневника. Пусть сама введёт код.',q:'Что не даст ему войти?',
+     o:[['Код в SMS',0,'Соня введёт его на подделке, а Связочник перешлёт за секунду.'],
+        ['Секретный вопрос «кличка собаки»',0,'Ответ есть у Сони в соцсетях. Это не второй фактор, а второй пароль.'],
+        ['Passkey, привязанный к адресу сайта',1,'На чужом адресе ключ не срабатывает. Выманивать нечего.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ix-paroli-bface'), BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='СВЯЗОЧНИК · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Связочника: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="ix-paroli-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="ix-paroli-vsay"><small>СВЯЗОЧНИК</small>'+esc(m.v)+'</p><p class="ix-paroli-bq">'+esc(m.q)+'</p><div class="ix-paroli-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="ix-paroli-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    bb.innerHTML=h+'</div><p class="ix-paroli-bfb" data-bfb aria-live="polite"></p>';
+    qa('.ix-paroli-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var o=MOVES[BS.i].o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('ix-paroli-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='ix-paroli-bfb ix-paroli-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]); return;
+    }
+    qa('.ix-paroli-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('ix-paroli-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('ix-paroli-ow'); void face.offsetWidth; face.classList.add('ix-paroli-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='ix-paroli-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='ix-paroli-bfb ix-paroli-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='ix-paroli-act';
+    nb.innerHTML='<button type="button" class="ix-paroli-btn ix-paroli-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.ix-paroli-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="ix-paroli-win"><div class="ix-paroli-wpost" aria-hidden="true"><div class="ix-paroli-ring"><span class="ix-paroli-hoop"></span><span class="ix-paroli-tag ix-paroli-t1">123456</span><span class="ix-paroli-tag ix-paroli-t2">qwerty</span><span class="ix-paroli-tag ix-paroli-t3">P@ssw0rd!</span><span class="ix-paroli-tag ix-paroli-t4">Sonya2009</span><span class="ix-paroli-tag ix-paroli-t5">111111</span></div><span>ПОВЕРЖЕН</span></div>'+
+      '<p class="ix-paroli-wint">Связочник повержен</p><p class="ix-paroli-wins">С первого раза: <b>'+BS.first+'/3</b></p>'+
+      '<p class="ix-paroli-rule">Пароль — только первый замок. Дверь держат лимиты, второй фактор и медленный хеш в базе.</p>'+
+      '<button type="button" class="ix-paroli-btn ix-paroli-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Связочник повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-paroli-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
