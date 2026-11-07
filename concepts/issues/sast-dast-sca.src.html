@@ -1,0 +1,890 @@
+<section class="ix ix-sast-dast-sca" data-ix="sast-dast-sca" aria-label="Выпуск 31: Ночной Мерджер, SAST, DAST и SCA">
+
+<div class="sd-story">
+
+  <div class="sd-hud" aria-hidden="true">
+    <span class="sd-hud-l">ЗАЩИТА КОНВЕЙЕРА</span>
+    <span class="sd-bar"><i></i><b>0%</b></span>
+    <span class="sd-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+  </div>
+  <div class="sd-sr" aria-live="polite" data-live></div>
+
+  <!-- ========== MISSION ========== -->
+  <div class="sd-mission" id="ix-sast-dast-sca-mission">
+    <div class="sd-poster" aria-hidden="true">
+      <span class="sd-moon"></span>
+      <svg class="sd-merge" viewBox="0 0 120 160"><path d="M30 18v124M30 40c0 40 60 30 60 70v8" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/><circle cx="30" cy="18" r="13" fill="#141414" stroke="#fff" stroke-width="8"/><circle cx="30" cy="142" r="13" fill="#ffd60a" stroke="#141414" stroke-width="6"/><circle cx="90" cy="118" r="13" fill="#ff3b3b" stroke="#fff" stroke-width="8"/></svg>
+      <span class="sd-clock">ПТ 23:47</span>
+      <span class="sd-pname">НОЧНОЙ<br>МЕРДЖЕР</span>
+      <span class="sd-tag">ЦЕЛЬ: ВЕТКА MAIN</span>
+    </div>
+    <div class="sd-mbody">
+      <p class="sd-kick">ВХОДЯЩЕЕ ЗАДАНИЕ</p>
+      <h2 class="sd-mt" id="ix-sast-dast-sca-mt">SAST, DAST и&nbsp;SCA: в&nbsp;чём разница</h2>
+      <p class="sd-msub">Пятница, вечер. Все ушли домой. Ночной Мерджер вливает в&nbsp;main <em>три подарка</em>: дыру в&nbsp;коде, поддельную библиотеку и&nbsp;открытую админку. Поставь охрану на&nbsp;конвейер.</p>
+      <ol class="sd-moves" aria-label="Шаги миссии">
+        <li data-mv="1"><b>01</b><span>Код: SAST</span></li>
+        <li data-mv="2"><b>02</b><span>Библиотеки: SCA</span></li>
+        <li data-mv="3"><b>03</b><span>Сайт: DAST</span></li>
+        <li data-mv="4"><b>04</b><span>Конвейер</span></li>
+      </ol>
+      <button class="sd-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </div>
+
+  <!-- ========== L1 SAST ========== -->
+  <section class="sd-lvl sd-locked" id="ix-sast-dast-sca-l1" aria-labelledby="ix-sast-dast-sca-t1">
+    <div class="sd-lh"><span class="sd-ln">ШАГ 1 / 4</span><h3 class="sd-lt" id="ix-sast-dast-sca-t1">SAST читает код</h3><span class="sd-ok">ПРОЙДЕНО</span></div>
+    <div class="sd-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="sd-lb">
+      <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Вот что Мерджер влил в поиск магазина. Программу запускать не будем. Просто дадим её прочитать роботу.</span></div>
+
+<pre class="sd-code" data-code1 aria-label="Код поиска товаров"><span class="sd-scan" aria-hidden="true"></span><span data-ln="1">@app.get("/search")</span>
+<span data-ln="2">def search():</span>
+<span data-ln="3">    q = request.args.get("q")</span>
+<span data-ln="4">    sql = "SELECT * FROM goods WHERE name = '" + q + "'"</span>
+<span data-ln="5">    rows = db.execute(sql)</span>
+<span data-ln="6">    page = int(request.args.get("page", 1))</span>
+<span data-ln="7">    db.execute("SELECT * FROM goods LIMIT 20 OFFSET " + str((page - 1) * 20))</span>
+<span data-ln="8">    return render(rows)</span></pre>
+
+      <div class="sd-act"><button class="sd-btn sd-y" type="button" data-act="sast">Запустить SAST</button></div>
+
+      <div class="sd-finds" data-finds1 hidden>
+        <p class="sd-fh">SAST: 2 находки</p>
+        <button class="sd-find" type="button" data-v="4"><span class="sd-sev sd-high">HIGH</span><b>Строка 4</b><span>Ввод пользователя склеивается в SQL-запрос (SQL-инъекция)</span></button>
+        <button class="sd-find" type="button" data-v="7"><span class="sd-sev sd-high">HIGH</span><b>Строка 7</b><span>Строка склеивается в SQL-запрос</span></button>
+        <p class="sd-q">Одна из находок — ложная тревога. Какая? Нажми на неё.</p>
+        <p class="sd-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="sd-after">
+        <div class="sd-say"><span class="sd-who sd-sonya">СОНЯ</span><span class="sd-bub">То есть сканер просто ищет опасные места по правилам? И иногда ошибается?</span></div>
+        <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Да. Он видит, откуда пришли данные и куда утекли. Но не всегда понимает, что по дороге их уже обезвредили.</span></div>
+        <p class="sd-big">SAST — «белый ящик».<br><span>Читает исходники, ничего не&nbsp;запуская.</span></p>
+        <p class="sd-def"><b>SAST</b> (Static Application Security Testing) — статический анализ кода. Работает рано: прямо в редакторе и на каждый pull request. Находит инъекции, опасные функции, слабую криптографию и показывает точную строку. Примеры: Semgrep, CodeQL, SonarQube.</p>
+        <div class="sd-two">
+          <p><span class="sd-mk sd-mk-ok" aria-label="умеет">✓</span><span><b>Рано и дёшево</b>Ошибку чинят до того, как код попал на сервер.</span></p>
+          <p><span class="sd-mk sd-mk-no" aria-label="не умеет">✗</span><span><b>Видит только свой код</b>Чужие библиотеки и настройки сервера для него невидимы.</span></p>
+        </div>
+        <div class="sd-act"><button class="sd-btn" type="button" data-goto="ix-sast-dast-sca-l2">Проверить библиотеки ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L2 SCA ========== -->
+  <section class="sd-lvl sd-locked" id="ix-sast-dast-sca-l2" aria-labelledby="ix-sast-dast-sca-t2">
+    <div class="sd-lh"><span class="sd-ln">ШАГ 2 / 4</span><h3 class="sd-lt" id="ix-sast-dast-sca-t2">SCA проверяет чужой код</h3><span class="sd-ok">ЗАКРЫТО</span></div>
+    <div class="sd-lockcap"><span>🔒 Сначала пройди SAST</span></div>
+    <div class="sd-lb">
+      <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Своего кода в проекте — процентов десять. Остальное — чужие библиотеки. Их список лежит в одном файле.</span></div>
+
+      <div class="sd-deps" data-deps>
+        <p class="sd-file">requirements.txt</p>
+        <div class="sd-dep" data-d="flask"><code>flask==3.1.1</code><span class="sd-st"></span></div>
+        <div class="sd-dep" data-d="requests"><code>requests==2.32.4</code><span class="sd-st"></span></div>
+        <div class="sd-dep" data-d="pyyaml"><code>pyyaml==5.3</code><span class="sd-st"></span></div>
+        <div class="sd-dep" data-d="colourama"><code>colourama==0.4.6</code><span class="sd-st"></span><span class="sd-new">влил Мерджер</span></div>
+      </div>
+
+      <div class="sd-act"><button class="sd-btn sd-y" type="button" data-act="sca">Запустить SCA</button></div>
+
+      <div class="sd-scawhy" data-scawhy hidden>
+        <p class="sd-note"><b>pyyaml 5.3</b> — в базе уязвимостей есть <b>CVE-2020-14343</b>: подсунутый файл может запустить чужой код. Уровень Critical (9.8 из 10). Исправлено в 5.4.</p>
+        <p class="sd-note"><b>colourama</b> — двойник настоящей библиотеки <b>colorama</b>, одна лишняя буква. Такой вредоносный пакет действительно нашли в PyPI в 2018 году. Это тайпсквоттинг.</p>
+        <p class="sd-q">Сборка упала: Critical в pyyaml. Релиз через час. Что делаешь?</p>
+        <div class="sd-choices" data-sca>
+          <button class="sd-ch" type="button" data-v="off"><b>Выключить SCA</b><span>До понедельника, релиз важнее</span></button>
+          <button class="sd-ch" type="button" data-v="ign"><b>Добавить в исключения</b><span>Навсегда, чтобы не мешало</span></button>
+          <button class="sd-ch" type="button" data-v="up"><b>Обновить и проверить</b><span>pyyaml до свежей версии, тесты, пересборка</span></button>
+        </div>
+        <p class="sd-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="sd-after">
+        <div class="sd-say"><span class="sd-who sd-sonya">СОНЯ</span><span class="sd-bub">А если обновить нельзя прямо сейчас?</span></div>
+        <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Смотрим, вызывает ли наш код уязвимое место. Если нет — временное исключение со сроком и задачей. Не «навсегда».</span></div>
+        <p class="sd-big">SCA — проверка состава.<br><span>Сверяет библиотеки с&nbsp;базой известных дыр.</span></p>
+        <p class="sd-def"><b>SCA</b> (Software Composition Analysis) — анализ сторонних компонентов. Он читает список зависимостей, включая зависимости зависимостей, и сверяет версии с базами CVE. Заодно проверяет лицензии. Полный список компонентов называют <b>SBOM</b>. Это защита от риска A03 OWASP Top 10:2025 «сбои цепочки поставок». Примеры: Trivy, OWASP Dependency-Check, Dependabot.</p>
+        <p class="sd-note">Так в 2021 году мир искал у себя Log4Shell: дыра в популярной библиотеке log4j. У кого был SBOM, нашёл её за минуты.</p>
+        <div class="sd-act"><button class="sd-btn" type="button" data-goto="ix-sast-dast-sca-l3">Проверить живой сайт ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L3 DAST ========== -->
+  <section class="sd-lvl sd-locked" id="ix-sast-dast-sca-l3" aria-labelledby="ix-sast-dast-sca-t3">
+    <div class="sd-lh"><span class="sd-ln">ШАГ 3 / 4</span><h3 class="sd-lt" id="ix-sast-dast-sca-t3">DAST стучится снаружи</h3><span class="sd-ok">ПОНЯТО</span></div>
+    <div class="sd-lockcap"><span>🔒 Сначала пройди SCA</span></div>
+    <div class="sd-lb">
+      <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Код чист, библиотеки свежие. Выкладываем магазин на тестовый стенд и атакуем его, как чужак. Кода он не увидит — только ответы сервера.</span></div>
+
+      <div class="sd-term" data-term>
+        <p class="sd-thead"><span>DAST → stage.shop.example</span><span class="sd-tst" data-tst>ГОТОВ</span></p>
+        <ol class="sd-log" data-log aria-label="Запросы сканера"></ol>
+      </div>
+      <div class="sd-act"><button class="sd-btn sd-y" type="button" data-act="dast">Запустить DAST на стенде</button></div>
+      <p class="sd-legal">Только свой стенд. DAST по чужому сайту — это атака.</p>
+
+      <div class="sd-dastq" data-dastq hidden>
+        <p class="sd-q">SAST и SCA молчали. Почему они не нашли открытую админку?</p>
+        <div class="sd-choices" data-dast>
+          <button class="sd-ch" type="button" data-v="bad"><b>Их плохо настроили</b><span>Надо было включить больше правил</span></button>
+          <button class="sd-ch" type="button" data-v="cfg"><b>Дыра не в коде</b><span>Мерджер поменял настройку сервера. Видно только у живого сайта</span></button>
+          <button class="sd-ch" type="button" data-v="smart"><b>DAST умнее</b><span>Он заменяет все остальные сканеры</span></button>
+        </div>
+        <p class="sd-fb" data-fb aria-live="polite"></p>
+      </div>
+
+      <div class="sd-after">
+        <p class="sd-big">DAST — «чёрный ящик».<br><span>Атакует запущенное приложение снаружи.</span></p>
+        <p class="sd-def"><b>DAST</b> (Dynamic Application Security Testing) — динамическое тестирование. Сканер обходит страницы и шлёт запросы с подвохом. Видит то, что появляется только в работе: настройки сервера, cookie без флагов, лишние открытые адреса. Это риск A02 «ошибки конфигурации». Примеры: ZAP, Burp Scanner.</p>
+        <div class="sd-two">
+          <p><span class="sd-mk sd-mk-ok" aria-label="умеет">✓</span><span><b>Мало ложных тревог</b>Если сканер достучался, дыра настоящая.</span></p>
+          <p><span class="sd-mk sd-mk-no" aria-label="не умеет">✗</span><span><b>Поздно и без адреса</b>Нужен работающий стенд, а строку кода с ошибкой он не покажет.</span></p>
+        </div>
+        <div class="sd-act"><button class="sd-btn" type="button" data-goto="ix-sast-dast-sca-l4">Собрать конвейер ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L4 PIPELINE ========== -->
+  <section class="sd-lvl sd-locked" id="ix-sast-dast-sca-l4" aria-labelledby="ix-sast-dast-sca-t4">
+    <div class="sd-lh"><span class="sd-ln">ШАГ 4 / 4</span><h3 class="sd-lt" id="ix-sast-dast-sca-t4">Охрана на конвейере</h3><span class="sd-ok">ЗАЩИЩЁН</span></div>
+    <div class="sd-lockcap"><span>🔒 Сначала пройди DAST</span></div>
+    <div class="sd-lb">
+      <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Это CI/CD — конвейер, который сам собирает и выкладывает код. Ночью Мерджер снова вольёт три подарка. Сначала посмотри, что будет без охраны.</span></div>
+
+      <div class="sd-gifts" aria-label="Подарки Мерджера">
+        <span class="sd-gift" data-g="code">🧨 Склейка SQL</span>
+        <span class="sd-gift" data-g="pkg">📦 colourama</span>
+        <span class="sd-gift" data-g="cfg">🚪 /admin без входа</span>
+      </div>
+
+      <div class="sd-guards" data-guards hidden>
+        <p class="sd-q">Выбери охранника, потом нажми на пост.</p>
+        <div class="sd-gchips">
+          <button class="sd-gc" type="button" data-guard="SAST" aria-pressed="false">SAST</button>
+          <button class="sd-gc" type="button" data-guard="SCA" aria-pressed="false">SCA</button>
+          <button class="sd-gc" type="button" data-guard="DAST" aria-pressed="false">DAST</button>
+        </div>
+      </div>
+
+      <ol class="sd-pipe" data-pipe aria-label="Конвейер">
+        <li class="sd-stage" data-s="0"><span class="sd-sn">Коммит в main</span><span class="sd-tray"></span></li>
+        <li class="sd-post" data-s="1"><button class="sd-slot" type="button" data-slot="0" disabled><span>Пост 1</span><small>после коммита</small><b data-slotv></b></button><span class="sd-tray"></span></li>
+        <li class="sd-stage" data-s="2"><span class="sd-sn">Сборка</span><span class="sd-tray"></span></li>
+        <li class="sd-post" data-s="3"><button class="sd-slot" type="button" data-slot="1" disabled><span>Пост 2</span><small>во время сборки</small><b data-slotv></b></button><span class="sd-tray"></span></li>
+        <li class="sd-stage" data-s="4"><span class="sd-sn">Тестовый стенд</span><span class="sd-tray"></span></li>
+        <li class="sd-post" data-s="5"><button class="sd-slot" type="button" data-slot="2" disabled><span>Пост 3</span><small>сайт запущен на стенде</small><b data-slotv></b></button><span class="sd-tray"></span></li>
+        <li class="sd-stage sd-prod" data-s="6"><span class="sd-sn">Прод: настоящие покупатели</span><span class="sd-tray"></span></li>
+      </ol>
+      <p class="sd-fb" data-fb4 aria-live="polite"></p>
+
+      <div class="sd-act">
+        <button class="sd-btn sd-y" type="button" data-act="run0">Запустить без охраны</button>
+        <button class="sd-btn sd-y" type="button" data-act="run" hidden disabled>Запустить конвейер</button>
+      </div>
+
+      <div class="sd-after">
+        <p class="sd-big">Чем левее проверка,<br><span>тем дешевле ошибка.</span></p>
+        <p class="sd-def">Это называют <b>shift left</b> — сдвиг влево. SAST и SCA проверяют каждый pull request, DAST — каждую выкладку на стенд. Рядом стоят поиск секретов (выпуск 8) и проверка образов контейнеров (выпуск 30). Вместе это и есть DevSecOps-конвейер.</p>
+        <div class="sd-say"><span class="sd-who sd-sonya">СОНЯ</span><span class="sd-bub">Значит, три сканера — и мы в безопасности?</span></div>
+        <div class="sd-say"><span class="sd-who">ДЯДЯ МИША</span><span class="sd-bub">Нет. Сканер не знает, что заказ №124 чужой. Ошибки логики, как IDOR, ловят тесты прав, ревью и пентест.</span></div>
+        <div class="sd-act"><button class="sd-btn sd-y" type="button" data-goto="ix-sast-dast-sca-battle">К битве с Ночным Мерджером ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="sd-hack" role="dialog" aria-modal="true" aria-labelledby="ix-sast-dast-sca-hk" hidden>
+  <div class="sd-hkin">
+    <div class="sd-hkposter" aria-hidden="true"><span class="sd-moon"></span><span class="sd-pname">НОЧНОЙ<br>МЕРДЖЕР</span></div>
+    <p class="sd-hkt" id="ix-sast-dast-sca-hk">ВЛИТО!</p>
+    <div class="sd-hkcard">
+      <span>🧨 SQL-инъекция в поиске</span>
+      <span>📦 colourama крадёт данные</span>
+      <span>🚪 /admin открыт всему интернету</span>
+    </div>
+    <p class="sd-hksay">Пятница, ночь. Все спят. Все три подарка уже у покупателей.</p>
+    <button class="sd-btn sd-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="sd-battle" id="ix-sast-dast-sca-battle" aria-labelledby="ix-sast-dast-sca-bt" tabindex="-1">
+  <div class="sd-bh">
+    <span class="sd-bface" aria-hidden="true"><span class="sd-moon"></span></span>
+    <div class="sd-bhx">
+      <h2 class="sd-bt" id="ix-sast-dast-sca-bt">Битва со злодеем</h2>
+      <div class="sd-hp" role="img" aria-label="Здоровье Ночного Мерджера" data-hp-wrap><i data-hp></i><b data-hp-t>НОЧНОЙ МЕРДЖЕР · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="sd-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="sd-iv" aria-labelledby="ix-sast-dast-sca-ivt">
+  <p class="sd-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC / DEVSECOPS</p>
+  <h2 class="sd-ivq" id="ix-sast-dast-sca-ivt">Чем отличаются SAST, DAST и SCA? Где ты поставишь каждый в CI/CD?</h2>
+  <div class="sd-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: что каждый сканер получает на вход — исходники, список библиотек или работающий сайт? От этого и зависит его место в конвейере.</span>
+  </div>
+  <button class="sd-btn sd-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-sast-dast-sca-iva">Показать сильный ответ</button>
+  <div class="sd-iva" id="ix-sast-dast-sca-iva" hidden>
+    <ol>
+      <li><b>SAST — свой код, белый ящик.</b> Читает исходники без запуска и ищет опасные шаблоны: инъекции, небезопасные функции. Ставлю в IDE и на каждый pull request. Плюс — точная строка и раннее обнаружение. Минус — ложные срабатывания.</li>
+      <li><b>SCA — чужой код.</b> Сверяет зависимости, в том числе транзитивные, с базами CVE, проверяет лицензии, строит SBOM. Ставлю на pull request и сборку, плюс регулярный перескан: новые CVE появляются и для старого кода.</li>
+      <li><b>DAST — работающее приложение, чёрный ящик.</b> Атакует стенд снаружи и находит ошибки конфигурации и поведения в работе. Ставлю после выкладки на staging, никогда не по чужим системам.</li>
+      <li><b>Как это живёт вместе.</b> Сборку блокируем только на новые High и Critical, остальное — в бэклог с владельцем и сроком. Ложные срабатывания разбираем и подавляем с комментарием, иначе команда перестанет верить сканеру.</li>
+    </ol>
+    <p class="sd-ivx"><b>Ошибка новичка:</b> «Поставим один сканер — и всё найдено». Каждый видит свой слой, а ошибки логики вроде IDOR не видит ни один.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="sd-cs" aria-labelledby="ix-sast-dast-sca-cst">
+  <h2 class="sd-cst" id="ix-sast-dast-sca-cst">Шпаргалка: что важно знать</h2>
+  <ol class="sd-csl">
+    <li><span class="sd-csn" aria-hidden="true">01</span><div><b>SAST — свой код</b><p>Читает исходники без запуска и показывает строку с опасным шаблоном, например склейкой SQL.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">02</span><div><b>SCA — чужой код</b><p>Сверяет версии библиотек с базами CVE и ловит пакеты-двойники. Список компонентов — SBOM.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">03</span><div><b>DAST — живой сайт</b><p>Атакует запущенное приложение на своём стенде и видит ошибки настройки сервера.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">04</span><div><b>Сдвиг влево</b><p>SAST и SCA — на каждый pull request, DAST — после выкладки на стенд. Чем раньше, тем дешевле.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">05</span><div><b>Шум убивает сканер</b><p>Разбирай ложные срабатывания, а сборку блокируй только на новые High и Critical.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">06</span><div><b>Critical CVE</b><p>Не выключай проверку: обнови, проверь, достижима ли дыра, а исключение делай только со сроком.</p></div></li>
+    <li><span class="sd-csn" aria-hidden="true">07</span><div><b>Логику не сканируют</b><p>IDOR и ошибки бизнес-логики ловят тесты прав, ревью и пентест.</p></div></li>
+  </ol>
+  <p class="sd-train"><b>Тренируйся легально:</b> запусти ZAP против OWASP Juice Shop на своём компьютере, пройди PortSwigger Web Security Academy, picoCTF или путь DevSecOps на TryHackMe. Сканируй только свой проект или учебный стенд.</p>
+</section>
+
+</section>
+
+<style>
+§{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--red:#ff3b3b;--vio:#6a3df0;--vdk:#2a1466;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+§ *,§ *::before,§ *::after{box-sizing:border-box}
+§ button{font:inherit;color:inherit}
+§ :focus-visible{outline:4px solid var(--red);outline-offset:3px}
+§ [hidden]{display:none !important}
+§ p{margin:0}
+§ .sd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+§ .sd-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+§ .sd-hud.sd-on{display:flex;animation:sd-drop .4s cubic-bezier(.2,1.4,.4,1)}
+§ .sd-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+§ .sd-bar{flex:1;min-width:50px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+§ .sd-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+§ .sd-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+§ .sd-hud.sd-hit{animation:sd-shake .4s}
+§ .sd-hud.sd-hit .sd-bar{border-color:var(--red)}
+§ .sd-pips{display:flex;gap:4px}
+§ .sd-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+§ .sd-pips span.sd-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION + POSTER */
+§ .sd-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--vio);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+§ .sd-poster{position:relative;min-height:440px;background:radial-gradient(circle at 70% 20%,#8b62ff 0,var(--vio) 35%,var(--vdk) 100%);border-right:3px solid var(--ink);overflow:hidden}
+§ .sd-poster::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(20,20,20,.55) 1.2px,transparent 1.9px);background-size:8px 8px;mix-blend-mode:multiply;opacity:.55;pointer-events:none}
+§ .sd-moon{position:absolute;right:12%;top:8%;width:38%;aspect-ratio:1;border-radius:50%;box-shadow:-22px 14px 0 0 var(--yel);transform:rotate(-8deg)}
+§ .sd-merge{position:absolute;left:10%;top:12%;width:34%;height:auto;z-index:1;filter:drop-shadow(5px 5px 0 rgba(0,0,0,.45))}
+§ .sd-clock{position:absolute;z-index:2;right:10%;top:52%;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);padding:8px 12px;border:3px solid var(--ink);transform:rotate(3deg);box-shadow:4px 4px 0 var(--ink)}
+§ .sd-pname{position:absolute;z-index:2;left:16px;right:16px;bottom:52px;font-family:var(--f-mono);font-size:44px;line-height:.98;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ink)}
+§ .sd-tag{position:absolute;z-index:3;left:16px;bottom:14px;font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:5px 10px;border:2px solid var(--yel)}
+§ .sd-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,214,10,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+§ .sd-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.12em;color:var(--yel)}
+§ .sd-mt{margin:0;font-family:var(--f-cap);font-weight:400;font-size:40px;line-height:1.08;color:var(--yel)}
+§ .sd-msub{font-size:20px;line-height:1.4}
+§ .sd-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+§ .sd-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+§ .sd-moves li{border:2px solid #fff;padding:8px 10px 10px}
+§ .sd-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+§ .sd-moves span{display:block;font-family:var(--f-cap);font-size:15px;line-height:1.2;margin-top:4px}
+§ .sd-moves li.sd-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+§ .sd-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--vio);cursor:pointer;transition:transform .12s,box-shadow .12s}
+§ .sd-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--vio)}
+§ .sd-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--vio)}
+§.sd-anim .sd-mission .sd-moon{animation:sd-rise 1.2s cubic-bezier(.2,1.2,.4,1) .2s both}
+§.sd-anim .sd-mission .sd-clock{animation:sd-tick 2s steps(1) infinite}
+§.sd-anim .sd-go:not(:disabled){animation:sd-pulse 1.8s ease-in-out infinite}
+
+/* LEVELS */
+§ .sd-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+§ .sd-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+§ .sd-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+§ .sd-lt{margin:0;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.15}
+§ .sd-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+§ .sd-clear .sd-ok{display:inline-block}
+§ .sd-lb{padding:22px 20px 24px}
+§ .sd-locked{pointer-events:none;user-select:none}
+§ .sd-locked .sd-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+§ .sd-lockcap{display:none}
+§ .sd-locked .sd-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+§ .sd-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+§ .sd-after{display:none;margin-top:28px}
+§ .sd-lvl.sd-clear .sd-after{display:block;animation:sd-up .4s ease-out}
+
+§ .sd-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+§ .sd-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+§ .sd-who.sd-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+§ .sd-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+
+/* code */
+§ .sd-code{position:relative;margin:20px 0 0;padding:16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--vio);font-family:var(--code);font-size:15px;line-height:1.7;white-space:pre;overflow-x:auto;counter-reset:sdln}
+§ .sd-code [data-ln]{display:inline-block;min-width:100%;padding-left:34px;position:relative;counter-increment:sdln}
+§ .sd-code [data-ln]::before{content:counter(sdln);position:absolute;left:0;width:22px;text-align:right;color:#7a7466}
+§ .sd-code .sd-bad{background:rgba(255,59,59,.32);box-shadow:inset 4px 0 0 var(--red)}
+§ .sd-code .sd-fp{background:rgba(255,214,10,.18);box-shadow:inset 4px 0 0 var(--yel)}
+§ .sd-code .sd-good{background:rgba(46,229,157,.22);box-shadow:inset 4px 0 0 var(--green)}
+§ .sd-scan{position:absolute;left:0;right:0;top:0;height:0;pointer-events:none;z-index:2}
+§ .sd-code.sd-scanning .sd-scan{height:28px;background:linear-gradient(180deg,transparent,rgba(46,229,157,.55),transparent);animation:sd-scan 1.4s linear forwards}
+
+§ .sd-finds{margin-top:22px;display:grid;gap:10px}
+§ .sd-fh{font-family:var(--f-cap);font-size:20px}
+§ .sd-find{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:center;min-height:64px;padding:10px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;transition:transform .1s,box-shadow .1s}
+§ .sd-find:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+§ .sd-find b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+§ .sd-find span:last-child{grid-column:1/-1;font-size:17px;line-height:1.35}
+§ .sd-sev{font-family:var(--f-cap);font-size:12px;padding:3px 8px;border:2px solid var(--ink)}
+§ .sd-high{background:var(--red);color:#fff}
+§ .sd-find.sd-right{background:var(--yel)}
+§ .sd-find.sd-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.75;cursor:default}
+§ .sd-find.sd-real{background:#ffe1e1}
+§ .sd-find:disabled{cursor:default;transform:none}
+
+/* deps */
+§ .sd-deps{margin:22px 0 0;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink)}
+§ .sd-file{font-family:var(--code);font-weight:700;font-size:15px;padding:8px 14px;background:#ece6d6;border-bottom:3px solid var(--ink)}
+§ .sd-dep{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:12px 14px;border-bottom:2px dashed #ccc;transition:background .3s}
+§ .sd-dep:last-child{border-bottom:0}
+§ .sd-dep code{font-family:var(--code);font-weight:700;font-size:18px}
+§ .sd-st{margin-left:auto;font-family:var(--f-cap);font-size:13px}
+§ .sd-st:empty{display:none}
+§ .sd-st.sd-s-ok{color:var(--gdk)}
+§ .sd-st.sd-s-crit,.sd-st.sd-s-mal{background:var(--red);color:#fff;padding:3px 8px;border:2px solid var(--ink)}
+§ .sd-st.sd-s-wait{color:var(--muted)}
+§ .sd-dep.sd-d-bad{background:rgba(255,59,59,.12)}
+§ .sd-dep.sd-d-bad code{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:3px}
+§ .sd-dep.sd-d-fixed{background:rgba(46,229,157,.18)}
+§ .sd-dep.sd-d-fixed code{text-decoration:none}
+§ .sd-new{font-family:var(--f-cap);font-size:12px;background:var(--vio);color:#fff;padding:2px 8px}
+§ .sd-scawhy{margin-top:22px}
+
+/* DAST terminal */
+§ .sd-term{margin:22px 0 0;background:#0d0d12;color:#d9fbe9;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--vio);font-family:var(--code);font-size:15px}
+§ .sd-thead{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;border-bottom:2px solid #333;color:#fff;font-weight:700}
+§ .sd-tst{font-family:var(--f-cap);font-size:12px;color:var(--yel)}
+§ .sd-log{list-style:none;margin:0;padding:10px 14px;min-height:204px;display:grid;align-content:start;gap:4px}
+§ .sd-log li{display:flex;flex-wrap:wrap;gap:4px 10px;overflow-wrap:anywhere;animation:sd-up .25s ease-out}
+§ .sd-log .sd-c2{color:#7af0b4}
+§ .sd-log .sd-c4{color:#9d9785}
+§ .sd-log li.sd-alert{background:rgba(255,59,59,.25);box-shadow:inset 4px 0 0 var(--red);padding-left:8px}
+§ .sd-log li.sd-alert em{font-style:normal;color:#fff;background:var(--red);padding:0 6px;font-family:var(--f-cap);font-size:12px}
+§ .sd-log li.sd-empty{color:#7a7466}
+§ .sd-dastq{margin-top:4px}
+
+/* buttons, choices */
+§ .sd-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+§ .sd-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--vio);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+§ .sd-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--vio)}
+§ .sd-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--vio)}
+§ .sd-btn.sd-y{background:var(--yel);color:var(--ink)}
+§ .sd-btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:2px 2px 0 var(--vio)}
+§ .sd-legal{margin-top:12px;font-size:16px;color:var(--muted)}
+§ .sd-note{margin-top:14px;font-size:18px;line-height:1.45;border-left:5px solid var(--yel);padding:2px 0 2px 14px}
+§ .sd-q{margin:24px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+§ .sd-finds .sd-q{margin:14px 0 0}
+§ .sd-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+§ .sd-ch{min-height:92px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+§ .sd-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+§ .sd-ch:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+§ .sd-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+§ .sd-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+§ .sd-ch.sd-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.7;cursor:default}
+§ .sd-ch.sd-right{background:var(--green)}
+§ .sd-ch.sd-right span{color:var(--ink)}
+§ .sd-ch:disabled{cursor:default;transform:none}
+§ .sd-fb{margin-top:14px;font-size:18px;line-height:1.4}
+§ .sd-fb:empty{display:none}
+§ .sd-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+§ .sd-fb.sd-bad b{color:#c81e1e}
+§ .sd-fb.sd-good b{color:var(--gdk)}
+
+§ .sd-big{font-family:var(--f-cap);font-size:30px;line-height:1.15}
+§ .sd-big span{color:var(--vio)}
+§ .sd-def{margin-top:18px;font-size:18px;line-height:1.5}
+§ .sd-two{margin:22px 0 0;display:grid;gap:14px}
+§ .sd-two p{display:flex;gap:14px;align-items:flex-start;font-size:18px;line-height:1.35}
+§ .sd-two b{display:block;font-family:var(--f-cap);font-weight:400;font-size:22px;line-height:1.15;margin-bottom:2px}
+§ .sd-mk{flex:0 0 46px;height:46px;display:grid;place-items:center;border:3px solid var(--ink);font-size:26px;font-weight:700;line-height:1}
+§ .sd-mk-ok{background:var(--green)}
+§ .sd-mk-no{background:var(--red);color:#fff}
+
+/* pipeline */
+§ .sd-gifts{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+§ .sd-gift,.sd-tok{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-cap);font-size:15px;line-height:1.2;padding:6px 10px;background:var(--vio);color:#fff;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+§ .sd-tok{animation:sd-pop .35s cubic-bezier(.2,1.5,.4,1)}
+§ .sd-tok.sd-caught{background:#fff;color:var(--ink);text-decoration:line-through;text-decoration-thickness:2px;position:relative}
+§ .sd-tok.sd-caught::after{content:"ПОЙМАН";position:absolute;right:-6px;top:-12px;font-size:11px;background:var(--green);color:var(--ink);border:2px solid var(--ink);padding:0 5px;text-decoration:none;transform:rotate(6deg)}
+§ .sd-tok.sd-leak{background:var(--red)}
+§ .sd-guards{margin-top:6px}
+§ .sd-gchips{display:flex;flex-wrap:wrap;gap:10px}
+§ .sd-gc{min-height:52px;min-width:96px;padding:0 18px;font-family:var(--f-cap);font-size:19px;background:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+§ .sd-gc[aria-pressed="true"]{background:var(--yel);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vio)}
+§ .sd-gc.sd-used{opacity:.4}
+§ .sd-pipe{list-style:none;margin:22px 0 0;padding:0;position:relative;display:grid;gap:0}
+§ .sd-pipe::before{content:"";position:absolute;left:22px;top:20px;bottom:20px;width:6px;background:repeating-linear-gradient(180deg,var(--ink) 0 10px,transparent 10px 16px)}
+§.sd-anim .sd-pipe.sd-running::before{animation:sd-belt .5s linear infinite}
+§ .sd-pipe li{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0 10px 56px;min-height:64px}
+§ .sd-pipe li::before{content:"";position:absolute;left:12px;top:50%;width:26px;height:26px;margin-top:-13px;background:#fff;border:3px solid var(--ink);border-radius:50%}
+§ .sd-pipe li.sd-post::before{border-radius:0;transform:rotate(45deg);background:var(--yel);width:22px;height:22px;margin-top:-11px;left:14px}
+§ .sd-pipe li.sd-prod::before{background:var(--red)}
+§ .sd-pipe li.sd-here::before{background:var(--green)}
+§ .sd-sn{font-family:var(--f-cap);font-size:18px}
+§ .sd-tray{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 200px}
+§ .sd-tray:empty{display:none}
+§ .sd-slot{display:grid;grid-template-columns:auto auto;align-items:center;gap:0 10px;min-height:56px;min-width:210px;padding:6px 14px;border:3px dashed var(--ink);background:#fffdf6;cursor:pointer;text-align:left}
+§ .sd-slot span{font-family:var(--f-cap);font-size:15px}
+§ .sd-slot small{grid-column:1;font-size:14px;color:var(--muted)}
+§ .sd-slot b{grid-row:1/3;grid-column:2;justify-self:end;font-family:var(--f-mono);font-weight:400;font-size:18px}
+§ .sd-slot b:empty::after{content:"?";color:#bbb}
+§ .sd-slot.sd-filled{border-style:solid;background:var(--yel)}
+§ .sd-slot:disabled{cursor:default}
+§ .sd-guards:not([hidden]) ~ .sd-pipe .sd-slot:not(:disabled):hover{background:#fff2b3}
+§ .sd-pipe li.sd-pnote .sd-tray::after{content:attr(data-n)}
+§ .sd-pmsg{flex-basis:100%;font-size:16px;line-height:1.35;color:var(--muted)}
+§ .sd-pipe li.sd-prod.sd-hot{background:rgba(255,59,59,.12)}
+
+/* HACK overlay */
+§ .sd-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--vdk);color:#fff;
+  background-image:radial-gradient(rgba(106,61,240,.7) 1.6px,transparent 2.4px);background-size:10px 10px}
+§ .sd-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+§ .sd-hkposter{position:relative;width:min(70vw,250px);aspect-ratio:1;border:4px solid var(--ink);overflow:hidden;background:var(--vio);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg)}
+§ .sd-hkposter .sd-pname{bottom:14px;left:12px;right:12px;font-size:28px}
+§ .sd-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+§ .sd-hkcard{display:grid;gap:4px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 18px;font-size:18px;text-align:left;transform:rotate(1.5deg)}
+§ .sd-hksay{font-family:var(--f-hand);font-size:25px;line-height:1.15;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:6px 16px}
+§.sd-anim .sd-hack:not([hidden]) .sd-hkin{animation:sd-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+§.sd-anim .sd-hack.sd-rw{animation:sd-fade .6s ease-in forwards}
+§.sd-anim .sd-hack.sd-rw .sd-hkin{animation:sd-rewind .6s ease-in forwards}
+
+/* BATTLE */
+§ .sd-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--vio);scroll-margin-top:16px;outline:none}
+§ .sd-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+§ .sd-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--yel);background:var(--vio);position:relative}
+§ .sd-bface .sd-moon{right:14%;top:16%;width:54%;box-shadow:-12px 8px 0 0 var(--yel)}
+§ .sd-bface.sd-ow{animation:sd-shake .4s}
+§ .sd-bhx{flex:1;min-width:0;display:grid;gap:10px}
+§ .sd-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+§ .sd-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+§ .sd-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--vio);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+§ .sd-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+§ .sd-bbody{position:relative;padding:22px 20px 26px}
+§ .sd-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+§ .sd-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--vio);margin-bottom:22px}
+§ .sd-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+§ .sd-bopts{display:grid;gap:10px}
+§ .sd-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+§ .sd-bo:hover{background:#262626}
+§ .sd-bo.sd-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+§ .sd-bo.sd-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+§ .sd-bo:disabled{cursor:default}
+§ .sd-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+§ .sd-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+§ .sd-bfb.sd-good b{color:var(--green)}
+§ .sd-bfb.sd-bad b{color:#ff8a8a}
+§ .sd-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:sd-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+§ .sd-win{display:grid;gap:16px;justify-items:start}
+§ .sd-wposter{position:relative;width:100%;max-width:420px;aspect-ratio:6/5;overflow:hidden;border:3px solid #fff;background:var(--vio);filter:grayscale(1) contrast(1.2)}
+§ .sd-wposter .sd-pname{bottom:18px;font-size:36px}
+§ .sd-wstamp{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.92);border:5px solid var(--red);padding:6px 14px;white-space:nowrap;z-index:4}
+§ .sd-wwrap{position:relative;width:100%;max-width:420px}
+§.sd-anim .sd-wstamp{animation:sd-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+§ .sd-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--green)}
+§ .sd-wins{font-size:20px}
+§ .sd-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+§ .sd-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+§ .sd-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+§ .sd-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:#c81e1e;margin-bottom:10px}
+§ .sd-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+§ .sd-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+§ .sd-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+§ .sd-think span{font-size:18px;line-height:1.45}
+§ .sd-iva{margin-top:24px;animation:sd-up .4s ease-out}
+§ .sd-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:sdiv}
+§ .sd-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:sdiv}
+§ .sd-iva li::before{content:counter(sdiv);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+§ .sd-iva li b{font-weight:700}
+§ .sd-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+§ .sd-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+§ .sd-cs{margin-top:72px}
+§ .sd-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+§ .sd-csl{list-style:none;margin:0;padding:0}
+§ .sd-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+§ .sd-csl li:last-child{border-bottom:0}
+§ .sd-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+§ .sd-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+§ .sd-csl p{font-size:18px;line-height:1.45}
+§ .sd-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes sd-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes sd-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes sd-rise{from{opacity:0;transform:translateY(60px) rotate(-30deg) scale(.6)}to{opacity:1;transform:rotate(-8deg)}}
+@keyframes sd-tick{0%{opacity:1}50%{opacity:.9}}
+@keyframes sd-pulse{0%,100%{box-shadow:5px 5px 0 var(--vio)}50%{box-shadow:5px 5px 0 var(--vio),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes sd-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes sd-pop{from{opacity:0;transform:scale(.5) translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes sd-scan{from{top:0}to{top:calc(100% - 28px)}}
+@keyframes sd-belt{to{background-position:0 16px}}
+@keyframes sd-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes sd-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes sd-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes sd-stampw{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(3)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+@keyframes sd-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+
+@media (max-width:760px){
+  § .sd-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--vio)}
+  § .sd-poster{min-height:330px;border-right:0;border-bottom:3px solid var(--ink)}
+  § .sd-moon{width:30%;right:14%}
+  § .sd-merge{width:24%}
+  § .sd-clock{top:38%;font-size:22px}
+  § .sd-pname{font-size:38px}
+  § .sd-mbody{padding:22px 16px 24px;gap:16px}
+  § .sd-mt{font-size:32px}
+  § .sd-go{align-self:stretch}
+  § .sd-choices{grid-template-columns:1fr}
+  § .sd-ch{min-height:72px}
+}
+@media (max-width:520px){
+  § .sd-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  § .sd-lh{padding:12px 14px}
+  § .sd-lt{font-size:21px}
+  § .sd-lb{padding:18px 14px 20px}
+  § .sd-bub{font-size:21px}
+  § .sd-code{font-size:12.5px;padding:12px 10px}
+  § .sd-code [data-ln]{padding-left:26px}
+  § .sd-code [data-ln]::before{width:16px}
+  § .sd-term{font-size:13px}
+  § .sd-dep code{font-size:16px}
+  § .sd-st{margin-left:0}
+  § .sd-q{font-size:20px}
+  § .sd-big{font-size:24px}
+  § .sd-two b{font-size:20px}
+  § .sd-slot{min-width:0;width:100%}
+  § .sd-pipe li{padding-left:50px}
+  § .sd-hkt{font-size:50px}
+  § .sd-bh{padding:16px 14px;gap:12px}
+  § .sd-bface{width:68px;height:68px}
+  § .sd-bt{font-size:20px}
+  § .sd-bbody{padding:18px 14px 22px}
+  § .sd-vsay{font-size:22px}
+  § .sd-iv{padding:22px 16px 24px}
+  § .sd-ivq{font-size:22px}
+  § .sd-iva li{padding-left:42px;font-size:18px}
+  § .sd-cst{font-size:25px}
+  § .sd-csl li{gap:14px}
+  § .sd-csn{flex-basis:54px;font-size:30px}
+  § .sd-hud{padding:7px 10px;gap:8px}
+  § .sd-hud-l{font-size:10px}
+  § .sd-pips span{width:20px;height:20px;font-size:11px}
+  § .sd-wposter .sd-pname{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  § *,§ *::before,§ *::after{animation:none !important;transition:none !important}
+  § .sd-boom{display:none}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-sast-dast-sca'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('sd-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function focusLater(el){if(el) setTimeout(function(){el.focus({preventScroll:true})},RM?0:500)}
+
+  /* HUD */
+  var hud=q('.sd-hud'), fill=q('.sd-bar i'), barT=q('.sd-bar b'), pips=qa('.sd-pips span');
+  var S={def:0,steps:[0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('sd-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('sd-hit');void hud.offsetWidth;hud.classList.add('sd-hit');setTimeout(function(){hud.classList.remove('sd-hit')},700)}
+  function lvl(i){return q('#ix-sast-dast-sca-l'+i)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('sd-x');
+    lvl(i+1).classList.add('sd-clear');
+    var nx=lvl(i+2); if(nx) nx.classList.remove('sd-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    focusLater(t.classList.contains('sd-battle')?t:t.querySelector('.sd-lb button:not([disabled])'));
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    if(!hud.classList.contains('sd-on')){
+      hud.classList.add('sd-on'); paint(); lvl(1).classList.remove('sd-locked');
+      startBtn.textContent='Миссия начата ▼'; say('Миссия принята. Шаг первый открыт.');
+    }
+    go(lvl(1)); focusLater(q('[data-act="sast"]'));
+  });
+
+  /* L1 SAST */
+  var code1=q('[data-code1]'), sastB=q('[data-act="sast"]'), finds=q('[data-finds1]'), fb1=q('#ix-sast-dast-sca-l1 [data-fb]');
+  sastB.addEventListener('click',function(){
+    if(sastB.disabled) return; sastB.disabled=true; sastB.textContent='SAST читает код…';
+    code1.classList.add('sd-scanning');
+    wait(1450).then(function(){
+      code1.classList.remove('sd-scanning');
+      q('[data-ln="4"]',code1).classList.add('sd-bad'); q('[data-ln="7"]',code1).classList.add('sd-bad');
+      sastB.textContent='SAST: 2 находки'; finds.hidden=false; hit();
+      say('SAST нашёл две находки: строка 4 и строка 7. Одна из них ложная тревога.');
+      focusLater(q('.sd-find',finds));
+    });
+  });
+  qa('.sd-find',finds).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v==='4'){
+      b.classList.add('sd-wrong'); b.disabled=true;
+      fb1.className='sd-fb sd-bad'; fb1.innerHTML='<b>Нет.</b>Строка 4 — настоящая дыра: текст из поиска попадает прямо в SQL. Вспомни выпуск про SQL-инъекции.';
+      return;
+    }
+    qa('.sd-find',finds).forEach(function(x){x.disabled=true});
+    b.classList.add('sd-right'); q('[data-v="4"]',finds).classList.add('sd-real');
+    fb1.className='sd-fb sd-good'; fb1.innerHTML='<b>Точно.</b>В строке 7 только число: <code>int()</code> уже отсёк всё лишнее. Это ложное срабатывание — его помечают с комментарием. А строку 4 чиним: параметры вместо склейки.';
+    var l7=q('[data-ln="7"]',code1); l7.classList.remove('sd-bad'); l7.classList.add('sd-fp');
+    var l4=q('[data-ln="4"]',code1); l4.classList.remove('sd-bad'); l4.classList.add('sd-good');
+    l4.textContent='    sql = "SELECT * FROM goods WHERE name = ?"   # параметр';
+    var l5=q('[data-ln="5"]',code1); l5.classList.add('sd-good'); l5.textContent='    rows = db.execute(sql, (q,))';
+    step(0,25); say('Шаг первый пройден. Защита 25 процентов.');
+  })});
+
+  /* L2 SCA */
+  var scaB=q('[data-act="sca"]'), scawhy=q('[data-scawhy]'), fb2=q('#ix-sast-dast-sca-l2 [data-fb]');
+  var DEPS=[['flask','sd-s-ok','✓ уязвимостей нет'],['requests','sd-s-ok','✓ уязвимостей нет'],['pyyaml','sd-s-crit','CRITICAL · CVE'],['colourama','sd-s-mal','ВРЕДОНОСНЫЙ ДВОЙНИК']];
+  scaB.addEventListener('click',function(){
+    if(scaB.disabled) return; scaB.disabled=true; scaB.textContent='SCA сверяет с базой…';
+    var p=Promise.resolve();
+    DEPS.forEach(function(d){
+      p=p.then(function(){var row=q('[data-d="'+d[0]+'"]'),st=q('.sd-st',row); st.className='sd-st sd-s-wait'; st.textContent='проверяю…'; return wait(420).then(function(){
+        st.className='sd-st '+d[1]; st.textContent=d[2]; if(d[1]!=='sd-s-ok'){row.classList.add('sd-d-bad'); hit();}
+      })});
+    });
+    p.then(function(){
+      scaB.textContent='SCA: сборка остановлена'; scawhy.hidden=false;
+      say('SCA нашёл критическую уязвимость в pyyaml 5.3 и вредоносный пакет-двойник colourama.');
+      focusLater(q('.sd-ch',scawhy));
+    });
+  });
+  var SCAW={off:'Пока SCA выключен, дыра уходит к покупателям. А Мерджер этого и ждёт.',ign:'«Навсегда» значит «забыли». Исключение бывает только временным: со сроком, причиной и владельцем.'};
+  qa('[data-sca] .sd-ch').forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v!=='up'){b.classList.add('sd-wrong'); b.disabled=true; hit(); fb2.className='sd-fb sd-bad'; fb2.innerHTML='<b>Мимо.</b>'+SCAW[v]; return}
+    qa('[data-sca] .sd-ch').forEach(function(x){x.disabled=true}); b.classList.add('sd-right');
+    fb2.className='sd-fb sd-good'; fb2.innerHTML='<b>Да.</b>Обновляем pyyaml, прогоняем тесты и пересобираем. Двойника colourama удаляем и ставим настоящий colorama.';
+    var py=q('[data-d="pyyaml"]'); py.classList.remove('sd-d-bad'); py.classList.add('sd-d-fixed'); q('code',py).textContent='pyyaml==6.0.2'; q('.sd-st',py).className='sd-st sd-s-ok'; q('.sd-st',py).textContent='✓ исправлено';
+    var co=q('[data-d="colourama"]'); co.classList.remove('sd-d-bad'); co.classList.add('sd-d-fixed'); q('code',co).textContent='colorama==0.4.6'; q('.sd-st',co).className='sd-st sd-s-ok'; q('.sd-st',co).textContent='✓ настоящий'; var nw=q('.sd-new',co); if(nw) nw.remove();
+    step(1,50); say('Шаг второй пройден. Защита 50 процентов.');
+  })});
+
+  /* L3 DAST */
+  var dastB=q('[data-act="dast"]'), log=q('[data-log]'), tst=q('[data-tst]'), dastq=q('[data-dastq]'), fb3=q('#ix-sast-dast-sca-l3 [data-fb]');
+  var LOG=[
+    ['GET /','200',0],['GET /search?q=чайник','200',0],['GET /search?q=\'','200',0,'SQL-инъекции нет'],['GET /login','200',0],
+    ['GET /admin','200',1,'ОТКРЫТО БЕЗ ВХОДА'],['Set-Cookie: session=…','',1,'НЕТ ФЛАГА HttpOnly'],['GET /backup.zip','404',0]
+  ];
+  function logEmpty(){log.innerHTML='<li class="sd-empty">Сканер ждёт команды…</li>'}
+  logEmpty();
+  dastB.addEventListener('click',function(){
+    if(dastB.disabled) return; dastB.disabled=true; dastB.textContent='DAST стучится…'; tst.textContent='СКАНИРУЮ'; log.innerHTML='';
+    var p=Promise.resolve();
+    LOG.forEach(function(l){p=p.then(function(){return wait(380).then(function(){
+      var li=document.createElement('li'); if(l[2]) li.className='sd-alert';
+      li.innerHTML='<span>'+esc(l[0])+'</span>'+(l[1]?'<span class="'+(l[1]==='200'?'sd-c2':'sd-c4')+'">'+l[1]+'</span>':'')+(l[3]?(l[2]?'<em>'+esc(l[3])+'</em>':'<span class="sd-c4">'+esc(l[3])+'</span>'):'');
+      log.appendChild(li); if(l[2]) hit();
+    })})});
+    p.then(function(){
+      tst.textContent='2 НАХОДКИ'; dastB.textContent='DAST: 2 находки'; dastq.hidden=false;
+      say('DAST нашёл открытую без входа страницу /admin и cookie сессии без флага HttpOnly.');
+      focusLater(q('.sd-ch',dastq));
+    });
+  });
+  var DASTW={bad:'Хоть тысячу правил: в коде и библиотеках этой ошибки нет. Мерджер поменял настройку прокси на сервере.',smart:'Не умнее — он смотрит с другой стороны. Строку кода и старую библиотеку он не найдёт.'};
+  qa('[data-dast] .sd-ch').forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v!=='cfg'){b.classList.add('sd-wrong'); b.disabled=true; hit(); fb3.className='sd-fb sd-bad'; fb3.innerHTML='<b>Мимо.</b>'+DASTW[v]; return}
+    qa('[data-dast] .sd-ch').forEach(function(x){x.disabled=true}); b.classList.add('sd-right');
+    fb3.className='sd-fb sd-good'; fb3.innerHTML='<b>Да.</b>Ошибка живёт в настройках сервера, а не в коде. Её видно только у запущенного сайта.';
+    step(2,75); say('Шаг третий пройден. Защита 75 процентов.');
+  })});
+
+  /* L4 PIPELINE */
+  var pipe=q('[data-pipe]'), run0=q('[data-act="run0"]'), runB=q('[data-act="run"]'), guards=q('[data-guards]'), fb4=q('[data-fb4]');
+  var slots=qa('.sd-slot',pipe), chips=qa('.sd-gc',guards), SLOT=[null,null,null], picked=null, running=false;
+  var TOK=[['code','🧨 Склейка SQL','SAST'],['pkg','📦 colourama','SCA'],['cfg','🚪 /admin без входа','DAST']];
+  function trays(){return qa('li',pipe).map(function(li){return q('.sd-tray',li)})}
+  function clearPipe(){qa('li',pipe).forEach(function(li){li.classList.remove('sd-here','sd-hot');var m=q('.sd-pmsg',li); if(m) m.remove()}); trays().forEach(function(t){t.innerHTML=''})}
+  function mkTok(t){var s=document.createElement('span'); s.className='sd-tok'; s.setAttribute('data-t',t[0]); s.textContent=t[1]; return s}
+  function msg(li,t){var m=document.createElement('span'); m.className='sd-pmsg'; m.textContent=t; li.appendChild(m)}
+  function runPipe(withGuards){
+    running=true; clearPipe(); pipe.classList.add('sd-running'); fb4.textContent=''; fb4.className='sd-fb';
+    var lis=qa('li',pipe), alive=TOK.map(function(t){return {t:t,el:mkTok(t)}}), caught=[], p=Promise.resolve();
+    lis.forEach(function(li,i){p=p.then(function(){
+      lis.forEach(function(x){x.classList.remove('sd-here')}); li.classList.add('sd-here');
+      var tray=q('.sd-tray',li); alive.forEach(function(a){tray.appendChild(a.el); a.el.style.animation='none'; void a.el.offsetWidth; a.el.style.animation=''});
+      if(withGuards && li.classList.contains('sd-post')){
+        var si=+q('.sd-slot',li).getAttribute('data-slot'), g=SLOT[si];
+        if(g==='DAST' && si<2) msg(li,'DAST: нечего сканировать — сайт ещё не запущен.');
+        var keep=[]; alive.forEach(function(a){ if(a.t[2]===g){a.el.classList.add('sd-caught'); caught.push(a)} else keep.push(a)});
+        if(keep.length!==alive.length) hit();
+        // пойманные остаются на посту, остальные едут дальше
+        alive=keep;
+        alive.forEach(function(a){a.el=mkTok(a.t)});
+        var tr=q('.sd-tray',li); qa('.sd-tok:not(.sd-caught)',tr).forEach(function(x){x.remove()});
+      }
+      if(!li.classList.contains('sd-prod') && !li.classList.contains('sd-post')){
+        // на этапах токен «проезжает»: копия едет дальше
+        var tr2=q('.sd-tray',li); alive.forEach(function(a){a.el=mkTok(a.t)}); setTimeout(function(){},0);
+        return wait(560).then(function(){ if(!li.classList.contains('sd-prod')) tr2.innerHTML=''; });
+      }
+      return wait(700);
+    })});
+    return p.then(function(){
+      pipe.classList.remove('sd-running'); running=false;
+      var prod=lis[lis.length-1]; qa('.sd-tok',prod).forEach(function(x){x.classList.add('sd-leak')});
+      if(alive.length) prod.classList.add('sd-hot');
+      return alive;
+    });
+  }
+  run0.addEventListener('click',function(){
+    if(running||run0.disabled) return; run0.disabled=true;
+    runPipe(false).then(function(){ wait(500).then(openHack) });
+  });
+  var hack=q('.sd-hack');
+  function openHack(){hack.hidden=false; hack.classList.remove('sd-rw'); setTimeout(function(){q('[data-act="rewind"]').focus()},30); say('Влито! Все три подарка дошли до покупателей.')}
+  function closeHack(){
+    if(hack.hidden) return; hack.classList.add('sd-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('sd-rw'); clearPipe();
+      run0.hidden=true; runB.hidden=false; guards.hidden=false; slots.forEach(function(s){s.disabled=false});
+      fb4.className='sd-fb'; fb4.innerHTML='<b>Время откачено.</b>Теперь расставь трёх охранников по постам.';
+      say('Время откачено. Выбери охранника и нажми на пост.');
+      go(guards); focusLater(chips[0]);
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]').focus()}
+  });
+  function paintGuards(){
+    slots.forEach(function(s,i){var v=SLOT[i]; q('[data-slotv]',s).textContent=v||''; s.classList.toggle('sd-filled',!!v); s.setAttribute('aria-label',q('span',s).textContent+', '+q('small',s).textContent+': '+(v||'пусто'))});
+    chips.forEach(function(c){var g=c.getAttribute('data-guard'); c.classList.toggle('sd-used',SLOT.indexOf(g)>-1); c.setAttribute('aria-pressed',String(picked===g))});
+    runB.disabled=SLOT.some(function(v){return !v});
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    if(running) return; var g=c.getAttribute('data-guard'); picked=picked===g?null:g; paintGuards();
+    if(picked){ say(g+' выбран. Нажми на пост.'); var first=slots.filter(function(s,i){return !SLOT[i]})[0]||slots[0]; first.focus({preventScroll:true}) }
+  })});
+  slots.forEach(function(s,i){s.addEventListener('click',function(){
+    if(running||s.disabled) return;
+    if(!picked){ if(SLOT[i]){SLOT[i]=null; paintGuards(); say('Пост освобождён.')} else say('Сначала выбери охранника.'); return }
+    var j=SLOT.indexOf(picked); if(j>-1) SLOT[j]=null;
+    SLOT[i]=picked; say(picked+' стоит на посту '+(i+1)+'.'); picked=null; paintGuards();
+    var nextChip=chips.filter(function(c){return SLOT.indexOf(c.getAttribute('data-guard'))<0})[0];
+    if(nextChip) nextChip.focus({preventScroll:true}); else runB.focus({preventScroll:true});
+  })});
+  paintGuards();
+  runB.addEventListener('click',function(){
+    if(running||runB.disabled) return; runB.disabled=true;
+    runPipe(true).then(function(left){
+      runB.disabled=false;
+      if(!left.length){
+        fb4.className='sd-fb sd-good'; fb4.innerHTML='<b>Все пойманы!</b>SAST поймал склейку SQL в коде, SCA — пакет-двойник при сборке, DAST — открытую админку на стенде. До покупателей не дошло ничего.';
+        runB.textContent='Конвейер защищён ✓'; runB.disabled=true; slots.forEach(function(s){s.disabled=true}); chips.forEach(function(c){c.disabled=true});
+        step(3,100); say('Все три подарка пойманы. Защита 100 процентов.');
+        var a=q('#ix-sast-dast-sca-l4 .sd-after'); setTimeout(function(){go(a)},RM?0:700); focusLater(q('#ix-sast-dast-sca-l4 [data-goto]'));
+      } else {
+        var names=left.map(function(a){return a.t[1]}).join(', ');
+        var why=SLOT[2]!=='DAST'?'Подсказка: DAST нужен запущенный сайт. Где он уже работает?':'Проверь, кто ловит код, а кто библиотеки.';
+        fb4.className='sd-fb sd-bad'; fb4.innerHTML='<b>Прорвалось:</b>'+esc(names)+'. '+why+' Переставь охрану и запусти снова.';
+        say('Прорвалось до покупателей: '+names+'. '+why); hit();
+      }
+    });
+  });
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Добавлю в проект пакет reqeusts. Одна буква не на месте — кто заметит?',q:'Чем ответишь?',
+     o:[['SAST прочитает наш код и найдёт',0,'SAST читает твой код, а не чужие пакеты. Импорт выглядит невинно.'],
+        ['SCA и правило: новый пакет — только после проверки, версии в lock-файле',1,'SCA знает вредоносные двойники, а lock-файл не даст пакету появиться тихо.'],
+        ['DAST на стенде',0,'Пакет может воровать данные молча. Снаружи сайт выглядит как обычно.']]},
+    {v:'Ваш SAST кричит двести раз в день. Скоро вы его выключите, и я пройду.',q:'Что сделаешь со шумом?',
+     o:[['Выключить SAST: всё равно никто не читает',0,'Именно этого он и ждёт. Без SAST склейка SQL уйдёт в прод.'],
+        ['Разобрать ложные тревоги, настроить правила, блокировать только новые High и Critical',1,'Мало шума — люди снова читают отчёты, а опасное не проходит.'],
+        ['Чинить все двести до каждого релиза',0,'Команда встанет. Сначала важное, остальное — в бэклог со сроком.']]},
+    {v:'Код чистый, библиотеки свежие. А в настройке сервера я оставил /admin без пароля.',q:'Кто это поймает?',
+     o:[['SCA',0,'SCA смотрит библиотеки. Настройка сервера — не библиотека.'],
+        ['DAST после выкладки на стенд',1,'DAST стучится в /admin снаружи и видит: пустило без входа.'],
+        ['SAST',0,'Этой ошибки нет в исходниках, читать нечего.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.sd-bface');
+  var BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='НОЧНОЙ МЕРДЖЕР · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Ночного Мерджера: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="sd-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="sd-vsay">'+esc(m.v)+'</p><p class="sd-bq">'+esc(m.q)+'</p><div class="sd-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="sd-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="sd-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.sd-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var m=MOVES[BS.i], o=m.o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){b.classList.add('sd-wrong'); b.disabled=true; BS.missed=true; fbx.className='sd-bfb sd-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]); return}
+    qa('.sd-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('sd-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('sd-ow'); void face.offsetWidth; face.classList.add('sd-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='sd-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='sd-bfb sd-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='sd-act';
+    nb.innerHTML='<button type="button" class="sd-btn sd-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++; if(BS.i<3){bMove(); focusFirst()} else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function focusFirst(){var f=q('.sd-bo',bb); f&&f.focus({preventScroll:true})}
+  function bWin(){
+    bb.innerHTML='<div class="sd-win"><div class="sd-wwrap" aria-hidden="true"><div class="sd-wposter"><span class="sd-moon"></span><span class="sd-pname">НОЧНОЙ<br>МЕРДЖЕР</span></div><span class="sd-wstamp">ПОВЕРЖЕН</span></div><p class="sd-wint">Ночной Мерджер повержен</p><p class="sd-wins">С первого раза: <b>'+BS.first+'/3</b></p><p class="sd-rule">SAST читает твой код, SCA — чужой, DAST проверяет живой сайт. Вместе они стоят на каждом шаге конвейера.</p><button type="button" class="sd-btn sd-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); focusFirst()});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Ночной Мерджер повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-sast-dast-sca-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
