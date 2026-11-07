@@ -1,0 +1,882 @@
+<section class="ix ix-burp-suite" data-ix="burp-suite" aria-label="Выпуск 29: Тихий Параметр и Burp Suite">
+
+<div class="bs-story">
+
+  <div class="bs-hud" aria-hidden="true">
+    <span class="bs-hud-l">КОНТРОЛЬ ЗАПРОСОВ</span>
+    <span class="bs-bar"><i></i><b>0%</b></span>
+    <span class="bs-pips"><span>1</span><span>2</span><span>3</span><span>4</span></span>
+  </div>
+  <div class="bs-sr" aria-live="polite" data-live></div>
+
+  <!-- ========== MISSION ========== -->
+  <section class="bs-mission" id="ix-burp-suite-mission" aria-labelledby="ix-burp-suite-mt">
+    <div class="bs-poster" role="img" aria-label="Постер злодея: Тихий Параметр прячется в скрытом поле формы">
+      <span class="bs-bgword" aria-hidden="true">hidden</span>
+      <span class="bs-tag" aria-hidden="true">ЦЕЛЬ: ТИХИЙ ПАРАМЕТР</span>
+      <span class="bs-tag2" aria-hidden="true">ПОЛЕ: СКРЫТОЕ</span>
+      <div class="bs-pname" aria-hidden="true"><span>ТИХИЙ</span><b>ПАРАМЕТР</b></div>
+      <code class="bs-pcode" aria-hidden="true">&lt;input type=<i>"hidden"</i><br>&nbsp;name="price" value="4990"&gt;</code>
+      <span class="bs-shh" aria-hidden="true">ТСС…</span>
+    </div>
+    <div class="bs-mbody">
+      <p class="bs-kick">ЗАДАНИЕ · ВЕБ-КВАРТАЛ · №29</p>
+      <h2 class="bs-mt" id="ix-burp-suite-mt">Поймай<br>запрос</h2>
+      <p class="bs-msub">Тихий Параметр прячется в&nbsp;полях, которых не&nbsp;видно на&nbsp;странице. Возьми <em>Burp Suite</em>, встань между браузером и&nbsp;сервером и&nbsp;найди, где сервер верит клиенту.</p>
+      <p class="bs-motto">«На экране меня нет. В запросе — я главный.»</p>
+      <ol class="bs-moves" aria-label="Четыре шага миссии">
+        <li data-mv="1"><b>01</b><span>Перехват</span></li>
+        <li data-mv="2"><b>02</b><span>Цена с сервера</span></li>
+        <li data-mv="3"><b>03</b><span>Repeater</span></li>
+        <li data-mv="4"><b>04</b><span>Инструменты</span></li>
+      </ol>
+      <button class="bs-go" type="button" data-act="start">Принять миссию ▶</button>
+    </div>
+  </section>
+
+  <!-- ========== L1: PROXY ========== -->
+  <section class="bs-lvl bs-locked" id="ix-burp-suite-l1" aria-labelledby="ix-burp-suite-t1">
+    <div class="bs-lh"><span class="bs-ln">ШАГ 1 / 4</span><h3 class="bs-lt" id="ix-burp-suite-t1">Встань посередине</h3><span class="bs-ok">ПОЙМАН</span></div>
+    <div class="bs-lockcap"><span>🔒 Сначала прими миссию</span></div>
+    <div class="bs-lb">
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Burp Suite — это посредник. Браузер думает, что говорит с сервером, а на деле каждое письмо сначала проходит через Burp. Можно остановить, прочитать и поправить.</span></div>
+      <div class="bs-say"><span class="bs-who bs-sonya">СОНЯ</span><span class="bs-bub">То есть я сама себе «человек посередине»?</span></div>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Именно. На своём учебном магазине. Включай перехват и покупай наушники.</span></div>
+
+      <div class="bs-flow" data-flow aria-hidden="true">
+        <span class="bs-node bs-n-br"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M3 9h18" stroke="currentColor" stroke-width="2.4"/></svg><small>браузер</small></span>
+        <span class="bs-wire"><i class="bs-pkt"></i></span>
+        <span class="bs-node bs-n-gate"><b>BURP</b><small>127.0.0.1:8080</small></span>
+        <span class="bs-wire bs-wire2"></span>
+        <span class="bs-node bs-n-srv"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="4" y="14" width="16" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="8" cy="6.5" r="1.3" fill="currentColor"/><circle cx="8" cy="17.5" r="1.3" fill="currentColor"/></svg><small>сервер</small></span>
+      </div>
+
+      <div class="bs-shop" data-shop>
+        <div class="bs-shop-url"><span aria-hidden="true">🔒</span> shop.lab/cart</div>
+        <div class="bs-shop-b">
+          <div class="bs-prod" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 38v-6a20 20 0 0 1 40 0v6" fill="none" stroke="currentColor" stroke-width="5"/><rect x="7" y="36" width="12" height="18" rx="4" fill="currentColor"/><rect x="45" y="36" width="12" height="18" rx="4" fill="currentColor"/></svg></div>
+          <div class="bs-prod-t"><b>Наушники Bass-9</b><span class="bs-price">4 990 ₽</span></div>
+          <button class="bs-btn" type="button" data-act="buy" disabled>Купить</button>
+        </div>
+        <div class="bs-shop-res" data-shopres aria-live="polite"></div>
+      </div>
+
+      <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="icpt" aria-pressed="false">Включить перехват</button></div>
+
+      <div class="bs-burp" data-burp hidden>
+        <div class="bs-burp-top"><span class="bs-tab">Proxy › Intercept</span><span class="bs-stamp-s">ЗАПРОС ОСТАНОВЛЕН</span></div>
+<pre class="bs-req" aria-label="Перехваченный запрос">POST /cart/checkout HTTP/2
+Host: shop.lab
+Cookie: session=7f3a91…
+Content-Type: application/x-www-form-urlencoded
+
+item=bass9&amp;qty=1&amp;<span class="bs-hot">price=<label class="bs-sr" for="ix-burp-suite-price">Значение параметра price</label><input class="bs-edit" id="ix-burp-suite-price" type="text" inputmode="numeric" value="4990" maxlength="6" autocomplete="off" spellcheck="false"></span></pre>
+        <div class="bs-burp-act">
+          <button class="bs-btn" type="button" data-act="set1">Поменять price на 1</button>
+          <button class="bs-btn bs-y" type="button" data-act="fwd">Forward ▶</button>
+        </div>
+        <p class="bs-hint">Поле с числом можно править самому. Forward отправит запрос дальше на сервер.</p>
+      </div>
+      <p class="bs-legal">Учебный магазин. Перехватывать и менять запросы можно только у себя и там, где тебе дали письменное разрешение.</p>
+
+      <div class="bs-after">
+        <div class="bs-say"><span class="bs-who bs-sonya">СОНЯ</span><span class="bs-bub">На странице никакого price не было! Откуда он в запросе?</span></div>
+        <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Скрытое поле формы. Глаз его не видит, а браузер отправляет. Burp показывает запрос целиком, со всем, что спрятано.</span></div>
+        <div class="bs-facts">
+          <p><b>Proxy</b><span>Burp слушает адрес <code>127.0.0.1:8080</code>. Проще всего открыть его встроенный браузер: Proxy › Open browser, там уже всё настроено.</span></p>
+          <p><b>HTTPS</b><span>Шифрование Burp не ломает. Он выдаёт браузеру свой сертификат, и браузер ему доверяет, потому что ты сам так настроил. Встроенный браузер доверяет сразу, в обычный сертификат Burp ставят вручную.</span></p>
+          <p><b>HTTP history</b><span>Перехват не обязательно держать включённым. Все запросы и так пишутся в историю, оттуда их удобно брать.</span></p>
+        </div>
+        <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-burp-suite-l2">Чинить сервер ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L2: FIX PRICE ========== -->
+  <section class="bs-lvl bs-locked" id="ix-burp-suite-l2" aria-labelledby="ix-burp-suite-t2">
+    <div class="bs-lh"><span class="bs-ln">ШАГ 2 / 4</span><h3 class="bs-lt" id="ix-burp-suite-t2">Цена с сервера</h3><span class="bs-ok">ЗАКРЫТО</span></div>
+    <div class="bs-lockcap"><span>🔒 Сначала перехвати запрос</span></div>
+    <div class="bs-lb">
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Вот код магазина. Найди строку, где сервер поверил браузеру.</span></div>
+<pre class="bs-code" data-code aria-label="Код сервера">@app.post("/cart/checkout")
+@login_required
+def checkout():
+  item = Product.get(request.form["item"])
+<span data-codeline><span class="bs-badl">  price = int(request.form["price"])
+  <span class="bs-cm"># цену прислал браузер</span></span></span>
+  charge(current_user, price)</pre>
+
+      <p class="bs-q">Как закрыть дыру?</p>
+      <div class="bs-choices" data-fix>
+        <button class="bs-ch" type="button" data-v="ro"><b>Спрятать глубже</b><span>Поле readonly, имя непонятное: <code>_p7</code></span></button>
+        <button class="bs-ch" type="button" data-v="js"><b>Проверка в JS</b><span>Скрипт не даст отправить цену меньше 4990</span></button>
+        <button class="bs-ch" type="button" data-v="srv"><b>Цена из базы</b><span>Сервер берёт цену товара сам, поле price не читает</span></button>
+      </div>
+      <p class="bs-fb" data-fb aria-live="polite"></p>
+
+      <div class="bs-after">
+        <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Проверь. Отправь тот же запрос с price=1.</span></div>
+        <div class="bs-resp" data-resp2>
+<pre class="bs-req">POST /cart/checkout HTTP/2
+
+item=bass9&amp;qty=1&amp;<span class="bs-hot bs-hot-s">price=1</span></pre>
+          <div class="bs-rout" data-rout aria-live="polite"></div>
+        </div>
+        <div class="bs-act"><button class="bs-btn bs-y" type="button" data-act="replay2">Отправить ещё раз</button></div>
+        <p class="bs-def">Это ошибка логики: сервер доверился клиенту. В OWASP Top&nbsp;10:2025 такие вещи относятся к&nbsp;<b>A06 Insecure Design</b>. Правило одно: всё, что пришло из браузера, мог написать кто угодно.</p>
+        <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-burp-suite-l3">Дальше: Repeater ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L3: REPEATER ========== -->
+  <section class="bs-lvl bs-locked" id="ix-burp-suite-l3" aria-labelledby="ix-burp-suite-t3">
+    <div class="bs-lh"><span class="bs-ln">ШАГ 3 / 4</span><h3 class="bs-lt" id="ix-burp-suite-t3">Повтори и поменяй</h3><span class="bs-ok">ЗАКРЫТО</span></div>
+    <div class="bs-lockcap"><span>🔒 Сначала почини цену</span></div>
+    <div class="bs-lb">
+      <div class="bs-say"><span class="bs-who bs-sonya">СОНЯ</span><span class="bs-bub">Каждый раз жать «Купить» и ловить запрос — долго.</span></div>
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">Для этого есть Repeater. Нашла запрос в истории, нажала Ctrl+R, и он у тебя на столе. Меняй что хочешь и жми Send сколько угодно раз.</span></div>
+      <div class="bs-say"><span class="bs-who bs-v">ТИХИЙ ПАРАМЕТР</span><span class="bs-bub">А в профиле есть поле role. В форме его нет. Но сервер-то его читает…</span></div>
+
+      <div class="bs-rep" data-rep>
+        <div class="bs-rep-top"><span class="bs-tab">Repeater</span><span class="bs-cnt" data-cnt>Отправлено: 0</span></div>
+        <div class="bs-rep-g">
+          <div class="bs-rep-p">
+            <p class="bs-rep-h">Request</p>
+<pre class="bs-req">PUT /api/profile HTTP/2
+Content-Type: application/json
+
+{"name": "Соня",
+ "role": "<label class="bs-sr" for="ix-burp-suite-role">Значение поля role</label><input class="bs-edit bs-edit-w" id="ix-burp-suite-role" type="text" value="user" maxlength="10" autocomplete="off" spellcheck="false">"}</pre>
+          </div>
+          <div class="bs-rep-p bs-rep-r">
+            <p class="bs-rep-h">Response</p>
+            <div class="bs-rout" data-rout3 aria-live="polite"><span class="bs-muted">Нажми Send</span></div>
+          </div>
+        </div>
+        <div class="bs-burp-act">
+          <button class="bs-btn" type="button" data-act="admin">role → admin</button>
+          <button class="bs-btn bs-y" type="button" data-act="send">Send ▶</button>
+        </div>
+      </div>
+
+      <div class="bs-fixbox" data-fixbox hidden>
+        <p class="bs-q">Сервер записал роль, которую прислал клиент. Как исправить?</p>
+        <div class="bs-choices" data-fix3>
+          <button class="bs-ch" type="button" data-v="form"><b>Убрать role из формы</b><span>Его там и так нет, а запрос шлют в обход формы</span></button>
+          <button class="bs-ch" type="button" data-v="allow"><b>Список разрешённых полей</b><span>Из запроса сервер берёт только name, остальное отбрасывает</span></button>
+          <button class="bs-ch" type="button" data-v="js"><b>Проверка в JS</b><span>Скрипт стирает role перед отправкой</span></button>
+        </div>
+        <p class="bs-fb" data-fb3 aria-live="polite"></p>
+      </div>
+
+      <div class="bs-after">
+        <p class="bs-big">Repeater не взламывает.<br><span>Он показывает, чему сервер верит.</span></p>
+        <p class="bs-def">Ошибка называется <b>mass assignment</b>: сервер копирует в базу все поля из запроса подряд. В OWASP API Security Top&nbsp;10 это <b>API3:2023</b>, нарушение авторизации на уровне свойств объекта. Лечится списком разрешённых полей на сервере.</p>
+        <div class="bs-act"><button class="bs-btn" type="button" data-goto="ix-burp-suite-l4">Ящик инструментов ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== L4: TOOLS ========== -->
+  <section class="bs-lvl bs-locked" id="ix-burp-suite-l4" aria-labelledby="ix-burp-suite-t4">
+    <div class="bs-lh"><span class="bs-ln">ШАГ 4 / 4</span><h3 class="bs-lt" id="ix-burp-suite-t4">Ящик инструментов</h3><span class="bs-ok">СОБРАН</span></div>
+    <div class="bs-lockcap"><span>🔒 Сначала пройди Repeater</span></div>
+    <div class="bs-lb">
+      <div class="bs-say"><span class="bs-who">ДЯДЯ МИША</span><span class="bs-bub">В Burp десяток вкладок, но новичку хватает пяти. Proxy и Repeater ты уже знаешь. Угадай, кто нужен в каждой ситуации.</span></div>
+      <div class="bs-tools" data-tools aria-live="polite"></div>
+      <div class="bs-after">
+        <ul class="bs-tlist">
+          <li><b>Proxy</b><span>ловит запросы и пишет их историю</span></li>
+          <li><b>Repeater</b><span>повторяет один запрос с правками</span></li>
+          <li><b>Intruder</b><span>подставляет много значений по очереди. В бесплатной Community работает с ограничением скорости</span></li>
+          <li><b>Decoder</b><span>раскодирует Base64, URL-кодирование, hex</span></li>
+          <li><b>Comparer</b><span>сравнивает два ответа и подсвечивает разницу</span></li>
+        </ul>
+        <p class="bs-def">Автоматический сканер уязвимостей есть только в платной Professional. Для учёбы хватает бесплатной <b>Community Edition</b>. И главное: в Target › Scope записывают адреса, которые разрешено трогать, а всё остальное Burp можно попросить не показывать.</p>
+        <div class="bs-act"><button class="bs-btn bs-y" type="button" data-goto="ix-burp-suite-battle">К битве с Тихим Параметром ▼</button></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /story -->
+
+<!-- ========== HACK OVERLAY ========== -->
+<div class="bs-hack" role="dialog" aria-modal="true" aria-labelledby="ix-burp-suite-hk" hidden>
+  <div class="bs-hkin">
+    <div class="bs-hkface" aria-hidden="true"><span>ТИХИЙ</span><b>ПАРАМЕТР</b><code>price=<i data-hkp>1</i></code></div>
+    <p class="bs-hkt" id="ix-burp-suite-hk">ВЗЛОМ!</p>
+    <div class="bs-hkcard">
+      <span>Заказ №5521 · <b>оплачен</b></span>
+      <span>Наушники Bass-9</span>
+      <span>Списано: <b class="bs-red" data-hkp2>1 ₽</b> вместо 4 990 ₽</span>
+    </div>
+    <p class="bs-hksay">Я молчал на странице. А сервер меня послушал.</p>
+    <button class="bs-btn bs-y" type="button" data-act="rewind">◀◀ Откатить время</button>
+  </div>
+</div>
+
+<!-- ========== BATTLE ========== -->
+<section class="bs-battle" id="ix-burp-suite-battle" aria-labelledby="ix-burp-suite-bt" tabindex="-1">
+  <div class="bs-bh">
+    <span class="bs-bface" aria-hidden="true">?=</span>
+    <div class="bs-bhx">
+      <h2 class="bs-bt" id="ix-burp-suite-bt">Битва со злодеем</h2>
+      <div class="bs-hp" role="img" aria-label="Здоровье Тихого Параметра" data-hp-wrap><i data-hp></i><b data-hp-t>ТИХИЙ ПАРАМЕТР · HP 3/3</b></div>
+    </div>
+  </div>
+  <div class="bs-bbody" data-battle aria-live="polite"></div>
+</section>
+
+<!-- ========== INTERVIEW ========== -->
+<section class="bs-iv" aria-labelledby="ix-burp-suite-ivt">
+  <p class="bs-ivk">ВОПРОС С СОБЕСЕДОВАНИЯ · JUNIOR APPSEC</p>
+  <h2 class="bs-ivq" id="ix-burp-suite-ivt">Тебе дали веб-приложение на проверку. Как ты будешь работать с Burp Suite в первый час?</h2>
+  <div class="bs-think">
+    <b>Подумай сам</b>
+    <span>Подсказка: с чего начать, ещё до первого запроса? И почему не стоит сразу запускать автоматический перебор?</span>
+  </div>
+  <button class="bs-btn bs-y" type="button" data-act="iv" aria-expanded="false" aria-controls="ix-burp-suite-iva">Показать сильный ответ</button>
+  <div class="bs-iva" id="ix-burp-suite-iva" hidden>
+    <ol>
+      <li><b>Разрешение и scope.</b> Уточняю письменно, какие адреса и действия можно трогать, и записываю их в Target › Scope. Беру тестовые аккаунты, лучше два разных пользователя и одного с другой ролью.</li>
+      <li><b>Карта приложения.</b> С выключенным перехватом прохожу все функции во встроенном браузере. Смотрю HTTP history и Site map: какие есть эндпоинты, параметры, скрытые поля, cookie, JSON-поля, заголовки.</li>
+      <li><b>Ручные проверки в Repeater.</b> Меняю по одному параметру: цену, количество, номер чужого объекта, роль, лишние поля в JSON. Смотрю код и длину ответа, для сравнения беру Comparer. Перебор через Intruder и сканер запускаю только в рамках scope.</li>
+      <li><b>Доказательство и исправление.</b> Сохраняю запрос и ответ, пишу шаги воспроизведения, влияние на бизнес и как чинить: проверки на сервере, а в CI тест на этот случай.</li>
+    </ol>
+    <p class="bs-ivx"><b>Ошибка новичка:</b> сразу запустить сканер или Intruder на всё подряд. Так легко выйти за scope и положить сервис, а ошибки логики вроде цены из браузера сканер почти не видит.</p>
+  </div>
+</section>
+
+<!-- ========== CHEAT SHEET ========== -->
+<section class="bs-cs" aria-labelledby="ix-burp-suite-cst">
+  <h2 class="bs-cst" id="ix-burp-suite-cst">Шпаргалка: что важно знать</h2>
+  <ol class="bs-csl">
+    <li><span class="bs-csn" aria-hidden="true">01</span><div><b>Burp — посредник</b><p>Он стоит между браузером и сервером (по умолчанию 127.0.0.1:8080) и показывает каждый запрос и ответ.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">02</span><div><b>HTTPS тоже виден</b><p>Burp выдаёт браузеру свой CA-сертификат. Встроенный браузер Burp ему уже доверяет.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">03</span><div><b>Proxy → Repeater</b><p>Поймал запрос в истории, Ctrl+R, меняешь один параметр и жмёшь Send.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">04</span><div><b>Клиенту не верят</b><p>Скрытые поля, cookie и проверки в JS подделываются. Цену, роль и права решает только сервер.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">05</span><div><b>Пять вкладок</b><p>Proxy, Repeater, Intruder, Decoder, Comparer. Сканер есть только в платной Professional.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">06</span><div><b>Scope и разрешение</b><p>Без письменного разрешения не трогаешь ничего. В Target › Scope записываешь, что можно.</p></div></li>
+    <li><span class="bs-csn" aria-hidden="true">07</span><div><b>Место в DevSecOps</b><p>DAST-сканер (ZAP, Burp Suite DAST) гоняют в CI, а ручной Burp ловит ошибки логики, которых сканер не понимает.</p></div></li>
+  </ol>
+  <p class="bs-train"><b>Тренируйся легально:</b> PortSwigger Web Security Academy (лаборатория «Excessive trust in client-side controls» в разделе Business logic), OWASP Juice Shop, picoCTF. Чужие сайты перехватывать и менять нельзя.</p>
+</section>
+
+</section>
+
+<style>
+.ix-burp-suite{--ink:#141414;--paper:#fff7e3;--yel:#ffd60a;--org:#ff5f1f;--red:#ff3b3b;--green:#2ee59d;--gdk:#0a7a4e;--muted:#5b5446;
+  --f-mono:'Rubik Mono One',sans-serif;--f-cap:'Russo One',sans-serif;--f-hand:Neucha,cursive;--f-text:Rubik,system-ui,sans-serif;--code:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  position:relative;display:block;color:var(--ink);font-family:var(--f-text);font-size:18px;line-height:1.5;max-width:900px;margin:0 auto}
+.ix-burp-suite *,.ix-burp-suite *::before,.ix-burp-suite *::after{box-sizing:border-box}
+.ix-burp-suite button,.ix-burp-suite input{font:inherit;color:inherit}
+.ix-burp-suite :focus-visible{outline:4px solid var(--org);outline-offset:3px}
+.ix-burp-suite [hidden]{display:none !important}
+.ix-burp-suite p{margin:0}
+.ix-burp-suite code{font-family:var(--code)}
+.ix-burp-suite .bs-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.ix-burp-suite .bs-hud{position:sticky;top:0;z-index:30;display:none;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);color:#fff;border:3px solid var(--ink)}
+.ix-burp-suite .bs-hud.bs-on{display:flex;animation:bs-drop .4s cubic-bezier(.2,1.4,.4,1)}
+.ix-burp-suite .bs-hud-l{font-family:var(--f-cap);font-size:12px;color:var(--yel);white-space:nowrap}
+.ix-burp-suite .bs-bar{flex:1;min-width:60px;height:20px;border:2px solid #fff;background:#2a2a2a;position:relative;overflow:hidden}
+.ix-burp-suite .bs-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.18) 0 6px,transparent 6px 12px)}
+.ix-burp-suite .bs-bar b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:12px;text-shadow:0 0 3px #000}
+.ix-burp-suite .bs-hud.bs-hit{animation:bs-shake .4s}
+.ix-burp-suite .bs-hud.bs-hit .bs-bar{border-color:var(--red)}
+.ix-burp-suite .bs-pips{display:flex;gap:4px}
+.ix-burp-suite .bs-pips span{width:24px;height:24px;border:2px solid #fff;display:grid;place-items:center;font-family:var(--f-cap);font-size:12px}
+.ix-burp-suite .bs-pips span.bs-done{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+
+/* MISSION */
+.ix-burp-suite .bs-mission{position:relative;margin:24px 0 0;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--org);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.ix-burp-suite .bs-poster{position:relative;min-height:420px;overflow:hidden;border-right:3px solid var(--ink);background:#1b0f09;
+  background-image:radial-gradient(rgba(255,95,31,.38) 1.4px,transparent 2.1px);background-size:9px 9px;display:flex;flex-direction:column;justify-content:center;gap:22px;padding:72px 22px 30px}
+.ix-burp-suite .bs-bgword{position:absolute;left:-6%;top:44%;transform:translateY(-50%) rotate(-8deg);font-family:var(--f-mono);font-size:120px;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,95,31,.35);white-space:nowrap;pointer-events:none}
+.ix-burp-suite .bs-tag,.ix-burp-suite .bs-tag2{position:absolute;top:14px;font-family:var(--f-cap);font-size:13px;padding:5px 10px;z-index:2}
+.ix-burp-suite .bs-tag{left:14px;background:var(--ink);color:var(--yel);border:2px solid var(--yel)}
+.ix-burp-suite .bs-tag2{right:14px;background:var(--org);color:var(--ink);border:2px solid var(--ink)}
+.ix-burp-suite .bs-pname{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.ix-burp-suite .bs-pname span{font-family:var(--f-mono);font-size:38px;line-height:1;color:#fff;text-shadow:4px 4px 0 var(--ink)}
+.ix-burp-suite .bs-pname b{font-family:var(--f-mono);font-weight:400;font-size:34px;line-height:1;background:var(--org);color:var(--ink);padding:8px 12px;transform:rotate(-2deg);box-shadow:5px 5px 0 var(--ink)}
+.ix-burp-suite .bs-pcode{position:relative;z-index:2;display:block;font-size:17px;line-height:1.5;color:#ffd2bd;background:rgba(20,20,20,.85);border-left:5px solid var(--org);padding:10px 14px}
+.ix-burp-suite .bs-pcode i{font-style:normal;color:var(--ink);background:var(--yel);padding:0 4px}
+.ix-burp-suite .bs-shh{position:absolute;z-index:2;right:18px;bottom:18px;font-family:var(--f-hand);font-size:30px;color:var(--yel);transform:rotate(-6deg)}
+.ix-burp-suite .bs-mbody{padding:28px 26px;display:flex;flex-direction:column;gap:18px;justify-content:center;background-image:radial-gradient(rgba(255,214,10,.1) 1.3px,transparent 1.9px);background-size:12px 12px}
+.ix-burp-suite .bs-kick{font-family:var(--f-cap);font-size:14px;letter-spacing:.1em;color:var(--org)}
+.ix-burp-suite .bs-mt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:46px;line-height:1.02;color:var(--yel);text-transform:uppercase}
+.ix-burp-suite .bs-msub{font-size:20px;line-height:1.4}
+.ix-burp-suite .bs-msub em{font-style:normal;color:var(--ink);background:var(--yel);padding:0 5px}
+.ix-burp-suite .bs-motto{font-family:var(--f-hand);font-size:23px;line-height:1.2;color:#e9e2d0;border-left:4px solid var(--org);padding-left:14px}
+.ix-burp-suite .bs-moves{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ix-burp-suite .bs-moves li{border:2px solid #fff;padding:8px 8px 10px}
+.ix-burp-suite .bs-moves b{display:block;font-family:var(--f-mono);font-weight:400;font-size:22px;color:var(--ink);-webkit-text-stroke:1.5px var(--yel)}
+.ix-burp-suite .bs-moves span{display:block;font-family:var(--f-cap);font-size:13px;line-height:1.2;margin-top:4px}
+.ix-burp-suite .bs-moves li.bs-x{border-color:var(--green);background:rgba(46,229,157,.15)}
+.ix-burp-suite .bs-go{align-self:flex-start;min-height:56px;padding:0 26px;font-family:var(--f-cap);font-size:20px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--org);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.ix-burp-suite .bs-go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--org)}
+.ix-burp-suite .bs-go:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--org)}
+.ix-burp-suite.bs-anim .bs-go{animation:bs-pulse 1.8s ease-in-out infinite}
+.ix-burp-suite.bs-anim .bs-pname b{animation:bs-flick 4s steps(1) infinite}
+.ix-burp-suite.bs-anim .bs-pcode i{animation:bs-blink 1.6s steps(1) infinite}
+
+/* LEVELS */
+.ix-burp-suite .bs-lvl{position:relative;margin-top:48px;border:3px solid var(--ink);background:#fffdf6;box-shadow:6px 6px 0 var(--ink);scroll-margin-top:56px}
+.ix-burp-suite .bs-lh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:3px solid var(--ink);background:var(--yel)}
+.ix-burp-suite .bs-ln{font-family:var(--f-cap);font-size:13px;background:var(--ink);color:var(--yel);padding:4px 10px}
+.ix-burp-suite .bs-lt{margin:0;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.15}
+.ix-burp-suite .bs-ok{display:none;margin-left:auto;font-family:var(--f-cap);font-size:13px;background:var(--green);border:2px solid var(--ink);padding:3px 10px;transform:rotate(2deg)}
+.ix-burp-suite .bs-clear .bs-ok{display:inline-block}
+.ix-burp-suite .bs-lb{padding:22px 20px 24px}
+.ix-burp-suite .bs-locked{pointer-events:none;user-select:none}
+.ix-burp-suite .bs-locked .bs-lb{filter:grayscale(1) blur(3px);opacity:.35;max-height:260px;overflow:hidden}
+.ix-burp-suite .bs-lockcap{display:none}
+.ix-burp-suite .bs-locked .bs-lockcap{display:grid;position:absolute;inset:56px 0 0;place-items:center;z-index:5}
+.ix-burp-suite .bs-lockcap span{font-family:var(--f-cap);font-size:16px;background:var(--ink);color:#fff;padding:10px 16px}
+.ix-burp-suite .bs-after{display:none;margin-top:28px}
+.ix-burp-suite .bs-lvl.bs-clear .bs-after{display:block;animation:bs-up .4s ease-out}
+
+.ix-burp-suite .bs-say{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px}
+.ix-burp-suite .bs-who{flex:0 0 auto;font-family:var(--f-cap);font-size:12px;background:var(--ink);color:#fff;padding:3px 8px;margin-top:8px}
+.ix-burp-suite .bs-who.bs-sonya{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.ix-burp-suite .bs-who.bs-v{background:var(--org);color:var(--ink)}
+.ix-burp-suite .bs-bub{font-family:var(--f-hand);font-size:23px;line-height:1.2;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:7px 14px;box-shadow:3px 3px 0 var(--ink)}
+
+/* flow */
+.ix-burp-suite .bs-flow{display:flex;align-items:center;margin:26px 0 6px;padding:0 4px}
+.ix-burp-suite .bs-node{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink)}
+.ix-burp-suite .bs-node svg{width:40px;height:40px}
+.ix-burp-suite .bs-node small{font-size:14px;color:var(--muted);white-space:nowrap}
+.ix-burp-suite .bs-n-gate b{font-family:var(--f-mono);font-weight:400;font-size:18px;background:var(--ink);color:var(--org);padding:9px 10px;border:3px solid var(--ink);transition:background .2s,color .2s}
+.ix-burp-suite .bs-flow.bs-armed .bs-n-gate b{background:var(--org);color:var(--ink);box-shadow:0 0 0 5px rgba(255,95,31,.3)}
+.ix-burp-suite .bs-wire{position:relative;flex:1;height:4px;margin:0 6px 22px;background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 14px)}
+.ix-burp-suite .bs-pkt{position:absolute;top:50%;left:0;width:18px;height:18px;margin-top:-9px;background:var(--yel);border:3px solid var(--ink);opacity:0}
+.ix-burp-suite .bs-flow.bs-go1 .bs-pkt{opacity:1;animation:bs-p1 .7s cubic-bezier(.4,0,.6,1) forwards}
+.ix-burp-suite .bs-flow.bs-held .bs-pkt{opacity:1;left:calc(100% - 18px);background:var(--org);animation:bs-hold 1s ease-in-out infinite}
+.ix-burp-suite .bs-flow.bs-go2 .bs-pkt{opacity:1;animation:bs-p2 .8s cubic-bezier(.4,0,.6,1) forwards}
+.ix-burp-suite .bs-flow.bs-held .bs-n-gate b{animation:bs-shake .4s}
+
+/* shop */
+.ix-burp-suite .bs-shop{margin:14px 0 0;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink)}
+.ix-burp-suite .bs-shop-url{padding:8px 14px;background:#ece6d6;border-bottom:3px solid var(--ink);font-family:var(--code);font-size:15px;font-weight:700}
+.ix-burp-suite .bs-shop-b{display:flex;align-items:center;gap:16px;padding:16px;flex-wrap:wrap}
+.ix-burp-suite .bs-prod{flex:0 0 64px;height:64px;display:grid;place-items:center;background:var(--yel);border:3px solid var(--ink)}
+.ix-burp-suite .bs-prod svg{width:44px;height:44px;color:var(--ink)}
+.ix-burp-suite .bs-prod-t{flex:1 1 140px;display:grid}
+.ix-burp-suite .bs-prod-t b{font-family:var(--f-cap);font-weight:400;font-size:20px}
+.ix-burp-suite .bs-price{font-family:var(--f-mono);font-size:22px}
+.ix-burp-suite .bs-shop-res{padding:0 16px}
+.ix-burp-suite .bs-shop-res:empty{display:none}
+.ix-burp-suite .bs-shop-res p{padding:12px 0 14px;border-top:2px dashed #bbb;font-size:18px}
+
+/* burp panel */
+.ix-burp-suite .bs-burp,.ix-burp-suite .bs-rep{margin:22px 0 0;background:#1d1d1d;color:#f3efe4;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--org)}
+.ix-burp-suite .bs-burp{animation:bs-up .35s ease-out}
+.ix-burp-suite .bs-burp-top,.ix-burp-suite .bs-rep-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:2px solid #3a3a3a;background:#111}
+.ix-burp-suite .bs-tab{font-family:var(--f-cap);font-size:15px;color:var(--org)}
+.ix-burp-suite .bs-stamp-s{font-family:var(--f-cap);font-size:13px;background:var(--org);color:var(--ink);padding:3px 8px;transform:rotate(-2deg)}
+.ix-burp-suite .bs-cnt{font-family:var(--code);font-size:14px;color:#bdb6a4}
+.ix-burp-suite .bs-req{margin:0;padding:14px;font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;color:#e6e1d4}
+.ix-burp-suite .bs-hot{background:rgba(255,95,31,.25);box-shadow:inset 0 -3px 0 var(--org);padding:2px 0;white-space:nowrap;color:#fff;font-weight:700}
+.ix-burp-suite .bs-hot-s{padding:2px 4px}
+.ix-burp-suite .bs-edit{width:5.2ch;min-height:40px;padding:2px 6px;margin-left:2px;font-family:var(--code);font-size:20px;font-weight:800;background:var(--yel);color:var(--ink);border:3px solid var(--org);border-radius:4px;vertical-align:middle}
+.ix-burp-suite .bs-edit-w{width:6.4ch}
+.ix-burp-suite .bs-edit:focus{outline:3px solid #fff;outline-offset:2px}
+.ix-burp-suite .bs-burp-act{display:flex;flex-wrap:wrap;gap:12px;padding:0 14px 16px}
+.ix-burp-suite .bs-burp-act .bs-btn{flex:1 1 170px;box-shadow:4px 4px 0 #000;border-color:#000}
+.ix-burp-suite .bs-burp-act .bs-btn:not(.bs-y){background:#333;border-color:#555}
+.ix-burp-suite .bs-hint{padding:0 14px 14px;font-size:16px;color:#bdb6a4}
+
+/* repeater */
+.ix-burp-suite .bs-rep-g{display:grid;grid-template-columns:1fr 1fr}
+.ix-burp-suite .bs-rep-p{min-width:0}
+.ix-burp-suite .bs-rep-r{border-left:2px solid #3a3a3a}
+.ix-burp-suite .bs-rep-h{padding:8px 14px 0;font-family:var(--f-cap);font-size:13px;color:#bdb6a4;letter-spacing:.06em}
+.ix-burp-suite .bs-rout{padding:12px 14px 16px;font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;min-height:90px}
+.ix-burp-suite .bs-resp .bs-rout{border-top:2px solid #3a3a3a}
+.ix-burp-suite .bs-resp{margin-top:18px;background:#1d1d1d;color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.ix-burp-suite .bs-muted{color:#8c8576}
+.ix-burp-suite .bs-c200{color:var(--green);font-weight:700}
+.ix-burp-suite .bs-c200.bs-alarm{color:#fff;background:var(--red);padding:0 4px}
+.ix-burp-suite .bs-cbad{color:#ff8a8a;font-weight:700}
+.ix-burp-suite .bs-flag{display:inline-block;margin-top:8px;font-family:var(--f-cap);font-size:15px;background:var(--red);color:#fff;padding:4px 10px;animation:bs-glitch .45s steps(3)}
+.ix-burp-suite .bs-okflag{display:inline-block;margin-top:8px;font-family:var(--f-cap);font-size:15px;background:var(--green);color:var(--ink);padding:4px 10px}
+
+.ix-burp-suite .bs-act{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.ix-burp-suite .bs-btn{min-height:52px;padding:0 22px;font-family:var(--f-cap);font-size:18px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--org);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s,box-shadow .1s;text-align:center}
+.ix-burp-suite .bs-btn:hover{transform:translate(-1px,-1px)}
+.ix-burp-suite .bs-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--org)}
+.ix-burp-suite .bs-btn.bs-y{background:var(--yel);color:var(--ink)}
+.ix-burp-suite .bs-btn:disabled{opacity:.45;cursor:default;transform:none}
+.ix-burp-suite .bs-btn[aria-pressed="true"]{background:var(--org);color:var(--ink)}
+.ix-burp-suite .bs-shop .bs-btn{box-shadow:3px 3px 0 var(--ink)}
+.ix-burp-suite .bs-shop .bs-btn:not(:disabled){background:var(--org);color:var(--ink)}
+.ix-burp-suite .bs-legal{margin-top:14px;font-size:16px;color:var(--muted)}
+
+.ix-burp-suite .bs-facts{margin:24px 0 0;display:grid;gap:18px}
+.ix-burp-suite .bs-facts p{display:grid;gap:2px;font-size:18px;line-height:1.45;border-left:5px solid var(--org);padding:2px 0 2px 14px}
+.ix-burp-suite .bs-facts b{font-family:var(--f-cap);font-weight:400;font-size:22px}
+.ix-burp-suite .bs-facts code{background:#ece6d6;padding:0 4px;font-size:16px}
+.ix-burp-suite .bs-def{margin-top:22px;font-size:18px;line-height:1.5}
+
+/* code */
+.ix-burp-suite .bs-code{margin:20px 0 0;padding:16px;background:var(--ink);color:#f3efe4;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--org);font-family:var(--code);font-size:15px;line-height:1.6;white-space:pre;overflow-x:auto}
+.ix-burp-suite .bs-cm{color:#9d9785}
+.ix-burp-suite .bs-badl{background:rgba(255,59,59,.3);box-shadow:inset 3px 0 0 var(--red)}
+.ix-burp-suite .bs-goodl{background:rgba(46,229,157,.22);box-shadow:inset 3px 0 0 var(--green)}
+.ix-burp-suite .bs-code.bs-fixed{box-shadow:5px 5px 0 var(--green)}
+.ix-burp-suite .bs-code.bs-fixed [data-codeline]{animation:bs-up .45s ease-out}
+
+.ix-burp-suite .bs-q{margin:26px 0 12px;font-family:var(--f-cap);font-size:22px;line-height:1.25}
+.ix-burp-suite .bs-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ix-burp-suite .bs-ch{min-height:92px;padding:12px 14px;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:transform .1s,box-shadow .1s}
+.ix-burp-suite .bs-ch:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ix-burp-suite .bs-ch b{font-family:var(--f-cap);font-weight:400;font-size:19px}
+.ix-burp-suite .bs-ch span{font-size:16px;line-height:1.35;color:#3b372e}
+.ix-burp-suite .bs-ch code{font-size:15px;background:#ece6d6;padding:0 3px}
+.ix-burp-suite .bs-ch.bs-wrong{background:#ffe1e1;border-color:#c81e1e;opacity:.7;cursor:default}
+.ix-burp-suite .bs-ch.bs-right{background:var(--green)}
+.ix-burp-suite .bs-ch.bs-right span{color:var(--ink)}
+.ix-burp-suite .bs-ch:disabled{cursor:default;transform:none}
+.ix-burp-suite .bs-fb{margin-top:14px;font-size:18px;line-height:1.4}
+.ix-burp-suite .bs-fb:empty{display:none}
+.ix-burp-suite .bs-fb b{font-family:var(--f-cap);font-weight:400;margin-right:6px}
+.ix-burp-suite .bs-fb.bs-bad b{color:#c81e1e}
+.ix-burp-suite .bs-fb.bs-good b{color:var(--gdk)}
+.ix-burp-suite .bs-fixbox{margin-top:8px;animation:bs-up .4s ease-out}
+.ix-burp-suite .bs-big{font-family:var(--f-cap);font-size:30px;line-height:1.15}
+.ix-burp-suite .bs-big span{color:var(--org)}
+
+/* tools */
+.ix-burp-suite .bs-tools{margin-top:20px}
+.ix-burp-suite .bs-tsit{font-family:var(--f-cap);font-size:14px;color:var(--org);margin-bottom:6px}
+.ix-burp-suite .bs-tq{font-size:20px;line-height:1.4;margin-bottom:14px}
+.ix-burp-suite .bs-tq code{font-size:18px;background:var(--yel);padding:0 5px;overflow-wrap:anywhere}
+.ix-burp-suite .bs-topts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ix-burp-suite .bs-topts .bs-ch{min-height:56px;align-items:center;justify-content:center;text-align:center}
+.ix-burp-suite .bs-tlist{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ix-burp-suite .bs-tlist li{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:baseline;padding-bottom:12px;border-bottom:2px solid rgba(20,20,20,.12)}
+.ix-burp-suite .bs-tlist b{font-family:var(--f-cap);font-weight:400;font-size:20px;color:var(--ink)}
+.ix-burp-suite .bs-tlist span{font-size:18px;line-height:1.4}
+
+/* HACK overlay */
+.ix-burp-suite .bs-hack{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--red);color:#fff;
+  background-image:radial-gradient(rgba(20,20,20,.32) 1.6px,transparent 2.4px);background-size:10px 10px}
+.ix-burp-suite .bs-hkin{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.ix-burp-suite .bs-hkface{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 22px 18px;background:#1b0f09;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);transform:rotate(-3deg);
+  background-image:radial-gradient(rgba(255,95,31,.4) 1.4px,transparent 2.1px);background-size:9px 9px}
+.ix-burp-suite .bs-hkface span{font-family:var(--f-mono);font-size:26px;line-height:1}
+.ix-burp-suite .bs-hkface b{font-family:var(--f-mono);font-weight:400;font-size:24px;background:var(--org);color:var(--ink);padding:5px 10px}
+.ix-burp-suite .bs-hkface code{font-size:22px;font-weight:800;color:#fff;margin-top:6px}
+.ix-burp-suite .bs-hkface code i{font-style:normal;background:var(--yel);color:var(--ink);padding:0 5px}
+.ix-burp-suite .bs-hkt{font-family:var(--f-mono);font-size:64px;line-height:1;color:var(--yel);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.ix-burp-suite .bs-hkcard{display:grid;gap:2px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 18px;font-family:var(--code);font-size:17px;transform:rotate(1.5deg)}
+.ix-burp-suite .bs-red{color:#c81e1e}
+.ix-burp-suite .bs-hksay{font-family:var(--f-hand);font-size:26px;line-height:1.15;background:var(--ink);color:#fff;border-radius:16px;padding:8px 18px}
+.ix-burp-suite.bs-anim .bs-hack:not([hidden]) .bs-hkin{animation:bs-hackin .5s cubic-bezier(.2,1.5,.4,1)}
+.ix-burp-suite.bs-anim .bs-hack.bs-rw{animation:bs-fade .6s ease-in forwards}
+.ix-burp-suite.bs-anim .bs-hack.bs-rw .bs-hkin{animation:bs-rewind .6s ease-in forwards}
+
+/* BATTLE */
+.ix-burp-suite .bs-battle{margin-top:72px;background:var(--ink);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--org);scroll-margin-top:16px;outline:none}
+.ix-burp-suite .bs-bh{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:3px solid #333}
+.ix-burp-suite .bs-bface{flex:0 0 auto;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;border:3px solid var(--org);font-family:var(--f-mono);font-size:30px;color:var(--ink);background:var(--org);
+  background-image:radial-gradient(rgba(20,20,20,.35) 1.4px,transparent 2.1px);background-size:7px 7px}
+.ix-burp-suite .bs-bface.bs-ow{animation:bs-shake .4s}
+.ix-burp-suite .bs-bhx{flex:1;min-width:0;display:grid;gap:10px}
+.ix-burp-suite .bs-bt{margin:0;font-family:var(--f-mono);font-weight:400;font-size:26px;line-height:1.1;color:var(--yel)}
+.ix-burp-suite .bs-hp{position:relative;height:30px;border:3px solid #fff;background:#2a2a2a;overflow:hidden}
+.ix-burp-suite .bs-hp i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--org);transition:width .6s cubic-bezier(.3,1.5,.5,1);background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.2) 0 6px,transparent 6px 12px)}
+.ix-burp-suite .bs-hp b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-cap);font-weight:400;font-size:14px;text-shadow:0 0 3px #000,0 0 2px #000}
+.ix-burp-suite .bs-bbody{position:relative;padding:22px 20px 26px}
+.ix-burp-suite .bs-mvn{font-family:var(--f-cap);font-size:14px;color:var(--yel);margin-bottom:10px}
+.ix-burp-suite .bs-vsay{font-family:var(--f-hand);font-size:25px;line-height:1.2;background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--org);margin-bottom:22px}
+.ix-burp-suite .bs-vsay code{font-size:19px;background:var(--yel);padding:0 4px}
+.ix-burp-suite .bs-bq{font-family:var(--f-cap);font-size:19px;margin-bottom:12px}
+.ix-burp-suite .bs-bopts{display:grid;gap:10px}
+.ix-burp-suite .bs-bo{min-height:60px;padding:12px 16px;border:3px solid #fff;background:transparent;color:#fff;cursor:pointer;text-align:left;font-size:18px;line-height:1.3;transition:background .15s}
+.ix-burp-suite .bs-bo:hover{background:#262626}
+.ix-burp-suite .bs-bo.bs-wrong{border-color:#ff8a8a;color:#ffb3b3;text-decoration:line-through;cursor:default}
+.ix-burp-suite .bs-bo.bs-right{background:var(--green);border-color:var(--green);color:var(--ink)}
+.ix-burp-suite .bs-bo:disabled{cursor:default}
+.ix-burp-suite .bs-bfb{margin-top:16px;font-size:18px;line-height:1.4}
+.ix-burp-suite .bs-bfb b{font-family:var(--f-mono);font-weight:400;font-size:24px;display:block;margin-bottom:2px}
+.ix-burp-suite .bs-bfb.bs-good b{color:var(--green)}
+.ix-burp-suite .bs-bfb.bs-bad b{color:#ff8a8a}
+.ix-burp-suite .bs-boom{position:absolute;z-index:5;right:14px;bottom:70px;padding:20px 24px;font-family:var(--f-mono);font-size:26px;line-height:1;color:var(--ink);background:var(--yel);pointer-events:none;
+  clip-path:polygon(50% 0,61% 22%,85% 6%,78% 33%,100% 38%,80% 55%,96% 78%,70% 72%,62% 100%,48% 78%,30% 98%,28% 72%,2% 82%,18% 56%,0 36%,24% 30%,14% 6%,38% 20%);animation:bs-boom .9s cubic-bezier(.2,1.6,.4,1) forwards}
+.ix-burp-suite .bs-win{display:grid;gap:16px;justify-items:start}
+.ix-burp-suite .bs-wface{position:relative;width:100%;max-width:420px;padding:34px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;border:3px solid #fff;background:#2a2a2a;filter:grayscale(1)}
+.ix-burp-suite .bs-wface i{font-style:normal;font-family:var(--f-mono);font-size:30px;color:#ddd}
+.ix-burp-suite .bs-wface em{font-style:normal;font-family:var(--f-mono);font-size:26px;background:#bbb;color:var(--ink);padding:4px 10px}
+.ix-burp-suite .bs-wstamp{position:relative;margin-top:-70px;margin-left:30px;font-family:var(--f-mono);font-size:30px;color:var(--red);background:rgba(255,255,255,.95);border:5px solid var(--red);padding:6px 14px;transform:rotate(-12deg);white-space:nowrap}
+.ix-burp-suite.bs-anim .bs-wstamp{animation:bs-stampw .5s cubic-bezier(.2,1.6,.4,1) .2s both}
+.ix-burp-suite .bs-wint{font-family:var(--f-mono);font-size:28px;line-height:1.1;color:var(--green);margin-top:18px}
+.ix-burp-suite .bs-wins{font-size:20px}
+.ix-burp-suite .bs-wins b{font-family:var(--f-mono);font-weight:400;color:var(--yel);font-size:24px}
+.ix-burp-suite .bs-rule{font-family:var(--f-cap);font-size:20px;line-height:1.3;background:var(--yel);color:var(--ink);padding:14px 16px;border:3px solid #fff}
+
+/* INTERVIEW */
+.ix-burp-suite .bs-iv{margin-top:72px;padding:28px 22px 30px;background:#fff;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.ix-burp-suite .bs-ivk{font-family:var(--f-cap);font-size:14px;letter-spacing:.06em;color:#c81e1e;margin-bottom:10px}
+.ix-burp-suite .bs-ivq{margin:0 0 20px;font-family:var(--f-cap);font-weight:400;font-size:26px;line-height:1.25}
+.ix-burp-suite .bs-think{display:grid;gap:4px;margin-bottom:20px;padding:14px 16px;background:var(--paper);border-left:6px solid var(--yel)}
+.ix-burp-suite .bs-think b{font-family:var(--f-cap);font-weight:400;font-size:18px}
+.ix-burp-suite .bs-think span{font-size:18px;line-height:1.45}
+.ix-burp-suite .bs-iva{margin-top:24px;animation:bs-up .4s ease-out}
+.ix-burp-suite .bs-iva ol{margin:0;padding:0;list-style:none;display:grid;gap:18px;counter-reset:ixbs}
+.ix-burp-suite .bs-iva li{position:relative;padding-left:46px;font-size:19px;line-height:1.5;counter-increment:ixbs}
+.ix-burp-suite .bs-iva li::before{content:counter(ixbs);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--yel);font-family:var(--f-cap);font-size:17px}
+.ix-burp-suite .bs-ivx{margin-top:22px;padding:14px 16px;background:var(--ink);color:#fff;font-size:19px;line-height:1.45}
+.ix-burp-suite .bs-ivx b{color:var(--yel)}
+
+/* CHEAT SHEET */
+.ix-burp-suite .bs-cs{margin-top:72px}
+.ix-burp-suite .bs-cst{margin:0 0 10px;font-family:var(--f-cap);font-weight:400;font-size:30px;line-height:1.15}
+.ix-burp-suite .bs-csl{list-style:none;margin:0;padding:0}
+.ix-burp-suite .bs-csl li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:2px solid rgba(20,20,20,.15)}
+.ix-burp-suite .bs-csl li:last-child{border-bottom:0}
+.ix-burp-suite .bs-csn{flex:0 0 64px;font-family:var(--f-mono);font-size:36px;line-height:1;color:var(--yel);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.ix-burp-suite .bs-csl b{display:block;font-family:var(--f-cap);font-weight:400;font-size:21px;line-height:1.2;margin-bottom:4px}
+.ix-burp-suite .bs-csl p{font-size:18px;line-height:1.45}
+.ix-burp-suite .bs-train{margin-top:18px;padding-top:18px;border-top:3px solid var(--ink);font-size:18px;line-height:1.5}
+
+@keyframes bs-drop{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes bs-shake{0%,100%{transform:none}20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,0)}}
+@keyframes bs-pulse{0%,100%{box-shadow:5px 5px 0 var(--org)}50%{box-shadow:5px 5px 0 var(--org),0 0 0 8px rgba(255,214,10,.35)}}
+@keyframes bs-flick{0%,92%,100%{opacity:1}93%{opacity:.15}95%{opacity:1}96%{opacity:.3}}
+@keyframes bs-blink{0%,60%{background:var(--yel)}61%,100%{background:transparent;color:#ffd2bd}}
+@keyframes bs-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes bs-p1{from{left:0}to{left:calc(100% - 18px)}}
+@keyframes bs-p2{0%{left:calc(100% - 18px);opacity:1}100%{left:calc(100% + 120%);opacity:0}}
+@keyframes bs-hold{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes bs-glitch{0%{transform:translateX(-8px) skewX(8deg)}50%{transform:translateX(6px) skewX(-6deg)}100%{transform:none}}
+@keyframes bs-hackin{from{transform:scale(1.6) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes bs-rewind{to{transform:translateX(-120%) skewX(30deg) scale(.6);filter:blur(4px);opacity:0}}
+@keyframes bs-fade{0%,50%{opacity:1}to{opacity:0}}
+@keyframes bs-boom{0%{opacity:0;transform:scale(.2) rotate(-20deg)}25%{opacity:1;transform:scale(1.15) rotate(4deg)}70%{opacity:1;transform:scale(1) rotate(-2deg)}100%{opacity:0;transform:translateY(-14px) rotate(-2deg)}}
+@keyframes bs-stampw{from{opacity:0;transform:rotate(-12deg) scale(3)}to{opacity:1;transform:rotate(-12deg) scale(1)}}
+
+@media (max-width:760px){
+  .ix-burp-suite .bs-mission{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--org)}
+  .ix-burp-suite .bs-poster{border-right:0;border-bottom:3px solid var(--ink);min-height:340px;padding:66px 16px 26px}
+  .ix-burp-suite .bs-bgword{font-size:96px}
+  .ix-burp-suite .bs-mbody{padding:22px 16px 24px;gap:16px}
+  .ix-burp-suite .bs-mt{font-size:38px}
+  .ix-burp-suite .bs-moves{grid-template-columns:1fr 1fr}
+  .ix-burp-suite .bs-go{align-self:stretch}
+  .ix-burp-suite .bs-choices{grid-template-columns:1fr}
+  .ix-burp-suite .bs-ch{min-height:72px}
+  .ix-burp-suite .bs-rep-g{grid-template-columns:1fr}
+  .ix-burp-suite .bs-rep-r{border-left:0;border-top:2px solid #3a3a3a}
+  .ix-burp-suite .bs-topts{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .ix-burp-suite .bs-pname span{font-size:30px}
+  .ix-burp-suite .bs-pname b{font-size:26px}
+  .ix-burp-suite .bs-pcode{font-size:15px}
+  .ix-burp-suite .bs-tag,.ix-burp-suite .bs-tag2{font-size:11px;padding:4px 7px}
+  .ix-burp-suite .bs-lvl{margin-top:40px;box-shadow:4px 4px 0 var(--ink)}
+  .ix-burp-suite .bs-lh{padding:12px 14px}
+  .ix-burp-suite .bs-lt{font-size:22px}
+  .ix-burp-suite .bs-lb{padding:18px 14px 20px}
+  .ix-burp-suite .bs-bub{font-size:21px}
+  .ix-burp-suite .bs-node svg{width:32px;height:32px}
+  .ix-burp-suite .bs-node small{font-size:12px}
+  .ix-burp-suite .bs-n-gate b{font-size:14px;padding:7px 7px}
+  .ix-burp-suite .bs-req,.ix-burp-suite .bs-rout{font-size:14px;padding:12px}
+  .ix-burp-suite .bs-code{font-size:13px;padding:12px}
+  .ix-burp-suite .bs-q{font-size:20px}
+  .ix-burp-suite .bs-big{font-size:24px}
+  .ix-burp-suite .bs-tlist li{grid-template-columns:1fr;gap:2px}
+  .ix-burp-suite .bs-hkt{font-size:46px}
+  .ix-burp-suite .bs-bh{padding:16px 14px;gap:12px}
+  .ix-burp-suite .bs-bface{width:64px;height:64px;font-size:22px}
+  .ix-burp-suite .bs-bt{font-size:20px}
+  .ix-burp-suite .bs-bbody{padding:18px 14px 22px}
+  .ix-burp-suite .bs-vsay{font-size:22px}
+  .ix-burp-suite .bs-wint{font-size:22px}
+  .ix-burp-suite .bs-iv{padding:22px 16px 24px}
+  .ix-burp-suite .bs-ivq{font-size:22px}
+  .ix-burp-suite .bs-iva li{padding-left:42px;font-size:18px}
+  .ix-burp-suite .bs-cst{font-size:25px}
+  .ix-burp-suite .bs-csl li{gap:14px}
+  .ix-burp-suite .bs-csn{flex-basis:54px;font-size:30px}
+  .ix-burp-suite .bs-hud{padding:7px 10px;gap:8px}
+  .ix-burp-suite .bs-hud-l{font-size:10px}
+  .ix-burp-suite .bs-pips span{width:22px;height:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ix-burp-suite *,.ix-burp-suite *::before,.ix-burp-suite *::after{animation:none !important;transition:none !important}
+  .ix-burp-suite .bs-boom{display:none}
+  .ix-burp-suite .bs-flow.bs-go2 .bs-pkt{opacity:0}
+}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('.ix-burp-suite'); if(!root) return;
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!RM) root.classList.add('bs-anim');
+  function q(s,el){return (el||root).querySelector(s)}
+  function qa(s,el){return Array.prototype.slice.call((el||root).querySelectorAll(s))}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?Math.min(ms,40):ms)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var live=q('[data-live]');
+  function say(t){live.textContent='';setTimeout(function(){live.textContent=t},40)}
+  function go(el){el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
+  function later(fn){setTimeout(fn,RM?0:500)}
+
+  /* HUD */
+  var hud=q('.bs-hud'), fill=q('.bs-bar i'), barT=q('.bs-bar b'), pips=qa('.bs-pips span');
+  var S={def:0,steps:[0,0,0,0]};
+  function paint(){fill.style.width=S.def+'%';barT.textContent=S.def+'%';pips.forEach(function(p,i){p.classList.toggle('bs-done',!!S.steps[i])})}
+  function hit(){hud.classList.remove('bs-hit');void hud.offsetWidth;hud.classList.add('bs-hit');setTimeout(function(){hud.classList.remove('bs-hit')},700)}
+  function step(i,def){
+    if(S.steps[i]) return; S.steps[i]=1; S.def=def; paint();
+    var mv=q('[data-mv="'+(i+1)+'"]'); if(mv) mv.classList.add('bs-x');
+    q('#ix-burp-suite-l'+(i+1)).classList.add('bs-clear');
+    var nx=q('#ix-burp-suite-l'+(i+2)); if(nx) nx.classList.remove('bs-locked');
+  }
+  qa('[data-goto]').forEach(function(b){b.addEventListener('click',function(){
+    var t=q('#'+b.getAttribute('data-goto')); go(t);
+    var f=t.classList.contains('bs-battle')?t:t.querySelector('.bs-lb button:not(:disabled)');
+    if(f) later(function(){f.focus({preventScroll:true})});
+  })});
+
+  /* START */
+  var startBtn=q('[data-act="start"]');
+  startBtn.addEventListener('click',function(){
+    var l1=q('#ix-burp-suite-l1');
+    if(!hud.classList.contains('bs-on')){
+      hud.classList.add('bs-on'); paint(); l1.classList.remove('bs-locked');
+      startBtn.textContent='Миссия начата ▼'; say('Миссия принята. Шаг первый открыт.');
+    }
+    go(l1); later(function(){q('[data-act="icpt"]').focus({preventScroll:true})});
+  });
+
+  /* L1: intercept */
+  var flow=q('[data-flow]'), icpt=q('[data-act="icpt"]'), buy=q('[data-act="buy"]'), burp=q('[data-burp]'),
+      priceIn=q('#ix-burp-suite-price'), set1=q('[data-act="set1"]'), fwd=q('[data-act="fwd"]'), shopRes=q('[data-shopres]');
+  icpt.addEventListener('click',function(){
+    if(icpt.getAttribute('aria-pressed')==='true') return;
+    icpt.setAttribute('aria-pressed','true'); icpt.textContent='Перехват: ВКЛ'; icpt.disabled=true;
+    flow.classList.add('bs-armed'); buy.disabled=false;
+    say('Перехват включён. Теперь нажми «Купить» в магазине.');
+    buy.focus({preventScroll:true});
+  });
+  buy.addEventListener('click',function(){
+    if(buy.disabled) return; buy.disabled=true; buy.textContent='Отправка…';
+    flow.classList.remove('bs-go2','bs-held'); void flow.offsetWidth; flow.classList.add('bs-go1');
+    wait(700).then(function(){
+      flow.classList.remove('bs-go1'); flow.classList.add('bs-held');
+      burp.hidden=false; say('Запрос остановлен в Burp. В нём есть скрытый параметр price равный 4990.');
+      later(function(){burp.scrollIntoView({behavior:RM?'auto':'smooth',block:'nearest'})});
+      set1.focus({preventScroll:true});
+    });
+  });
+  set1.addEventListener('click',function(){priceIn.value='1'; priceIn.classList.remove('bs-x'); fwd.focus({preventScroll:true}); say('price теперь 1. Нажми Forward.')});
+  priceIn.addEventListener('input',function(){priceIn.value=priceIn.value.replace(/[^0-9]/g,'').slice(0,6)});
+  priceIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();fwd.click()}});
+  var hack=q('.bs-hack'), solved1=false;
+  fwd.addEventListener('click',function(){
+    if(fwd.disabled) return;
+    var v=parseInt(priceIn.value,10); if(isNaN(v)) v=4990;
+    fwd.disabled=true; set1.disabled=true; priceIn.disabled=true;
+    flow.classList.remove('bs-held'); void flow.offsetWidth; flow.classList.add('bs-go2');
+    wait(800).then(function(){
+      if(v>=4990){
+        shopRes.innerHTML='<p>Сервер: <b class="bs-c200">200 OK</b>. Заказ оплачен, списано '+v.toLocaleString('ru-RU')+' ₽. Честная покупка.</p>';
+        say('Честная покупка. Теперь попробуй поменять price.');
+        return wait(900).then(function(){resetL1('Ещё раз: поменяй price')});
+      }
+      var p=v.toLocaleString('ru-RU')+' ₽';
+      shopRes.innerHTML='<p>Сервер: <b class="bs-c200 bs-alarm">200 OK</b>. Списано '+esc(p)+'. Сервер не возразил.</p>';
+      q('[data-hkp]').textContent=String(v); q('[data-hkp2]').textContent=p;
+      hit(); say('Сервер принял цену '+p+' вместо 4990.');
+      return wait(900).then(openHack);
+    });
+  });
+  function resetL1(label){
+    flow.classList.remove('bs-go2'); void flow.offsetWidth; flow.classList.add('bs-held');
+    priceIn.disabled=false; set1.disabled=false; fwd.disabled=false; priceIn.value='4990';
+    set1.focus({preventScroll:true}); if(label) say(label);
+  }
+  var lastFocus=null;
+  function openHack(){lastFocus=document.activeElement; hack.hidden=false; hack.classList.remove('bs-rw'); setTimeout(function(){q('[data-act="rewind"]').focus()},30)}
+  function closeHack(){
+    if(hack.hidden) return; hack.classList.add('bs-rw');
+    wait(600).then(function(){
+      hack.hidden=true; hack.classList.remove('bs-rw');
+      flow.classList.remove('bs-go2'); burp.hidden=true; shopRes.innerHTML='';
+      buy.textContent='Купить'; buy.disabled=true; priceIn.value='4990';
+      if(!solved1){solved1=true; step(0,20);}
+      say('Время откачено. Шаг первый пройден.');
+      var a=q('#ix-burp-suite-l1 .bs-after'); go(a);
+      later(function(){var b=q('#ix-burp-suite-l1 [data-goto]'); b&&b.focus({preventScroll:true})});
+    });
+  }
+  q('[data-act="rewind"]').addEventListener('click',closeHack);
+  hack.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();closeHack()}
+    if(e.key==='Tab'){e.preventDefault();q('[data-act="rewind"]').focus()}
+  });
+
+  /* L2: fix price */
+  var fixWrap=q('[data-fix]'), fb2=q('#ix-burp-suite-l2 [data-fb]'), code=q('[data-code]');
+  var FIX={
+    ro:'readonly и странное имя мешают только на странице. В Burp поле _p7 правится так же, как price.',
+    js:'Проверка в JS живёт в браузере. Запрос из Burp уходит уже после неё, и скрипт его не видит.'
+  };
+  qa('.bs-ch',fixWrap).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v!=='srv'){b.classList.add('bs-wrong'); b.disabled=true; hit(); fb2.className='bs-fb bs-bad'; fb2.innerHTML='<b>ВЗЛОМ!</b>'+FIX[v]; return}
+    qa('.bs-ch',fixWrap).forEach(function(x){x.disabled=true}); b.classList.add('bs-right');
+    fb2.className='bs-fb bs-good'; fb2.innerHTML='<b>Точно.</b>Цену знает только сервер. Что бы ни пришло в price, он его не читает.';
+    q('[data-codeline]',code).innerHTML='<span class="bs-goodl">  price = item.price * qty\n  <span class="bs-cm"># цена из базы, price из запроса игнорируем</span></span>';
+    code.classList.add('bs-fixed');
+    step(1,45); say('Сервер починен. Отправь запрос с price равным 1 ещё раз.');
+    later(function(){q('[data-act="replay2"]').focus({preventScroll:true})});
+  })});
+  var replay2=q('[data-act="replay2"]'), rout2=q('[data-rout]');
+  replay2.addEventListener('click',function(){
+    rout2.innerHTML='<span class="bs-muted">…</span>';
+    wait(450).then(function(){
+      rout2.innerHTML='HTTP/2 <b class="bs-c200">200 OK</b>\n\n{"order": 5522,\n "charged": 4990}\n<span class="bs-okflag">price=1 проигнорирован</span>';
+      say('Сервер списал 4990. Поле price из запроса проигнорировано.');
+    });
+  });
+
+  /* L3: repeater */
+  var roleIn=q('#ix-burp-suite-role'), adm=q('[data-act="admin"]'), send=q('[data-act="send"]'), rout3=q('[data-rout3]'), cnt=q('[data-cnt]'),
+      fixbox=q('[data-fixbox]'), fix3=q('[data-fix3]'), fb3=q('[data-fb3]'), sent=0, fixed3=false, hacked3=false;
+  roleIn.addEventListener('input',function(){roleIn.value=roleIn.value.replace(/[^a-zA-Z_]/g,'').slice(0,10)});
+  roleIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();send.click()}});
+  adm.addEventListener('click',function(){roleIn.value='admin'; send.focus({preventScroll:true}); say('role теперь admin. Нажми Send.')});
+  send.addEventListener('click',function(){
+    if(send.disabled) return; send.disabled=true;
+    var r=(roleIn.value||'user').toLowerCase(); sent++; cnt.textContent='Отправлено: '+sent;
+    rout3.innerHTML='<span class="bs-muted">…</span>';
+    wait(450).then(function(){
+      send.disabled=false;
+      if(fixed3){
+        rout3.innerHTML='HTTP/2 <b class="bs-c200">200 OK</b>\n\n{"name": "Соня",\n "role": "user"}\n<span class="bs-okflag">лишнее поле отброшено</span>';
+        say('Роль осталась user. Сервер взял только name.');
+        if(!S.steps[2]){step(2,75); later(function(){go(q('#ix-burp-suite-l3 .bs-after'))})}
+        return;
+      }
+      if(r==='user'){
+        rout3.innerHTML='HTTP/2 <b class="bs-c200">200 OK</b>\n\n{"name": "Соня",\n "role": "user"}';
+        say('Ответ 200, роль user. Попробуй поменять role.'); return;
+      }
+      rout3.innerHTML='HTTP/2 <b class="bs-c200 bs-alarm">200 OK</b>\n\n{"name": "Соня",\n "role": "'+esc(r)+'"}\n<span class="bs-flag">РОЛЬ ЗАПИСАНА!</span>';
+      hit(); say('Сервер записал роль '+r+'. Это дыра.');
+      if(!hacked3){hacked3=true; fixbox.hidden=false; later(function(){fixbox.scrollIntoView({behavior:RM?'auto':'smooth',block:'nearest'}); var f=q('.bs-ch',fix3); f&&f.focus({preventScroll:true})})}
+    });
+  });
+  var FIX3={
+    form:'Repeater шлёт запрос без всякой формы. Убирать нечего, а сервер всё ещё читает role.',
+    js:'Скрипт работает в браузере, а запрос из Repeater уходит мимо него.'
+  };
+  qa('.bs-ch',fix3).forEach(function(b){b.addEventListener('click',function(){
+    if(b.disabled) return; var v=b.getAttribute('data-v');
+    if(v!=='allow'){b.classList.add('bs-wrong'); b.disabled=true; hit(); fb3.className='bs-fb bs-bad'; fb3.innerHTML='<b>ВЗЛОМ!</b>'+FIX3[v]; return}
+    qa('.bs-ch',fix3).forEach(function(x){x.disabled=true}); b.classList.add('bs-right'); fixed3=true;
+    fb3.className='bs-fb bs-good'; fb3.innerHTML='<b>Точно.</b>Сервер копирует из запроса только name. Проверь: нажми Send с role=admin ещё раз.';
+    roleIn.value='admin'; say('Защита включена. Нажми Send ещё раз.');
+    later(function(){send.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'}); send.focus({preventScroll:true})});
+  })});
+
+  /* L4: tools */
+  var TOOLS=['Repeater','Intruder','Decoder','Comparer'];
+  var SIT=[
+    {q:'Cookie выглядит так: <code>dXNlcj1zb255YQ==</code>. Что внутри?',a:'Decoder',w:'Decoder раскодирует Base64: внутри <b>user=sonya</b>. Base64 — не шифр, а просто запись.'},
+    {q:'На своём стенде надо проверить 50 вариантов промокода по очереди.',a:'Intruder',w:'Intruder сам подставит 50 значений в одно место запроса и покажет все ответы.'},
+    {q:'Два ответа на вид одинаковые, но длина отличается на 3 байта. Где разница?',a:'Comparer',w:'Comparer кладёт ответы рядом и подсвечивает разницу. Так видно, где сервер отвечает иначе.'}
+  ];
+  var tw=q('[data-tools]'), ti=0, tfirst=0, tmiss=false;
+  function tRender(){
+    var s=SIT[ti]; tmiss=false;
+    var h='<p class="bs-tsit">СИТУАЦИЯ '+(ti+1)+' / 3</p><p class="bs-tq">'+s.q+'</p><div class="bs-topts">';
+    TOOLS.forEach(function(t){h+='<button class="bs-ch" type="button" data-t="'+t+'"><b>'+t+'</b></button>'});
+    h+='</div><p class="bs-fb" data-tfb aria-live="polite"></p>';
+    tw.innerHTML=h;
+    qa('.bs-ch',tw).forEach(function(b){b.addEventListener('click',function(){tPick(b)})});
+  }
+  function tPick(b){
+    if(b.disabled) return; var s=SIT[ti], fb=q('[data-tfb]',tw);
+    if(b.getAttribute('data-t')!==s.a){
+      b.classList.add('bs-wrong'); b.disabled=true; tmiss=true; fb.className='bs-fb bs-bad';
+      fb.innerHTML='<b>Мимо.</b>'+(b.getAttribute('data-t')==='Repeater'?'Repeater шлёт по одному запросу руками. Тут есть инструмент удобнее.':'Этот инструмент для другого. Подумай ещё.'); return;
+    }
+    qa('.bs-ch',tw).forEach(function(x){x.disabled=true}); b.classList.add('bs-right'); if(!tmiss) tfirst++;
+    fb.className='bs-fb bs-good'; fb.innerHTML='<b>Да.</b>'+s.w;
+    var nb=document.createElement('div'); nb.className='bs-act';
+    nb.innerHTML='<button type="button" class="bs-btn bs-y">'+(ti<2?'Следующая ситуация ▶':'Готово ▶')+'</button>';
+    fb.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){
+      ti++; if(ti<3){tRender(); var f=q('.bs-ch',tw); f&&f.focus({preventScroll:true})}
+      else{tw.innerHTML='<p class="bs-tq">С первого раза: <b>'+tfirst+'/3</b>. Ящик собран.</p>'; step(3,100); say('Шаг четвёртый пройден. Контроль запросов 100 процентов.'); later(function(){var a=q('#ix-burp-suite-l4 .bs-after'); go(a); var g=q('#ix-burp-suite-l4 [data-goto]'); g&&g.focus({preventScroll:true})})}
+    });
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  tRender();
+
+  /* BATTLE */
+  var MOVES=[
+    {v:'Спрячусь в cookie: <code>discount=100</code>. Туда никто не смотрит!',q:'Чем ответишь?',
+     o:[['Закодировать cookie в Base64, чтобы не читалось',0,'Decoder раскодирует Base64 за секунду. Это запись, а не защита.'],
+        ['Скидку считает сервер, cookie для этого не читает',1,'Cookie приходит от клиента. Скидку, цену и роль решает сервер.']]},
+    {v:'Ваш JS запрещает <code>qty=-5</code>. А я пошлю прямо из Repeater.',q:'Что его остановит?',
+     o:[['Проверка количества на сервере',1,'Отрицательное или огромное qty отбрасывается на сервере, как бы запрос ни пришёл.'],
+        ['Строже проверка в JavaScript',0,'Repeater шлёт запрос мимо браузера. JS его даже не увидит.'],
+        ['Убрать поле qty со страницы',0,'Поле можно дописать в запрос руками. Невидимое не значит недоступное.']]},
+    {v:'Допишу в JSON <code>"isAdmin": true</code>. Вдруг сервер возьмёт?',q:'Как закрыть заранее?',
+     o:[['Переименовать поле в _a1',0,'Имена находят в ответах API и в коде фронтенда. Прав это не проверяет.'],
+        ['Принимать только разрешённые поля, остальное отбрасывать',1,'Список разрешённых полей защищает от mass assignment.'],
+        ['Надеяться, что никто не догадается',0,'Тихий Параметр догадается. Безопасность через незаметность не работает.']]}
+  ];
+  var bb=q('[data-battle]'), hpI=q('[data-hp]'), hpT=q('[data-hp-t]'), hpW=q('[data-hp-wrap]'), face=q('.bs-bface'), BS;
+  function hp(){var left=3-BS.hits; hpI.style.width=(left/3*100)+'%'; hpT.textContent='ТИХИЙ ПАРАМЕТР · HP '+left+'/3'; hpW.setAttribute('aria-label','Здоровье Тихого Параметра: '+left+' из 3')}
+  function bStart(){BS={i:0,hits:0,first:0,missed:false}; hp(); bMove()}
+  function bMove(){
+    var m=MOVES[BS.i]; BS.missed=false;
+    var h='<p class="bs-mvn">ХОД '+(BS.i+1)+' / 3</p><p class="bs-vsay">'+m.v+'</p><p class="bs-bq">'+esc(m.q)+'</p><div class="bs-bopts">';
+    m.o.forEach(function(o,k){h+='<button type="button" class="bs-bo" data-k="'+k+'">'+esc(o[0])+'</button>'});
+    h+='</div><p class="bs-bfb" data-bfb aria-live="polite"></p>';
+    bb.innerHTML=h;
+    qa('.bs-bo',bb).forEach(function(b){b.addEventListener('click',function(){bPick(b)})});
+  }
+  function bPick(b){
+    if(b.disabled) return;
+    var m=MOVES[BS.i], o=m.o[+b.getAttribute('data-k')], fbx=q('[data-bfb]',bb);
+    if(!o[1]){b.classList.add('bs-wrong'); b.disabled=true; BS.missed=true; fbx.className='bs-bfb bs-bad'; fbx.innerHTML='<b>Промах</b>'+esc(o[2]); return}
+    qa('.bs-bo',bb).forEach(function(x){x.disabled=true});
+    b.classList.add('bs-right'); BS.hits++; if(!BS.missed) BS.first++; hp();
+    face.classList.remove('bs-ow'); void face.offsetWidth; face.classList.add('bs-ow');
+    if(!RM){var bm=document.createElement('div'); bm.className='bs-boom'; bm.setAttribute('aria-hidden','true'); bm.textContent='УДАР!'; bb.appendChild(bm); setTimeout(function(){bm.remove()},950)}
+    fbx.className='bs-bfb bs-good'; fbx.innerHTML='<b>УДАР!</b>'+esc(o[2]);
+    var nb=document.createElement('div'); nb.className='bs-act';
+    nb.innerHTML='<button type="button" class="bs-btn bs-y">'+(BS.i<2?'Следующий ход ▶':'Добить ▶')+'</button>';
+    fbx.after(nb); var nbtn=q('button',nb);
+    nbtn.addEventListener('click',function(){BS.i++; if(BS.i<3){bMove(); var f=q('.bs-bo',bb); f&&f.focus({preventScroll:true})} else bWin()});
+    setTimeout(function(){nbtn.focus({preventScroll:true})},30);
+  }
+  function bWin(){
+    bb.innerHTML='<div class="bs-win"><div aria-hidden="true"><div class="bs-wface"><i>ТИХИЙ</i><em>ПАРАМЕТР</em></div><span class="bs-wstamp">ПОВЕРЖЕН</span></div><p class="bs-wint">Тихий Параметр повержен</p><p class="bs-wins">С первого раза: <b>'+BS.first+'/3</b></p><p class="bs-rule">Всё, что пришло от клиента, могли поменять. Цену, роль и права решает сервер.</p><button type="button" class="bs-btn bs-y" data-again>↺ Ещё раз</button></div>';
+    var a=q('[data-again]',bb); a.addEventListener('click',function(){bStart(); var f=q('.bs-bo',bb); f&&f.focus({preventScroll:true})});
+    setTimeout(function(){a.focus({preventScroll:true})},30);
+    say('Тихий Параметр повержен. С первого раза '+BS.first+' из 3.');
+  }
+  bStart();
+
+  /* INTERVIEW */
+  var ivb=q('[data-act="iv"]'), iva=q('#ix-burp-suite-iva');
+  ivb.addEventListener('click',function(){
+    var open=iva.hidden; iva.hidden=!open; ivb.setAttribute('aria-expanded',String(open));
+    ivb.textContent=open?'Скрыть ответ':'Показать сильный ответ';
+  });
+})();
+</script>
