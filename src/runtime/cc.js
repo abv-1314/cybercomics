@@ -20,7 +20,7 @@
   const BITS = { read: 50, right: 10 };
   // Шаги Фундамента 1–14 (номера выпусков) и дальше Веб-квартал и Завод.
   const STEPS = [10, 11, 12, 13, 14, 1, 15, 16, 17, 18, 19, 20, 21, 22];
-  const PATH = STEPS.concat([2, 3, 4, 5, 6, 7, 8, 9]);
+  const PATH = STEPS.concat([2, 3, 4, 5, 6, 7, 8, 9, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]);
 
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* без хранилища — работаем в памяти */ } }

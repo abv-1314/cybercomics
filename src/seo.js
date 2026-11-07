@@ -25,7 +25,7 @@ const LEVEL = { 1: "начальный", 2: "средний", 3: "продвин
 // t — title без бренда (бренд добавляется, если влезает в 60 символов), d — description (до 160),
 // term — какой термин из словарика выпуска (fn) считать главным определением, def — своё определение,
 // если подходящего термина в словарике нет. Факты сверены с данными выпусков.
-const ISSUE_SEO = {
+const ISSUE_SEO_BASE = {
   "http": { t: "HTTP простыми словами: запрос, ответ, коды и cookie", term: "HTTP",
     d: "Что такое HTTP простыми словами: из чего состоят запрос и ответ, чем 401 отличается от 403 и зачем cookie флаги HttpOnly, Secure и SameSite." },
   "idor": { t: "IDOR простыми словами: что это и как защититься", term: "IDOR",
@@ -74,6 +74,16 @@ const ISSUE_SEO = {
   "kriptografiya": { t: "Криптография простыми словами: хеши, ключи, подписи", term: "Хеш-функция",
     d: "Чем кодирование отличается от шифрования и хеширования, почему пароли хранят в Argon2id или bcrypt с солью, а не в MD5, как работают ключи и подпись." }
 };
+// Выпуски 23+ держат тексты для выдачи в своём паспорте: "seoTitle" (до 60), "seoDesc" (до 160),
+// "seoTerm" (термин из fn) или "seoTopic" + "seoDef" (своё определение), необязательно "seoQ".
+const ISSUE_SEO = new Proxy(ISSUE_SEO_BASE, { get(t, slug) {
+  if (t[slug]) return t[slug];
+  const m = PASSPORT_SEO[slug]; if (!m || !m.seoTitle || !m.seoDesc) return undefined;
+  const c = { t: m.seoTitle, d: m.seoDesc };
+  if (m.seoTerm) c.term = m.seoTerm; if (m.seoTopic) c.topic = m.seoTopic; if (m.seoDef) c.def = m.seoDef; if (m.seoQ) c.q = m.seoQ;
+  return c;
+} });
+const PASSPORT_SEO = {};
 // Остальные страницы по адресу. Нет в списке — остаются title/description из build.js (только обрезаются по длине).
 // name — подпись в хлебных крошках и llms.txt; index: true — индексировать, даже если build.js поставил noindex
 // (решение Адама 15.10: «Разминка» — готовый раздел, а не заглушка «скоро»).
@@ -153,7 +163,7 @@ function loadIssues(srcDir, ixDir) {
   } catch (e) { console.warn("  seo: не прочитал ISSUES из IssueReader.dc.html (" + e.message + ")"); }
   if (fs.existsSync(ixDir)) {
     fs.readdirSync(ixDir).filter((f) => f.endsWith(".meta.json")).forEach((f) => {
-      try { const m = JSON.parse(fs.readFileSync(path.join(ixDir, f), "utf8")); if (m.n) out[m.n] = Object.assign({}, out[m.n], m); } catch (e) { /* битый паспорт build.js и так пропустит */ }
+      try { const m = JSON.parse(fs.readFileSync(path.join(ixDir, f), "utf8")); if (m.n) out[m.n] = Object.assign({}, out[m.n], m); PASSPORT_SEO[f.replace(/\.meta\.json$/, "")] = m; } catch (e) { /* битый паспорт build.js и так пропустит */ }
     });
   }
   return out;

@@ -96,7 +96,15 @@ const FOUNDATION = [
   [21, "sql-bazy", "Шаг 13. SQL и базы данных", "SQL и базы данных"],
   [22, "kriptografiya", "Шаг 14. Криптография", "Криптография"]
 ];
-function loadPassport(n, slug) {
+// Выпуски 23+ из паспортов. Район берётся из поля "district" паспорта (по умолчанию Веб-квартал).
+// Добавить выпуск: строка здесь + <slug>.html и <slug>.meta.json в concepts/issues/ (+ ANCHOR и RELATED_MAP ниже).
+const NEXT = [
+  [23, "paroli"], [24, "cookie-sessii"], [25, "fishing"], [26, "cors"], [27, "oauth"],
+  [28, "path-traversal"], [29, "burp-suite"], [30, "docker"], [31, "sast-dast-sca"], [32, "prompt-injection"]
+];
+const DIST_KEY = { "Фундамент": "base", "Веб-квартал": "web", "Завод": "factory", "Облака": "clouds", "Штаб защиты": "hq", "Лаборатория": "lab", "Подполье": "under" };
+const PASS_LINKS = {}; // n → { anchor, related } из паспорта (для «Читай также»)
+function loadPassport(n, slug, foundation) {
   const mf = path.join(IX_DIR, slug + ".meta.json"), hf = path.join(IX_DIR, slug + ".html");
   if (!fs.existsSync(mf)) return null;
   const skip = (why) => { console.warn("  пропускаю выпуск №" + n + " " + slug + ": " + why); return null; };
@@ -114,21 +122,25 @@ function loadPassport(n, slug) {
   if (!Array.isArray(m.quiz) || !m.quiz.length || !m.quiz.every((q) => q && str(q.q) && Array.isArray(q.o) && q.o.length >= 2 &&
     Number.isInteger(q.a) && q.a >= 0 && q.a < q.o.length && typeof q.w === "string")) bad.push("quiz");
   if (!m.iv || !str(m.iv.q) || !str(m.iv.a)) bad.push("iv");
+  const district = foundation ? "Фундамент" : (m.district || "Веб-квартал");
+  if (!DIST_KEY[district]) bad.push("district");
   if (bad.length) return skip("в паспорте нет или неверны поля: " + bad.join(", "));
+  PASS_LINKS[n] = { anchor: str(m.anchor) ? m.anchor.trim() : "", related: Array.isArray(m.related) ? m.related : [] };
   if (m.n !== undefined && Number(m.n) !== n) console.warn("  выпуск " + slug + ": в паспорте n=" + m.n + ", беру " + n);
   return {
     villain: m.villain.trim(), title: m.title.trim(), sub: m.sub.trim(), color: m.color, minutes: Number(m.minutes), diff: Number(m.diff),
-    district: "Фундамент", art: "poster", emblem: m.emblem.trim(), motto: m.motto.trim(), learn: m.learn,
+    district, art: "poster", emblem: m.emblem.trim(), motto: m.motto.trim(), learn: m.learn,
     blocks: [["p", m.sub.trim()]], fn: m.fn, quiz: m.quiz.map((q) => ({ q: q.q, o: q.o, a: q.a, w: q.w })),
     iv: { q: m.iv.q, a: m.iv.a }, seo: m.seo.trim()
   };
 }
 const EXTRA = {};
-FOUNDATION.forEach(([n, slug]) => { const d = loadPassport(n, slug); if (d) EXTRA[n] = d; });
+FOUNDATION.forEach(([n, slug]) => { const d = loadPassport(n, slug, true); if (d) EXTRA[n] = d; });
+NEXT.forEach(([n, slug]) => { const d = loadPassport(n, slug, false); if (d) EXTRA[n] = d; });
 const EXTRA_N = Object.keys(EXTRA).map(Number).sort((a, b) => a - b);
 EXTRA_N.forEach((n) => {
   const d = Object.assign({}, EXTRA[n]); const seo = d.seo; delete d.seo;
-  ISSUES[n] = d; SLUGS[n] = FOUNDATION.find((f) => f[0] === n)[1]; SEO[n] = seo;
+  ISSUES[n] = d; SLUGS[n] = FOUNDATION.concat(NEXT).find((f) => f[0] === n)[1]; SEO[n] = seo;
 });
 
 const LINKS = { Main: "", Review: "povtorenie/", Shop: "baraholka/", Arcade: "arkada/" };
@@ -236,9 +248,9 @@ patch(P.IssueReader, "logic", "nextHref: 'Issue' + next + '.dc.html', nextLabel:
 // Главная: карточки и карусель (A), кирпичи Фундамента, список «скоро» района.
 patch(P.Main, "logic", "read: false }\n    ];\n",
   "read: false }" + EXTRA_N.map((n) => { const d = ISSUES[n];
-    return ",\n      " + JSON.stringify({ issue: n, dist: "base", villain: d.villain, title: d.title, subtitle: d.sub, diff: d.diff, minutes: d.minutes,
+    return ",\n      " + JSON.stringify({ issue: n, dist: DIST_KEY[d.district], villain: d.villain, title: d.title, subtitle: d.sub, diff: d.diff, minutes: d.minutes,
       color: d.color, read: false, art: "poster", emblem: d.emblem, motto: d.motto, plain: d.title }); }).join("") + "\n    ];\n");
-EXTRA_N.forEach((n) => { const f = FOUNDATION.find((x) => x[0] === n); patch(P.Main, "logic", "['" + f[2] + "', 0]", "['" + f[2] + "', " + n + "]"); });
+EXTRA_N.forEach((n) => { const f = FOUNDATION.find((x) => x[0] === n); if (f) patch(P.Main, "logic", "['" + f[2] + "', 0]", "['" + f[2] + "', " + n + "]"); });
 // Прокачаться и Разминка сами берут выпуски и биты из CC (src/runtime/cc.js): правок из сборки не нужно.
 
 // ---------- 3в. Вес и доступность ----------
@@ -320,6 +332,8 @@ const RELATED_MAP = {
   13: [11, 12, 14, "MPorts"], 14: [10, 1, 15], 15: [1, 22, 14, "MHttp"], 16: [1, 7, 6, "MHttp"], 17: [19, 18, "MLinux"],
   18: [8, 19, "MGit"], 19: [17, 20, "MLinux"], 20: [19, 16, 21], 21: [3, 20, 2], 22: [15, 7, 8]
 };
+// Выпуски из паспортов: "anchor" — текст ссылки на выпуск, "related" — номера выпусков и ключи шпаргалок (как в RELATED_MAP).
+EXTRA_N.forEach((n) => { const x = PASS_LINKS[n] || {}; if (x.anchor && !ANCHOR[n]) ANCHOR[n] = x.anchor; if (x.related.length && !RELATED_MAP[n]) RELATED_MAP[n] = x.related; });
 const RELATED = {};
 const KICK = "align-self:flex-start;font-family:'Russo One',sans-serif;font-size:13px;padding:2px 8px;";
 Object.keys(ISSUES).forEach((n) => {
@@ -467,6 +481,7 @@ function page({ file, route, title, description, comp, props, image, jsonld, noi
     '<meta name="site-root" content="' + root + '">',
     '<link rel="icon" href="' + root + 'assets/favicon.svg" type="image/svg+xml">',
     '<link rel="icon" href="' + root + 'favicon.ico" sizes="48x48">',
+    '<link rel="icon" href="' + root + 'assets/icon-120.png" type="image/png" sizes="120x120">',
     '<link rel="icon" href="' + root + 'assets/icon-192.png" type="image/png" sizes="192x192">',
     '<link rel="apple-touch-icon" href="' + root + 'assets/apple-touch-icon.png">',
     PREVIEW ? "" : '<link rel="manifest" href="' + root + 'assets/site.webmanifest">',
@@ -638,7 +653,7 @@ page({ file: "arkada/index.html", route: "arkada/", comp: "Arcade",
 // 404: пути от корня сайта (/assets/…), потому что страница показывается по любому адресу. noindex ставит seo.js.
 write("404.html", '<!doctype html>\n<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Страница не найдена — CyberComics</title>' +
   '<meta name="description" content="Такой страницы на CyberComics нет. Все выпуски про кибербезопасность — на главной.">' +
-  '<meta name="theme-color" content="#ffd60a"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">' +
+  '<meta name="theme-color" content="#ffd60a"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/assets/icon-120.png" type="image/png" sizes="120x120"><link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">' +
   '<link rel="stylesheet" href="/assets/fonts.css"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff7e3;font-family:Rubik,system-ui,sans-serif;color:#141414;padding:16px;box-sizing:border-box}main{max-width:520px;background:#fff;border:3px solid #141414;box-shadow:8px 8px 0 #141414;padding:28px}h1{margin:0 0 12px;font-family:"Rubik Mono One",sans-serif;font-size:34px;color:#ff2e93;-webkit-text-stroke:2px #141414;paint-order:stroke fill;text-shadow:4px 4px 0 #141414}a{display:inline-block;margin-top:12px;font-family:"Russo One",sans-serif;color:#141414;text-decoration:none;padding:12px 18px;background:#ffd60a;border:3px solid #141414;box-shadow:4px 4px 0 #141414}</style></head>' +
   '<body><main><h1>404</h1><p>Злодеи утащили эту страницу. Возможно, её никогда и не было.</p><a href="/">На главную</a> <a href="/vypuski/">Все выпуски</a></main></body></html>\n');
 
