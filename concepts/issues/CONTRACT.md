@@ -1,5 +1,11 @@
 # Контракт: тело выпуска как фрагмент для сайта
 
+## Выпуски 23–32 (с 07.11.2026)
+- Номер и slug заданы в `NEXT` в `src/build.js`: 23 paroli, 24 cookie-sessii, 25 fishing, 26 cors, 27 oauth, 28 path-traversal, 29 burp-suite, 30 docker, 31 sast-dast-sca, 32 prompt-injection. Злодеи и сюжеты — в плане «CyberComics: темы выпусков 23–32» (Claude Doc).
+- Выпуск = два файла: `concepts/issues/<slug>.html` (этот контракт) и `<slug>.meta.json` (META.md). Больше ничего не трогать: сайт подхватит выпуск сам.
+- Портретов нет: злодей — постер-эмблема, как у 10–22.
+- Публикация только после «да» Адама: push в `main` сразу выкладывает сайт. До этого работать в своей ветке.
+
 Каждый выпуск хранится в одном файле `concepts/issues/<slug>.html`. Это ФРАГМЕНТ, а не страница: без doctype, html, head и body. Сайт сам рисует шапку выпуска (портрет, обложку, «Что ты узнаешь»), а фрагмент вставляется сразу под ней.
 
 ## Структура фрагмента
@@ -73,7 +79,7 @@
   - Старые имена «Агент Патч» и «Кай» больше не использовать.
 
 ## Проверка
-1. `python3 /mnt/project-files/cybercomics-site/concepts/issues/wrap.py <slug>` соберёт `concepts/issues/test/<slug>.html`.
+1. `python3 concepts/issues/wrap.py <slug>` (из корня репозитория) соберёт `concepts/issues/test/<slug>.html`. Целиком сайт: `PREVIEW=1 node src/build.js && PREVIEW=1 node src/prerender.js` → `preview/`.
 2. Открой его в Playwright (`require('/opt/node22/lib/node_modules/playwright')`, `chromium.launch()`, адрес `file://`) на 390 и 1280.
 3. Пройди всё кликами и посмотри на скриншоты.
 4. Проверь консоль, горизонтальный скролл, клавиатуру и reduced motion.
